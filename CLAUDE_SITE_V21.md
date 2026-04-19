@@ -10,28 +10,68 @@ Refonte complète du site voyages21.com en Next.js.
 
 ---
 
-## Site déjà en ligne
+## INSTRUCTIONS OBLIGATOIRES POUR COWORK
 
+### 🔴 DEBUT DE CHAQUE SESSION — à faire en premier
+```bash
+git pull
+cat SESSION_STATE.md
+```
+Lis SESSION_STATE.md pour reprendre exactement là où la session précédente s'est arrêtée.
+
+### 🔴 FIN DE CHAQUE SESSION — à faire avant de terminer
+**Toujours exécuter ces 3 actions avant la fin de session :**
+
+**1. Mettre à jour SESSION_STATE.md**
+```bash
+# Editer SESSION_STATE.md avec :
+# - Date et heure de fin
+# - Ce qui a été fait
+# - Prochaine étape immédiate (très précise)
+# - Fichiers modifiés
+# - Décisions prises
+```
+
+**2. Mettre à jour cockpit-data.json**
+```bash
+# Mettre à jour les champs dans cockpit-data.json :
+# - "_meta.last_updated" avec la date du jour
+# - "_meta.updated_by" avec "cowork"
+# - Pour chaque projet modifié : status, nextStep, phases (state: done/in_progress/todo)
+```
+
+**3. Commit et push**
+```bash
+git add SESSION_STATE.md cockpit-data.json
+git commit -m "Session [DATE] : [résumé en 1 ligne de ce qui a été fait]"
+git push
+```
+
+### 🟡 SI LIMITE DE TOKENS APPROCHE
+Dès que tu détectes que la session approche de sa limite (contexte long, nombreux échanges) :
+1. **Stop** — ne commence pas une nouvelle tâche complexe
+2. **Sauvegarde** — exécute les 3 actions ci-dessus immédiatement
+3. **Informe Karim** : "Limite de tokens approche — j'ai sauvegardé l'état. Pour reprendre : ouvre une nouvelle session Cowork sur ce projet, je lirai SESSION_STATE.md automatiquement."
+
+---
+
+## Site déjà en ligne
 - URL active : **https://voyages21.vercel.app/**
 - Le site existe déjà, on travaille dessus de manière incrémentale
 
 ---
 
 ## Design de référence — Page d'accueil
-
 - Référence : **Black Tomato** → https://www.blacktomato.com/
-- Site de tours de luxe haut de gamme
-- Karim veut que la page d'accueil de voyages21.vercel.app soit **inspirée de ce design** : immersif, luxe, grande typographie, visuels plein écran
-- Ne pas copier, s'en inspirer pour l'esprit visuel et l'architecture de la page
+- Page d'accueil : immersive, luxe, grande typographie, visuel plein écran, hero vidéo
 
 ---
 
 ## Vidéo Header
-
-- Fichier vidéo à placer dans le **header de la page d'accueil**
-- Nom du fichier : `2964957128`
-- Emplacement local : `G:\Mon Drive\SITE WEB AVEC CLAUDE\SITE ZEB V21\VIDEO\2964957128`
-- Cette vidéo doit servir de **fond plein écran** dans le header (hero section)
+- Fichier : `2964957128`
+- Chemin local : `G:\Mon Drive\SITE WEB AVEC CLAUDE\SITE ZEB V21\VIDEO\2964957128`
+- Usage : fond plein écran hero section page d'accueil
+- A uploader sur Cloudinary ou Vercel Blob avant utilisation
 
 ---
 
@@ -49,18 +89,23 @@ Refonte complète du site voyages21.com en Next.js.
 | CRM | HubSpot |
 | Affiliation | Rewardful (~$49/mo) |
 | Recherche IA | Perplexity |
-| Reviews | Google + Sanity |
 
 **4 langues :** FR / EN / ES / DE
 
 ---
 
 ## Dépôt & déploiement
-
 - GitHub : `karimzoubdane-debug/voyages21`
 - URL Vercel : `voyages21.vercel.app`
-- Domaine final : `voyages21.com` (chez Valablue — à connecter en dernier)
+- Domaine final : `voyages21.com` (chez Valablue — connecter en dernier)
 - ⚠️ Migration emails OBLIGATOIRE avant de quitter Valablue
+
+---
+
+## Fichiers de continuité (à la racine du repo)
+- `SESSION_STATE.md` — état de la session en cours
+- `cockpit-data.json` — données du cockpit (mis à jour automatiquement)
+- `CLAUDE_SITE_V21.md` — ce fichier
 
 ---
 
@@ -68,39 +113,20 @@ Refonte complète du site voyages21.com en Next.js.
 
 | Phase | Contenu | Statut |
 |---|---|---|
-| 1 | VS Code, Node.js v24, Next.js, GitHub, Vercel, Sanity | ✅ Terminée |
-| 2 | Google Apps Script dispatch photos (`dispatch-photos-voyages21`) | 🔄 En cours |
+| 1 | Infrastructure complète | ✅ Terminée |
+| 2 | Google Apps Script photos | 🔄 En cours |
 | 3 | Pages du site | ⏳ En attente |
 | 4 | Domaine + emails + Make.com + HubSpot + Rewardful + DeepL | ⏳ En attente |
 
 ---
 
-## Phase 2 — Dispatch photos (détail)
-
-- Script Google Apps Script nommé `dispatch-photos-voyages21`
-- Trie les photos par mot-clé dans le nom de fichier → dossiers Google Drive structurés
-- Plan futur : Claude Vision API (~$0.003/photo) pour renommage SEO automatique
-
----
-
-## Budget mensuel estimé
-
-- Make.com : ~$9
-- Claude API : ~$5–15
-- Vercel Pro : ~$20
-- **Total : ~$35–45/mois**
-
----
-
-## Hors scope (ne pas aborder)
-
+## Hors scope (ne jamais aborder)
 - Golf.voyages21.com → abandonné
-- WordPress / Elementor / WP Travel Engine → abandonnés
+- WordPress / Elementor / WP Travel Engine → abandonnés définitivement
 
 ---
 
 ## Style de travail
-
 - Réponses en **français**
 - Ton factuel et concis, pas de style promotionnel
 - Validation explicite avant exécution

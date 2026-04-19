@@ -1,0 +1,102 @@
+{
+  "_meta": {
+    "version": "4.0",
+    "last_updated": "2026-04-19",
+    "updated_by": "karim",
+    "repo": "karimzoubdane-debug/voyages21",
+    "instructions": "Ce fichier est mis a jour automatiquement par Cowork a la fin de chaque session. Ne pas modifier manuellement sauf urgence."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "cat": "business",
+      "status": "actif",
+      "title": "Plateforme Web Voyages21.com",
+      "desc": "Refonte complete du site en Next.js, 4 langues (FR/EN/ES/DE). SITE LIVE : voyages21.vercel.app. Design ref : Black Tomato (blacktomato.com). Video header : fichier 2964957128.",
+      "nextStep": "Phase 3 : Construire la page d'accueil inspiration Black Tomato + integrer video header 2964957128",
+      "stack": "Next.js · Tailwind CSS · Sanity.io · Vercel Pro · next-intl · DeepL · Make.com · HubSpot · Rewardful · PayPal",
+      "livrables": [
+        {"name": "Site en ligne (Vercel)", "type": "URL", "url": "https://voyages21.vercel.app"},
+        {"name": "CLAUDE_SITE_V21.md — Contexte Cowork (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/CLAUDE_SITE_V21.md"},
+        {"name": "Design ref : Black Tomato", "type": "URL", "url": "https://www.blacktomato.com"},
+        {"name": "Video Header : 2964957128 (Drive local)", "type": "VIDEO", "url": "https://drive.google.com/drive/folders/1LLOudY9JCGq2kz65OaqJgAJ3mTb8E_hv"}
+      ],
+      "phases": [
+        {"name": "Phase 1 — Infrastructure", "state": "done", "items": ["VS Code installe","Node.js v24 + npm v11","Next.js + Tailwind CSS cree","GitHub : karimzoubdane-debug/voyages21","Vercel : voyages21.vercel.app en ligne","Sanity.io CMS installe","CLAUDE_SITE_V21.md deploye sur GitHub (contexte Cowork automatique)"]},
+        {"name": "Phase 2 — Automatisation Photos", "state": "in_progress", "items": ["Script Google Apps Script dispatch-photos-voyages21","Dispatch par mot-cle dans nom de fichier","DECISION : Claude Vision API (~$0.003/photo) apres fin du site"]},
+        {"name": "Phase 3 — Pages Site", "state": "todo", "items": ["Page d'accueil (inspiration Black Tomato + video header 2964957128)","Page Circuits","Pages Activites","Page Contact / Devis","Integration Sanity (contenu)","4 langues : FR / EN / ES / DE"]},
+        {"name": "Phase 4 — Lancement", "state": "todo", "items": ["Connecter domaine voyages21.com (Valablue => Vercel)","Migration emails AVANT quitter Valablue","Make.com automations","HubSpot CRM operationnel","Rewardful affiliation","DeepL integration"]}
+      ]
+    },
+    {
+      "id": 2,
+      "cat": "business",
+      "status": "actif",
+      "title": "Dossier Strategique B2B — Voyages 21",
+      "desc": "Catalogue complet 108 activites, presentation agence 78 slides, grilles tarifaires multi-devises (MAD/USD/EUR), strategie prospection internationale B2B.",
+      "nextStep": "Finaliser strategie OTA et configurer pipeline HubSpot",
+      "stack": "PowerPoint · Google Drive · HTML/JS · HubSpot",
+      "livrables": [
+        {"name": "Presentation Agence Voyages21 (78 slides)", "type": "PPTX", "url": "https://drive.google.com/file/d/1WtcA3Go0SsV7H-muLXOV7K0AW_0XuJg2/view"},
+        {"name": "Catalogue Voyages 21 — Merged", "type": "PDF", "url": "https://drive.google.com/file/d/1bUqIB3MkF7yQmzB_HtuTj2YwUr_tgSBk/view"}
+      ],
+      "phases": [
+        {"name": "Catalogue & Presentation", "state": "done", "items": ["78 slides master B2B PPTX produit","Grilles tarifaires MAD/USD/EUR","Analyse OTA : Viator, Civitatis, Airbnb"]},
+        {"name": "Strategie Prospection", "state": "in_progress", "items": ["SWOT Voyages 21 complet","Plan 12 mois — Budget ~217 400 MAD","Cibles : UK, Europe, Canada"]},
+        {"name": "CRM & Deploiement", "state": "todo", "items": ["HubSpot CRM pipeline B2B configure","Sequences emails Brevo","Reporting KPIs mensuel"]}
+      ]
+    },
+    {
+      "id": 3,
+      "cat": "business",
+      "status": "actif",
+      "title": "Application Devis & Tarification",
+      "desc": "Outil web standalone (HTML/JavaScript) pour l'equipe finance — generation de devis clients avec import tarifs hotels depuis Google Drive. Export PDF automatique.",
+      "nextStep": "Developper l'interface de saisie et le moteur de calcul des marges",
+      "stack": "HTML · JavaScript · Google Drive API · PDF.js",
+      "livrables": [],
+      "phases": [
+        {"name": "Conception", "state": "done", "items": ["Architecture standalone HTML/JS validee","Contrats hotels Drive = source de donnees","Equipe finance = utilisateurs cibles"]},
+        {"name": "Developpement", "state": "in_progress", "items": ["Interface saisie devis","Import tarifs hotels depuis contrats","Calcul automatique marges et prix vente","Export PDF devis client"]},
+        {"name": "Deploiement", "state": "todo", "items": ["Tests avec equipe finance","Formation utilisateurs","Mise en production"]}
+      ]
+    },
+    {
+      "id": 7,
+      "cat": "eco",
+      "status": "actif",
+      "title": "HAYDEN 21 — Complexe Ecotourisme Tamazouzte",
+      "desc": "Complexe d'animation ecotouristique a Tamazouzte (Al Haouz) : e-bike, ateliers cuisine marocaine, paintball. Dossier financement soumis (Go Siyaha, Intelaka CMT).",
+      "nextStep": "Obtenir reponse financement Go Siyaha / Intelaka CMT",
+      "stack": "Business Plan · Go Siyaha · Intelaka CMT",
+      "livrables": [
+        {"name": "Business Plan HAYDEN 21", "type": "DOCX", "url": "https://drive.google.com/file/d/1aqGhv181fDcB_TDIANwH_Ix3Dr3DLkSV/view"},
+        {"name": "Etude Financiere HAYDEN", "type": "XLSX", "url": "https://drive.google.com/file/d/1OyX_me6rzGxY7MNrA4hqt6lIa2ogGEnv/view"}
+      ],
+      "phases": [
+        {"name": "Business Plan & Financement", "state": "done", "items": ["Business plan complet redige","Budget total ~723 500 MAD","Subvention Go Siyaha ~39% modelisee","Intelaka CMT 1,75% / 7 ans"]},
+        {"name": "Dossier de Financement", "state": "in_progress", "items": ["Dossier soumis","En attente reponse financement"]},
+        {"name": "Travaux & Amenagement", "state": "todo", "items": ["Amenagement terrain Tamazouzte","Equipements VTT e-bike","Espace cuisine + paintball"]},
+        {"name": "Ouverture Commerciale", "state": "todo", "items": ["Site web HAYDEN 21","Referencement OTA","Partenariats Voyages 21"]}
+      ]
+    },
+    {
+      "id": 10,
+      "cat": "web",
+      "status": "actif",
+      "title": "Agence Web IA — Creation Industrielle de Sites",
+      "desc": "Service creation rapide sites web clients via workflow automatise : WhatsApp audio => transcription => Google Drive => Claude => HTML/Tailwind. 3 formules (Vitrine, Booking, Premium).",
+      "nextStep": "Realiser le site La Maisonnette (Site 2 — 3 suites, jardin, piscine)",
+      "stack": "HTML · Tailwind CSS · Web3Forms · Bookeo · Tawk.to · Make.com · Claude API",
+      "livrables": [
+        {"name": "Site DA21 — Livre (Multi-pages Premium)", "type": "HTML", "url": "https://drive.google.com/drive/folders/1wgeQ1amnDxx5XaREGGJeAzeW7OGYquV1"}
+      ],
+      "phases": [
+        {"name": "Methode & Formules", "state": "done", "items": ["3 formules : Vitrine / Booking / Premium","Prompt Maitre V2 cree (SEO, Schema.org, Web3Forms)","Workflow WhatsApp => Make => Claude => HTML"]},
+        {"name": "Site 1 — DA21 (Livre)", "state": "done", "items": ["Multi-pages Premium ~2200 lignes","VTT 350/500/750 · Paintball 250/400/550 · Cuisine 650/900/1200 MAD","Bookeo + Tawk.to chat integre"]},
+        {"name": "Site 2 — La Maisonnette", "state": "in_progress", "items": ["3 suites + jardin 2000m2 + piscine + pergola","A construire"]},
+        {"name": "Commercial", "state": "todo", "items": ["Portfolio clients","Grille tarifaire finalisee","Processus de vente"]}
+      ]
+    }
+  ]
+}
