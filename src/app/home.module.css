@@ -1,11 +1,16 @@
-/* ===== HERO ===== */
+/* ============================================================
+   VOYAGES21 — HOME PAGE STYLES
+   Inspiré de Black Tomato : immersif, luxe, plein écran
+   ============================================================ */
+
+/* ===== HERO PLEIN ECRAN ===== */
 .hero {
   position: relative;
   height: 100vh;
-  min-height: 600px;
+  min-height: 650px;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
@@ -19,68 +24,128 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 
-/* Fond de secours (gradient) tant que la vidéo n'est pas uploadée */
+/* Fond de secours pendant le chargement de la vidéo */
 .videoBg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    #1B2D4F 0%,
-    #2d1a0e 35%,
-    #8C2020 65%,
-    #C8860A 100%
-  );
+  background: linear-gradient(135deg, #1B2D4F 0%, #2d1a0e 35%, #8C2020 65%, #C8860A 100%);
+  z-index: -1;
 }
 
+/* Overlay sombre subtil — laisse respirer la vidéo comme Black Tomato */
 .heroOverlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to right,
-    rgba(0,0,0,0.72) 0%,
-    rgba(0,0,0,0.3) 60%,
-    rgba(0,0,0,0.05) 100%
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.40) 50%,
+    rgba(0, 0, 0, 0.65) 100%
   );
   z-index: 1;
 }
 
+/* Contenu centré — style Black Tomato */
 .heroContent {
   position: relative;
   z-index: 2;
-  padding: 0 5rem 7rem;
-  max-width: 680px;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.heroLabel {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold, #C8860A);
+  margin-bottom: 1.8rem;
 }
 
 .heroTitle {
-  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-size: clamp(3.2rem, 7vw, 6rem);
   font-weight: 700;
-  color: var(--white);
-  line-height: 1.08;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.01em;
+  color: #ffffff;
+  line-height: 1.05;
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
 }
 
 .heroTitle em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--gold, #C8860A);
+}
+
+/* Ligne décorative fine entre titre et sous-titre — signature Black Tomato */
+.heroRule {
+  width: 50px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.45);
+  margin: 2rem auto;
 }
 
 .heroSub {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,0.82);
-  line-height: 1.7;
-  margin-bottom: 2.2rem;
-  max-width: 480px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.80);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  margin-bottom: 2.8rem;
+  max-width: 520px;
 }
 
 .heroCta {
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* Boutons dans le hero */
+.btnHeroPrimary {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background: var(--gold, #C8860A);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btnHeroPrimary:hover {
+  background: #a86f00;
+  transform: translateY(-2px);
+}
+
+.btnHeroOutline {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.btnHeroOutline:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Indicateur de scroll en bas à droite */
 .scrollHint {
   position: absolute;
   bottom: 2.5rem;
@@ -89,40 +154,73 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  color: rgba(255,255,255,0.5);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
 .scrollLine {
   width: 1px;
   height: 50px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
   animation: scrollAnim 2s ease-in-out infinite;
 }
 
 @keyframes scrollAnim {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  51% { transform: scaleY(1); transform-origin: bottom; }
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
-/* ===== SECTION TITLES ===== */
+/* ===== BANDEAU SIGNATURE ===== */
+.signatureBand {
+  background: #0d1a2e;
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid rgba(200, 134, 10, 0.3);
+}
+
+.signatureBand strong {
+  color: var(--gold, #C8860A);
+  font-weight: 600;
+}
+
+/* ===== LABELS & TITRES DE SECTION ===== */
+.sectionLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold, #C8860A);
+  margin-bottom: 0.7rem;
+}
+
 .sectionTitle {
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   font-weight: 700;
-  color: var(--navy);
+  color: #1B2D4F;
   line-height: 1.2;
   margin-bottom: 1rem;
 }
 
-/* ===== 3 UNIVERS ===== */
+.sectionTitleWhite {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+/* ===== NOS 3 UNIVERS ===== */
 .univers {
   padding: 6rem 3rem;
-  background: var(--light-gray);
+  background: #f5f3ef;
 }
 
 .universHeader {
@@ -144,7 +242,7 @@
   text-decoration: none;
   overflow: hidden;
   aspect-ratio: 3/4;
-  background: var(--navy);
+  background: #1B2D4F;
 }
 
 .universImg {
@@ -153,7 +251,7 @@
   background-size: cover;
   background-position: center;
   background-color: #2a3a55;
-  transition: transform 0.6s ease;
+  transition: transform 0.7s ease;
 }
 
 .universCard:hover .universImg { transform: scale(1.06); }
@@ -162,7 +260,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
 }
 
 .universCardContent {
@@ -173,36 +271,36 @@
   z-index: 1;
   padding: 2rem 1.8rem;
   transform: translateY(8px);
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
 .universCard:hover .universCardContent { transform: translateY(0); }
 
 .universLabel {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.4rem;
+  color: var(--gold, #C8860A);
+  margin-bottom: 0.5rem;
 }
 
 .universCardTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--white);
+  color: #ffffff;
   margin-bottom: 0.6rem;
 }
 
 .universCardDesc {
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.75);
-  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
   margin-bottom: 1rem;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
   opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
 }
 
 .universCard:hover .universCardDesc {
@@ -211,17 +309,17 @@
 }
 
 .universArrow {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold, #C8860A);
 }
 
 /* ===== CIRCUITS PHARES ===== */
 .featured {
   padding: 6rem 3rem;
-  background: var(--white);
+  background: #ffffff;
 }
 
 .featuredInner {
@@ -240,14 +338,14 @@
 .featuredCard {
   display: block;
   text-decoration: none;
-  background: var(--navy);
+  background: #1B2D4F;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .featuredCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(27,45,79,0.2);
+  box-shadow: 0 16px 48px rgba(27, 45, 79, 0.2);
 }
 
 .featuredImg {
@@ -258,18 +356,16 @@
   transition: transform 0.5s ease;
 }
 
-.featuredCard:hover .featuredImg { transform: scale(1.04); }
+.featuredCard:hover .featuredImg { transform: scale(1.05); }
 
-.featuredCardBody {
-  padding: 1.4rem 1.2rem;
-}
+.featuredCardBody { padding: 1.4rem 1.2rem; }
 
 .featuredTag {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold, #C8860A);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -277,21 +373,21 @@
 .featuredCardTitle {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--white);
-  line-height: 1.3;
+  color: #ffffff;
+  line-height: 1.35;
   margin-bottom: 0.6rem;
 }
 
 .featuredCardDesc {
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.6;
 }
 
 /* ===== STATS ===== */
 .stats {
-  background: var(--navy);
-  padding: 3.5rem 3rem;
+  background: #1B2D4F;
+  padding: 4rem 3rem;
 }
 
 .statsInner {
@@ -306,28 +402,28 @@
 .statItem {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .statNum {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
+  font-size: 3.2rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold, #C8860A);
   line-height: 1;
 }
 
 .statLabel {
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* ===== EXPERIENCES ===== */
 .expSection {
   padding: 6rem 3rem;
-  background: var(--light-gray);
+  background: #f5f3ef;
 }
 
 .expHeader {
@@ -338,8 +434,8 @@
 
 .expSub {
   font-size: 0.92rem;
-  color: var(--gray);
-  line-height: 1.7;
+  color: #666;
+  line-height: 1.75;
   margin-top: 0.75rem;
 }
 
@@ -357,7 +453,7 @@
   overflow: hidden;
   position: relative;
   aspect-ratio: 4/5;
-  background: var(--navy);
+  background: #1B2D4F;
 }
 
 .expImg {
@@ -366,16 +462,16 @@
   background-size: cover;
   background-position: center;
   background-color: #2a3a55;
-  transition: transform 0.5s ease;
+  transition: transform 0.55s ease;
 }
 
-.expCard:hover .expImg { transform: scale(1.06); }
+.expCard:hover .expImg { transform: scale(1.07); }
 
 .expCard::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 55%);
 }
 
 .expCardBody {
@@ -388,15 +484,15 @@
 }
 
 .expCardTitle {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--white);
-  margin-bottom: 0.25rem;
+  color: #ffffff;
+  margin-bottom: 0.28rem;
 }
 
 .expCardSub {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.7);
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.68);
   letter-spacing: 0.04em;
 }
 
@@ -414,7 +510,7 @@
 }
 
 .aboutBandContent {
-  background: var(--navy);
+  background: #1B2D4F;
   padding: 5rem 4rem;
   display: flex;
   flex-direction: column;
@@ -424,8 +520,8 @@
 
 .aboutBandText {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.75);
-  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.85;
   margin: 1rem 0 1.5rem;
 }
 
@@ -433,35 +529,80 @@
   font-family: 'Playfair Display', serif;
   font-style: italic;
   font-size: 1.3rem;
-  color: var(--gold);
-  border-left: 3px solid var(--gold);
+  color: var(--gold, #C8860A);
+  border-left: 2px solid var(--gold, #C8860A);
   padding-left: 1.2rem;
   margin-bottom: 2rem;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-/* ===== CTA ===== */
+/* ===== CTA FINAL ===== */
 .ctaSection {
-  background: var(--cream);
+  background: #faf8f4;
   text-align: center;
-  padding: 6rem 3rem;
-  border-top: 2px solid var(--gold);
+  padding: 7rem 3rem;
+  border-top: 1px solid rgba(200, 134, 10, 0.25);
 }
 
 .ctaTitle {
   font-size: clamp(1.8rem, 3vw, 2.8rem);
-  color: var(--navy);
+  color: #1B2D4F;
   margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .ctaSub {
   font-size: 0.95rem;
-  color: var(--gray);
+  color: #666;
   margin-bottom: 2.5rem;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== BOUTONS GLOBAUX ===== */
+.btnPrimary {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background: var(--gold, #C8860A);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btnPrimary:hover {
+  background: #a86f00;
+  transform: translateY(-2px);
+}
+
+.btnOutline {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.btnOutline:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* ===== RESPONSIVE ===== */
@@ -475,9 +616,9 @@
   .expGrid { grid-template-columns: repeat(2, 1fr); }
   .statsInner { grid-template-columns: repeat(2, 1fr); }
   .aboutBand { grid-template-columns: 1fr; }
-  .aboutBandImg { height: 280px; }
+  .aboutBandImg { height: 300px; }
   .aboutBandContent { padding: 3rem 2rem; }
-  .heroContent { padding: 0 2rem 5rem; }
+  .heroTitle { font-size: clamp(2.5rem, 8vw, 4rem); }
 }
 
 @media (max-width: 600px) {
@@ -485,4 +626,6 @@
   .expGrid { grid-template-columns: 1fr; }
   .statsInner { grid-template-columns: repeat(2, 1fr); }
   .univers, .featured, .expSection, .ctaSection { padding: 4rem 1.5rem; }
+  .heroCta { flex-direction: column; align-items: center; }
+  .scrollHint { display: none; }
 }
