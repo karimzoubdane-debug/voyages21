@@ -5,7 +5,6 @@ import Link from 'next/link'
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [circuitsOpen, setCircuitsOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -22,14 +21,16 @@ export default function NavBar() {
 
       {/* Menu desktop */}
       <ul className="navbar-menu">
+
+        {/* Marhaba — accueil */}
         <li>
-          <Link href="/">Accueil</Link>
+          <Link href="/">Marhaba</Link>
         </li>
 
-        {/* Circuits avec sous-menu */}
+        {/* Nos voyages — sous-menu */}
         <li>
           <button aria-haspopup="true">
-            Circuits
+            Nos voyages
             <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: '4px' }}>
               <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -38,24 +39,25 @@ export default function NavBar() {
             <li><Link href="/circuits/raid-4x4">Raid 4x4 — Collection 2026</Link></li>
             <li><Link href="/circuits/moto">Moto Expedition BMW & KTM</Link></li>
             <li><Link href="/circuits/classiques">Circuits Classiques & Autotours</Link></li>
+            <li><Link href="/experiences">Experiences & Activites</Link></li>
           </ul>
         </li>
 
+        {/* MICE */}
         <li>
-          <Link href="/experiences">Experiences</Link>
+          <Link href="/mice">MICE</Link>
         </li>
 
+        {/* Partenaires */}
         <li>
-          <Link href="/mice">MICE & Groupes</Link>
+          <Link href="/partenaires">Partenaires</Link>
         </li>
 
-        <li>
-          <Link href="/about">A propos</Link>
-        </li>
-
+        {/* CTA Devis gratuit */}
         <li>
           <Link href="/contact" className="navbar-cta">Devis gratuit</Link>
         </li>
+
       </ul>
 
       {/* Burger mobile */}
@@ -83,13 +85,13 @@ export default function NavBar() {
         }}>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
-              { href: '/', label: 'Accueil' },
+              { href: '/', label: 'Marhaba' },
               { href: '/circuits/raid-4x4', label: 'Raid 4x4' },
               { href: '/circuits/moto', label: 'Moto Expedition' },
               { href: '/circuits/classiques', label: 'Circuits Classiques' },
               { href: '/experiences', label: 'Experiences' },
-              { href: '/mice', label: 'MICE & Groupes' },
-              { href: '/about', label: 'A propos' },
+              { href: '/mice', label: 'MICE' },
+              { href: '/partenaires', label: 'Partenaires' },
             ].map(item => (
               <li key={item.href} style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                 <Link
