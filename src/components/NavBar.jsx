@@ -2,11 +2,37 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
+/* Style hover commun à tous les items du menu */
+const hoverOn  = e => {
+  e.currentTarget.style.background = 'var(--gold)'
+  e.currentTarget.style.color      = 'var(--dark)'
+}
+const hoverOff = e => {
+  e.currentTarget.style.background = 'transparent'
+  e.currentTarget.style.color      = ''
+}
+
+const menuLinkStyle = {
+  display:        'block',
+  padding:        '0.45rem 0.9rem',
+  borderRadius:   '2px',
+  textDecoration: 'none',
+  fontSize:       '0.78rem',
+  fontWeight:     '600',
+  letterSpacing:  '0.1em',
+  textTransform:  'uppercase',
+  transition:     'background .18s, color .18s',
+  cursor:         'pointer',
+  background:     'transparent',
+  border:         'none',
+  color:          'inherit',
+}
+
 export default function NavBar() {
-  const [scrolled, setScrolled]       = useState(false)
-  const [mobileOpen, setMobileOpen]   = useState(false)
-  const [expOpen, setExpOpen]         = useState(false)
-  const closeTimer                    = useRef(null)
+  const [scrolled,    setScrolled]  = useState(false)
+  const [mobileOpen,  setMobileOpen] = useState(false)
+  const [expOpen,     setExpOpen]   = useState(false)
+  const closeTimer                  = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -15,7 +41,7 @@ export default function NavBar() {
   }, [])
 
   const openExp  = () => { clearTimeout(closeTimer.current); setExpOpen(true) }
-  const closeExp = () => { closeTimer.current = setTimeout(() => setExpOpen(false), 180) }
+  const closeExp = () => { closeTimer.current = setTimeout(() => setExpOpen(false), 200) }
 
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
@@ -28,17 +54,19 @@ export default function NavBar() {
       {/* ── Menu desktop ── */}
       <ul className="navbar-menu">
 
-        {/* Marhaba */}
+        {/* 1. Marhaba */}
         <li>
-          <Link href="/marhaba">Marhaba</Link>
+          <Link
+            href="/marhaba"
+            style={menuLinkStyle}
+            onMouseEnter={hoverOn}
+            onMouseLeave={hoverOff}
+          >
+            Marhaba
+          </Link>
         </li>
 
-        {/* Notre Signature */}
-        <li>
-          <Link href="/marhaba#signature">Notre Signature</Link>
-        </li>
-
-        {/* Expériences — sous-menu hover */}
+        {/* 2. Expériences — sous-menu hover */}
         <li
           style={{ position: 'relative' }}
           onMouseEnter={openExp}
@@ -47,19 +75,24 @@ export default function NavBar() {
           <button
             aria-haspopup="true"
             aria-expanded={expOpen}
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{
+              ...menuLinkStyle,
+              display:    'flex',
+              alignItems: 'center',
+              gap:        '5px',
+              background: expOpen ? 'var(--gold)' : 'transparent',
+              color:      expOpen ? 'var(--dark)' : '',
+            }}
           >
             Expériences
-            <svg
-              width="10" height="6" viewBox="0 0 10 6" fill="none"
-              style={{
-                marginLeft: '5px',
-                verticalAlign: 'middle',
-                transition: 'transform .2s',
-                transform: expOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-              }}
-            >
-              <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path
+                d="M1 1l4 4 4-4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                style={{ transition: 'transform .2s', transform: expOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
             </svg>
           </button>
 
@@ -70,17 +103,17 @@ export default function NavBar() {
               onMouseLeave={closeExp}
               style={{
                 position:   'absolute',
-                top:        '100%',
+                top:        'calc(100% + 4px)',
                 left:       '50%',
                 transform:  'translateX(-50%)',
                 background: 'var(--navy)',
                 border:     '1px solid rgba(200,160,10,0.3)',
-                borderTop:  '2px solid var(--gold)',
+                borderTop:  '3px solid var(--gold)',
                 listStyle:  'none',
-                padding:    '0.5rem 0',
-                minWidth:   '240px',
+                padding:    '0.4rem 0',
+                minWidth:   '220px',
                 zIndex:     1000,
-                boxShadow:  '0 8px 30px rgba(0,0,0,0.35)',
+                boxShadow:  '0 8px 30px rgba(0,0,0,0.4)',
               }}
             >
               {[
@@ -93,24 +126,24 @@ export default function NavBar() {
                     href={item.href}
                     onClick={() => setExpOpen(false)}
                     style={{
-                      display:       'block',
-                      padding:       '0.75rem 1.4rem',
-                      color:         'rgba(255,255,255,0.85)',
-                      textDecoration:'none',
-                      fontSize:      '0.82rem',
-                      fontWeight:    '500',
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      transition:    'color .15s, background .15s',
-                      whiteSpace:    'nowrap',
+                      display:        'block',
+                      padding:        '0.75rem 1.4rem',
+                      color:          'rgba(255,255,255,0.85)',
+                      textDecoration: 'none',
+                      fontSize:       '0.8rem',
+                      fontWeight:     '600',
+                      letterSpacing:  '0.08em',
+                      textTransform:  'uppercase',
+                      transition:     'background .15s, color .15s',
+                      whiteSpace:     'nowrap',
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.color      = 'var(--gold)'
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
+                      e.currentTarget.style.background = 'var(--gold)'
+                      e.currentTarget.style.color      = 'var(--dark)'
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.color      = 'rgba(255,255,255,0.85)'
                       e.currentTarget.style.background = 'transparent'
+                      e.currentTarget.style.color      = 'rgba(255,255,255,0.85)'
                     }}
                   >
                     {item.label}
@@ -121,17 +154,31 @@ export default function NavBar() {
           )}
         </li>
 
-        {/* Chroniques */}
+        {/* 3. Chroniques */}
         <li>
-          <Link href="/chroniques">Chroniques</Link>
+          <Link
+            href="/chroniques"
+            style={menuLinkStyle}
+            onMouseEnter={hoverOn}
+            onMouseLeave={hoverOff}
+          >
+            Chroniques
+          </Link>
         </li>
 
-        {/* En Images */}
+        {/* 4. En Images */}
         <li>
-          <Link href="/en-images">En Images</Link>
+          <Link
+            href="/en-images"
+            style={menuLinkStyle}
+            onMouseEnter={hoverOn}
+            onMouseLeave={hoverOff}
+          >
+            En Images
+          </Link>
         </li>
 
-        {/* Contact CTA */}
+        {/* CTA Contact */}
         <li>
           <Link href="/contact" className="navbar-cta">Contact</Link>
         </li>
@@ -164,7 +211,6 @@ export default function NavBar() {
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 0 }}>
             {[
               { href: '/marhaba',                        label: 'Marhaba' },
-              { href: '/marhaba#signature',              label: 'Notre Signature' },
               { href: '/experiences/rallyes-4x4',        label: '— Rallyes 4x4' },
               { href: '/experiences/moto-expeditions',   label: '— Moto Expéditions' },
               { href: '/experiences/circuits-autotours', label: '— Circuits & Autotours' },
@@ -176,14 +222,14 @@ export default function NavBar() {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   style={{
-                    display:       'block',
-                    padding:       '0.85rem 0',
-                    color:         'rgba(255,255,255,0.85)',
-                    textDecoration:'none',
-                    fontSize:      '0.88rem',
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    fontWeight:    '500',
+                    display:        'block',
+                    padding:        '0.85rem 0',
+                    color:          'rgba(255,255,255,0.85)',
+                    textDecoration: 'none',
+                    fontSize:       '0.88rem',
+                    letterSpacing:  '0.06em',
+                    textTransform:  'uppercase',
+                    fontWeight:     '500',
                   }}
                 >
                   {item.label}
@@ -195,16 +241,16 @@ export default function NavBar() {
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
                 style={{
-                  display:       'block',
-                  padding:       '0.85rem 1.5rem',
-                  background:    'var(--gold)',
-                  color:         'var(--dark)',
-                  textDecoration:'none',
-                  fontSize:      '0.85rem',
-                  fontWeight:    '700',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  textAlign:     'center',
+                  display:        'block',
+                  padding:        '0.85rem 1.5rem',
+                  background:     'var(--gold)',
+                  color:          'var(--dark)',
+                  textDecoration: 'none',
+                  fontSize:       '0.85rem',
+                  fontWeight:     '700',
+                  letterSpacing:  '0.1em',
+                  textTransform:  'uppercase',
+                  textAlign:      'center',
                 }}
               >
                 Contact
