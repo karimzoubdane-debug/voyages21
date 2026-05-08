@@ -300,8 +300,18 @@ footer {
 .cousu-main-banner strong { color: var(--gold); font-style: normal; font-weight: 600; }
 
 /* Responsive */
+/* ── Groupes nav desktop ── */
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 900px) {
-  .navbar-menu, .navbar-cta { display: none; }
+  .nav-left, .nav-right, .navbar-menu, .navbar-cta { display: none; }
   .burger { display: flex; }
   .navbar { padding: 0 1.5rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
