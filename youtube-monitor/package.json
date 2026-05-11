@@ -1,0 +1,14 @@
+{
+  "name": "youtube-monitor",
+  "version": "1.0.0",
+  "description": "Veille YouTube automatisée — Voyages21",
+  "main": "monitor.js",
+  "scripts": {
+    "start": "node monitor.js",
+    "monitor": "node monitor.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {}
+}

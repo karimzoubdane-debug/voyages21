@@ -1,0 +1,92 @@
+{
+  "_meta": {
+    "description": "Configuration des chaînes YouTube à surveiller",
+    "note_ids": "Les channel_id YouTube commencent par 'UC'. Si vide, le script tente de le résoudre automatiquement via le handle.",
+    "last_updated": "2026-05-11"
+  },
+  "channels": [
+    {
+      "id": "enzo-webmaster",
+      "name": "Enzo Webmaster 2.0",
+      "handle": "enzo-webmaster2.0",
+      "channel_id": "",
+      "category": "Web · SEO · Freelance",
+      "flag": "🇫🇷",
+      "group": "mes-chaines"
+    },
+    {
+      "id": "eliott-meunier",
+      "name": "Eliott Meunier",
+      "handle": "EliottMeunier",
+      "channel_id": "",
+      "category": "Productivité · Business",
+      "flag": "🇫🇷",
+      "group": "mes-chaines"
+    },
+    {
+      "id": "shubham-sharma",
+      "name": "Shubham Sharma",
+      "handle": "shubham-sharma.fr",
+      "channel_id": "",
+      "category": "IA · Web · Automatisation",
+      "flag": "🇫🇷",
+      "group": "mes-chaines"
+    },
+    {
+      "id": "matt-wolfe",
+      "name": "Matt Wolfe — Future Tools",
+      "handle": "mreflow",
+      "channel_id": "UCKy1dAqELo0zrOtPkf0sBRQ",
+      "category": "IA · Outils · News",
+      "flag": "🇺🇸",
+      "group": "top5-global"
+    },
+    {
+      "id": "liam-ottley",
+      "name": "Liam Ottley",
+      "handle": "liamottley",
+      "channel_id": "UCfX55GHm3v9lJDgjS4KFbIg",
+      "category": "IA · Agence · Automatisation",
+      "flag": "🇬🇧",
+      "group": "top5-global"
+    },
+    {
+      "id": "ali-abdaal",
+      "name": "Ali Abdaal",
+      "handle": "aliabdaal",
+      "channel_id": "UCnUYZLuoy1rq1aVMwx4aTzw",
+      "category": "Productivité · Business · Revenu passif",
+      "flag": "🇬🇧",
+      "group": "top5-global"
+    },
+    {
+      "id": "garyvee",
+      "name": "Gary Vaynerchuk — GaryVee",
+      "handle": "garyvee",
+      "channel_id": "UCctXZhXmG-kf3tlIXgVZUlw",
+      "category": "Marketing · Entrepreneuriat",
+      "flag": "🇺🇸",
+      "group": "top5-global"
+    },
+    {
+      "id": "greg-isenberg",
+      "name": "Greg Isenberg",
+      "handle": "gregisenberg",
+      "channel_id": "UCnBb6eFafFdwKN2eFJFDKsw",
+      "category": "Startup · IA · Business",
+      "flag": "🇨🇦",
+      "group": "top5-global"
+    }
+  ],
+  "schedule": {
+    "frequency_days": 2,
+    "cron": "0 0 */2 * *",
+    "timezone": "Europe/Paris",
+    "check_time_utc": "00:00",
+    "deliver_time_local": "11:00"
+  },
+  "settings": {
+    "videos_per_channel": 5,
+    "new_video_threshold_hours": 48
+  }
+}
