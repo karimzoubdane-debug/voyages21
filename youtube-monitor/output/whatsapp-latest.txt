@@ -4,29 +4,41 @@
 🇫🇷 *MES 3 CHAÎNES*
 ──────────────────
 📌 *Enzo Webmaster 2.0* 🇫🇷
-   ⚠ Erreur : ID introuvable pour @enzo-webmaster2.0
+   🔴 il y a moins d'1h : "Comment mettre en ligne un site créé avec Claude Code ?" 👀 16
+   • il y a 5 jours : "Le problème avec les sites générés par IA" 👀 2k
+   • il y a 11 jours : "TOP 5 Claude Code Skills pour créer des sites web !" 👀 4k
 📌 *Eliott Meunier* 🇫🇷
-   ⚠ Erreur : ID introuvable pour @EliottMeunier
+   🔴 il y a 1 jour : "Ce plombier a un meilleur système IA que la plupart des devs" 👀 3k
+   • il y a 3 jours : "Créer son système IA : ça vaut encore le coup ?" 👀 2k
+   • il y a 4 jours : "Le plan machiavélique d'Anthropic (et comment s'en protéger)" 👀 20k
 📌 *Shubham Sharma* 🇫🇷
-   ⚠ Erreur : ID introuvable pour @shubham-sharma.fr
+   • il y a 4 jours : "Vos MCP vous coûtent cher sur Claude Code #mcp #claudecode" 👀 30k
+   • il y a 6 jours : "J’ai laissé Claude Code monter mes vidéos | Le résultat e…" 👀 46k
+   • il y a 8 jours : "Astuce Claude Code que peu de gens connaissent ou utilise…" 👀 65k
 
 🌍 *TOP 5 MONDIAL IA/BUSINESS*
 ──────────────────────────────
 📌 *Matt Wolfe — Future Tools* 🇺🇸
-   — Aucune vidéo récupérée
+   🔴 il y a 1 jour : "Codex Now Has "AI Pets"" 👀 5k
+   • il y a 2 jours : "AI News: OpenAI Absolutely Cooked This Week!" 👀 79k
+   • il y a 4 jours : "Your AI Setup Needs This" 👀 9k
 📌 *Liam Ottley* 🇬🇧
-   — Aucune vidéo récupérée
+   • il y a 17 jours : "How to Make $20,000/Month with Claude Code" 👀 42k
+   • il y a 23 jours : "keeping up with AI is making you fall behind (just focus …" 👀 14k
+   • il y a 28 jours : "how to sell $5,000 Claude Code AIOS to SMBs (full breakdown)" 👀 33k
 📌 *Ali Abdaal* 🇬🇧
-   • il y a 3 jours : "Translator API: on-device translation made easy" 👀 5k
-   • il y a 3 jours : "Build your AI testing pipeline" 👀 2k
-   • il y a 3 jours : "What is Chrome's feature removal process" 👀 1k
+   🔴 il y a 8h : "I'm hiring! Join my team in Hong Kong" 👀 4k
+   🔴 il y a 13h : "The Time Freedom Spectrum" 👀 6k
+   🔴 il y a 1 jour : "My favourite book for making millions" 👀 23k
 📌 *Gary Vaynerchuk — GaryVee* 🇺🇸
-   🔴 il y a 7h : "Once you fall in love with accountability you actually fe…" 👀 5k
-   🔴 il y a 10h : "You’re capable of solving your hurt … but it starts with …" 👀 2k
-   🔴 il y a 11h : "Forget the 💰💰. forget the fame , forget the stuff ⌚🚙🎁🏘" 👀 4k
+   🔴 il y a 8h : "Once you fall in love with accountability you actually fe…" 👀 6k
+   🔴 il y a 11h : "You’re capable of solving your hurt … but it starts with …" 👀 2k
+   🔴 il y a 12h : "Forget the 💰💰. forget the fame , forget the stuff ⌚🚙🎁🏘" 👀 4k
 📌 *Greg Isenberg* 🇨🇦
-   — Aucune vidéo récupérée
+   • il y a 4 jours : "Google's Design.md is a design team in a file" 👀 45k
+   • il y a 6 jours : "AI Agents run my business and life" 👀 33k
+   • il y a 11 jours : "Making $$ with AI Agents" 👀 83k
 
 ━━━━━━━━━━━━━━━━━━━━━━━
-📊 *Résumé :* 5 nouvelle(s) vidéo(s) sur 8 chaînes
+📊 *Résumé :* 11 nouvelle(s) vidéo(s) sur 8 chaînes
 ⏰ *Prochaine veille :* Mercredi 13 mai à 11h00
