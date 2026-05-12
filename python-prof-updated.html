@@ -701,37 +701,54 @@ if __name__ == "__main__":
                 }
 
                 try {
-                    /* Mock input() pour eviter le blocage sur les programmes interactifs */
                     const setupCode = `
 import sys
+import builtins
 from io import StringIO
 
 _captured = StringIO()
 sys.stdout = _captured
+_input_count = 0
 
-# Mock input() : affiche le prompt et retourne une chaine vide
-_input_calls = []
-def input(prompt=""):
+def _mock_input(prompt=""):
+    global _input_count
+    _input_count += 1
+    if _input_count > 30:
+        raise RuntimeError("Trop d'appels a input() — execution arretee")
     _captured.write(str(prompt) + "\\n")
-    _input_calls.append(str(prompt))
     return ""
+
+builtins.input = _mock_input
 `;
                     pyodide.runPython(setupCode);
-                    await pyodide.runPythonAsync(project.code);
-                    const output = pyodide.runPython("_captured.getvalue()");
-                    setExecOutput(
-                        output.trim() ||
-                        "(Programme execute sans sortie visible)"
-                    );
-                    if (pyodide.runPython("len(_input_calls)") > 0) {
-                        setExecOutput(prev =>
-                            prev + "\n\n[Note: input() a ete simule — les saisies retournent une chaine vide]"
-                        );
+
+                    let execError = null;
+                    try {
+                        await pyodide.runPythonAsync(project.code);
+                    } catch (e) {
+                        execError = e;
                     }
+
+                    const output = pyodide.runPython("_captured.getvalue()");
+                    const inputCount = pyodide.runPython("_input_count");
+                    let result = output.trim() || "(Aucune sortie)";
+                    if (inputCount > 0) {
+                        result += `\n\n[Note: ${inputCount} appel(s) a input() simules — saisies vides]`;
+                    }
+                    if (execError && !execError.message.includes("Trop d'appels")) {
+                        result += `\n\nErreur: ${execError.message}`;
+                    }
+                    setExecOutput(result);
                 } catch (err) {
-                    setExecOutput(`Erreur Python:\n${err.message}`);
+                    setExecOutput(`Erreur: ${err.message}`);
                 } finally {
-                    try { pyodide.runPython("import sys; sys.stdout = sys.__stdout__"); } catch {}
+                    try {
+                        pyodide.runPython(`
+import sys, builtins
+sys.stdout = sys.__stdout__
+builtins.input = input
+`);
+                    } catch {}
                     setExecuting(false);
                 }
             };
