@@ -803,6 +803,7 @@ sys.stdout = _captured
 sys.stderr = _captured
 _input_count = 0
 _input_log = []
+_last_output_pos = 0  # position dans _captured apres le dernier prompt affiche
 
 _MOCK_NUMBERS = ["3", "5", "7", "12", "2"]
 _MOCK_OPS = ["+", "-", "*", "/"]
@@ -839,17 +840,28 @@ def _smart_mock(prompt_text):
     v = _MOCK_NUMBERS[_idx_num % len(_MOCK_NUMBERS)]; _idx_num += 1; return v
 
 def _patched_input(prompt=""):
-    global _input_count
+    global _input_count, _last_output_pos
     _input_count += 1
     if _input_count > 80:
         raise RuntimeError("Limite de 80 appels a input() atteinte — boucle infinie probable")
     p = str(prompt)
     if INTERACTIVE:
-        val = _js_window.pyPromptFn(p)
+        # Recupere tout ce qui a ete imprime depuis la derniere saisie
+        # (typiquement : la question + les options) et le met dans la popup.
+        sys.stdout.flush() if hasattr(sys.stdout, "flush") else None
+        full = _captured.getvalue()
+        context = full[_last_output_pos:]
+        # Limite la taille pour eviter une popup geante
+        if len(context) > 2000:
+            context = "...\\n" + context[-2000:]
+        # Construit le texte affiche dans la popup
+        msg = (context.rstrip() + "\\n\\n" + p) if context.strip() else p
+        val = _js_window.pyPromptFn(msg)
     else:
         val = _smart_mock(p)
     _input_log.append((p, val))
     _captured.write(p + str(val) + "\\n")
+    _last_output_pos = len(_captured.getvalue())
     return val
 
 builtins.input = _patched_input
