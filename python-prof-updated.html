@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Prof - Apprentissage interactif</title>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        }
+    </script>
     <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -470,10 +477,18 @@ if __name__ == "__main__":
         };
 
         /* ── Appel API Claude (si clé fournie) ── */
-        const SYSTEM_PROMPT = `Tu es un assistant IA polyvalent francophone alimente par Claude Haiku.
+        const SYSTEM_PROMPT = `Tu es un assistant IA polyvalent alimente par Claude Haiku.
+Tu maitrises le francais, l'anglais et l'arabe — reponds TOUJOURS dans la langue de l'utilisateur
+ou dans la langue du document quand il en fournit un.
 
 Tu peux discuter de tout : culture, science, conseil, ecriture, philosophie, math, etc.
-Sois clair, concis, naturel. Reponds dans la langue de l'utilisateur (francais par defaut).
+Sois clair, concis, naturel.
+
+LECONS / DOCUMENTS : quand l'utilisateur t'envoie une lecon (entre "--- DEBUT LECON ---" et
+"--- FIN LECON ---") :
+- Pour un resume : produis des titres en gras, des listes a puces, et reste fidele au contenu.
+- Pour un quiz : 5 QCM (4 options A/B/C/D), puis "Reponses: 1-X, 2-Y..." a la fin.
+- Reponds dans la meme langue que la lecon (arabe → arabe, anglais → anglais, francais → francais).
 
 SPECIALITE Python : quand l'utilisateur demande un programme, fournis le code complet
 dans un bloc \`\`\`python ... \`\`\` en respectant ces regles :
@@ -619,6 +634,9 @@ except EOFError:
             const [execOutput, setExecOutput]       = useState("");
             const [executing, setExecuting]         = useState(false);
             const [apiOk, setApiOk]                 = useState(null); // null | true | false
+            const [lesson, setLesson]               = useState(null); // { name, text, lang }
+            const [lessonLoading, setLessonLoading] = useState(false);
+            const fileInputRef                      = useRef(null);
 
             const messagesEndRef = useRef(null);
 
@@ -649,6 +667,102 @@ except EOFError:
             }, [projects]);
 
             /* ── Envoyer un message ── */
+            /* ── Détection grossière de la langue dominante ── */
+            const detectLang = (text) => {
+                const sample = text.slice(0, 2000);
+                if (/[؀-ۿ]/.test(sample)) return "ar"; // arabe
+                const fr = (sample.match(/\b(le|la|les|un|une|des|de|du|et|est|que|qui|pour|dans|avec|sur)\b/gi) || []).length;
+                const en = (sample.match(/\b(the|a|an|of|and|to|is|that|in|on|with|for|are|this)\b/gi) || []).length;
+                return en > fr ? "en" : "fr";
+            };
+
+            /* ── Lit un fichier .txt/.md ou .pdf et le stocke en tant que leçon ── */
+            const handleFileUpload = async (file) => {
+                if (!file) return;
+                setLessonLoading(true);
+                try {
+                    let text = "";
+                    const name = file.name;
+                    const lower = name.toLowerCase();
+
+                    if (lower.endsWith(".pdf")) {
+                        if (!window.pdfjsLib) throw new Error("PDF.js n'est pas charge — recharge la page.");
+                        const arrayBuffer = await file.arrayBuffer();
+                        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                        const pages = [];
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const content = await page.getTextContent();
+                            pages.push(content.items.map(it => it.str).join(" "));
+                        }
+                        text = pages.join("\n\n");
+                    } else {
+                        // .txt, .md, .text, ou tout fichier texte
+                        text = await file.text();
+                    }
+
+                    text = text.trim();
+                    if (!text) throw new Error("Le fichier est vide ou illisible.");
+
+                    // Tronque si > 30 000 caracteres (~ 7500 tokens) pour rester sous max_tokens
+                    let truncated = false;
+                    if (text.length > 30000) {
+                        text = text.slice(0, 30000);
+                        truncated = true;
+                    }
+
+                    const lang = detectLang(text);
+                    setLesson({ name, text, lang, truncated, chars: text.length });
+                } catch (err) {
+                    alert(`Erreur de lecture : ${err.message}`);
+                } finally {
+                    setLessonLoading(false);
+                    if (fileInputRef.current) fileInputRef.current.value = "";
+                }
+            };
+
+            /* ── Envoie une action sur la leçon (Résumé / Quiz) ── */
+            const askLessonAction = async (action) => {
+                if (!lesson || loading) return;
+
+                const langLabel = { fr: "francais", en: "anglais", ar: "arabe" }[lesson.lang] || "francais";
+                let userText;
+                if (action === "resume") {
+                    userText = `Voici une lecon en ${langLabel} (fichier: ${lesson.name}). Fais-moi un resume clair et structure (titres, listes a puces). Reponds dans la meme langue que la lecon.\n\n--- DEBUT LECON ---\n${lesson.text}\n--- FIN LECON ---`;
+                } else if (action === "quiz") {
+                    userText = `Voici une lecon en ${langLabel} (fichier: ${lesson.name}). Cree un quiz de 5 questions a choix multiples (4 options chacune, A/B/C/D) sur le contenu. Termine en donnant les bonnes reponses sous la forme: "Reponses: 1-X, 2-Y, ...". Reponds dans la meme langue que la lecon.\n\n--- DEBUT LECON ---\n${lesson.text}\n--- FIN LECON ---`;
+                } else {
+                    return;
+                }
+
+                // Affiche un message utilisateur court dans le chat (pour ne pas polluer avec toute la lecon)
+                const displayText = action === "resume"
+                    ? `Resume la lecon "${lesson.name}"`
+                    : `Cree un quiz sur la lecon "${lesson.name}"`;
+                setMessages(prev => [...prev, { role: "user", content: displayText }]);
+                setLoading(true);
+
+                try {
+                    // Envoie le vrai texte (avec la lecon) a Claude, pas l'affichage court
+                    const history = [...messages, { role: "user", content: userText }]
+                        .slice(-20)
+                        .map(m => ({ role: m.role, content: m.content }));
+
+                    let assistantText;
+                    try {
+                        assistantText = await callClaude(history);
+                        setApiOk(true);
+                    } catch (apiErr) {
+                        setApiOk(false);
+                        assistantText = `_(API Claude indisponible : ${apiErr.message})_`;
+                    }
+                    setMessages(prev => [...prev, { role: "assistant", content: assistantText }]);
+                } catch (err) {
+                    setMessages(prev => [...prev, { role: "assistant", content: `Erreur: ${err.message}` }]);
+                }
+                setLoading(false);
+            };
+
             const sendMessage = async () => {
                 const text = input.trim();
                 if (!text || loading) return;
@@ -975,11 +1089,80 @@ builtins.input = input
                                 <div ref={messagesEndRef} />
                             </div>
 
+                            {/* Bannière de leçon chargée */}
+                            {lesson && (
+                                <div style={{
+                                    margin: "0 20px",
+                                    padding: "10px 12px",
+                                    background: "rgba(0,204,136,0.10)",
+                                    border: "1px solid rgba(0,204,136,0.4)",
+                                    borderRadius: 8,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 10,
+                                    flexWrap: "wrap",
+                                    fontSize: 12
+                                }}>
+                                    <span style={{ fontSize: 16 }}>📄</span>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ fontWeight: "bold", color: "var(--g)" }}>
+                                            {lesson.name}
+                                        </div>
+                                        <div style={{ color: "var(--mu)", fontSize: 11 }}>
+                                            {lesson.chars.toLocaleString()} caracteres · langue: {lesson.lang}
+                                            {lesson.truncated && " · tronquée à 30k"}
+                                        </div>
+                                    </div>
+                                    <button
+                                        className="action-btn"
+                                        style={{ width: "auto", margin: 0, padding: "6px 12px" }}
+                                        onClick={() => askLessonAction("resume")}
+                                        disabled={loading}
+                                    >
+                                        Résumé
+                                    </button>
+                                    <button
+                                        className="action-btn"
+                                        style={{ width: "auto", margin: 0, padding: "6px 12px" }}
+                                        onClick={() => askLessonAction("quiz")}
+                                        disabled={loading}
+                                    >
+                                        Quiz
+                                    </button>
+                                    <button
+                                        className="action-btn"
+                                        style={{ width: "auto", margin: 0, padding: "6px 10px", color: "#ff4455", borderColor: "rgba(255,68,85,0.3)" }}
+                                        onClick={() => setLesson(null)}
+                                        title="Retirer la leçon"
+                                    >
+                                        x
+                                    </button>
+                                </div>
+                            )}
+
                             <div className="input-area">
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept=".txt,.md,.text,.pdf,text/plain,text/markdown,application/pdf"
+                                    style={{ display: "none" }}
+                                    onChange={e => handleFileUpload(e.target.files?.[0])}
+                                />
+                                <button
+                                    className="send-btn"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={lessonLoading}
+                                    title="Charger une leçon (.txt, .md, .pdf)"
+                                    style={{ background: "var(--b3)", color: "var(--tx)", padding: "0 14px", fontSize: 18 }}
+                                >
+                                    {lessonLoading ? "..." : "+"}
+                                </button>
                                 <textarea
                                     className="chat-input"
                                     rows={2}
-                                    placeholder="Decris le programme Python que tu veux creer..."
+                                    placeholder={lesson
+                                        ? `Pose une question sur "${lesson.name}" ou clique sur Résumé / Quiz...`
+                                        : "Discute avec Claude ou demande un programme Python..."}
                                     value={input}
                                     onChange={e => setInput(e.target.value)}
                                     onKeyDown={e => {
