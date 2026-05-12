@@ -122,16 +122,19 @@
         .project-name { font-size: 13px; font-weight: 500; }
 
         .delete-project {
-            background: none;
-            border: none;
-            color: var(--mu);
+            background: rgba(255,68,85,0.1);
+            border: 1px solid rgba(255,68,85,0.3);
+            color: #ff4455;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
+            font-weight: bold;
             line-height: 1;
-            padding: 2px 4px;
+            padding: 3px 7px;
+            border-radius: 4px;
+            flex-shrink: 0;
         }
 
-        .delete-project:hover { color: #ff4455; }
+        .delete-project:hover { background: rgba(255,68,85,0.3); }
 
         /* Chat */
         .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -716,7 +719,12 @@ def _mock_input(prompt=""):
     if _input_count > 30:
         raise RuntimeError("Trop d'appels a input() — execution arretee")
     _captured.write(str(prompt) + "\\n")
-    return ""
+    p = str(prompt).lower()
+    if any(c.isdigit() for c in p):
+        return "1"
+    if "lettre" in p or "letter" in p:
+        return "a"
+    return "1"
 
 builtins.input = _mock_input
 `;
@@ -912,15 +920,18 @@ builtins.input = input
                                                 {opt}
                                             </label>
                                         ))}
-                                        {quizAnswers[qi] !== undefined && (
+                                                        {quizAnswers[qi] !== undefined && (
                                             <div style={{
                                                 marginTop: 8,
                                                 fontSize: 12,
+                                                padding: "6px 10px",
+                                                borderRadius: 6,
+                                                background: quizAnswers[qi] === q.correct ? "rgba(0,204,136,0.15)" : "rgba(255,68,85,0.15)",
                                                 color: quizAnswers[qi] === q.correct ? "var(--g)" : "#ff4455"
                                             }}>
                                                 {quizAnswers[qi] === q.correct
                                                     ? "Correct !"
-                                                    : `Incorrect. Bonne reponse : ${q.opts[q.correct]}`}
+                                                    : `Incorrect — bonne reponse : ${q.opts[q.correct]}`}
                                             </div>
                                         )}
                                     </div>
