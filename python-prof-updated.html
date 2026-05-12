@@ -470,25 +470,29 @@ if __name__ == "__main__":
         };
 
         /* ── Appel API Claude (si clé fournie) ── */
-        const SYSTEM_PROMPT = `Tu es un professeur Python pour debutants francophones.
+        const SYSTEM_PROMPT = `Tu es un assistant IA polyvalent francophone alimente par Claude Haiku.
 
-REGLES pour le code que tu produis :
-1. Reponds avec une courte explication (2-3 phrases) puis le code complet dans un bloc \`\`\`python ... \`\`\`.
-2. Le code doit etre AUTONOME et EXECUTABLE tel quel.
-3. Commente en francais, code propre, noms de variables explicites.
-4. Toujours definir main() et terminer par : if __name__ == "__main__": main()
-5. Si tu utilises input(), reste COURT (max 5 input()) et utilise des prompts clairs en francais.
-6. Bibliotheque standard uniquement : random, math, datetime, time, json, re, string. Pas de pip install.
-7. PAS de tkinter, pygame, matplotlib, requests (ne fonctionnent pas dans Pyodide).
-8. Enveloppe les conversions risquees (float(), int()) dans try/except ValueError.`;
+Tu peux discuter de tout : culture, science, conseil, ecriture, philosophie, math, etc.
+Sois clair, concis, naturel. Reponds dans la langue de l'utilisateur (francais par defaut).
 
-        const callClaude = async (userRequest) => {
+SPECIALITE Python : quand l'utilisateur demande un programme, fournis le code complet
+dans un bloc \`\`\`python ... \`\`\` en respectant ces regles :
+1. Code AUTONOME et EXECUTABLE tel quel, commente en francais.
+2. Toujours definir main() et terminer par : if __name__ == "__main__": main()
+3. Si tu utilises input(), reste COURT (max 5 input()) avec des prompts clairs.
+4. Bibliotheque standard uniquement : random, math, datetime, time, json, re, string.
+5. PAS de tkinter, pygame, matplotlib, requests (ne marchent pas dans Pyodide).
+6. Enveloppe float()/int() dans try/except ValueError.
+
+Hors demande de programme, reponds naturellement sans bloc de code.`;
+
+        const callClaude = async (conversationMessages) => {
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     system: SYSTEM_PROMPT,
-                    messages: [{ role: "user", content: userRequest }]
+                    messages: conversationMessages
                 })
             });
 
@@ -658,8 +662,14 @@ except EOFError:
                     let codeForLibrary = null;
                     let projectName = text.slice(0, 40).trim();
 
+                    // Construit l'historique complet pour donner du contexte conversationnel a Claude.
+                    // On limite a 20 derniers messages pour eviter d'exploser les tokens / le cout.
+                    const history = [...messages, { role: "user", content: text }]
+                        .slice(-20)
+                        .map(m => ({ role: m.role, content: m.content }));
+
                     try {
-                        assistantText = await callClaude(text);
+                        assistantText = await callClaude(history);
                         setApiOk(true);
                         const extracted = extractCode(assistantText);
                         if (extracted) codeForLibrary = extracted;
@@ -670,7 +680,7 @@ except EOFError:
                         const result = simulateGenerate(text);
                         projectName = result.name;
                         codeForLibrary = result.code;
-                        assistantText = `_(API Claude indisponible — mode demo : ${apiErr.message})_\n\nVoici un exemple de code pour "${result.name}" :\n\n\`\`\`python\n${result.code}\n\`\`\`\n\nClique sur "Executer (jouer)" pour le tester.`;
+                        assistantText = `_(API Claude indisponible : ${apiErr.message})_\n\nMode demo — exemple de code pour "${result.name}" :\n\n\`\`\`python\n${result.code}\n\`\`\``;
                     }
 
                     setMessages(prev => [...prev, { role: "assistant", content: assistantText }]);
@@ -916,6 +926,19 @@ builtins.input = input
                             <button className="action-btn" onClick={generateQuiz}>
                                 Quiz Python
                             </button>
+
+                            <div className="section-title" style={{ marginTop: 20 }}>Conversation</div>
+                            <button
+                                className="action-btn"
+                                onClick={() => {
+                                    if (messages.length === 0) return;
+                                    if (confirm("Effacer la conversation ? (les projets sont conserves)")) {
+                                        setMessages([]);
+                                    }
+                                }}
+                            >
+                                Nouveau chat ({messages.length} msg)
+                            </button>
                         </div>
 
                         {/* Chat */}
@@ -924,9 +947,10 @@ builtins.input = input
                                 {messages.length === 0 && (
                                     <div style={{ textAlign: "center", marginTop: 60, color: "var(--mu)" }}>
                                         <h2 style={{ color: "var(--g)", marginBottom: 10 }}>Bienvenue</h2>
-                                        <p>Demande-moi de creer un programme Python.</p>
+                                        <p>Discute avec Claude Haiku — sur n'importe quel sujet.</p>
                                         <p style={{ marginTop: 6, fontSize: 12 }}>
-                                            Exemple : "cree un jeu du pendu" ou "cree une calculatrice"
+                                            Demande un programme Python ("cree un pendu"), pose une question
+                                            de culture, demande un conseil, fais traduire un texte...
                                         </p>
                                     </div>
                                 )}
