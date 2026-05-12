@@ -509,7 +509,11 @@ REGLES pour le code que tu produis :
             }
 
             const data = await res.json();
-            return data.content[0].text;
+            let text = data.content[0].text;
+            if (data.stop_reason === "max_tokens") {
+                text += "\n\n_(Reponse tronquee — la limite de tokens a ete atteinte. Si le code est incomplet, demande une version plus courte.)_";
+            }
+            return text;
         };
 
         /* ── Helper: enrobe le code Python avec un wrapper qui n'efface pas la console Windows ── */
