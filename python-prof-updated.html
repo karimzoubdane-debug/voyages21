@@ -6,6 +6,7 @@
     <title>Python Prof - Apprentissage interactif</title>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.7.0/mammoth.browser.min.js"></script>
     <script>
         if (window.pdfjsLib) {
             window.pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -676,15 +677,38 @@ except EOFError:
                 return en > fr ? "en" : "fr";
             };
 
-            /* ── Lit un fichier .txt/.md ou .pdf et le stocke en tant que leçon ── */
+            /* ── Lit un fichier (.txt, .md, .pdf, .docx, image) et le stocke en tant que leçon ── */
             const handleFileUpload = async (file) => {
                 if (!file) return;
                 setLessonLoading(true);
                 try {
-                    let text = "";
                     const name = file.name;
                     const lower = name.toLowerCase();
+                    const mime = file.type || "";
 
+                    // ─── IMAGE : via la vision native de Claude (pas d'OCR local) ───
+                    if (mime.startsWith("image/")) {
+                        if (file.size > 5 * 1024 * 1024) {
+                            throw new Error("Image trop lourde (max 5 Mo).");
+                        }
+                        const dataUrl = await new Promise((res, rej) => {
+                            const r = new FileReader();
+                            r.onload = () => res(r.result);
+                            r.onerror = () => rej(new Error("Echec de lecture du fichier image."));
+                            r.readAsDataURL(file);
+                        });
+                        const base64 = dataUrl.split(",")[1];
+                        const mediaType = mime || "image/jpeg";
+                        setLesson({
+                            name, type: "image", mediaType, base64,
+                            dataUrl, lang: "auto",
+                            sizeKb: Math.round(file.size / 1024)
+                        });
+                        return;
+                    }
+
+                    // ─── DOCUMENT TEXTE : .txt, .md, .pdf, .docx ───
+                    let text = "";
                     if (lower.endsWith(".pdf")) {
                         if (!window.pdfjsLib) throw new Error("PDF.js n'est pas charge — recharge la page.");
                         const arrayBuffer = await file.arrayBuffer();
@@ -696,15 +720,22 @@ except EOFError:
                             pages.push(content.items.map(it => it.str).join(" "));
                         }
                         text = pages.join("\n\n");
+                    } else if (lower.endsWith(".docx")) {
+                        if (!window.mammoth) throw new Error("Mammoth.js n'est pas charge — recharge la page.");
+                        const arrayBuffer = await file.arrayBuffer();
+                        const result = await window.mammoth.extractRawText({ arrayBuffer });
+                        text = result.value || "";
+                    } else if (lower.endsWith(".doc")) {
+                        throw new Error("Format .doc (ancien Word binaire) non supporte. Reenregistre en .docx ou .pdf.");
                     } else {
-                        // .txt, .md, .text, ou tout fichier texte
+                        // .txt, .md, .text, autres textes simples
                         text = await file.text();
                     }
 
                     text = text.trim();
                     if (!text) throw new Error("Le fichier est vide ou illisible.");
 
-                    // Tronque si > 30 000 caracteres (~ 7500 tokens) pour rester sous max_tokens
+                    // Tronque si > 30 000 caracteres pour rester sous max_tokens
                     let truncated = false;
                     if (text.length > 30000) {
                         text = text.slice(0, 30000);
@@ -712,7 +743,7 @@ except EOFError:
                     }
 
                     const lang = detectLang(text);
-                    setLesson({ name, text, lang, truncated, chars: text.length });
+                    setLesson({ name, type: "text", text, lang, truncated, chars: text.length });
                 } catch (err) {
                     alert(`Erreur de lecture : ${err.message}`);
                 } finally {
@@ -721,32 +752,47 @@ except EOFError:
                 }
             };
 
+            /* ── Helper : construit le contenu API d'un message utilisateur en y attachant la leçon ── */
+            const attachLessonTo = (userText) => {
+                if (!lesson) return userText;
+                if (lesson.type === "image") {
+                    return [
+                        { type: "image", source: { type: "base64", media_type: lesson.mediaType, data: lesson.base64 }},
+                        { type: "text", text: userText || "Decris cette image en detail." }
+                    ];
+                }
+                // text-based lesson
+                return `${userText}\n\n--- DEBUT LECON (${lesson.name}) ---\n${lesson.text}\n--- FIN LECON ---`;
+            };
+
             /* ── Envoie une action sur la leçon (Résumé / Quiz) ── */
             const askLessonAction = async (action) => {
                 if (!lesson || loading) return;
 
-                const langLabel = { fr: "francais", en: "anglais", ar: "arabe" }[lesson.lang] || "francais";
-                let userText;
+                let promptText;
                 if (action === "resume") {
-                    userText = `Voici une lecon en ${langLabel} (fichier: ${lesson.name}). Fais-moi un resume clair et structure (titres, listes a puces). Reponds dans la meme langue que la lecon.\n\n--- DEBUT LECON ---\n${lesson.text}\n--- FIN LECON ---`;
+                    promptText = lesson.type === "image"
+                        ? `Decris et resume le contenu de cette image (fichier: ${lesson.name}). Reponds dans la langue principale du document/de l'image.`
+                        : `Fais-moi un resume clair et structure de cette lecon (titres, listes a puces). Reponds dans la meme langue que la lecon.`;
                 } else if (action === "quiz") {
-                    userText = `Voici une lecon en ${langLabel} (fichier: ${lesson.name}). Cree un quiz de 5 questions a choix multiples (4 options chacune, A/B/C/D) sur le contenu. Termine en donnant les bonnes reponses sous la forme: "Reponses: 1-X, 2-Y, ...". Reponds dans la meme langue que la lecon.\n\n--- DEBUT LECON ---\n${lesson.text}\n--- FIN LECON ---`;
+                    promptText = lesson.type === "image"
+                        ? `A partir du contenu de cette image (fichier: ${lesson.name}), cree un quiz de 5 questions a choix multiples (4 options A/B/C/D). Termine par les bonnes reponses sous la forme: "Reponses: 1-X, 2-Y, ...". Reponds dans la langue principale de l'image.`
+                        : `Cree un quiz de 5 questions a choix multiples (4 options A/B/C/D) sur cette lecon. Termine par les bonnes reponses sous la forme: "Reponses: 1-X, 2-Y, ...". Reponds dans la meme langue que la lecon.`;
                 } else {
                     return;
                 }
 
-                // Affiche un message utilisateur court dans le chat (pour ne pas polluer avec toute la lecon)
                 const displayText = action === "resume"
-                    ? `Resume la lecon "${lesson.name}"`
-                    : `Cree un quiz sur la lecon "${lesson.name}"`;
-                setMessages(prev => [...prev, { role: "user", content: displayText }]);
+                    ? `Resume "${lesson.name}"`
+                    : `Quiz sur "${lesson.name}"`;
+                const newMessages = [...messages, { role: "user", content: displayText }];
+                setMessages(newMessages);
                 setLoading(true);
 
                 try {
-                    // Envoie le vrai texte (avec la lecon) a Claude, pas l'affichage court
-                    const history = [...messages, { role: "user", content: userText }]
-                        .slice(-20)
-                        .map(m => ({ role: m.role, content: m.content }));
+                    // Construit l'historique avec la leçon attachée au dernier user message
+                    const history = newMessages.slice(-20).map(m => ({ role: m.role, content: m.content }));
+                    history[history.length - 1].content = attachLessonTo(promptText);
 
                     let assistantText;
                     try {
@@ -781,6 +827,11 @@ except EOFError:
                     const history = [...messages, { role: "user", content: text }]
                         .slice(-20)
                         .map(m => ({ role: m.role, content: m.content }));
+
+                    // Si une leçon est chargée, on l'attache au dernier message utilisateur
+                    if (lesson) {
+                        history[history.length - 1].content = attachLessonTo(text);
+                    }
 
                     try {
                         assistantText = await callClaude(history);
@@ -1103,14 +1154,26 @@ builtins.input = input
                                     flexWrap: "wrap",
                                     fontSize: 12
                                 }}>
-                                    <span style={{ fontSize: 16 }}>📄</span>
+                                    {lesson.type === "image" ? (
+                                        <img
+                                            src={lesson.dataUrl}
+                                            alt={lesson.name}
+                                            style={{
+                                                width: 42, height: 42, objectFit: "cover",
+                                                borderRadius: 6, border: "1px solid var(--br)"
+                                            }}
+                                        />
+                                    ) : (
+                                        <span style={{ fontSize: 22 }}>📄</span>
+                                    )}
                                     <div style={{ flex: 1, minWidth: 0 }}>
                                         <div style={{ fontWeight: "bold", color: "var(--g)" }}>
                                             {lesson.name}
                                         </div>
                                         <div style={{ color: "var(--mu)", fontSize: 11 }}>
-                                            {lesson.chars.toLocaleString()} caracteres · langue: {lesson.lang}
-                                            {lesson.truncated && " · tronquée à 30k"}
+                                            {lesson.type === "image"
+                                                ? `Image · ${lesson.sizeKb} Ko · vision Claude`
+                                                : `${lesson.chars.toLocaleString()} caracteres · langue: ${lesson.lang}${lesson.truncated ? " · tronquée à 30k" : ""}`}
                                         </div>
                                     </div>
                                     <button
@@ -1144,7 +1207,7 @@ builtins.input = input
                                 <input
                                     ref={fileInputRef}
                                     type="file"
-                                    accept=".txt,.md,.text,.pdf,text/plain,text/markdown,application/pdf"
+                                    accept=".txt,.md,.text,.pdf,.docx,image/*,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                     style={{ display: "none" }}
                                     onChange={e => handleFileUpload(e.target.files?.[0])}
                                 />
@@ -1152,7 +1215,7 @@ builtins.input = input
                                     className="send-btn"
                                     onClick={() => fileInputRef.current?.click()}
                                     disabled={lessonLoading}
-                                    title="Charger une leçon (.txt, .md, .pdf)"
+                                    title="Charger un document (.txt, .md, .pdf, .docx) ou une image"
                                     style={{ background: "var(--b3)", color: "var(--tx)", padding: "0 14px", fontSize: 18 }}
                                 >
                                     {lessonLoading ? "..." : "+"}
