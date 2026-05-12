@@ -500,13 +500,37 @@ if __name__ == "__main__":
             return data.content[0].text;
         };
 
-        /* ── Rendu du contenu avec blocs de code ── */
+        /* ── Rendu du contenu avec blocs de code + bouton copier ── */
+        const CodeBlock = ({ code }) => {
+            const [copied, setCopied] = React.useState(false);
+            const copy = () => {
+                navigator.clipboard.writeText(code).then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                });
+            };
+            return (
+                <div style={{ position: "relative", margin: "10px 0" }}>
+                    <button onClick={copy} style={{
+                        position: "absolute", top: 6, right: 6,
+                        background: copied ? "var(--g)" : "var(--br)",
+                        color: copied ? "#000" : "var(--tx)",
+                        border: "none", borderRadius: 4, padding: "3px 10px",
+                        fontSize: 11, cursor: "pointer", fontFamily: "inherit"
+                    }}>
+                        {copied ? "Copie !" : "Copier"}
+                    </button>
+                    <pre style={{ paddingTop: 30 }}><code>{code}</code></pre>
+                </div>
+            );
+        };
+
         const renderContent = (content) => {
             const parts = content.split(/(```python[\s\S]*?```|```[\s\S]*?```)/g);
             return parts.map((part, i) => {
                 if (part.startsWith("```")) {
                     const code = part.replace(/^```(?:python)?\n?/, "").replace(/```$/, "");
-                    return <pre key={i}><code>{code}</code></pre>;
+                    return <CodeBlock key={i} code={code} />;
                 }
                 return <span key={i} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
             });
