@@ -526,10 +526,37 @@ Hors demande de programme, reponds naturellement sans bloc de code.`;
         };
 
         /* ── Helper: enrobe le code Python avec un wrapper qui n'efface pas la console Windows ── */
-        const wrapPyForDownload = (code, name) => `# ${name || "Programme"}
-# Genere par Python Prof — https://prof-python-abderrahman.vercel.app
+        const hasArabic = (s) => /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/.test(s || "");
 
+        const wrapPyForDownload = (code, name) => {
+            const arabicWarning = hasArabic(code)
+                ? `# ─────────────────────────────────────────────────────────────────────────
+# ATTENTION : ce programme contient du texte arabe.
+# Windows cmd.exe N'AFFICHE PAS correctement l'arabe (pas de BiDi, pas de
+# liaison des lettres). Pour un rendu correct, choisis UNE des solutions :
+#   1. Dans Python Prof, clique "Executer (jouer)" — l'arabe s'affiche bien
+#   2. Lance ce fichier dans Windows Terminal (gratuit sur le Microsoft Store)
+#   3. Clic droit sur ce fichier > "Edit with IDLE" puis F5
+# Lancer avec cmd.exe affichera les lettres a l'envers et separees.
+# ─────────────────────────────────────────────────────────────────────────
+
+`
+                : "";
+
+            return `# ${name || "Programme"}
+# Genere par Python Prof — https://prof-python-abderrahman.vercel.app
+${arabicWarning}
 import sys
+import os
+
+# Force UTF-8 sur Windows pour eviter les caracteres bizarres (mojibake)
+if os.name == "nt":
+    try:
+        os.system("chcp 65001 > nul 2>&1")
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stdin.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 try:
 ${code.split("\n").map(l => "    " + l).join("\n")}
@@ -546,6 +573,7 @@ try:
 except EOFError:
     pass
 `;
+        };
 
         const triggerDownload = (filename, content) => {
             const blob = new Blob([content], { type: "text/x-python;charset=utf-8" });
