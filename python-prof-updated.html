@@ -712,19 +712,27 @@ from io import StringIO
 _captured = StringIO()
 sys.stdout = _captured
 _input_count = 0
+_input_letters = list("aeioubcdflmnprstvy")
+_input_numbers = ["1", "2", "3", "4", "5"]
+_letter_idx = 0
+_number_idx = 0
 
 def _mock_input(prompt=""):
-    global _input_count
+    global _input_count, _letter_idx, _number_idx
     _input_count += 1
-    if _input_count > 30:
-        raise RuntimeError("Trop d'appels a input() — execution arretee")
-    _captured.write(str(prompt) + "\\n")
-    p = str(prompt).lower()
-    if any(c.isdigit() for c in p):
-        return "1"
-    if "lettre" in p or "letter" in p:
-        return "a"
-    return "1"
+    if _input_count > 60:
+        raise RuntimeError("Limite d'appels a input() atteinte — execution arretee")
+    p = str(prompt)
+    _captured.write(p + "\\n")
+    pl = p.lower()
+    if "lettre" in pl or "letter" in pl or "caractere" in pl:
+        val = _input_letters[_letter_idx % len(_input_letters)]
+        _letter_idx += 1
+        return val
+    else:
+        val = _input_numbers[_number_idx % len(_input_numbers)]
+        _number_idx += 1
+        return val
 
 builtins.input = _mock_input
 `;
