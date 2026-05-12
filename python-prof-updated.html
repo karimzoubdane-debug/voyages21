@@ -322,17 +322,6 @@
 
         .quiz-option:hover { background: var(--br); }
 
-        /* Function block */
-        .function-block {
-            background: var(--b3);
-            border-left: 3px solid var(--g);
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-        }
-
-        .function-name { color: var(--g); font-weight: bold; font-family: monospace; margin-bottom: 5px; }
-
         /* Loading */
         .loading {
             display: inline-block;
@@ -620,13 +609,11 @@ except EOFError:
                 () => Object.keys(DEFAULT_PROJECTS)[0]
             );
 
-            const [modal, setModal]                 = useState(null); // null | "explain" | "quiz" | "exec"
-            const [explanation, setExplanation]     = useState([]);
+            const [modal, setModal]                 = useState(null); // null | "quiz" | "exec"
             const [quizQuestions, setQuizQuestions] = useState([]);
             const [quizAnswers, setQuizAnswers]     = useState({});
             const [execOutput, setExecOutput]       = useState("");
             const [executing, setExecuting]         = useState(false);
-            const [execMode, setExecMode]           = useState("interactive"); // "interactive" | "auto"
             const [apiOk, setApiOk]                 = useState(null); // null | true | false
 
             const messagesEndRef = useRef(null);
@@ -706,35 +693,6 @@ except EOFError:
                 setLoading(false);
             };
 
-            /* ── Expliquer le code ── */
-            const explainCode = () => {
-                const project = projects[selectedProject];
-                if (!project) return;
-
-                const funcs = [];
-                const re = /def\s+(\w+)\s*\(([^)]*)\)\s*:/g;
-                let m;
-                while ((m = re.exec(project.code)) !== null) {
-                    const name = m[1];
-                    const params = m[2];
-                    const purposes = {
-                        choisir_mot:    "Choisit un mot aleatoire dans une liste predefined",
-                        afficher_pendu: "Affiche le visuel ASCII du pendu selon le nombre d'erreurs",
-                        jouer:          "Gere toute la logique du jeu : boucle, saisie, victoire/defaite",
-                        calculatrice:   "Gere la saisie des nombres et effectue l'operation choisie",
-                        main:           "Point d'entree principal du programme"
-                    };
-                    funcs.push({
-                        name,
-                        params,
-                        purpose: purposes[name] || `Fonction personnalisee "${name}"`
-                    });
-                }
-
-                setExplanation(funcs.length ? funcs : [{ name: "main", params: "", purpose: "Point d'entree du programme" }]);
-                setModal("explain");
-            };
-
             /* ── Quiz ── */
             const generateQuiz = () => {
                 const project = projects[selectedProject];
@@ -773,9 +731,8 @@ except EOFError:
                 setModal("quiz");
             };
 
-            /* ── Exécuter en direct ── */
-            const executeCode = async (mode) => {
-                const chosenMode = mode || execMode;
+            /* ── Exécuter en direct (mode interactif uniquement) ── */
+            const executeCode = async () => {
                 const project = projects[selectedProject];
                 if (!project) return;
 
@@ -789,7 +746,7 @@ except EOFError:
                     return;
                 }
 
-                // Expose un prompt JS interactif pour le mode "jouer"
+                // Expose un prompt JS interactif (popup native)
                 window.pyPromptFn = (msg) => {
                     const reply = window.prompt(msg && msg.length ? msg : "Saisie :");
                     return reply === null ? "" : String(reply);
@@ -806,42 +763,7 @@ _captured = StringIO()
 sys.stdout = _captured
 sys.stderr = _captured
 _input_count = 0
-_input_log = []
-_last_output_pos = 0  # position dans _captured apres le dernier prompt affiche
-
-_MOCK_NUMBERS = ["3", "5", "7", "12", "2"]
-_MOCK_OPS = ["+", "-", "*", "/"]
-_MOCK_LETTERS = list("aeioubcdflmnprstvyhg")
-_MOCK_YESNO = ["o", "n", "o", "o", "n"]
-_MOCK_NAMES = ["Alice", "Bob", "Chloe"]
-_idx_num = 0
-_idx_op = 0
-_idx_letter = 0
-_idx_yn = 0
-_idx_name = 0
-
-INTERACTIVE = ${chosenMode === "interactive" ? "True" : "False"}
-
-def _smart_mock(prompt_text):
-    global _idx_num, _idx_op, _idx_letter, _idx_yn, _idx_name
-    p = prompt_text.lower()
-    # operateur
-    if "operation" in p or "operateur" in p or "+, -" in p or "(+" in p or "+ -" in p:
-        v = _MOCK_OPS[_idx_op % len(_MOCK_OPS)]; _idx_op += 1; return v
-    # oui/non
-    if "oui" in p and "non" in p:
-        v = _MOCK_YESNO[_idx_yn % len(_MOCK_YESNO)]; _idx_yn += 1; return v
-    # nom / prenom
-    if "nom" in p or "prenom" in p or "name" in p:
-        v = _MOCK_NAMES[_idx_name % len(_MOCK_NAMES)]; _idx_name += 1; return v
-    # lettre / caractere
-    if "lettre" in p or "letter" in p or "caractere" in p:
-        v = _MOCK_LETTERS[_idx_letter % len(_MOCK_LETTERS)]; _idx_letter += 1; return v
-    # nombre / chiffre / age / nb
-    if "nombre" in p or "chiffre" in p or "age" in p or "valeur" in p or "entier" in p or "nb " in p or "n =" in p:
-        v = _MOCK_NUMBERS[_idx_num % len(_MOCK_NUMBERS)]; _idx_num += 1; return v
-    # defaut: nombre
-    v = _MOCK_NUMBERS[_idx_num % len(_MOCK_NUMBERS)]; _idx_num += 1; return v
+_last_output_pos = 0
 
 def _patched_input(prompt=""):
     global _input_count, _last_output_pos
@@ -849,21 +771,14 @@ def _patched_input(prompt=""):
     if _input_count > 80:
         raise RuntimeError("Limite de 80 appels a input() atteinte — boucle infinie probable")
     p = str(prompt)
-    if INTERACTIVE:
-        # Recupere tout ce qui a ete imprime depuis la derniere saisie
-        # (typiquement : la question + les options) et le met dans la popup.
-        sys.stdout.flush() if hasattr(sys.stdout, "flush") else None
-        full = _captured.getvalue()
-        context = full[_last_output_pos:]
-        # Limite la taille pour eviter une popup geante
-        if len(context) > 2000:
-            context = "...\\n" + context[-2000:]
-        # Construit le texte affiche dans la popup
-        msg = (context.rstrip() + "\\n\\n" + p) if context.strip() else p
-        val = _js_window.pyPromptFn(msg)
-    else:
-        val = _smart_mock(p)
-    _input_log.append((p, val))
+    # Recupere tout ce qui a ete imprime depuis la derniere saisie
+    # (typiquement : la question + les options) et le met dans la popup.
+    full = _captured.getvalue()
+    context = full[_last_output_pos:]
+    if len(context) > 2000:
+        context = "...\\n" + context[-2000:]
+    msg = (context.rstrip() + "\\n\\n" + p) if context.strip() else p
+    val = _js_window.pyPromptFn(msg)
     _captured.write(p + str(val) + "\\n")
     _last_output_pos = len(_captured.getvalue())
     return val
@@ -880,11 +795,7 @@ builtins.input = _patched_input
                     }
 
                     const output = pyodide.runPython("_captured.getvalue()");
-                    const inputCount = pyodide.runPython("_input_count");
                     let result = output.trim() || "(Aucune sortie produite)";
-                    if (inputCount > 0 && chosenMode === "auto") {
-                        result += `\n\n[Mode AUTO : ${inputCount} saisie(s) simulees. Pour jouer vraiment, utilise le bouton "Executer (jouer)".]`;
-                    }
                     if (execError) {
                         const msg = String(execError.message || execError);
                         // Nettoie le traceback pour ne garder que la derniere ligne utile
@@ -996,20 +907,14 @@ builtins.input = input
                             </button>
 
                             <div className="section-title" style={{ marginTop: 20 }}>Actions</div>
-                            <button className="action-btn" onClick={explainCode}>
-                                Expliquer le code
-                            </button>
-                            <button className="action-btn" onClick={generateQuiz}>
-                                Quiz Python
-                            </button>
-                            <button className="action-btn primary" onClick={() => executeCode("interactive")}>
+                            <button className="action-btn primary" onClick={executeCode}>
                                 Executer (jouer)
-                            </button>
-                            <button className="action-btn" onClick={() => executeCode("auto")}>
-                                Executer (auto / demo)
                             </button>
                             <button className="action-btn" onClick={downloadPy}>
                                 Telecharger le .py
+                            </button>
+                            <button className="action-btn" onClick={generateQuiz}>
+                                Quiz Python
                             </button>
                         </div>
 
@@ -1068,27 +973,6 @@ builtins.input = input
                     </div>
 
                     <div className={`status-bar${pyodide ? " ok" : ""}`}>{pyStatus}</div>
-
-                    {/* Modal Explication */}
-                    {modal === "explain" && (
-                        <div className="modal" onClick={() => setModal(null)}>
-                            <div className="modal-content" onClick={e => e.stopPropagation()}>
-                                <div className="modal-header">
-                                    <h3>Explication — {selectedProject}</h3>
-                                    <button className="modal-close" onClick={() => setModal(null)}>x</button>
-                                </div>
-                                {explanation.length === 0 && (
-                                    <p style={{ color: "var(--mu)" }}>Aucune fonction trouvee dans ce code.</p>
-                                )}
-                                {explanation.map((fn, i) => (
-                                    <div key={i} className="function-block">
-                                        <div className="function-name">def {fn.name}({fn.params})</div>
-                                        <div style={{ fontSize: 13 }}>{fn.purpose}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
 
                     {/* Modal Quiz */}
                     {modal === "quiz" && (
