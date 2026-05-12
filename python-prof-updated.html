@@ -355,6 +355,85 @@
 
         .status-bar.ok { color: var(--g); }
         .status-bar.err { color: #ff4455; }
+
+        /* Hamburger button - hidden on desktop, shown on mobile */
+        .menu-btn {
+            display: none;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            color: var(--tx);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* Sidebar overlay (mobile only) */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 90;
+        }
+
+        /* ─── MOBILE (<= 768px) ─── */
+        @media (max-width: 768px) {
+            .menu-btn { display: block; }
+
+            .header { padding: 10px 12px; gap: 8px; }
+            .logo { font-size: 16px; }
+
+            .main-layout { position: relative; }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                z-index: 100;
+                transition: left 0.25s ease;
+                box-shadow: 4px 0 16px rgba(0,0,0,0.6);
+                padding-top: 50px;
+            }
+            .sidebar.open { left: 0; }
+            .sidebar-overlay.show { display: block; }
+
+            .sidebar-close {
+                position: absolute;
+                top: 10px; right: 10px;
+                background: var(--b3);
+                border: 1px solid var(--br);
+                color: var(--tx);
+                width: 32px; height: 32px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .bubble { max-width: 88%; font-size: 13px; }
+            .messages { padding: 12px; }
+            .message { gap: 6px; }
+            .avatar { width: 28px; height: 28px; font-size: 10px; }
+
+            .input-area { padding: 10px; gap: 6px; }
+            .chat-input { padding: 8px 10px; font-size: 14px; }
+            .send-btn { padding: 0 14px; font-size: 13px; }
+
+            pre { font-size: 11px; padding: 10px; }
+
+            .modal-content { max-height: 88vh; padding: 14px; }
+
+            /* Status bar : on cache la version desktop, on l'affiche compacte */
+            .status-bar { font-size: 10px; padding: 3px 12px; }
+        }
+
+        /* Sur desktop, l'overlay et le bouton close ne servent pas */
+        @media (min-width: 769px) {
+            .sidebar-close { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -665,7 +744,12 @@ except EOFError:
             const [apiOk, setApiOk]                 = useState(null); // null | true | false
             const [lesson, setLesson]               = useState(null); // { name, text, lang }
             const [lessonLoading, setLessonLoading] = useState(false);
+            const [sidebarOpen, setSidebarOpen]     = useState(false);
             const fileInputRef                      = useRef(null);
+
+            // Détection mobile pour fermer la sidebar après une action
+            const isMobile = () => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+            const closeSidebarOnMobile = () => { if (isMobile()) setSidebarOpen(false); };
 
             const messagesEndRef = useRef(null);
 
@@ -673,6 +757,11 @@ except EOFError:
             useEffect(() => {
                 messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
             }, [messages]);
+
+            /* ferme la sidebar sur mobile dès qu'une modale s'ouvre */
+            useEffect(() => {
+                if (modal) closeSidebarOnMobile();
+            }, [modal]);
 
             /* load Pyodide */
             useEffect(() => {
@@ -1057,22 +1146,39 @@ builtins.input = input
                 <div className="app">
                     {/* Header */}
                     <div className="header">
+                        <button
+                            className="menu-btn"
+                            onClick={() => setSidebarOpen(true)}
+                            aria-label="Ouvrir le menu"
+                        >☰</button>
                         <div className="logo">Python Prof</div>
                         <div style={{ flex: 1 }} />
-                        <div style={{ fontSize: 11, color: "var(--mu)", display: "flex", alignItems: "center", gap: 8 }}>
+                        <div style={{ fontSize: 11, color: "var(--mu)", display: "flex", alignItems: "center", gap: 6 }}>
                             <span style={{
                                 display: "inline-block", width: 8, height: 8, borderRadius: "50%",
                                 background: apiOk === true ? "var(--g)" : apiOk === false ? "#ff4455" : "var(--mu)"
                             }} />
-                            {apiOk === true ? "Claude Haiku connecte"
-                                : apiOk === false ? "Mode demo (API indisponible)"
-                                : "claude-haiku · en attente"}
+                            <span className="api-status-text">
+                                {apiOk === true ? "Claude connecte"
+                                    : apiOk === false ? "Mode demo"
+                                    : "en attente"}
+                            </span>
                         </div>
                     </div>
 
                     <div className="main-layout">
+                        {/* Overlay sombre derrière la sidebar (mobile uniquement) */}
+                        <div
+                            className={`sidebar-overlay${sidebarOpen ? " show" : ""}`}
+                            onClick={() => setSidebarOpen(false)}
+                        />
                         {/* Sidebar */}
-                        <div className="sidebar">
+                        <div className={`sidebar${sidebarOpen ? " open" : ""}`}>
+                            <button
+                                className="sidebar-close"
+                                onClick={() => setSidebarOpen(false)}
+                                aria-label="Fermer le menu"
+                            >x</button>
                             <div className="section-title">Bibliotheque de projets</div>
                             {Object.keys(projects).length === 0 && (
                                 <div style={{ color: "var(--mu)", fontSize: 12 }}>Aucun projet</div>
