@@ -2,9 +2,9 @@
 
 :root {
   --red:        #8C2020;
-  --navy:       #233118;
-  --olive-dark: #1C2912;
-  --olive-mid:  #3B5228;
+  --navy:       #1B3A28;
+  --olive-dark: #152E1F;
+  --olive-mid:  #2A5238;
   --gold:       #C8A440;
   --cream:      #F5F0E8;
   --dark:       #111111;
@@ -308,10 +308,10 @@ footer {
   top: 156px;
   left: 0;
   right: 0;
-  background: #233118;
+  background: #1B3A28;
   border-top: 2px solid #C8A440;
   z-index: 997;
-  padding: 1.8rem 2.5rem;
+  padding: 1.2rem 2.5rem 1.4rem;
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 
@@ -321,7 +321,7 @@ footer {
   top: 156px;
   left: 0;
   right: 0;
-  background: #233118;
+  background: #1B3A28;
   border-top: 2px solid #C8A440;
   z-index: 996;
   max-height: calc(100vh - 156px);
