@@ -54,7 +54,7 @@
   z-index: 2;
   text-align: center;
   padding: 0 2rem;
-  margin-top: -40px;
+  margin-top: 60px;
   max-width: 860px;
   display: flex;
   flex-direction: column;
@@ -145,7 +145,8 @@
 .heroChatBar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.75rem;
   width: 100%;
   max-width: 340px;
   margin-top: 0.85rem;
