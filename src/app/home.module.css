@@ -145,6 +145,26 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+.btnHeroAI {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: transparent;
+  border: 1px solid rgba(200, 164, 64, 0.55);
+  color: #C8A440;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.btnHeroAI:hover {
+  background: rgba(200, 164, 64, 0.12);
+  border-color: #C8A440;
+}
+
 /* Indicateur de scroll en bas à droite */
 .scrollHint {
   position: absolute;

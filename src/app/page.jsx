@@ -26,19 +26,22 @@ export default function HomePage() {
         <div className={styles.heroContent}>
           <p className={styles.heroLabel}>Depuis 2000 — Marrakech, Maroc</p>
           <h1 className={styles.heroTitle}>
-            Le Maroc<br /><em>comme vous</em><br />le rêvez
+            Depuis 2000, nous<br /><em>dessinons</em> vos émotions<br />et maîtrisons vos horizons.
           </h1>
           <div className={styles.heroRule} />
-          <p className={styles.heroSub}>
-            Circuits sur mesure · Raids 4x4 · Moto Expédition · Expériences authentiques
-          </p>
           <div className={styles.heroCta}>
             <Link href="/circuits/classiques" className={styles.btnHeroPrimary}>
-              Découvrir nos circuits
+              Découvrir
             </Link>
             <Link href="/contact" className={styles.btnHeroOutline}>
               Devis gratuit
             </Link>
+            <button
+              className={styles.btnHeroAI}
+              onClick={() => alert('Assistant IA — bientôt disponible')}
+            >
+              Posez-nous vos questions
+            </button>
           </div>
         </div>
 
@@ -50,8 +53,8 @@ export default function HomePage() {
 
       {/* ===== BANDEAU SIGNATURE ===== */}
       <div className={styles.signatureBand}>
-        Chaque voyage est conçu sur mesure — solo, à deux, en famille ou entre amis.&nbsp;
-        <strong>Voyages21, l'agence cousu main depuis 2000.</strong>
+        De l&apos;aventure intime aux projets d&apos;envergure,&nbsp;
+        <strong>Voyages 21 signe le Maroc en cousu main depuis 2000.</strong>
       </div>
 
       {/* ===== NOS UNIVERS ===== */}
