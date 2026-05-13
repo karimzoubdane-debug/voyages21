@@ -15,6 +15,15 @@ function isAllowedOrigin(origin) {
 }
 
 export default async function handler(req, res) {
+    // ─── MODE MAINTENANCE : Application desactivee jusqu'a nouvel ordre ───
+    // Aucun appel a Anthropic n'est effectue, donc aucun credit n'est consomme.
+    // Pour REACTIVER : supprime (ou commente) ce bloc return ci-dessous.
+    return res.status(503).json({
+        error: {
+            message: "Application temporairement indisponible. Service suspendu jusqu'a nouvel ordre. Merci de votre comprehension."
+        }
+    });
+
     if (req.method !== "POST") {
         return res.status(405).json({ error: { message: "Method not allowed" } });
     }
