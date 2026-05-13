@@ -60,7 +60,7 @@ export default function HomePage() {
       {/* ===== BANDEAU SIGNATURE ===== */}
       <div className={styles.signatureBand}>
         De l&apos;aventure intime aux projets d&apos;envergure,&nbsp;
-        <strong>Voyages 21 signe le Maroc en cousu main depuis 2000.</strong>
+        <strong>Voyages 21 signe le voyage.</strong>
       </div>
 
       {/* ===== NOS UNIVERS ===== */}

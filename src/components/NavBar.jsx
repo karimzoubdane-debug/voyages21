@@ -8,25 +8,24 @@ const CADRAN = {
 }
 
 const SEJOURS = [
-  { label: 'Marrakech',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=240&q=75' },
-  { label: 'Casablanca',  href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1551913902-c92207136625?w=240&q=75' },
-  { label: 'Fez',         href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?w=240&q=75' },
-  { label: 'Chefchaouen', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=240&q=75' },
-  { label: 'Tanger',      href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1580834341580-8c17a3a630ca?w=240&q=75' },
+  { label: 'Marrakech',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=480&q=80' },
+  { label: 'Casablanca',  href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1551913902-c92207136625?w=480&q=80' },
+  { label: 'Fez',         href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?w=480&q=80' },
+  { label: 'Chefchaouen', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=480&q=80' },
 ]
 
 const CIRCUITS = [
-  { label: 'En minibus',               href: '/circuits/classiques',            img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=240&q=75' },
-  { label: 'En autotours',             href: '/experiences/circuits-autotours', img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=240&q=75' },
-  { label: 'Rally 4x4',               href: '/circuits/raid-4x4',              img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=240&q=75' },
-  { label: 'Virée en Moto cylindrée', href: '/circuits/moto',                  img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=240&q=75' },
+  { label: 'En minibus',              href: '/circuits/classiques',            img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=480&q=80' },
+  { label: 'En autotours',            href: '/experiences/circuits-autotours', img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=480&q=80' },
+  { label: 'Rallye 4x4',             href: '/circuits/raid-4x4',              img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=480&q=80' },
+  { label: 'Virée en Moto cylindrée', href: '/circuits/moto',                  img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=480&q=80' },
 ]
 
 const AVEC_QUI = [
-  { label: 'En petits groupes',     href: '/experiences', img: 'https://images.unsplash.com/photo-1501554728187-ce583db33af7?w=240&q=75' },
-  { label: 'Solo',                  href: '/experiences', img: 'https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=240&q=75' },
-  { label: 'En couple',            href: '/experiences', img: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=240&q=75' },
-  { label: 'Entre amis et famille', href: '/experiences', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=240&q=75' },
+  { label: 'En petits groupes',     href: '/experiences', img: 'https://images.unsplash.com/photo-1501554728187-ce583db33af7?w=480&q=80' },
+  { label: 'Solo',                  href: '/experiences', img: 'https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=480&q=80' },
+  { label: 'En couple',            href: '/experiences', img: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=480&q=80' },
+  { label: 'Entre amis et famille', href: '/experiences', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=480&q=80' },
 ]
 
 const STYLES_VOYAGE = [
@@ -75,32 +74,32 @@ function Chevron({ active }) {
   )
 }
 
-// Carte Inspirations — image haut / texte bas, layout card vertical
+// Carte Inspirations — image haut / texte bas, grille 2 colonnes par section
 function InspCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
       style={{
         textDecoration: 'none', flexShrink: 0, cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
-        width: '122px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.45rem',
+        width: '170px',
       }}
     >
       <div style={{
-        width: '118px', height: '88px', borderRadius: '6px',
+        width: '165px', height: '125px', borderRadius: '6px',
         backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
         border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
       }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.05)' }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.04)' }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
       />
-      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.75rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
+      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.78rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
         {item.label}
       </span>
     </Link>
   )
 }
 
-// Grande carte Styles — image large haut / texte bas
+// Grande carte Styles
 function LargeCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
@@ -125,7 +124,7 @@ function LargeCard({ item, onClose }) {
   )
 }
 
-// Grande carte Explorer — encore plus grande car seulement 2 items
+// Grande carte Explorer
 function ExplorerCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
@@ -167,14 +166,12 @@ function RightCadran({ onClose }) {
       onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.02)' }}
       onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
     >
-      {/* Image visible en haut */}
       <div style={{
         flex: 1,
         backgroundImage: `url(${CADRAN.img})`,
         backgroundSize: 'cover', backgroundPosition: 'center',
         minHeight: '100px',
       }} />
-      {/* Texte en bas fond sombre */}
       <div style={{
         background: 'rgba(21,46,31,0.96)',
         borderTop: '1px solid rgba(200,164,64,0.3)',
@@ -189,11 +186,16 @@ function RightCadran({ onClose }) {
   )
 }
 
+// Titre de section des mega menus — imposant, lisible
 const SEC = {
-  fontFamily: "'DM Sans', sans-serif",
-  fontSize: '0.54rem', fontWeight: 700, letterSpacing: '0.24em',
-  textTransform: 'uppercase', color: 'rgba(255,255,255,0.38)',
-  marginBottom: '0.45rem', display: 'block',
+  fontFamily: "'Playfair Display', serif",
+  fontStyle: 'italic',
+  fontSize: '1.15rem',
+  fontWeight: 700,
+  color: '#FFFFFF',
+  letterSpacing: '0.01em',
+  marginBottom: '0.9rem',
+  display: 'block',
 }
 
 // Bouton trigger pill — fond solide au survol
@@ -227,7 +229,9 @@ export default function NavBar() {
   const [scrolled,   setScrolled]   = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openMenu,   setOpenMenu]   = useState(null)
+  const [aboutOpen,  setAboutOpen]  = useState(false)
   const closeTimer = useRef(null)
+  const aboutRef   = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -235,7 +239,19 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const open     = (name) => { clearTimeout(closeTimer.current); setOpenMenu(name) }
+  // Ferme le dropdown About au clic extérieur
+  useEffect(() => {
+    if (!aboutOpen) return
+    const handler = (e) => {
+      if (aboutRef.current && !aboutRef.current.contains(e.target)) {
+        setAboutOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [aboutOpen])
+
+  const open     = (name) => { clearTimeout(closeTimer.current); setOpenMenu(name); setAboutOpen(false) }
   const schedule = ()     => { closeTimer.current = setTimeout(() => setOpenMenu(null), 200) }
   const keep     = ()     => clearTimeout(closeTimer.current)
   const closeNow = ()     => setOpenMenu(null)
@@ -243,7 +259,6 @@ export default function NavBar() {
   const hoverGold = (e) => { e.currentTarget.style.color = '#C8A440' }
   const hoverOff  = (e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.78)' }
 
-  // Barre 3 : solid quand scrollé OU quand un menu est ouvert (pour tangence avec le panel)
   const bar3Bg = (scrolled || openMenu !== null)
     ? 'rgba(27,58,40,0.97)'
     : 'transparent'
@@ -278,7 +293,7 @@ export default function NavBar() {
           padding: '0 2.5rem',
           borderBottom: '1px solid rgba(200,164,64,0.12)',
         }}>
-          {/* Gauche : contacts avec icônes */}
+          {/* Gauche : contacts */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.4rem', flex: 1 }}>
             <Link href="/faq" style={BAR_LINK} onMouseEnter={hoverGold} onMouseLeave={hoverOff}>
               Have a Question
@@ -306,17 +321,19 @@ export default function NavBar() {
             <Link href="/chroniques" style={{ ...BAR_LINK, fontWeight: 600, letterSpacing: '0.1em' }} onMouseEnter={hoverGold} onMouseLeave={hoverOff}>BLOG</Link>
           </div>
 
-          {/* Droite : About avec sous-titres empilés */}
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', gap: '1px', lineHeight: 1 }}>
-              <Link href="/about" style={{ ...BAR_LINK, fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.08em' }} onMouseEnter={hoverGold} onMouseLeave={hoverOff}>
-                About
-              </Link>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <Link href="/about#expertise" style={{ ...BAR_LINK, fontSize: '0.61rem' }} onMouseEnter={hoverGold} onMouseLeave={hoverOff}>Notre expertise</Link>
-                <Link href="/about#engagements" style={{ ...BAR_LINK, fontSize: '0.61rem' }} onMouseEnter={hoverGold} onMouseLeave={hoverOff}>Nos engagements</Link>
-              </div>
-            </div>
+          {/* Droite : About — dropdown au clic */}
+          <div ref={aboutRef} style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <button
+              onClick={() => setAboutOpen(!aboutOpen)}
+              style={{
+                ...BAR_LINK, fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.08em',
+                background: 'none', border: 'none', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: '4px',
+                color: aboutOpen ? '#C8A440' : 'rgba(255,255,255,0.78)',
+              }}
+            >
+              About <Chevron active={aboutOpen} />
+            </button>
           </div>
         </div>
 
@@ -330,7 +347,6 @@ export default function NavBar() {
           display: 'flex', alignItems: 'center', padding: '0 2.5rem',
         }}>
 
-          {/* Espace gauche */}
           <div style={{ flex: '0 0 180px' }} />
 
           {/* Menus desktop centrés */}
@@ -393,33 +409,87 @@ export default function NavBar() {
         </div>
       </header>
 
+      {/* ── Dropdown About — glisse sous le header ── */}
+      {aboutOpen && (
+        <div ref={aboutRef} style={{
+          position: 'fixed',
+          top: '88px',
+          right: '2.5rem',
+          background: '#152E1F',
+          border: '1px solid rgba(200,164,64,0.25)',
+          borderTop: '2px solid #C8A440',
+          borderRadius: '0 0 6px 6px',
+          padding: '0.6rem 0',
+          zIndex: 998,
+          minWidth: '210px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
+          animation: 'slideDown 0.18s ease',
+        }}>
+          <Link href="/about" onClick={() => setAboutOpen(false)} style={{
+            display: 'block', padding: '0.6rem 1.2rem',
+            color: '#FFFFFF', textDecoration: 'none',
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+            fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
+            transition: 'color .15s',
+          }}
+            onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
+            onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
+          >
+            À propos
+          </Link>
+          <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0 1.2rem' }} />
+          <Link href="/about#expertise" onClick={() => setAboutOpen(false)} style={{
+            display: 'block', padding: '0.55rem 1.2rem',
+            color: 'rgba(255,255,255,0.72)', textDecoration: 'none',
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
+            letterSpacing: '0.05em', transition: 'color .15s, padding-left .15s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.color = '#C8A440'; e.currentTarget.style.paddingLeft = '1.5rem' }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)'; e.currentTarget.style.paddingLeft = '1.2rem' }}
+          >
+            Notre expertise
+          </Link>
+          <Link href="/about#engagements" onClick={() => setAboutOpen(false)} style={{
+            display: 'block', padding: '0.55rem 1.2rem',
+            color: 'rgba(255,255,255,0.72)', textDecoration: 'none',
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
+            letterSpacing: '0.05em', transition: 'color .15s, padding-left .15s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.color = '#C8A440'; e.currentTarget.style.paddingLeft = '1.5rem' }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)'; e.currentTarget.style.paddingLeft = '1.2rem' }}
+          >
+            Nos engagements
+          </Link>
+        </div>
+      )}
+
       {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — INSPIRATIONS  (3 colonnes compactes)
+          MEGA MENU — INSPIRATIONS  (3 colonnes, titres imposants, grandes images)
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'inspirations' && (
         <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'stretch' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '2.5rem', alignItems: 'stretch' }}>
 
-            {/* 3 colonnes — cartes image/texte */}
-            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem', alignItems: 'start' }}>
+            {/* 3 colonnes */}
+            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2.5rem', alignItems: 'start' }}>
 
               <div>
                 <span style={SEC}>Séjours</span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
-                  {SEJOURS.slice(0, 4).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem' }}>
+                  {SEJOURS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
                 </div>
               </div>
 
               <div>
                 <span style={SEC}>Circuits</span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem' }}>
                   {CIRCUITS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
                 </div>
               </div>
 
               <div>
                 <span style={SEC}>Avec qui partir</span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem' }}>
                   {AVEC_QUI.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
                 </div>
               </div>
@@ -428,7 +498,7 @@ export default function NavBar() {
             <RightCadran onClose={closeNow} />
           </div>
 
-          {/* Pied du menu : CTA cousu main */}
+          {/* Pied du menu */}
           <div style={{
             maxWidth: '1400px', margin: '0.75rem auto 0',
             paddingTop: '0.65rem',
@@ -450,13 +520,13 @@ export default function NavBar() {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — CHOISISSEZ VOTRE STYLE  (grandes cartes)
+          MEGA MENU — CHOISISSEZ VOTRE STYLE  (3 grandes cartes + cadran, centré)
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'styles' && (
         <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'stretch', justifyContent: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <div style={{ display: 'flex', gap: '1.8rem', marginBottom: '1rem', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', gap: '1.8rem', marginBottom: '0.8rem' }}>
                 {STYLES_VOYAGE.map(item => <LargeCard key={item.label} item={item} onClose={closeNow} />)}
               </div>
               <Link href="/about#styles" onClick={closeNow}
@@ -498,10 +568,9 @@ export default function NavBar() {
               { label: 'Casablanca',                href: '/circuits/classiques',            indent: true },
               { label: 'Fez',                       href: '/circuits/classiques',            indent: true },
               { label: 'Chefchaouen',               href: '/circuits/classiques',            indent: true },
-              { label: 'Tanger',                    href: '/circuits/classiques',            indent: true },
               { label: 'En minibus',                href: '/circuits/classiques',            indent: true },
               { label: 'En autotours',              href: '/experiences/circuits-autotours', indent: true },
-              { label: 'Rally 4x4',                href: '/circuits/raid-4x4',              indent: true },
+              { label: 'Rallye 4x4',               href: '/circuits/raid-4x4',              indent: true },
               { label: 'Virée en Moto cylindrée',  href: '/circuits/moto',                  indent: true },
               { label: 'En petits groupes',        href: '/experiences',                    indent: true },
               { label: 'Solo',                      href: '/experiences',                    indent: true },

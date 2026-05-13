@@ -302,6 +302,12 @@ footer {
 .cousu-main-banner strong { color: var(--gold); font-style: normal; font-weight: 600; }
 
 /* Responsive */
+/* ── Animation dropdown About ── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Mega menus — positionnés sous le header (48+40+68 = 156px) ── */
 .mega-panel {
   position: fixed;

@@ -202,13 +202,13 @@
 /* ===== BANDEAU SIGNATURE — style écriture élégante ===== */
 .signatureBand {
   background: #0d2018;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.88);
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 1.05rem;
-  letter-spacing: 0.06em;
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  letter-spacing: 0.04em;
   text-align: center;
-  padding: 1.4rem 4rem;
+  padding: 1.8rem 4rem;
   border-top: 1px solid rgba(200, 164, 64, 0.30);
   border-bottom: 1px solid rgba(200, 164, 64, 0.30);
 }
