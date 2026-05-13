@@ -1,86 +1,162 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'A propos — Voyages21, 25 ans d\'expertise au Maroc',
-  description: 'Depuis l\'an 2000, Voyages21 conçoit des voyages sur mesure au Maroc depuis Marrakech. 25 ans d\'experience, logistique de pointe, agence cousu main.',
+  title: 'About — Voyages21',
+  description: "L'histoire, l'expertise et les engagements de Voyages21, agence de voyages sur mesure au Maroc depuis 2000.",
 }
 
 export default function AboutPage() {
   return (
     <>
+      {/* ── Hero ── */}
       <section style={{
-        height: '55vh', minHeight: '380px',
-        background: 'var(--navy)',
-        display: 'flex', alignItems: 'flex-end',
-        padding: '0 5rem 4rem', position: 'relative',
+        position: 'relative',
+        height: '52vh', minHeight: '380px',
+        backgroundImage: "url('https://images.unsplash.com/photo-1548813395-edd5373a8e72?w=1600&q=80')",
+        backgroundSize: 'cover', backgroundPosition: 'center',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        marginTop: '156px',
       }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/images/about-hero.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.35 }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '0.75rem' }}>Depuis l'an 2000</p>
-          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.2rem,5vw,4rem)', color: 'white', fontWeight: 700, lineHeight: 1.1 }}>
-            25 ans de passion<br /><em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>pour le Maroc</em>
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(15,35,20,0.72)' }} />
+        <div style={{ position: 'relative', textAlign: 'center', padding: '0 2rem' }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#C8A440', marginBottom: '0.9rem' }}>
+            Depuis 2000
+          </p>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(2rem, 4vw, 3.4rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15 }}>
+            L&apos;art du voyage<br /><em>cousu main</em>
           </h1>
         </div>
       </section>
 
-      <section style={{ padding: '5rem 3rem', background: 'var(--white)' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '4rem' }}>
-            <div>
-              <p className="section-label">Notre histoire</p>
-              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2rem', color: 'var(--navy)', marginBottom: '1.2rem', lineHeight: 1.2 }}>
-                L'ingenierie du voyage au service de l'emotion
-              </h2>
-            </div>
-            <div>
-              <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.8, marginBottom: '1rem' }}>
-                Depuis l'an 2000, Voyages21 conçoit des aventures sur-mesure pour une clientele de passionnes et de pilotes exigeants. Nous ne vendons pas de simples voyages, mais une logistique de pointe heritee de l'esprit "Rallye-Raid".
-              </p>
-              <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.8 }}>
-                Chaque expedition est pensee comme une operation technique, ou securite, precision et passion du terrain convergent. Notre signature : un Maroc revele avec justesse, elegance et engagement.
-              </p>
-            </div>
-          </div>
+      {/* ── Intro ── */}
+      <section style={{ background: '#faf8f4', padding: '5rem 3rem', textAlign: 'center' }}>
+        <div style={{ maxWidth: '680px', margin: '0 auto' }}>
+          <p style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', fontSize: '1.25rem', color: '#1B3A28', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+            &ldquo;Depuis 2000, nous ne vendons pas des voyages — nous signons des expéditions.&rdquo;
+          </p>
+          <p style={{ fontSize: '0.92rem', color: '#555', lineHeight: 1.85 }}>
+            Fondée à Marrakech, Voyages21 conçoit chaque itinéraire comme une pièce unique.
+            Raids 4x4, circuits classiques, moto expédition, expériences authentiques —
+            chaque projet naît d&apos;une écoute attentive et d&apos;une expertise terrain incomparable.
+          </p>
+        </div>
+      </section>
 
-          <blockquote style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '1.5rem', color: 'var(--navy)', borderLeft: '4px solid var(--gold)', paddingLeft: '2rem', marginBottom: '4rem', lineHeight: 1.4 }}>
-            "Depuis 2000, VOYAGES21 façonne des voyages sur mesure au Maroc avec exigence, passion et precision."
+      {/* ── Notre expertise ── */}
+      <section id="expertise" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '520px' }}>
+        <div style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=900&q=80')",
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          minHeight: '440px',
+        }} />
+        <div style={{
+          background: '#1B3A28', padding: '5rem 4rem',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.2rem',
+        }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#C8A440' }}>
+            Notre expertise
+          </p>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.6rem, 2.5vw, 2.4rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.2 }}>
+            25 ans d&apos;expéditions<br />au cœur du Maroc
+          </h2>
+          <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.72)', lineHeight: 1.85 }}>
+            {/* À compléter — texte expertise Voyages21 */}
+            Notre expertise est née sur les pistes. Dès l&apos;an 2000, nous accompagnons
+            des voyageurs exigeants sur des terrains où la logistique fait la différence.
+            Chaque guide, chaque véhicule, chaque itinéraire est sélectionné avec la rigueur
+            d&apos;un professionnel du Rallye-Raid.
+          </p>
+          <blockquote style={{
+            fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+            fontSize: '1.1rem', color: '#C8A440',
+            borderLeft: '2px solid #C8A440', paddingLeft: '1.2rem',
+            lineHeight: 1.55,
+          }}>
+            &ldquo;Chaque expédition est une opération technique autant qu&apos;une aventure humaine.&rdquo;
           </blockquote>
+          <Link href="/contact" style={{
+            display: 'inline-block', marginTop: '0.5rem',
+            padding: '0.82rem 2rem', background: '#C8A440',
+            color: '#111', fontFamily: "'DM Sans', sans-serif",
+            fontSize: '0.76rem', fontWeight: 700, letterSpacing: '0.12em',
+            textTransform: 'uppercase', textDecoration: 'none',
+            borderRadius: '50px', width: 'fit-content',
+          }}>
+            Parlez-nous de votre projet
+          </Link>
+        </div>
+      </section>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1.5rem', marginBottom: '4rem' }}>
+      {/* ── Nos engagements ── */}
+      <section id="engagements" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '520px' }}>
+        <div style={{
+          background: '#0d2018', padding: '5rem 4rem',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.2rem',
+        }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#C8A440' }}>
+            Nos engagements
+          </p>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.6rem, 2.5vw, 2.4rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.2 }}>
+            Sécurité, authenticité<br />& responsabilité
+          </h2>
+          <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.72)', lineHeight: 1.85 }}>
+            {/* À compléter — texte engagements Voyages21 */}
+            Nous nous engageons à offrir des expériences respectueuses des communautés locales,
+            de l&apos;environnement et de la culture marocaine. Sécurité maximale sur chaque
+            itinéraire, partenaires locaux soigneusement sélectionnés, et transparence totale
+            sur chaque prestation.
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '0.5rem' }}>
             {[
-              { n: '25+', l: 'Annees d\'experience' },
-              { n: '2000', l: 'Annee de creation' },
-              { n: '50+', l: 'Activites & circuits' },
-              { n: '24/7', l: 'Assistance terrain' },
-            ].map(s => (
-              <div key={s.n} style={{ textAlign: 'center', padding: '1.5rem', background: 'var(--light-gray)', borderTop: '3px solid var(--gold)' }}>
-                <span style={{ fontFamily: 'Playfair Display, serif', fontSize: '2.2rem', color: 'var(--navy)', fontWeight: 700, display: 'block' }}>{s.n}</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--gray)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{s.l}</span>
+              { titre: 'Sécurité',     texte: "Protocoles hérités de l'expérience Rallye-Raid" },
+              { titre: 'Local',        texte: 'Partenaires & guides marocains certifiés' },
+              { titre: 'Sur mesure',   texte: 'Chaque voyage est unique, aucun catalogue' },
+              { titre: 'Responsable',  texte: "Respect des cultures et de l'environnement" },
+            ].map(e => (
+              <div key={e.titre} style={{ borderLeft: '2px solid rgba(200,164,64,0.4)', paddingLeft: '1rem' }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C8A440', marginBottom: '0.3rem' }}>{e.titre}</p>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.62)', lineHeight: 1.5 }}>{e.texte}</p>
               </div>
             ))}
           </div>
+        </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5rem', marginBottom: '4rem' }}>
-            {[
-              { titre: 'Expertise Terrain', texte: 'Des traces reconnus et testes, adaptes au niveau de chaque pilote. Chaque piste est validee par nos equipes avant d\'etre proposee.' },
-              { titre: 'Securite Totale', texte: 'Chaque expedition est encadree par une equipe technique complete : Guide-pisteur, mecanicien specialise et vehicule d\'assistance dedie.' },
-              { titre: 'Voyage Cousu Main', texte: 'Chaque projet est pense comme une creation exclusive, alliant authenticite, confort et maitrise logistique. Nous ne suivons pas les standards — nous les redefinissons.' },
-            ].map(p => (
-              <div key={p.titre} style={{ padding: '1.8rem', background: 'var(--navy)' }}>
-                <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.1rem', color: 'var(--gold)', marginBottom: '0.6rem' }}>{p.titre}</h3>
-                <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.72)', lineHeight: 1.7 }}>{p.texte}</p>
-              </div>
-            ))}
-          </div>
+        <div style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=900&q=80')",
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          minHeight: '440px',
+        }} />
+      </section>
 
-          <div style={{ background: 'var(--cream)', padding: '3rem', borderTop: '2px solid var(--gold)', textAlign: 'center' }}>
-            <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.4rem', color: 'var(--navy)', marginBottom: '0.75rem' }}>
-              Bd Prince My Abdellah, Imm. Taiba — 1er Etage, Appt. N°1, Marrakech
-            </h3>
-            <p style={{ fontSize: '0.9rem', color: 'var(--gray)', marginBottom: '0.4rem' }}>contact@voyages21.com</p>
-            <p style={{ fontSize: '0.9rem', color: 'var(--gray)', marginBottom: '1.5rem' }}>+212 524 331 007 — +212 661 181 618</p>
-            <Link href="/contact" className="btn-primary">Nous contacter</Link>
-          </div>
+      {/* ── CTA final ── */}
+      <section style={{ background: '#faf8f4', textAlign: 'center', padding: '6rem 3rem', borderTop: '1px solid rgba(200,164,64,0.2)' }}>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#C8A440', marginBottom: '1rem' }}>
+          Votre voyage
+        </p>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', color: '#1B3A28', marginBottom: '1rem', fontWeight: 700 }}>
+          Prêt à voyager autrement ?
+        </h2>
+        <p style={{ fontSize: '0.92rem', color: '#666', margin: '1rem auto 2.5rem', maxWidth: '480px', lineHeight: 1.75 }}>
+          Partagez votre vision, nous dessinons le reste.
+        </p>
+        <div style={{ display: 'flex', gap: '1.2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/contact" style={{
+            padding: '0.85rem 2.2rem', background: '#C8A440', color: '#111',
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.76rem', fontWeight: 700,
+            letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none',
+            borderRadius: '50px',
+          }}>
+            Demander un devis gratuit
+          </Link>
+          <a href="https://wa.me/212661181618" target="_blank" rel="noopener noreferrer" style={{
+            padding: '0.85rem 2.2rem', background: 'transparent', color: '#1B3A28',
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.76rem', fontWeight: 600,
+            letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none',
+            border: '1.5px solid #1B3A28', borderRadius: '50px',
+          }}>
+            WhatsApp direct
+          </a>
         </div>
       </section>
     </>
