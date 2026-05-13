@@ -1,6 +1,34 @@
+// Liste des origines autorisees a appeler cet endpoint.
+// Tout autre site qui essaie d'utiliser ton endpoint (et donc tes credits Anthropic)
+// recoit un 403. La verification se fait sur l'en-tete Origin (envoye automatiquement
+// par les navigateurs lors de requetes cross-origin) avec un fallback sur Referer.
+const ALLOWED_ORIGIN_REGEX = [
+    /^https:\/\/prof-python-abderrahman\.vercel\.app$/,
+    /^https:\/\/prof-python-abderrahman-[a-z0-9-]+\.vercel\.app$/, // previews du meme projet
+    /^http:\/\/localhost(:\d+)?$/, // dev local
+    /^http:\/\/127\.0\.0\.1(:\d+)?$/
+];
+
+function isAllowedOrigin(origin) {
+    if (!origin) return false;
+    return ALLOWED_ORIGIN_REGEX.some(rx => rx.test(origin));
+}
+
 export default async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: { message: "Method not allowed" } });
+    }
+
+    // ─── Controle d'origine : empeche les sites tiers de cramer tes credits ───
+    const origin = req.headers.origin || "";
+    let originForCheck = origin;
+    if (!originForCheck && req.headers.referer) {
+        try { originForCheck = new URL(req.headers.referer).origin; } catch {}
+    }
+    if (!isAllowedOrigin(originForCheck)) {
+        return res.status(403).json({
+            error: { message: "Origin non autorisee. Cet endpoint n'est utilisable que depuis prof-python-abderrahman.vercel.app." }
+        });
     }
 
     if (!process.env.ANTHROPIC_API_KEY) {
