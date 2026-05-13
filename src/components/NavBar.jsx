@@ -30,9 +30,9 @@ const AVEC_QUI = [
 ]
 
 const STYLES_VOYAGE = [
-  { label: 'Essentiel',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=300&q=80' },
-  { label: 'Authentique', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?w=300&q=80' },
-  { label: 'Prestige',    href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=300&q=80' },
+  { label: 'Essentiel',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=400&q=80' },
+  { label: 'Authentique', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80' },
+  { label: 'Prestige',    href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=400&q=80' },
 ]
 
 const EXPLORER_ITEMS = [
@@ -75,50 +75,50 @@ function Chevron({ active }) {
   )
 }
 
-// Carte mini (colonnes Inspirations) — texte et images agrandis
-function MiniItem({ item, onClose }) {
+// Carte Inspirations — image haut / texte bas, layout card vertical
+function InspCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
       style={{
-        display: 'flex', alignItems: 'center', gap: '0.75rem',
-        textDecoration: 'none', padding: '0.38rem 0',
-        color: 'rgba(255,255,255,0.85)', fontSize: '0.95rem', fontWeight: 400,
-        transition: 'color .15s',
+        textDecoration: 'none', flexShrink: 0, cursor: 'pointer',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
+        width: '122px',
       }}
-      onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
-      onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
     >
-      {item.img && (
-        <div style={{
-          width: '70px', height: '52px', borderRadius: '4px', flexShrink: 0,
-          backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
-        }} />
-      )}
-      <span>{item.label}</span>
+      <div style={{
+        width: '118px', height: '88px', borderRadius: '6px',
+        backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
+        border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
+      }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.05)' }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
+      />
+      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.75rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
+        {item.label}
+      </span>
     </Link>
   )
 }
 
-// Grande carte (Styles) — image + texte en dessous
+// Grande carte Styles — image large haut / texte bas
 function LargeCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
       style={{
         textDecoration: 'none', flexShrink: 0, cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.55rem',
-        width: '175px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem',
+        width: '225px',
       }}
     >
-      <div
-        style={{
-          width: '170px', height: '128px', borderRadius: '7px',
-          backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
-          border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
-        }}
+      <div style={{
+        width: '220px', height: '165px', borderRadius: '8px',
+        backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
+        border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
+      }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.04)' }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
       />
-      <span style={{ color: 'rgba(255,255,255,0.92)', fontSize: '0.85rem', fontWeight: 600, textAlign: 'center', lineHeight: 1.3 }}>
+      <span style={{ color: 'rgba(255,255,255,0.92)', fontSize: '1rem', fontWeight: 600, textAlign: 'center', lineHeight: 1.3 }}>
         {item.label}
       </span>
     </Link>
@@ -151,24 +151,36 @@ function ExplorerCard({ item, onClose }) {
   )
 }
 
-// Cadran droit pleine hauteur
+// Cadran droit — image visible en haut + texte en bas
 function RightCadran({ onClose }) {
   return (
     <Link href={CADRAN.href} onClick={onClose}
       style={{
-        position: 'relative', width: '155px', flexShrink: 0, alignSelf: 'stretch',
-        borderRadius: '7px', overflow: 'hidden', minHeight: '110px',
-        backgroundImage: `url(${CADRAN.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
-        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+        width: '160px', flexShrink: 0, alignSelf: 'stretch',
+        borderRadius: '8px', overflow: 'hidden',
+        display: 'flex', flexDirection: 'column',
         textDecoration: 'none', cursor: 'pointer',
-        transition: 'transform .25s, box-shadow .25s',
+        border: '2px solid transparent',
+        transition: 'border-color .2s, transform .25s',
+        minHeight: '150px',
       }}
-      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.02)'; e.currentTarget.style.boxShadow = '0 0 0 2px #C8A440' }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.02)' }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
     >
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(21,46,31,0.95) 0%, rgba(21,46,31,0.40) 55%, rgba(21,46,31,0.05) 100%)' }} />
-      <div style={{ position: 'relative', padding: '0.9rem', textAlign: 'center' }}>
-        <p style={{ color: '#FFFFFF', fontSize: '0.76rem', fontWeight: 600, letterSpacing: '0.04em', lineHeight: 1.4, marginBottom: '0.2rem' }}>
+      {/* Image visible en haut */}
+      <div style={{
+        flex: 1,
+        backgroundImage: `url(${CADRAN.img})`,
+        backgroundSize: 'cover', backgroundPosition: 'center',
+        minHeight: '100px',
+      }} />
+      {/* Texte en bas fond sombre */}
+      <div style={{
+        background: 'rgba(21,46,31,0.96)',
+        borderTop: '1px solid rgba(200,164,64,0.3)',
+        padding: '0.65rem 0.8rem', textAlign: 'center', flexShrink: 0,
+      }}>
+        <p style={{ color: '#FFFFFF', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.04em', lineHeight: 1.4, marginBottom: '0.18rem' }}>
           Voir tous<br />nos circuits
         </p>
         <span style={{ color: '#C8A440', fontSize: '0.9rem' }}>→</span>
@@ -386,24 +398,30 @@ export default function NavBar() {
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'inspirations' && (
         <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'stretch' }}>
 
-            {/* 3 colonnes */}
-            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2.5rem' }}>
+            {/* 3 colonnes — cartes image/texte */}
+            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem', alignItems: 'start' }}>
 
               <div>
                 <span style={SEC}>Séjours</span>
-                {SEJOURS.map(item => <MiniItem key={item.label} item={item} onClose={closeNow} />)}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+                  {SEJOURS.slice(0, 4).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+                </div>
               </div>
 
               <div>
                 <span style={SEC}>Circuits</span>
-                {CIRCUITS.map(item => <MiniItem key={item.label} item={item} onClose={closeNow} />)}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+                  {CIRCUITS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+                </div>
               </div>
 
               <div>
                 <span style={SEC}>Avec qui partir</span>
-                {AVEC_QUI.map(item => <MiniItem key={item.label} item={item} onClose={closeNow} />)}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+                  {AVEC_QUI.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+                </div>
               </div>
             </div>
 
@@ -436,9 +454,9 @@ export default function NavBar() {
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'styles' && (
         <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'stretch' }}>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: 'flex', gap: '1.6rem', marginBottom: '1rem', justifyContent: 'flex-start' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'stretch', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', gap: '1.8rem', marginBottom: '1rem', justifyContent: 'center' }}>
                 {STYLES_VOYAGE.map(item => <LargeCard key={item.label} item={item} onClose={closeNow} />)}
               </div>
               <Link href="/about#styles" onClick={closeNow}
@@ -459,10 +477,8 @@ export default function NavBar() {
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'explorer' && (
         <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
-          <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ display: 'flex', gap: '1.8rem', justifyContent: 'center' }}>
-              {EXPLORER_ITEMS.map(item => <ExplorerCard key={item.label} item={item} onClose={closeNow} />)}
-            </div>
+          <div style={{ display: 'flex', gap: '2rem', alignItems: 'stretch', justifyContent: 'center' }}>
+            {EXPLORER_ITEMS.map(item => <ExplorerCard key={item.label} item={item} onClose={closeNow} />)}
             <RightCadran onClose={closeNow} />
           </div>
         </div>
