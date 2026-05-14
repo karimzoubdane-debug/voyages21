@@ -230,6 +230,91 @@ Séquences à créer en priorité :
 
 ---
 
+### Vidéo 2 — Nathan Levallois : Agent IA Make.com + Telegram
+
+**ID YouTube :** `aiLkDjZBbB4`
+**Lien :** https://www.youtube.com/watch?v=aiLkDjZBbB4
+
+**Outils présentés :**
+- **Make.com** (ex-Integromat) — orchestrateur no-code avec fonctionnalité "AI Agent"
+- **OpenAI GPT-4o mini** — cerveau de l'agent
+- **DALL-E 3** — génération d'images
+- **Cloudinary** — hébergement des images générées (URL publique)
+- **Telegram bot** — interface utilisateur (texte + vocal via Whisper)
+- **API Instagram + Facebook** — publication directe
+
+**Workflow décrit :**
+1. L'utilisateur envoie un message texte ou vocal à un bot Telegram
+2. Whisper transcrit la voix (si vocal)
+3. Make AI Agent (GPT-4o mini) interprète la demande
+4. Outil 1 : DALL-E 3 génère une image → Cloudinary → URL publique
+5. GPT-4o rédige la légende avec émojis et hashtags
+6. Telegram demande validation à l'utilisateur ("c'est top, publie-la")
+7. Outil 2 : publication automatique Instagram + Facebook
+
+**Avantages mis en avant :**
+- Création d'un post en moins de 2 minutes
+- Pilotable **depuis un téléphone**, en mobilité
+- Commandes vocales possibles (idéal sur le terrain)
+- No-code, beaucoup plus accessible techniquement que la vidéo 1
+
+**Idées à reprendre pour Voyages21 :**
+- ✅ Le **bot Telegram pilotable en vocal** = parfait pour les guides sur le terrain (Sahara, Atlas, médinas)
+- ✅ Commande vocale en français/arabe/anglais depuis le désert
+- ✅ Validation rapide avant publication (garde le contrôle qualité)
+- ⚠️ DALL-E 3 à utiliser avec parcimonie : préférer les vraies photos du Maroc pour l'authenticité
+- ⚠️ Pas de stratégie SEO → reste complémentaire à la Vidéo 1
+
+**Timestamps clés :**
+- 00:46 — présentation Make.com AI Agent
+- 01:41 — config OpenAI GPT-4o mini
+- 02:54 — système de prompt (rôle, objectifs, outils)
+- 04:22 — outil DALL-E 3 + Cloudinary
+- 08:06 — outil publication Instagram + Facebook
+- 11:01 — interface Telegram (texte + vocal Whisper)
+- 13:21 — démonstration pratique complète
+
+---
+
+## 🔄 Synthèse : Système hybride recommandé (Vidéo 1 + Vidéo 2)
+
+Les deux vidéos sont **complémentaires**, pas concurrentes.
+
+| Aspect | Vidéo 1 (Claude Code + Blotato + Arvo) | Vidéo 2 (Make.com + Telegram) |
+|---|---|---|
+| Rôle | **L'usine de contenu** (80% du volume) | **Le scout mobile** (20% spontané) |
+| Mode | Planifié, industriel, SEO + Social | À la demande, terrain, vocal |
+| Interface | Terminal / IDE | Téléphone via Telegram |
+| Cerveau | Claude (Anthropic) | OpenAI GPT-4o mini |
+| Images | Assets propres (photos Maroc) | DALL-E 3 (à doser) |
+| SEO | ✅ Oui (Arvo) | ❌ Non |
+| Coût | ~80€/mois | ~40€/mois |
+| Accessibilité tech | Moyen-élevé | Bas (no-code) |
+
+### Combinaison cible :
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  PILIER 1 — L'USINE (vidéo 1)                            │
+│  Claude Code + Blotato + Arvo                            │
+│  → 80% du contenu (planifié, régulier, SEO)              │
+│  → Master prompt + RSS, tourne en autopilote             │
+└─────────────────────────────────────────────────────────┘
+                          +
+┌─────────────────────────────────────────────────────────┐
+│  PILIER 2 — LE SCOUT MOBILE (vidéo 2)                    │
+│  Make.com + GPT-4o + DALL-E + Telegram                   │
+│  → 20% du contenu (spontané, terrain)                    │
+│  → Vocal depuis le désert, validation 1 clic             │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Exemple concret :**
+- Lundi 8h : l'usine publie l'article SEO + 7 posts de la semaine (automatique)
+- Mardi 16h, le guide est à Aït-Ben-Haddou : vocal Telegram → post publié en 90 sec
+
+---
+
 ### 🆕 Vidéos à ajouter (à compléter au fil de l'eau)
 
 > **Format suggéré pour chaque vidéo ajoutée :**
@@ -239,10 +324,10 @@ Séquences à créer en priorité :
 > - Idées à reprendre / à écarter
 > - Timestamps clés
 
-#### Vidéo 2 — [à ajouter]
-
-
 #### Vidéo 3 — [à ajouter]
+
+
+#### Vidéo 4 — [à ajouter]
 
 
 ---
@@ -284,6 +369,10 @@ Séquences à créer en priorité :
 - Claude Code : https://claude.com/code
 - Blotato : https://www.blotato.com
 - Arvo : (à compléter)
+- Make.com : https://www.make.com
+- OpenAI (GPT-4o, DALL-E 3, Whisper) : https://platform.openai.com
+- Cloudinary : https://cloudinary.com
+- Telegram Bot API : https://core.telegram.org/bots
 - Metricool : https://metricool.com
 - ManyChat : https://manychat.com
 - n8n : https://n8n.io
@@ -316,4 +405,6 @@ Séquences à créer en priorité :
 | Date | Modification | Par |
 |---|---|---|
 | 2026-05-14 | Création initiale du document | Claude Code |
+| 2026-05-14 | Ajout des liens GitHub en en-tête | Claude Code |
+| 2026-05-14 | Ajout Vidéo 2 (Make.com + Telegram) + synthèse système hybride | Claude Code |
 |  |  |  |
