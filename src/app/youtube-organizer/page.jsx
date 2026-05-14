@@ -1,18 +1,18 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-// ─── Catégorisation automatique ──────────────────────────────────────────────
+// ─── Categorie auto ───────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { id: 'chatgpt', label: 'ChatGPT & LLMs', color: '#10a37f', keywords: ['chatgpt', 'gpt-4', 'gpt4', 'llm', 'claude', 'gemini', 'mistral', 'openai', 'ollama', 'prompt', 'llama', 'copilot'] },
-  { id: 'automation', label: 'Automatisation & No-Code', color: '#f97316', keywords: ['zapier', 'make.com', 'n8n', 'automation', 'automatisation', 'workflow', 'no-code', 'nocode', 'airtable', 'integromat', 'automate'] },
-  { id: 'video_image', label: 'Vidéo & Image IA', color: '#a855f7', keywords: ['midjourney', 'stable diffusion', 'dall-e', 'runway', 'sora', 'heygen', 'synthesia', 'kling', 'pika', 'leonardo', 'firefly', 'imagen', 'flux'] },
-  { id: 'dev', label: 'Développement & Code', color: '#3b82f6', keywords: ['python', 'javascript', 'typescript', 'github', 'react', 'next.js', 'api', 'code', 'developer', 'développeur', 'cursor', 'copilot', 'langchain', 'rag'] },
-  { id: 'marketing', label: 'Marketing & SEO', color: '#ec4899', keywords: ['marketing', 'seo', 'référencement', 'email', 'newsletter', 'funnel', 'copywriting', 'ads', 'publicité', 'leads', 'conversion', 'contenu', 'blog'] },
-  { id: 'business', label: 'Business & Monétisation', color: '#eab308', keywords: ['business', 'argent', 'money', 'monétis', 'revenue', 'saas', 'startup', 'entrepreneur', 'vendre', 'client', 'agence', 'freelance'] },
-  { id: 'productivity', label: 'Productivité & Organisation', color: '#06b6d4', keywords: ['productivité', 'productivity', 'notion', 'obsidian', 'organisation', 'gestion du temps', 'pkm', 'second brain', 'note', 'task'] },
-  { id: 'social', label: 'Réseaux Sociaux & Contenu', color: '#f43f5e', keywords: ['instagram', 'tiktok', 'twitter', 'linkedin', 'youtube', 'social media', 'réseaux', 'créateur', 'content creator', 'viral'] },
-  { id: 'tools', label: 'Outils & Applications IA', color: '#8b5cf6', keywords: ['outil', 'tool', 'app', 'logiciel', 'software', 'extension', 'plugin', 'perplexity', 'notion ai', 'jasper', 'grammarly'] },
-  { id: 'other', label: 'Autre / Non classé', color: '#6b7280', keywords: [] },
+  { id: 'chatgpt', label: 'ChatGPT et LLMs', color: '#10a37f', keywords: ['chatgpt', 'gpt-4', 'gpt4', 'llm', 'claude', 'gemini', 'mistral', 'openai', 'ollama', 'prompt', 'llama', 'copilot', 'perplexity'] },
+  { id: 'automation', label: 'Automatisation et No-Code', color: '#f97316', keywords: ['zapier', 'make.com', 'n8n', 'automation', 'automatisation', 'workflow', 'no-code', 'nocode', 'airtable', 'integromat', 'automate', 'webhook', 'trigger'] },
+  { id: 'video_image', label: 'Video et Image IA', color: '#a855f7', keywords: ['midjourney', 'stable diffusion', 'dall-e', 'runway', 'sora', 'heygen', 'synthesia', 'kling', 'pika', 'leonardo', 'firefly', 'imagen', 'flux'] },
+  { id: 'dev', label: 'Developpement et Code', color: '#3b82f6', keywords: ['python', 'javascript', 'typescript', 'github', 'react', 'next.js', 'api', 'supabase', 'firebase', 'cursor', 'langchain', 'rag', 'backend', 'frontend'] },
+  { id: 'marketing', label: 'Marketing et SEO', color: '#ec4899', keywords: ['marketing', 'seo', 'referencement', 'email', 'newsletter', 'funnel', 'copywriting', 'ads', 'publicite', 'leads', 'conversion', 'contenu', 'blog', 'landing page'] },
+  { id: 'business', label: 'Business et Monetisation', color: '#eab308', keywords: ['business', 'argent', 'money', 'monetis', 'revenue', 'saas', 'startup', 'entrepreneur', 'vendre', 'client', 'agence', 'freelance'] },
+  { id: 'productivity', label: 'Productivite et Organisation', color: '#06b6d4', keywords: ['productivite', 'productivity', 'notion', 'obsidian', 'organisation', 'gestion du temps', 'pkm', 'second brain', 'note', 'task'] },
+  { id: 'social', label: 'Reseaux Sociaux et Contenu', color: '#f43f5e', keywords: ['instagram', 'tiktok', 'twitter', 'linkedin', 'youtube', 'social media', 'reseaux', 'createur', 'content creator', 'viral'] },
+  { id: 'tools', label: 'Outils et Applications IA', color: '#8b5cf6', keywords: ['outil', 'tool', 'app', 'logiciel', 'software', 'extension', 'plugin', 'notion ai', 'jasper', 'grammarly'] },
+  { id: 'other', label: 'Autre', color: '#6b7280', keywords: [] },
 ]
 
 function categorize(title, description) {
@@ -24,34 +24,208 @@ function categorize(title, description) {
   return 'other'
 }
 
-// ─── Extraction des actions clés ─────────────────────────────────────────────
+// ─── Extraction actions techniques ───────────────────────────────────────────
 function extractActions(description) {
   if (!description || description.trim().length < 10) return []
 
-  // 1. Listes numérotées : "1. xxx" ou "1) xxx"
   const numbered = description.match(/(?:^|\n)\s*\d+[\.\)]\s+([^\n]{10,})/g)
-  if (numbered && numbered.length >= 2) {
-    return numbered.slice(0, 6).map((s) => s.replace(/^\s*\d+[\.\)]\s+/, '').trim())
-  }
+  if (numbered && numbered.length >= 2)
+    return numbered.slice(0, 8).map((s) => s.replace(/^\s*\d+[\.\)]\s+/, '').trim())
 
-  // 2. Puces : "- xxx" ou "• xxx" ou "* xxx"
-  const bullets = description.match(/(?:^|\n)\s*[-•*►✅✔→]\s+([^\n]{10,})/g)
-  if (bullets && bullets.length >= 2) {
-    return bullets.slice(0, 6).map((s) => s.replace(/^\s*[-•*►✅✔→]\s+/, '').trim())
-  }
+  const bullets = description.match(/(?:^|\n)\s*[-*]\s+([^\n]{10,})/g)
+  if (bullets && bullets.length >= 2)
+    return bullets.slice(0, 8).map((s) => s.replace(/^\s*[-*]\s+/, '').trim())
 
-  // 3. Lignes commençant par un verbe d'action
-  const actionVerbs = /^(install|créer|créez|apprendre|découvrir|utiliser|configur|générer|automatiser|optimiser|construire|développer|lancer|déployer|connecter|intégrer|mettre|faire|comment|étape|step|how to)/i
+  const actionVerbs = /^(installer|creer|creez|apprendre|decouvrir|utiliser|configur|generer|automatiser|optimiser|construire|developper|lancer|deployer|connecter|integrer|mettre|comment|etape|step|how to|setup|connect|build|create|use|install|configure|generate)/i
   const lines = description.split('\n').filter((l) => l.trim().length > 15 && actionVerbs.test(l.trim()))
-  if (lines.length >= 2) return lines.slice(0, 5).map((l) => l.trim())
+  if (lines.length >= 2) return lines.slice(0, 6).map((l) => l.trim())
 
-  // 4. Fallback : premières phrases significatives
   const sentences = description
     .replace(/https?:\/\/\S+/g, '')
     .split(/[.!?\n]/)
     .map((s) => s.trim())
-    .filter((s) => s.length > 20)
+    .filter((s) => s.length > 25)
   return sentences.slice(0, 4)
+}
+
+// ─── Extraction liens ─────────────────────────────────────────────────────────
+function extractLinks(description) {
+  if (!description) return []
+  const urlRegex = /https?:\/\/[^\s\)>\]"']+/g
+  const urls = description.match(urlRegex) || []
+  const unique = [...new Set(urls)].slice(0, 15)
+
+  return unique.map((url) => {
+    // Trouver le contexte autour du lien
+    const idx = description.indexOf(url)
+    const before = description.slice(Math.max(0, idx - 60), idx).split('\n').pop().trim()
+    const label = before.replace(/[-:>*]\s*$/, '').trim() || null
+
+    let domain = ''
+    try { domain = new URL(url).hostname.replace('www.', '') } catch {}
+
+    return { url, label: label || domain, domain }
+  })
+}
+
+// ─── Extraction formations et prix ───────────────────────────────────────────
+function extractFormations(description) {
+  if (!description) return []
+  const results = []
+  const lines = description.split('\n')
+
+  const formationKeywords = /formation|cours|programme|mastermind|coaching|bootcamp|mentoring|template|pack|bundle|academy|school|training|module|certification/i
+  const priceRegex = /(\d[\d\s]*[,.]?\d*)\s*[€$£]|[€$£]\s*(\d[\d\s]*[,.]?\d*)|(\d+)\s*euros?|gratuit|free|offert/i
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    if (!formationKeywords.test(line)) continue
+
+    // Chercher un prix dans la ligne et les 3 suivantes
+    const context = lines.slice(i, i + 4).join(' ')
+    const priceMatch = context.match(priceRegex)
+    const price = priceMatch ? priceMatch[0].trim() : null
+
+    // Chercher un lien associe
+    const urlMatch = context.match(/https?:\/\/[^\s]+/)
+    const url = urlMatch ? urlMatch[0] : null
+
+    const name = line.replace(/https?:\/\/\S+/g, '').replace(/[*_#]/g, '').trim()
+    if (name.length > 5) {
+      results.push({ name, price, url })
+    }
+  }
+
+  return results.slice(0, 5)
+}
+
+// ─── Pertinence business ─────────────────────────────────────────────────────
+const BUSINESS_DOMAINS = [
+  {
+    id: 'travel',
+    label: 'Agence de voyages',
+    keywords: [
+      'booking', 'reservation', 'crm', 'client', 'newsletter', 'email marketing', 'seo', 'instagram',
+      'tiktok', 'contenu', 'marketing', 'landing page', 'devis', 'automatisation client', 'avis',
+      'google my business', 'google ads', 'meta ads', 'publicite', 'lead', 'tunnel de vente',
+      'chatbot', 'whatsapp', 'automation', 'voyage', 'tourisme', 'agence', 'experience client',
+      'personnalise', 'calendly', 'calendrier', 'facturation', 'paiement', 'stripe'
+    ],
+    useCases: {
+      'chatgpt': 'Redaction de descriptions de circuits, reponses clients automatisees, generation de contenu marketing',
+      'automation': 'Automatiser les confirmations de reservation, relances clients, envoi de programmes',
+      'marketing': 'Campagnes email, SEO pour les circuits, publicite ciblee voyageurs',
+      'social': 'Contenus Instagram et TikTok pour attirer des voyageurs, gestion communaute',
+      'video_image': 'Visuels pour les circuits, videos promotionnelles de destinations',
+      'business': 'Modelisation economique, tarification dynamique, developpement agence',
+      'dev': 'Systeme de devis en ligne, CRM personnalise, espace client',
+      'tools': 'Outils de gestion de projets voyages, coordination guides et prestataires',
+    }
+  },
+  {
+    id: 'apps',
+    label: 'Creation d applications',
+    keywords: [
+      'react', 'next.js', 'python', 'javascript', 'typescript', 'api', 'supabase', 'firebase',
+      'vercel', 'cursor', 'github', 'backend', 'frontend', 'database', 'ui/ux', 'figma',
+      'no-code', 'bubble', 'webflow', 'framer', 'mvp', 'saas', 'developpement', 'code',
+      'deploy', 'hebergement', 'serveur', 'cloud', 'docker', 'langchain', 'rag', 'llm api',
+      'openai api', 'anthropic', 'integration', 'webhook', 'stripe', 'auth', 'authentication'
+    ],
+    useCases: {
+      'dev': 'Techniques directement applicables au developpement de vos applications',
+      'chatgpt': 'Integration IA dans vos applications, chatbots, generation de contenu automatique',
+      'automation': 'Automatisation des workflows de developpement, tests, deploiement',
+      'tools': 'Outils de productivite pour developper plus vite et mieux',
+      'business': 'Monetisation de vos applications, modele SaaS, pricing',
+    }
+  },
+  {
+    id: 'automation',
+    label: 'Automatismes',
+    keywords: [
+      'zapier', 'make', 'n8n', 'automation', 'automatisation', 'workflow', 'webhook', 'trigger',
+      'api', 'script', 'python', 'bot', 'schedule', 'cron', 'integromat', 'airtable',
+      'notion', 'google sheets', 'slack', 'gmail', 'calendar', 'typeform', 'notion api',
+      'automatique', 'synchronisation', 'pipeline', 'flux', 'connecter', 'integrer'
+    ],
+    useCases: {
+      'automation': 'Applications directes : automatiser vos processus metier entre voyages, hebergement et activites',
+      'chatgpt': 'Automatiser la creation de contenu, les reponses, les rapports',
+      'dev': 'Developper vos propres automatismes sur mesure avec du code',
+      'tools': 'Nouveaux outils d automatisation a integrer dans votre stack',
+    }
+  },
+  {
+    id: 'accommodation',
+    label: 'Hebergement touristique',
+    keywords: [
+      'airbnb', 'booking.com', 'hebergement', 'hotel', 'riad', 'villa', 'location', 'propriete',
+      'tarif', 'pricing', 'ota', 'channel manager', 'calendrier', 'avis', 'review', 'guest',
+      'checkin', 'checkout', 'message automatique', 'menage', 'conciergerie', 'sejour',
+      'occupation', 'revenue management', 'dynamic pricing', 'hostaway', 'smoobu', 'gestion locative'
+    ],
+    useCases: {
+      'automation': 'Messages automatiques aux guests, synchronisation calendriers, gestion menage',
+      'chatgpt': 'Reponses aux avis, descriptions optimisees, guide de bienvenue personnalise',
+      'marketing': 'Optimisation des annonces Airbnb et Booking, strategie de contenu',
+      'business': 'Revenue management, pricing dynamique, optimisation du taux d occupation',
+      'tools': 'Outils de gestion de proprietes, channel managers, PMS',
+    }
+  },
+  {
+    id: 'activities',
+    label: 'Animation et activites touristiques',
+    keywords: [
+      'activite', 'excursion', 'tour', 'guide', 'reservation', 'experience', 'evenement',
+      'ticketing', 'groupe', 'planning', 'itineraire', 'animation', 'visite', 'atelier',
+      'booking activite', 'fareharbor', 'bokun', 'rezdy', 'tripadvisor', 'google things to do',
+      'programme', 'outdoor', 'aventure', 'randonnee', 'quad', 'sport'
+    ],
+    useCases: {
+      'automation': 'Automatiser les reservations, confirmations, rappels aux participants',
+      'marketing': 'Promouvoir les activites sur les plateformes, Google, Tripadvisor',
+      'social': 'Contenus pour attirer des participants, videos d activites, temoignages',
+      'chatgpt': 'Descriptions d activites optimisees, reponses FAQ automatiques',
+      'video_image': 'Visuels promotionnels pour les activites, videos de terrain',
+    }
+  },
+]
+
+function getBusinessRelevance(title, description, categoryId) {
+  const text = `${title} ${description}`.toLowerCase()
+  const results = []
+
+  for (const domain of BUSINESS_DOMAINS) {
+    const matchedKeywords = domain.keywords.filter((k) => text.includes(k.toLowerCase()))
+    const score = matchedKeywords.length
+
+    let level = 'Faible'
+    if (score >= 5) level = 'Fort'
+    else if (score >= 2) level = 'Moyen'
+    else if (score === 0) continue
+
+    const useCase = domain.useCases[categoryId] || null
+    results.push({ domain: domain.label, level, useCase, matchedKeywords: matchedKeywords.slice(0, 4) })
+  }
+
+  // Trier par niveau de pertinence
+  const order = { 'Fort': 0, 'Moyen': 1, 'Faible': 2 }
+  results.sort((a, b) => order[a.level] - order[b.level])
+
+  return results
+}
+
+// ─── Enrichissement complet ───────────────────────────────────────────────────
+function enrichVideo(video) {
+  const catId = categorize(video.title, video.description || '')
+  return {
+    category: catId,
+    actions: extractActions(video.description || ''),
+    links: extractLinks(video.description || ''),
+    formations: extractFormations(video.description || ''),
+    businessRelevance: getBusinessRelevance(video.title, video.description || '', catId),
+  }
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -77,51 +251,74 @@ function getCat(id) {
   return CATEGORIES.find((c) => c.id === id) || CATEGORIES[CATEGORIES.length - 1]
 }
 
-// ─── Export ──────────────────────────────────────────────────────────────────
+function levelColor(level) {
+  if (level === 'Fort') return '#22c55e'
+  if (level === 'Moyen') return '#f59e0b'
+  return '#6b7280'
+}
+
+// ─── Export ───────────────────────────────────────────────────────────────────
 function buildExport(videos, enriched, selections) {
   const kept = videos.filter((v) => selections[v.id] === 'keep')
   const deleted = videos.filter((v) => selections[v.id] === 'delete')
 
-  // Group kept by category
   const byCategory = {}
   kept.forEach((v) => {
-    const catId = enriched[v.id]?.category || 'other'
-    const cat = getCat(catId)
+    const cat = getCat(enriched[v.id]?.category || 'other')
     if (!byCategory[cat.label]) byCategory[cat.label] = []
     byCategory[cat.label].push(v)
   })
 
   const lines = []
-  lines.push('╔════════════════════════════════════════════╗')
-  lines.push('║      RAPPORT DE TRI VIDÉOS YOUTUBE IA      ║')
-  lines.push(`║  Généré le ${new Date().toLocaleDateString('fr-FR')} — ${kept.length} vidéos à garder  ║`)
-  lines.push('╚════════════════════════════════════════════╝')
-
-  lines.push('\n\n═══════════════════════════════════')
-  lines.push('  VIDÉOS SÉLECTIONNÉES PAR CATÉGORIE')
-  lines.push('═══════════════════════════════════\n')
+  lines.push('RAPPORT DE TRI VIDEOS YOUTUBE IA')
+  lines.push(`Genere le ${new Date().toLocaleDateString('fr-FR')} — ${kept.length} video(s) selectionnee(s)`)
+  lines.push('='.repeat(60))
 
   for (const [catLabel, vids] of Object.entries(byCategory)) {
-    lines.push(`\n▶ ${catLabel.toUpperCase()} (${vids.length} vidéo${vids.length > 1 ? 's' : ''})`)
-    lines.push('─'.repeat(50))
+    lines.push(`\n\n${catLabel.toUpperCase()} — ${vids.length} video(s)`)
+    lines.push('-'.repeat(60))
+
     vids.forEach((v, i) => {
-      const e = enriched[v.id]
+      const e = enriched[v.id] || {}
       lines.push(`\n${i + 1}. ${v.title}`)
       lines.push(`   URL : ${v.url}`)
+
       if (v.description?.trim()) {
-        lines.push(`   Description : ${v.description.slice(0, 200).replace(/\n/g, ' ')}${v.description.length > 200 ? '…' : ''}`)
+        const desc = v.description.slice(0, 300).replace(/\n/g, ' ')
+        lines.push(`   Description : ${desc}${v.description.length > 300 ? '...' : ''}`)
       }
-      if (e?.actions?.length) {
-        lines.push('   Actions principales :')
+
+      if (e.actions?.length) {
+        lines.push('\n   ACTIONS TECHNIQUES :')
         e.actions.forEach((a, ai) => lines.push(`     ${ai + 1}. ${a}`))
+      }
+
+      if (e.links?.length) {
+        lines.push('\n   LIENS ET RESSOURCES :')
+        e.links.forEach((l) => lines.push(`     - ${l.label} : ${l.url}`))
+      }
+
+      if (e.formations?.length) {
+        lines.push('\n   FORMATIONS PROPOSEES :')
+        e.formations.forEach((f) => {
+          lines.push(`     - ${f.name}${f.price ? ` [${f.price}]` : ''}${f.url ? ` — ${f.url}` : ''}`)
+        })
+      }
+
+      if (e.businessRelevance?.length) {
+        lines.push('\n   PERTINENCE BUSINESS :')
+        e.businessRelevance.forEach((r) => {
+          lines.push(`     [${r.level}] ${r.domain}`)
+          if (r.useCase) lines.push(`            ${r.useCase}`)
+        })
       }
     })
   }
 
   if (deleted.length > 0) {
-    lines.push('\n\n═══════════════════════════════════')
-    lines.push('  VIDÉOS À SUPPRIMER')
-    lines.push('═══════════════════════════════════')
+    lines.push('\n\n' + '='.repeat(60))
+    lines.push('VIDEOS A SUPPRIMER')
+    lines.push('-'.repeat(60))
     deleted.forEach((v, i) => {
       lines.push(`\n${i + 1}. ${v.title}`)
       lines.push(`   URL : ${v.url}`)
@@ -131,117 +328,178 @@ function buildExport(videos, enriched, selections) {
   return lines.join('\n')
 }
 
-// ─── VideoCard ────────────────────────────────────────────────────────────────
-function VideoCard({ video, enriched, selection, onChange }) {
-  const [expanded, setExpanded] = useState(false)
-  const e = enriched || {}
-  const cat = getCat(e.category || 'other')
-  const actions = e.actions || []
-
-  const borderColor =
-    selection === 'keep' ? '#22c55e' : selection === 'delete' ? '#ef4444' : '#2a2a2a'
-
+// ─── Bloc section ─────────────────────────────────────────────────────────────
+function Section({ title, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen)
   return (
-    <div
-      style={{
-        background: '#161616',
-        border: `1px solid ${borderColor}`,
-        borderRadius: 10,
-        padding: 16,
-        display: 'flex',
-        gap: 14,
-        transition: 'border-color .2s',
-      }}
-    >
-      {/* Thumbnail */}
-      <div style={{ flexShrink: 0 }}>
-        <a href={video.url} target="_blank" rel="noopener noreferrer">
-          {video.thumbnail ? (
-            <img src={video.thumbnail} alt="" style={{ width: 120, height: 68, objectFit: 'cover', borderRadius: 6, display: 'block' }} />
-          ) : (
-            <div style={{ width: 120, height: 68, background: '#222', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', fontSize: 11 }}>
-              no thumb
-            </div>
-          )}
-        </a>
-        <div style={{ marginTop: 6, display: 'flex', gap: 6 }}>
-          {/* Garder */}
-          <label style={{ flex: 1, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, background: selection === 'keep' ? '#14532d' : '#1a1a1a', border: '1px solid ' + (selection === 'keep' ? '#22c55e' : '#333'), borderRadius: 6, padding: '6px 4px' }}>
-            <input type="checkbox" checked={selection === 'keep'} onChange={() => onChange(video.id, selection === 'keep' ? null : 'keep')} style={{ accentColor: '#22c55e', width: 14, height: 14 }} />
-            <span style={{ fontSize: 9, color: '#22c55e' }}>Garder</span>
-          </label>
-          {/* Supprimer */}
-          <label style={{ flex: 1, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, background: selection === 'delete' ? '#450a0a' : '#1a1a1a', border: '1px solid ' + (selection === 'delete' ? '#ef4444' : '#333'), borderRadius: 6, padding: '6px 4px' }}>
-            <input type="checkbox" checked={selection === 'delete'} onChange={() => onChange(video.id, selection === 'delete' ? null : 'delete')} style={{ accentColor: '#ef4444', width: 14, height: 14 }} />
-            <span style={{ fontSize: 9, color: '#ef4444' }}>Supprimer</span>
-          </label>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {/* Category badge */}
-        <span style={{ display: 'inline-block', background: cat.color + '22', border: `1px solid ${cat.color}55`, color: cat.color, fontSize: 10, borderRadius: 4, padding: '2px 7px', marginBottom: 6 }}>
-          {cat.label}
-        </span>
-
-        {/* Title */}
-        <a href={video.url} target="_blank" rel="noopener noreferrer" style={{ color: '#f0f0f0', fontWeight: 600, fontSize: 14, textDecoration: 'none', display: 'block', marginBottom: 4, lineHeight: 1.4 }}>
-          {video.title}
-        </a>
-
-        {/* Meta */}
-        <div style={{ color: '#666', fontSize: 11, marginBottom: 8 }}>
-          {[parseDuration(video.duration), fmtViews(video.viewCount), video.channel].filter(Boolean).join(' · ')}
-        </div>
-
-        {/* Description */}
-        {video.description && (
-          <div style={{ marginBottom: 8 }}>
-            <div style={{ color: '#999', fontSize: 12, lineHeight: 1.5, maxHeight: expanded ? 'none' : 40, overflow: 'hidden' }}>
-              {video.description}
-            </div>
-            {video.description.length > 80 && (
-              <button onClick={() => setExpanded(!expanded)} style={{ background: 'none', border: 'none', color: '#5b9cf6', cursor: 'pointer', fontSize: 11, padding: '2px 0' }}>
-                {expanded ? '▲ Moins' : '▼ Plus'}
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Actions */}
-        {actions.length > 0 && (
-          <div style={{ background: '#0d1a0d', border: '1px solid #1a3a1a', borderRadius: 6, padding: '8px 12px' }}>
-            <div style={{ color: '#4ade80', fontSize: 11, fontWeight: 700, marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              Actions principales
-            </div>
-            <ol style={{ margin: 0, paddingLeft: 18 }}>
-              {actions.map((a, i) => (
-                <li key={i} style={{ color: '#b0d4b0', fontSize: 12, lineHeight: 1.5, marginBottom: 3 }}>
-                  {a}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-      </div>
+    <div style={{ borderTop: '1px solid #222', marginTop: 10 }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', color: '#bbb', cursor: 'pointer', padding: '8px 0', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        <span>{title}</span>
+        <span style={{ fontSize: 10, color: '#555' }}>{open ? 'REDUIRE' : 'AFFICHER'}</span>
+      </button>
+      {open && <div style={{ paddingBottom: 10 }}>{children}</div>}
     </div>
   )
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+// ─── VideoCard ────────────────────────────────────────────────────────────────
+function VideoCard({ video, enriched, selection, onChange }) {
+  const e = enriched || {}
+  const cat = getCat(e.category || 'other')
+
+  const borderColor = selection === 'keep' ? '#22c55e' : selection === 'delete' ? '#ef4444' : '#252525'
+  const bgColor = selection === 'keep' ? '#0d1f0d' : selection === 'delete' ? '#1f0d0d' : '#141414'
+
+  return (
+    <div style={{ background: bgColor, border: `1px solid ${borderColor}`, borderRadius: 8, padding: 16, transition: 'border-color .2s, background .2s' }}>
+
+      {/* En-tete */}
+      <div style={{ display: 'flex', gap: 14, marginBottom: 12 }}>
+        {/* Thumbnail */}
+        <div style={{ flexShrink: 0 }}>
+          <a href={video.url} target="_blank" rel="noopener noreferrer">
+            {video.thumbnail
+              ? <img src={video.thumbnail} alt="" style={{ width: 130, height: 73, objectFit: 'cover', borderRadius: 4, display: 'block' }} />
+              : <div style={{ width: 130, height: 73, background: '#1e1e1e', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', fontSize: 11 }}>aucune image</div>
+            }
+          </a>
+          {/* Boutons */}
+          <div style={{ display: 'flex', gap: 4, marginTop: 6 }}>
+            <label style={{ flex: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, background: selection === 'keep' ? '#14532d' : '#1a1a1a', border: '1px solid ' + (selection === 'keep' ? '#22c55e' : '#333'), borderRadius: 4, padding: '5px 4px' }}>
+              <input type="checkbox" checked={selection === 'keep'} onChange={() => onChange(video.id, selection === 'keep' ? null : 'keep')} style={{ accentColor: '#22c55e', width: 12, height: 12 }} />
+              <span style={{ fontSize: 10, color: '#22c55e', fontWeight: 700 }}>GARDER</span>
+            </label>
+            <label style={{ flex: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, background: selection === 'delete' ? '#450a0a' : '#1a1a1a', border: '1px solid ' + (selection === 'delete' ? '#ef4444' : '#333'), borderRadius: 4, padding: '5px 4px' }}>
+              <input type="checkbox" checked={selection === 'delete'} onChange={() => onChange(video.id, selection === 'delete' ? null : 'delete')} style={{ accentColor: '#ef4444', width: 12, height: 12 }} />
+              <span style={{ fontSize: 10, color: '#ef4444', fontWeight: 700 }}>SUPPRIMER</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Titre et meta */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
+            <span style={{ background: cat.color + '20', border: `1px solid ${cat.color}50`, color: cat.color, fontSize: 10, borderRadius: 3, padding: '2px 7px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              {cat.label}
+            </span>
+            {e.formations?.length > 0 && (
+              <span style={{ background: '#1a1500', border: '1px solid #d9770650', color: '#d97706', fontSize: 10, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>
+                FORMATION
+              </span>
+            )}
+          </div>
+          <a href={video.url} target="_blank" rel="noopener noreferrer" style={{ color: '#f0f0f0', fontWeight: 600, fontSize: 14, textDecoration: 'none', display: 'block', marginBottom: 5, lineHeight: 1.4 }}>
+            {video.title}
+          </a>
+          <div style={{ color: '#555', fontSize: 11 }}>
+            {[video.channel, parseDuration(video.duration), fmtViews(video.viewCount)].filter(Boolean).join('  ·  ')}
+          </div>
+          {video.description && (
+            <div style={{ color: '#888', fontSize: 12, lineHeight: 1.5, marginTop: 6, maxHeight: 48, overflow: 'hidden' }}>
+              {video.description.slice(0, 200)}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Blocs detailles */}
+
+      {/* Bloc 1 — Actions techniques */}
+      {e.actions?.length > 0 && (
+        <Section title="Actions techniques">
+          <ol style={{ margin: '6px 0 0', paddingLeft: 20 }}>
+            {e.actions.map((a, i) => (
+              <li key={i} style={{ color: '#c8c8c8', fontSize: 12, lineHeight: 1.6, marginBottom: 3 }}>{a}</li>
+            ))}
+          </ol>
+        </Section>
+      )}
+
+      {/* Bloc 2 — Liens et ressources */}
+      {e.links?.length > 0 && (
+        <Section title={`Liens et ressources (${e.links.length})`}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6 }}>
+            {e.links.map((l, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                <span style={{ color: '#555', fontSize: 11, minWidth: 16 }}>{i + 1}.</span>
+                <div>
+                  {l.label && l.label !== l.domain && (
+                    <span style={{ color: '#aaa', fontSize: 11, marginRight: 6 }}>{l.label}</span>
+                  )}
+                  <a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
+                    {l.domain || l.url}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* Bloc 3 — Formations et prix */}
+      {e.formations?.length > 0 && (
+        <Section title="Formations proposees" defaultOpen={true}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
+            {e.formations.map((f, i) => (
+              <div key={i} style={{ background: '#1a1200', border: '1px solid #3a2a0050', borderRadius: 4, padding: '8px 12px' }}>
+                <div style={{ color: '#d4a017', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>{f.name}</div>
+                {f.price && <div style={{ color: '#f59e0b', fontSize: 12, marginBottom: 3 }}>Prix : {f.price}</div>}
+                {f.url && (
+                  <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
+                    {f.url}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* Bloc 4 — Pertinence business */}
+      {e.businessRelevance?.length > 0 && (
+        <Section title="Pertinence pour votre business">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
+            {e.businessRelevance.map((r, i) => (
+              <div key={i} style={{ background: '#111', border: '1px solid #222', borderRadius: 4, padding: '8px 12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: r.useCase ? 4 : 0 }}>
+                  <span style={{ background: levelColor(r.level) + '22', border: `1px solid ${levelColor(r.level)}55`, color: levelColor(r.level), fontSize: 10, borderRadius: 3, padding: '1px 6px', fontWeight: 700 }}>
+                    {r.level.toUpperCase()}
+                  </span>
+                  <span style={{ color: '#ccc', fontSize: 12, fontWeight: 600 }}>{r.domain}</span>
+                </div>
+                {r.useCase && <div style={{ color: '#999', fontSize: 12, lineHeight: 1.5 }}>{r.useCase}</div>}
+                {r.matchedKeywords.length > 0 && (
+                  <div style={{ marginTop: 4, display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                    {r.matchedKeywords.map((k) => (
+                      <span key={k} style={{ background: '#1a1a1a', border: '1px solid #333', color: '#666', fontSize: 10, borderRadius: 3, padding: '1px 6px' }}>{k}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+    </div>
+  )
+}
+
+// ─── Page principale ──────────────────────────────────────────────────────────
 export default function YouTubeOrganizerPage() {
   const [connected, setConnected] = useState(false)
   const [loading, setLoading] = useState(true)
   const [playlists, setPlaylists] = useState([])
   const [selectedPlaylist, setSelectedPlaylist] = useState(null)
   const [videos, setVideos] = useState([])
-  const [enriched, setEnriched] = useState({}) // { videoId: { category, actions } }
+  const [enriched, setEnriched] = useState({})
   const [videosLoading, setVideosLoading] = useState(false)
   const [selections, setSelections] = useState({})
   const [search, setSearch] = useState('')
   const [activeCat, setActiveCat] = useState('all')
-  const [filterSel, setFilterSel] = useState('all') // all | keep | delete | none
+  const [filterSel, setFilterSel] = useState('all')
   const [exported, setExported] = useState(false)
   const [playlistsLoaded, setPlaylistsLoaded] = useState(false)
 
@@ -270,9 +528,7 @@ export default function YouTubeOrganizerPage() {
       const data = await res.json()
       if (data.playlists) {
         setPlaylists(data.playlists)
-        const ia = data.playlists.find(
-          (p) => p.title.toLowerCase() === 'ia' || p.title.toLowerCase().includes('ia')
-        )
+        const ia = data.playlists.find((p) => p.title.toLowerCase() === 'ia' || p.title.toLowerCase().includes('ia'))
         if (ia) loadVideos(ia)
       }
     } catch (e) { console.error(e) }
@@ -282,11 +538,7 @@ export default function YouTubeOrganizerPage() {
 
   async function loadVideos(playlist) {
     setSelectedPlaylist(playlist)
-    setVideos([])
-    setEnriched({})
-    setSelections({})
-    setSearch('')
-    setActiveCat('all')
+    setVideos([]); setEnriched({}); setSelections({}); setSearch(''); setActiveCat('all')
     setVideosLoading(true)
     try {
       const res = await fetch(`/api/youtube/videos?playlistId=${playlist.id}`)
@@ -294,16 +546,9 @@ export default function YouTubeOrganizerPage() {
       const data = await res.json()
       const vids = data.videos || []
       setVideos(vids)
-
-      // Enrichissement local : catégorie + actions
-      const enrichMap = {}
-      vids.forEach((v) => {
-        enrichMap[v.id] = {
-          category: categorize(v.title, v.description || ''),
-          actions: extractActions(v.description || ''),
-        }
-      })
-      setEnriched(enrichMap)
+      const map = {}
+      vids.forEach((v) => { map[v.id] = enrichVideo(v) })
+      setEnriched(map)
     } catch (e) { console.error(e) }
     finally { setVideosLoading(false) }
   }
@@ -349,71 +594,63 @@ export default function YouTubeOrganizerPage() {
   const deleteCount = Object.values(selections).filter((v) => v === 'delete').length
   const noneCount = videos.length - keepCount - deleteCount
 
-  // Categories present in current videos
-  const presentCats = CATEGORIES.filter(
-    (c) => c.id === 'all' || videos.some((v) => enriched[v.id]?.category === c.id)
-  )
-
   const S = {
-    page: { position: 'fixed', inset: 0, zIndex: 9999, background: '#0a0a0a', color: '#e8e8e8', fontFamily: "'Segoe UI', system-ui, sans-serif", overflowY: 'auto', paddingBottom: 60 },
-    header: { background: '#111', borderBottom: '1px solid #222', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 },
-    inner: { maxWidth: 1000, margin: '0 auto', padding: '24px 16px' },
-    btn: (color) => ({ background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '7px 14px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }),
-    btnOutline: { background: 'transparent', color: '#bbb', border: '1px solid #444', borderRadius: 6, padding: '6px 14px', cursor: 'pointer', fontSize: 13 },
+    page: { position: 'fixed', inset: 0, zIndex: 9999, background: '#0a0a0a', color: '#e8e8e8', fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif", overflowY: 'auto', paddingBottom: 80 },
+    header: { background: '#0f0f0f', borderBottom: '1px solid #1e1e1e', padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10, position: 'sticky', top: 0, zIndex: 10 },
+    inner: { maxWidth: 980, margin: '0 auto', padding: '24px 16px' },
+    btn: (color) => ({ background: color, color: '#fff', border: 'none', borderRadius: 5, padding: '7px 14px', cursor: 'pointer', fontSize: 12, fontWeight: 700, letterSpacing: '0.3px' }),
+    btnOutline: { background: 'transparent', color: '#999', border: '1px solid #333', borderRadius: 5, padding: '6px 14px', cursor: 'pointer', fontSize: 12 },
   }
 
-  if (loading) return <div style={S.page}><div style={{ textAlign: 'center', paddingTop: 120, color: '#555' }}>Chargement…</div></div>
+  if (loading) return <div style={S.page}><div style={{ textAlign: 'center', paddingTop: 120, color: '#444', fontSize: 13 }}>Chargement...</div></div>
 
   return (
     <div style={S.page}>
-      {/* Header */}
       <div style={S.header}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="#ff0000">
-            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
-          </svg>
-          <div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: '#fff' }}>YouTube Organizer IA</div>
-            <div style={{ fontSize: 12, color: '#666' }}>Tri par catégories · Actions extraites automatiquement</div>
-          </div>
+        <div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: '#fff', letterSpacing: '-0.3px' }}>YouTube Organizer IA</div>
+          <div style={{ fontSize: 11, color: '#555', marginTop: 1 }}>Categorisation · Actions techniques · Liens · Formations · Pertinence business</div>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {connected && videos.length > 0 && (
-            <button onClick={doExport} style={S.btn('#2563eb')}>
-              {exported ? '✓ Exporté !' : '⬇ Exporter rapport .txt'}
+            <button onClick={doExport} style={S.btn('#1d4ed8')}>
+              {exported ? 'Exporte' : 'Exporter rapport .txt'}
             </button>
           )}
-          {connected && <button onClick={disconnect} style={S.btnOutline}>Déconnecter</button>}
+          {connected && <button onClick={disconnect} style={S.btnOutline}>Deconnecter</button>}
         </div>
       </div>
 
       <div style={S.inner}>
-        {/* Non connecté */}
+        {/* Non connecte */}
         {!connected && (
           <div style={{ textAlign: 'center', padding: '80px 24px' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📺</div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 12 }}>Connectez votre compte YouTube</h2>
-            <p style={{ color: '#888', fontSize: 13, marginBottom: 8 }}>L&apos;outil va récupérer vos playlists, catégoriser les vidéos et extraire les actions clés.</p>
-            <p style={{ color: '#555', fontSize: 12, marginBottom: 28 }}>Assurez-vous que <code style={{ background: '#1a1a1a', padding: '2px 6px', borderRadius: 4 }}>.env.local</code> est configuré.</p>
-            <a href="/api/youtube/auth" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#ff0000', color: '#fff', borderRadius: 8, padding: '13px 28px', fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+            <div style={{ fontSize: 13, color: '#888', marginBottom: 8 }}>Connectez votre compte YouTube pour commencer</div>
+            <div style={{ color: '#444', fontSize: 12, marginBottom: 28, fontFamily: 'monospace', background: '#111', border: '1px solid #222', borderRadius: 6, padding: 12, display: 'inline-block', textAlign: 'left' }}>
+              YOUTUBE_CLIENT_ID=...<br />
+              YOUTUBE_CLIENT_SECRET=...<br />
+              YOUTUBE_REDIRECT_URI=http://localhost:3000/api/youtube/callback<br />
+              NEXT_PUBLIC_BASE_URL=http://localhost:3000
+            </div>
+            <br />
+            <a href="/api/youtube/auth" style={{ display: 'inline-block', background: '#cc0000', color: '#fff', borderRadius: 5, padding: '12px 28px', fontSize: 14, fontWeight: 700, textDecoration: 'none', marginTop: 16 }}>
               Se connecter avec YouTube
             </a>
           </div>
         )}
 
-        {/* Connecté — choix playlist */}
+        {/* Choix playlist */}
         {connected && !selectedPlaylist && (
           <>
-            <h2 style={{ fontSize: 17, fontWeight: 700, marginBottom: 16 }}>Choisissez une playlist</h2>
+            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, color: '#ccc' }}>Choisissez une playlist</div>
             {playlists.length === 0
-              ? <p style={{ color: '#666' }}>Chargement des playlists…</p>
+              ? <div style={{ color: '#555', fontSize: 13 }}>Chargement des playlists...</div>
               : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px,1fr))', gap: 10 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px,1fr))', gap: 8 }}>
                   {playlists.map((p) => (
-                    <div key={p.id} onClick={() => loadVideos(p)} style={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, padding: 12, cursor: 'pointer' }}>
-                      <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 4 }}>{p.title}</div>
-                      <div style={{ color: '#666', fontSize: 11 }}>{p.count} vidéo{p.count !== 1 ? 's' : ''}</div>
+                    <div key={p.id} onClick={() => loadVideos(p)} style={{ background: '#141414', border: '1px solid #222', borderRadius: 6, padding: 12, cursor: 'pointer' }}>
+                      <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 4, color: '#e0e0e0' }}>{p.title}</div>
+                      <div style={{ color: '#555', fontSize: 11 }}>{p.count} video{p.count !== 1 ? 's' : ''}</div>
                     </div>
                   ))}
                 </div>
@@ -422,71 +659,69 @@ export default function YouTubeOrganizerPage() {
           </>
         )}
 
-        {/* Connecté — vidéos chargées */}
+        {/* Videos */}
         {connected && selectedPlaylist && (
           <>
-            {/* Breadcrumb */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
-              <button onClick={() => { setSelectedPlaylist(null); setVideos([]); setSelections({}); setEnriched({}) }} style={{ ...S.btnOutline, fontSize: 12, padding: '4px 10px' }}>
-                ← Playlists
+              <button onClick={() => { setSelectedPlaylist(null); setVideos([]); setSelections({}); setEnriched({}) }} style={{ ...S.btnOutline, fontSize: 11, padding: '4px 10px' }}>
+                Playlists
               </button>
-              <span style={{ color: '#888', fontSize: 13 }}>
-                <strong style={{ color: '#e8e8e8' }}>{selectedPlaylist.title}</strong>
-                {videos.length > 0 && <span style={{ color: '#555' }}> — {videos.length} vidéos</span>}
+              <span style={{ color: '#555', fontSize: 13 }}>
+                <strong style={{ color: '#e0e0e0' }}>{selectedPlaylist.title}</strong>
+                {videos.length > 0 && <span style={{ color: '#444' }}> — {videos.length} videos</span>}
               </span>
             </div>
 
-            {videosLoading && <div style={{ textAlign: 'center', padding: '60px 0', color: '#555' }}>Chargement et analyse des vidéos…</div>}
+            {videosLoading && <div style={{ textAlign: 'center', padding: '60px 0', color: '#444', fontSize: 13 }}>Chargement et analyse en cours...</div>}
 
             {!videosLoading && videos.length > 0 && (
               <>
                 {/* Stats */}
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 16 }}>
-                  <span style={{ background: '#0d2b1a', border: '1px solid #22c55e44', color: '#22c55e', fontSize: 12, borderRadius: 20, padding: '3px 12px' }}>✓ {keepCount} à garder</span>
-                  <span style={{ background: '#2b0d0d', border: '1px solid #ef444444', color: '#ef4444', fontSize: 12, borderRadius: 20, padding: '3px 12px' }}>✕ {deleteCount} à supprimer</span>
-                  <span style={{ background: '#1a1a1a', border: '1px solid #44444455', color: '#888', fontSize: 12, borderRadius: 20, padding: '3px 12px' }}>? {noneCount} non classées</span>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+                  {[
+                    [keepCount + ' a garder', '#22c55e'],
+                    [deleteCount + ' a supprimer', '#ef4444'],
+                    [noneCount + ' non classees', '#555'],
+                  ].map(([label, color]) => (
+                    <span key={label} style={{ border: `1px solid ${color}44`, color, fontSize: 12, borderRadius: 4, padding: '3px 10px' }}>{label}</span>
+                  ))}
                 </div>
 
-                {/* Filtres catégories */}
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>
-                  <button onClick={() => setActiveCat('all')} style={{ background: activeCat === 'all' ? '#2a2a2a' : 'transparent', color: activeCat === 'all' ? '#fff' : '#888', border: '1px solid ' + (activeCat === 'all' ? '#555' : '#333'), borderRadius: 20, padding: '4px 12px', cursor: 'pointer', fontSize: 12 }}>
+                {/* Filtres categories */}
+                <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 10 }}>
+                  <button onClick={() => setActiveCat('all')} style={{ background: activeCat === 'all' ? '#222' : 'transparent', color: activeCat === 'all' ? '#fff' : '#666', border: '1px solid ' + (activeCat === 'all' ? '#444' : '#222'), borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 11 }}>
                     Toutes ({videos.length})
                   </button>
-                  {CATEGORIES.filter(c => c.id !== 'other' && videos.some(v => enriched[v.id]?.category === c.id)).map((cat) => {
+                  {CATEGORIES.filter(c => videos.some(v => enriched[v.id]?.category === c.id)).map((cat) => {
                     const count = videos.filter((v) => enriched[v.id]?.category === cat.id).length
                     return (
-                      <button key={cat.id} onClick={() => setActiveCat(activeCat === cat.id ? 'all' : cat.id)} style={{ background: activeCat === cat.id ? cat.color + '33' : 'transparent', color: activeCat === cat.id ? cat.color : '#888', border: '1px solid ' + (activeCat === cat.id ? cat.color + '88' : '#333'), borderRadius: 20, padding: '4px 12px', cursor: 'pointer', fontSize: 12 }}>
+                      <button key={cat.id} onClick={() => setActiveCat(activeCat === cat.id ? 'all' : cat.id)} style={{ background: activeCat === cat.id ? cat.color + '22' : 'transparent', color: activeCat === cat.id ? cat.color : '#666', border: '1px solid ' + (activeCat === cat.id ? cat.color + '66' : '#222'), borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 11 }}>
                         {cat.label} ({count})
                       </button>
                     )
                   })}
-                  {videos.some(v => enriched[v.id]?.category === 'other') && (
-                    <button onClick={() => setActiveCat(activeCat === 'other' ? 'all' : 'other')} style={{ background: activeCat === 'other' ? '#33333399' : 'transparent', color: '#888', border: '1px solid #333', borderRadius: 20, padding: '4px 12px', cursor: 'pointer', fontSize: 12 }}>
-                      Autre ({videos.filter(v => enriched[v.id]?.category === 'other').length})
-                    </button>
-                  )}
                 </div>
 
-                {/* Barre de recherche + filtres sélection */}
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+                {/* Recherche et filtres */}
+                <div style={{ display: 'flex', gap: 6, marginBottom: 20, flexWrap: 'wrap' }}>
                   <input
                     type="text"
-                    placeholder="Rechercher…"
+                    placeholder="Rechercher..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    style={{ flex: '1 1 200px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e8e8e8', padding: '7px 12px', fontSize: 13, outline: 'none' }}
+                    style={{ flex: '1 1 200px', background: '#141414', border: '1px solid #222', borderRadius: 5, color: '#e8e8e8', padding: '7px 12px', fontSize: 13, outline: 'none' }}
                   />
-                  {[['all','Toutes'],['keep','✓ Garder'],['delete','✕ Supprimer'],['none','? Non classées']].map(([mode, label]) => (
-                    <button key={mode} onClick={() => setFilterSel(mode)} style={{ background: filterSel === mode ? '#2a2a2a' : 'transparent', color: filterSel === mode ? '#fff' : '#888', border: '1px solid ' + (filterSel === mode ? '#555' : '#333'), borderRadius: 6, padding: '6px 10px', cursor: 'pointer', fontSize: 12 }}>
+                  {[['all', 'Toutes'], ['keep', 'A garder'], ['delete', 'A supprimer'], ['none', 'Non classees']].map(([mode, label]) => (
+                    <button key={mode} onClick={() => setFilterSel(mode)} style={{ background: filterSel === mode ? '#1e1e1e' : 'transparent', color: filterSel === mode ? '#fff' : '#666', border: '1px solid ' + (filterSel === mode ? '#444' : '#222'), borderRadius: 5, padding: '6px 10px', cursor: 'pointer', fontSize: 11 }}>
                       {label}
                     </button>
                   ))}
                 </div>
 
-                {/* Liste de vidéos */}
+                {/* Liste */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {visible.length === 0
-                    ? <div style={{ textAlign: 'center', padding: 60, color: '#555' }}>Aucune vidéo trouvée</div>
+                    ? <div style={{ textAlign: 'center', padding: 60, color: '#444', fontSize: 13 }}>Aucune video trouvee</div>
                     : visible.map((v) => (
                       <VideoCard
                         key={v.id}
@@ -499,8 +734,8 @@ export default function YouTubeOrganizerPage() {
                   }
                 </div>
 
-                <div style={{ textAlign: 'center', marginTop: 12, color: '#444', fontSize: 12 }}>
-                  {visible.length} vidéo{visible.length !== 1 ? 's' : ''} affichée{visible.length !== 1 ? 's' : ''}
+                <div style={{ textAlign: 'center', marginTop: 16, color: '#333', fontSize: 11 }}>
+                  {visible.length} video{visible.length !== 1 ? 's' : ''} affichee{visible.length !== 1 ? 's' : ''}
                 </div>
               </>
             )}
