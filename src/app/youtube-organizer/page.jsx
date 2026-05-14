@@ -195,26 +195,19 @@ const BUSINESS_DOMAINS = [
 
 function getBusinessRelevance(title, description, categoryId) {
   const text = `${title} ${description}`.toLowerCase()
-  const results = []
 
-  for (const domain of BUSINESS_DOMAINS) {
+  return BUSINESS_DOMAINS.map((domain) => {
     const matchedKeywords = domain.keywords.filter((k) => text.includes(k.toLowerCase()))
     const score = matchedKeywords.length
 
-    let level = 'Faible'
+    let level = 'Non detecte'
     if (score >= 5) level = 'Fort'
     else if (score >= 2) level = 'Moyen'
-    else if (score === 0) continue
+    else if (score >= 1) level = 'Faible'
 
     const useCase = domain.useCases[categoryId] || null
-    results.push({ domain: domain.label, level, useCase, matchedKeywords: matchedKeywords.slice(0, 4) })
-  }
-
-  // Trier par niveau de pertinence
-  const order = { 'Fort': 0, 'Moyen': 1, 'Faible': 2 }
-  results.sort((a, b) => order[a.level] - order[b.level])
-
-  return results
+    return { domain: domain.label, level, useCase, matchedKeywords: matchedKeywords.slice(0, 4) }
+  })
 }
 
 // ─── Enrichissement complet ───────────────────────────────────────────────────
@@ -394,81 +387,84 @@ function VideoCard({ video, enriched, selection, onChange }) {
       {/* Blocs detailles */}
 
       {/* Bloc 1 — Actions techniques */}
-      {e.actions?.length > 0 && (
-        <Section title="Actions techniques">
-          <ol style={{ margin: '6px 0 0', paddingLeft: 20 }}>
-            {e.actions.map((a, i) => (
-              <li key={i} style={{ color: '#c8c8c8', fontSize: 12, lineHeight: 1.6, marginBottom: 3 }}>{a}</li>
-            ))}
-          </ol>
-        </Section>
-      )}
+      <Section title={`Actions techniques (${(e.actions || []).length})`}>
+        {e.actions?.length > 0
+          ? <ol style={{ margin: '6px 0 0', paddingLeft: 20 }}>
+              {e.actions.map((a, i) => (
+                <li key={i} style={{ color: '#c8c8c8', fontSize: 12, lineHeight: 1.6, marginBottom: 3 }}>{a}</li>
+              ))}
+            </ol>
+          : <div style={{ color: '#444', fontSize: 12, paddingTop: 6 }}>Aucune action structuree detectee dans la description.</div>
+        }
+      </Section>
 
       {/* Bloc 2 — Liens et ressources */}
-      {e.links?.length > 0 && (
-        <Section title={`Liens et ressources (${e.links.length})`}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6 }}>
-            {e.links.map((l, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                <span style={{ color: '#555', fontSize: 11, minWidth: 16 }}>{i + 1}.</span>
-                <div>
-                  {l.label && l.label !== l.domain && (
-                    <span style={{ color: '#aaa', fontSize: 11, marginRight: 6 }}>{l.label}</span>
-                  )}
-                  <a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
-                    {l.domain || l.url}
-                  </a>
+      <Section title={`Liens et ressources (${(e.links || []).length})`}>
+        {e.links?.length > 0
+          ? <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6 }}>
+              {e.links.map((l, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                  <span style={{ color: '#555', fontSize: 11, minWidth: 16 }}>{i + 1}.</span>
+                  <div>
+                    {l.label && l.label !== l.domain && (
+                      <span style={{ color: '#aaa', fontSize: 11, marginRight: 6 }}>{l.label}</span>
+                    )}
+                    <a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
+                      {l.domain || l.url}
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
+              ))}
+            </div>
+          : <div style={{ color: '#444', fontSize: 12, paddingTop: 6 }}>Aucun lien detecte dans la description.</div>
+        }
+      </Section>
 
       {/* Bloc 3 — Formations et prix */}
-      {e.formations?.length > 0 && (
-        <Section title="Formations proposees" defaultOpen={true}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
-            {e.formations.map((f, i) => (
-              <div key={i} style={{ background: '#1a1200', border: '1px solid #3a2a0050', borderRadius: 4, padding: '8px 12px' }}>
-                <div style={{ color: '#d4a017', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>{f.name}</div>
-                {f.price && <div style={{ color: '#f59e0b', fontSize: 12, marginBottom: 3 }}>Prix : {f.price}</div>}
-                {f.url && (
-                  <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
-                    {f.url}
-                  </a>
-                )}
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
+      <Section title={`Formations proposees (${(e.formations || []).length})`}>
+        {e.formations?.length > 0
+          ? <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
+              {e.formations.map((f, i) => (
+                <div key={i} style={{ background: '#1a1200', border: '1px solid #3a2a0050', borderRadius: 4, padding: '8px 12px' }}>
+                  <div style={{ color: '#d4a017', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>{f.name}</div>
+                  {f.price && <div style={{ color: '#f59e0b', fontSize: 12, marginBottom: 3 }}>Prix : {f.price}</div>}
+                  {f.url && (
+                    <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
+                      {f.url}
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          : <div style={{ color: '#444', fontSize: 12, paddingTop: 6 }}>Aucune formation detectee dans la description.</div>
+        }
+      </Section>
 
       {/* Bloc 4 — Pertinence business */}
-      {e.businessRelevance?.length > 0 && (
-        <Section title="Pertinence pour votre business">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
-            {e.businessRelevance.map((r, i) => (
-              <div key={i} style={{ background: '#111', border: '1px solid #222', borderRadius: 4, padding: '8px 12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: r.useCase ? 4 : 0 }}>
-                  <span style={{ background: levelColor(r.level) + '22', border: `1px solid ${levelColor(r.level)}55`, color: levelColor(r.level), fontSize: 10, borderRadius: 3, padding: '1px 6px', fontWeight: 700 }}>
-                    {r.level.toUpperCase()}
-                  </span>
-                  <span style={{ color: '#ccc', fontSize: 12, fontWeight: 600 }}>{r.domain}</span>
-                </div>
-                {r.useCase && <div style={{ color: '#999', fontSize: 12, lineHeight: 1.5 }}>{r.useCase}</div>}
-                {r.matchedKeywords.length > 0 && (
-                  <div style={{ marginTop: 4, display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                    {r.matchedKeywords.map((k) => (
-                      <span key={k} style={{ background: '#1a1a1a', border: '1px solid #333', color: '#666', fontSize: 10, borderRadius: 3, padding: '1px 6px' }}>{k}</span>
-                    ))}
-                  </div>
-                )}
+      <Section title="Pertinence pour votre business">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 6 }}>
+          {(e.businessRelevance || []).map((r, i) => (
+            <div key={i} style={{ background: '#111', border: '1px solid #1e1e1e', borderRadius: 4, padding: '8px 12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: r.useCase && r.level !== 'Non detecte' ? 4 : 0 }}>
+                <span style={{ background: levelColor(r.level) + '22', border: `1px solid ${levelColor(r.level)}55`, color: levelColor(r.level), fontSize: 10, borderRadius: 3, padding: '1px 6px', fontWeight: 700, minWidth: 80, textAlign: 'center' }}>
+                  {r.level.toUpperCase()}
+                </span>
+                <span style={{ color: r.level === 'Non detecte' ? '#444' : '#ccc', fontSize: 12, fontWeight: 600 }}>{r.domain}</span>
               </div>
-            ))}
-          </div>
-        </Section>
-      )}
+              {r.useCase && r.level !== 'Non detecte' && (
+                <div style={{ color: '#888', fontSize: 12, lineHeight: 1.5 }}>{r.useCase}</div>
+              )}
+              {r.matchedKeywords.length > 0 && (
+                <div style={{ marginTop: 4, display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                  {r.matchedKeywords.map((k) => (
+                    <span key={k} style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#666', fontSize: 10, borderRadius: 3, padding: '1px 6px' }}>{k}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Section>
     </div>
   )
 }
