@@ -594,7 +594,7 @@ export default function YouTubeOrganizerPage() {
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {connected && videos.length > 0 && (
             <button onClick={doExport} style={S.btn('#1d4ed8')}>
-              {exported ? 'Exporte' : 'Exporter rapport .txt'}
+              {exported ? 'Exporte !' : 'Exporter rapport .xlsx'}
             </button>
           )}
           {connected && <button onClick={disconnect} style={S.btnOutline}>Deconnecter</button>}
