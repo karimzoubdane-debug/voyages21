@@ -7,11 +7,20 @@ const CADRAN = {
   href: '/comment-voir-le-maroc',
 }
 
-const SEJOURS = [
+// Villes pour "Choisissez votre ville de séjour"
+const SEJOURS_VILLES = [
   { label: 'Marrakech',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=480&q=80' },
-  { label: 'Casablanca',  href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1551913902-c92207136625?w=480&q=80' },
   { label: 'Fez',         href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?w=480&q=80' },
+  { label: 'Casablanca',  href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1551913902-c92207136625?w=480&q=80' },
   { label: 'Chefchaouen', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=480&q=80' },
+]
+
+// Types de séjours (texte seul)
+const SEJOURS_TYPES = [
+  { label: 'Week-end',    href: '/circuits/classiques' },
+  { label: 'Court séjour', href: '/circuits/classiques' },
+  { label: 'Long séjour', href: '/circuits/classiques' },
+  { label: 'Escapade',    href: '/circuits/classiques' },
 ]
 
 const CIRCUITS = [
@@ -67,19 +76,18 @@ function EmailIcon() {
 
 function Chevron({ active }) {
   return (
-    <svg width="9" height="5" viewBox="0 0 10 6" fill="none" style={{ marginTop: 1, flexShrink: 0 }}>
-      <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"
-        style={{ transition: 'transform .2s', display: 'block', transform: active ? 'rotate(180deg)' : 'none' }} />
+    <svg width="9" height="5" viewBox="0 0 10 6" fill="none" style={{ marginTop: 1, flexShrink: 0, transition: 'transform .2s', transform: active ? 'rotate(180deg)' : 'none' }}>
+      <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   )
 }
 
-// Carte Inspirations — image haut / texte bas, grille 2 colonnes par section
+// Carte image — colonne unique (165×125px)
 function InspCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
       style={{
-        textDecoration: 'none', flexShrink: 0, cursor: 'pointer',
+        textDecoration: 'none', cursor: 'pointer',
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.45rem',
         width: '170px',
       }}
@@ -186,19 +194,25 @@ function RightCadran({ onClose }) {
   )
 }
 
-// Titre de section des mega menus — imposant, lisible
+// Séparateur vertical entre blocs
+function ColSep() {
+  return <div style={{ width: '1px', background: 'rgba(200,164,64,0.22)', alignSelf: 'stretch', flexShrink: 0, margin: '0 0.2rem' }} />
+}
+
+// Titre de section — imposant, centré
 const SEC = {
   fontFamily: "'Playfair Display', serif",
   fontStyle: 'italic',
-  fontSize: '1.15rem',
+  fontSize: '1.1rem',
   fontWeight: 700,
   color: '#FFFFFF',
   letterSpacing: '0.01em',
   marginBottom: '0.9rem',
   display: 'block',
+  textAlign: 'center',
 }
 
-// Bouton trigger pill — fond solide au survol
+// Bouton trigger pill — fond solide au clic (click-only, plus de hover)
 function triggerStyle(active) {
   return {
     display: 'flex', alignItems: 'center', gap: '5px',
@@ -230,14 +244,25 @@ export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openMenu,   setOpenMenu]   = useState(null)
   const [aboutOpen,  setAboutOpen]  = useState(false)
-  const closeTimer = useRef(null)
-  const aboutRef   = useRef(null)
+  const aboutRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Ferme les mega menus au clic extérieur
+  useEffect(() => {
+    if (!openMenu) return
+    const handler = (e) => {
+      if (!e.target.closest('header') && !e.target.closest('.mega-panel')) {
+        setOpenMenu(null)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [openMenu])
 
   // Ferme le dropdown About au clic extérieur
   useEffect(() => {
@@ -251,10 +276,8 @@ export default function NavBar() {
     return () => document.removeEventListener('mousedown', handler)
   }, [aboutOpen])
 
-  const open     = (name) => { clearTimeout(closeTimer.current); setOpenMenu(name); setAboutOpen(false) }
-  const schedule = ()     => { closeTimer.current = setTimeout(() => setOpenMenu(null), 200) }
-  const keep     = ()     => clearTimeout(closeTimer.current)
-  const closeNow = ()     => setOpenMenu(null)
+  const toggleMenu = (name) => setOpenMenu(prev => prev === name ? null : name)
+  const closeNow   = ()     => { setOpenMenu(null); setAboutOpen(false) }
 
   const hoverGold = (e) => { e.currentTarget.style.color = '#C8A440' }
   const hoverOff  = (e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.78)' }
@@ -321,8 +344,8 @@ export default function NavBar() {
             <Link href="/chroniques" style={{ ...BAR_LINK, fontWeight: 600, letterSpacing: '0.1em' }} onMouseEnter={hoverGold} onMouseLeave={hoverOff}>BLOG</Link>
           </div>
 
-          {/* Droite : About — dropdown au clic */}
-          <div ref={aboutRef} style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          {/* Droite : About — dropdown au clic, positionné relatif à ce conteneur */}
+          <div ref={aboutRef} style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', position: 'relative' }}>
             <button
               onClick={() => setAboutOpen(!aboutOpen)}
               style={{
@@ -334,6 +357,60 @@ export default function NavBar() {
             >
               About <Chevron active={aboutOpen} />
             </button>
+
+            {/* Dropdown About — ancré sous le bouton, décalé à gauche du bord */}
+            {aboutOpen && (
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                right: 0,
+                background: '#152E1F',
+                border: '1px solid rgba(200,164,64,0.25)',
+                borderTop: '2px solid #C8A440',
+                borderRadius: '0 0 6px 6px',
+                padding: '0.5rem 0',
+                zIndex: 999,
+                minWidth: '210px',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
+                animation: 'slideDown 0.18s ease',
+              }}>
+                <Link href="/about" onClick={closeNow} style={{
+                  display: 'block', padding: '0.55rem 1.2rem',
+                  color: '#FFFFFF', textDecoration: 'none',
+                  fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+                  fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
+                  transition: 'color .15s',
+                }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
+                >
+                  À propos
+                </Link>
+                <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0 1.2rem' }} />
+                <Link href="/about#expertise" onClick={closeNow} style={{
+                  display: 'block', padding: '0.5rem 1.2rem',
+                  color: 'rgba(255,255,255,0.72)', textDecoration: 'none',
+                  fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
+                  letterSpacing: '0.05em', transition: 'color .15s, padding-left .15s',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#C8A440'; e.currentTarget.style.paddingLeft = '1.5rem' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)'; e.currentTarget.style.paddingLeft = '1.2rem' }}
+                >
+                  Notre expertise
+                </Link>
+                <Link href="/about#engagements" onClick={closeNow} style={{
+                  display: 'block', padding: '0.5rem 1.2rem',
+                  color: 'rgba(255,255,255,0.72)', textDecoration: 'none',
+                  fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
+                  letterSpacing: '0.05em', transition: 'color .15s, padding-left .15s',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#C8A440'; e.currentTarget.style.paddingLeft = '1.5rem' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)'; e.currentTarget.style.paddingLeft = '1.2rem' }}
+                >
+                  Nos engagements
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
@@ -347,28 +424,37 @@ export default function NavBar() {
           display: 'flex', alignItems: 'center', padding: '0 2.5rem',
         }}>
 
-          <div style={{ flex: '0 0 180px' }} />
+          {/* Gauche : bouton retour accueil (toutes les pages) */}
+          <div style={{ flex: '0 0 180px', display: 'flex', alignItems: 'center' }}>
+            <Link href="/"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '5px',
+                color: 'rgba(255,255,255,0.52)', textDecoration: 'none',
+                fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem',
+                fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase',
+                transition: 'color .15s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.52)'}
+            >
+              ← Accueil
+            </Link>
+          </div>
 
-          {/* Menus desktop centrés */}
+          {/* Menus desktop — CLIC uniquement, plus de survol */}
           <div className="bar3-menu" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flex: 1, justifyContent: 'center' }}>
 
-            <div onMouseEnter={() => open('inspirations')} onMouseLeave={schedule}>
-              <button style={triggerStyle(openMenu === 'inspirations')}>
-                Inspirations <Chevron active={openMenu === 'inspirations'} />
-              </button>
-            </div>
+            <button style={triggerStyle(openMenu === 'inspirations')} onClick={() => toggleMenu('inspirations')}>
+              Inspirations <Chevron active={openMenu === 'inspirations'} />
+            </button>
 
-            <div onMouseEnter={() => open('styles')} onMouseLeave={schedule}>
-              <button style={triggerStyle(openMenu === 'styles')}>
-                Choisissez votre style <Chevron active={openMenu === 'styles'} />
-              </button>
-            </div>
+            <button style={triggerStyle(openMenu === 'styles')} onClick={() => toggleMenu('styles')}>
+              Choisissez votre style <Chevron active={openMenu === 'styles'} />
+            </button>
 
-            <div onMouseEnter={() => open('explorer')} onMouseLeave={schedule}>
-              <button style={triggerStyle(openMenu === 'explorer')}>
-                Explorer <Chevron active={openMenu === 'explorer'} />
-              </button>
-            </div>
+            <button style={triggerStyle(openMenu === 'explorer')} onClick={() => toggleMenu('explorer')}>
+              Explorer <Chevron active={openMenu === 'explorer'} />
+            </button>
           </div>
 
           {/* Droite : téléphone + Contact + burger */}
@@ -409,98 +495,74 @@ export default function NavBar() {
         </div>
       </header>
 
-      {/* ── Dropdown About — glisse sous le header ── */}
-      {aboutOpen && (
-        <div ref={aboutRef} style={{
-          position: 'fixed',
-          top: '88px',
-          right: '2.5rem',
-          background: '#152E1F',
-          border: '1px solid rgba(200,164,64,0.25)',
-          borderTop: '2px solid #C8A440',
-          borderRadius: '0 0 6px 6px',
-          padding: '0.6rem 0',
-          zIndex: 998,
-          minWidth: '210px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
-          animation: 'slideDown 0.18s ease',
-        }}>
-          <Link href="/about" onClick={() => setAboutOpen(false)} style={{
-            display: 'block', padding: '0.6rem 1.2rem',
-            color: '#FFFFFF', textDecoration: 'none',
-            fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
-            fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
-            transition: 'color .15s',
-          }}
-            onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
-            onMouseLeave={e => e.currentTarget.style.color = '#FFFFFF'}
-          >
-            À propos
-          </Link>
-          <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0 1.2rem' }} />
-          <Link href="/about#expertise" onClick={() => setAboutOpen(false)} style={{
-            display: 'block', padding: '0.55rem 1.2rem',
-            color: 'rgba(255,255,255,0.72)', textDecoration: 'none',
-            fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
-            letterSpacing: '0.05em', transition: 'color .15s, padding-left .15s',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.color = '#C8A440'; e.currentTarget.style.paddingLeft = '1.5rem' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)'; e.currentTarget.style.paddingLeft = '1.2rem' }}
-          >
-            Notre expertise
-          </Link>
-          <Link href="/about#engagements" onClick={() => setAboutOpen(false)} style={{
-            display: 'block', padding: '0.55rem 1.2rem',
-            color: 'rgba(255,255,255,0.72)', textDecoration: 'none',
-            fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
-            letterSpacing: '0.05em', transition: 'color .15s, padding-left .15s',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.color = '#C8A440'; e.currentTarget.style.paddingLeft = '1.5rem' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)'; e.currentTarget.style.paddingLeft = '1.2rem' }}
-          >
-            Nos engagements
-          </Link>
-        </div>
-      )}
-
       {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — INSPIRATIONS  (3 colonnes, titres imposants, grandes images)
+          MEGA MENU — INSPIRATIONS
+          4 blocs centrés + cadran, même largeur que les autres panels
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'inspirations' && (
-        <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '2.5rem', alignItems: 'stretch' }}>
+        <div className="mega-panel">
+          <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', gap: 0 }}>
 
-            {/* 3 colonnes */}
-            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2.5rem', alignItems: 'start' }}>
-
-              <div>
-                <span style={SEC}>Séjours</span>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem' }}>
-                  {SEJOURS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-                </div>
-              </div>
-
-              <div>
-                <span style={SEC}>Circuits</span>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem' }}>
-                  {CIRCUITS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-                </div>
-              </div>
-
-              <div>
-                <span style={SEC}>Avec qui partir</span>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem' }}>
-                  {AVEC_QUI.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-                </div>
+            {/* Bloc 1 : Séjours — types en texte */}
+            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '140px' }}>
+              <span style={SEC}>Séjours</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem', alignItems: 'center' }}>
+                {SEJOURS_TYPES.map(item => (
+                  <Link key={item.label} href={item.href} onClick={closeNow}
+                    style={{
+                      color: 'rgba(255,255,255,0.75)', textDecoration: 'none',
+                      fontFamily: "'DM Sans', sans-serif", fontSize: '0.84rem',
+                      fontWeight: 400, letterSpacing: '0.04em',
+                      transition: 'color .15s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.75)'}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             </div>
 
-            <RightCadran onClose={closeNow} />
+            <ColSep />
+
+            {/* Bloc 2 : Choisissez votre ville de séjour */}
+            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={SEC}>Choisissez votre ville de séjour</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                {SEJOURS_VILLES.slice(0, 2).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+              </div>
+            </div>
+
+            <ColSep />
+
+            {/* Bloc 3 : Circuits */}
+            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={SEC}>Circuits</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                {CIRCUITS.slice(0, 2).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+              </div>
+            </div>
+
+            <ColSep />
+
+            {/* Bloc 4 : Avec qui partir */}
+            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={SEC}>Avec qui partir</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                {AVEC_QUI.slice(0, 2).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+              </div>
+            </div>
+
+            {/* Cadran droit */}
+            <div style={{ paddingLeft: '1.5rem' }}>
+              <RightCadran onClose={closeNow} />
+            </div>
           </div>
 
           {/* Pied du menu */}
           <div style={{
-            maxWidth: '1400px', margin: '0.75rem auto 0',
+            maxWidth: '1000px', margin: '0.75rem auto 0',
             paddingTop: '0.65rem',
             borderTop: '1px solid rgba(200,164,64,0.18)',
             textAlign: 'center',
@@ -520,10 +582,10 @@ export default function NavBar() {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — CHOISISSEZ VOTRE STYLE  (3 grandes cartes + cadran, centré)
+          MEGA MENU — CHOISISSEZ VOTRE STYLE
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'styles' && (
-        <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
+        <div className="mega-panel">
           <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', gap: '1.8rem', marginBottom: '0.8rem' }}>
@@ -543,10 +605,10 @@ export default function NavBar() {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — EXPLORER  (2 grandes cartes centrées + cadran)
+          MEGA MENU — EXPLORER
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'explorer' && (
-        <div className="mega-panel" onMouseEnter={keep} onMouseLeave={schedule}>
+        <div className="mega-panel">
           <div style={{ display: 'flex', gap: '2rem', alignItems: 'stretch', justifyContent: 'center' }}>
             {EXPLORER_ITEMS.map(item => <ExplorerCard key={item.label} item={item} onClose={closeNow} />)}
             <RightCadran onClose={closeNow} />
@@ -561,17 +623,26 @@ export default function NavBar() {
         <div className="mobile-panel">
           <ul style={{ listStyle: 'none', padding: '1rem 1.5rem' }}>
             {[
+              { label: '← Accueil',                href: '/',                               section: true },
               { label: 'Marhaba',                   href: '/marhaba',                        section: true },
               { label: 'Blog',                      href: '/chroniques',                     section: true },
               { label: 'Inspirations',              href: '#',                               section: true },
+              { label: 'Séjours',                  href: '#',                               indent: true, disabled: true },
+              { label: 'Week-end',                  href: '/circuits/classiques',            indent: true },
+              { label: 'Court séjour',             href: '/circuits/classiques',            indent: true },
+              { label: 'Long séjour',              href: '/circuits/classiques',            indent: true },
+              { label: 'Escapade',                  href: '/circuits/classiques',            indent: true },
+              { label: 'Choisissez votre ville',   href: '#',                               indent: true, disabled: true },
               { label: 'Marrakech',                 href: '/circuits/classiques',            indent: true },
-              { label: 'Casablanca',                href: '/circuits/classiques',            indent: true },
               { label: 'Fez',                       href: '/circuits/classiques',            indent: true },
+              { label: 'Casablanca',                href: '/circuits/classiques',            indent: true },
               { label: 'Chefchaouen',               href: '/circuits/classiques',            indent: true },
+              { label: 'Circuits',                 href: '#',                               indent: true, disabled: true },
               { label: 'En minibus',                href: '/circuits/classiques',            indent: true },
               { label: 'En autotours',              href: '/experiences/circuits-autotours', indent: true },
               { label: 'Rallye 4x4',               href: '/circuits/raid-4x4',              indent: true },
               { label: 'Virée en Moto cylindrée',  href: '/circuits/moto',                  indent: true },
+              { label: 'Avec qui partir',          href: '#',                               indent: true, disabled: true },
               { label: 'En petits groupes',        href: '/experiences',                    indent: true },
               { label: 'Solo',                      href: '/experiences',                    indent: true },
               { label: 'En couple',                href: '/experiences',                    indent: true },
@@ -588,22 +659,22 @@ export default function NavBar() {
               { label: 'Nos engagements',          href: '/about#engagements',             indent: true },
             ].map(item => (
               <li key={item.href + item.label}
-                style={{ borderBottom: item.section ? 'none' : '1px solid rgba(255,255,255,0.06)' }}>
+                style={{ borderBottom: (item.section || item.disabled) ? 'none' : '1px solid rgba(255,255,255,0.06)' }}>
                 <Link
                   href={item.href}
-                  onClick={item.href === '#' ? undefined : () => setMobileOpen(false)}
+                  onClick={(item.href === '#' || item.disabled) ? undefined : () => setMobileOpen(false)}
                   style={{
                     display: 'block',
-                    padding: item.section ? '1rem 0 0.35rem' : '0.72rem 0',
+                    padding: item.section ? '1rem 0 0.35rem' : '0.6rem 0',
                     paddingLeft: item.indent ? '1rem' : '0',
-                    color: item.section ? '#C8A440' : 'rgba(255,255,255,0.85)',
+                    color: item.section ? '#C8A440' : item.disabled ? 'rgba(200,164,64,0.45)' : 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
-                    fontSize: item.section ? '0.6rem' : '0.84rem',
-                    fontWeight: item.section ? 700 : 400,
-                    letterSpacing: item.section ? '0.22em' : '0.03em',
-                    textTransform: item.section ? 'uppercase' : 'none',
-                    pointerEvents: item.href === '#' ? 'none' : 'auto',
-                    cursor: item.href === '#' ? 'default' : 'pointer',
+                    fontSize: item.section ? '0.6rem' : item.disabled ? '0.62rem' : '0.84rem',
+                    fontWeight: item.section ? 700 : item.disabled ? 600 : 400,
+                    letterSpacing: item.section ? '0.22em' : item.disabled ? '0.18em' : '0.03em',
+                    textTransform: (item.section || item.disabled) ? 'uppercase' : 'none',
+                    pointerEvents: (item.href === '#') ? 'none' : 'auto',
+                    cursor: (item.href === '#') ? 'default' : 'pointer',
                   }}
                 >
                   {item.label}
