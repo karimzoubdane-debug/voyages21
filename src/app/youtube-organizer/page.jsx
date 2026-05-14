@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import * as XLSX from 'xlsx'
 
 // ─── Categorie auto ───────────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -257,79 +258,64 @@ function levelColor(level) {
   return '#6b7280'
 }
 
-// ─── Export ───────────────────────────────────────────────────────────────────
-function buildExport(videos, enriched, selections) {
-  const kept = videos.filter((v) => selections[v.id] === 'keep')
-  const deleted = videos.filter((v) => selections[v.id] === 'delete')
+// ─── Export Excel ─────────────────────────────────────────────────────────────
+function buildExcelExport(videos, enriched, selections) {
+  const rows = videos.map((v) => {
+    const e = enriched[v.id] || {}
+    const cat = getCat(e.category || 'other')
+    const statut = selections[v.id] === 'keep' ? 'GARDER' : selections[v.id] === 'delete' ? 'SUPPRIMER' : 'Non classe'
 
-  const byCategory = {}
-  kept.forEach((v) => {
-    const cat = getCat(enriched[v.id]?.category || 'other')
-    if (!byCategory[cat.label]) byCategory[cat.label] = []
-    byCategory[cat.label].push(v)
+    const actions = (e.actions || []).join('\n')
+    const liens = (e.links || []).map((l) => `${l.label} : ${l.url}`).join('\n')
+    const formations = (e.formations || []).map((f) => `${f.name}${f.price ? ' [' + f.price + ']' : ''}${f.url ? ' — ' + f.url : ''}`).join('\n')
+
+    // Pertinence par domaine
+    const domainMap = {}
+    ;(e.businessRelevance || []).forEach((r) => { domainMap[r.domain] = `[${r.level}] ${r.useCase || ''}` })
+
+    return {
+      'Statut': statut,
+      'Titre': v.title,
+      'URL': v.url,
+      'Categorie': cat.label,
+      'Description': v.description || '',
+      'Actions techniques': actions,
+      'Liens et ressources': liens,
+      'Formations proposees': formations,
+      'Agence de voyages': domainMap['Agence de voyages'] || '',
+      'Creation d applications': domainMap["Creation d applications"] || '',
+      'Automatismes': domainMap['Automatismes'] || '',
+      'Hebergement touristique': domainMap['Hebergement touristique'] || '',
+      'Animation touristique': domainMap['Animation et activites touristiques'] || '',
+    }
   })
 
-  const lines = []
-  lines.push('RAPPORT DE TRI VIDEOS YOUTUBE IA')
-  lines.push(`Genere le ${new Date().toLocaleDateString('fr-FR')} — ${kept.length} video(s) selectionnee(s)`)
-  lines.push('='.repeat(60))
+  const ws = XLSX.utils.json_to_sheet(rows)
 
-  for (const [catLabel, vids] of Object.entries(byCategory)) {
-    lines.push(`\n\n${catLabel.toUpperCase()} — ${vids.length} video(s)`)
-    lines.push('-'.repeat(60))
+  // Largeurs des colonnes
+  ws['!cols'] = [
+    { wch: 12 }, // Statut
+    { wch: 50 }, // Titre
+    { wch: 45 }, // URL
+    { wch: 25 }, // Categorie
+    { wch: 60 }, // Description
+    { wch: 50 }, // Actions
+    { wch: 50 }, // Liens
+    { wch: 45 }, // Formations
+    { wch: 40 }, // Agence voyages
+    { wch: 40 }, // Creation apps
+    { wch: 40 }, // Automatismes
+    { wch: 40 }, // Hebergement
+    { wch: 40 }, // Animation
+  ]
 
-    vids.forEach((v, i) => {
-      const e = enriched[v.id] || {}
-      lines.push(`\n${i + 1}. ${v.title}`)
-      lines.push(`   URL : ${v.url}`)
-
-      if (v.description?.trim()) {
-        const desc = v.description.slice(0, 300).replace(/\n/g, ' ')
-        lines.push(`   Description : ${desc}${v.description.length > 300 ? '...' : ''}`)
-      }
-
-      if (e.actions?.length) {
-        lines.push('\n   ACTIONS TECHNIQUES :')
-        e.actions.forEach((a, ai) => lines.push(`     ${ai + 1}. ${a}`))
-      }
-
-      if (e.links?.length) {
-        lines.push('\n   LIENS ET RESSOURCES :')
-        e.links.forEach((l) => lines.push(`     - ${l.label} : ${l.url}`))
-      }
-
-      if (e.formations?.length) {
-        lines.push('\n   FORMATIONS PROPOSEES :')
-        e.formations.forEach((f) => {
-          lines.push(`     - ${f.name}${f.price ? ` [${f.price}]` : ''}${f.url ? ` — ${f.url}` : ''}`)
-        })
-      }
-
-      if (e.businessRelevance?.length) {
-        lines.push('\n   PERTINENCE BUSINESS :')
-        e.businessRelevance.forEach((r) => {
-          lines.push(`     [${r.level}] ${r.domain}`)
-          if (r.useCase) lines.push(`            ${r.useCase}`)
-        })
-      }
-    })
-  }
-
-  if (deleted.length > 0) {
-    lines.push('\n\n' + '='.repeat(60))
-    lines.push('VIDEOS A SUPPRIMER')
-    lines.push('-'.repeat(60))
-    deleted.forEach((v, i) => {
-      lines.push(`\n${i + 1}. ${v.title}`)
-      lines.push(`   URL : ${v.url}`)
-    })
-  }
-
-  return lines.join('\n')
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Videos IA')
+  return wb
 }
 
 // ─── Bloc section ─────────────────────────────────────────────────────────────
-function Section({ title, children, defaultOpen = false }) {
+function Section({ title, children, defaultOpen = true }) {
   const [open, setOpen] = useState(defaultOpen)
   return (
     <div style={{ borderTop: '1px solid #222', marginTop: 10 }}>
@@ -571,14 +557,8 @@ export default function YouTubeOrganizerPage() {
   }
 
   function doExport() {
-    const text = buildExport(videos, enriched, selections)
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `tri-videos-IA-${new Date().toISOString().slice(0, 10)}.txt`
-    a.click()
-    URL.revokeObjectURL(url)
+    const wb = buildExcelExport(videos, enriched, selections)
+    XLSX.writeFile(wb, `tri-videos-IA-${new Date().toISOString().slice(0, 10)}.xlsx`)
     setExported(true)
     setTimeout(() => setExported(false), 3000)
   }
