@@ -82,25 +82,25 @@ function Chevron({ active }) {
   )
 }
 
-// Carte image — colonne unique (165×125px)
+// Carte image — grille 2×2 dans le panel Inspirations
 function InspCard({ item, onClose }) {
   return (
     <Link href={item.href} onClick={onClose}
       style={{
         textDecoration: 'none', cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.45rem',
-        width: '170px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
+        width: '148px',
       }}
     >
       <div style={{
-        width: '165px', height: '125px', borderRadius: '6px',
+        width: '143px', height: '106px', borderRadius: '6px',
         backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
         border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
       }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.04)' }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
       />
-      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.78rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
+      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.76rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
         {item.label}
       </span>
     </Link>
@@ -194,9 +194,14 @@ function RightCadran({ onClose }) {
   )
 }
 
-// Séparateur vertical entre blocs
+// Séparateur vertical stylé entre blocs — dégradé or
 function ColSep() {
-  return <div style={{ width: '1px', background: 'rgba(200,164,64,0.22)', alignSelf: 'stretch', flexShrink: 0, margin: '0 0.2rem' }} />
+  return (
+    <div style={{
+      width: '1px', flexShrink: 0, alignSelf: 'stretch',
+      background: 'linear-gradient(to bottom, transparent, rgba(200,164,64,0.5) 20%, rgba(200,164,64,0.5) 80%, transparent)',
+    }} />
+  )
 }
 
 // Titre de section — imposant, centré
@@ -497,72 +502,55 @@ export default function NavBar() {
 
       {/* ══════════════════════════════════════════════════════════════════════
           MEGA MENU — INSPIRATIONS
-          4 blocs centrés + cadran, même largeur que les autres panels
+          3 blocs image + cadran, 1.25× la taille du panel Styles, séparateurs dorés
       ══════════════════════════════════════════════════════════════════════ */}
       {openMenu === 'inspirations' && (
         <div className="mega-panel">
-          <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', gap: 0 }}>
+          <div style={{
+            maxWidth: '1200px', margin: '0 auto',
+            display: 'flex', alignItems: 'stretch', gap: 0,
+          }}>
 
-            {/* Bloc 1 : Séjours — types en texte */}
-            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '140px' }}>
+            {/* Bloc 1 : Séjours — grille 2×2 */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
               <span style={SEC}>Séjours</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem', alignItems: 'center' }}>
-                {SEJOURS_TYPES.map(item => (
-                  <Link key={item.label} href={item.href} onClick={closeNow}
-                    style={{
-                      color: 'rgba(255,255,255,0.75)', textDecoration: 'none',
-                      fontFamily: "'DM Sans', sans-serif", fontSize: '0.84rem',
-                      fontWeight: 400, letterSpacing: '0.04em',
-                      transition: 'color .15s',
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.color = '#C8A440'}
-                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.75)'}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+                {SEJOURS_VILLES.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
               </div>
             </div>
 
             <ColSep />
 
-            {/* Bloc 2 : Choisissez votre ville de séjour */}
-            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span style={SEC}>Choisissez votre ville de séjour</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                {SEJOURS_VILLES.slice(0, 2).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-              </div>
-            </div>
-
-            <ColSep />
-
-            {/* Bloc 3 : Circuits */}
-            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* Bloc 2 : Circuits — grille 2×2 */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
               <span style={SEC}>Circuits</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                {CIRCUITS.slice(0, 2).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+                {CIRCUITS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
               </div>
             </div>
 
             <ColSep />
 
-            {/* Bloc 4 : Avec qui partir */}
-            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* Bloc 3 : Avec qui partir — grille 2×2 */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
               <span style={SEC}>Avec qui partir</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                {AVEC_QUI.slice(0, 2).map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+                {AVEC_QUI.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
               </div>
             </div>
 
-            {/* Cadran droit */}
-            <div style={{ paddingLeft: '1.5rem' }}>
+            <ColSep />
+
+            {/* Bloc 4 : Voir tous nos circuits (cadran) */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 0 0 1.2rem', flexShrink: 0 }}>
+              <span style={{ ...SEC, marginBottom: '0.9rem' }}>Voir tous nos circuits</span>
               <RightCadran onClose={closeNow} />
             </div>
           </div>
 
           {/* Pied du menu */}
           <div style={{
-            maxWidth: '1000px', margin: '0.75rem auto 0',
+            maxWidth: '1200px', margin: '0.75rem auto 0',
             paddingTop: '0.65rem',
             borderTop: '1px solid rgba(200,164,64,0.18)',
             textAlign: 'center',
