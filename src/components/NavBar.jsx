@@ -88,19 +88,19 @@ function InspCard({ item, onClose }) {
     <Link href={item.href} onClick={onClose}
       style={{
         textDecoration: 'none', cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
-        width: '148px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.35rem',
+        width: '128px',
       }}
     >
       <div style={{
-        width: '143px', height: '106px', borderRadius: '6px',
+        width: '124px', height: '84px', borderRadius: '6px',
         backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
         border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
       }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.04)' }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
       />
-      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.76rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.3 }}>
+      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.73rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.25 }}>
         {item.label}
       </span>
     </Link>
