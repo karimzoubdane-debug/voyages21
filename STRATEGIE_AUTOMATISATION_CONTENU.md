@@ -7,6 +7,25 @@
 
 ---
 
+## 🔗 Adresses GitHub (pour retrouver ce document partout)
+
+- 📄 **Fichier en ligne (lecture directe) :**
+  https://github.com/karimzoubdane-debug/voyages21/blob/claude/debug-chatbot-error-lsgD1/STRATEGIE_AUTOMATISATION_CONTENU.md
+
+- 📥 **Version brute (téléchargement) :**
+  https://github.com/karimzoubdane-debug/voyages21/raw/claude/debug-chatbot-error-lsgD1/STRATEGIE_AUTOMATISATION_CONTENU.md
+
+- 🔄 **Pull Request associée :**
+  https://github.com/karimzoubdane-debug/voyages21/pull/10
+
+- 📁 **Repo GitHub :**
+  https://github.com/karimzoubdane-debug/voyages21
+
+- 🌿 **Branche :**
+  https://github.com/karimzoubdane-debug/voyages21/tree/claude/debug-chatbot-error-lsgD1
+
+---
+
 ## 📌 Objectif global
 
 Mettre en place un système **semi-automatisé pilotable depuis Claude Code** qui :
