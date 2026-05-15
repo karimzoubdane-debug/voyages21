@@ -315,6 +315,76 @@ Les deux vidéos sont **complémentaires**, pas concurrentes.
 
 ---
 
+### Vidéo 3 — Emmanuel Gutman (Joyeux No-Code) : Notion + Make pour publication automatique
+
+**ID YouTube :** `9AdejqEdUC4`
+**Lien :** https://www.youtube.com/watch?v=9AdejqEdUC4
+**Titre :** Automatisez vos publications sur les réseaux sociaux avec Notion et Make !
+
+**Outils présentés :**
+- **Notion** — base de données = calendrier éditorial (gratuit)
+- **Make.com** — orchestrateur d'automatisation (free/low cost selon volume)
+- **API officielles** : Facebook Pages, Instagram for Business, LinkedIn
+
+**Workflow décrit :**
+
+**Étape 1 — Base Notion (calendrier éditorial)** avec colonnes :
+- Titre et Contenu du post
+- Date et Heure de publication
+- Image de couverture (fichier attaché)
+- Plateforme (Facebook / Instagram / LinkedIn)
+- État (Brouillon / Programmé / Publié)
+
+**Étape 2 — Déclencheur Make**
+- Module Notion `Search Objects` ou `Watch Database Items`
+- Filtre statut : récupère uniquement les lignes "Programmé"
+- Filtre temporel : ne traite que les posts dans une fenêtre de 30 min autour de l'heure actuelle
+- Make tourne toutes les 30 minutes
+
+**Étape 3 — Routeur par plateforme**
+- Route Facebook → module "Facebook Pages" → post texte + image
+- Route Instagram → module "Instagram for Business" → image avec contraintes API (format/taille)
+- Route LinkedIn → plus complexe : ajout d'un module HTTP "Get a file" pour télécharger l'image avant envoi
+
+**Étape 4 — Gestion des cas particuliers (LinkedIn sans image)**
+- Second routeur testant si une image existe
+- Si OUI → télécharger + publier avec image
+- Si NON → publier texte seul (évite l'erreur d'arrêt)
+
+**Étape 5 — Mise à jour automatique du statut**
+- Module Notion `Update a Database Item` à la fin de chaque branche
+- Après succès → état passe de "Programmé" à "Publié" automatiquement
+
+**Points techniques clés :**
+- Compte **Facebook professionnel obligatoire** (pas perso) — limite des API officielles
+- Notion gratuit suffit pour démarrer
+- Make gratuit jusqu'à un certain volume d'opérations
+
+**Idées à reprendre pour Voyages21 :**
+- ✅ **Notion comme calendrier éditorial visuel** = parfait pour collaboration en équipe (rédacteur + validateur + community manager)
+- ✅ **État "Brouillon → Programmé → Publié"** = workflow clair, n'importe qui peut voir où on en est
+- ✅ **Pas besoin de cerveau IA** dans cette config = simple, fiable, prévisible
+- ✅ **Coût ultra-bas** (proche de 0€ au démarrage)
+- ✅ **Multi-utilisateur** dans Notion = ton équipe peut alimenter sans toi
+- ⚠️ Ce système **publie** mais ne **crée pas** le contenu → à combiner avec un générateur (Claude / GPT)
+- ⚠️ Pas de capture de leads, pas de SEO
+
+**Timestamps clés :**
+- 00:39 — préparation Notion (base de données)
+- 01:45 — déclencheur Make
+- 03:00 — filtre statut "Programmé"
+- 04:43 — filtre temporel (fenêtre 30 min)
+- 06:26 — routeur par plateforme
+- 08:14 — route Facebook
+- 10:03 — mise à jour statut Notion
+- 11:55 — passage à "Publié"
+- 12:38 — route Instagram
+- 15:28 — route LinkedIn + HTTP file
+- 19:25 — gestion sans image
+- 20:51 — fallback texte seul
+
+---
+
 ### 🆕 Vidéos à ajouter (à compléter au fil de l'eau)
 
 > **Format suggéré pour chaque vidéo ajoutée :**
@@ -324,10 +394,10 @@ Les deux vidéos sont **complémentaires**, pas concurrentes.
 > - Idées à reprendre / à écarter
 > - Timestamps clés
 
-#### Vidéo 3 — [à ajouter]
-
-
 #### Vidéo 4 — [à ajouter]
+
+
+#### Vidéo 5 — [à ajouter]
 
 
 ---

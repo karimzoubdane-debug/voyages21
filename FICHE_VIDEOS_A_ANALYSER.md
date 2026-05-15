@@ -16,7 +16,7 @@
 
 | # | Vidéo | Langue | Fait |
 |---|---|---|---|
-| 1 | Automatisez vos publications sur les réseaux sociaux | 🇫🇷 | [ ] |
+| 1 | Automatisez vos publications sur les réseaux sociaux (Notion + Make) | 🇫🇷 | [x] ✅ |
 | 2 | Automatiser la publication YouTube (Trankilia) | 🇫🇷 | [ ] |
 | 3 | 3 changements YouTube en 2026 (Stratégie Vidéo) | 🇫🇷 | [ ] |
 | 4 | Top 10 outils IA réseaux sociaux 2026 (CréActifs) | 🇫🇷 | [ ] |
