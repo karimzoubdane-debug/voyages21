@@ -199,6 +199,157 @@ Le cycle recommence. **25 minutes plus tard, c'est fait.**
 
 ---
 
+## 🎨 OÙ ET COMMENT le contenu est créé
+
+Le contenu se crée en **3 niveaux**, avec des outils différents :
+
+| Type de contenu | Créé où ? | Par qui ? | Temps |
+|---|---|---|---|
+| **📝 Textes** (légendes, hashtags, scripts) | **Claude** (ici dans cette interface) | Tu demandes, Claude rédige | 3 min / post |
+| **🖼️ Visuels statiques** (photos, carrousels) | **Canva** (gratuit) | Toi, à partir de tes photos + templates | 5-10 min / visuel |
+| **📷 Photos réelles du Maroc** | **Ton disque dur / téléphone** | Toi sur le terrain | Déjà existantes |
+| **🎬 Vidéos Reels/Shorts** | **CapCut** (gratuit) | Toi, montage rapide | 10-20 min / vidéo |
+| **🤖 Visuels IA** (si manque de photo) | **Canva Magic Media** | Toi, en dépannage | 30 sec |
+
+➡️ **Important :** la création reste **manuelle mais assistée**. Claude écrit, toi tu valides. Canva assemble, toi tu choisis. **C'est ce qui garde l'authenticité.**
+
+---
+
+## 📡 OÙ le contenu est publié — les plateformes
+
+Make.com publie **automatiquement** sur ces plateformes :
+
+### 🟢 Niveau 1 — Faciles à automatiser (Phase 1, week-ends 1-3)
+
+| Plateforme | Statut | Type de contenu accepté | Notes |
+|---|---|---|---|
+| **Instagram** (compte Pro/Business) | ✅ **Très facile** | Posts, Reels, Stories | Compte Business obligatoire (gratuit à créer) |
+| **Facebook Page** | ✅ **Très facile** | Posts texte + image + vidéo | Page Pro obligatoire (pas perso) |
+| **LinkedIn** (page entreprise) | ✅ **Facile** | Posts, articles, vidéos | Idéal pour cibler les partenaires B2B |
+
+### 🟡 Niveau 2 — Possibles mais plus complexes (Phase 2, week-end 4+)
+
+| Plateforme | Statut | Type | Pourquoi plus complexe |
+|---|---|---|---|
+| **YouTube Shorts** | 🟡 **Possible** | Vidéos verticales 60s | Demande des fichiers vidéo finalisés |
+| **TikTok** | 🟡 **Possible** | Shorts verticaux | API moins stable mais Make supporte |
+| **Pinterest** | 🟡 **Possible** | Pins (très bon pour voyages !) | À considérer pour audience EU/US |
+
+### 🔴 Niveau 3 — Pas automatisable
+
+| Plateforme | Pourquoi |
+|---|---|
+| **YouTube long format** | Demande production lourde (script, montage, voix off, miniature) — Phase 3 |
+| **WhatsApp Business** | Pas d'API publique pour publier dans le statut |
+| **Compte Instagram perso** | Meta n'autorise QUE les comptes Business |
+
+---
+
+## 🎯 Recommandation par phase
+
+### Phase 1 (mois 1) — Démarre avec 3 plateformes seulement
+
+✅ **Instagram** (Reels + posts)
+✅ **Facebook Page**
+✅ **LinkedIn**
+
+**Pourquoi ces 3 plateformes :**
+- Acceptent **le même contenu** (1 post → publié sur les 3 en 1 clic Make)
+- Couvrent **80% des leads voyages** francophones
+- Sont **API-friendly** = configuration Make en 1 week-end
+
+### Phase 2 (mois 2-3) — Ajoute YouTube Shorts + TikTok
+
+✅ **YouTube Shorts** — réutilise tes Reels Instagram (même format vertical)
+✅ **TikTok** — idem
+
+**Bénéfice :** tu transformes 1 Reel → publié sur 5 plateformes sans effort supplémentaire.
+
+### Phase 3 (mois 6+) — YouTube long format
+
+✅ **YouTube vidéos longues** — vlogs de voyage, témoignages clients, guides destinations
+**Quand ?** Quand le reste tourne et que tu as prouvé le ROI.
+
+---
+
+## 🎬 Exemple concret : 1 post = combien de plateformes ?
+
+Imagine un **Reel "Lever de soleil à Merzouga"** :
+
+```
+1 vidéo verticale 30 sec (filmée par ton guide sur place)
+            │
+            ▼
+   ┌────────────────────┐
+   │  Notion            │
+   │  Tu coches :       │
+   │  ☑ Instagram Reel  │
+   │  ☑ Facebook Reel   │
+   │  ☑ LinkedIn vidéo  │
+   │  ☑ YouTube Short   │
+   │  ☑ TikTok          │
+   └─────────┬──────────┘
+             │
+             ▼
+   ┌────────────────────┐
+   │  Make publie sur   │
+   │  les 5 en 1 fois   │
+   └────────────────────┘
+```
+
+**Résultat :** 1 vidéo créée → 5 publications → 5 fois plus de portée.
+
+---
+
+## ❓ Questions fréquentes sur la création/publication
+
+**Q : Où je trouve des vidéos si je n'ai pas le temps de filmer ?**
+
+3 options :
+1. **Filme toi-même** au téléphone (mode portrait, 15-30 sec, bonne lumière) — c'est ce qui marche le mieux
+2. **Demande à tes guides** d'envoyer une vidéo brute chaque jour terrain — tu archives tout
+3. **Anime tes photos** avec Canva → "Magic Animate" (transforme une photo en vidéo subtilement)
+
+**Q : Je peux publier sur YouTube long format avec ce système ?**
+
+Pas tout de suite. YouTube long format = production lourde. À garder pour Phase 3 quand tu auras prouvé le ROI sur Instagram/Facebook.
+
+**Q : Et le blog du site web ?**
+
+Pas dans Phase 1. On l'ajoute en Phase 2 si tu veux faire du SEO (avec Claude + WordPress). Pour l'instant : focus social.
+
+---
+
+## 📋 Récap visuel — Qui fait quoi
+
+```
+┌──────────────────────────────────────────────────────────┐
+│ CRÉATION (toi + outils)                                    │
+├──────────────────────────────────────────────────────────┤
+│ Textes      → Claude (3 min)                              │
+│ Visuels     → Canva + tes photos (10 min)                 │
+│ Vidéos      → Filmage tel + CapCut (15 min)               │
+└──────────────────────┬────────────────────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────────────────┐
+│ PLANIFICATION (toi)                                        │
+├──────────────────────────────────────────────────────────┤
+│ Coller dans Notion + cocher les plateformes (5 min)       │
+└──────────────────────┬────────────────────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────────────────┐
+│ PUBLICATION (Make, automatique)                            │
+├──────────────────────────────────────────────────────────┤
+│ Phase 1 :  Instagram + Facebook + LinkedIn                │
+│ Phase 2 :  + YouTube Shorts + TikTok                      │
+│ Phase 3 :  + YouTube long format + Pinterest              │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## ✂️ Ce qu'on JETTE et POURQUOI
 
 | Outil suggéré ailleurs | Verdict | Pourquoi |
