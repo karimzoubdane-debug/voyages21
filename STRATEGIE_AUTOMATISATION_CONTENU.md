@@ -385,19 +385,148 @@ Les deux vidéos sont **complémentaires**, pas concurrentes.
 
 ---
 
+### Vidéo 4 — CréActifs : Top 10 outils IA réseaux sociaux 2026
+
+**Lien :** https://creactifs.com/blog/les-10-meilleurs-outils-ia-pour-les-reseaux-sociaux-en-2026/
+
+**Outils présentés (6 confirmés) :**
+1. **ChatGPT** — angle, légendes, scripts Reels, déclinaisons multi-réseaux
+2. **Adobe Express** — visuels et formats courts (écosystème Adobe)
+3. **Hootsuite** — centralisation + assistant IA + planification + gouvernance
+4. **SocialBee** — catégories de contenu + calendrier éditorial cohérent
+5. **Publer** — programmation légère + suivi de base
+6. **Predis.ai** — brief → contenus adaptés tous formats
+
+**Classification 3 familles :**
+- Création de contenu
+- Programmation/automatisation
+- Analyse et écoute sociale
+
+**À retenir pour Voyages21 :**
+- ✅ SocialBee = excellent pour calendrier "evergreen" (témoignages, conseils voyage)
+- ✅ Hootsuite = si besoin de social listening (que disent les voyageurs du Maroc)
+- ⚠️ Publer = trop léger pour une agence sérieuse
+- ⚠️ Predis.ai = qualité moyenne, plus pour solo
+
+---
+
+### Vidéo 5 — Metricool : 7 outils IA gratuits YouTube
+
+**Lien :** https://metricool.com/fr/ia-youtube/
+
+**Outils confirmés (5 sur 7) :**
+1. **ChatGPT Summarize** (extension Chrome) — transcrit + résume une vidéo
+2. **Venngage** — bannières YouTube IA depuis un prompt
+3. **Magic Media Canva** — miniatures captivantes IA
+4. **PlayPlay** — générateur de scripts vidéo IA
+5. **Wordcount Ahrefs** — générateur de noms originaux
+
+**À retenir pour Voyages21 :**
+- ✅ **Magic Media Canva** + **PlayPlay** = combo gagnant gratuit pour produire des vidéos voyages rapidement
+- ✅ ChatGPT Summarize = utile pour transformer des avis Google en posts
+
+---
+
+### Vidéo 6 — Non Stop Reality : 10 outils IA réseaux sociaux
+
+**Lien :** https://non-stop-reality.fr/strategies/crea/10-outils-ia-incontournables-pour-dynamiser-vos-reseaux-sociaux-en-2026/
+
+**Pitch :** planificateurs intelligents + plateformes de veille sociale + apprentissage automatique pour optimiser moments de publication, créer légendes pertinentes, proposer idées d'engagement.
+
+**Cibles :** créateurs individuels, équipes marketing, agences.
+
+**Note :** Article publié le 27 avril 2026. La liste complète n'a pas été extraite, mais la philosophie rejoint celle de la Vidéo 4. **Pas d'apport nouveau majeur** vs Vidéo 4.
+
+---
+
+### Vidéo 7 — How to Auto Publish Social Media Posts on All Platforms Using n8n (YouTube)
+
+**Lien :** https://www.youtube.com/watch?v=EoAEkaSw85A
+
+**Workflow type décrit :**
+1. **Google Sheet comme calendrier** (colonnes : video_url, title, platforms, scheduled_date, status)
+2. n8n lit la sheet et déclenche les publications
+3. **Upload-Post API** distribue le contenu vers TikTok, Instagram Reels, YouTube Shorts, LinkedIn **en un appel HTTP**
+4. Statut mis à jour automatiquement après publication
+
+**Variantes :**
+- Form-based publishing : formulaire unifié (plateforme + caption + photo/vidéo)
+- AI-generated content factory : chat → posts optimisés par plateforme
+
+**À retenir pour Voyages21 :**
+- ✅ **Upload-Post API** = alternative très puissante à Blotato (1 appel pour tout publier)
+- ✅ Google Sheet comme calendrier = encore plus simple que Notion si on veut minimaliste
+- ⚠️ n8n vs Make : équivalent pour ce cas. Make est plus visuel, n8n plus puissant en self-hosted gratuit
+
+---
+
+### Vidéo 8 — AI Influencer Automation in n8n (YouTube)
+
+**Lien :** https://www.youtube.com/watch?v=R9c_JQrEtu8
+
+**Workflow décrit :**
+- n8n + Blotato + outils de génération vidéo IA
+- **Schedule trigger** (toutes les 6h ou choisi)
+- Génération automatique de contenu IA → publication multi-réseaux
+- Concept de "AI Influencer Factory" : créer une présence multi-plateformes pilotée 100% par IA
+
+**À retenir pour Voyages21 :**
+- ❌ **À éviter** : ce modèle vise les "AI Influencers" 100% générés. Une agence de voyages doit garder son **authenticité humaine et marocaine**
+- ✅ L'idée du **schedule trigger n8n** est utile pour automatiser le rythme
+- ✅ Confirmation que **Blotato** est un outil de référence
+
+---
+
+### Vidéo 9 — n8n Community : Long-Form Videos Virales avec IA
+
+**Lien :** https://community.n8n.io/t/how-i-built-a-youtube-automation-that-creates-viral-long-form-videos-with-ai/105676
+
+**Stack technique :**
+- **OpenAI Whisper** — transcription word-level
+- **Google Gemini** — sélection de clips + métadonnées
+- **Upload-Post FFmpeg API** — cutting/cropping accéléré GPU + scheduling
+- **GPT-4** — concepts vidéo uniques
+- **Fal.ai** — texte → scènes cinématiques + audio ASMR
+- Alternatives : Vizard AI, Klap, Seedance, Blotato
+
+**Coût :** Spikes Studio gratuit + Upload-Post free trial sans CB
+
+**À retenir pour Voyages21 :**
+- ⚠️ **Trop complexe** pour démarrer. Excellente roadmap pour Phase 3 (mois 6+) quand le système simple sera maîtrisé
+- ✅ **Fal.ai** = à tester pour générer des scènes vidéo Maroc impossibles à filmer (ex : caravane historique)
+
+---
+
+### Vidéo 10 — Thinkpeak AI : Guide YouTube Automation 2026
+
+**Lien :** https://thinkpeak.ai/youtube-automations-2026-guide/
+
+**Concepts clés :**
+
+1. **Agentic AI** — l'IA ne génère plus seulement du contenu, elle **raisonne, planifie, exécute**. Traiter ton stack comme une "équipe d'employés digitaux".
+
+2. **SEO automatique** — titres, descriptions, tags générés automatiquement à partir des mots-clés cibles.
+
+3. **Cross-platform repurposing** — 1 vidéo longue → shorts TikTok / Reels / YouTube Shorts automatiquement.
+
+4. **Audience engagement** — chatbots IA entraînés pour répondre aux questions communes, accuser réception des feedbacks, maintenir la conversation.
+
+5. **Chaînes "faceless" rentables** — modèle économique fort en 2026 (ads + affiliate + sponsoring).
+
+**À retenir pour Voyages21 :**
+- ✅ **Cross-platform repurposing** = principe d'or à appliquer (1 contenu → toutes les plateformes)
+- ✅ **Chatbot IA pour engagement** = à coupler avec ManyChat pour qualifier les leads
+- ✅ Concept "Agentic AI" valide notre choix de Claude/Make comme orchestrateur intelligent
+- ❌ "Faceless channel" pas adapté : une agence de voyages Maroc DOIT montrer du vrai humain et du vrai pays
+
+---
+
 ### 🆕 Vidéos à ajouter (à compléter au fil de l'eau)
 
-> **Format suggéré pour chaque vidéo ajoutée :**
-> - Titre / URL
-> - Outils présentés
-> - Workflow décrit
-> - Idées à reprendre / à écarter
-> - Timestamps clés
-
-#### Vidéo 4 — [à ajouter]
+#### Vidéo 11 — [à ajouter]
 
 
-#### Vidéo 5 — [à ajouter]
+#### Vidéo 12 — [à ajouter]
 
 
 ---

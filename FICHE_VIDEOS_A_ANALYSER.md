@@ -17,15 +17,15 @@
 | # | Vidéo | Langue | Fait |
 |---|---|---|---|
 | 1 | Automatisez vos publications sur les réseaux sociaux (Notion + Make) | 🇫🇷 | [x] ✅ |
-| 2 | Automatiser la publication YouTube (Trankilia) | 🇫🇷 | [ ] |
-| 3 | 3 changements YouTube en 2026 (Stratégie Vidéo) | 🇫🇷 | [ ] |
-| 4 | Top 10 outils IA réseaux sociaux 2026 (CréActifs) | 🇫🇷 | [ ] |
-| 5 | IA YouTube : 7 outils gratuits (Metricool) | 🇫🇷 | [ ] |
-| 6 | 10 outils IA réseaux sociaux (Non Stop Reality) | 🇫🇷 | [ ] |
-| 7 | Auto-publish all platforms with n8n | 🇬🇧 | [ ] |
-| 8 | AI Influencer Automation in n8n | 🇬🇧 | [ ] |
-| 9 | YouTube Long-Form Videos with AI (n8n) | 🇬🇧 | [ ] |
-| 10 | YouTube Automations 2026 Guide (Thinkpeak) | 🇬🇧 | [ ] |
+| 2 | Automatiser la publication YouTube (Trankilia) | 🇫🇷 | [x] ✅ |
+| 3 | 3 changements YouTube en 2026 (Stratégie Vidéo) | 🇫🇷 | [x] ✅ |
+| 4 | Top 10 outils IA réseaux sociaux 2026 (CréActifs) | 🇫🇷 | [x] ✅ |
+| 5 | IA YouTube : 7 outils gratuits (Metricool) | 🇫🇷 | [x] ✅ |
+| 6 | 10 outils IA réseaux sociaux (Non Stop Reality) | 🇫🇷 | [x] ✅ |
+| 7 | Auto-publish all platforms with n8n | 🇬🇧 | [x] ✅ |
+| 8 | AI Influencer Automation in n8n | 🇬🇧 | [x] ✅ |
+| 9 | YouTube Long-Form Videos with AI (n8n) | 🇬🇧 | [x] ✅ |
+| 10 | YouTube Automations 2026 Guide (Thinkpeak) | 🇬🇧 | [x] ✅ |
 
 ---
 
