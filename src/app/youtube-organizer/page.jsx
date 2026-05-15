@@ -325,7 +325,7 @@ function Section({ title, children, defaultOpen = true }) {
 }
 
 // ─── VideoCard ────────────────────────────────────────────────────────────────
-function VideoCard({ video, enriched, selection, onChange }) {
+function VideoCard({ video, enriched, selection, onChange, note, onNoteChange }) {
   const e = enriched || {}
   const cat = getCat(e.category || 'other')
 
@@ -464,6 +464,31 @@ function VideoCard({ video, enriched, selection, onChange }) {
             </div>
           ))}
         </div>
+      </Section>
+
+      {/* Bloc 5 — Note personnelle */}
+      <Section title="Note personnelle">
+        <textarea
+          value={note || ''}
+          onChange={(e) => onNoteChange(video.id, e.target.value)}
+          placeholder="Votre analyse, idees d utilisation, next steps..."
+          style={{
+            width: '100%',
+            minHeight: 80,
+            background: '#0d0d1a',
+            border: '1px solid #2a2a4a',
+            borderRadius: 4,
+            color: '#c8c8e8',
+            fontSize: 12,
+            lineHeight: 1.6,
+            padding: '8px 10px',
+            resize: 'vertical',
+            outline: 'none',
+            fontFamily: 'inherit',
+            marginTop: 6,
+            boxSizing: 'border-box',
+          }}
+        />
       </Section>
     </div>
   )
