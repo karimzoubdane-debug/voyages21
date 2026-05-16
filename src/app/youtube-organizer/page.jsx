@@ -252,7 +252,7 @@ function levelColor(level) {
 }
 
 // ─── Export Excel ─────────────────────────────────────────────────────────────
-function buildExcelExport(videos, enriched, selections) {
+function buildExcelExport(videos, enriched, selections, notes, geminiAnalyses) {
   const rows = videos.map((v) => {
     const e = enriched[v.id] || {}
     const cat = getCat(e.category || 'other')
@@ -280,6 +280,8 @@ function buildExcelExport(videos, enriched, selections) {
       'Automatismes': domainMap['Automatismes'] || '',
       'Hebergement touristique': domainMap['Hebergement touristique'] || '',
       'Animation touristique': domainMap['Animation et activites touristiques'] || '',
+      'Analyse Gemini': (geminiAnalyses && geminiAnalyses[v.id]) ? geminiAnalyses[v.id].replace(/## /g, '\n\n') : '',
+      'Note personnelle': (notes && notes[v.id]) || '',
     }
   })
 
@@ -300,6 +302,8 @@ function buildExcelExport(videos, enriched, selections) {
     { wch: 40 }, // Automatismes
     { wch: 40 }, // Hebergement
     { wch: 40 }, // Animation
+    { wch: 80 }, // Gemini
+    { wch: 50 }, // Note
   ]
 
   const wb = XLSX.utils.book_new()
@@ -325,12 +329,33 @@ function Section({ title, children, defaultOpen = true }) {
 }
 
 // ─── VideoCard ────────────────────────────────────────────────────────────────
-function VideoCard({ video, enriched, selection, onChange, note, onNoteChange }) {
+function VideoCard({ video, enriched, selection, onChange, note, onNoteChange, geminiAnalysis, onGeminiAnalysis }) {
   const e = enriched || {}
   const cat = getCat(e.category || 'other')
+  const [geminiLoading, setGeminiLoading] = useState(false)
+  const [geminiError, setGeminiError] = useState(null)
 
   const borderColor = selection === 'keep' ? '#22c55e' : selection === 'delete' ? '#ef4444' : '#252525'
   const bgColor = selection === 'keep' ? '#0d1f0d' : selection === 'delete' ? '#1f0d0d' : '#141414'
+
+  async function runGemini() {
+    setGeminiLoading(true)
+    setGeminiError(null)
+    try {
+      const res = await fetch('/api/youtube/analyze-gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ videoUrl: video.url }),
+      })
+      const data = await res.json()
+      if (data.error) { setGeminiError(data.error); return }
+      onGeminiAnalysis(video.id, data.analysis)
+    } catch (err) {
+      setGeminiError(err.message)
+    } finally {
+      setGeminiLoading(false)
+    }
+  }
 
   return (
     <div style={{ background: bgColor, border: `1px solid ${borderColor}`, borderRadius: 8, padding: 16, transition: 'border-color .2s, background .2s' }}>
@@ -466,28 +491,52 @@ function VideoCard({ video, enriched, selection, onChange, note, onNoteChange })
         </div>
       </Section>
 
-      {/* Bloc 5 — Note personnelle */}
+      {/* Bloc 5 — Analyse Gemini */}
+      <Section title="Analyse Gemini (lecture complete de la video)">
+        {!geminiAnalysis && !geminiLoading && (
+          <div style={{ paddingTop: 8 }}>
+            <button
+              onClick={runGemini}
+              style={{ background: '#1a3a5c', border: '1px solid #2a5a8c', color: '#7ab8f5', borderRadius: 5, padding: '7px 16px', cursor: 'pointer', fontSize: 12, fontWeight: 700 }}
+            >
+              Analyser avec Gemini
+            </button>
+            {geminiError && (
+              <div style={{ color: '#ef4444', fontSize: 11, marginTop: 6 }}>{geminiError}</div>
+            )}
+            <div style={{ color: '#444', fontSize: 11, marginTop: 6 }}>
+              Necessite GEMINI_API_KEY dans .env.local — Gemini lit la video entiere et produit une synthese complete.
+            </div>
+          </div>
+        )}
+        {geminiLoading && (
+          <div style={{ color: '#7ab8f5', fontSize: 12, paddingTop: 8 }}>
+            Gemini analyse la video... (30-60 secondes)
+          </div>
+        )}
+        {geminiAnalysis && (
+          <div style={{ paddingTop: 8 }}>
+            <div
+              style={{ color: '#c8c8c8', fontSize: 12, lineHeight: 1.7, whiteSpace: 'pre-wrap', background: '#0d1520', border: '1px solid #1a3050', borderRadius: 4, padding: '10px 14px' }}
+              dangerouslySetInnerHTML={{ __html: geminiAnalysis.replace(/## (.+)/g, '<strong style="color:#7ab8f5;display:block;margin:10px 0 4px">$1</strong>') }}
+            />
+            <button
+              onClick={runGemini}
+              style={{ background: 'transparent', border: '1px solid #333', color: '#666', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 11, marginTop: 8 }}
+            >
+              Relancer l analyse
+            </button>
+          </div>
+        )}
+      </Section>
+
+      {/* Bloc 6 — Note personnelle */}
       <Section title="Note personnelle">
         <textarea
           value={note || ''}
           onChange={(e) => onNoteChange(video.id, e.target.value)}
           placeholder="Votre analyse, idees d utilisation, next steps..."
-          style={{
-            width: '100%',
-            minHeight: 80,
-            background: '#0d0d1a',
-            border: '1px solid #2a2a4a',
-            borderRadius: 4,
-            color: '#c8c8e8',
-            fontSize: 12,
-            lineHeight: 1.6,
-            padding: '8px 10px',
-            resize: 'vertical',
-            outline: 'none',
-            fontFamily: 'inherit',
-            marginTop: 6,
-            boxSizing: 'border-box',
-          }}
+          style={{ width: '100%', minHeight: 80, background: '#0d0d1a', border: '1px solid #2a2a4a', borderRadius: 4, color: '#c8c8e8', fontSize: 12, lineHeight: 1.6, padding: '8px 10px', resize: 'vertical', outline: 'none', fontFamily: 'inherit', marginTop: 6, boxSizing: 'border-box' }}
         />
       </Section>
     </div>
@@ -509,6 +558,8 @@ export default function YouTubeOrganizerPage() {
   const [filterSel, setFilterSel] = useState('all')
   const [exported, setExported] = useState(false)
   const [playlistsLoaded, setPlaylistsLoaded] = useState(false)
+  const [notes, setNotes] = useState({})
+  const [geminiAnalyses, setGeminiAnalyses] = useState({})
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -578,7 +629,7 @@ export default function YouTubeOrganizerPage() {
   }
 
   function doExport() {
-    const wb = buildExcelExport(videos, enriched, selections)
+    const wb = buildExcelExport(videos, enriched, selections, notes, geminiAnalyses)
     XLSX.writeFile(wb, `tri-videos-IA-${new Date().toISOString().slice(0, 10)}.xlsx`)
     setExported(true)
     setTimeout(() => setExported(false), 3000)
@@ -730,6 +781,10 @@ export default function YouTubeOrganizerPage() {
                         enriched={enriched[v.id]}
                         selection={selections[v.id] || null}
                         onChange={handleSelection}
+                        note={notes[v.id] || ''}
+                        onNoteChange={(id, val) => setNotes((prev) => ({ ...prev, [id]: val }))}
+                        geminiAnalysis={geminiAnalyses[v.id] || null}
+                        onGeminiAnalysis={(id, analysis) => setGeminiAnalyses((prev) => ({ ...prev, [id]: analysis }))}
                       />
                     ))
                   }
