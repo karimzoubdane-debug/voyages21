@@ -31,6 +31,15 @@ D'ici **le 30 septembre 2026**, atteindre :
 
 **Phase actuelle :** 🟡 Phase 0 — Conception terminée, mise en place pas commencée
 
+### Progression globale
+
+```
+PHASE 0  ██████████████████████████████  100% ✅
+PHASE 1  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
+PHASE 2  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
+PHASE 3  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
+```
+
 ✅ Stratégie définie (analysée 12 sources)
 ✅ Stack d'outils choisi (Notion + Claude + Make + ManyChat + Canva)
 ✅ Scénario final validé (`SCENARIO_FINAL.md`)
@@ -41,13 +50,44 @@ D'ici **le 30 septembre 2026**, atteindre :
 
 ---
 
-## 🗺️ TRAJECTOIRE — 4 PHASES
+## 🗺️ TRAJECTOIRE — Vue d'ensemble
 
+```mermaid
+gantt
+    title Roadmap Voyages21 Automation
+    dateFormat YYYY-MM-DD
+    axisFormat %d %b
+
+    section Phase 0
+    Conception & stratégie       :done, p0, 2026-05-08, 2026-05-16
+
+    section Phase 1
+    WE1 - Fondations Notion       :crit, p1a, 2026-05-23, 2d
+    WE2 - Publication auto Make   :crit, p1b, 2026-05-30, 2d
+    WE3 - Capture leads ManyChat  :crit, p1c, 2026-06-06, 2d
+    WE4 - LinkedIn + KPIs         :p1d, 2026-06-13, 2d
+
+    section Décision
+    Point de décision 1           :milestone, m1, 2026-06-15, 0d
+
+    section Phase 2
+    UGC + YouTube Shorts + TikTok :p2, 2026-06-15, 60d
+
+    section Décision
+    Point de décision 2           :milestone, m2, 2026-08-15, 0d
+
+    section Phase 3
+    Site web + Blog SEO           :p3, 2026-08-15, 45d
+
+    section Croisière
+    Routine permanente            :p4, 2026-09-30, 90d
 ```
-PHASE 0 (FAIT) → PHASE 1 → PHASE 2 → PHASE 3 → CROISIÈRE
-Conception     Lancement   Extension   Site/SEO   Optimisation
-   ✅          4 WE        6-8 sem.    3-6 mois   continu
-```
+
+> 💡 Ce diagramme s'affiche en **visuel coloré** quand tu ouvres ce fichier sur GitHub.
+
+---
+
+## 🗺️ TRAJECTOIRE — 4 PHASES (détail texte)
 
 ---
 
@@ -217,6 +257,35 @@ Conception     Lancement   Extension   Site/SEO   Optimisation
 | 📄 `FICHE_VIDEOS_A_ANALYSER.md` | Pour ajouter de nouvelles vidéos plus tard |
 
 Tout est sur GitHub : https://github.com/karimzoubdane-debug/voyages21/tree/claude/debug-chatbot-error-lsgD1
+
+---
+
+## 📊 TABLEAU DE BORD VISUEL
+
+### Vue Kanban (à mettre à jour à la main)
+
+```
+┌──────────────────┬───────────────────┬──────────────────┐
+│   📥 À FAIRE      │   🔄 EN COURS     │   ✅ TERMINÉ     │
+├──────────────────┼───────────────────┼──────────────────┤
+│  WE1 Notion       │                   │  Phase 0          │
+│  WE2 Make         │                   │  Stratégie        │
+│  WE3 ManyChat     │                   │  Scénario final   │
+│  WE4 LinkedIn     │                   │  Planning créé    │
+│                  │                   │                  │
+│  Photos dossier  │                   │                  │
+│  Liste concurr.  │                   │                  │
+└──────────────────┴───────────────────┴──────────────────┘
+```
+
+### Indicateurs clés (à mettre à jour chaque semaine)
+
+| Métrique | Cible Phase 1 | Actuel | Statut |
+|---|---|---|---|
+| Posts publiés auto | 28 | 0 | 🔴 |
+| Leads capturés | 5 | 0 | 🔴 |
+| Coût mensuel | < 30 € | 0 € | ✅ |
+| Heures travail / sem. | < 1h | - | ⏳ |
 
 ---
 
