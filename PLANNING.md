@@ -29,24 +29,30 @@ D'ici **le 30 septembre 2026**, atteindre :
 
 ## 📍 ÉTAT ACTUEL (où on en est)
 
-**Phase actuelle :** 🟡 Phase 0 — Conception terminée, mise en place pas commencée
+**Phase actuelle :** 🟢 Phase 1 — Week-end 1 EN COURS
 
 ### Progression globale
 
 ```
 PHASE 0  ██████████████████████████████  100% ✅
-PHASE 1  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
+PHASE 1  █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    3%
 PHASE 2  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
 PHASE 3  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
 ```
+
+### 📝 Journal d'exécution
+
+| Date | Action | Statut |
+|---|---|---|
+| 2026-05-16 | A1 — Création page "Voyages21 — Espace projet" dans Notion | ✅ Validé |
 
 ✅ Stratégie définie (analysée 12 sources)
 ✅ Stack d'outils choisi (Notion + Claude + Make + ManyChat + Canva)
 ✅ Scénario final validé (`SCENARIO_FINAL.md`)
 ✅ Plan progressif acté
-⏳ **Mise en place pas commencée**
+🟢 **WE1 démarré — A1 fait, A2 en cours**
 
-**Prochaine action :** Week-end 1 — Création du calendrier Notion
+**Prochaine action :** A2 — Nettoyer la page par défaut Notion
 
 ---
 
@@ -268,12 +274,11 @@ Tout est sur GitHub : https://github.com/karimzoubdane-debug/voyages21/tree/clau
 ┌──────────────────┬───────────────────┬──────────────────┐
 │   📥 À FAIRE      │   🔄 EN COURS     │   ✅ TERMINÉ     │
 ├──────────────────┼───────────────────┼──────────────────┤
-│  WE1 Notion       │                   │  Phase 0          │
-│  WE2 Make         │                   │  Stratégie        │
-│  WE3 ManyChat     │                   │  Scénario final   │
-│  WE4 LinkedIn     │                   │  Planning créé    │
-│                  │                   │                  │
-│  Photos dossier  │                   │                  │
+│  WE2 Make         │  WE1 Notion       │  Phase 0          │
+│  WE3 ManyChat     │                   │  Stratégie        │
+│  WE4 LinkedIn     │                   │  Scénario final   │
+│                  │                   │  Planning créé    │
+│  Photos dossier  │                   │  A1: Page projet  │
 │  Liste concurr.  │                   │                  │
 └──────────────────┴───────────────────┴──────────────────┘
 ```
