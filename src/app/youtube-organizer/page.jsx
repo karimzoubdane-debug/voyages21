@@ -41,22 +41,6 @@ function extractActions(description) {
   return sentences.slice(0, 4)
 }
 
-// ─── Extraction liens ─────────────────────────────────────────────────────────
-function extractLinks(description) {
-  if (!description) return []
-  const urlRegex = /https?:\/\/[^\s\)>\]"']+/g
-  const urls = description.match(urlRegex) || []
-  const unique = [...new Set(urls)].slice(0, 15)
-  return unique.map((url) => {
-    const idx = description.indexOf(url)
-    const before = description.slice(Math.max(0, idx - 60), idx).split('\n').pop().trim()
-    const label = before.replace(/[-:>*]\s*$/, '').trim() || null
-    let domain = ''
-    try { domain = new URL(url).hostname.replace('www.', '') } catch {}
-    return { url, label: label || domain, domain }
-  })
-}
-
 // ─── Extraction formations et prix ───────────────────────────────────────────
 function extractFormations(description) {
   if (!description) return []
@@ -78,57 +62,12 @@ function extractFormations(description) {
   return results.slice(0, 5)
 }
 
-// ─── Pertinence business ─────────────────────────────────────────────────────
-const BUSINESS_DOMAINS = [
-  {
-    id: 'travel', label: 'Agence de voyages',
-    keywords: ['booking', 'reservation', 'crm', 'client', 'newsletter', 'email marketing', 'seo', 'instagram', 'tiktok', 'contenu', 'marketing', 'landing page', 'devis', 'automatisation client', 'avis', 'google my business', 'google ads', 'meta ads', 'publicite', 'lead', 'tunnel de vente', 'chatbot', 'whatsapp', 'automation', 'voyage', 'tourisme', 'agence', 'experience client', 'personnalise', 'calendly', 'calendrier', 'facturation', 'paiement', 'stripe'],
-    useCases: { 'chatgpt': 'Redaction de descriptions de circuits, reponses clients automatisees, generation de contenu marketing', 'automation': 'Automatiser les confirmations de reservation, relances clients, envoi de programmes', 'marketing': 'Campagnes email, SEO pour les circuits, publicite ciblee voyageurs', 'social': 'Contenus Instagram et TikTok pour attirer des voyageurs, gestion communaute', 'video_image': 'Visuels pour les circuits, videos promotionnelles de destinations', 'business': 'Modelisation economique, tarification dynamique, developpement agence', 'dev': 'Systeme de devis en ligne, CRM personnalise, espace client', 'tools': 'Outils de gestion de projets voyages, coordination guides et prestataires' }
-  },
-  {
-    id: 'apps', label: 'Creation d applications',
-    keywords: ['react', 'next.js', 'python', 'javascript', 'typescript', 'api', 'supabase', 'firebase', 'vercel', 'cursor', 'github', 'backend', 'frontend', 'database', 'ui/ux', 'figma', 'no-code', 'bubble', 'webflow', 'framer', 'mvp', 'saas', 'developpement', 'code', 'deploy', 'hebergement', 'serveur', 'cloud', 'docker', 'langchain', 'rag', 'llm api', 'openai api', 'anthropic', 'integration', 'webhook', 'stripe', 'auth', 'authentication'],
-    useCases: { 'dev': 'Techniques directement applicables au developpement de vos applications', 'chatgpt': 'Integration IA dans vos applications, chatbots, generation de contenu automatique', 'automation': 'Automatisation des workflows de developpement, tests, deploiement', 'tools': 'Outils de productivite pour developper plus vite et mieux', 'business': 'Monetisation de vos applications, modele SaaS, pricing' }
-  },
-  {
-    id: 'automation_biz', label: 'Automatismes',
-    keywords: ['zapier', 'make', 'n8n', 'automation', 'automatisation', 'workflow', 'webhook', 'trigger', 'api', 'script', 'python', 'bot', 'schedule', 'cron', 'integromat', 'airtable', 'notion', 'google sheets', 'slack', 'gmail', 'calendar', 'typeform', 'notion api', 'automatique', 'synchronisation', 'pipeline', 'flux', 'connecter', 'integrer'],
-    useCases: { 'automation': 'Applications directes : automatiser vos processus metier entre voyages, hebergement et activites', 'chatgpt': 'Automatiser la creation de contenu, les reponses, les rapports', 'dev': 'Developper vos propres automatismes sur mesure avec du code', 'tools': 'Nouveaux outils d automatisation a integrer dans votre stack' }
-  },
-  {
-    id: 'accommodation', label: 'Hebergement touristique',
-    keywords: ['airbnb', 'booking.com', 'hebergement', 'hotel', 'riad', 'villa', 'location', 'propriete', 'tarif', 'pricing', 'ota', 'channel manager', 'calendrier', 'avis', 'review', 'guest', 'checkin', 'checkout', 'message automatique', 'menage', 'conciergerie', 'sejour', 'occupation', 'revenue management', 'dynamic pricing', 'hostaway', 'smoobu', 'gestion locative'],
-    useCases: { 'automation': 'Messages automatiques aux guests, synchronisation calendriers, gestion menage', 'chatgpt': 'Reponses aux avis, descriptions optimisees, guide de bienvenue personnalise', 'marketing': 'Optimisation des annonces Airbnb et Booking, strategie de contenu', 'business': 'Revenue management, pricing dynamique, optimisation du taux d occupation', 'tools': 'Outils de gestion de proprietes, channel managers, PMS' }
-  },
-  {
-    id: 'activities', label: 'Animation et activites touristiques',
-    keywords: ['activite', 'excursion', 'tour', 'guide', 'reservation', 'experience', 'evenement', 'ticketing', 'groupe', 'planning', 'itineraire', 'animation', 'visite', 'atelier', 'booking activite', 'fareharbor', 'bokun', 'rezdy', 'tripadvisor', 'google things to do', 'programme', 'outdoor', 'aventure', 'randonnee', 'quad', 'sport'],
-    useCases: { 'automation': 'Automatiser les reservations, confirmations, rappels aux participants', 'marketing': 'Promouvoir les activites sur les plateformes, Google, Tripadvisor', 'social': 'Contenus pour attirer des participants, videos d activites, temoignages', 'chatgpt': 'Descriptions d activites optimisees, reponses FAQ automatiques', 'video_image': 'Visuels promotionnels pour les activites, videos de terrain' }
-  },
-]
-
-function getBusinessRelevance(title, description, categoryId) {
-  const text = `${title} ${description}`.toLowerCase()
-  return BUSINESS_DOMAINS.map((domain) => {
-    const matchedKeywords = domain.keywords.filter((k) => text.includes(k.toLowerCase()))
-    const score = matchedKeywords.length
-    let level = 'Non detecte'
-    if (score >= 5) level = 'Fort'
-    else if (score >= 2) level = 'Moyen'
-    else if (score >= 1) level = 'Faible'
-    const useCase = domain.useCases[categoryId] || null
-    return { domain: domain.label, level, useCase, matchedKeywords: matchedKeywords.slice(0, 4) }
-  })
-}
-
 function enrichVideo(video) {
   const catId = categorize(video.title, video.description || '')
   return {
     category: catId,
     actions: extractActions(video.description || ''),
-    links: extractLinks(video.description || ''),
     formations: extractFormations(video.description || ''),
-    businessRelevance: getBusinessRelevance(video.title, video.description || '', catId),
   }
 }
 
@@ -155,12 +94,6 @@ function getCat(id) {
   return CATEGORIES.find((c) => c.id === id) || CATEGORIES[CATEGORIES.length - 1]
 }
 
-function levelColor(level) {
-  if (level === 'Fort') return '#22c55e'
-  if (level === 'Moyen') return '#f59e0b'
-  return '#6b7280'
-}
-
 const STATUS_OPTIONS = [
   { value: 'non_commence', label: 'Non commence', color: '#6b7280' },
   { value: 'en_cours', label: 'En cours', color: '#f59e0b' },
@@ -184,10 +117,7 @@ function buildExcelExport(videos, enriched, selections, notes, geminiAnalyses, v
     const statut = selections[v.id] === 'keep' ? 'GARDER' : selections[v.id] === 'delete' ? 'SUPPRIMER' : 'Non classe'
     const gd = geminiAnalyses[v.id] || {}
     const actions = gd.parsedActions?.length ? gd.parsedActions.join('\n') : (e.actions || []).join('\n')
-    const liens = (e.links || []).map((l) => `${l.label} : ${l.url}`).join('\n')
     const formations = (e.formations || []).map((f) => `${f.name}${f.price ? ' [' + f.price + ']' : ''}${f.url ? ' — ' + f.url : ''}`).join('\n')
-    const domainMap = {}
-    ;(e.businessRelevance || []).forEach((r) => { domainMap[r.domain] = `[${r.level}] ${r.useCase || ''}` })
     const checks = actionChecks[v.id] || {}
     const geminiActions = gd.parsedActions || []
     const doneCount = geminiActions.filter((_, i) => checks[i]).length
@@ -202,19 +132,13 @@ function buildExcelExport(videos, enriched, selections, notes, geminiAnalyses, v
       'Date cible': targetDates[v.id] || '',
       'Progression actions': progress,
       'Description': v.description || '',
-      'Actions techniques (Gemini)': actions,
-      'Liens et ressources': liens,
+      'Plan d action (Gemini)': actions,
       'Formations proposees': formations,
-      'Agence de voyages': domainMap['Agence de voyages'] || '',
-      'Creation d applications': domainMap["Creation d applications"] || '',
-      'Automatismes': domainMap['Automatismes'] || '',
-      'Hebergement touristique': domainMap['Hebergement touristique'] || '',
-      'Animation touristique': domainMap['Animation et activites touristiques'] || '',
       'Impact CA': gd.impact || '',
       'Facilite mise en oeuvre': gd.effort || '',
       'Priorite': gd.priorite || '',
       'Temps estime': gd.temps || '',
-      'Analyse Gemini': gd.analysis ? gd.analysis.replace(/## /g, '\n\n') : '',
+      'Analyse Gemini complete': gd.analysis ? gd.analysis.replace(/## /g, '\n\n') : '',
       'Note personnelle': notes[v.id] || '',
     }
   })
@@ -222,8 +146,7 @@ function buildExcelExport(videos, enriched, selections, notes, geminiAnalyses, v
   const ws1 = XLSX.utils.json_to_sheet(rows)
   ws1['!cols'] = [
     { wch: 12 }, { wch: 50 }, { wch: 45 }, { wch: 25 }, { wch: 16 }, { wch: 14 }, { wch: 20 },
-    { wch: 60 }, { wch: 55 }, { wch: 50 }, { wch: 45 }, { wch: 38 }, { wch: 38 }, { wch: 38 },
-    { wch: 38 }, { wch: 38 }, { wch: 12 }, { wch: 12 }, { wch: 20 }, { wch: 20 }, { wch: 80 }, { wch: 50 },
+    { wch: 60 }, { wch: 55 }, { wch: 45 }, { wch: 12 }, { wch: 12 }, { wch: 20 }, { wch: 20 }, { wch: 80 }, { wch: 50 },
   ]
 
   // Sheet 2 — Plan d action (une ligne par etape)
@@ -466,29 +389,7 @@ function VideoCard({ video, enriched, selection, onChange, note, onNoteChange, g
         }
       </Section>
 
-      {/* Bloc 2 — Liens et ressources */}
-      <Section title={`Liens et ressources (${(e.links || []).length})`}>
-        {e.links?.length > 0
-          ? <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6 }}>
-              {e.links.map((l, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                  <span style={{ color: '#555', fontSize: 11, minWidth: 16 }}>{i + 1}.</span>
-                  <div>
-                    {l.label && l.label !== l.domain && (
-                      <span style={{ color: '#aaa', fontSize: 11, marginRight: 6 }}>{l.label}</span>
-                    )}
-                    <a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: '#5b9cf6', fontSize: 11, wordBreak: 'break-all' }}>
-                      {l.domain || l.url}
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          : <div style={{ color: '#444', fontSize: 12, paddingTop: 6 }}>Aucun lien detecte dans la description.</div>
-        }
-      </Section>
-
-      {/* Bloc 3 — Formations et prix */}
+      {/* Bloc 2 — Formations et prix */}
       <Section title={`Formations proposees (${(e.formations || []).length})`}>
         {e.formations?.length > 0
           ? <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
@@ -506,33 +407,7 @@ function VideoCard({ video, enriched, selection, onChange, note, onNoteChange, g
         }
       </Section>
 
-      {/* Bloc 4 — Pertinence business */}
-      <Section title="Pertinence pour votre business">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 6 }}>
-          {(e.businessRelevance || []).map((r, i) => (
-            <div key={i} style={{ background: '#111', border: '1px solid #1e1e1e', borderRadius: 4, padding: '8px 12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: r.useCase && r.level !== 'Non detecte' ? 4 : 0 }}>
-                <span style={{ background: levelColor(r.level) + '22', border: `1px solid ${levelColor(r.level)}55`, color: levelColor(r.level), fontSize: 10, borderRadius: 3, padding: '1px 6px', fontWeight: 700, minWidth: 80, textAlign: 'center' }}>
-                  {r.level.toUpperCase()}
-                </span>
-                <span style={{ color: r.level === 'Non detecte' ? '#444' : '#ccc', fontSize: 12, fontWeight: 600 }}>{r.domain}</span>
-              </div>
-              {r.useCase && r.level !== 'Non detecte' && (
-                <div style={{ color: '#888', fontSize: 12, lineHeight: 1.5 }}>{r.useCase}</div>
-              )}
-              {r.matchedKeywords.length > 0 && (
-                <div style={{ marginTop: 4, display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                  {r.matchedKeywords.map((k) => (
-                    <span key={k} style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#666', fontSize: 10, borderRadius: 3, padding: '1px 6px' }}>{k}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Bloc 5 — Note personnelle */}
+      {/* Bloc 3 — Note personnelle */}
       <Section title="Note personnelle">
         <textarea
           value={note || ''}
