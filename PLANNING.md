@@ -35,7 +35,7 @@ D'ici **le 30 septembre 2026**, atteindre :
 
 ```
 PHASE 0  ██████████████████████████████  100% ✅
-PHASE 1  █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    3%
+PHASE 1  ████████░░░░░░░░░░░░░░░░░░░░░░   25%
 PHASE 2  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
 PHASE 3  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    0%
 ```
@@ -45,14 +45,18 @@ PHASE 3  ░░░░░░░░░░░░░░░░░░░░░░░�
 | Date | Action | Statut |
 |---|---|---|
 | 2026-05-16 | A1 — Création page "Voyages21 — Espace projet" dans Notion | ✅ Validé |
+| 2026-05-16 | A2-A10 — Création base "Calendrier éditorial" + 7 colonnes (Titre, Contenu, Image, Date, Plateforme, État, Lead capture) | ✅ Validé |
+| 2026-05-16 | A11 — Nettoyage des lignes de test (2/3 lignes supprimées, 1 reste comme ligne de test) | ✅ Validé |
+| 2026-05-16 | A12 — Définition du positionnement (cible 60/40, marchés DE+IT+UK+CH, ton de marque) | ✅ Validé |
+| 2026-05-16 | A13 — Création MASTER_PROMPT_VOYAGES21.md (identité, audiences, tonalités, piliers, stratégie marketing phasée) | ✅ Validé |
 
 ✅ Stratégie définie (analysée 12 sources)
 ✅ Stack d'outils choisi (Notion + Claude + Make + ManyChat + Canva)
 ✅ Scénario final validé (`SCENARIO_FINAL.md`)
 ✅ Plan progressif acté
-🟢 **WE1 démarré — A1 fait, A2 en cours**
+🟢 **WE1 en cours — Base Notion + Master Prompt OK, contenu à générer**
 
-**Prochaine action :** A2 — Nettoyer la page par défaut Notion
+**Prochaine action :** A14 — Générer les 7 premiers posts de la semaine 1 (test)
 
 ---
 
@@ -258,6 +262,7 @@ gantt
 | Document | Rôle |
 |---|---|
 | 📄 **PLANNING.md** *(ce document)* | **GPS du projet** — vision, trajectoire, état |
+| 📄 `MASTER_PROMPT_VOYAGES21.md` | **ADN de marque** pour génération de contenu IA (identité, audiences, tonalités, stratégie marketing) |
 | 📄 `SCENARIO_FINAL.md` | Le "comment" détaillé du système |
 | 📄 `STRATEGIE_AUTOMATISATION_CONTENU.md` | Toutes les analyses des 12 vidéos/articles |
 | 📄 `FICHE_VIDEOS_A_ANALYSER.md` | Pour ajouter de nouvelles vidéos plus tard |
