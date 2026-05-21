@@ -1,0 +1,142 @@
+{
+  "name": "01 — Airtable Trigger + Download Media",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 5,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "triggerField": "Statut",
+        "downloadAttachments": false,
+        "additionalFields": {
+          "viewId": "",
+          "filterByFormula": "{Statut} = 'En cours'"
+        }
+      },
+      "id": "airtable-trigger-node",
+      "name": "Airtable Trigger",
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "TO_CONFIGURE",
+          "name": "Airtable Usine Virale"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json[\"Médias Bruts\"][0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "http-download-node",
+      "name": "HTTP — Download Raw Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/files/raw/{{ $('Airtable Trigger').item.json.id }}_{{ $('Airtable Trigger').item.json[\"Médias Bruts\"][0].filename }}",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "id": "write-file-node",
+      "name": "Write Binary to VPS",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": "TO_CONFIGURE_BASE_ID"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "Publications"
+        },
+        "id": "={{ $('Airtable Trigger').item.json.id }}",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Notes": "=Téléchargé OK le {{ $now.toISO() }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "airtable-update-node",
+      "name": "Airtable — Update Notes",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [960, 300],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "TO_CONFIGURE",
+          "name": "Airtable Usine Virale"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP — Download Raw Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP — Download Raw Media": {
+      "main": [
+        [
+          {
+            "node": "Write Binary to VPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Binary to VPS": {
+      "main": [
+        [
+          {
+            "node": "Airtable — Update Notes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "Premier workflow Usine Virale : surveille Airtable, télécharge le média brut sur le VPS quand un record passe en statut 'En cours'."
+  }
+}
