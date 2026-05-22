@@ -1,0 +1,208 @@
+<!--
+  PAGE WORDPRESS : AXE 02 - PUBLICATIONS
+  -----------------------------------------------------
+  A coller dans un bloc "HTML personnalise" (Gutenberg) ou en mode HTML (Classic).
+  Remplacer [URL_DIAGNOSTIC], [URL_AXE_1] et [URL_AXE_3] par les URLs des pages WP correspondantes.
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+.nl-page {
+  --bg: #FAF3E7;
+  --bg-card: #FEFAF2;
+  --bg-soft: #F2E4CC;
+  --ochre: #B8862D;
+  --ochre-deep: #8E6620;
+  --text: #3D2817;
+  --text-medium: #6B4A38;
+  --text-muted: #9B8270;
+  --border: #E5D3B8;
+  --border-strong: #D4BB95;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  padding: 4rem 1.8rem 6rem;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.nl-page *, .nl-page *::before, .nl-page *::after { box-sizing: border-box; }
+
+.nl-page .breadcrumb { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+.nl-page .breadcrumb a { color: var(--ochre); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+.nl-page .breadcrumb a:hover { border-bottom-color: var(--ochre); }
+
+.nl-page .top { border-bottom: 1px solid var(--border); padding-bottom: 2.5rem; margin-bottom: 4.5rem; }
+.nl-page .eyebrow { font-size: 0.78rem; font-weight: 500; color: var(--ochre); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.nl-page h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 600; color: var(--text); line-height: 1.15; margin: 0 0 1.2rem; letter-spacing: -0.01em; }
+.nl-page .lede { font-size: 1.05rem; color: var(--text-medium); max-width: 600px; margin: 0; }
+
+.nl-page section { margin-bottom: 4.5rem; }
+.nl-page h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--text); margin: 0 0 1.4rem; letter-spacing: -0.005em; }
+.nl-page h2::before { content: attr(data-num); font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--ochre); letter-spacing: 0.2em; display: block; margin-bottom: 0.6rem; text-transform: uppercase; }
+
+.nl-page p { margin: 0 0 1.2rem; color: var(--text); }
+.nl-page p:last-child { margin-bottom: 0; }
+.nl-page strong { font-weight: 600; }
+
+.nl-page .action { margin-bottom: 3.5rem; }
+.nl-page .action-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 500; color: var(--ochre); line-height: 1; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+.nl-page .action-title { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.3; }
+.nl-page .action p { font-size: 1rem; }
+
+.nl-page .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.6rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-strong); }
+@media (max-width: 600px) { .nl-page .roles { grid-template-columns: 1fr; gap: 0.6rem; } }
+.nl-page .role-item { font-size: 0.92rem; line-height: 1.6; }
+.nl-page .role-label { font-size: 0.72rem; font-weight: 600; color: var(--ochre-deep); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.nl-page .role-text { color: var(--text-medium); }
+
+.nl-page .angles { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+.nl-page .angle { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem 1.8rem; border-left: 3px solid var(--ochre); border-radius: 2px; }
+.nl-page .angle-label { font-size: 0.72rem; font-weight: 600; color: var(--ochre-deep); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.nl-page .angle-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+.nl-page .angle-text { font-size: 0.95rem; color: var(--text-medium); line-height: 1.65; }
+
+.nl-page .roadmap { border-top: 1px solid var(--border); padding-top: 3rem; margin-top: 4rem; }
+.nl-page .timeline { position: relative; padding-left: 2rem; margin-top: 2rem; }
+.nl-page .timeline::before { content: ''; position: absolute; left: 0.4rem; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--border-strong); }
+.nl-page .milestone { position: relative; padding-bottom: 2rem; }
+.nl-page .milestone:last-child { padding-bottom: 0; }
+.nl-page .milestone::before { content: ''; position: absolute; left: -2rem; top: 0.5rem; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ochre); }
+.nl-page .milestone-when { font-size: 0.78rem; font-weight: 500; color: var(--ochre); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.nl-page .milestone-what { font-size: 1rem; color: var(--text); line-height: 1.6; }
+
+.nl-page .foot-nav { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.nl-page .foot-link { color: var(--ochre); text-decoration: none; font-size: 0.92rem; font-weight: 500; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+.nl-page .foot-link:hover { border-bottom-color: var(--ochre); }
+.nl-page .foot-link-prev::before { content: '\\2190  '; }
+.nl-page .foot-link-next::after { content: '  \\2192'; }
+.nl-page .foot-link-home { color: var(--text-muted); }
+</style>
+
+<div class="nl-page">
+
+  <div class="breadcrumb">
+    <a href="[URL_DIAGNOSTIC]">État actuel</a> &nbsp;&middot;&nbsp; Axe 02
+  </div>
+
+  <header class="top">
+    <div class="eyebrow">Axe 02 &middot; Semaines 2 à 12</div>
+    <h1>Publications</h1>
+    <p class="lede">Sortie du silence éditorial. Production régulière de contenu original autour du positionnement Medical Affairs. Le profil cesse d'être passif et commence à exister dans le classement de l'algorithme.</p>
+  </header>
+
+  <section>
+    <h2 data-num="Méthode">Comment on travaille</h2>
+    <p>Karim construit le calendrier éditorial, rédige chaque publication, programme sa mise en ligne. Nada relit chaque proposition avant qu'elle ne parte. Elle peut accepter la version proposée, demander un ajustement, ou suggérer un angle différent. Une fois validée, la publication part automatiquement à l'heure prévue, sans que Nada ait à se connecter.</p>
+    <p>Là où Nada reprend systématiquement la main, c'est sur les interactions. Les commentaires reçus, les messages que ses publications déclenchent, les conversations qui s'ouvrent : tout ce qui relève du dialogue lui appartient. C'est la part humaine du dispositif, celle qui ne peut pas, et ne doit pas, être automatisée.</p>
+  </section>
+
+  <section>
+    <h2 data-num="Angles">Les trois angles éditoriaux</h2>
+    <p>Le calendrier s'articule autour de trois angles complémentaires. Chacun construit un signal distinct pour l'algorithme LinkedIn et pour les recruteurs qui parcourent le fil.</p>
+
+    <div class="angles">
+      <div class="angle">
+        <div class="angle-label">Angle 01</div>
+        <div class="angle-title">Expertise scientifique</div>
+        <div class="angle-text">Publications de fond sur l'imagerie cardiaque, la tomographie par émission de positons et les sujets périphériques au doctorat. Ces contenus établissent la crédibilité scientifique du profil et activent les mots-clés métier dans l'algorithme.</div>
+      </div>
+
+      <div class="angle">
+        <div class="angle-label">Angle 02</div>
+        <div class="angle-title">Vulgarisation scientifique</div>
+        <div class="angle-text">Reprise et capitalisation de la compétence reconnue par le prix Trois Minutes Trois Disciplines. Contenus qui rendent accessible un sujet médical complexe. C'est exactement le geste professionnel attendu d'un Medical Science Liaison : traduire la science pour un public non-expert.</div>
+      </div>
+
+      <div class="angle">
+        <div class="angle-label">Angle 03</div>
+        <div class="angle-title">Regards sur l'industrie</div>
+        <div class="angle-text">Commentaires construits sur l'actualité de la pharmaceutique au Québec, les nouvelles autorisations, les enjeux de Medical Affairs, les évolutions réglementaires. Ces publications signalent une connaissance vivante du secteur visé.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+
+    <div class="action">
+      <div class="action-num">01</div>
+      <div class="action-title">Le calendrier éditorial</div>
+      <p>Karim construit un calendrier de publications couvrant les douze premières semaines, en répartissant les trois angles selon une rotation régulière. Chaque semaine comporte deux publications, alternant les sujets scientifiques de fond, les contenus de vulgarisation et les regards sur le secteur.</p>
+      <p>Le calendrier complet est soumis à Nada avant le démarrage. Elle peut ajouter un sujet qui lui tient à cœur, en retirer un qu'elle ne souhaite pas traiter, demander à inverser deux semaines. Une fois validé, le calendrier devient le fil directeur des trois mois qui suivent.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Construit le calendrier de douze semaines, le présente à Nada.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Lit le calendrier, ajuste les sujets, valide.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">02</div>
+      <div class="action-title">La rédaction des publications</div>
+      <p>Quelques jours avant la date de publication prévue, Karim rédige le texte. Il propose à Nada une version complète, prête à être mise en ligne. Le texte respecte le ton attendu d'un profil Medical Affairs en construction : précis sur le contenu, sobre dans la forme, sans superlatifs.</p>
+      <p>Nada relit. Elle peut valider tel quel, demander une reformulation, ou indiquer qu'elle préfère un autre angle pour cette semaine. Le retour est court — quelques minutes suffisent. La publication part ensuite automatiquement au créneau prévu.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Rédige chaque publication, intègre les retours, programme la mise en ligne.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Lit, demande des ajustements si besoin, valide.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">03</div>
+      <div class="action-title">La cadence</div>
+      <p>Deux publications par semaine. Lundi matin et jeudi en milieu de journée, sur les créneaux où l'algorithme LinkedIn met le mieux en circulation les contenus professionnels au Québec. La cadence est soutenue sans devenir envahissante. Elle suffit à entraîner l'algorithme à classer progressivement le profil dans les catégories Medical Affairs et Scientific Communication.</p>
+      <p>La régularité prime sur le volume. Une semaine manquée annule plusieurs semaines de progression. Le dispositif est conçu pour tenir cette cadence sans intervention manuelle de Nada, qui n'a qu'à valider.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Tient la cadence semaine après semaine.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Valide les publications à venir une fois par semaine.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">04</div>
+      <div class="action-title">Les interactions</div>
+      <p>Une fois la publication en ligne, le travail automatisé s'arrête. Les commentaires, les messages privés, les invitations à connecter qui suivent appartiennent à Nada. C'est elle qui répond, qui remercie pour un partage, qui prolonge une conversation lorsqu'un contact pertinent réagit.</p>
+      <p>C'est la partie irremplaçable du dispositif. Un compte qui publie mais qui ne répond jamais perd rapidement de la valeur aux yeux de l'algorithme, et plus encore aux yeux des contacts qui ont pris le temps de réagir.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">N'intervient pas sur les interactions.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Répond, remercie, prolonge les conversations.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">05</div>
+      <div class="action-title">Le suivi mensuel</div>
+      <p>Chaque fin de mois, Karim prépare un point sur les publications du mois écoulé. Quelles publications ont produit le plus de vues, lesquelles ont déclenché des conversations qualifiées, quels sujets sont à conserver pour le mois suivant et lesquels sont à abandonner.</p>
+      <p>Le point est court. Nada y consacre quinze minutes. Les ajustements décidés sont reportés sur le calendrier des semaines à venir.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Prépare le point mensuel et propose les ajustements du calendrier.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Lit le point, valide les ajustements.</div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="roadmap">
+    <h2 data-num="Calendrier">Feuille de route — Trois mois</h2>
+    <p>L'axe démarre en deuxième semaine, une fois le profil reconstruit. Il s'inscrit dans la durée et continue au-delà du jalon des soixante jours.</p>
+
+    <div class="timeline">
+      <div class="milestone"><div class="milestone-when">Semaine 2</div><div class="milestone-what">Construction du calendrier de douze semaines. Validation par Nada. Première publication en ligne en fin de semaine.</div></div>
+      <div class="milestone"><div class="milestone-when">Semaines 3 à 4</div><div class="milestone-what">Mise en cadence. Quatre publications mises en ligne. L'algorithme commence à reconnaître le profil sur les sujets ciblés.</div></div>
+      <div class="milestone"><div class="milestone-when">Fin du mois 1</div><div class="milestone-what">Premier point de suivi. Identification des sujets qui performent. Ajustement du calendrier pour le mois suivant.</div></div>
+      <div class="milestone"><div class="milestone-when">Mois 2</div><div class="milestone-what">Régime de croisière. Huit publications. Premiers contacts qualifiés via les commentaires et les messages privés attendus.</div></div>
+      <div class="milestone"><div class="milestone-when">Mois 3</div><div class="milestone-what">Stabilisation. Le profil est classé par l'algorithme dans les catégories Medical Affairs et Scientific Communication. Décision de poursuivre la cadence ou de la réviser au regard des résultats observés.</div></div>
+    </div>
+  </section>
+
+  <nav class="foot-nav">
+    <a class="foot-link foot-link-prev" href="[URL_AXE_1]">Axe 01 — Profil</a>
+    <a class="foot-link foot-link-home" href="[URL_DIAGNOSTIC]">État actuel</a>
+    <a class="foot-link foot-link-next" href="[URL_AXE_3]">Axe 03 — Recruteurs</a>
+  </nav>
+
+</div>

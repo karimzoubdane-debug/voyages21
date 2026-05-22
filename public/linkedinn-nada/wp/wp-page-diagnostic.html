@@ -1,0 +1,229 @@
+<!--
+  PAGE WORDPRESS : ETAT ACTUEL DU PROFIL (DIAGNOSTIC)
+  -----------------------------------------------------
+  A coller dans un bloc "HTML personnalise" (Gutenberg) ou en mode HTML (Classic).
+  Remplacer les placeholders [URL_AXE_1], [URL_AXE_2], [URL_AXE_3] par les URLs
+  des pages WP correspondantes avant publication.
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+.nl-page {
+  --bg: #FAF3E7;
+  --bg-card: #FEFAF2;
+  --bg-soft: #F2E4CC;
+  --terracotta: #B8553A;
+  --terracotta-deep: #8E3E29;
+  --text: #3D2817;
+  --text-medium: #6B4A38;
+  --text-muted: #9B8270;
+  --border: #E5D3B8;
+  --border-strong: #D4BB95;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  padding: 4rem 1.8rem 6rem;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.nl-page *, .nl-page *::before, .nl-page *::after { box-sizing: border-box; }
+
+.nl-page .top { border-bottom: 1px solid var(--border); padding-bottom: 2.5rem; margin-bottom: 4.5rem; }
+.nl-page .eyebrow { font-size: 0.78rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.nl-page h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 600; color: var(--text); line-height: 1.15; margin: 0 0 1.2rem; letter-spacing: -0.01em; }
+.nl-page .lede { font-size: 1.05rem; color: var(--text-medium); max-width: 600px; margin: 0; }
+
+.nl-page section { margin-bottom: 4.5rem; }
+.nl-page h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--text); margin: 0 0 1.4rem; letter-spacing: -0.005em; }
+.nl-page h2::before { content: attr(data-num); font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.2em; display: block; margin-bottom: 0.6rem; text-transform: uppercase; }
+
+.nl-page p { margin: 0 0 1.2rem; color: var(--text); }
+.nl-page p:last-child { margin-bottom: 0; }
+.nl-page strong { font-weight: 600; color: var(--text); }
+
+.nl-page .panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 2rem 2.2rem; margin-top: 1.8rem; }
+.nl-page .panel + .panel { margin-top: 1rem; }
+.nl-page .panel-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--terracotta-deep); margin-bottom: 0.8rem; }
+.nl-page .panel-text { font-size: 0.97rem; color: var(--text-medium); line-height: 1.7; }
+
+.nl-page .verdict { background: var(--bg-soft); border-left: 3px solid var(--terracotta); padding: 2rem 2.2rem; margin: 2rem 0; }
+.nl-page .verdict-label { font-size: 0.72rem; font-weight: 500; color: var(--terracotta-deep); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.7rem; }
+.nl-page .verdict-text { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; line-height: 1.45; color: var(--text); font-weight: 500; }
+
+.nl-page .score-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+@media (max-width: 600px) { .nl-page .score-row { grid-template-columns: 1fr; } }
+.nl-page .score-item { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem 1.6rem; border-radius: 4px; }
+.nl-page .score-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.nl-page .score-value { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 600; color: var(--terracotta); line-height: 1; }
+.nl-page .score-sub { font-size: 0.88rem; color: var(--text-medium); margin-top: 0.5rem; }
+
+.nl-page .roadmap { border-top: 1px solid var(--border); padding-top: 3rem; margin-top: 4rem; }
+.nl-page .timeline { position: relative; padding-left: 2rem; margin-top: 2rem; }
+.nl-page .timeline::before { content: ''; position: absolute; left: 0.4rem; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--border-strong); }
+.nl-page .milestone { position: relative; padding-bottom: 2rem; }
+.nl-page .milestone:last-child { padding-bottom: 0; }
+.nl-page .milestone::before { content: ''; position: absolute; left: -2rem; top: 0.5rem; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--terracotta); }
+.nl-page .milestone-when { font-size: 0.78rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.nl-page .milestone-what { font-size: 1rem; color: var(--text); line-height: 1.6; }
+
+.nl-page .axes-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+.nl-page .axe-card { background: var(--bg-card); border: 1px solid var(--border); padding: 1.8rem 2rem; text-decoration: none; color: var(--text); transition: border-color 0.25s, background 0.25s; display: block; border-radius: 4px; }
+.nl-page .axe-card:hover { border-color: var(--terracotta); background: var(--bg-soft); }
+.nl-page .axe-card-num { font-size: 0.75rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.nl-page .axe-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; margin-bottom: 0.4rem; }
+.nl-page .axe-card-desc { font-size: 0.92rem; color: var(--text-medium); line-height: 1.6; }
+
+.nl-page .foot { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 5rem; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+</style>
+
+<div class="nl-page">
+
+  <header class="top">
+    <div class="eyebrow">Profil LinkedIn &middot; Nada</div>
+    <h1>État actuel du profil</h1>
+    <p class="lede">Trois audits indépendants ont été conduits sur le profil. Ce document en présente la synthèse, le verdict partagé et la direction retenue pour les soixante jours qui viennent.</p>
+  </header>
+
+  <section>
+    <h2 data-num="01">Le constat partagé</h2>
+    <p>Les trois diagnostics convergent à hauteur de quatre-vingts pour cent. Là où ils se rejoignent, ils ne laissent pas place au doute : le profil ne reflète pas, dans son état actuel, le parcours et le potentiel réels de Nada. Le positionnement visible reste académique, alors que la direction professionnelle visée se situe désormais du côté de l'industrie pharmaceutique, sur des fonctions de Medical Science Liaison.</p>
+    <p>Le profil n'est ni vide ni inactif. Il est mal calibré. Les éléments structurants qu'un recruteur de Medical Affairs attend dès la première lecture ne sont pas en place : le titre ne le mentionne pas, le bloc À propos est absent, la bannière n'a pas été configurée, et l'ensemble n'existe qu'en français.</p>
+
+    <div class="verdict">
+      <div class="verdict-label">Verdict</div>
+      <div class="verdict-text">Un profil à fort potentiel, dans un état critique, mais redressable rapidement par un repositionnement ciblé.</div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-item">
+        <div class="score-label">Score actuel</div>
+        <div class="score-value">14 %</div>
+        <div class="score-sub">Sur les critères de visibilité recruteurs Medical Affairs.</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Convergence des audits</div>
+        <div class="score-value">80 %</div>
+        <div class="score-sub">Sur le diagnostic et les priorités d'intervention.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-num="02">Ce que le profil contient déjà</h2>
+    <p>Sous la forme actuelle, plusieurs éléments solides sont déjà présents. Ils n'ont pas besoin d'être construits, seulement d'être rendus visibles et mis au bon endroit.</p>
+
+    <div class="panel">
+      <div class="panel-title">Un doctorat en physiologie cardiovasculaire</div>
+      <div class="panel-text">L'expertise scientifique de fond est en place. Elle constitue le socle de toute candidature en Medical Affairs et reste l'atout différenciant face à des profils plus standardisés.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Une expérience Walmart</div>
+      <div class="panel-text">Souvent perçue comme étrangère au parcours médical, elle constitue en réalité une preuve concrète de gestion d'interlocuteurs, de leadership terrain et de communication structurée. Reformulée correctement, elle parle directement aux recruteurs Medical Affairs.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Un prix de vulgarisation scientifique</div>
+      <div class="panel-text">Le prix Trois Minutes Trois Disciplines atteste d'une compétence rare et précisément recherchée pour les fonctions MSL : la capacité à traduire un contenu scientifique complexe pour un public non-expert. C'est un argument que peu de candidats peuvent produire.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Cinquante-neuf compétences déclarées</div>
+      <div class="panel-text">Le socle est large. Le travail consistera à en sélectionner trois pour les mettre en avant, pas à en ajouter davantage.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-num="03">Ce qui bloque aujourd'hui</h2>
+    <p>Les points qui suivent sont ceux que les trois audits désignent comme bloquants. Aucun n'est lourd à corriger pris isolément. C'est leur accumulation qui produit l'état actuel.</p>
+
+    <div class="panel">
+      <div class="panel-title">Le titre du profil</div>
+      <div class="panel-text">Formulé en langage doctoral, il ne contient aucun des termes recherchés par les recruteurs pharmaceutiques. Un recruteur Medical Affairs qui parcourt cinquante profils par jour ne s'arrêtera pas sur celui-ci.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Le bloc À propos</div>
+      <div class="panel-text">Absent. C'est l'équivalent d'une candidature envoyée sans lettre de motivation. Le visiteur du profil ne dispose d'aucun contexte pour comprendre la trajectoire et l'intention professionnelle.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">La bannière</div>
+      <div class="panel-text">Non configurée. Premier élément visuel rencontré par le visiteur, elle reste aujourd'hui vide.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">L'absence de version anglaise</div>
+      <div class="panel-text">La majorité des recruteurs des laboratoires pharmaceutiques implantés à Montréal opèrent en anglais. Un profil unilingue français reste hors de leur radar.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Aucune publication originale</div>
+      <div class="panel-text">L'activité se limite à des partages. Pour qu'un profil soit classé par l'algorithme LinkedIn dans la catégorie Medical Affairs, il faut produire du contenu sur ces sujets, même à faible cadence.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-num="04">La direction retenue</h2>
+    <p>Le plan d'action est organisé en trois axes complémentaires, déployés en parallèle sur soixante jours. Chacun fait l'objet d'une page dédiée.</p>
+
+    <div class="axes-grid">
+      <a class="axe-card" href="[URL_AXE_1]">
+        <div class="axe-card-num">Axe 01</div>
+        <div class="axe-card-title">Profil et configuration</div>
+        <div class="axe-card-desc">Reconstruction des éléments structurants du profil sur le positionnement Medical Science Liaison.</div>
+      </a>
+
+      <a class="axe-card" href="[URL_AXE_2]">
+        <div class="axe-card-num">Axe 02</div>
+        <div class="axe-card-title">Publications</div>
+        <div class="axe-card-desc">Sortie du silence éditorial et construction progressive de la visibilité algorithmique.</div>
+      </a>
+
+      <a class="axe-card" href="[URL_AXE_3]">
+        <div class="axe-card-num">Axe 03</div>
+        <div class="axe-card-title">Approche recruteurs</div>
+        <div class="axe-card-desc">Activation directe et nominative des recruteurs et alumni pharmaceutiques.</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="roadmap">
+    <h2 data-num="05">Feuille de route d'ensemble</h2>
+    <p>Le calendrier global s'étend sur soixante jours. Les trois axes ne se succèdent pas, ils se chevauchent.</p>
+
+    <div class="timeline">
+      <div class="milestone">
+        <div class="milestone-when">Semaine 1</div>
+        <div class="milestone-what">Refonte complète du profil. Titre, À propos, bannière, version anglaise, compétences épinglées, géolocalisation.</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Semaine 2</div>
+        <div class="milestone-what">Démarrage des publications. Première publication originale en ligne. Première vague de contacts recruteurs lancée.</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Semaines 3 à 6</div>
+        <div class="milestone-what">Régime de croisière. Deux publications par semaine. Séquences d'approche en cours. Veille des offres active.</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Semaines 7 à 8</div>
+        <div class="milestone-what">Premier point d'étape. Analyse des publications les plus performantes, des recruteurs ayant répondu, ajustement du calendrier éditorial et de la liste de contacts.</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Semaine 9 et au-delà</div>
+        <div class="milestone-what">Poursuite du dispositif sur cadence stabilisée. Les axes deux et trois fonctionnent sans intervention quotidienne, Nada conserve la main sur les conversations et les réponses entrantes.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    Document préparé pour Nada. Synthèse interne, non publique.
+  </div>
+
+</div>
