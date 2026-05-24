@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille YouTube — 23/05/2026 — Voyages21</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2333; --bg4:#212842;
+  --border:#2a3045; --border2:#3a4560;
+  --blue:#2f6fd4; --blue-l:#4a8ae8; --blue-dim:rgba(47,111,212,0.12);
+  --silver:#8b9ab5; --text:#e2e8f0; --text-m:#6b7fa3;
+  --white:#f8fafc; --green:#22c55e; --orange:#f59e0b; --red:#ef4444;
+  --gold:#d4a843; --gold-dim:rgba(212,168,67,0.12);
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── Header ── */
+header{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:20px 32px;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:16px;
+  position:sticky;top:0;z-index:50;
+}
+.logo{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--white);}
+.logo span{color:var(--blue-l);}
+.header-meta{font-size:11px;color:var(--text-m);}
+.header-stats{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.hstat{text-align:center;}
+.hstat-val{font-size:22px;font-weight:800;color:var(--white);line-height:1;}
+.hstat-lbl{font-size:10px;color:var(--text-m);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.hstat-val.gold{color:var(--gold);}
+
+/* ── Next check banner ── */
+.next-banner{
+  margin:16px 32px 0;padding:10px 16px;
+  background:var(--blue-dim);border:1px solid var(--border2);border-radius:8px;
+  font-size:11px;color:var(--silver);display:flex;align-items:center;gap:8px;
+}
+
+/* ── Section ── */
+.main{padding:24px 32px;}
+.section-block{margin-bottom:40px;}
+.section-label{
+  font-size:10px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--text-m);
+  padding:0 0 12px 2px;border-bottom:1px solid var(--border);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-count{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  padding:2px 9px;font-size:10px;color:var(--silver);letter-spacing:0;
+}
+
+/* ── Channel grid ── */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;}
+
+/* ── Channel card ── */
+.ch-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px;display:flex;flex-direction:column;gap:14px;
+  transition:all 0.2s;
+}
+.ch-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.3);}
+.ch-card-new{border-color:rgba(212,168,67,0.35);}
+.ch-card-new:hover{border-color:var(--gold);}
+
+.ch-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.ch-left{display:flex;align-items:center;gap:10px;}
+.ch-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ch-flag{font-size:18px;line-height:1;}
+.ch-name{font-size:13px;font-weight:700;color:var(--white);line-height:1.3;}
+.ch-cat{font-size:10px;color:var(--text-m);margin-top:3px;}
+.ch-link{font-size:10px;color:var(--blue-l);font-weight:600;text-decoration:none;}
+.ch-link:hover{text-decoration:underline;}
+
+.badge-new{
+  background:var(--gold-dim);border:1px solid rgba(212,168,67,0.4);
+  color:var(--gold);font-size:10px;font-weight:700;
+  padding:2px 8px;border-radius:10px;letter-spacing:0.5px;
+}
+
+/* ── Status dots ── */
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.dot-ok{background:var(--green);box-shadow:0 0 6px var(--green);}
+.dot-new{background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 1.5s infinite;}
+.dot-err{background:var(--orange);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ── Video list ── */
+.vid-list{display:flex;flex-direction:column;gap:6px;}
+.vid-row{
+  display:flex;flex-direction:column;gap:3px;
+  padding:9px 11px;border-radius:7px;
+  background:var(--bg3);border:1px solid var(--border);
+  text-decoration:none;transition:all 0.15s;
+}
+.vid-row:hover{border-color:var(--border2);background:var(--bg4);}
+.vid-row-new{border-color:rgba(212,168,67,0.25);background:rgba(212,168,67,0.04);}
+.vid-row-new:hover{border-color:rgba(212,168,67,0.5);}
+
+.vid-new{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.5px;margin-bottom:2px;}
+.vid-title{font-size:12px;color:var(--text);line-height:1.35;font-weight:500;}
+.vid-meta{font-size:10px;color:var(--text-m);display:flex;align-items:center;gap:8px;margin-top:2px;}
+.vid-views{color:var(--silver);}
+.vid-error{font-size:11px;color:var(--orange);padding:8px;background:rgba(245,158,11,0.06);border-radius:6px;border:1px solid rgba(245,158,11,0.2);}
+
+/* ── Footer ── */
+footer{
+  text-align:center;padding:24px 32px;
+  font-size:10px;color:var(--text-m);border-top:1px solid var(--border);
+  margin-top:20px;
+}
+
+/* ── Filter bar ── */
+.filter-bar{
+  padding:12px 32px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  border-bottom:1px solid var(--border);background:var(--bg2);
+}
+.chip{
+  background:transparent;border:1px solid var(--border);color:var(--text-m);
+  padding:5px 14px;border-radius:20px;font-size:10px;font-family:'Sora',sans-serif;
+  font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;
+  transition:all 0.15s;
+}
+.chip:hover,.chip.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue-l);}
+.chip.gold:hover,.chip.gold.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+
+@media(max-width:640px){
+  header,main,.filter-bar{padding-left:16px;padding-right:16px;}
+  .ch-grid{grid-template-columns:1fr;}
+  .next-banner{margin:12px 16px 0;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">VOYAGES<span>21</span> · Veille YouTube</div>
+    <div class="header-meta">📅 samedi 23 mai 2026</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="hstat-val">8</div>
+      <div class="hstat-lbl">Chaînes</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val gold">10</div>
+      <div class="hstat-lbl">Nouvelles vidéos</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val">8</div>
+      <div class="hstat-lbl">Actives</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val">02:46</div>
+      <div class="hstat-lbl">Mis à jour</div>
+    </div>
+  </div>
+</header>
+
+<div class="next-banner">
+  ⏰ Prochaine veille automatique : <strong>lundi 25 mai à 00:00</strong> — Livrable disponible à 11h00
+</div>
+
+<div class="filter-bar">
+  <button class="chip active" onclick="filterGroup('all')">Toutes (8)</button>
+  <button class="chip gold" onclick="filterGroup('new')">Nouvelles uniquement (10)</button>
+  <button class="chip" onclick="filterGroup('mes-chaines')">Mes 3 chaînes (3)</button>
+  <button class="chip" onclick="filterGroup('top5-global')">Top 5 Mondial (5)</button>
+</div>
+
+<div class="main">
+
+  <div class="section-block" id="sec-mes-chaines">
+    <div class="section-label">
+      🇫🇷 Mes 3 Chaînes
+      <span class="section-count">3 chaînes · 0 nouvelles vidéos</span>
+    </div>
+    <div class="ch-grid">
+      
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇫🇷</span>
+          <div>
+            <div class="ch-name">Enzo Webmaster 2.0</div>
+            <div class="ch-cat">Web · SEO · Freelance</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@enzo-webmaster2.0" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=iDemojGrv80" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Tutoriel Woocommerce 2026 : Créez votre boutique de A à Z</span>
+        <span class="vid-meta">il y a 4 jours <span class="vid-views">👀 432</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=FSf9ndH31dw" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Comment mettre en ligne un site créé avec Claude Code ?</span>
+        <span class="vid-meta">il y a 11 jours <span class="vid-views">👀 2k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=hzor9a_RDgI" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Le problème avec les sites générés par IA</span>
+        <span class="vid-meta">il y a 16 jours <span class="vid-views">👀 2k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=O_HJnChCNxo" target="_blank" class="vid-row">
+        
+        <span class="vid-title">TOP 5 Claude Code Skills pour créer des sites web !</span>
+        <span class="vid-meta">il y a 22 jours <span class="vid-views">👀 5k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=1UweZchJEPQ" target="_blank" class="vid-row">
+        
+        <span class="vid-title">5 services IA qui rapporte + de 2000€ par client en 2026</span>
+        <span class="vid-meta">il y a 25 jours <span class="vid-views">👀 2k</span></span>
+      </a></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇫🇷</span>
+          <div>
+            <div class="ch-name">Eliott Meunier</div>
+            <div class="ch-cat">Productivité · Business</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@EliottMeunier" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=q5IfMPw6mFg" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Ce dev gère 4 agents IA comme une équipe d&#39;ingénieurs - co-fondateur d&#39;Argil.AI (YC)</span>
+        <span class="vid-meta">il y a 6 jours <span class="vid-views">👀 4k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=hr5J7g2R0H8" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Je vous présente mon second cerveau IA (+ réponse à vos questions)</span>
+        <span class="vid-meta">il y a 9 jours <span class="vid-views">👀 11k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=YCttZsEIuqI" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Il a connecté son ADN et sa montre à l&#39;IA (le résultat est génial)</span>
+        <span class="vid-meta">il y a 11 jours <span class="vid-views">👀 2k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=y0taBHJRJXY" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Ce plombier a un meilleur système IA que la plupart des devs</span>
+        <span class="vid-meta">il y a 13 jours <span class="vid-views">👀 5k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=SgxSUle-TcE" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Créer son système IA : ça vaut encore le coup ?</span>
+        <span class="vid-meta">il y a 14 jours <span class="vid-views">👀 3k</span></span>
+      </a></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇫🇷</span>
+          <div>
+            <div class="ch-name">Shubham Sharma</div>
+            <div class="ch-cat">IA · Web · Automatisation</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@shubham-sharma.fr" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=Q3VqYvsFo84" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Vous gaspillez 90% de vos tokens sans le savoir</span>
+        <span class="vid-meta">il y a 4 jours <span class="vid-views">👀 46k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=6UCjq3tpWkA" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Vos MCP vous coûtent cher sur Claude Code #mcp #claudecode</span>
+        <span class="vid-meta">il y a 16 jours <span class="vid-views">👀 33k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=6XvIMDFYh58" target="_blank" class="vid-row">
+        
+        <span class="vid-title">J’ai laissé Claude Code monter mes vidéos | Le résultat est fou</span>
+        <span class="vid-meta">il y a 18 jours <span class="vid-views">👀 59k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=zsvqRlD7Ib4" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Astuce Claude Code que peu de gens connaissent ou utilise #claudecode</span>
+        <span class="vid-meta">il y a 20 jours <span class="vid-views">👀 69k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=BVU6NDFMVes" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Cmux, l’alternative à ton terminal pour Claude code #terminal #agenția #claude #claudecode</span>
+        <span class="vid-meta">il y a 21 jours <span class="vid-views">👀 49k</span></span>
+      </a></div>
+    </div>
+    </div>
+  </div>
+
+  <div class="section-block" id="sec-top5-global">
+    <div class="section-label">
+      🌍 Top 5 Mondial — IA · Business · Marketing
+      <span class="section-count">5 chaînes · 10 nouvelles vidéos</span>
+    </div>
+    <div class="ch-grid">
+      
+    <div class="ch-card ch-card-new">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-new"></span>
+          <span class="ch-flag">🇺🇸</span>
+          <div>
+            <div class="ch-name">Matt Wolfe — Future Tools</div>
+            <div class="ch-cat">IA · Outils · News</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          <span class="badge-new">3 new</span>
+          <a href="https://youtube.com/@mreflow" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=kyOPFFy3I38" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">AI News: These Google Updates Are Dividing People</span>
+        <span class="vid-meta">il y a 10h <span class="vid-views">👀 32k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=5HqJWBSqXFU" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">Anthropic Is Raising Prices And Pissing People Off</span>
+        <span class="vid-meta">il y a 11h <span class="vid-views">👀 9k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=E6kQi65PKNc" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">Notion Announces Massive Update For Developers</span>
+        <span class="vid-meta">il y a 1 jour <span class="vid-views">👀 11k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=bQN-D8qeAgg" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Viral Post Embarrassingly Exposes AI Haters 💀</span>
+        <span class="vid-meta">il y a 2 jours <span class="vid-views">👀 86k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=XlyOJYwRdPg" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Krea AI Launches Crazy New Image Model</span>
+        <span class="vid-meta">il y a 3 jours <span class="vid-views">👀 4k</span></span>
+      </a></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇬🇧</span>
+          <div>
+            <div class="ch-name">Liam Ottley</div>
+            <div class="ch-cat">IA · Agence · Automatisation</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@liamottley" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=qpa5XwGkLp8" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Claude Managed Agents Will Make Millionaires (do this now)</span>
+        <span class="vid-meta">il y a 3 jours <span class="vid-views">👀 30k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=NlGIl5-gpHM" target="_blank" class="vid-row">
+        
+        <span class="vid-title">How to Make $20,000/Month with Claude Code</span>
+        <span class="vid-meta">il y a 29 jours <span class="vid-views">👀 47k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=3LqntdbOWts" target="_blank" class="vid-row">
+        
+        <span class="vid-title">keeping up with AI is making you fall behind (just focus on this one thing)</span>
+        <span class="vid-meta">il y a 35 jours <span class="vid-views">👀 15k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=yd9tr0xqg-Y" target="_blank" class="vid-row">
+        
+        <span class="vid-title">how to sell $5,000 Claude Code AIOS to SMBs (full breakdown)</span>
+        <span class="vid-meta">il y a 39 jours <span class="vid-views">👀 35k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=AYQtRqW1xX4" target="_blank" class="vid-row">
+        
+        <span class="vid-title">How to Build &amp; Sell AI Agents in 2026: Ultimate Beginner’s Guide</span>
+        <span class="vid-meta">il y a 61 jours <span class="vid-views">👀 149k</span></span>
+      </a></div>
+    </div>
+
+    <div class="ch-card ch-card-new">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-new"></span>
+          <span class="ch-flag">🇬🇧</span>
+          <div>
+            <div class="ch-name">Ali Abdaal</div>
+            <div class="ch-cat">Productivité · Business · Revenu passif</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          <span class="badge-new">2 new</span>
+          <a href="https://youtube.com/@aliabdaal" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=vvlWVEcz050" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">This simple app saves hours</span>
+        <span class="vid-meta">il y a 16h <span class="vid-views">👀 13k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=LLjpnubsOWc" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">If You Want to Make Money From YouTube, Do This (Case Study)</span>
+        <span class="vid-meta">il y a 1 jour <span class="vid-views">👀 32k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=3G-gcv0L-q0" target="_blank" class="vid-row">
+        
+        <span class="vid-title">I save hours with this simple trick</span>
+        <span class="vid-meta">il y a 2 jours <span class="vid-views">👀 25k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=0-M1srFwU9I" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Stop using your computer mouse</span>
+        <span class="vid-meta">il y a 3 jours <span class="vid-views">👀 28k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=dW6pvUx4_jc" target="_blank" class="vid-row">
+        
+        <span class="vid-title">What&#39;s the Point?</span>
+        <span class="vid-meta">il y a 4 jours <span class="vid-views">👀 87k</span></span>
+      </a></div>
+    </div>
+
+    <div class="ch-card ch-card-new">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-new"></span>
+          <span class="ch-flag">🇺🇸</span>
+          <div>
+            <div class="ch-name">Gary Vaynerchuk — GaryVee</div>
+            <div class="ch-cat">Marketing · Entrepreneuriat</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          <span class="badge-new">5 new</span>
+          <a href="https://youtube.com/@garyvee" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=g-zTwyIbU4U" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">Give yourself a little grace .. there is no figuring it out .. there’s just enjoyment of the process</span>
+        <span class="vid-meta">il y a moins d'1h <span class="vid-views">👀 600</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=JWGmPsrghU0" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">🚨🚨🚨 this video should be intoxicating to anybody under the age of 30</span>
+        <span class="vid-meta">il y a 5h <span class="vid-views">👀 2k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=1K5N05odsws" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">Advice you need to hear pt 4</span>
+        <span class="vid-meta">il y a 6h <span class="vid-views">👀 2k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=qSSSu3Ql2MY" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">This should wake u up!</span>
+        <span class="vid-meta">il y a 7h <span class="vid-views">👀 5k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=ELzpINduaDc" target="_blank" class="vid-row vid-row-new">
+        <span class="vid-new">🔴 NOUVEAU</span>
+        <span class="vid-title">Fight for happiness - peace of mind and smiling often is success !!!</span>
+        <span class="vid-meta">il y a 19h <span class="vid-views">👀 4k</span></span>
+      </a></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇨🇦</span>
+          <div>
+            <div class="ch-name">Greg Isenberg</div>
+            <div class="ch-cat">Startup · IA · Business</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@gregisenberg" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list">
+      <a href="https://www.youtube.com/watch?v=IFLY6L3YPGo" target="_blank" class="vid-row">
+        
+        <span class="vid-title">9 biggest startup ideas right now (AI, B2C, mobile etc)</span>
+        <span class="vid-meta">il y a 4 jours <span class="vid-views">👀 30k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=dLS-6jn9xxc" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Easily build agentic workflows with Hyperagent</span>
+        <span class="vid-meta">il y a 9 jours <span class="vid-views">👀 10k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=BI-MNjm1tTQ" target="_blank" class="vid-row">
+        
+        <span class="vid-title">The $1M+ Solo AI Agent Business (Full Course)</span>
+        <span class="vid-meta">il y a 10 jours <span class="vid-views">👀 100k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=Ix43w_IssR8" target="_blank" class="vid-row">
+        
+        <span class="vid-title">Screensharing How to Start an AI Agent Business Today</span>
+        <span class="vid-meta">il y a 11 jours <span class="vid-views">👀 41k</span></span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=oLu32YpiIJw" target="_blank" class="vid-row">
+        
+        <span class="vid-title">My AI Design Workflow That Doesn&#39;t Ship Slop</span>
+        <span class="vid-meta">il y a 16 jours <span class="vid-views">👀 58k</span></span>
+      </a></div>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Généré automatiquement le samedi 23 mai 2026 à 02:46 · Voyages21 YouTube Monitor
+  · Prochaine vérification dans 2 jours
+</footer>
+
+<script>
+function filterGroup(group) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('.ch-card');
+  const secMes  = document.getElementById('sec-mes-chaines');
+  const secTop5 = document.getElementById('sec-top5-global');
+
+  if (group === 'all') {
+    secMes.style.display = secTop5.style.display = '';
+    cards.forEach(c => c.style.display = '');
+  } else if (group === 'new') {
+    secMes.style.display = secTop5.style.display = '';
+    cards.forEach(c => {
+      c.style.display = c.classList.contains('ch-card-new') ? '' : 'none';
+    });
+  } else if (group === 'mes-chaines') {
+    secMes.style.display = '';
+    secTop5.style.display = 'none';
+    cards.forEach(c => c.style.display = '');
+  } else if (group === 'top5-global') {
+    secMes.style.display = 'none';
+    secTop5.style.display = '';
+    cards.forEach(c => c.style.display = '');
+  }
+}
+</script>
+</body>
+</html>

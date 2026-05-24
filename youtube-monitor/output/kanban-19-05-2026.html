@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille YouTube — 19/05/2026 — Voyages21</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2333; --bg4:#212842;
+  --border:#2a3045; --border2:#3a4560;
+  --blue:#2f6fd4; --blue-l:#4a8ae8; --blue-dim:rgba(47,111,212,0.12);
+  --silver:#8b9ab5; --text:#e2e8f0; --text-m:#6b7fa3;
+  --white:#f8fafc; --green:#22c55e; --orange:#f59e0b; --red:#ef4444;
+  --gold:#d4a843; --gold-dim:rgba(212,168,67,0.12);
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── Header ── */
+header{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:20px 32px;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:16px;
+  position:sticky;top:0;z-index:50;
+}
+.logo{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--white);}
+.logo span{color:var(--blue-l);}
+.header-meta{font-size:11px;color:var(--text-m);}
+.header-stats{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.hstat{text-align:center;}
+.hstat-val{font-size:22px;font-weight:800;color:var(--white);line-height:1;}
+.hstat-lbl{font-size:10px;color:var(--text-m);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.hstat-val.gold{color:var(--gold);}
+
+/* ── Next check banner ── */
+.next-banner{
+  margin:16px 32px 0;padding:10px 16px;
+  background:var(--blue-dim);border:1px solid var(--border2);border-radius:8px;
+  font-size:11px;color:var(--silver);display:flex;align-items:center;gap:8px;
+}
+
+/* ── Section ── */
+.main{padding:24px 32px;}
+.section-block{margin-bottom:40px;}
+.section-label{
+  font-size:10px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--text-m);
+  padding:0 0 12px 2px;border-bottom:1px solid var(--border);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-count{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  padding:2px 9px;font-size:10px;color:var(--silver);letter-spacing:0;
+}
+
+/* ── Channel grid ── */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;}
+
+/* ── Channel card ── */
+.ch-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px;display:flex;flex-direction:column;gap:14px;
+  transition:all 0.2s;
+}
+.ch-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.3);}
+.ch-card-new{border-color:rgba(212,168,67,0.35);}
+.ch-card-new:hover{border-color:var(--gold);}
+
+.ch-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.ch-left{display:flex;align-items:center;gap:10px;}
+.ch-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ch-flag{font-size:18px;line-height:1;}
+.ch-name{font-size:13px;font-weight:700;color:var(--white);line-height:1.3;}
+.ch-cat{font-size:10px;color:var(--text-m);margin-top:3px;}
+.ch-link{font-size:10px;color:var(--blue-l);font-weight:600;text-decoration:none;}
+.ch-link:hover{text-decoration:underline;}
+
+.badge-new{
+  background:var(--gold-dim);border:1px solid rgba(212,168,67,0.4);
+  color:var(--gold);font-size:10px;font-weight:700;
+  padding:2px 8px;border-radius:10px;letter-spacing:0.5px;
+}
+
+/* ── Status dots ── */
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.dot-ok{background:var(--green);box-shadow:0 0 6px var(--green);}
+.dot-new{background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 1.5s infinite;}
+.dot-err{background:var(--orange);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ── Video list ── */
+.vid-list{display:flex;flex-direction:column;gap:6px;}
+.vid-row{
+  display:flex;flex-direction:column;gap:3px;
+  padding:9px 11px;border-radius:7px;
+  background:var(--bg3);border:1px solid var(--border);
+  text-decoration:none;transition:all 0.15s;
+}
+.vid-row:hover{border-color:var(--border2);background:var(--bg4);}
+.vid-row-new{border-color:rgba(212,168,67,0.25);background:rgba(212,168,67,0.04);}
+.vid-row-new:hover{border-color:rgba(212,168,67,0.5);}
+
+.vid-new{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.5px;margin-bottom:2px;}
+.vid-title{font-size:12px;color:var(--text);line-height:1.35;font-weight:500;}
+.vid-meta{font-size:10px;color:var(--text-m);display:flex;align-items:center;gap:8px;margin-top:2px;}
+.vid-views{color:var(--silver);}
+.vid-error{font-size:11px;color:var(--orange);padding:8px;background:rgba(245,158,11,0.06);border-radius:6px;border:1px solid rgba(245,158,11,0.2);}
+
+/* ── Footer ── */
+footer{
+  text-align:center;padding:24px 32px;
+  font-size:10px;color:var(--text-m);border-top:1px solid var(--border);
+  margin-top:20px;
+}
+
+/* ── Filter bar ── */
+.filter-bar{
+  padding:12px 32px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  border-bottom:1px solid var(--border);background:var(--bg2);
+}
+.chip{
+  background:transparent;border:1px solid var(--border);color:var(--text-m);
+  padding:5px 14px;border-radius:20px;font-size:10px;font-family:'Sora',sans-serif;
+  font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;
+  transition:all 0.15s;
+}
+.chip:hover,.chip.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue-l);}
+.chip.gold:hover,.chip.gold.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+
+@media(max-width:640px){
+  header,main,.filter-bar{padding-left:16px;padding-right:16px;}
+  .ch-grid{grid-template-columns:1fr;}
+  .next-banner{margin:12px 16px 0;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">VOYAGES<span>21</span> · Veille YouTube</div>
+    <div class="header-meta">📅 mardi 19 mai 2026</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="hstat-val">8</div>
+      <div class="hstat-lbl">Chaînes</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val gold">0</div>
+      <div class="hstat-lbl">Nouvelles vidéos</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val">8</div>
+      <div class="hstat-lbl">Actives</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val">02:57</div>
+      <div class="hstat-lbl">Mis à jour</div>
+    </div>
+  </div>
+</header>
+
+<div class="next-banner">
+  ⏰ Prochaine veille automatique : <strong>jeudi 21 mai à 00:00</strong> — Livrable disponible à 11h00
+</div>
+
+<div class="filter-bar">
+  <button class="chip active" onclick="filterGroup('all')">Toutes (8)</button>
+  <button class="chip gold" onclick="filterGroup('new')">Nouvelles uniquement (0)</button>
+  <button class="chip" onclick="filterGroup('mes-chaines')">Mes 3 chaînes (3)</button>
+  <button class="chip" onclick="filterGroup('top5-global')">Top 5 Mondial (5)</button>
+</div>
+
+<div class="main">
+
+  <div class="section-block" id="sec-mes-chaines">
+    <div class="section-label">
+      🇫🇷 Mes 3 Chaînes
+      <span class="section-count">3 chaînes · 0 nouvelles vidéos</span>
+    </div>
+    <div class="ch-grid">
+      
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇫🇷</span>
+          <div>
+            <div class="ch-name">Enzo Webmaster 2.0</div>
+            <div class="ch-cat">Web · SEO · Freelance</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@enzo-webmaster2.0" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇫🇷</span>
+          <div>
+            <div class="ch-name">Eliott Meunier</div>
+            <div class="ch-cat">Productivité · Business</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@EliottMeunier" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇫🇷</span>
+          <div>
+            <div class="ch-name">Shubham Sharma</div>
+            <div class="ch-cat">IA · Web · Automatisation</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@shubham-sharma.fr" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+    </div>
+  </div>
+
+  <div class="section-block" id="sec-top5-global">
+    <div class="section-label">
+      🌍 Top 5 Mondial — IA · Business · Marketing
+      <span class="section-count">5 chaînes · 0 nouvelles vidéos</span>
+    </div>
+    <div class="ch-grid">
+      
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇺🇸</span>
+          <div>
+            <div class="ch-name">Matt Wolfe — Future Tools</div>
+            <div class="ch-cat">IA · Outils · News</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@mreflow" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇬🇧</span>
+          <div>
+            <div class="ch-name">Liam Ottley</div>
+            <div class="ch-cat">IA · Agence · Automatisation</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@liamottley" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇬🇧</span>
+          <div>
+            <div class="ch-name">Ali Abdaal</div>
+            <div class="ch-cat">Productivité · Business · Revenu passif</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@aliabdaal" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇺🇸</span>
+          <div>
+            <div class="ch-name">Gary Vaynerchuk — GaryVee</div>
+            <div class="ch-cat">Marketing · Entrepreneuriat</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@garyvee" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+
+    <div class="ch-card">
+      <div class="ch-head">
+        <div class="ch-left">
+          <span class="dot dot-ok"></span>
+          <span class="ch-flag">🇨🇦</span>
+          <div>
+            <div class="ch-name">Greg Isenberg</div>
+            <div class="ch-cat">Startup · IA · Business</div>
+          </div>
+        </div>
+        <div class="ch-right">
+          
+          <a href="https://youtube.com/@gregisenberg" target="_blank" class="ch-link">Chaîne ↗</a>
+        </div>
+      </div>
+      <div class="vid-list"><div class="vid-error">Aucune vidéo trouvée</div></div>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Généré automatiquement le mardi 19 mai 2026 à 02:57 · Voyages21 YouTube Monitor
+  · Prochaine vérification dans 2 jours
+</footer>
+
+<script>
+function filterGroup(group) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('.ch-card');
+  const secMes  = document.getElementById('sec-mes-chaines');
+  const secTop5 = document.getElementById('sec-top5-global');
+
+  if (group === 'all') {
+    secMes.style.display = secTop5.style.display = '';
+    cards.forEach(c => c.style.display = '');
+  } else if (group === 'new') {
+    secMes.style.display = secTop5.style.display = '';
+    cards.forEach(c => {
+      c.style.display = c.classList.contains('ch-card-new') ? '' : 'none';
+    });
+  } else if (group === 'mes-chaines') {
+    secMes.style.display = '';
+    secTop5.style.display = 'none';
+    cards.forEach(c => c.style.display = '');
+  } else if (group === 'top5-global') {
+    secMes.style.display = 'none';
+    secTop5.style.display = '';
+    cards.forEach(c => c.style.display = '');
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+name: YouTube Channel Monitor
+
+on:
+  # Tous les 2 jours à minuit UTC (≈ 01:00 heure de Paris)
+  schedule:
+    - cron: '0 0 */2 * *'
+
+  # Déclenchement manuel depuis GitHub Actions
+  workflow_dispatch:
+    inputs:
+      force_refresh:
+        description: 'Forcer le rafraîchissement même sans nouvelles vidéos'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    name: Fetch YouTube & Generate Outputs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run YouTube monitor
+        working-directory: youtube-monitor
+        run: node monitor.js
+
+      - name: Check for generated files
+        id: check_files
+        run: |
+          if [ -f "youtube-monitor/output/kanban-latest.html" ]; then
+            echo "files_exist=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Fichiers générés avec succès"
+            ls -lh youtube-monitor/output/
+          else
+            echo "files_exist=false" >> "$GITHUB_OUTPUT"
+            echo "⚠ Aucun fichier généré"
+          fi
+
+      - name: Commit and push generated outputs
+        if: steps.check_files.outputs.files_exist == 'true'
+        run: |
+          git config --local user.email "youtube-monitor[bot]@voyages21"
+          git config --local user.name "YouTube Monitor Bot"
+          git add youtube-monitor/output/
+          git add youtube-monitor/last-check.json
+          git add youtube-monitor/resolved-ids.json || true
+          # Ne committer que s'il y a des changements
+          if git diff --staged --quiet; then
+            echo "Aucun changement détecté — pas de commit nécessaire"
+          else
+            DATE=$(TZ=Europe/Paris date '+%d/%m/%Y à %Hh%M')
+            git commit -m "chore(youtube): veille automatique — ${DATE}"
+            git push origin HEAD
+            echo "✅ Outputs committés et pushés"
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Résumé de la veille YouTube" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Fichier | Taille |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
+          if [ -f "youtube-monitor/output/kanban-latest.html" ]; then
+            SIZE=$(wc -c < youtube-monitor/output/kanban-latest.html | xargs)
+            echo "| kanban-latest.html | ${SIZE} octets |" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f "youtube-monitor/output/whatsapp-latest.txt" ]; then
+            SIZE=$(wc -c < youtube-monitor/output/whatsapp-latest.txt | xargs)
+            echo "| whatsapp-latest.txt | ${SIZE} octets |" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f "youtube-monitor/last-check.json" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Dernière vérification" >> $GITHUB_STEP_SUMMARY
+            cat youtube-monitor/last-check.json >> $GITHUB_STEP_SUMMARY
+          fi
