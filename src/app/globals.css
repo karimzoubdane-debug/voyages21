@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  --red:   #8C2020;
-  --navy:  #1B2D4F;
-  --gold:  #C8860A;
-  --cream: #F5F0E8;
-  --dark:  #111111;
-  --white: #FFFFFF;
-  --gray:  #6B7280;
+  --red:        #8C2020;
+  --navy:       #1B3A28;
+  --olive-dark: #152E1F;
+  --olive-mid:  #2A5238;
+  --gold:       #C8A440;
+  --cream:      #F5F0E8;
+  --dark:       #111111;
+  --white:      #FFFFFF;
+  --gray:       #6B7280;
   --light-gray: #F9F7F4;
 }
 
@@ -300,8 +302,46 @@ footer {
 .cousu-main-banner strong { color: var(--gold); font-style: normal; font-weight: 600; }
 
 /* Responsive */
+/* ── Animation dropdown About ── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mega menus — positionnés sous le header (48+40+68 = 156px) ── */
+.mega-panel {
+  position: fixed;
+  top: 156px;
+  left: 0;
+  right: 0;
+  background: #1B3A28;
+  border-top: 2px solid #C8A440;
+  z-index: 997;
+  padding: 0.7rem 2.5rem 0.85rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+/* ── Menu mobile ── */
+.mobile-panel {
+  position: fixed;
+  top: 156px;
+  left: 0;
+  right: 0;
+  background: #1B3A28;
+  border-top: 2px solid #C8A440;
+  z-index: 996;
+  max-height: calc(100vh - 156px);
+  overflow-y: auto;
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
-  .navbar-menu, .navbar-cta { display: none; }
+  .bar2 { display: none !important; }
+  .bar3-menu { display: none !important; }
+  .nav-cta-btn { display: none !important; }
+  .nav-left, .nav-right, .navbar-menu, .navbar-cta { display: none; }
+  .mega-panel { display: none !important; }
+  .mobile-panel { top: 68px; max-height: calc(100vh - 68px); }
   .burger { display: flex; }
   .navbar { padding: 0 1.5rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }

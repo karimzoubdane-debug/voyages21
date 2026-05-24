@@ -24,22 +24,31 @@ export default function HomePage() {
         <div className={styles.heroOverlay} />
 
         <div className={styles.heroContent}>
-          <p className={styles.heroLabel}>Depuis 2000 — Marrakech, Maroc</p>
           <h1 className={styles.heroTitle}>
-            Le Maroc<br /><em>comme vous</em><br />le rêvez
+            Depuis 2000, nous sommes les orfèvres<br />
+            des voyages que vous n&apos;auriez pas pu<br />
+            <em>faire par vous-même.</em>
           </h1>
           <div className={styles.heroRule} />
-          <p className={styles.heroSub}>
-            Circuits sur mesure · Raids 4x4 · Moto Expédition · Expériences authentiques
-          </p>
           <div className={styles.heroCta}>
             <Link href="/circuits/classiques" className={styles.btnHeroPrimary}>
-              Découvrir nos circuits
+              Découvrir
             </Link>
             <Link href="/contact" className={styles.btnHeroOutline}>
               Devis gratuit
             </Link>
           </div>
+          <button
+            className={styles.heroChatBar}
+            onClick={() => alert('Assistant IA — bientôt disponible')}
+          >
+            <span>On vous aide à choisir</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A440" strokeWidth="2">
+              <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/>
+              <path d="M19 17l.75 2.25L22 20l-2.25.75L19 23l-.75-2.25L16 20l2.25-.75L19 17z"/>
+              <path d="M5 3l.5 1.5L7 5l-1.5.5L5 7l-.5-1.5L3 5l1.5-.5L5 3z"/>
+            </svg>
+          </button>
         </div>
 
         <div className={styles.scrollHint}>
@@ -50,8 +59,8 @@ export default function HomePage() {
 
       {/* ===== BANDEAU SIGNATURE ===== */}
       <div className={styles.signatureBand}>
-        Chaque voyage est conçu sur mesure — solo, à deux, en famille ou entre amis.&nbsp;
-        <strong>Voyages21, l'agence cousu main depuis 2000.</strong>
+        De l&apos;aventure intime aux projets d&apos;envergure,&nbsp;
+        <strong>Voyages 21 signe le voyage.</strong>
       </div>
 
       {/* ===== NOS UNIVERS ===== */}
