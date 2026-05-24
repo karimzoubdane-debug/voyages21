@@ -1,8 +1,8 @@
 {
   "_meta": {
     "version": "4.0",
-    "last_updated": "2026-04-19",
-    "updated_by": "karim",
+    "last_updated": "2026-05-24",
+    "updated_by": "claude-code",
     "repo": "karimzoubdane-debug/voyages21",
     "instructions": "Ce fichier est mis a jour automatiquement par Cowork a la fin de chaque session. Ne pas modifier manuellement sauf urgence."
   },
@@ -13,7 +13,7 @@
       "status": "actif",
       "title": "Plateforme Web Voyages21.com",
       "desc": "Refonte complete du site en Next.js, 4 langues (FR/EN/ES/DE). SITE LIVE : voyages21.vercel.app. Design ref : Black Tomato (blacktomato.com). Video header : fichier 2964957128.",
-      "nextStep": "Phase 3 : Construire la page d'accueil inspiration Black Tomato + integrer video header 2964957128",
+      "nextStep": "Phase 4 : Connecter domaine voyages21.com + migration emails + Make.com + HubSpot + DeepL + Rewardful",
       "stack": "Next.js · Tailwind CSS · Sanity.io · Vercel Pro · next-intl · DeepL · Make.com · HubSpot · Rewardful · PayPal",
       "livrables": [
         {"name": "Site en ligne (Vercel)", "type": "URL", "url": "https://voyages21.vercel.app"},
@@ -24,7 +24,7 @@
       "phases": [
         {"name": "Phase 1 — Infrastructure", "state": "done", "items": ["VS Code installe","Node.js v24 + npm v11","Next.js + Tailwind CSS cree","GitHub : karimzoubdane-debug/voyages21","Vercel : voyages21.vercel.app en ligne","Sanity.io CMS installe","CLAUDE_SITE_V21.md deploye sur GitHub (contexte Cowork automatique)"]},
         {"name": "Phase 2 — Automatisation Photos", "state": "in_progress", "items": ["Script Google Apps Script dispatch-photos-voyages21","Dispatch par mot-cle dans nom de fichier","DECISION : Claude Vision API (~$0.003/photo) apres fin du site"]},
-        {"name": "Phase 3 — Pages Site", "state": "todo", "items": ["Page d'accueil (inspiration Black Tomato + video header 2964957128)","Page Circuits","Pages Activites","Page Contact / Devis","Integration Sanity (contenu)","4 langues : FR / EN / ES / DE"]},
+        {"name": "Phase 3 — Pages Site", "state": "done", "items": ["Page d'accueil COMPLETE (Black Tomato design + video header 2964957128)","Hero video plein ecran immersif","Bandeau signature","3 univers (Raid 4x4, Moto, Circuits)","Circuits phares 2026","Stats","Experiences & activites","About band","CTA final (devis + WhatsApp)"]},
         {"name": "Phase 4 — Lancement", "state": "todo", "items": ["Connecter domaine voyages21.com (Valablue => Vercel)","Migration emails AVANT quitter Valablue","Make.com automations","HubSpot CRM operationnel","Rewardful affiliation","DeepL integration"]}
       ]
     },
