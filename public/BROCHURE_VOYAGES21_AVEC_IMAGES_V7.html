@@ -463,6 +463,78 @@
             transition: background 0.2s;
         }
         .slider-dot.active { background: #fff; }
+
+        /* WHATSAPP FLOTTANT */
+        .wa-float {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .wa-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .wa-btn:hover { transform: scale(1.08); }
+        .wa-btn svg { width: 34px; height: 34px; fill: #fff; }
+        .wa-bubble {
+            position: relative;
+            background: #fff;
+            color: var(--navy);
+            padding: 0.7rem 2rem 0.7rem 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            max-width: 230px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.3;
+            animation: waPop 0.3s ease;
+        }
+        .wa-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            right: 24px;
+            border-width: 7px 7px 0;
+            border-style: solid;
+            border-color: #fff transparent transparent;
+        }
+        .wa-bubble-link { color: var(--navy); text-decoration: none; display: block; }
+        .wa-bubble-link:hover { color: #25D366; }
+        .wa-bubble-close {
+            position: absolute;
+            top: 4px;
+            right: 7px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            line-height: 1;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+        }
+        @keyframes waPop {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+            .wa-float { right: 14px; bottom: 14px; }
+            .wa-bubble { max-width: 180px; font-size: 0.82rem; }
+            .wa-btn { width: 54px; height: 54px; }
+            .wa-btn svg { width: 30px; height: 30px; }
+        }
 </style>
 </head>
 <body>
@@ -1659,6 +1731,17 @@
 <p><strong>Inclus:</strong> Vol Turkish Air aller-retour • Transferts privés • Taxes séjour • Assurance obligatoire</p>
 <p><strong>Non compris:</strong> Visa aéroport 50 USD • Excursions optionnelles</p>
 </div></div></div>
+
+<!-- WHATSAPP FLOTTANT -->
+<div class="wa-float">
+<div class="wa-bubble" id="waBubble">
+<button class="wa-bubble-close" aria-label="Fermer" onclick="document.getElementById('waBubble').style.display='none';return false;">×</button>
+<a class="wa-bubble-link" href="https://wa.me/212673280009?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%20au%20sujet%20de%20vos%20voyages." target="_blank" rel="noopener">Souhaitez-vous être contacté ?</a>
+</div>
+<a class="wa-btn" href="https://wa.me/212673280009?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%20au%20sujet%20de%20vos%20voyages." target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.003 3.2c-7.06 0-12.79 5.73-12.79 12.79 0 2.26.59 4.46 1.71 6.4L3.2 28.8l6.57-1.72a12.74 12.74 0 0 0 6.23 1.59h.01c7.05 0 12.79-5.73 12.79-12.79 0-3.42-1.33-6.63-3.75-9.05a12.7 12.7 0 0 0-9.05-3.63zm0 23.4h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.01 1.05 1.07-3.91-.25-.4a10.57 10.57 0 0 1-1.62-5.64c0-5.86 4.77-10.63 10.63-10.63 2.84 0 5.51 1.11 7.52 3.12a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.62-10.62 10.62zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.18.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.54-.71-.55-.18-.01-.4-.01-.61-.01-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.44 5.45 4.82.76.33 1.36.53 1.82.68.77.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.74.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37z"/></svg>
+</a>
+</div>
 
 <!-- JAVASCRIPT COMPLET -->
     <script>
