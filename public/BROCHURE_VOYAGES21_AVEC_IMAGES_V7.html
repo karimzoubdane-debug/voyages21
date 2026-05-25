@@ -464,6 +464,126 @@
         }
         .slider-dot.active { background: #fff; }
 
+        /* MENU PRINCIPAL (3 titres) */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: var(--blanc);
+            border-bottom: 3px solid var(--or);
+            position: relative;
+            z-index: 200;
+        }
+        .nav-title {
+            padding: 1rem 1.8rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-title:hover { color: var(--azur); background: var(--bleu-pale); }
+        .nav-title.active { color: var(--azur); border-bottom-color: var(--azur); }
+        .nav-caret { font-size: 0.65rem; transition: transform 0.25s ease; }
+        .nav-title.open .nav-caret { transform: rotate(180deg); }
+
+        /* MEGA PANNEAU DESTINATIONS */
+        .mega-panel {
+            display: none;
+            background: var(--blanc);
+            border-bottom: 3px solid var(--or);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+            position: relative;
+            z-index: 199;
+        }
+        .mega-panel.open { display: block; animation: fadeIn 0.25s ease; }
+        .mega-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            min-height: 230px;
+        }
+        .mega-continents {
+            width: 240px;
+            background: var(--creme);
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 0;
+        }
+        .mega-cont {
+            text-align: left;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .mega-cont:hover { background: rgba(0,0,0,0.04); }
+        .mega-cont.active {
+            background: var(--blanc);
+            border-left-color: var(--or);
+            color: var(--rouge);
+        }
+        .mega-countries { flex: 1; padding: 1.5rem 2rem; }
+        .mega-col { display: none; flex-direction: column; gap: 0.2rem; }
+        .mega-col.active { display: flex; animation: fadeIn 0.2s ease; }
+        .mega-col a {
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.6rem 0.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mega-col a:hover { background: var(--bleu-pale); color: var(--azur); padding-left: 1rem; }
+        @media (max-width: 700px) {
+            .nav-title { padding: 0.8rem 1rem; font-size: 0.95rem; }
+            .mega-inner { flex-direction: column; min-height: 0; }
+            .mega-continents { width: 100%; flex-direction: row; flex-wrap: wrap; padding: 0.4rem; }
+            .mega-cont { flex: 1 1 auto; text-align: center; border-left: none; border-bottom: 3px solid transparent; padding: 0.6rem 0.4rem; }
+            .mega-cont.active { border-left: none; border-bottom-color: var(--or); }
+            .mega-countries { padding: 1rem; }
+        }
+
+        /* OMRA */
+        .omra-card {
+            max-width: 640px;
+            margin: 1rem auto;
+            background: var(--blanc);
+            border: 1px solid #e6ddcb;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+        .omra-card p { margin-bottom: 1rem; }
+        .omra-cta {
+            display: inline-block;
+            margin-top: 0.5rem;
+            background: #25D366;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .omra-cta:hover { transform: scale(1.04); }
+
         /* WHATSAPP FLOTTANT */
         .wa-float {
             position: fixed;
@@ -544,20 +664,43 @@
 <p>Vos circuits et séjours 2026 — Marrakech</p>
 </header>
 
-<!-- NAV TABS -->
-<div class="nav-tabs">
-<button class="tab-button active" onclick="switchTab('turquie', this)">Turquie</button>
-<button class="tab-button" onclick="switchTab('egypte', this)"> Égypte</button>
-<button class="tab-button" onclick="switchTab('usa', this)">USA &amp; Canada</button>
-<button class="tab-button" onclick="switchTab('cuba', this)">Cuba</button>
-<button class="tab-button" onclick="switchTab('perou', this)">Pérou</button>
-<button class="tab-button" onclick="switchTab('europe', this)">Europe</button>
-<button class="tab-button" onclick="switchTab('croisiere', this)">Croisières</button>
-<button class="tab-button" onclick="switchTab('chine', this)">Chine</button>
-<button class="tab-button" onclick="switchTab('malaisie', this)">Malaisie &amp; Thaïlande</button>
-<button class="tab-button" onclick="switchTab('bangkok', this)">Bangkok &amp; Thaïlande</button>
-<button class="tab-button" onclick="switchTab('vietnam', this)">Vietnam</button>
-<button class="tab-button" onclick="switchTab('zanzibar', this)">Zanzibar</button>
+<!-- NAV MENU (3 titres) -->
+<nav class="main-nav">
+<button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde<span class="nav-caret">▾</span></button>
+<button class="nav-title" id="navCroisiere" onclick="switchTab('croisiere')">Croisières</button>
+<button class="nav-title" id="navOmra" onclick="switchTab('omra')">Omra</button>
+</nav>
+<!-- MEGA PANNEAU DESTINATIONS -->
+<div class="mega-panel" id="destPanel">
+<div class="mega-inner">
+<div class="mega-continents">
+<button class="mega-cont active" onclick="showContinent('c-europe', this)">Europe</button>
+<button class="mega-cont" onclick="showContinent('c-afrique', this)">Afrique</button>
+<button class="mega-cont" onclick="showContinent('c-ameriques', this)">Amériques</button>
+<button class="mega-cont" onclick="showContinent('c-asie', this)">Asie</button>
+</div>
+<div class="mega-countries">
+<div class="mega-col active" id="c-europe">
+<a role="button" onclick="switchTab('europe')">Circuits Europe</a>
+<a role="button" onclick="switchTab('turquie')">Turquie</a>
+</div>
+<div class="mega-col" id="c-afrique">
+<a role="button" onclick="switchTab('egypte')">Égypte</a>
+<a role="button" onclick="switchTab('zanzibar')">Zanzibar</a>
+</div>
+<div class="mega-col" id="c-ameriques">
+<a role="button" onclick="switchTab('usa')">USA &amp; Canada</a>
+<a role="button" onclick="switchTab('cuba')">Cuba</a>
+<a role="button" onclick="switchTab('perou')">Pérou</a>
+</div>
+<div class="mega-col" id="c-asie">
+<a role="button" onclick="switchTab('chine')">Chine</a>
+<a role="button" onclick="switchTab('malaisie')">Malaisie &amp; Thaïlande</a>
+<a role="button" onclick="switchTab('bangkok')">Bangkok &amp; Thaïlande</a>
+<a role="button" onclick="switchTab('vietnam')">Vietnam</a>
+</div>
+</div>
+</div>
 </div>
 <!-- CONTAINER -->
 <div class="container">
@@ -1028,6 +1171,16 @@
 <button class="btn-details" onclick="openModal('modal-croisiere-2')">Voir détails</button>
 </div>
 </div>
+</div>
+</div>
+<!-- TAB OMRA -->
+<div class="tab-content" id="omra">
+<h2 class="section-title">Omra</h2>
+<p class="section-subtitle">Accomplissez votre Omra avec Voyages 21</p>
+<div class="omra-card">
+<p>Nos programmes Omra 2026 seront <strong>bientôt disponibles</strong>.</p>
+<p>Contactez-nous dès maintenant pour réserver votre place ou recevoir le programme détaillé (vols, hôtels proches du Haram, accompagnement).</p>
+<a class="omra-cta" href="https://wa.me/212673280009?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20vos%20programmes%20Omra." target="_blank" rel="noopener">Nous contacter sur WhatsApp</a>
 </div>
 </div>
 </div>
@@ -1800,15 +1953,58 @@
         sliderTimers[sliderId] = setInterval(function() { autoNext(sliderId); }, 3500);
     }
 
-    // ── ONGLETS ──
-    function switchTab(tabName, btn) {
-        var tabs = document.querySelectorAll('.tab-content');
-        for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-        var buttons = document.querySelectorAll('.tab-button');
-        for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
-        document.getElementById(tabName).classList.add('active');
+    // ── MENU PRINCIPAL + ONGLETS ──
+    function closeDest() {
+        var panel = document.getElementById('destPanel');
+        if (panel) panel.classList.remove('open');
+        var navDest = document.getElementById('navDest');
+        if (navDest) navDest.classList.remove('open');
+    }
+
+    function toggleDest(btn) {
+        var panel = document.getElementById('destPanel');
+        var open = panel.classList.toggle('open');
+        btn.classList.toggle('open', open);
+    }
+
+    function showContinent(colId, btn) {
+        var cols = document.querySelectorAll('.mega-col');
+        for (var i = 0; i < cols.length; i++) cols[i].classList.remove('active');
+        var col = document.getElementById(colId);
+        if (col) col.classList.add('active');
+        var conts = document.querySelectorAll('.mega-cont');
+        for (var i = 0; i < conts.length; i++) conts[i].classList.remove('active');
         if (btn) btn.classList.add('active');
     }
+
+    function switchTab(tabName) {
+        var tabs = document.querySelectorAll('.tab-content');
+        for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+        var target = document.getElementById(tabName);
+        if (target) target.classList.add('active');
+        var titles = document.querySelectorAll('.nav-title');
+        for (var i = 0; i < titles.length; i++) titles[i].classList.remove('active');
+        if (tabName === 'croisiere') {
+            document.getElementById('navCroisiere').classList.add('active');
+        } else if (tabName === 'omra') {
+            document.getElementById('navOmra').classList.add('active');
+        } else {
+            document.getElementById('navDest').classList.add('active');
+        }
+        closeDest();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Fermer le menu Destinations en cliquant en dehors
+    document.addEventListener('click', function(e) {
+        var panel = document.getElementById('destPanel');
+        var navDest = document.getElementById('navDest');
+        if (!panel || !navDest) return;
+        if (panel.classList.contains('open') &&
+            !panel.contains(e.target) && !navDest.contains(e.target)) {
+            closeDest();
+        }
+    });
 
     // ── MODALES ──
     function openModal(modalId) {
