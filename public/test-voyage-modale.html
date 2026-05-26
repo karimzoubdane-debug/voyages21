@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Voyages21 — Page test (modale style Intrepid + vidéo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --gold-soft:#E4D2A0;
+        --cream:#F5F0E8; --ink:#23291f; --muted:#6b7065; --line:#e6e0d4;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;}
+    h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;}
+
+    /* ---- page de démo ---- */
+    .demo-bar{background:var(--forest);color:#fff;padding:.7rem 1rem;font-size:.82rem;text-align:center;letter-spacing:.02em;}
+    .demo-bar b{color:var(--gold-soft);}
+    .demo-wrap{max-width:980px;margin:2.4rem auto;padding:0 1rem;}
+    .demo-card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(21,46,31,.08);display:grid;grid-template-columns:1.1fr 1fr;}
+    .demo-card .media{position:relative;min-height:240px;background:#10231a;}
+    .demo-card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9;}
+    .demo-card .body{padding:1.6rem 1.8rem;}
+    .demo-card .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:var(--gold);font-weight:700;}
+    .demo-card h2{font-size:1.7rem;color:var(--forest);margin:.3rem 0 .2rem;}
+    .demo-card .sub{color:var(--muted);font-size:.95rem;}
+    .demo-card .price{margin:1rem 0;font-size:.9rem;color:var(--ink);}
+    .demo-card .price b{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--forest);}
+    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:var(--forest2);border:none;border-radius:999px;padding:.8rem 1.5rem;font:inherit;font-weight:700;cursor:pointer;transition:.2s;}
+    .btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px);}
+
+    /* ---- modale ---- */
+    .modal{position:fixed;inset:0;background:rgba(10,18,12,.55);backdrop-filter:blur(3px);display:none;z-index:1000;}
+    .modal.active{display:block;}
+    .modal-box{position:absolute;inset:2.5vh 50% auto 50%;transform:translateX(-50%);width:min(960px,94vw);height:95vh;background:var(--cream);border-radius:18px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;box-shadow:0 30px 80px rgba(0,0,0,.4);}
+    .modal-close{position:fixed;z-index:30;top:calc(2.5vh + 14px);right:max(50% - 480px + 14px, calc(3vw + 14px));width:40px;height:40px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:1.4rem;line-height:1;cursor:pointer;}
+    .modal-close:hover{background:#000;}
+
+    /* hero vidéo */
+    .hero{position:relative;height:46vh;min-height:300px;background:#10231a;overflow:hidden;}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,0) 35%,rgba(16,35,26,.85) 100%);}
+    .hero-overlay{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1.6rem 2rem;color:#fff;}
+    .hero-overlay .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.2em;color:var(--gold-soft);font-weight:700;}
+    .hero-overlay h1{font-size:2.3rem;line-height:1.1;margin:.25rem 0 .35rem;text-shadow:0 2px 16px rgba(0,0,0,.45);}
+    .hero-overlay .tagline{font-style:italic;font-family:'Playfair Display',serif;opacity:.95;font-size:1.05rem;}
+    .hero-facts{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:.9rem;font-size:.82rem;}
+    .hero-facts span{display:flex;align-items:center;gap:.4rem;opacity:.95;}
+    .hero-facts b{font-weight:700;}
+    .mute-toggle{position:absolute;z-index:3;right:14px;bottom:14px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:999px;padding:.4rem .8rem;font:inherit;font-size:.78rem;cursor:pointer;}
+
+    /* nav collante */
+    .tabs{position:sticky;top:0;z-index:20;display:flex;gap:.2rem;background:var(--forest);padding:0 .6rem;overflow-x:auto;box-shadow:0 2px 10px rgba(0,0,0,.15);}
+    .tabs a{flex:0 0 auto;color:#cdd6ce;text-decoration:none;font-size:.82rem;font-weight:600;padding:.9rem .9rem;border-bottom:3px solid transparent;white-space:nowrap;}
+    .tabs a.active,.tabs a:hover{color:#fff;border-bottom-color:var(--gold);}
+
+    .content{padding:1.8rem 2rem 2.4rem;max-width:760px;margin:0 auto;}
+    section{scroll-margin-top:60px;padding:1.4rem 0;border-top:1px solid var(--line);}
+    section:first-child{border-top:none;}
+    .sec-title{font-size:1.45rem;color:var(--forest);margin-bottom:.8rem;}
+    .lead{font-size:1.05rem;color:#3a4034;}
+
+    .highlights{list-style:none;margin:1rem 0 0;display:grid;gap:.55rem;}
+    .highlights li{position:relative;padding-left:1.7rem;}
+    .highlights li::before{content:'✦';position:absolute;left:0;color:var(--gold);font-size:.9rem;top:.15rem;}
+
+    .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem 1.4rem;margin-top:1.2rem;background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.3rem;}
+    .facts div{font-size:.9rem;}
+    .facts .k{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700;}
+    .facts .v{color:var(--ink);font-weight:500;}
+
+    /* itinéraire accordéon */
+    .day{border:1px solid var(--line);border-radius:12px;margin-bottom:.6rem;background:#fff;overflow:hidden;}
+    .day-head{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;background:none;border:none;padding:1rem 1.1rem;cursor:pointer;font:inherit;}
+    .day-num{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--forest);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;}
+    .day-title{flex:1;font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--forest);}
+    .day-chev{transition:.25s;color:var(--muted);}
+    .day.open .day-chev{transform:rotate(180deg);}
+    .day-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+    .day.open .day-body{max-height:600px;}
+    .day-body-inner{padding:0 1.1rem 1.1rem 4.4rem;font-size:.93rem;color:#3a4034;}
+    .day-meta{margin-top:.6rem;font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:1rem;}
+    .day-meta b{color:var(--forest);}
+
+    .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:.6rem;}
+    .twocol h3{font-size:1rem;color:var(--forest);margin-bottom:.5rem;}
+    .ticks{list-style:none;display:grid;gap:.4rem;font-size:.9rem;}
+    .ticks li{padding-left:1.5rem;position:relative;}
+    .inc li::before{content:'✓';position:absolute;left:0;color:#2e7d4f;font-weight:700;}
+    .exc li::before{content:'✕';position:absolute;left:0;color:#b23a2e;font-weight:700;}
+
+    .hotel{display:flex;gap:.9rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px dashed var(--line);}
+    .hotel:last-child{border-bottom:none;}
+    .hotel .stars{color:var(--gold);font-size:.8rem;}
+
+    .route{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.3rem;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;font-family:'Playfair Display',serif;color:var(--forest);}
+    .route .stop{padding:.25rem .6rem;background:var(--cream);border:1px solid var(--line);border-radius:999px;font-size:.9rem;}
+    .route .arr{color:var(--gold);font-weight:700;}
+
+    table.dates{width:100%;border-collapse:collapse;margin-top:.6rem;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+    table.dates th,table.dates td{padding:.75rem 1rem;text-align:left;font-size:.9rem;border-bottom:1px solid var(--line);}
+    table.dates th{background:var(--forest);color:#fff;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;}
+    table.dates tr:last-child td{border-bottom:none;}
+    table.dates .price{font-family:'Playfair Display',serif;font-weight:700;color:var(--forest);}
+    .mini-cta{background:var(--gold);color:var(--forest2);border:none;border-radius:999px;padding:.45rem .9rem;font:inherit;font-weight:700;font-size:.8rem;cursor:pointer;}
+
+    .reviews-head{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+    .score{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--forest);line-height:1;}
+    .stars-big{color:var(--gold);}
+    .review{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;margin-bottom:.7rem;}
+    .review .who{font-size:.8rem;color:var(--muted);margin-top:.5rem;}
+    .review .q{font-style:italic;font-family:'Playfair Display',serif;}
+
+    .cta-final{margin-top:1.6rem;background:var(--forest);color:#fff;border-radius:16px;padding:1.6rem;text-align:center;}
+    .cta-final h3{color:#fff;font-size:1.4rem;margin-bottom:.4rem;}
+    .cta-final p{opacity:.85;font-size:.92rem;margin-bottom:1rem;}
+    .cta-final .btn-primary{background:var(--gold);}
+
+    @media(max-width:680px){
+        .demo-card{grid-template-columns:1fr;}
+        .twocol,.facts{grid-template-columns:1fr;}
+        .hero-overlay h1{font-size:1.7rem;}
+        .modal-close{right:calc(3vw + 14px);}
+        .day-body-inner{padding-left:1.1rem;}
+    }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Page <b>test</b> · structure inspirée d'Intrepid, identité Voyages21 · la vidéo remplace la galerie et démarre à l'ouverture de la modale</div>
+
+<div class="demo-wrap">
+    <div class="demo-card">
+        <div class="media">
+            <img src="https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/galata%20tower%20voyages21-mTzK8CryRgVyawixCj7SK3uezJaI8q.jpg" alt="Istanbul">
+        </div>
+        <div class="body">
+            <span class="eyebrow">Turquie · Sur mesure</span>
+            <h2>Istanbul &amp; Antalya</h2>
+            <div class="sub">8 jours / 7 nuits — de la Corne d'Or aux plages turquoise</div>
+            <div class="price">à partir de <b>16 900 DH</b> <span style="color:var(--muted)">/ personne</span></div>
+            <button class="btn-primary" onclick="openModal()">▶ Voir détails</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODALE ===================== -->
+<div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box" id="modalBox">
+        <button class="modal-close" onclick="closeModal()" aria-label="Fermer">×</button>
+
+        <!-- HERO VIDEO -->
+        <div class="hero">
+            <video id="heroVideo" muted loop playsinline preload="auto"
+                   poster="https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Istanbul%20sunset%20bosphorus-8NTUzREi4a22UaoXkDcwaXg0vmdUph.jpg">
+                <source src="https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/istanbul%203%20mn-sd5CAhT8910gXPmTxFullipdPUJphV.mp4" type="video/mp4">
+            </video>
+            <button class="mute-toggle" id="muteBtn" onclick="toggleMute()">🔇 Son coupé</button>
+            <div class="hero-overlay">
+                <span class="eyebrow">Turquie · Voyage signé Voyages21</span>
+                <h1>Istanbul &amp; Antalya</h1>
+                <div class="tagline">« De la Corne d'Or aux rivages turquoise, la Turquie en grand. »</div>
+                <div class="hero-facts">
+                    <span>🗓 <b>8 jours</b> / 7 nuits</span>
+                    <span>✦ <b>Confort &amp; culture</b></span>
+                    <span>👥 <b>Privé</b> ou 2–12 pers.</span>
+                    <span>🥾 Rythme <b>léger</b></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAV COLLANTE -->
+        <nav class="tabs" id="tabs">
+            <a href="#apercu" class="active">Aperçu</a>
+            <a href="#itineraire">Itinéraire</a>
+            <a href="#inclus">Inclus</a>
+            <a href="#hebergement">Hébergement</a>
+            <a href="#carte">Itinéraire carte</a>
+            <a href="#dates">Dates &amp; prix</a>
+            <a href="#avis">Avis</a>
+        </nav>
+
+        <div class="content">
+
+            <!-- APERÇU -->
+            <section id="apercu">
+                <h2 class="sec-title">Aperçu du voyage</h2>
+                <p class="lead">Deux visages de la Turquie en un seul séjour. D'abord Istanbul, capitale aux mille
+                    coupoles, où l'Orient et l'Occident se donnent rendez-vous entre Sainte-Sophie, le Bosphore et les
+                    effluves du Grand Bazar. Puis Antalya et sa Riviera turque, ses ruines romaines posées face à une
+                    Méditerranée d'un bleu irréel. Un itinéraire pensé sur mesure, mêlant grands incontournables et
+                    moments rien qu'à vous.</p>
+                <ul class="highlights">
+                    <li>Croisière privée au coucher du soleil sur le Bosphore</li>
+                    <li>Visite coupe-file de Sainte-Sophie, la Mosquée Bleue et le palais de Topkapı</li>
+                    <li>Flânerie guidée dans le Grand Bazar et le bazar aux épices</li>
+                    <li>Vieille ville de Kaleiçi et port romain d'Antalya</li>
+                    <li>Excursion aux sites antiques d'Aspendos et Pergé</li>
+                    <li>Temps libre en bord de mer, dans un resort 5★</li>
+                </ul>
+                <div class="facts">
+                    <div><span class="k">Départ</span><span class="v">Istanbul</span></div>
+                    <div><span class="k">Fin</span><span class="v">Antalya</span></div>
+                    <div><span class="k">Taille du groupe</span><span class="v">Privé ou 2 à 12</span></div>
+                    <div><span class="k">Âges</span><span class="v">Tous (familles bienvenues)</span></div>
+                    <div><span class="k">Style</span><span class="v">Confort &amp; culture</span></div>
+                    <div><span class="k">Repas</span><span class="v">7 petits-déjeuners · 4 dîners</span></div>
+                </div>
+            </section>
+
+            <!-- ITINÉRAIRE -->
+            <section id="itineraire">
+                <h2 class="sec-title">Itinéraire jour par jour</h2>
+                <div id="days"></div>
+            </section>
+
+            <!-- INCLUS / NON INCLUS -->
+            <section id="inclus">
+                <h2 class="sec-title">Ce qui est inclus</h2>
+                <div class="twocol">
+                    <div>
+                        <h3>Compris</h3>
+                        <ul class="ticks inc">
+                            <li>Vols intérieurs Istanbul → Antalya</li>
+                            <li>7 nuits en hôtels &amp; resort 5★</li>
+                            <li>Transferts privés climatisés</li>
+                            <li>Guide francophone diplômé</li>
+                            <li>Croisière privée sur le Bosphore</li>
+                            <li>Entrées des sites mentionnés</li>
+                            <li>7 petits-déjeuners &amp; 4 dîners</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Non compris</h3>
+                        <ul class="ticks exc">
+                            <li>Vols internationaux</li>
+                            <li>Déjeuners &amp; boissons</li>
+                            <li>Pourboires &amp; dépenses personnelles</li>
+                            <li>Assurance voyage</li>
+                            <li>Activités optionnelles</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HÉBERGEMENT -->
+            <section id="hebergement">
+                <h2 class="sec-title">Hébergement</h2>
+                <div class="hotel">
+                    <div>
+                        <div class="stars">★★★★★</div>
+                        <strong>Istanbul — Hôtel Bosphore (3 nuits)</strong>
+                        <div style="font-size:.9rem;color:var(--muted)">Chambre vue détroit, à deux pas de Sultanahmet.</div>
+                    </div>
+                </div>
+                <div class="hotel">
+                    <div>
+                        <div class="stars">★★★★★</div>
+                        <strong>Antalya — Resort bord de mer (4 nuits)</strong>
+                        <div style="font-size:.9rem;color:var(--muted)">Accès plage privée, spa &amp; piscines à débordement.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CARTE / ROUTE -->
+            <section id="carte">
+                <h2 class="sec-title">L'itinéraire en un coup d'œil</h2>
+                <div class="route">
+                    <span class="stop">Istanbul</span><span class="arr">→</span>
+                    <span class="stop">Bosphore</span><span class="arr">→</span>
+                    <span class="stop">✈ Antalya</span><span class="arr">→</span>
+                    <span class="stop">Kaleiçi</span><span class="arr">→</span>
+                    <span class="stop">Aspendos &amp; Pergé</span><span class="arr">→</span>
+                    <span class="stop">Riviera turque</span>
+                </div>
+            </section>
+
+            <!-- DATES & PRIX -->
+            <section id="dates">
+                <h2 class="sec-title">Dates &amp; prix</h2>
+                <table class="dates">
+                    <thead><tr><th>Départ</th><th>Disponibilité</th><th>Prix / pers.</th><th></th></tr></thead>
+                    <tbody>
+                        <tr><td>15 avril 2026</td><td>Confirmé</td><td class="price">16 900 DH</td><td><button class="mini-cta" onclick="ask('15 avril 2026')">Réserver</button></td></tr>
+                        <tr><td>20 mai 2026</td><td>Places limitées</td><td class="price">17 500 DH</td><td><button class="mini-cta" onclick="ask('20 mai 2026')">Réserver</button></td></tr>
+                        <tr><td>12 septembre 2026</td><td>Disponible</td><td class="price">17 900 DH</td><td><button class="mini-cta" onclick="ask('12 septembre 2026')">Réserver</button></td></tr>
+                        <tr><td>Sur mesure</td><td>Toute l'année</td><td class="price">sur devis</td><td><button class="mini-cta" onclick="ask('dates sur mesure')">Demander</button></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- AVIS -->
+            <section id="avis">
+                <h2 class="sec-title">Avis voyageurs</h2>
+                <div class="reviews-head">
+                    <div class="score">4,9</div>
+                    <div><div class="stars-big">★★★★★</div><div style="font-size:.85rem;color:var(--muted)">sur 128 avis vérifiés</div></div>
+                </div>
+                <div class="review"><div class="q">« Organisation impeccable du début à la fin. Le guide à Istanbul était passionnant, et le resort d'Antalya un vrai cocon. »</div><div class="who">— Nadia &amp; Karim, Casablanca</div></div>
+                <div class="review"><div class="q">« La croisière privée sur le Bosphore au coucher du soleil restera un souvenir inoubliable. Merci Voyages21. »</div><div class="who">— Sophie L., Rabat</div></div>
+            </section>
+
+            <!-- CTA -->
+            <div class="cta-final">
+                <h3>Envie de ce voyage ?</h3>
+                <p>Nous composons chaque itinéraire sur mesure, selon vos dates et vos envies.</p>
+                <button class="btn-primary" onclick="ask('Istanbul & Antalya')">Demander un devis sur WhatsApp</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var DAYS = [
+        ["Arrivée à Istanbul","Accueil personnalisé à l'aéroport et transfert privé vers votre hôtel face au Bosphore. Première soirée libre pour ressentir l'atmosphère de la ville, suivie d'un dîner de bienvenue.",["Dîner"],"Hôtel Bosphore 5★"],
+        ["Istanbul impériale","Journée coupe-file dans la vieille ville : Sainte-Sophie, la Mosquée Bleue, le palais de Topkapı et la Citerne Basilique, avec votre guide francophone.",["Petit-déjeuner"],"Hôtel Bosphore 5★"],
+        ["Bosphore & bazars","Croisière privée sur le Bosphore, puis immersion dans le Grand Bazar et le bazar aux épices. Après-midi libre ou hammam traditionnel en option.",["Petit-déjeuner","Dîner"],"Hôtel Bosphore 5★"],
+        ["Envol vers Antalya","Transfert et vol intérieur vers Antalya. Installation dans votre resort en bord de mer, après-midi détente, piscine et plage privée.",["Petit-déjeuner","Dîner"],"Resort 5★ Antalya"],
+        ["Antalya & Kaleiçi","Découverte de la vieille ville de Kaleiçi, du port romain et de la porte d'Hadrien. Temps libre dans les ruelles ottomanes et les boutiques d'artisans.",["Petit-déjeuner"],"Resort 5★ Antalya"],
+        ["Sites antiques","Excursion aux théâtres et temples d'Aspendos et de Pergé, parmi les mieux conservés du monde romain, puis retour pour une fin d'après-midi de repos.",["Petit-déjeuner","Dîner"],"Resort 5★ Antalya"],
+        ["Journée à vous","Journée libre : plage, spa, ou excursion optionnelle (chutes de Düden, sortie en mer). Votre conseiller reste à disposition.",["Petit-déjeuner"],"Resort 5★ Antalya"],
+        ["Retour","Temps libre selon votre vol, puis transfert privé vers l'aéroport d'Antalya. Fin de nos services, des souvenirs plein la tête.",["Petit-déjeuner"],"—"]
+    ];
+
+    function renderDays(){
+        var box = document.getElementById('days');
+        box.innerHTML = DAYS.map(function(d,i){
+            var meals = d[2].length ? '<span><b>Repas :</b> '+d[2].join(' · ')+'</span>' : '';
+            var hotel = d[3] && d[3] !== '—' ? '<span><b>Nuit :</b> '+d[3]+'</span>' : '';
+            return '<div class="day'+(i===0?' open':'')+'">'
+                + '<button class="day-head" onclick="toggleDay(this)">'
+                +   '<span class="day-num">J'+(i+1)+'</span>'
+                +   '<span class="day-title">'+d[0]+'</span>'
+                +   '<span class="day-chev">▾</span>'
+                + '</button>'
+                + '<div class="day-body"><div class="day-body-inner">'+d[1]
+                +   '<div class="day-meta">'+meals+hotel+'</div>'
+                + '</div></div></div>';
+        }).join('');
+    }
+    function toggleDay(btn){ btn.parentElement.classList.toggle('open'); }
+
+    var hero = document.getElementById('heroVideo');
+    function playHero(){
+        if(!hero) return;
+        hero.muted = true; hero.currentTime = 0;
+        var p = hero.play();
+        if(p && p.catch) p.catch(function(){
+            var once=function(){ hero.removeEventListener('canplay',once); hero.muted=true; hero.play().catch(function(){}); };
+            hero.addEventListener('canplay',once);
+        });
+    }
+    function toggleMute(){
+        if(!hero) return;
+        hero.muted = !hero.muted;
+        document.getElementById('muteBtn').textContent = hero.muted ? '🔇 Son coupé' : '🔊 Son activé';
+        if(!hero.muted) hero.play().catch(function(){});
+    }
+
+    function openModal(){
+        var m = document.getElementById('modal');
+        m.classList.add('active'); m.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+        document.getElementById('modalBox').scrollTop = 0;
+        playHero();
+    }
+    function closeModal(){
+        var m = document.getElementById('modal');
+        m.classList.remove('active'); m.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+        if(hero){ try{ hero.pause(); }catch(e){} }
+    }
+    document.getElementById('modal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+
+    // nav collante : scroll doux + surlignage
+    var tabLinks = Array.prototype.slice.call(document.querySelectorAll('.tabs a'));
+    var box = document.getElementById('modalBox');
+    tabLinks.forEach(function(a){
+        a.addEventListener('click',function(e){
+            e.preventDefault();
+            var t = document.querySelector(a.getAttribute('href'));
+            if(t) box.scrollTo({ top: t.offsetTop - 48, behavior:'smooth' });
+        });
+    });
+    box && box.addEventListener('scroll',function(){
+        var y = box.scrollTop + 80, cur = tabLinks[0];
+        tabLinks.forEach(function(a){
+            var t = document.querySelector(a.getAttribute('href'));
+            if(t && t.offsetTop <= y) cur = a;
+        });
+        tabLinks.forEach(function(a){ a.classList.toggle('active', a===cur); });
+    });
+
+    function ask(label){
+        var msg = encodeURIComponent('Bonjour, je suis intéressé(e) par le voyage « Istanbul & Antalya » ('+label+'). Pouvez-vous me faire une proposition ?');
+        window.open('https://wa.me/212673280009?text='+msg,'_blank');
+    }
+
+    renderDays();
+</script>
+</body>
+</html>
