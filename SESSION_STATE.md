@@ -14,27 +14,38 @@ Détail complet du chantier médias : voir **`HANDOFF.md`** (même branche).
 - **Branche :** `claude/gracious-cori-hpQlE` — PR #14 (brouillon, base `main`)
 
 ## TACHE EN COURS
-Aucune en cours. Dernier état : système médias fonctionnel en version « simple »
-(stockage **local à l'appareil**, sans login). Tout est committé + poussé.
+Médias passés au **stockage en ligne partagé (Vercel Blob)** : l'admin et la
+brochure lisent/écrivent désormais via `/api/media`. Le code est committé + poussé.
+**⚠️ Action requise côté Vercel (une seule fois)** : créer un store **Blob** et le
+connecter au projet (Storage → Create → Blob → Connect). Cela injecte
+`BLOB_READ_WRITE_TOKEN` ; sans lui, l'admin affiche un bandeau « stockage en ligne
+indisponible » et la brochure reste à l'original.
 
 ## CE QUI A ETE FAIT (chantier médias)
 - [x] Admin autonome `public/admin-medias.html` : liste déroulante des 28 voyages,
       photos (lien ou fichier), vidéo lien YouTube/Vimeo + vidéo fichier mp4,
       export/import JSON, alertes auto poids/dimensions.
-- [x] Stockage **IndexedDB** (`voyages21-media`), synchro temps réel
-      `BroadcastChannel('v21_media')` entre admin et brochure.
-- [x] Brochure `public/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html` :
+- [x] **Stockage en ligne partagé (Vercel Blob)** : routes `src/app/api/media/route.js`
+      (GET/PUT du manifeste `media-manifest.json`) et `src/app/api/media/upload/route.js`
+      (upload direct navigateur → Blob via `handleUpload`, contourne la limite de
+      taille des fonctions). L'admin téléverse les fichiers vers Blob et n'enregistre
+      que des **URL** dans un manifeste JSON partagé.
+- [x] Brochure `public/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html` lit les médias via
+      `fetch('/api/media')` → visibles par **tous les visiteurs** après rechargement :
       - photos perso injectées dans les carrousels (fond des diapos) ;
       - **mp4 = diapo auto-jouée (muette)** dans le carrousel ;
       - **lien YouTube/Vimeo = bouton « Voir la vidéo »** (au clic, avec son) ;
       - popup vidéo réduite à 640px.
 - [x] `HANDOFF.md` créé (contexte/architecture détaillés).
+- [~] Ancien stockage IndexedDB + migration localStorage **retirés** (remplacés par
+      le stockage en ligne). `BroadcastChannel('v21_media')` conservé pour l'aperçu
+      immédiat dans la brochure du même appareil.
 
 ## PROCHAINE ETAPE PROBABLE
-Rendre les médias **partagés/publics** via un **stockage en ligne**
-(Sanity / Vercel Blob / autre). L'interface d'admin ne changerait quasiment pas ;
-seule la couche de stockage serait remplacée. Nécessitera un compte/identifiants
-(à décider avec Karim — jusqu'ici choix volontaire de « rester simple, sans login »).
+1. **Activer le store Blob sur Vercel** (voir « TACHE EN COURS ») pour que la
+   chaîne fonctionne réellement en ligne.
+2. Optionnel : protéger l'accès admin (mot de passe), pagination/cache du manifeste
+   si le volume grandit, et migrer d'éventuels anciens médias locaux via Export/Import.
 
 ## DECISIONS PRISES
 - Version actuelle volontairement **sans login/compte** → stockage local (IndexedDB).

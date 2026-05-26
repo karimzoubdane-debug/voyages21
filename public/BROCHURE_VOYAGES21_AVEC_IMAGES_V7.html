@@ -2153,43 +2153,19 @@
         }
     });
 
-    // ── POPUP VIDEO + MEDIAS PERSONNALISES (interface admin locale, IndexedDB) ──
+    // ── POPUP VIDEO + MEDIAS PERSONNALISES (saisis dans admin-medias.html) ──
     // Liens YouTube par fiche (fallback code). Ex: 'modal-istanbul': 'ID_YOUTUBE'
     var CIRCUIT_VIDEOS = {
     };
 
-    // Medias saisis depuis l'admin (admin-medias.html), partages via IndexedDB (meme origine).
+    // Medias partages via le stockage en ligne (Vercel Blob), lus depuis /api/media.
     var V21_MEDIA = {};
 
-    function v21idbOpen() {
-        return new Promise(function (resolve, reject) {
-            var req = indexedDB.open('voyages21-media', 1);
-            req.onupgradeneeded = function () {
-                if (!req.result.objectStoreNames.contains('media')) {
-                    req.result.createObjectStore('media', { keyPath: 'key' });
-                }
-            };
-            req.onsuccess = function () { resolve(req.result); };
-            req.onerror = function () { reject(req.error); };
-        });
-    }
-    function v21idbAll() {
-        return v21idbOpen().then(function (db) {
-            return new Promise(function (resolve, reject) {
-                var rq = db.transaction('media', 'readonly').objectStore('media').getAll();
-                rq.onsuccess = function () { resolve(rq.result || []); };
-                rq.onerror = function () { reject(rq.error); };
-            });
-        });
-    }
     function loadMedia() {
-        if (!('indexedDB' in window)) return Promise.resolve();
-        return v21idbAll().then(function (rows) {
-            var map = {};
-            rows.forEach(function (r) { map[r.key] = r; });
-            V21_MEDIA = map;
-            applyMediaOverrides();
-        }).catch(function () { /* pas de medias : on garde la brochure d'origine */ });
+        return fetch('/api/media', { cache: 'no-store' })
+            .then(function (r) { return r.ok ? r.json() : {}; })
+            .then(function (map) { V21_MEDIA = map || {}; applyMediaOverrides(); })
+            .catch(function () { /* pas de medias : on garde la brochure d'origine */ });
     }
 
     function extractYouTubeId(u) {
@@ -2227,9 +2203,8 @@
             html = buildLinkEmbed(rec.videoLink);
         } else if (CIRCUIT_VIDEOS[key]) {
             html = buildLinkEmbed(CIRCUIT_VIDEOS[key]);
-        } else if (rec.videoBlob) {
-            html = '<video src="' + URL.createObjectURL(rec.videoBlob) + '" controls autoplay playsinline ' +
-                'style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video>';
+        } else if (rec.videoUrl) {
+            html = buildLinkEmbed(rec.videoUrl);
         }
         if (html) {
             frame.innerHTML = html;
@@ -2245,9 +2220,7 @@
     // Applique les images personnalisees aux sliders (ne change que le fond, aucune structure)
     function mediaItemSrc(it) {
         if (!it) return '';
-        if (it.url) return it.url;
-        if (it.blob) return URL.createObjectURL(it.blob);
-        return '';
+        return it.url || '';
     }
     function applyMediaOverrides() {
         try {
@@ -2272,11 +2245,11 @@
                 var oldDot = slider.querySelector('[data-dot-video]');
                 if (oldDot) oldDot.remove();
 
-                if (rec.videoBlob) {
+                if (rec.videoUrl) {
                     var slide = document.createElement('div');
                     slide.className = 'slide slide-video';
                     var v = document.createElement('video');
-                    v.src = URL.createObjectURL(rec.videoBlob);
+                    v.src = rec.videoUrl;
                     v.muted = true;
                     v.preload = 'metadata';
                     v.setAttribute('playsinline', '');

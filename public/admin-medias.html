@@ -118,10 +118,11 @@
         <strong>Comment ça marche :</strong> choisissez un voyage dans la liste, ajoutez une vidéo
         (lien YouTube/Vimeo <em>ou</em> fichier) et des photos (liens <em>ou</em> fichiers), puis
         <strong>rechargez la brochure</strong> pour voir le résultat. Tout est enregistré automatiquement.<br>
-        <strong>Aucune limite</strong> de type ni de nombre de photos. Les fichiers sont stockés sur cet appareil
-        (capacité large). <em>Version actuelle :</em> visible sur cet appareil/navigateur — le partage pour tous les
-        visiteurs viendra avec le stockage en ligne (étape suivante). Cliquez <em>« Exporter »</em> pour garder une sauvegarde.
+        <strong>Stockage en ligne partagé :</strong> ce que vous ajoutez ici est <strong>visible par toute
+        l'équipe et par les visiteurs du site</strong> (après rechargement). Aucune limite de nombre de photos.
+        Cliquez <em>« Exporter »</em> pour garder une sauvegarde du contenu.
     </div>
+    <div class="warn" id="connBox" style="display:none"></div>
 
     <label class="picker-label" for="picker">Choisissez un voyage à renseigner :</label>
     <select class="picker" id="picker" onchange="selectProduct(this.value)">
@@ -133,6 +134,12 @@
 </div>
 
 <div class="toast" id="toast">✓ Enregistré</div>
+
+<script type="module">
+    // Upload direct navigateur -> Vercel Blob (contourne la limite de taille des fonctions).
+    import { upload } from 'https://esm.sh/@vercel/blob@2.4.0/client';
+    window.v21upload = upload;
+</script>
 
 <script>
     var PRODUCTS = [
@@ -168,55 +175,57 @@
     var TITLES = {};
     PRODUCTS.forEach(function (p) { TITLES[p.k] = p.t; });
 
-    // ── IndexedDB ──
-    function idbOpen() {
-        return new Promise(function (resolve, reject) {
-            var req = indexedDB.open('voyages21-media', 1);
-            req.onupgradeneeded = function () {
-                if (!req.result.objectStoreNames.contains('media')) {
-                    req.result.createObjectStore('media', { keyPath: 'key' });
-                }
-            };
-            req.onsuccess = function () { resolve(req.result); };
-            req.onerror = function () { reject(req.error); };
-        });
-    }
-    function idbReq(mode, fn) {
-        return idbOpen().then(function (db) {
-            return new Promise(function (resolve, reject) {
-                var store = db.transaction('media', mode).objectStore('media');
-                var rq = fn(store);
-                rq.onsuccess = function () { resolve(rq.result); };
-                rq.onerror = function () { reject(rq.error); };
-            });
-        });
-    }
-    function idbGet(key) { return idbReq('readonly', function (s) { return s.get(key); }); }
-    function idbAll() { return idbReq('readonly', function (s) { return s.getAll(); }); }
-    function idbPut(rec) { return idbReq('readwrite', function (s) { return s.put(rec); }); }
-    function idbDel(key) { return idbReq('readwrite', function (s) { return s.delete(key); }); }
-    function idbClear() { return idbReq('readwrite', function (s) { return s.clear(); }); }
+    // ── Stockage en ligne (Vercel Blob via /api/media) ──
+    // MANIFEST = source de vérité partagée par toute l'équipe et les visiteurs.
+    // Les fichiers sont téléversés directement vers Blob ; le manifeste ne
+    // contient que des URL (JSON léger).
+    var MANIFEST = {};
+    var ONLINE = true;
 
-    // ── Sync inter-onglets ──
+    function apiGet() {
+        return fetch('/api/media', { cache: 'no-store' })
+            .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+    }
+    function apiPutProduct(key, rec) {
+        return fetch('/api/media', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: key, rec: rec })
+        }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+    }
+    function apiPutAll(data) {
+        return fetch('/api/media', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+    }
+    function uploadFile(file) {
+        if (!window.v21upload) {
+            return Promise.reject(new Error('Module d\'upload non chargé (vérifiez la connexion).'));
+        }
+        return window.v21upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/media/upload',
+            contentType: file.type || undefined
+        }).then(function (res) { return res.url; });
+    }
+    function setOnline(ok, msg) {
+        ONLINE = ok;
+        var b = document.getElementById('connBox');
+        if (!b) return;
+        if (ok) { b.style.display = 'none'; b.textContent = ''; }
+        else {
+            b.style.display = '';
+            b.textContent = '⚠️ ' + (msg || 'Stockage en ligne indisponible : vos saisies ne sont pas enregistrées tant que la connexion n\'est pas rétablie.');
+        }
+    }
+
+    // ── Sync inter-onglets (aperçu immédiat dans la brochure du même appareil) ──
     var bc = ('BroadcastChannel' in window) ? new BroadcastChannel('v21_media') : null;
     function notify() { if (bc) bc.postMessage('update'); }
 
-    // ── Helpers fichiers ──
-    function dataURLtoBlob(d) {
-        var arr = d.split(','), mime = (arr[0].match(/:(.*?);/) || [])[1] || 'application/octet-stream';
-        var bstr = atob(arr[1]), n = bstr.length, u8 = new Uint8Array(n);
-        while (n--) u8[n] = bstr.charCodeAt(n);
-        return new Blob([u8], { type: mime });
-    }
-    function blobToDataURL(blob) {
-        return new Promise(function (resolve) {
-            var r = new FileReader();
-            r.onload = function () { resolve(r.result); };
-            r.readAsDataURL(blob);
-        });
-    }
-
-    function emptyRec(key) { return { key: key, videoLink: '', videoBlob: null, images: [] }; }
+    function emptyRec(key) { return { key: key, videoLink: '', videoUrl: '', images: [] }; }
 
     var currentKey = '';
     var currentRec = null;
@@ -230,16 +239,19 @@
     }
 
     function hasMedia(rec) {
-        return !!(rec && (rec.videoLink || rec.videoBlob || (rec.images && rec.images.length)));
+        return !!(rec && (rec.videoLink || rec.videoUrl || (rec.images && rec.images.length)));
     }
 
     function save() {
-        return idbPut(currentRec).then(function () {
-            toast('✓ Enregistré');
+        return apiPutProduct(currentKey, currentRec).then(function () {
+            MANIFEST[currentKey] = JSON.parse(JSON.stringify(currentRec));
+            setOnline(true);
+            toast('✓ Enregistré en ligne');
             notify();
             refreshPickerMarks();
         }).catch(function () {
-            alert("Impossible d'enregistrer ce média (fichier peut-être trop volumineux pour le stockage de l'appareil).");
+            setOnline(false);
+            alert("Impossible d'enregistrer en ligne. Vérifiez la connexion, ou que le stockage Blob est bien activé sur Vercel.");
         });
     }
 
@@ -254,15 +266,13 @@
         refreshPickerMarks();
     }
     function refreshPickerMarks() {
-        idbAll().then(function (rows) {
-            var done = {};
-            rows.forEach(function (r) { if (hasMedia(r)) done[r.key] = true; });
-            var sel = document.getElementById('picker');
-            Array.prototype.forEach.call(sel.options, function (o) {
-                if (!o.value) return;
-                var base = TITLES[o.value] || o.value;
-                o.textContent = (done[o.value] ? '✓ ' : '') + base;
-            });
+        var done = {};
+        Object.keys(MANIFEST).forEach(function (k) { if (hasMedia(MANIFEST[k])) done[k] = true; });
+        var sel = document.getElementById('picker');
+        Array.prototype.forEach.call(sel.options, function (o) {
+            if (!o.value) return;
+            var base = TITLES[o.value] || o.value;
+            o.textContent = (done[o.value] ? '✓ ' : '') + base;
         });
     }
 
@@ -275,12 +285,11 @@
             return;
         }
         empty.style.display = 'none';
-        idbGet(key).then(function (rec) {
-            currentRec = rec || emptyRec(key);
-            if (!currentRec.images) currentRec.images = [];
-            renderEditor();
-            editor.classList.remove('hidden');
-        });
+        var rec = MANIFEST[key];
+        currentRec = rec ? JSON.parse(JSON.stringify(rec)) : emptyRec(key);
+        if (!currentRec.images) currentRec.images = [];
+        renderEditor();
+        editor.classList.remove('hidden');
     }
 
     function esc(s) {
@@ -322,7 +331,7 @@
             '<div class="thumbs" id="thumbs"></div>' +
             '<div class="hint">Idéal : format paysage ≈ 1600×1000 px, &lt; 500 Ko (JPG qualité ~80 %). Sans photo, les images d\'origine restent affichées.</div>';
 
-        document.getElementById('vlink').addEventListener('input', function () { setVideoLink(this.value); });
+        document.getElementById('vlink').addEventListener('change', function () { setVideoLink(this.value); });
         updateVideoStatus();
         renderThumbs();
     }
@@ -387,24 +396,32 @@
     // ── Vidéo ──
     function setVideoLink(value) {
         currentRec.videoLink = (value || '').trim();
-        if (currentRec.videoLink) currentRec.videoBlob = null;
+        if (currentRec.videoLink) currentRec.videoUrl = '';
         updateVideoStatus();
         save();
     }
     function setVideoFile(input) {
         var f = input.files && input.files[0];
         if (!f) return;
-        currentRec.videoBlob = f;       // un File est un Blob, stockable tel quel
-        currentRec.videoLink = '';
-        var li = document.getElementById('vlink'); if (li) li.value = '';
-        updateVideoStatus();
-        checkVideoFile(f);
-        save();
         input.value = '';
+        checkVideoFile(f);
+        var el = document.getElementById('vstatus');
+        if (el) { el.textContent = '⏳ Téléversement de la vidéo en cours…'; el.className = 'status'; }
+        uploadFile(f).then(function (url) {
+            currentRec.videoUrl = url;
+            currentRec.videoLink = '';
+            var li = document.getElementById('vlink'); if (li) li.value = '';
+            updateVideoStatus();
+            return save();
+        }).catch(function (e) {
+            setOnline(false);
+            updateVideoStatus();
+            alert('Échec du téléversement de la vidéo : ' + ((e && e.message) || e));
+        });
     }
     function clearVideo() {
         currentRec.videoLink = '';
-        currentRec.videoBlob = null;
+        currentRec.videoUrl = '';
         var li = document.getElementById('vlink'); if (li) li.value = '';
         updateVideoStatus();
         save();
@@ -412,7 +429,7 @@
     function updateVideoStatus() {
         var el = document.getElementById('vstatus');
         if (!el) return;
-        if (currentRec.videoBlob) { el.textContent = '✓ Vidéo (fichier) enregistrée'; el.className = 'status set'; }
+        if (currentRec.videoUrl) { el.textContent = '✓ Vidéo (fichier) en ligne'; el.className = 'status set'; }
         else if (currentRec.videoLink) { el.textContent = '✓ Vidéo (lien) enregistrée'; el.className = 'status set'; }
         else { el.textContent = 'Aucune vidéo'; el.className = 'status'; }
     }
@@ -430,16 +447,25 @@
         save();
     }
     function addImageFiles(input) {
-        var files = input.files;
-        if (!files || !files.length) return;
-        setWarn([]);
-        Array.prototype.forEach.call(files, function (f) {
-            currentRec.images.push({ blob: f });
-            checkImageFile(f);
-        });
+        var files = Array.prototype.slice.call(input.files || []);
+        if (!files.length) return;
         input.value = '';
-        renderThumbs();
-        save();
+        setWarn([]);
+        toast('⏳ Téléversement des photos…');
+        var seq = Promise.resolve();
+        files.forEach(function (f) {
+            checkImageFile(f);
+            seq = seq.then(function () {
+                return uploadFile(f).then(function (url) {
+                    currentRec.images.push({ url: url });
+                    renderThumbs();
+                });
+            });
+        });
+        seq.then(function () { return save(); }).catch(function (e) {
+            setOnline(false);
+            alert('Échec du téléversement d\'une photo : ' + ((e && e.message) || e));
+        });
     }
     function removeImage(idx) {
         currentRec.images.splice(idx, 1);
@@ -451,7 +477,7 @@
         if (!box) return;
         box.innerHTML = '';
         currentRec.images.forEach(function (it, i) {
-            var src = it.url || (it.blob ? URL.createObjectURL(it.blob) : '');
+            var src = it.url || '';
             var d = document.createElement('div');
             d.className = 'thumb';
             d.style.backgroundImage = "url('" + src + "')";
@@ -465,98 +491,65 @@
 
     // ── Export / Import / Reset ──
     function exportData() {
-        idbAll().then(function (rows) {
-            var jobs = rows.map(function (r) {
-                var out = { key: r.key, videoLink: r.videoLink || '', images: [] };
-                var chain = Promise.resolve();
-                if (r.videoBlob) chain = chain.then(function () {
-                    return blobToDataURL(r.videoBlob).then(function (d) { out.videoData = d; });
-                });
-                (r.images || []).forEach(function (it) {
-                    chain = chain.then(function () {
-                        if (it.url) { out.images.push({ url: it.url }); return; }
-                        if (it.blob) return blobToDataURL(it.blob).then(function (d) { out.images.push({ data: d }); });
-                    });
-                });
-                return chain.then(function () { return out; });
-            });
-            return Promise.all(jobs);
-        }).then(function (list) {
-            var blob = new Blob([JSON.stringify(list)], { type: 'application/json' });
-            var a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'voyages21-medias.json';
-            a.click();
-            URL.revokeObjectURL(a.href);
-        });
+        var blob = new Blob([JSON.stringify(MANIFEST, null, 2)], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'voyages21-medias.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
     }
     function importData(input) {
         var f = input.files && input.files[0];
         if (!f) return;
         var r = new FileReader();
         r.onload = function () {
-            try {
-                var list = JSON.parse(r.result);
-                var jobs = list.map(function (o) {
-                    var rec = emptyRec(o.key);
-                    rec.videoLink = o.videoLink || '';
-                    if (o.videoData) rec.videoBlob = dataURLtoBlob(o.videoData);
-                    (o.images || []).forEach(function (it) {
-                        if (it.url) rec.images.push({ url: it.url });
-                        else if (it.data) rec.images.push({ blob: dataURLtoBlob(it.data) });
-                    });
-                    return idbPut(rec);
+            var data;
+            try { data = JSON.parse(r.result); }
+            catch (e) { alert('Fichier invalide.'); return; }
+            // Compat ancien export (tableau d'objets). On ne garde que les URL.
+            if (Array.isArray(data)) {
+                var obj = {};
+                data.forEach(function (o) {
+                    if (!o || !o.key) return;
+                    var imgs = (o.images || [])
+                        .filter(function (it) { return it && it.url; })
+                        .map(function (it) { return { url: it.url }; });
+                    obj[o.key] = { key: o.key, videoLink: o.videoLink || '', videoUrl: o.videoUrl || '', images: imgs };
                 });
-                Promise.all(jobs).then(function () {
-                    notify(); refreshPickerMarks();
-                    if (currentKey) selectProduct(currentKey);
-                    toast('Import terminé');
-                });
-            } catch (e) { alert('Fichier invalide.'); }
+                data = obj;
+            }
+            apiPutAll(data).then(function () {
+                MANIFEST = data;
+                setOnline(true);
+                notify(); refreshPickerMarks();
+                if (currentKey) selectProduct(currentKey);
+                toast('Import terminé');
+            }).catch(function () { setOnline(false); alert('Import : échec de l\'enregistrement en ligne.'); });
         };
         r.readAsText(f);
         input.value = '';
     }
     function clearAll() {
-        if (!confirm('Effacer TOUS les médias enregistrés sur cet appareil ?')) return;
-        idbClear().then(function () {
+        if (!confirm('Effacer TOUS les médias en ligne (pour toute l\'équipe et le site) ?')) return;
+        apiPutAll({}).then(function () {
+            MANIFEST = {};
             notify(); refreshPickerMarks();
             currentRec = currentKey ? emptyRec(currentKey) : null;
             if (currentKey) renderEditor();
             toast('Tout effacé');
-        });
-    }
-
-    // ── Migration depuis l'ancien stockage localStorage (si présent) ──
-    function migrateFromLocalStorage() {
-        var raw;
-        try { raw = localStorage.getItem('v21_media'); } catch (e) { return Promise.resolve(); }
-        if (!raw) return Promise.resolve();
-        return idbAll().then(function (rows) {
-            if (rows && rows.length) return; // deja des donnees en IDB : ne pas ecraser
-            var old;
-            try { old = JSON.parse(raw) || {}; } catch (e) { return; }
-            var jobs = Object.keys(old).map(function (key) {
-                var o = old[key] || {};
-                var rec = emptyRec(key);
-                if (o.videoType === 'file' && o.video) { try { rec.videoBlob = dataURLtoBlob(o.video); } catch (e) {} }
-                else if (o.video) { rec.videoLink = o.video; }
-                (o.images || []).forEach(function (s) {
-                    if (typeof s !== 'string') return;
-                    if (s.indexOf('data:') === 0) { try { rec.images.push({ blob: dataURLtoBlob(s) }); } catch (e) {} }
-                    else { rec.images.push({ url: s }); }
-                });
-                return idbPut(rec);
-            });
-            return Promise.all(jobs).then(function () {
-                try { localStorage.removeItem('v21_media'); } catch (e) {}
-            });
-        });
+        }).catch(function () { setOnline(false); alert('Échec de l\'effacement en ligne.'); });
     }
 
     // ── Démarrage ──
     buildPicker();
-    migrateFromLocalStorage().then(function () { refreshPickerMarks(); });
+    apiGet().then(function (data) {
+        MANIFEST = data || {};
+        setOnline(true);
+        refreshPickerMarks();
+    }).catch(function () {
+        setOnline(false, 'Stockage en ligne non disponible — le store Blob est-il activé sur Vercel ? Vous pouvez tout de même préparer le contenu, mais il ne sera pas enregistré tant que la connexion n\'est pas établie.');
+        refreshPickerMarks();
+    });
 </script>
 </body>
 </html>

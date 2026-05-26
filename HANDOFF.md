@@ -23,18 +23,29 @@ Fichiers concernés (statiques, dans `/public`) :
 - `scripts/check_brochure.py` — contrôle structurel (lancé avant chaque push).
 
 ## Architecture du système médias
-- **Stockage** : IndexedDB — base `voyages21-media`, store `media`, keyPath `key`.
-  (On a quitté localStorage qui plafonnait à ~5 Mo et faisait perdre vidéos/photos.)
-- **Synchro temps réel** admin ↔ brochure : `BroadcastChannel('v21_media')`.
-- **Modèle d'un enregistrement** :
+- **Stockage** : **Vercel Blob** (en ligne, partagé). Un manifeste JSON unique
+  `media-manifest.json` mappe chaque produit → médias ; les fichiers (photos/mp4)
+  sont des blobs publics référencés par URL. (On a quitté IndexedDB, qui était
+  local à l'appareil et ne partageait rien.)
+- **API** (Next.js App Router, jeton `BLOB_READ_WRITE_TOKEN` côté serveur) :
+  - `src/app/api/media/route.js` — `GET` lit le manifeste, `PUT` l'écrit
+    (fusion par produit `{key, rec}` pour ne pas écraser le travail d'un autre,
+    ou remplacement complet pour import / tout effacer).
+  - `src/app/api/media/upload/route.js` — `handleUpload` : upload **direct
+    navigateur → Blob** (contourne la limite de taille des fonctions serverless,
+    indispensable pour les vidéos).
+- **Synchro temps réel** admin ↔ brochure du même appareil : `BroadcastChannel('v21_media')`.
+- **Modèle d'un enregistrement** (manifeste) :
   ```js
-  { key: 'modal-xxx', videoLink: '', videoBlob: Blob|null,
-    images: [ {url:'...'} | {blob: Blob} ] }
+  { key: 'modal-xxx', videoLink: '', videoUrl: '', images: [ {url:'...'} ] }
   ```
 - **Correspondance clé ↔ carrousel** : `modal-XXX` ↔ `sl-XXX` (28 produits).
+- **⚠️ Pré-requis Vercel** : créer un store Blob (Storage → Create → Blob →
+  Connect au projet) pour injecter `BLOB_READ_WRITE_TOKEN`. Sans lui, l'admin
+  affiche un bandeau d'avertissement et la brochure reste à l'original.
 
 ### Côté brochure (fonctions clés dans le `<script>`)
-- `loadMedia()` : lit IndexedDB → remplit `V21_MEDIA` → `applyMediaOverrides()`.
+- `loadMedia()` : `fetch('/api/media')` → remplit `V21_MEDIA` → `applyMediaOverrides()`.
   Appelé au chargement (après `initSliders()`) et sur message BroadcastChannel.
 - `applyMediaOverrides()` : (1) remplace le **fond** des diapos d'origine par les
   photos perso (`.slide:not(.slide-video)`, cyclage) ; (2) injecte une **diapo
@@ -44,7 +55,7 @@ Fichiers concernés (statiques, dans `/public`) :
   et **tient le carrousel** le temps de la vidéo (`video.onended` → avance +
   relance le timer 3500 ms). Repli si `play()` rejeté (relance le timer).
 - `openVideo(key)` (bouton « Voir la vidéo ») : priorité `videoLink`
-  (YouTube/Vimeo) → `CIRCUIT_VIDEOS[key]` → `videoBlob` → repli WhatsApp.
+  (YouTube/Vimeo) → `CIRCUIT_VIDEOS[key]` → `videoUrl` (mp4 hébergé) → repli WhatsApp.
 - `buildLinkEmbed(value)` : YouTube (id/url/shorts), Vimeo, ou fichier direct.
 - CSS : `.slide video { object-fit: cover; ... }` ; popup vidéo `max-width: 640px`.
 
@@ -65,19 +76,22 @@ Fichiers concernés (statiques, dans `/public`) :
   - photo > 500 Ko / format portrait / largeur < 1200 px.
   - Specs idéales rappelées : photo paysage ≈ 1600×1000, < 500 Ko, JPG ~80 % ;
     clip < 30 s, < 10 Mo, 720p.
-- **Export / Import JSON** (sauvegarde + transport), **Tout effacer**,
-  **migration** unique depuis l'ancien localStorage.
+- À l'ajout d'un fichier : **upload direct vers Blob** puis enregistrement de
+  l'URL dans le manifeste (PUT `/api/media`). Bandeau de connexion si le store
+  Blob n'est pas joignable.
+- **Export / Import JSON** (sauvegarde + transport du manifeste), **Tout effacer**
+  (vide le manifeste en ligne pour tout le monde).
 
-## Limite ASSUMÉE de la version actuelle
-Le stockage est **local à l'appareil/navigateur** (IndexedDB) : les médias ne
-sont **pas encore partagés** avec les autres appareils ni avec les visiteurs du
-site. C'est volontaire (« on fait simple, pas de login pour l'instant »).
+## État du partage (version en ligne)
+Les médias sont désormais **partagés** : tout ce que l'équipe saisit dans l'admin
+est stocké en ligne (Vercel Blob) et **visible par tous les visiteurs** du site
+après rechargement. L'admin reste **sans login** (lien simple à partager).
+Limite restante : pas d'authentification (quiconque a l'URL de l'admin peut
+éditer) ni de gestion de conflits fine (dernier `PUT` par produit gagne).
 
 ## Prochaine étape probable
-Rendre les médias **partagés/publics** via un **stockage en ligne** (ex. Sanity,
-Vercel Blob/KV, ou autre) — l'interface d'admin ne changerait quasiment pas,
-on remplacerait juste la couche de stockage. Cette étape nécessitera un compte
-/ des identifiants (à décider avec l'utilisateur).
+- Protéger l'accès admin (mot de passe simple) si besoin.
+- Éventuel cache court du manifeste pour la brochure si le trafic grandit.
 
 ## Garde-fous / règle d'or
 - Tout est **additif et défensif** : sans média saisi, la brochure affiche
