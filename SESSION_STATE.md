@@ -16,10 +16,22 @@ Détail complet du chantier médias : voir **`HANDOFF.md`** (même branche).
 ## TACHE EN COURS
 Médias passés au **stockage en ligne partagé (Vercel Blob)** : l'admin et la
 brochure lisent/écrivent désormais via `/api/media`. Le code est committé + poussé.
-**⚠️ Action requise côté Vercel (une seule fois)** : créer un store **Blob** et le
-connecter au projet (Storage → Create → Blob → Connect). Cela injecte
-`BLOB_READ_WRITE_TOKEN` ; sans lui, l'admin affiche un bandeau « stockage en ligne
-indisponible » et la brochure reste à l'original.
+
+**Workflow validé avec Karim :** l'équipe alimente les médias via la page admin
+(lien public) → tout va dans Blob ; en parallèle on retravaille la brochure (code)
+sur la branche. Comme la brochure lit les médias à l'exécution via `/api/media`,
+**médias et code sont découplés → la « consolidation » est automatique** (au merge,
+la prod affiche les médias déjà en ligne, aucun rapprochement manuel).
+
+**Lien public (preview PR #14, branche stable) :**
+`https://voyages21-git-claude-graci-7ad061-karimzoubdane-debugs-projects.vercel.app/admin-medias.html`
+
+**⚠️ 2 actions Karim (dashboard Vercel, je n'y ai pas accès) :**
+1. Créer un store **Blob** et le connecter au projet (Storage → Create → Blob →
+   Connect) → injecte `BLOB_READ_WRITE_TOKEN`. Pro ≠ store : le store doit être créé.
+2. Rendre la preview publique : Settings → Deployment Protection → **Vercel
+   Authentication** → désactiver pour *Preview* (sinon l'équipe a un 403).
+Sans (1) l'admin affiche « stockage indisponible » ; sans (2) le lien renvoie 403.
 
 ## CE QUI A ETE FAIT (chantier médias)
 - [x] Admin autonome `public/admin-medias.html` : liste déroulante des 28 voyages,
