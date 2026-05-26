@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Voyages21 — Gestion des médias</title>
+<style>
+    :root {
+        --forest: #1B3A28;
+        --forest2: #152E1F;
+        --gold: #C8A440;
+        --cream: #F5F0E8;
+        --rouge: #b23a2e;
+        --text: #2a2a2a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'DM Sans', -apple-system, Segoe UI, Roboto, sans-serif;
+        background: var(--cream);
+        color: var(--text);
+        line-height: 1.5;
+        padding-bottom: 60px;
+    }
+    header {
+        background: var(--forest);
+        color: #fff;
+        padding: 1.2rem 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    header h1 { font-size: 1.25rem; font-weight: 700; }
+    header .sub { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+    .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+    }
+    .btn {
+        background: var(--gold);
+        color: var(--forest2);
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 0.9rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+    .btn.danger { background: var(--rouge); color: #fff; }
+    .wrap { max-width: 880px; margin: 1.2rem auto; padding: 0 1rem; }
+    .notice {
+        background: #fff8e6;
+        border: 1px solid var(--gold);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+    .notice strong { color: var(--forest); }
+    .search {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        margin-bottom: 1rem;
+    }
+    .card {
+        background: #fff;
+        border: 1px solid #e3ddd0;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .card h2 {
+        font-size: 1.05rem;
+        color: var(--forest);
+        margin-bottom: 0.2rem;
+    }
+    .card .key { font-size: 0.72rem; color: #999; margin-bottom: 0.8rem; }
+    .section-label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--forest2);
+        margin: 0.6rem 0 0.4rem;
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    input[type=text], input[type=url] {
+        flex: 1;
+        min-width: 180px;
+        padding: 0.55rem 0.7rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-family: inherit;
+    }
+    input[type=file] { font-size: 0.82rem; }
+    .mini {
+        background: var(--forest);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 0.8rem;
+        font-weight: 600;
+        font-size: 0.82rem;
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .mini.clear { background: #888; }
+    .status { font-size: 0.8rem; color: #557; margin-top: 0.3rem; min-height: 1.1em; }
+    .status.set { color: #1a7a3a; font-weight: 600; }
+    .thumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+    .thumb {
+        position: relative;
+        width: 84px;
+        height: 60px;
+        border-radius: 6px;
+        background-size: cover;
+        background-position: center;
+        border: 1px solid #ddd;
+    }
+    .thumb button {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--rouge);
+        color: #fff;
+        border: none;
+        font-size: 0.8rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+    .hint { font-size: 0.76rem; color: #888; margin-top: 0.25rem; }
+    .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: var(--forest);
+        color: #fff;
+        padding: 0.7rem 1.4rem;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        transition: transform 0.3s ease;
+        z-index: 100;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .divider { height: 1px; background: #eee; margin: 0.8rem 0; }
+</style>
+</head>
+<body>
+<header>
+    <h1>Voyages21 — Gestion des médias</h1>
+    <div class="sub">Mode local · aucun mot de passe · ajoutez photos &amp; vidéos par produit</div>
+    <div class="toolbar">
+        <button class="btn ghost" onclick="window.open('BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html','_blank')">Ouvrir la brochure</button>
+        <button class="btn ghost" onclick="exportData()">Exporter (sauvegarde)</button>
+        <button class="btn ghost" onclick="document.getElementById('importFile').click()">Importer</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(this)">
+        <button class="btn danger" onclick="clearAll()">Tout effacer</button>
+    </div>
+</header>
+
+<div class="wrap">
+    <div class="notice">
+        <strong>Comment ça marche :</strong> pour chaque produit, collez un lien (photo / YouTube / Vimeo) ou téléversez un fichier.
+        Tout est enregistré automatiquement. <strong>Rechargez la brochure</strong> pour voir le résultat.<br>
+        <strong>À savoir (version simple actuelle) :</strong> les médias sont stockés <em>sur cet appareil et ce navigateur uniquement</em> —
+        ils ne sont pas encore partagés avec vos équipes ni avec les visiteurs du site. Cliquez sur
+        <em>« Exporter »</em> pour garder une sauvegarde. Le partage pour tous viendra avec le stockage en ligne (étape suivante).
+        Pour les <strong>vidéos lourdes</strong>, préférez un <strong>lien YouTube/Vimeo</strong> (les gros fichiers saturent le stockage local).
+    </div>
+
+    <input type="text" class="search" id="search" placeholder="Rechercher un produit…" oninput="filterCards(this.value)">
+
+    <div id="list"></div>
+</div>
+
+<div class="toast" id="toast">✓ Enregistré</div>
+
+<script>
+    var STORE = 'v21_media';
+
+    var PRODUCTS = [
+        { k: "modal-istanbul", t: "Séjour à Istanbul" },
+        { k: "modal-istanbul-antalya", t: "Istanbul & Antalya" },
+        { k: "modal-istanbul-bodrum", t: "Istanbul & Bodrum" },
+        { k: "modal-marmaris-bodrum", t: "Istanbul, Marmaris & Bodrum" },
+        { k: "modal-istanbul-antalya-11j", t: "Istanbul & Antalya (11 jours)" },
+        { k: "modal-caire-nil-hurghada", t: "Le Caire • Croisière Nil • Hurghada" },
+        { k: "modal-caire-sharm", t: "Le Caire & Sharm El Sheikh" },
+        { k: "modal-ouest-usa", t: "L'Ouest Complet — USA" },
+        { k: "modal-joyaux-canada", t: "Les joyaux du Canada et des USA" },
+        { k: "modal-rocheuses", t: "Les Rocheuses et l'Ouest classique — USA" },
+        { k: "modal-cuba", t: "Cuba — La Havane & Varadero" },
+        { k: "modal-perou", t: "Pérou — Les merveilles Incas" },
+        { k: "modal-europe-1", t: "Séjour à Las Palmas" },
+        { k: "modal-europe-2", t: "Imperial Capitals — Vienna, Budapest, Prague" },
+        { k: "modal-europe-3", t: "Al-Andalus — Madrid, Granada, Seville" },
+        { k: "modal-europe-4", t: "Athens, Rhodes & Kos" },
+        { k: "modal-europe-5", t: "Athens Classical Greece" },
+        { k: "modal-europe-6", t: "Circuit Espagne & Portugal" },
+        { k: "modal-europe-7", t: "Circuit Italie" },
+        { k: "modal-europe-8", t: "France & Suisse" },
+        { k: "modal-europe-9", t: "Angleterre & Écosse" },
+        { k: "modal-croisiere-1", t: "Croisière Méditerranée — Espagne & Italie" },
+        { k: "modal-croisiere-2", t: "Croisière Méditerranée Premium" },
+        { k: "modal-chine", t: "Circuit Chine — Pékin, Shanghai & Merveilles" },
+        { k: "modal-malaisie", t: "Malaisie & Thaïlande — KL, Krabi & Phuket" },
+        { k: "modal-bangkok", t: "Exotic Thailand — Bangkok, Krabi & Phuket" },
+        { k: "modal-vietnam", t: "Découverte du Vietnam — Hanoi à Saigon" },
+        { k: "modal-zanzibar", t: "Séjour à Zanzibar — Détente & Loisirs" }
+    ];
+
+    function loadStore() {
+        try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; }
+        catch (e) { return {}; }
+    }
+    function saveStore(data) {
+        try {
+            localStorage.setItem(STORE, JSON.stringify(data));
+            toast('✓ Enregistré');
+            return true;
+        } catch (e) {
+            alert("Stockage local plein. Utilisez des LIENS d'images/vidéos (URL) au lieu de fichiers lourds, "
+                + "ou attendez le stockage en ligne (étape suivante).");
+            return false;
+        }
+    }
+    function entry(data, key) {
+        if (!data[key]) data[key] = { video: '', videoType: 'link', images: [] };
+        if (!data[key].images) data[key].images = [];
+        return data[key];
+    }
+
+    var toastTimer;
+    function toast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1400);
+    }
+
+    function readFile(file, cb) {
+        var r = new FileReader();
+        r.onload = function () { cb(r.result); };
+        r.readAsDataURL(file);
+    }
+
+    // ── Handlers vidéo ──
+    function onVideoLink(key, value) {
+        var data = loadStore();
+        var e = entry(data, key);
+        e.video = value.trim();
+        e.videoType = 'link';
+        saveStore(data);
+        updateVideoStatus(key, e);
+    }
+    function onVideoFile(key, input) {
+        var f = input.files && input.files[0];
+        if (!f) return;
+        readFile(f, function (dataUrl) {
+            var data = loadStore();
+            var e = entry(data, key);
+            e.video = dataUrl;
+            e.videoType = 'file';
+            if (saveStore(data)) updateVideoStatus(key, e);
+        });
+        input.value = '';
+    }
+    function clearVideo(key) {
+        var data = loadStore();
+        var e = entry(data, key);
+        e.video = ''; e.videoType = 'link';
+        saveStore(data);
+        var linkInput = document.querySelector('[data-vlink="' + key + '"]');
+        if (linkInput) linkInput.value = '';
+        updateVideoStatus(key, e);
+    }
+    function updateVideoStatus(key, e) {
+        var el = document.querySelector('[data-vstatus="' + key + '"]');
+        if (!el) return;
+        if (e.video && e.videoType === 'file') { el.textContent = '✓ Vidéo (fichier) définie'; el.className = 'status set'; }
+        else if (e.video) { el.textContent = '✓ Vidéo (lien) définie'; el.className = 'status set'; }
+        else { el.textContent = 'Aucune vidéo'; el.className = 'status'; }
+    }
+
+    // ── Handlers images ──
+    function addImageUrl(key) {
+        var input = document.querySelector('[data-iurl="' + key + '"]');
+        var url = (input.value || '').trim();
+        if (!url) return;
+        var data = loadStore();
+        var e = entry(data, key);
+        e.images.push(url);
+        if (saveStore(data)) { input.value = ''; renderThumbs(key, e.images); }
+    }
+    function addImageFiles(key, input) {
+        var files = input.files;
+        if (!files || !files.length) return;
+        var pending = files.length;
+        var data = loadStore();
+        var e = entry(data, key);
+        Array.prototype.forEach.call(files, function (f) {
+            readFile(f, function (dataUrl) {
+                e.images.push(dataUrl);
+                pending--;
+                if (pending === 0) { if (saveStore(data)) renderThumbs(key, e.images); }
+            });
+        });
+        input.value = '';
+    }
+    function removeImage(key, idx) {
+        var data = loadStore();
+        var e = entry(data, key);
+        e.images.splice(idx, 1);
+        saveStore(data);
+        renderThumbs(key, e.images);
+    }
+    function renderThumbs(key, images) {
+        var box = document.querySelector('[data-thumbs="' + key + '"]');
+        if (!box) return;
+        box.innerHTML = '';
+        images.forEach(function (src, i) {
+            var d = document.createElement('div');
+            d.className = 'thumb';
+            d.style.backgroundImage = "url('" + src + "')";
+            var b = document.createElement('button');
+            b.textContent = '×';
+            b.title = 'Retirer';
+            b.onclick = function () { removeImage(key, i); };
+            d.appendChild(b);
+            box.appendChild(d);
+        });
+    }
+
+    // ── Rendu ──
+    function render() {
+        var data = loadStore();
+        var list = document.getElementById('list');
+        list.innerHTML = '';
+        PRODUCTS.forEach(function (p) {
+            var e = data[p.k] || { video: '', videoType: 'link', images: [] };
+            var card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-card', p.k);
+            card.setAttribute('data-name', (p.t + ' ' + p.k).toLowerCase());
+            card.innerHTML =
+                '<h2>' + esc(p.t) + '</h2>' +
+                '<div class="key">' + p.k + '</div>' +
+
+                '<div class="section-label">Vidéo (lien YouTube/Vimeo ou fichier)</div>' +
+                '<div class="row">' +
+                    '<input type="url" data-vlink="' + p.k + '" placeholder="https://youtu.be/… ou https://vimeo.com/…" value="' + esc(e.video && e.videoType !== 'file' ? e.video : '') + '">' +
+                    '<button class="mini clear" onclick="clearVideo(\'' + p.k + '\')">Effacer</button>' +
+                '</div>' +
+                '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser un fichier vidéo : </label>' +
+                    '<input type="file" accept="video/*" onchange="onVideoFile(\'' + p.k + '\', this)"></div>' +
+                '<div class="status" data-vstatus="' + p.k + '"></div>' +
+
+                '<div class="divider"></div>' +
+
+                '<div class="section-label">Photos (liens ou fichiers, plusieurs possibles)</div>' +
+                '<div class="row">' +
+                    '<input type="url" data-iurl="' + p.k + '" placeholder="https://… (lien d\'une image)">' +
+                    '<button class="mini" onclick="addImageUrl(\'' + p.k + '\')">Ajouter le lien</button>' +
+                '</div>' +
+                '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser des images : </label>' +
+                    '<input type="file" accept="image/*" multiple onchange="addImageFiles(\'' + p.k + '\', this)"></div>' +
+                '<div class="thumbs" data-thumbs="' + p.k + '"></div>' +
+                '<div class="hint">Si aucune photo n\'est ajoutée, les images d\'origine de la brochure restent affichées.</div>';
+
+            list.appendChild(card);
+
+            // listener live sur le lien video
+            card.querySelector('[data-vlink="' + p.k + '"]').addEventListener('input', function () {
+                onVideoLink(p.k, this.value);
+            });
+            updateVideoStatus(p.k, e);
+            renderThumbs(p.k, e.images || []);
+        });
+    }
+
+    function esc(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function filterCards(q) {
+        q = (q || '').trim().toLowerCase();
+        document.querySelectorAll('[data-card]').forEach(function (c) {
+            c.style.display = (!q || c.getAttribute('data-name').indexOf(q) > -1) ? '' : 'none';
+        });
+    }
+
+    function exportData() {
+        var blob = new Blob([localStorage.getItem(STORE) || '{}'], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'voyages21-medias.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+    function importData(input) {
+        var f = input.files && input.files[0];
+        if (!f) return;
+        var r = new FileReader();
+        r.onload = function () {
+            try {
+                var incoming = JSON.parse(r.result);
+                var data = loadStore();
+                Object.keys(incoming).forEach(function (k) { data[k] = incoming[k]; });
+                if (saveStore(data)) render();
+            } catch (e) { alert('Fichier invalide.'); }
+        };
+        r.readAsText(f);
+        input.value = '';
+    }
+    function clearAll() {
+        if (!confirm('Effacer TOUS les médias enregistrés sur cet appareil ?')) return;
+        localStorage.removeItem(STORE);
+        render();
+        toast('Tout effacé');
+    }
+
+    render();
+</script>
+</body>
+</html>
