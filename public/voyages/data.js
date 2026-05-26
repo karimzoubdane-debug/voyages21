@@ -75,6 +75,74 @@ window.VOYAGES = {
       title: "Envie de partir à Istanbul ?",
       text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
     }
+  },
+
+  "turquie-istanbul-antalya": {
+    mediaKey: "modal-istanbul-antalya",
+    whatsapp: "212673280009",
+    eyebrow: "Turquie · Combiné été 2026",
+    title: "Istanbul & Antalya",
+    tag: "Turquie",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Istanbul et Antalya"],
+      ["Durée", "8 jours / 7 nuits"],
+      ["Vols", "Inclus — Turkish Airlines et AJet"],
+      ["Pension", "2 nuits petit-déj · 5 nuits tout compris"],
+      ["Période", "Été 2026"]
+    ],
+    price: "sur demande",
+    intro: [
+      "Istanbul d'abord, le temps d'une escale qui a tout d'une promesse : la ville aux deux continents vous accueille au bord du Bosphore, entre coupoles et lumière dorée, avant de vous laisser repartir vers le sud.",
+      "Puis Antalya, et le grand bleu. Sur la Riviera turque, votre séjour se fait en formule tout compris, au rythme des bains de mer, des longues heures au bord de la piscine et des soirées douces face à la Méditerranée. Cinq nuits où l'on ne s'occupe de rien, sinon de profiter.",
+      "Entre la profondeur d'Istanbul et la douceur balnéaire d'Antalya, ce combiné offre le meilleur des deux : un peu de ville, beaucoup de détente, et des vols comme des transferts entièrement pris en charge. Vous n'avez qu'à dire oui."
+    ],
+    highlights: [
+      "Deux nuits à Istanbul, porte d'entrée entre Europe et Asie",
+      "Cinq nuits en formule tout compris à Antalya, sur la Riviera turque",
+      "Vols Casablanca – Istanbul – Antalya inclus (Turkish Airlines et AJet)",
+      "Tous les transferts privés assurés, à Istanbul comme à Antalya",
+      "Plage, piscines et farniente face à la Méditerranée"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca – Istanbul",
+        text: "Rendez-vous à l'aéroport, assistance aux formalités d'embarquement et envol vers Istanbul. À l'arrivée, accueil par notre correspondant local et transfert à l'hôtel. Nuitée.",
+        meta: [["Nuit", "Istanbul"]] },
+      { num: "J2", title: "Istanbul – Antalya",
+        text: "Petit-déjeuner à l'hôtel, puis transfert vers l'aéroport Sabiha et envol vers Antalya. À l'arrivée, accueil et transfert à votre hôtel. Début de votre séjour en formule tout compris.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Antalya"]] },
+      { num: "J3–6", title: "Antalya — séjour en tout compris",
+        text: "Journées libres en formule tout compris à Antalya : plage, piscines et détente, à votre rythme, face à la Méditerranée.",
+        meta: [["Repas", "tout compris"], ["Nuit", "Antalya"]] },
+      { num: "J7", title: "Antalya – Istanbul",
+        text: "Après le petit-déjeuner, transfert à l'aéroport d'Antalya et envol vers Istanbul. Accueil et assistance à l'aéroport, transfert et nuitée à l'hôtel.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Istanbul"]] },
+      { num: "J8", title: "Istanbul – Casablanca",
+        text: "Après le petit-déjeuner, transfert à l'aéroport d'Istanbul et envol vers Casablanca. Fin de nos services.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Le billet d'avion aller-retour Casablanca / Istanbul / Antalya — Turkish Airlines (40 kg en soute + 8 kg en cabine) et AJet (20 kg en soute + 8 kg en cabine)",
+      "2 nuits avec petit-déjeuner à Istanbul",
+      "5 nuits en formule tout compris à Antalya",
+      "Les transferts arrivées et départs à Istanbul",
+      "Les transferts arrivées et départs à Antalya",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les extras aux hôtels et les boissons",
+      "Les pourboires des guides et chauffeurs"
+    ],
+    hebergement: "<b>Istanbul</b> — 2 nuits, en logement et petit-déjeuner.<br><b>Antalya</b> — 5 nuits, en formule tout compris.",
+    route: ["Casablanca", "Istanbul", "Antalya", "Istanbul", "Casablanca"],
+    dates: {
+      line: "Dates de voyages garanties au départ de Casablanca, tout l'été 2026.",
+      note: "Contactez-nous pour le tarif et les disponibilités selon vos dates."
+    },
+    cta: {
+      title: "Envie de partir en Turquie ?",
+      text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
+    }
   }
 
 };

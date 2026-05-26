@@ -2147,7 +2147,8 @@
     // Voyages disposant d'une page detail dediee : "Voir details" y redirige.
     // (Les autres ouvrent encore la modale classique, le temps de creer leurs pages.)
     var DETAIL_PAGES = {
-        'modal-istanbul': 'voyages/turquie-sejour-istanbul.html'
+        'modal-istanbul': 'voyages/turquie-sejour-istanbul.html',
+        'modal-istanbul-antalya': 'voyages/turquie-istanbul-antalya.html'
     };
     function openModal(modalId) {
         if (DETAIL_PAGES[modalId]) { window.location.href = DETAIL_PAGES[modalId]; return; }
