@@ -85,6 +85,10 @@
         background: var(--rouge); color: #fff; border: none; font-size: 0.85rem; line-height: 1; cursor: pointer;
     }
     .hint { font-size: 0.76rem; color: #888; margin-top: 0.25rem; }
+    .warn {
+        background: #fff3e0; border: 1px solid #e8a33d; color: #8a4b00;
+        border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.82rem; margin: 0.6rem 0; line-height: 1.45;
+    }
     .empty { text-align: center; color: #999; padding: 2rem 1rem; }
     .divider { height: 1px; background: #eee; margin: 1rem 0; }
     .toast {
@@ -291,6 +295,7 @@
         editor.innerHTML =
             '<h2>' + esc(TITLES[currentKey] || currentKey) + '</h2>' +
             '<div class="key">' + currentKey + '</div>' +
+            '<div class="warn" id="warnBox" style="display:none"></div>' +
 
             '<div class="section-label">Vidéo « Voir la vidéo » — lien YouTube / Vimeo</div>' +
             '<div class="row">' +
@@ -302,7 +307,7 @@
             '<div class="section-label" style="margin-top:.9rem">Vidéo de la galerie — fichier mp4 (se lance automatiquement)</div>' +
             '<div class="row"><label class="hint">téléverser un fichier vidéo&nbsp;: </label>' +
                 '<input type="file" accept="video/*" onchange="setVideoFile(this)"></div>' +
-            '<div class="hint">Ajoutée au carrousel des photos : elle démarre toute seule (sans son) quand le carrousel arrive sur elle.</div>' +
+            '<div class="hint">Idéal : clip court &lt; 30 s, &lt; 10 Mo, résolution 720p. Démarre tout seul (sans son) dans le carrousel.</div>' +
             '<div class="status" id="vstatus"></div>' +
 
             '<div class="divider"></div>' +
@@ -315,11 +320,68 @@
             '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser des images&nbsp;: </label>' +
                 '<input type="file" accept="image/*" multiple onchange="addImageFiles(this)"></div>' +
             '<div class="thumbs" id="thumbs"></div>' +
-            '<div class="hint">Sans photo ajoutée, les images d\'origine de la brochure restent affichées.</div>';
+            '<div class="hint">Idéal : format paysage ≈ 1600×1000 px, &lt; 500 Ko (JPG qualité ~80 %). Sans photo, les images d\'origine restent affichées.</div>';
 
         document.getElementById('vlink').addEventListener('input', function () { setVideoLink(this.value); });
         updateVideoStatus();
         renderThumbs();
+    }
+
+    // ── Contrôle automatique poids / dimensions ──
+    function setWarn(msgs) {
+        var box = document.getElementById('warnBox');
+        if (!box) return;
+        box.innerHTML = '';
+        box.style.display = 'none';
+        appendWarn(msgs);
+    }
+    function appendWarn(msgs) {
+        if (!msgs || !msgs.length) return;
+        var box = document.getElementById('warnBox');
+        if (!box) return;
+        box.style.display = '';
+        var prev = box.innerHTML;
+        var add = msgs.map(function (m) { return '⚠️ ' + m; }).join('<br>');
+        box.innerHTML = prev ? (prev + '<br>' + add) : add;
+    }
+    function dimWarns(w, h, w0) {
+        var out = [];
+        if (!w || !h) return out;
+        if (h > w) out.push('Photo en format portrait (' + w + '×' + h + ') : le paysage s\'affiche mieux dans la galerie.');
+        if (w < 1200) out.push('Photo peu large (' + w + ' px) : idéal ≈ 1600×1000 px pour un affichage net.');
+        return out;
+    }
+    function checkVideoFile(f) {
+        setWarn([]);
+        var mb = f.size / 1048576;
+        if (mb > 10) appendWarn(['Vidéo lourde (' + mb.toFixed(1) + ' Mo) : risque d\'alourdir le site. Idéal < 10 Mo, sinon utilisez plutôt un lien YouTube/Vimeo.']);
+        var url = URL.createObjectURL(f);
+        var v = document.createElement('video');
+        v.preload = 'metadata';
+        v.onloadedmetadata = function () {
+            var extra = [];
+            if (v.duration && v.duration > 30) extra.push('Vidéo longue (' + Math.round(v.duration) + ' s) : préférez un clip < 30 s pour la galerie.');
+            if (v.videoHeight && v.videoHeight > 720) extra.push('Résolution élevée (' + v.videoWidth + '×' + v.videoHeight + ') : 720p suffit pour le web et allège le poids.');
+            URL.revokeObjectURL(url);
+            appendWarn(extra);
+        };
+        v.onerror = function () { URL.revokeObjectURL(url); };
+        v.src = url;
+    }
+    function checkImageFile(f) {
+        var kb = f.size / 1024;
+        if (kb > 500) appendWarn(['Photo lourde (' + Math.round(kb) + ' Ko, ' + (f.name || 'image') + ') : idéal < 500 Ko (JPG qualité ~80 %).']);
+        var url = URL.createObjectURL(f);
+        var img = new Image();
+        img.onload = function () { URL.revokeObjectURL(url); appendWarn(dimWarns(img.naturalWidth, img.naturalHeight)); };
+        img.onerror = function () { URL.revokeObjectURL(url); };
+        img.src = url;
+    }
+    function checkImageUrl(url) {
+        var img = new Image();
+        img.onload = function () { appendWarn(dimWarns(img.naturalWidth, img.naturalHeight)); };
+        img.onerror = function () {};
+        img.src = url;
     }
 
     // ── Vidéo ──
@@ -336,6 +398,7 @@
         currentRec.videoLink = '';
         var li = document.getElementById('vlink'); if (li) li.value = '';
         updateVideoStatus();
+        checkVideoFile(f);
         save();
         input.value = '';
     }
@@ -361,13 +424,19 @@
         if (!url) return;
         currentRec.images.push({ url: url });
         input.value = '';
+        setWarn([]);
+        checkImageUrl(url);
         renderThumbs();
         save();
     }
     function addImageFiles(input) {
         var files = input.files;
         if (!files || !files.length) return;
-        Array.prototype.forEach.call(files, function (f) { currentRec.images.push({ blob: f }); });
+        setWarn([]);
+        Array.prototype.forEach.call(files, function (f) {
+            currentRec.images.push({ blob: f });
+            checkImageFile(f);
+        });
         input.value = '';
         renderThumbs();
         save();
