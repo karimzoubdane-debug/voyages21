@@ -292,13 +292,17 @@
             '<h2>' + esc(TITLES[currentKey] || currentKey) + '</h2>' +
             '<div class="key">' + currentKey + '</div>' +
 
-            '<div class="section-label">Vidéo — lien YouTube/Vimeo ou fichier</div>' +
+            '<div class="section-label">Vidéo « Voir la vidéo » — lien YouTube / Vimeo</div>' +
             '<div class="row">' +
                 '<input type="url" id="vlink" placeholder="https://youtu.be/… ou https://vimeo.com/…" value="' + esc(p.videoLink || '') + '">' +
                 '<button class="mini clear" onclick="clearVideo()">Effacer</button>' +
             '</div>' +
-            '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser un fichier vidéo&nbsp;: </label>' +
+            '<div class="hint">Lecture au clic, avec le son, via le bouton « Voir la vidéo » (un lien YouTube peut afficher des publicités — voir Vimeo pour éviter).</div>' +
+
+            '<div class="section-label" style="margin-top:.9rem">Vidéo de la galerie — fichier mp4 (se lance automatiquement)</div>' +
+            '<div class="row"><label class="hint">téléverser un fichier vidéo&nbsp;: </label>' +
                 '<input type="file" accept="video/*" onchange="setVideoFile(this)"></div>' +
+            '<div class="hint">Ajoutée au carrousel des photos : elle démarre toute seule (sans son) quand le carrousel arrive sur elle.</div>' +
             '<div class="status" id="vstatus"></div>' +
 
             '<div class="divider"></div>' +

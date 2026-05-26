@@ -424,6 +424,7 @@
             transition: opacity 0.7s ease;
         }
         .slide.active { opacity: 1; }
+        .slide video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -2037,6 +2038,27 @@
         for (var i = 0; i < dots.length; i++) {
             dots[i].classList.toggle('active', i === index);
         }
+        // Lecture auto de la diapo video (mp4) dans la galerie
+        for (var j = 0; j < slides.length; j++) {
+            var vid = slides[j].querySelector('video');
+            if (!vid) continue;
+            if (j === index) {
+                clearInterval(sliderTimers[sliderId]);
+                try { vid.currentTime = 0; } catch (e) {}
+                var pr = vid.play();
+                if (pr && pr.catch) pr.catch(function () {
+                    sliderTimers[sliderId] = setInterval(function () { autoNext(sliderId); }, 3500);
+                });
+                (function (sid, v) {
+                    v.onended = function () {
+                        showSlide(sid, (sliderState[sid] || 0) + 1);
+                        sliderTimers[sid] = setInterval(function () { autoNext(sid); }, 3500);
+                    };
+                })(sliderId, vid);
+            } else {
+                try { vid.pause(); } catch (e) {}
+            }
+        }
     }
 
     function autoNext(id) { showSlide(id, (sliderState[id] || 0) + 1); }
@@ -2201,13 +2223,13 @@
         var frame = document.getElementById('videoFrame');
         var rec = V21_MEDIA[key] || {};
         var html = '';
-        if (rec.videoBlob) {
-            html = '<video src="' + URL.createObjectURL(rec.videoBlob) + '" controls autoplay playsinline ' +
-                'style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video>';
-        } else if (rec.videoLink) {
+        if (rec.videoLink) {
             html = buildLinkEmbed(rec.videoLink);
         } else if (CIRCUIT_VIDEOS[key]) {
             html = buildLinkEmbed(CIRCUIT_VIDEOS[key]);
+        } else if (rec.videoBlob) {
+            html = '<video src="' + URL.createObjectURL(rec.videoBlob) + '" controls autoplay playsinline ' +
+                'style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video>';
         }
         if (html) {
             frame.innerHTML = html;
@@ -2230,15 +2252,49 @@
     function applyMediaOverrides() {
         try {
             Object.keys(V21_MEDIA).forEach(function (key) {
-                var imgs = (V21_MEDIA[key] || {}).images;
-                if (!imgs || !imgs.length) return;
+                var rec = V21_MEDIA[key] || {};
                 var sliderId = key.replace(/^modal-/, 'sl-');
                 var slider = document.querySelector('[data-slider-id="' + sliderId + '"]');
                 if (!slider) return;
-                slider.querySelectorAll('.slide').forEach(function (sl, i) {
-                    var src = mediaItemSrc(imgs[i % imgs.length]);
-                    if (src) sl.style.backgroundImage = "url('" + src + "')";
-                });
+
+                // 1) Images personnalisees -> fond des diapos d'origine
+                var imgs = rec.images || [];
+                if (imgs.length) {
+                    slider.querySelectorAll('.slide:not(.slide-video)').forEach(function (sl, i) {
+                        var src = mediaItemSrc(imgs[i % imgs.length]);
+                        if (src) sl.style.backgroundImage = "url('" + src + "')";
+                    });
+                }
+
+                // 2) Diapo video (mp4) auto-jouee : reconcilier (eviter les doublons)
+                var oldSlide = slider.querySelector('.slide-video');
+                if (oldSlide) oldSlide.remove();
+                var oldDot = slider.querySelector('[data-dot-video]');
+                if (oldDot) oldDot.remove();
+
+                if (rec.videoBlob) {
+                    var slide = document.createElement('div');
+                    slide.className = 'slide slide-video';
+                    var v = document.createElement('video');
+                    v.src = URL.createObjectURL(rec.videoBlob);
+                    v.muted = true;
+                    v.preload = 'metadata';
+                    v.setAttribute('playsinline', '');
+                    v.setAttribute('muted', '');
+                    slide.appendChild(v);
+                    var arrow = slider.querySelector('.slider-arrow');
+                    if (arrow) slider.insertBefore(slide, arrow); else slider.appendChild(slide);
+
+                    var dots = slider.querySelector('.slider-dots');
+                    if (dots) {
+                        var idx = slider.querySelectorAll('.slide').length - 1;
+                        var dot = document.createElement('button');
+                        dot.className = 'slider-dot';
+                        dot.setAttribute('data-dot-video', '1');
+                        (function (sid, ix) { dot.onclick = function () { goSlide(sid, ix); }; })(sliderId, idx);
+                        dots.appendChild(dot);
+                    }
+                }
             });
         } catch (e) { /* ne jamais casser l'affichage existant */ }
     }
