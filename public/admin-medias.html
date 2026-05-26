@@ -186,19 +186,25 @@
         return fetch('/api/media', { cache: 'no-store' })
             .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
     }
+    function readJsonOrThrow(r) {
+        return r.json().catch(function () { return {}; }).then(function (j) {
+            if (!r.ok || j.ok === false) throw new Error(j.error || ('HTTP ' + r.status));
+            return j;
+        });
+    }
     function apiPutProduct(key, rec) {
         return fetch('/api/media', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ key: key, rec: rec })
-        }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+        }).then(readJsonOrThrow);
     }
     function apiPutAll(data) {
         return fetch('/api/media', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
-        }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+        }).then(readJsonOrThrow);
     }
     function uploadFile(file) {
         if (!window.v21upload) {
@@ -249,9 +255,9 @@
             toast('✓ Enregistré en ligne');
             notify();
             refreshPickerMarks();
-        }).catch(function () {
+        }).catch(function (e) {
             setOnline(false);
-            alert("Impossible d'enregistrer en ligne. Vérifiez la connexion, ou que le stockage Blob est bien activé sur Vercel.");
+            alert("Impossible d'enregistrer en ligne : " + ((e && e.message) || e));
         });
     }
 

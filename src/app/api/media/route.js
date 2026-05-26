@@ -25,7 +25,22 @@ async function writeManifest(data) {
 
 const noStore = { 'Cache-Control': 'no-store' };
 
-export async function GET() {
+export async function GET(request) {
+  // Mode diagnostic : /api/media?debug=1 indique si la fonction voit le token.
+  const debug = new URL(request.url).searchParams.get('debug');
+  if (debug) {
+    const token = process.env.BLOB_READ_WRITE_TOKEN || '';
+    const out = { hasToken: !!token, tokenLength: token.length };
+    try {
+      const { blobs } = await list({ limit: 5 });
+      out.list = 'ok';
+      out.blobCount = blobs.length;
+    } catch (e) {
+      out.list = 'error';
+      out.error = String((e && e.message) || e);
+    }
+    return Response.json(out, { headers: noStore });
+  }
   try {
     const data = await readManifest();
     return Response.json(data, { headers: noStore });
