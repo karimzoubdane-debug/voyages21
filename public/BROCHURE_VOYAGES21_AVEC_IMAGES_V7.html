@@ -2044,16 +2044,25 @@
             if (!vid) continue;
             if (j === index) {
                 clearInterval(sliderTimers[sliderId]);
+                vid.muted = true;
                 try { vid.currentTime = 0; } catch (e) {}
-                var pr = vid.play();
-                if (pr && pr.catch) pr.catch(function () {
-                    sliderTimers[sliderId] = setInterval(function () { autoNext(sliderId); }, 3500);
-                });
-                (function (sid, v) {
-                    v.onended = function () {
+                (function (sid, vv) {
+                    vv.onended = function () {
                         showSlide(sid, (sliderState[sid] || 0) + 1);
                         sliderTimers[sid] = setInterval(function () { autoNext(sid); }, 3500);
                     };
+                    var pr = vv.play();
+                    if (pr && pr.catch) pr.catch(function () {
+                        // Pas encore pret : relance des que des donnees arrivent.
+                        var onReady = function () {
+                            vv.removeEventListener('canplay', onReady);
+                            vv.muted = true;
+                            vv.play().catch(function () {});
+                        };
+                        vv.addEventListener('canplay', onReady);
+                        // Filet de securite : ne jamais figer le carrousel.
+                        sliderTimers[sid] = setInterval(function () { autoNext(sid); }, 5000);
+                    });
                 })(sliderId, vid);
             } else {
                 try { vid.pause(); } catch (e) {}
@@ -2251,7 +2260,8 @@
                     var v = document.createElement('video');
                     v.src = rec.videoUrl;
                     v.muted = true;
-                    v.preload = 'metadata';
+                    v.defaultMuted = true;
+                    v.preload = 'auto';
                     v.setAttribute('playsinline', '');
                     v.setAttribute('muted', '');
                     slide.appendChild(v);
