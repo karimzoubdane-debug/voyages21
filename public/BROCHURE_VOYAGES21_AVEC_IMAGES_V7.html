@@ -2131,14 +2131,44 @@
         }
     });
 
-    // ── POPUP VIDEO + MEDIAS PERSONNALISES (interface admin locale) ──
+    // ── POPUP VIDEO + MEDIAS PERSONNALISES (interface admin locale, IndexedDB) ──
     // Liens YouTube par fiche (fallback code). Ex: 'modal-istanbul': 'ID_YOUTUBE'
     var CIRCUIT_VIDEOS = {
     };
 
-    // Medias saisis depuis l'admin (admin-medias.html), partages via localStorage.
+    // Medias saisis depuis l'admin (admin-medias.html), partages via IndexedDB (meme origine).
     var V21_MEDIA = {};
-    try { V21_MEDIA = JSON.parse(localStorage.getItem('v21_media') || '{}') || {}; } catch (e) { V21_MEDIA = {}; }
+
+    function v21idbOpen() {
+        return new Promise(function (resolve, reject) {
+            var req = indexedDB.open('voyages21-media', 1);
+            req.onupgradeneeded = function () {
+                if (!req.result.objectStoreNames.contains('media')) {
+                    req.result.createObjectStore('media', { keyPath: 'key' });
+                }
+            };
+            req.onsuccess = function () { resolve(req.result); };
+            req.onerror = function () { reject(req.error); };
+        });
+    }
+    function v21idbAll() {
+        return v21idbOpen().then(function (db) {
+            return new Promise(function (resolve, reject) {
+                var rq = db.transaction('media', 'readonly').objectStore('media').getAll();
+                rq.onsuccess = function () { resolve(rq.result || []); };
+                rq.onerror = function () { reject(rq.error); };
+            });
+        });
+    }
+    function loadMedia() {
+        if (!('indexedDB' in window)) return Promise.resolve();
+        return v21idbAll().then(function (rows) {
+            var map = {};
+            rows.forEach(function (r) { map[r.key] = r; });
+            V21_MEDIA = map;
+            applyMediaOverrides();
+        }).catch(function () { /* pas de medias : on garde la brochure d'origine */ });
+    }
 
     function extractYouTubeId(u) {
         u = String(u || '').trim();
@@ -2147,10 +2177,10 @@
         return m ? m[1] : '';
     }
 
-    function buildVideoEmbed(value, type) {
+    function buildLinkEmbed(value) {
         value = String(value || '').trim();
         if (!value) return '';
-        if (type === 'file' || /^data:video\//i.test(value) || /\.(mp4|webm|ogg)(\?|$)/i.test(value)) {
+        if (/^data:video\//i.test(value) || /\.(mp4|webm|ogg)(\?|$)/i.test(value)) {
             return '<video src="' + value + '" controls autoplay playsinline ' +
                 'style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video>';
         }
@@ -2169,10 +2199,16 @@
 
     function openVideo(key) {
         var frame = document.getElementById('videoFrame');
-        var ov = V21_MEDIA[key] || {};
+        var rec = V21_MEDIA[key] || {};
         var html = '';
-        if (ov.video) html = buildVideoEmbed(ov.video, ov.videoType);
-        else if (CIRCUIT_VIDEOS[key]) html = buildVideoEmbed(CIRCUIT_VIDEOS[key], 'link');
+        if (rec.videoBlob) {
+            html = '<video src="' + URL.createObjectURL(rec.videoBlob) + '" controls autoplay playsinline ' +
+                'style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video>';
+        } else if (rec.videoLink) {
+            html = buildLinkEmbed(rec.videoLink);
+        } else if (CIRCUIT_VIDEOS[key]) {
+            html = buildLinkEmbed(CIRCUIT_VIDEOS[key]);
+        }
         if (html) {
             frame.innerHTML = html;
         } else {
@@ -2185,6 +2221,12 @@
     }
 
     // Applique les images personnalisees aux sliders (ne change que le fond, aucune structure)
+    function mediaItemSrc(it) {
+        if (!it) return '';
+        if (it.url) return it.url;
+        if (it.blob) return URL.createObjectURL(it.blob);
+        return '';
+    }
     function applyMediaOverrides() {
         try {
             Object.keys(V21_MEDIA).forEach(function (key) {
@@ -2194,7 +2236,8 @@
                 var slider = document.querySelector('[data-slider-id="' + sliderId + '"]');
                 if (!slider) return;
                 slider.querySelectorAll('.slide').forEach(function (sl, i) {
-                    sl.style.backgroundImage = "url('" + imgs[i % imgs.length] + "')";
+                    var src = mediaItemSrc(imgs[i % imgs.length]);
+                    if (src) sl.style.backgroundImage = "url('" + src + "')";
                 });
             });
         } catch (e) { /* ne jamais casser l'affichage existant */ }
@@ -2212,20 +2255,19 @@
     });
 
     // ── WHATSAPP POPUP ──
-    // Lancer les sliders au chargement
+    // Lancer les sliders au chargement, puis appliquer les medias personnalises
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { initSliders(); applyMediaOverrides(); });
+        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); });
     } else {
         initSliders();
-        applyMediaOverrides();
+        loadMedia();
     }
 
-    // Mise a jour en direct si les medias sont modifies dans l'admin (autre onglet)
-    window.addEventListener('storage', function (e) {
-        if (e.key !== 'v21_media') return;
-        try { V21_MEDIA = JSON.parse(e.newValue || '{}') || {}; } catch (err) { V21_MEDIA = {}; }
-        applyMediaOverrides();
-    });
+    // Mise a jour en direct quand les medias sont modifies dans l'admin (autre onglet)
+    if ('BroadcastChannel' in window) {
+        var v21bc = new BroadcastChannel('v21_media');
+        v21bc.onmessage = function () { loadMedia(); };
+    }
     </script>
 
 </body></html>

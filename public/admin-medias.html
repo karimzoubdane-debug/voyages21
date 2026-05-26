@@ -33,139 +33,73 @@
     }
     header h1 { font-size: 1.25rem; font-weight: 700; }
     header .sub { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
-    .toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 0.8rem;
-    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
     .btn {
-        background: var(--gold);
-        color: var(--forest2);
-        border: none;
-        border-radius: 6px;
-        padding: 0.5rem 0.9rem;
-        font-weight: 700;
-        font-size: 0.85rem;
-        cursor: pointer;
-        font-family: inherit;
+        background: var(--gold); color: var(--forest2); border: none; border-radius: 6px;
+        padding: 0.5rem 0.9rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: inherit;
     }
     .btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
     .btn.danger { background: var(--rouge); color: #fff; }
-    .wrap { max-width: 880px; margin: 1.2rem auto; padding: 0 1rem; }
+    .wrap { max-width: 760px; margin: 1.2rem auto; padding: 0 1rem; }
     .notice {
-        background: #fff8e6;
-        border: 1px solid var(--gold);
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        font-size: 0.85rem;
-        margin-bottom: 1rem;
+        background: #fff8e6; border: 1px solid var(--gold); border-radius: 8px;
+        padding: 0.8rem 1rem; font-size: 0.85rem; margin-bottom: 1rem;
     }
     .notice strong { color: var(--forest); }
-    .search {
-        width: 100%;
-        padding: 0.7rem 1rem;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        font-family: inherit;
-        margin-bottom: 1rem;
+    .picker-label { font-weight: 700; color: var(--forest); margin-bottom: 0.4rem; display: block; }
+    select.picker {
+        width: 100%; padding: 0.8rem 1rem; border: 2px solid var(--forest);
+        border-radius: 8px; font-size: 1rem; font-family: inherit; background: #fff; cursor: pointer;
     }
-    .card {
-        background: #fff;
-        border: 1px solid #e3ddd0;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    .editor {
+        background: #fff; border: 1px solid #e3ddd0; border-radius: 10px;
+        padding: 1.2rem; margin-top: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
-    .card h2 {
-        font-size: 1.05rem;
-        color: var(--forest);
-        margin-bottom: 0.2rem;
-    }
-    .card .key { font-size: 0.72rem; color: #999; margin-bottom: 0.8rem; }
+    .editor.hidden { display: none; }
+    .editor h2 { font-size: 1.15rem; color: var(--forest); margin-bottom: 0.2rem; }
+    .editor .key { font-size: 0.72rem; color: #999; margin-bottom: 1rem; }
     .section-label {
-        font-size: 0.78rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: var(--forest2);
-        margin: 0.6rem 0 0.4rem;
+        font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+        color: var(--forest2); margin: 0.8rem 0 0.4rem;
     }
     .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
     input[type=text], input[type=url] {
-        flex: 1;
-        min-width: 180px;
-        padding: 0.55rem 0.7rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        font-family: inherit;
+        flex: 1; min-width: 180px; padding: 0.55rem 0.7rem; border: 1px solid #ccc;
+        border-radius: 6px; font-size: 0.9rem; font-family: inherit;
     }
     input[type=file] { font-size: 0.82rem; }
     .mini {
-        background: var(--forest);
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 0.5rem 0.8rem;
-        font-weight: 600;
-        font-size: 0.82rem;
-        cursor: pointer;
-        font-family: inherit;
+        background: var(--forest); color: #fff; border: none; border-radius: 6px;
+        padding: 0.5rem 0.8rem; font-weight: 600; font-size: 0.82rem; cursor: pointer; font-family: inherit;
     }
     .mini.clear { background: #888; }
-    .status { font-size: 0.8rem; color: #557; margin-top: 0.3rem; min-height: 1.1em; }
+    .status { font-size: 0.85rem; color: #557; margin-top: 0.4rem; min-height: 1.1em; }
     .status.set { color: #1a7a3a; font-weight: 600; }
     .thumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
     .thumb {
-        position: relative;
-        width: 84px;
-        height: 60px;
-        border-radius: 6px;
-        background-size: cover;
-        background-position: center;
-        border: 1px solid #ddd;
+        position: relative; width: 96px; height: 68px; border-radius: 6px;
+        background-size: cover; background-position: center; border: 1px solid #ddd;
     }
     .thumb button {
-        position: absolute;
-        top: -6px;
-        right: -6px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: var(--rouge);
-        color: #fff;
-        border: none;
-        font-size: 0.8rem;
-        line-height: 1;
-        cursor: pointer;
+        position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%;
+        background: var(--rouge); color: #fff; border: none; font-size: 0.85rem; line-height: 1; cursor: pointer;
     }
     .hint { font-size: 0.76rem; color: #888; margin-top: 0.25rem; }
+    .empty { text-align: center; color: #999; padding: 2rem 1rem; }
+    .divider { height: 1px; background: #eee; margin: 1rem 0; }
     .toast {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(80px);
-        background: var(--forest);
-        color: #fff;
-        padding: 0.7rem 1.4rem;
-        border-radius: 30px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-        transition: transform 0.3s ease;
-        z-index: 100;
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px);
+        background: var(--forest); color: #fff; padding: 0.7rem 1.4rem; border-radius: 30px;
+        font-size: 0.9rem; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        transition: transform 0.3s ease; z-index: 100;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
-    .divider { height: 1px; background: #eee; margin: 0.8rem 0; }
 </style>
 </head>
 <body>
 <header>
     <h1>Voyages21 — Gestion des médias</h1>
-    <div class="sub">Mode local · aucun mot de passe · ajoutez photos &amp; vidéos par produit</div>
+    <div class="sub">Sans mot de passe · choisissez un voyage, ajoutez photos &amp; vidéo</div>
     <div class="toolbar">
         <button class="btn ghost" onclick="window.open('BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html','_blank')">Ouvrir la brochure</button>
         <button class="btn ghost" onclick="exportData()">Exporter (sauvegarde)</button>
@@ -177,24 +111,26 @@
 
 <div class="wrap">
     <div class="notice">
-        <strong>Comment ça marche :</strong> pour chaque produit, collez un lien (photo / YouTube / Vimeo) ou téléversez un fichier.
-        Tout est enregistré automatiquement. <strong>Rechargez la brochure</strong> pour voir le résultat.<br>
-        <strong>À savoir (version simple actuelle) :</strong> les médias sont stockés <em>sur cet appareil et ce navigateur uniquement</em> —
-        ils ne sont pas encore partagés avec vos équipes ni avec les visiteurs du site. Cliquez sur
-        <em>« Exporter »</em> pour garder une sauvegarde. Le partage pour tous viendra avec le stockage en ligne (étape suivante).
-        Pour les <strong>vidéos lourdes</strong>, préférez un <strong>lien YouTube/Vimeo</strong> (les gros fichiers saturent le stockage local).
+        <strong>Comment ça marche :</strong> choisissez un voyage dans la liste, ajoutez une vidéo
+        (lien YouTube/Vimeo <em>ou</em> fichier) et des photos (liens <em>ou</em> fichiers), puis
+        <strong>rechargez la brochure</strong> pour voir le résultat. Tout est enregistré automatiquement.<br>
+        <strong>Aucune limite</strong> de type ni de nombre de photos. Les fichiers sont stockés sur cet appareil
+        (capacité large). <em>Version actuelle :</em> visible sur cet appareil/navigateur — le partage pour tous les
+        visiteurs viendra avec le stockage en ligne (étape suivante). Cliquez <em>« Exporter »</em> pour garder une sauvegarde.
     </div>
 
-    <input type="text" class="search" id="search" placeholder="Rechercher un produit…" oninput="filterCards(this.value)">
+    <label class="picker-label" for="picker">Choisissez un voyage à renseigner :</label>
+    <select class="picker" id="picker" onchange="selectProduct(this.value)">
+        <option value="">— Choisir un voyage —</option>
+    </select>
 
-    <div id="list"></div>
+    <div class="editor hidden" id="editor"></div>
+    <div class="empty" id="empty">Sélectionnez un voyage ci-dessus pour ajouter ses médias.</div>
 </div>
 
 <div class="toast" id="toast">✓ Enregistré</div>
 
 <script>
-    var STORE = 'v21_media';
-
     var PRODUCTS = [
         { k: "modal-istanbul", t: "Séjour à Istanbul" },
         { k: "modal-istanbul-antalya", t: "Istanbul & Antalya" },
@@ -225,174 +161,121 @@
         { k: "modal-vietnam", t: "Découverte du Vietnam — Hanoi à Saigon" },
         { k: "modal-zanzibar", t: "Séjour à Zanzibar — Détente & Loisirs" }
     ];
+    var TITLES = {};
+    PRODUCTS.forEach(function (p) { TITLES[p.k] = p.t; });
 
-    function loadStore() {
-        try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; }
-        catch (e) { return {}; }
+    // ── IndexedDB ──
+    function idbOpen() {
+        return new Promise(function (resolve, reject) {
+            var req = indexedDB.open('voyages21-media', 1);
+            req.onupgradeneeded = function () {
+                if (!req.result.objectStoreNames.contains('media')) {
+                    req.result.createObjectStore('media', { keyPath: 'key' });
+                }
+            };
+            req.onsuccess = function () { resolve(req.result); };
+            req.onerror = function () { reject(req.error); };
+        });
     }
-    function saveStore(data) {
-        try {
-            localStorage.setItem(STORE, JSON.stringify(data));
-            toast('✓ Enregistré');
-            return true;
-        } catch (e) {
-            alert("Stockage local plein. Utilisez des LIENS d'images/vidéos (URL) au lieu de fichiers lourds, "
-                + "ou attendez le stockage en ligne (étape suivante).");
-            return false;
-        }
+    function idbReq(mode, fn) {
+        return idbOpen().then(function (db) {
+            return new Promise(function (resolve, reject) {
+                var store = db.transaction('media', mode).objectStore('media');
+                var rq = fn(store);
+                rq.onsuccess = function () { resolve(rq.result); };
+                rq.onerror = function () { reject(rq.error); };
+            });
+        });
     }
-    function entry(data, key) {
-        if (!data[key]) data[key] = { video: '', videoType: 'link', images: [] };
-        if (!data[key].images) data[key].images = [];
-        return data[key];
+    function idbGet(key) { return idbReq('readonly', function (s) { return s.get(key); }); }
+    function idbAll() { return idbReq('readonly', function (s) { return s.getAll(); }); }
+    function idbPut(rec) { return idbReq('readwrite', function (s) { return s.put(rec); }); }
+    function idbDel(key) { return idbReq('readwrite', function (s) { return s.delete(key); }); }
+    function idbClear() { return idbReq('readwrite', function (s) { return s.clear(); }); }
+
+    // ── Sync inter-onglets ──
+    var bc = ('BroadcastChannel' in window) ? new BroadcastChannel('v21_media') : null;
+    function notify() { if (bc) bc.postMessage('update'); }
+
+    // ── Helpers fichiers ──
+    function dataURLtoBlob(d) {
+        var arr = d.split(','), mime = (arr[0].match(/:(.*?);/) || [])[1] || 'application/octet-stream';
+        var bstr = atob(arr[1]), n = bstr.length, u8 = new Uint8Array(n);
+        while (n--) u8[n] = bstr.charCodeAt(n);
+        return new Blob([u8], { type: mime });
     }
+    function blobToDataURL(blob) {
+        return new Promise(function (resolve) {
+            var r = new FileReader();
+            r.onload = function () { resolve(r.result); };
+            r.readAsDataURL(blob);
+        });
+    }
+
+    function emptyRec(key) { return { key: key, videoLink: '', videoBlob: null, images: [] }; }
+
+    var currentKey = '';
+    var currentRec = null;
 
     var toastTimer;
     function toast(msg) {
         var t = document.getElementById('toast');
-        t.textContent = msg;
-        t.classList.add('show');
+        t.textContent = msg; t.classList.add('show');
         clearTimeout(toastTimer);
         toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1400);
     }
 
-    function readFile(file, cb) {
-        var r = new FileReader();
-        r.onload = function () { cb(r.result); };
-        r.readAsDataURL(file);
+    function hasMedia(rec) {
+        return !!(rec && (rec.videoLink || rec.videoBlob || (rec.images && rec.images.length)));
     }
 
-    // ── Handlers vidéo ──
-    function onVideoLink(key, value) {
-        var data = loadStore();
-        var e = entry(data, key);
-        e.video = value.trim();
-        e.videoType = 'link';
-        saveStore(data);
-        updateVideoStatus(key, e);
-    }
-    function onVideoFile(key, input) {
-        var f = input.files && input.files[0];
-        if (!f) return;
-        readFile(f, function (dataUrl) {
-            var data = loadStore();
-            var e = entry(data, key);
-            e.video = dataUrl;
-            e.videoType = 'file';
-            if (saveStore(data)) updateVideoStatus(key, e);
-        });
-        input.value = '';
-    }
-    function clearVideo(key) {
-        var data = loadStore();
-        var e = entry(data, key);
-        e.video = ''; e.videoType = 'link';
-        saveStore(data);
-        var linkInput = document.querySelector('[data-vlink="' + key + '"]');
-        if (linkInput) linkInput.value = '';
-        updateVideoStatus(key, e);
-    }
-    function updateVideoStatus(key, e) {
-        var el = document.querySelector('[data-vstatus="' + key + '"]');
-        if (!el) return;
-        if (e.video && e.videoType === 'file') { el.textContent = '✓ Vidéo (fichier) définie'; el.className = 'status set'; }
-        else if (e.video) { el.textContent = '✓ Vidéo (lien) définie'; el.className = 'status set'; }
-        else { el.textContent = 'Aucune vidéo'; el.className = 'status'; }
-    }
-
-    // ── Handlers images ──
-    function addImageUrl(key) {
-        var input = document.querySelector('[data-iurl="' + key + '"]');
-        var url = (input.value || '').trim();
-        if (!url) return;
-        var data = loadStore();
-        var e = entry(data, key);
-        e.images.push(url);
-        if (saveStore(data)) { input.value = ''; renderThumbs(key, e.images); }
-    }
-    function addImageFiles(key, input) {
-        var files = input.files;
-        if (!files || !files.length) return;
-        var pending = files.length;
-        var data = loadStore();
-        var e = entry(data, key);
-        Array.prototype.forEach.call(files, function (f) {
-            readFile(f, function (dataUrl) {
-                e.images.push(dataUrl);
-                pending--;
-                if (pending === 0) { if (saveStore(data)) renderThumbs(key, e.images); }
-            });
-        });
-        input.value = '';
-    }
-    function removeImage(key, idx) {
-        var data = loadStore();
-        var e = entry(data, key);
-        e.images.splice(idx, 1);
-        saveStore(data);
-        renderThumbs(key, e.images);
-    }
-    function renderThumbs(key, images) {
-        var box = document.querySelector('[data-thumbs="' + key + '"]');
-        if (!box) return;
-        box.innerHTML = '';
-        images.forEach(function (src, i) {
-            var d = document.createElement('div');
-            d.className = 'thumb';
-            d.style.backgroundImage = "url('" + src + "')";
-            var b = document.createElement('button');
-            b.textContent = '×';
-            b.title = 'Retirer';
-            b.onclick = function () { removeImage(key, i); };
-            d.appendChild(b);
-            box.appendChild(d);
+    function save() {
+        return idbPut(currentRec).then(function () {
+            toast('✓ Enregistré');
+            notify();
+            refreshPickerMarks();
+        }).catch(function () {
+            alert("Impossible d'enregistrer ce média (fichier peut-être trop volumineux pour le stockage de l'appareil).");
         });
     }
 
-    // ── Rendu ──
-    function render() {
-        var data = loadStore();
-        var list = document.getElementById('list');
-        list.innerHTML = '';
+    // ── Picker ──
+    function buildPicker() {
+        var sel = document.getElementById('picker');
         PRODUCTS.forEach(function (p) {
-            var e = data[p.k] || { video: '', videoType: 'link', images: [] };
-            var card = document.createElement('div');
-            card.className = 'card';
-            card.setAttribute('data-card', p.k);
-            card.setAttribute('data-name', (p.t + ' ' + p.k).toLowerCase());
-            card.innerHTML =
-                '<h2>' + esc(p.t) + '</h2>' +
-                '<div class="key">' + p.k + '</div>' +
-
-                '<div class="section-label">Vidéo (lien YouTube/Vimeo ou fichier)</div>' +
-                '<div class="row">' +
-                    '<input type="url" data-vlink="' + p.k + '" placeholder="https://youtu.be/… ou https://vimeo.com/…" value="' + esc(e.video && e.videoType !== 'file' ? e.video : '') + '">' +
-                    '<button class="mini clear" onclick="clearVideo(\'' + p.k + '\')">Effacer</button>' +
-                '</div>' +
-                '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser un fichier vidéo : </label>' +
-                    '<input type="file" accept="video/*" onchange="onVideoFile(\'' + p.k + '\', this)"></div>' +
-                '<div class="status" data-vstatus="' + p.k + '"></div>' +
-
-                '<div class="divider"></div>' +
-
-                '<div class="section-label">Photos (liens ou fichiers, plusieurs possibles)</div>' +
-                '<div class="row">' +
-                    '<input type="url" data-iurl="' + p.k + '" placeholder="https://… (lien d\'une image)">' +
-                    '<button class="mini" onclick="addImageUrl(\'' + p.k + '\')">Ajouter le lien</button>' +
-                '</div>' +
-                '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser des images : </label>' +
-                    '<input type="file" accept="image/*" multiple onchange="addImageFiles(\'' + p.k + '\', this)"></div>' +
-                '<div class="thumbs" data-thumbs="' + p.k + '"></div>' +
-                '<div class="hint">Si aucune photo n\'est ajoutée, les images d\'origine de la brochure restent affichées.</div>';
-
-            list.appendChild(card);
-
-            // listener live sur le lien video
-            card.querySelector('[data-vlink="' + p.k + '"]').addEventListener('input', function () {
-                onVideoLink(p.k, this.value);
+            var o = document.createElement('option');
+            o.value = p.k; o.textContent = p.t;
+            sel.appendChild(o);
+        });
+        refreshPickerMarks();
+    }
+    function refreshPickerMarks() {
+        idbAll().then(function (rows) {
+            var done = {};
+            rows.forEach(function (r) { if (hasMedia(r)) done[r.key] = true; });
+            var sel = document.getElementById('picker');
+            Array.prototype.forEach.call(sel.options, function (o) {
+                if (!o.value) return;
+                var base = TITLES[o.value] || o.value;
+                o.textContent = (done[o.value] ? '✓ ' : '') + base;
             });
-            updateVideoStatus(p.k, e);
-            renderThumbs(p.k, e.images || []);
+        });
+    }
+
+    function selectProduct(key) {
+        currentKey = key;
+        var editor = document.getElementById('editor');
+        var empty = document.getElementById('empty');
+        if (!key) {
+            editor.classList.add('hidden'); empty.style.display = ''; currentRec = null;
+            return;
+        }
+        empty.style.display = 'none';
+        idbGet(key).then(function (rec) {
+            currentRec = rec || emptyRec(key);
+            if (!currentRec.images) currentRec.images = [];
+            renderEditor();
+            editor.classList.remove('hidden');
         });
     }
 
@@ -402,20 +285,137 @@
             .replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    function filterCards(q) {
-        q = (q || '').trim().toLowerCase();
-        document.querySelectorAll('[data-card]').forEach(function (c) {
-            c.style.display = (!q || c.getAttribute('data-name').indexOf(q) > -1) ? '' : 'none';
+    function renderEditor() {
+        var p = currentRec;
+        var editor = document.getElementById('editor');
+        editor.innerHTML =
+            '<h2>' + esc(TITLES[currentKey] || currentKey) + '</h2>' +
+            '<div class="key">' + currentKey + '</div>' +
+
+            '<div class="section-label">Vidéo — lien YouTube/Vimeo ou fichier</div>' +
+            '<div class="row">' +
+                '<input type="url" id="vlink" placeholder="https://youtu.be/… ou https://vimeo.com/…" value="' + esc(p.videoLink || '') + '">' +
+                '<button class="mini clear" onclick="clearVideo()">Effacer</button>' +
+            '</div>' +
+            '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser un fichier vidéo&nbsp;: </label>' +
+                '<input type="file" accept="video/*" onchange="setVideoFile(this)"></div>' +
+            '<div class="status" id="vstatus"></div>' +
+
+            '<div class="divider"></div>' +
+
+            '<div class="section-label">Photos — liens ou fichiers (plusieurs possibles)</div>' +
+            '<div class="row">' +
+                '<input type="url" id="iurl" placeholder="https://… (lien d\'une image)">' +
+                '<button class="mini" onclick="addImageUrl()">Ajouter le lien</button>' +
+            '</div>' +
+            '<div class="row" style="margin-top:.4rem"><label class="hint">ou téléverser des images&nbsp;: </label>' +
+                '<input type="file" accept="image/*" multiple onchange="addImageFiles(this)"></div>' +
+            '<div class="thumbs" id="thumbs"></div>' +
+            '<div class="hint">Sans photo ajoutée, les images d\'origine de la brochure restent affichées.</div>';
+
+        document.getElementById('vlink').addEventListener('input', function () { setVideoLink(this.value); });
+        updateVideoStatus();
+        renderThumbs();
+    }
+
+    // ── Vidéo ──
+    function setVideoLink(value) {
+        currentRec.videoLink = (value || '').trim();
+        if (currentRec.videoLink) currentRec.videoBlob = null;
+        updateVideoStatus();
+        save();
+    }
+    function setVideoFile(input) {
+        var f = input.files && input.files[0];
+        if (!f) return;
+        currentRec.videoBlob = f;       // un File est un Blob, stockable tel quel
+        currentRec.videoLink = '';
+        var li = document.getElementById('vlink'); if (li) li.value = '';
+        updateVideoStatus();
+        save();
+        input.value = '';
+    }
+    function clearVideo() {
+        currentRec.videoLink = '';
+        currentRec.videoBlob = null;
+        var li = document.getElementById('vlink'); if (li) li.value = '';
+        updateVideoStatus();
+        save();
+    }
+    function updateVideoStatus() {
+        var el = document.getElementById('vstatus');
+        if (!el) return;
+        if (currentRec.videoBlob) { el.textContent = '✓ Vidéo (fichier) enregistrée'; el.className = 'status set'; }
+        else if (currentRec.videoLink) { el.textContent = '✓ Vidéo (lien) enregistrée'; el.className = 'status set'; }
+        else { el.textContent = 'Aucune vidéo'; el.className = 'status'; }
+    }
+
+    // ── Photos ──
+    function addImageUrl() {
+        var input = document.getElementById('iurl');
+        var url = (input.value || '').trim();
+        if (!url) return;
+        currentRec.images.push({ url: url });
+        input.value = '';
+        renderThumbs();
+        save();
+    }
+    function addImageFiles(input) {
+        var files = input.files;
+        if (!files || !files.length) return;
+        Array.prototype.forEach.call(files, function (f) { currentRec.images.push({ blob: f }); });
+        input.value = '';
+        renderThumbs();
+        save();
+    }
+    function removeImage(idx) {
+        currentRec.images.splice(idx, 1);
+        renderThumbs();
+        save();
+    }
+    function renderThumbs() {
+        var box = document.getElementById('thumbs');
+        if (!box) return;
+        box.innerHTML = '';
+        currentRec.images.forEach(function (it, i) {
+            var src = it.url || (it.blob ? URL.createObjectURL(it.blob) : '');
+            var d = document.createElement('div');
+            d.className = 'thumb';
+            d.style.backgroundImage = "url('" + src + "')";
+            var b = document.createElement('button');
+            b.textContent = '×'; b.title = 'Retirer';
+            b.onclick = function () { removeImage(i); };
+            d.appendChild(b);
+            box.appendChild(d);
         });
     }
 
+    // ── Export / Import / Reset ──
     function exportData() {
-        var blob = new Blob([localStorage.getItem(STORE) || '{}'], { type: 'application/json' });
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'voyages21-medias.json';
-        a.click();
-        URL.revokeObjectURL(a.href);
+        idbAll().then(function (rows) {
+            var jobs = rows.map(function (r) {
+                var out = { key: r.key, videoLink: r.videoLink || '', images: [] };
+                var chain = Promise.resolve();
+                if (r.videoBlob) chain = chain.then(function () {
+                    return blobToDataURL(r.videoBlob).then(function (d) { out.videoData = d; });
+                });
+                (r.images || []).forEach(function (it) {
+                    chain = chain.then(function () {
+                        if (it.url) { out.images.push({ url: it.url }); return; }
+                        if (it.blob) return blobToDataURL(it.blob).then(function (d) { out.images.push({ data: d }); });
+                    });
+                });
+                return chain.then(function () { return out; });
+            });
+            return Promise.all(jobs);
+        }).then(function (list) {
+            var blob = new Blob([JSON.stringify(list)], { type: 'application/json' });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'voyages21-medias.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
     }
     function importData(input) {
         var f = input.files && input.files[0];
@@ -423,10 +423,22 @@
         var r = new FileReader();
         r.onload = function () {
             try {
-                var incoming = JSON.parse(r.result);
-                var data = loadStore();
-                Object.keys(incoming).forEach(function (k) { data[k] = incoming[k]; });
-                if (saveStore(data)) render();
+                var list = JSON.parse(r.result);
+                var jobs = list.map(function (o) {
+                    var rec = emptyRec(o.key);
+                    rec.videoLink = o.videoLink || '';
+                    if (o.videoData) rec.videoBlob = dataURLtoBlob(o.videoData);
+                    (o.images || []).forEach(function (it) {
+                        if (it.url) rec.images.push({ url: it.url });
+                        else if (it.data) rec.images.push({ blob: dataURLtoBlob(it.data) });
+                    });
+                    return idbPut(rec);
+                });
+                Promise.all(jobs).then(function () {
+                    notify(); refreshPickerMarks();
+                    if (currentKey) selectProduct(currentKey);
+                    toast('Import terminé');
+                });
             } catch (e) { alert('Fichier invalide.'); }
         };
         r.readAsText(f);
@@ -434,12 +446,44 @@
     }
     function clearAll() {
         if (!confirm('Effacer TOUS les médias enregistrés sur cet appareil ?')) return;
-        localStorage.removeItem(STORE);
-        render();
-        toast('Tout effacé');
+        idbClear().then(function () {
+            notify(); refreshPickerMarks();
+            currentRec = currentKey ? emptyRec(currentKey) : null;
+            if (currentKey) renderEditor();
+            toast('Tout effacé');
+        });
     }
 
-    render();
+    // ── Migration depuis l'ancien stockage localStorage (si présent) ──
+    function migrateFromLocalStorage() {
+        var raw;
+        try { raw = localStorage.getItem('v21_media'); } catch (e) { return Promise.resolve(); }
+        if (!raw) return Promise.resolve();
+        return idbAll().then(function (rows) {
+            if (rows && rows.length) return; // deja des donnees en IDB : ne pas ecraser
+            var old;
+            try { old = JSON.parse(raw) || {}; } catch (e) { return; }
+            var jobs = Object.keys(old).map(function (key) {
+                var o = old[key] || {};
+                var rec = emptyRec(key);
+                if (o.videoType === 'file' && o.video) { try { rec.videoBlob = dataURLtoBlob(o.video); } catch (e) {} }
+                else if (o.video) { rec.videoLink = o.video; }
+                (o.images || []).forEach(function (s) {
+                    if (typeof s !== 'string') return;
+                    if (s.indexOf('data:') === 0) { try { rec.images.push({ blob: dataURLtoBlob(s) }); } catch (e) {} }
+                    else { rec.images.push({ url: s }); }
+                });
+                return idbPut(rec);
+            });
+            return Promise.all(jobs).then(function () {
+                try { localStorage.removeItem('v21_media'); } catch (e) {}
+            });
+        });
+    }
+
+    // ── Démarrage ──
+    buildPicker();
+    migrateFromLocalStorage().then(function () { refreshPickerMarks(); });
 </script>
 </body>
 </html>
