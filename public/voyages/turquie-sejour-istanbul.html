@@ -11,43 +11,51 @@
 </head>
 <body data-media-key="modal-istanbul" data-title="Séjour à Istanbul" data-whatsapp="212673280009">
 
-<div class="topbar">
+<div class="topbar"><div class="topbar-inner">
     <a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">‹ Retour à la brochure</a>
     <span class="brand">VOYAGES 21</span>
-</div>
+</div></div>
 
-<!-- HERO VIDEO (alimenté par la médiathèque en ligne) -->
-<div class="hero" id="hero">
-    <video id="heroVideo" muted loop playsinline autoplay preload="auto"></video>
-    <button class="sound-toggle" id="soundBtn" onclick="toggleSound()">Activer le son</button>
-    <div class="hero-inner">
-        <div class="eyebrow">Turquie · Spécial été 2026</div>
-        <h1>Séjour à Istanbul</h1>
-        <div class="tagline">Sept nuits à cheval sur deux continents, entre coupoles, Bosphore et bazars.</div>
-        <div class="hero-facts">
-            <div class="f"><span>Durée</span><b>8 jours / 7 nuits</b></div>
-            <div class="f"><span>Vols</span><b>Inclus — Turkish Airlines</b></div>
-            <div class="f"><span>Pension</span><b>Logement + petit-déjeuner</b></div>
-            <div class="f"><span>Période</span><b>Juillet &amp; août 2026</b></div>
+<div class="page">
+
+    <div class="eyebrow">Turquie · Spécial été 2026</div>
+    <h1 class="voyage-title">Séjour à Istanbul</h1>
+
+    <!-- RANGÉE HÉRO : média (gauche) + cadran (droite) -->
+    <div class="hero-row">
+        <div class="media-col">
+            <div class="media-main" id="hero">
+                <span class="media-tag">Turquie</span>
+                <video id="heroVideo" muted loop playsinline autoplay preload="auto"></video>
+                <button class="sound-toggle" id="soundBtn" onclick="toggleSound()">Activer le son</button>
+            </div>
+            <div class="thumbs" id="thumbs" style="display:none"></div>
         </div>
-        <div class="hero-actions">
-            <button class="btn btn-gold" onclick="ask('')">Demander un devis</button>
-            <button class="btn btn-ghost" id="voirVideo" style="display:none">Voir la vidéo</button>
-        </div>
+
+        <aside class="cadran">
+            <div class="cadran-row"><span class="k">Départ</span><span class="v">Casablanca</span></div>
+            <div class="cadran-row"><span class="k">Destination</span><span class="v">Istanbul, Turquie</span></div>
+            <div class="cadran-row"><span class="k">Durée</span><span class="v">8 jours / 7 nuits</span></div>
+            <div class="cadran-row"><span class="k">Vols</span><span class="v">Inclus — Turkish Airlines</span></div>
+            <div class="cadran-row"><span class="k">Pension</span><span class="v">Logement &amp; petit-déjeuner</span></div>
+            <div class="cadran-row"><span class="k">Période</span><span class="v">Été 2026 (juil.–août)</span></div>
+            <div class="cadran-row"><span class="k">Guide</span><span class="v">Arabophone (excursions)</span></div>
+            <div class="cadran-price">À partir de <b>sur demande</b></div>
+            <button class="btn btn-gold full" onclick="ask('')">Demander un devis</button>
+            <button class="btn btn-gold full" id="voirVideo" style="display:none;background:transparent;color:var(--forest);border:1px solid var(--gold);margin-top:.5rem" onclick="">Voir la vidéo</button>
+            <div class="cadran-note">Sur mesure · Voyages 21, depuis 2000</div>
+        </aside>
     </div>
-</div>
 
-<!-- NAV COLLANTE -->
-<nav class="tabs">
-    <a href="#apercu" class="active">Le voyage</a>
-    <a href="#itineraire">Itinéraire</a>
-    <a href="#inclus">Inclus</a>
-    <a href="#hebergement">Hébergement</a>
-    <a href="#carte">Carte</a>
-    <a href="#dates">Dates &amp; prix</a>
-</nav>
-
-<div class="wrap">
+    <!-- NAV COLLANTE -->
+    <nav class="tabs">
+        <a href="#apercu" class="active">Le voyage</a>
+        <a href="#itineraire">Itinéraire</a>
+        <a href="#inclus">Inclus</a>
+        <a href="#hebergement">Hébergement</a>
+        <a href="#carte">Carte</a>
+        <a href="#dates">Dates &amp; prix</a>
+    </nav>
 
     <!-- POURQUOI -->
     <section id="apercu">
@@ -65,7 +73,6 @@
                 pour flâner dans le Grand Bazar, vous perdre dans une ruelle, ou simplement regarder la ville vivre.
                 Sept nuits pour faire d'Istanbul, un peu, la vôtre.</p>
         </div>
-
         <ul class="highlights">
             <li>La Mosquée Bleue et ses faïences d'Iznik, l'Hippodrome et le palais de Topkapı</li>
             <li>Une croisière incluse sur le Bosphore, entre Europe et Asie</li>
@@ -73,15 +80,6 @@
             <li>Plusieurs journées libres pour explorer à votre rythme</li>
             <li>Vols Casablanca ⇄ Istanbul inclus sur Turkish Airlines</li>
         </ul>
-
-        <div class="facts">
-            <div><span class="k">Départ</span><span class="v">Casablanca</span></div>
-            <div><span class="k">Destination</span><span class="v">Istanbul</span></div>
-            <div><span class="k">Durée</span><span class="v">8 jours / 7 nuits</span></div>
-            <div><span class="k">Compagnie</span><span class="v">Turkish Airlines (vols inclus)</span></div>
-            <div><span class="k">Pension</span><span class="v">Logement &amp; petit-déjeuner</span></div>
-            <div><span class="k">Guide</span><span class="v">Arabophone pendant les excursions</span></div>
-        </div>
     </section>
 
     <!-- ITINÉRAIRE -->
@@ -159,9 +157,9 @@
     <section id="inclus">
         <h2 class="sec-title">Ce qui est inclus</h2>
         <div class="twocol">
-            <div>
+            <div class="incbox in">
                 <h3>Notre tarif comprend</h3>
-                <ul class="ticks inc">
+                <ul class="ticks">
                     <li>Le billet d'avion Casablanca / Istanbul / Casablanca sur Turkish Airlines</li>
                     <li>7 nuits à Istanbul en logement et petit-déjeuner</li>
                     <li>Excursion d'une demi-journée : croisière sur le Bosphore</li>
@@ -171,9 +169,9 @@
                     <li>L'assistance de Voyages 21</li>
                 </ul>
             </div>
-            <div>
+            <div class="incbox out">
                 <h3>Notre tarif ne comprend pas</h3>
-                <ul class="ticks exc">
+                <ul class="ticks">
                     <li>Les excursions (hors croisière sur le Bosphore incluse)</li>
                     <li>Les extras aux hôtels et les boissons</li>
                     <li>Les pourboires des guides et chauffeurs</li>
@@ -203,13 +201,8 @@
     <!-- DATES & PRIX -->
     <section id="dates">
         <h2 class="sec-title">Dates &amp; prix</h2>
-        <table class="dates">
-            <thead><tr><th>Période</th><th>Départ</th><th>Prix / pers.</th><th></th></tr></thead>
-            <tbody>
-                <tr><td>Spécial été — juillet &amp; août 2026</td><td>Casablanca</td><td class="price">sur demande</td><td><button class="btn btn-gold" style="padding:.45rem .9rem;font-size:.8rem" onclick="ask('été 2026')">Demander</button></td></tr>
-            </tbody>
-        </table>
-        <p class="note">Départs garantis tout l'été 2026, au départ de Casablanca. Contactez-nous pour le tarif et les disponibilités.</p>
+        <div class="stay">Départs garantis tout l'été 2026 (juillet &amp; août), au départ de Casablanca.</div>
+        <p class="note">Contactez-nous pour le tarif et les disponibilités selon vos dates.</p>
     </section>
 
     <!-- CTA -->
@@ -221,9 +214,9 @@
 
 </div>
 
-<!-- POPUP VIDÉO -->
+<!-- POPUP VIDÉO / PHOTO -->
 <div class="vmodal" id="vmodal" onclick="if(event.target===this)closeVideo()">
-    <div class="box"><button class="close" onclick="closeVideo()">×</button><div id="vframe"></div></div>
+    <div class="box"><button class="close" onclick="closeVideo()">×</button><div class="ratio" id="vframe"></div></div>
 </div>
 
 <script src="voyage.js"></script>

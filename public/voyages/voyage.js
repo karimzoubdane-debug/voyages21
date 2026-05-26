@@ -1,6 +1,6 @@
 /* Voyages21 — comportement partagé des pages voyage.
-   La vidéo du header et le bouton « Voir la vidéo » sont alimentés en ligne
-   (médiathèque gérée par l'équipe via l'admin). Aucun média n'est codé en dur. */
+   Le bloc média (vidéo) et les miniatures (photos) sont alimentés en ligne
+   via la médiathèque gérée par l'équipe (/api/media). Aucun média codé en dur. */
 (function () {
     var body = document.body;
     var KEY = body.getAttribute('data-media-key');
@@ -10,8 +10,10 @@
     var hero = document.getElementById('heroVideo');
     var heroBox = document.getElementById('hero');
     var voirVideoBtn = document.getElementById('voirVideo');
+    var thumbsBox = document.getElementById('thumbs');
 
-    // --- Médias en ligne ---
+    var PHOTOS = [];
+
     function playHero() {
         if (!hero) return;
         hero.muted = true;
@@ -21,9 +23,31 @@
             hero.addEventListener('canplay', once);
         });
     }
+
+    function buildThumbs(images) {
+        if (!thumbsBox) return;
+        PHOTOS = (images || []).map(function (it) { return it && it.url; }).filter(Boolean);
+        thumbsBox.innerHTML = '';
+        if (!PHOTOS.length) { thumbsBox.style.display = 'none'; return; }
+        thumbsBox.style.display = '';
+        var max = 4, n = Math.min(PHOTOS.length, max);
+        for (var i = 0; i < n; i++) {
+            var d = document.createElement('div');
+            d.className = 'thumb';
+            d.style.backgroundImage = "url('" + PHOTOS[i] + "')";
+            (function (idx) { d.onclick = function () { openPhoto(idx); }; })(i);
+            if (i === max - 1 && PHOTOS.length > max) {
+                var more = document.createElement('div');
+                more.className = 'more';
+                more.textContent = '+' + (PHOTOS.length - max + 1) + ' photos';
+                d.appendChild(more);
+            }
+            thumbsBox.appendChild(d);
+        }
+    }
+
     function applyMedia(rec) {
         rec = rec || {};
-        // Header : mp4 en lecture auto, sinon repli sur une photo, sinon dégradé.
         if (rec.videoUrl && hero) {
             if (rec.images && rec.images[0] && rec.images[0].url) hero.setAttribute('poster', rec.images[0].url);
             hero.src = rec.videoUrl;
@@ -32,19 +56,20 @@
             if (hero) hero.style.display = 'none';
             var bg = (rec.images && rec.images[0] && rec.images[0].url) ? rec.images[0].url : null;
             if (bg && heroBox) heroBox.style.backgroundImage = "url('" + bg + "')";
+            var st = document.getElementById('soundBtn'); if (st) st.style.display = 'none';
         }
-        // Bouton « Voir la vidéo » : uniquement si un lien YouTube/Vimeo existe.
         if (voirVideoBtn) {
             if (rec.videoLink) { voirVideoBtn.style.display = ''; voirVideoBtn.onclick = function () { openVideo(rec.videoLink); }; }
             else { voirVideoBtn.style.display = 'none'; }
         }
+        buildThumbs(rec.images);
     }
+
     fetch('/api/media', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : {}; })
         .then(function (m) { applyMedia(m && m[KEY]); })
         .catch(function () { applyMedia(null); });
 
-    // --- Son du header ---
     window.toggleSound = function () {
         if (!hero) return;
         hero.muted = !hero.muted;
@@ -53,10 +78,8 @@
         if (!hero.muted) hero.play().catch(function () {});
     };
 
-    // --- Accordéon itinéraire ---
     window.toggleDay = function (btn) { btn.parentElement.classList.toggle('open'); };
 
-    // --- Nav collante : défilement doux + surlignage ---
     var links = Array.prototype.slice.call(document.querySelectorAll('.tabs a'));
     links.forEach(function (a) {
         a.addEventListener('click', function (e) {
@@ -74,7 +97,6 @@
         links.forEach(function (a) { a.classList.toggle('active', a === cur); });
     });
 
-    // --- Popup « Voir la vidéo » (YouTube / Vimeo / mp4) ---
     function extractYouTubeId(u) {
         u = String(u || '').trim();
         if (/^[A-Za-z0-9_-]{11}$/.test(u)) return u;
@@ -93,11 +115,15 @@
         if (yt) return '<iframe src="https://www.youtube.com/embed/' + yt + '?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
         return '<div class="video-soon"><strong>Vidéo bientôt disponible</strong><a href="' + value + '" target="_blank" rel="noopener">Ouvrir le lien</a></div>';
     }
-    window.openVideo = function (link) {
-        var vm = document.getElementById('vmodal');
-        document.getElementById('vframe').innerHTML = buildLinkEmbed(link);
-        vm.classList.add('active');
+    function showModal(html) {
+        document.getElementById('vframe').innerHTML = html;
+        document.getElementById('vmodal').classList.add('active');
         document.body.style.overflow = 'hidden';
+    }
+    window.openVideo = function (link) { showModal(buildLinkEmbed(link)); };
+    window.openPhoto = function (idx) {
+        var url = PHOTOS[idx]; if (!url) return;
+        showModal('<img src="' + url + '" alt="">');
     };
     window.closeVideo = function () {
         document.getElementById('vframe').innerHTML = '';
@@ -105,7 +131,6 @@
         document.body.style.overflow = '';
     };
 
-    // --- Devis WhatsApp ---
     window.ask = function (label) {
         var txt = 'Bonjour, je suis intéressé(e) par le voyage « ' + TITLE + ' »' + (label ? ' (' + label + ')' : '') + '. Pouvez-vous me faire une proposition ?';
         window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt), '_blank');
