@@ -38,6 +38,18 @@
     var dates = v.dates || {};
     var cta = v.cta || {};
 
+    var hotelsHtml = (v.hotels && v.hotels.length)
+        ? '<ul class="hotels">' + v.hotels.map(function (h) { return "<li>" + h + "</li>"; }).join("") + "</ul>"
+        : (v.hebergement ? '<div class="stay">' + v.hebergement + "</div>" : "");
+    var priceHtml = "";
+    if (v.priceTable) {
+        priceHtml = '<table class="ptable"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
+            + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
+                return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : "<td>" + c + "</td>"; }).join("") + "</tr>";
+            }).join("") + "</tbody></table>";
+    }
+    var childrenHtml = v.children ? '<p class="note"><b>Tarifs enfants :</b> ' + v.children + "</p>" : "";
+
     app.innerHTML =
         '<div class="topbar"><div class="topbar-inner"><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">‹ Retour à la brochure</a><span class="brand">VOYAGES 21</span></div></div>'
         + '<div class="page">'
@@ -59,12 +71,13 @@
         + '<section id="apercu"><h2 class="sec-title">Pourquoi vous allez adorer ce voyage</h2><div class="lead">' + intro + '</div><ul class="highlights">' + highlights + "</ul></section>"
         + '<section id="itineraire"><h2 class="sec-title">Itinéraire jour par jour</h2>' + days + "</section>"
         + '<section id="inclus"><h2 class="sec-title">Ce qui est inclus</h2><div class="twocol"><div class="incbox in"><h3>Notre tarif comprend</h3><ul class="ticks">' + inc + '</ul></div><div class="incbox out"><h3>Notre tarif ne comprend pas</h3><ul class="ticks">' + exc + "</ul></div></div></section>"
-        + '<section id="hebergement"><h2 class="sec-title">Hébergement</h2><div class="stay">' + (v.hebergement || "") + "</div></section>"
+        + '<section id="hebergement"><h2 class="sec-title">Hébergement</h2>' + hotelsHtml + "</section>"
         + '<section id="carte"><h2 class="sec-title">L\'itinéraire en un coup d\'œil</h2><div class="route">' + route + "</div></section>"
-        + '<section id="dates"><h2 class="sec-title">Dates &amp; prix</h2><div class="stay">' + (dates.line || "") + "</div>" + (dates.note ? '<p class="note">' + dates.note + "</p>" : "") + "</section>"
+        + '<section id="dates"><h2 class="sec-title">Dates &amp; prix</h2>' + (dates.line ? '<div class="stay">' + dates.line + "</div>" : "") + priceHtml + childrenHtml + (dates.note ? '<p class="note">' + dates.note + "</p>" : "") + "</section>"
         + '<div class="cta-final"><h3>' + (cta.title || "") + "</h3><p>" + (cta.text || "") + '</p><button class="btn btn-gold" onclick="ask(\'\')">Demander un devis sur WhatsApp</button></div>'
         + "</div>"
-        + '<div class="vmodal" id="vmodal" onclick="if(event.target===this)closeVideo()"><div class="box"><button class="close" onclick="closeVideo()">×</button><div class="ratio" id="vframe"></div></div></div>';
+        + '<div class="vmodal" id="vmodal" onclick="if(event.target===this)closeVideo()"><div class="box"><button class="close" onclick="closeVideo()">×</button><div class="ratio" id="vframe"></div></div></div>'
+        + '<div class="gallery" id="gallery"><button class="gallery-close" onclick="closeGallery()">×</button><div class="gallery-inner" id="galleryInner"></div></div>';
 
     // ===== Médias en ligne + comportements =====
     var hero = document.getElementById("heroVideo");
@@ -92,7 +105,7 @@
             var d = document.createElement("div");
             d.className = "thumb";
             d.style.backgroundImage = "url('" + PHOTOS[i] + "')";
-            (function (idx) { d.onclick = function () { openPhoto(idx); }; })(i);
+            (function (idx) { d.onclick = function () { openGallery(idx); }; })(i);
             if (i === max - 1 && PHOTOS.length > max) {
                 var more = document.createElement("div");
                 more.className = "more";
@@ -170,10 +183,23 @@
         document.body.style.overflow = "hidden";
     }
     window.openVideo = function (link) { showModal(buildLinkEmbed(link)); };
-    window.openPhoto = function (idx) { var u = PHOTOS[idx]; if (u) showModal('<img src="' + u + '" alt="">'); };
     window.closeVideo = function () {
         document.getElementById("vframe").innerHTML = "";
         document.getElementById("vmodal").classList.remove("active");
+        document.body.style.overflow = "";
+    };
+    // Galerie type Intrepid : ascenseur de photos sur fond clair.
+    window.openGallery = function (idx) {
+        if (!PHOTOS.length) return;
+        var inner = document.getElementById("galleryInner");
+        inner.innerHTML = PHOTOS.map(function (u) { return '<img src="' + u + '" alt="" loading="lazy">'; }).join("");
+        document.getElementById("gallery").classList.add("active");
+        document.body.style.overflow = "hidden";
+        setTimeout(function () { var imgs = inner.querySelectorAll("img"); if (imgs[idx]) imgs[idx].scrollIntoView(); }, 30);
+    };
+    window.closeGallery = function () {
+        document.getElementById("gallery").classList.remove("active");
+        document.getElementById("galleryInner").innerHTML = "";
         document.body.style.overflow = "";
     };
     window.ask = function (label) {

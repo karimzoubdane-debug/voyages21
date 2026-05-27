@@ -21,7 +21,7 @@ img{max-width:100%;display:block;}
 .page{max-width:var(--maxw);margin:0 auto;padding:0 1.2rem 3rem;}
 .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.2em;color:var(--gold);font-weight:700;margin-top:1.5rem;}
 .voyage-title{font-size:clamp(1.9rem,4.6vw,2.8rem);line-height:1.15;color:var(--forest);margin:.25rem 0 1.1rem;}
-.dur-badge{display:inline-block;vertical-align:middle;margin-left:.7rem;background:var(--gold);color:var(--forest2);font-family:'DM Sans',sans-serif;font-weight:700;font-size:.92rem;letter-spacing:.02em;padding:.28rem .85rem;border-radius:999px;white-space:nowrap;}
+.dur-badge{display:inline-block;vertical-align:middle;margin-left:.8rem;background:var(--gold);color:var(--forest2);font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.03em;padding:.38rem 1.15rem;border-radius:999px;white-space:nowrap;box-shadow:0 3px 10px rgba(200,164,64,.4);text-transform:uppercase;}
 
 /* rangée héro : média (gauche) + cadran (droite) */
 .hero-row{display:grid;grid-template-columns:1.7fr 1fr;gap:1.4rem;align-items:start;}
@@ -97,6 +97,24 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 .route .sep{color:var(--gold);font-weight:700;}
 
 .note{font-size:.85rem;color:var(--muted);margin-top:.7rem;}
+
+/* hôtels */
+.hotels{list-style:none;display:grid;gap:.5rem;}
+.hotels li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.7rem 1rem;font-size:.93rem;}
+
+/* tableau de prix (identique à la brochure) */
+.ptable{width:100%;border-collapse:collapse;margin:.5rem 0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.ptable th,.ptable td{padding:.7rem .9rem;text-align:left;font-size:.9rem;border-bottom:1px solid var(--line);}
+.ptable thead th{background:var(--forest);color:#fff;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;}
+.ptable tbody th{font-weight:700;color:var(--forest);font-family:'Playfair Display',serif;}
+.ptable tr:last-child td,.ptable tbody tr:last-child th{border-bottom:none;}
+
+/* galerie photos type Intrepid : fond clair, ascenseur vertical */
+.gallery{position:fixed;inset:0;background:#f5f0e8;display:none;z-index:1100;overflow-y:auto;}
+.gallery.active{display:block;}
+.gallery-close{position:fixed;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;z-index:2;box-shadow:0 2px 10px rgba(0,0,0,.15);}
+.gallery-inner{max-width:840px;margin:0 auto;padding:70px 16px 48px;}
+.gallery-inner img{width:100%;border-radius:14px;margin-bottom:16px;display:block;box-shadow:0 4px 16px rgba(21,46,31,.08);}
 
 .cta-final{margin-top:1.8rem;background:var(--forest);color:#fff;border-radius:18px;padding:1.9rem 1.6rem;text-align:center;}
 .cta-final h3{color:#fff;font-size:1.5rem;margin-bottom:.4rem;}

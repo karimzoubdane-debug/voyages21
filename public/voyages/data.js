@@ -66,7 +66,20 @@ window.VOYAGES = {
       "Les extras aux hôtels et les boissons",
       "Les pourboires des guides et chauffeurs"
     ],
-    hebergement: "<b>Istanbul</b> — 7 nuits, en logement et petit-déjeuner.",
+    hotels: ["Comfortlife 3★ — Laleli", "All Season 4★ — Fatih", "Taksim Square 4★"],
+    priceTable: {
+      head: ["Catégorie", "Saison", "Prix / pers."],
+      rows: [
+        ["Triple · 3★", "Basse", "9 700 DH"],
+        ["Triple · 4★", "Moyenne", "9 900 DH"],
+        ["Triple · 4★", "Haute", "11 900 DH"],
+        ["Double · 3★", "Basse", "9 900 DH"],
+        ["Double · 4★", "Moyenne", "10 900 DH"],
+        ["Double · 4★", "Haute", "12 600 DH"],
+        ["Single · 4★", "Moyenne", "13 900 DH"]
+      ]
+    },
+    children: "0–2 ans : 1 500 DH · 2–6 ans : 6 900 DH · 7–11 ans : 8 700–10 100 DH",
     route: ["Casablanca", "Istanbul", "Bosphore", "Îles des Princesses", "Casablanca"],
     dates: {
       line: "Départs garantis tout l'été 2026 (juillet et août), au départ de Casablanca.",
@@ -135,7 +148,16 @@ window.VOYAGES = {
       "Les extras aux hôtels et les boissons",
       "Les pourboires des guides et chauffeurs"
     ],
-    hebergement: "<b>Istanbul</b> — 2 nuits, en logement et petit-déjeuner.<br><b>Antalya</b> — 5 nuits, en formule tout compris.",
+    hotels: ["Beyazsamay 4★ + Kemer Ring Beach Resort 5★", "Taksim Gonen 4★ + Kemer Ring Beach Resort 5★", "Taksim Square 4★ + Sirene Belek Resort 5★ (vue mer)"],
+    priceTable: {
+      head: ["Chambre", "Basse", "Moyenne", "Haute"],
+      rows: [
+        ["Triple", "16 300 DH", "16 500 DH", "20 500 DH"],
+        ["Double", "17 900 DH", "18 500 DH", "22 500 DH"],
+        ["Single", "23 800 DH", "24 500 DH", "31 800 DH"]
+      ]
+    },
+    children: "0–2 ans : 1 800 DH · 2–6 ans : 8 900 DH",
     route: ["Casablanca", "Istanbul", "Antalya", "Istanbul", "Casablanca"],
     dates: {
       line: "Dates de voyages garanties au départ de Casablanca, tout l'été 2026.",
