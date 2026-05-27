@@ -418,6 +418,183 @@ window.VOYAGES = {
       title: "Envie de partir en Turquie ?",
       text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
     }
+  },
+
+  "egypte-caire-nil-hurghada": {
+    mediaKey: "modal-caire-nil-hurghada",
+    whatsapp: "212673280009",
+    eyebrow: "Égypte · Circuit & croisière été 2026",
+    title: "Le Caire, Croisière du Nil & Hurghada",
+    duration: "12 jours",
+    tag: "Égypte",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Le Caire · Nil · Hurghada"],
+      ["Durée", "12 jours / 11 nuits"],
+      ["Vols", "Inclus — Royal Air Maroc"],
+      ["Date", "Du 17 au 28 août 2026"],
+      ["Guide", "Francophone"]
+    ],
+    price: "19 300 DH",
+    intro: [
+      "L'Égypte des pharaons, dans les règles de l'art. Au Caire, vous vous tiendrez au pied des pyramides de Gizeh et face au Sphinx, ces merveilles que le temps n'a pas su user, avant de percer les secrets des parfums et du papyrus.",
+      "Puis le Nil vous prend par la main. Trois nuits à bord d'un bateau de croisière, d'Assouan à Louxor, au fil des temples de Kom Ombo, d'Edfou et de Karnak, des felouques et des couchers de soleil sur le fleuve. La Vallée des Rois vous attend sur l'autre rive.",
+      "Enfin Hurghada, et la mer Rouge : quatre nuits en tout compris pour se reposer face à des eaux d'un bleu incomparable. Un grand voyage, des pyramides aux récifs, vols et pension compris."
+    ],
+    highlights: [
+      "Les pyramides de Gizeh et le Sphinx, au Caire",
+      "Trois nuits de croisière sur le Nil, d'Assouan à Louxor",
+      "Temples de Kom Ombo, Edfou, Karnak et Vallée des Rois",
+      "Quatre nuits en tout compris à Hurghada, sur la mer Rouge",
+      "Vols Royal Air Maroc inclus et guide francophone"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca – Le Caire",
+        text: "Envol pour Le Caire. À l'arrivée à l'aéroport international, accueil et transfert à l'hôtel. Installation et nuitée.",
+        meta: [["Nuit", "Le Caire (hôtel 4★ sup.)"]] },
+      { num: "J2", title: "Le Caire — Pyramides & Musée, puis train de nuit", titleOpt: "(Musée et déjeuner en option)",
+        text: "Petit-déjeuner, puis plateau de Gizeh pour les trois pyramides et le Sphinx, visite d'une parfumerie et d'une fabrique de papyrus. En option : déjeuner avec vue sur le Nil et Musée égyptien. En soirée, transfert vers le train-couchettes pour Assouan (dîner et petit-déjeuner servis à bord).",
+        meta: [["Repas", "petit-déjeuner, dîner"], ["Nuit", "Train-couchettes"]] },
+      { num: "J3", title: "Assouan – Kom Ombo",
+        text: "Arrivée à Assouan et embarquement sur le bateau de croisière. Déjeuner, visite du Haut Barrage, promenade en felouque sur le Nil et jardin botanique. Dîner et nuit à bord.",
+        meta: [["Repas", "pension complète"], ["Nuit", "Croisière 5★"]] },
+      { num: "J4", title: "Kom Ombo",
+        text: "Visite du temple de Kom Ombo, dédié à Sobek et Horus. Retour au bateau, navigation, déjeuner et dîner à bord.",
+        meta: [["Repas", "pension complète"], ["Nuit", "Croisière 5★"]] },
+      { num: "J5", title: "Edfou",
+        text: "Visite du temple d'Edfou, l'un des mieux conservés d'Égypte. Retour au bateau, déjeuner et dîner à bord.",
+        meta: [["Repas", "pension complète"], ["Nuit", "Croisière 5★"]] },
+      { num: "J6", title: "Louxor – Hurghada",
+        text: "Rive ouest de Louxor : Vallée des Rois et temple d'Hatchepsout, puis temple de Karnak sur la rive est. Transfert en bus climatisé vers Hurghada ; début du séjour en tout compris.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Hurghada (4★ de luxe)"]] },
+      { num: "J7–9", title: "Hurghada — séjour en tout compris",
+        text: "Journées libres en formule tout compris à Hurghada, sur la mer Rouge : plage, piscines et détente, avec excursions possibles en option.",
+        meta: [["Repas", "tout compris"], ["Nuit", "Hurghada"]] },
+      { num: "J10", title: "Hurghada – Le Caire",
+        text: "Petit-déjeuner, puis transfert en bus climatisé vers Le Caire. Arrivée et nuitée à l'hôtel.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Le Caire"]] },
+      { num: "J11", title: "Le Caire",
+        text: "Journée et nuit au Caire, en logement et petit-déjeuner.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Le Caire"]] },
+      { num: "J12", title: "Le Caire – Casablanca",
+        text: "Petit-déjeuner, puis transfert à l'aéroport du Caire et envol vers Casablanca.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Le billet d'avion Casablanca – Le Caire – Casablanca sur Royal Air Maroc (2 × 23 kg + bagage à main)",
+      "1 nuit avec petit-déjeuner au Caire (hôtel 4★ sup.)",
+      "1 nuit en train-couchettes, en demi-pension",
+      "3 nuits de croisière sur le Nil (5★, pension complète)",
+      "4 nuits en tout compris à Hurghada (4★ de luxe)",
+      "2 nuits avec petit-déjeuner au Caire (hôtel 4★ sup.)",
+      "Les transferts privés (arrivée, départ et vers Hurghada)",
+      "Les taxes de séjour et de promotion touristique",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les dépenses personnelles",
+      "Les pourboires (20 $/adulte, 5 $/enfant, collectés à l'arrivée)",
+      "Le visa Égypte (600 DH)"
+    ],
+    hotels: ["Le Caire — hôtel 4★ sup. (1 nuit à l'arrivée + 2 nuits au retour)", "Croisière du Nil — bateau 5★, pension complète (3 nuits)", "Hurghada — resort 4★ de luxe, tout compris (4 nuits)"],
+    priceTable: {
+      head: ["Forfait", "Prix / pers."],
+      rows: [
+        ["Chambre double ou triple", "19 300 DH"]
+      ]
+    },
+    route: ["Casablanca", "Le Caire", "Assouan", "Kom Ombo · Edfou", "Louxor", "Hurghada", "Le Caire", "Casablanca"],
+    dates: {
+      line: "Date fixe : du 17 au 28 août 2026, au départ de Casablanca.",
+      note: "Visa Égypte : 600 DH (2 photos, copie CIN, relevés bancaires des 3 derniers mois, attestation de travail). À prévoir : dépenses personnelles et pourboires."
+    },
+    cta: {
+      title: "Envie de découvrir l'Égypte ?",
+      text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
+    }
+  },
+
+  "egypte-caire-sharm": {
+    mediaKey: "modal-caire-sharm",
+    whatsapp: "212673280009",
+    eyebrow: "Égypte · Combiné été 2026",
+    title: "Le Caire & Sharm El Sheikh",
+    duration: "11 jours",
+    tag: "Égypte",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Le Caire et Sharm El Sheikh"],
+      ["Durée", "11 jours / 10 nuits"],
+      ["Vols", "Inclus"],
+      ["Pension", "3 nuits B&B · 7 nuits tout compris"],
+      ["Hôtels", "5★"]
+    ],
+    price: "19 600 DH",
+    intro: [
+      "Le Caire pour commencer : trois jours au cœur de l'Égypte éternelle, entre les pyramides de Gizeh, le Sphinx, les ruelles animées de Khan El Khalili et les mosquées d'Al-Hussein et Al-Azhar. Un soir, vous dînerez sur le Nil, au rythme d'un spectacle folklorique.",
+      "Puis Sharm El Sheikh, joyau de la mer Rouge. Sept nuits en formule tout compris dans un resort 5★, face à l'un des plus beaux jardins de corail du monde : farniente, baignades et soleil garanti.",
+      "De la pierre des pharaons au bleu de la mer Rouge, ce combiné réunit culture et détente — vols, excursions et pension compris."
+    ],
+    highlights: [
+      "Trois nuits au Caire en hôtel 5★, visites comprises",
+      "Pyramides de Gizeh, Sphinx et Khan El Khalili",
+      "Dîner-croisière sur le Nil avec spectacle",
+      "Sept nuits en tout compris à Sharm El Sheikh, resort 5★",
+      "Vols et transferts inclus, guide professionnel"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca – Le Caire",
+        text: "Envol vers Le Caire. Accueil par notre représentant local, assistance aux formalités de visa et transfert à l'hôtel. Nuitée.",
+        meta: [["Nuit", "Le Caire (5★)"]] },
+      { num: "J2", title: "Le Caire — pyramides & vieille ville",
+        text: "Journée de visite : les grandes pyramides et le Sphinx, l'institut du papyrus et une fabrique de parfums, puis Khan El Khalili et les mosquées d'Al-Hussein et Al-Azhar. Déjeuner et retour à l'hôtel.",
+        meta: [["Repas", "petit-déjeuner, déjeuner"], ["Nuit", "Le Caire"]] },
+      { num: "J3", title: "Le Caire — dîner-croisière sur le Nil",
+        text: "Petit-déjeuner, journée libre, puis dîner-croisière sur le Nil avec spectacle folklorique et musique live à bord. Retour et nuit au Caire.",
+        meta: [["Repas", "petit-déjeuner, dîner"], ["Nuit", "Le Caire"]] },
+      { num: "J4", title: "Le Caire – Sharm El Sheikh",
+        text: "Petit-déjeuner, transfert à l'aéroport et envol vers Sharm El Sheikh. Transfert et dîner à l'hôtel ; début du séjour en tout compris.",
+        meta: [["Repas", "petit-déjeuner, dîner"], ["Nuit", "Sharm El Sheikh (5★)"]] },
+      { num: "J5–10", title: "Sharm El Sheikh — séjour en tout compris",
+        text: "Sept nuits en formule tout compris à Sharm El Sheikh, dans un resort 5★ : plage, récifs de corail, piscines et détente, à votre rythme.",
+        meta: [["Repas", "tout compris"], ["Nuit", "Sharm El Sheikh"]] },
+      { num: "J11", title: "Sharm El Sheikh – Casablanca",
+        text: "Transfert à l'aéroport de Sharm El Sheikh et envol vers Casablanca via Le Caire. Fin de nos services.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Les billets d'avion Casablanca / Le Caire / Sharm El Sheikh / Casablanca",
+      "3 nuits au Caire en hôtel 5★, logement et petit-déjeuner",
+      "7 nuits à Sharm El Sheikh en resort 5★, tout compris (soft)",
+      "Excursion d'une journée complète au Caire + 1 déjeuner",
+      "Dîner-croisière sur le Nil avec spectacle",
+      "Tous les transferts en autocar Deluxe climatisé et un guide professionnel"
+    ],
+    exclus: [
+      "Les dépenses personnelles",
+      "Les pourboires (20 $/adulte, 5 $/enfant)",
+      "Le visa Égypte (600 DH)"
+    ],
+    hotels: ["Option A : Marriott Cairo City View 5★ + Aurora Oriental Resort Sharm El Sheikh 5★ (vue jardin)", "Option B : Marriott & Omar Khayyam Casino City View 5★ + Cleopatra Luxury Resort ou Mövenpick 5★"],
+    priceTable: {
+      head: ["Chambre", "Prix / pers."],
+      rows: [
+        ["Triple", "19 600 DH"],
+        ["Double", "19 800 DH"],
+        ["Supplément single", "+ 5 900 DH"]
+      ]
+    },
+    children: "2–5 ans : 8 900 DH · 6–11 ans (1ᵉʳ) : 11 900 DH · 4–11 ans (2ᵉ) : 14 900 DH",
+    datesList: ["16→26 juil.", "23 juil.→2 août", "6→16 août", "10→20 août", "13→23 août", "20→30 août", "30 août→9 sept."],
+    route: ["Casablanca", "Le Caire", "Sharm El Sheikh", "Le Caire", "Casablanca"],
+    dates: {
+      line: "Départs garantis au départ de Casablanca :",
+      note: "Visa Égypte : 600 DH (dossier à remettre 15 jours avant le départ). Annulation : 30–15 j (50 %), 14–8 j (70 %), moins de 7 j (100 %). Paiement : 50 % à la confirmation, solde 30 j avant le départ."
+    },
+    cta: {
+      title: "Envie de découvrir l'Égypte ?",
+      text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
+    }
   }
 
 };
