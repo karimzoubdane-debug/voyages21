@@ -8,6 +8,7 @@ window.VOYAGES = {
     whatsapp: "212673280009",
     eyebrow: "Turquie · Spécial été 2026",
     title: "Séjour à Istanbul",
+    duration: "8 jours",
     tag: "Turquie",
     cadran: [
       ["Départ", "Casablanca"],
@@ -18,7 +19,7 @@ window.VOYAGES = {
       ["Période", "Été 2026 (juil.–août)"],
       ["Guide", "Arabophone (excursions)"]
     ],
-    price: "sur demande",
+    price: "9 700 DH",
     intro: [
       "Il y a des villes que l'on visite, et d'autres que l'on habite, le temps d'une semaine. Istanbul est de celles-là. Posée à cheval sur deux continents, elle vous accueille au son de l'appel à la prière qui glisse au-dessus des coupoles, dans le parfum du thé et des épices. Vous lèverez les yeux vers les faïences d'Iznik de la Mosquée Bleue, traverserez l'Hippodrome où battait le cœur de Constantinople, et pousserez les portes du palais de Topkapı, fastueuse demeure des sultans.",
       "Un matin, un bateau vous emmènera au fil du Bosphore, entre les rives d'Europe et d'Asie, devant les yalis de bois des familles ottomanes. Un autre jour, le large vous tendra les bras vers les Îles des Princesses, leurs pinèdes et leurs calèches, loin du tumulte de la ville.",
@@ -82,6 +83,7 @@ window.VOYAGES = {
     whatsapp: "212673280009",
     eyebrow: "Turquie · Combiné été 2026",
     title: "Istanbul & Antalya",
+    duration: "8 jours",
     tag: "Turquie",
     cadran: [
       ["Départ", "Casablanca"],
@@ -91,7 +93,7 @@ window.VOYAGES = {
       ["Pension", "2 nuits petit-déj · 5 nuits tout compris"],
       ["Période", "Été 2026"]
     ],
-    price: "sur demande",
+    price: "16 300 DH",
     intro: [
       "Istanbul d'abord, le temps d'une escale qui a tout d'une promesse : la ville aux deux continents vous accueille au bord du Bosphore, entre coupoles et lumière dorée, avant de vous laisser repartir vers le sud.",
       "Puis Antalya, et le grand bleu. Sur la Riviera turque, votre séjour se fait en formule tout compris, au rythme des bains de mer, des longues heures au bord de la piscine et des soirées douces face à la Méditerranée. Cinq nuits où l'on ne s'occupe de rien, sinon de profiter.",

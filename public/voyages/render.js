@@ -42,7 +42,7 @@
         '<div class="topbar"><div class="topbar-inner"><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">‹ Retour à la brochure</a><span class="brand">VOYAGES 21</span></div></div>'
         + '<div class="page">'
         + (v.eyebrow ? '<div class="eyebrow">' + v.eyebrow + "</div>" : "")
-        + '<h1 class="voyage-title">' + v.title + "</h1>"
+        + '<h1 class="voyage-title">' + v.title + (v.duration ? ' <span class="dur-badge">' + v.duration + "</span>" : "") + "</h1>"
         + '<div class="hero-row">'
         + '<div class="media-col"><div class="media-main" id="hero">'
         + (v.tag ? '<span class="media-tag">' + v.tag + "</span>" : "")

@@ -20,7 +20,8 @@ img{max-width:100%;display:block;}
 /* conteneur unique : toutes les sections à la même largeur */
 .page{max-width:var(--maxw);margin:0 auto;padding:0 1.2rem 3rem;}
 .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.2em;color:var(--gold);font-weight:700;margin-top:1.5rem;}
-.voyage-title{font-size:clamp(1.9rem,4.6vw,2.8rem);line-height:1.05;color:var(--forest);margin:.25rem 0 1.1rem;}
+.voyage-title{font-size:clamp(1.9rem,4.6vw,2.8rem);line-height:1.15;color:var(--forest);margin:.25rem 0 1.1rem;}
+.dur-badge{display:inline-block;vertical-align:middle;margin-left:.7rem;background:var(--gold);color:var(--forest2);font-family:'DM Sans',sans-serif;font-weight:700;font-size:.92rem;letter-spacing:.02em;padding:.28rem .85rem;border-radius:999px;white-space:nowrap;}
 
 /* rangée héro : média (gauche) + cadran (droite) */
 .hero-row{display:grid;grid-template-columns:1.7fr 1fr;gap:1.4rem;align-items:start;}
