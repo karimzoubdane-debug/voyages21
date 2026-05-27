@@ -32,7 +32,7 @@
 
     var inc = (v.inclus || []).map(function (x) { return "<li>" + x + "</li>"; }).join("");
     var exc = (v.exclus || []).map(function (x) { return "<li>" + x + "</li>"; }).join("");
-    var route = (v.route || []).map(function (s, i) {
+    var route = (v.route || v.programme || []).map(function (s, i) {
         return (i ? '<span class="sep">—</span>' : "") + '<span class="stop">' + s + "</span>";
     }).join("");
     var dates = v.dates || {};
@@ -52,6 +52,11 @@
     var datesListHtml = (v.datesList && v.datesList.length)
         ? '<div class="datechips">' + v.datesList.map(function (x) { return "<span>" + x + "</span>"; }).join("") + "</div>"
         : "";
+    var inclusBlock = '<div class="incbox in"><h3>Notre tarif comprend</h3><ul class="ticks">' + inc + "</ul></div>";
+    if (exc) inclusBlock = '<div class="twocol">' + inclusBlock + '<div class="incbox out"><h3>Notre tarif ne comprend pas</h3><ul class="ticks">' + exc + "</ul></div></div>";
+    var itinTitle = (v.days && v.days.length) ? "Itinéraire jour par jour" : "Itinéraire";
+    var itinBody = (v.days && v.days.length) ? days
+        : ((v.programme && v.programme.length) ? '<ol class="steps">' + v.programme.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" : "");
 
     app.innerHTML =
         '<div class="topbar"><div class="topbar-inner"><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">‹ Retour à la brochure</a><span class="brand">VOYAGES 21</span></div></div>'
@@ -72,8 +77,8 @@
         + "</aside></div>"
         + '<nav class="tabs"><a href="#apercu" class="active">Le voyage</a><a href="#itineraire">Itinéraire</a><a href="#inclus">Inclus</a><a href="#hebergement">Hébergement</a><a href="#carte">Carte</a><a href="#dates">Dates &amp; prix</a></nav>'
         + '<section id="apercu"><h2 class="sec-title">Pourquoi vous allez adorer ce voyage</h2><div class="lead">' + intro + '</div><ul class="highlights">' + highlights + "</ul></section>"
-        + '<section id="itineraire"><h2 class="sec-title">Itinéraire jour par jour</h2>' + days + "</section>"
-        + '<section id="inclus"><h2 class="sec-title">Ce qui est inclus</h2><div class="twocol"><div class="incbox in"><h3>Notre tarif comprend</h3><ul class="ticks">' + inc + '</ul></div><div class="incbox out"><h3>Notre tarif ne comprend pas</h3><ul class="ticks">' + exc + "</ul></div></div></section>"
+        + '<section id="itineraire"><h2 class="sec-title">' + itinTitle + "</h2>" + itinBody + "</section>"
+        + '<section id="inclus"><h2 class="sec-title">Ce qui est inclus</h2>' + inclusBlock + "</section>"
         + '<section id="hebergement"><h2 class="sec-title">Hébergement</h2>' + hotelsHtml + "</section>"
         + '<section id="carte"><h2 class="sec-title">L\'itinéraire en un coup d\'œil</h2><div class="route">' + route + "</div></section>"
         + '<section id="dates"><h2 class="sec-title">Dates &amp; prix</h2>' + (dates.line ? '<div class="stay">' + dates.line + "</div>" : "") + datesListHtml + priceHtml + childrenHtml + (dates.note ? '<p class="note">' + dates.note + "</p>" : "") + "</section>"

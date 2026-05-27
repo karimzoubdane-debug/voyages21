@@ -595,6 +595,412 @@ window.VOYAGES = {
       title: "Envie de découvrir l'Égypte ?",
       text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
     }
+  },
+
+  "usa-ouest-complet": {
+    mediaKey: "modal-ouest-usa", whatsapp: "212673280009",
+    eyebrow: "États-Unis · Circuit accompagné", title: "L'Ouest Complet — USA", duration: "13 jours", tag: "États-Unis",
+    cadran: [["Destinations", "Ouest américain"], ["Durée", "13 jours / 12 nuits"], ["Vols", "Non inclus"], ["Pension", "Petit-déjeuner + 10 repas"], ["Guide", "Accompagnateur francophone"], ["Type", "Départs garantis"]],
+    price: "21 250 DH",
+    intro: [
+      "Le grand Ouest américain comme dans les films. De Los Angeles aux gratte-ciel de San Francisco, en passant par les canyons rouges et les déserts de l'Arizona, ce circuit accompagné déroule les paysages les plus mythiques des États-Unis.",
+      "Grand Canyon, Monument Valley, les néons de Las Vegas, la côte de Monterey : quinze jours de route, d'émerveillements et de grands espaces, guidés en français."
+    ],
+    highlights: ["Le Grand Canyon et Monument Valley", "Las Vegas et ses lumières", "San Francisco et la côte Pacifique", "Accompagnateur francophone tout au long du circuit", "12 nuits d'hôtel et 10 repas inclus"],
+    programme: ["Los Angeles", "Grand Canyon", "Monument Valley", "Las Vegas", "San Francisco", "Monterey", "Los Angeles"],
+    inclus: ["12 nuits d'hôtel avec petit-déjeuner", "10 repas mentionnés au programme", "Les entrées selon programme", "Un accompagnateur francophone", "Les transferts d'aéroports", "Autocar climatisé 38-56 places", "Les taxes et services"],
+    exclus: ["Les vols internationaux", "Les repas non mentionnés", "Les dépenses personnelles et pourboires"],
+    priceTable: { head: ["Triple", "Double", "Suppl. single", "Enfant -12 ans"], rows: [["21 250 DH", "22 400 DH", "7 650 DH", "18 900 DH"]] },
+    datesList: ["25/03", "15/04", "27/05", "08/07", "29/07", "23/09", "20/10"],
+    dates: { line: "Départs garantis (GIR) :", note: "" },
+    cta: { title: "Envie de partir dans l'Ouest américain ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "canada-usa-joyaux": {
+    mediaKey: "modal-joyaux-canada", whatsapp: "212673280009",
+    eyebrow: "Canada & USA · Circuit accompagné", title: "Les joyaux du Canada et des USA", duration: "11 jours", tag: "Canada & USA",
+    cadran: [["Destinations", "Est canadien et américain"], ["Durée", "11 jours / 10 nuits"], ["Vols", "Non inclus"], ["Pension", "Petit-déjeuner + 9 repas"], ["Guide", "Accompagnateur francophone"], ["Type", "Départs garantis"]],
+    price: "20 550 DH",
+    intro: [
+      "L'Est du continent nord-américain, du Saint-Laurent à la côte atlantique. Montréal et Québec la française, Boston l'historique, New York l'électrique, Washington la monumentale.",
+      "Et la nature en majesté : les chutes du Niagara, les Mille-Îles, le pays Amish. Un grand circuit accompagné en français, ponctué d'une croisière."
+    ],
+    highlights: ["Montréal, Québec et la côte atlantique", "New York et Washington", "Les chutes du Niagara", "Croisière des Mille-Îles", "Accompagnateur francophone et guides locaux"],
+    programme: ["Montréal", "Québec", "Boston", "New York", "Washington", "Pays Amish", "Niagara", "Toronto", "Mille-Îles", "Ottawa", "Montréal"],
+    inclus: ["10 nuits d'hôtel avec petit-déjeuner", "9 repas mentionnés au programme", "La croisière des Mille-Îles", "Un accompagnateur francophone et des guides locaux", "Les transferts d'aéroports", "Autocar climatisé"],
+    exclus: ["Les vols internationaux", "Les repas non mentionnés", "Les dépenses personnelles et pourboires"],
+    priceTable: { head: ["Triple", "Double", "Suppl. single", "Enfant -12 ans"], rows: [["20 550 DH", "21 800 DH", "8 200 DH", "17 600 DH"]] },
+    datesList: ["12/05", "09/06", "30/06", "14/07", "04/08", "11/08", "02/09", "08/09", "15/09", "22/09", "29/09", "06/10"],
+    dates: { line: "Départs garantis :", note: "" },
+    cta: { title: "Envie de partir au Canada ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "usa-rocheuses": {
+    mediaKey: "modal-rocheuses", whatsapp: "212673280009",
+    eyebrow: "États-Unis · Grand circuit", title: "Les Rocheuses et l'Ouest classique — USA", duration: "17 jours", tag: "États-Unis",
+    cadran: [["Destinations", "Ouest américain et Rocheuses"], ["Durée", "17 jours / 16 nuits"], ["Vols", "Non inclus"], ["Pension", "Petit-déjeuner + 15 repas"], ["Guide", "Accompagnateur francophone"], ["Type", "Départs garantis"]],
+    price: "32 000 DH",
+    intro: [
+      "Le plus complet de nos circuits américains. Aux grands classiques de l'Ouest — Grand Canyon, Las Vegas, San Francisco — s'ajoutent les merveilles des Rocheuses : Bryce Canyon, et surtout Yellowstone et Grand Teton, royaumes des geysers et de la vie sauvage.",
+      "Dix-sept jours pour traverser des paysages parmi les plus spectaculaires de la planète, accompagnés en français."
+    ],
+    highlights: ["Yellowstone et Grand Teton", "Bryce Canyon et Grand Canyon", "Monument Valley et Las Vegas", "San Francisco", "16 nuits et 15 repas inclus, accompagnateur francophone"],
+    programme: ["Los Angeles", "Las Vegas", "Bryce Canyon", "Grand Canyon", "Monument Valley", "Yellowstone", "Grand Teton", "San Francisco", "Los Angeles"],
+    inclus: ["16 nuits d'hôtel avec petit-déjeuner", "15 repas mentionnés au programme", "Les entrées selon programme", "Un accompagnateur francophone", "Autocar climatisé 38-56 places", "Les taxes et services"],
+    exclus: ["Les vols internationaux", "Les repas non mentionnés", "Les dépenses personnelles et pourboires"],
+    priceTable: { head: ["Triple", "Double", "Suppl. single", "Enfant -12 ans"], rows: [["32 000 DH", "34 000 DH", "13 600 DH", "27 300 DH"]] },
+    datesList: ["20/05", "27/05", "03/06", "24/06", "05/08", "12/08", "02/09", "16/09"],
+    dates: { line: "Départs garantis :", note: "" },
+    cta: { title: "Envie de partir dans les Rocheuses ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "cuba-havane-varadero": {
+    mediaKey: "modal-cuba", whatsapp: "212673280009",
+    eyebrow: "Cuba · Circuit & plages", title: "Cuba — La Havane & Varadero", duration: "9 jours", tag: "Cuba",
+    cadran: [["Destinations", "La Havane, Viñales, Trinidad, Varadero"], ["Durée", "9 jours / 8 nuits"], ["Vols", "Non inclus"], ["Pension", "Repas selon programme, boissons incluses"], ["Guide", "Local francophone"], ["Minimum", "4 personnes"]],
+    price: "17 000 DH",
+    intro: [
+      "Cuba comme une chanson. La Havane et son Malecón, ses voitures américaines et ses façades colorées ; Viñales et ses plantations de tabac ; Trinidad la coloniale, figée dans le temps.",
+      "Et pour finir, les plages de sable blanc de Varadero, en formule tout compris. Un voyage entre culture, mojitos et farniente, guidé en français."
+    ],
+    highlights: ["La Havane, le Malecón et la vieille ville", "La vallée de Viñales et le tabac", "Trinidad, joyau colonial", "Les plages de Varadero en all-inclusive", "Visites avec guide local francophone, boissons incluses"],
+    programme: ["La Havane (vieille ville, Malecón, musées)", "Viñales (vallée du tabac)", "Trinidad (architecture coloniale)", "Varadero (plages all-inclusive)"],
+    inclus: ["Les hébergements proposés ou similaires", "Les repas selon programme et les boissons incluses", "Toutes les visites avec guide local francophone", "La carte de tourisme (visa) obligatoire", "L'assistance de nos représentants sur place"],
+    exclus: ["Les vols internationaux", "L'assurance assistance-rapatriement (obligatoire)", "Les pourboires et le port des bagages"],
+    priceTable: { head: ["Double", "Suppl. single"], rows: [["17 000 DH", "3 400 DH"]] },
+    datesList: ["09/05", "21/06", "11/10"],
+    dates: { line: "Dates de départ (à partir de 4 personnes) :", note: "" },
+    cta: { title: "Envie de partir à Cuba ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "perou-merveilles-incas": {
+    mediaKey: "modal-perou", whatsapp: "212673280009",
+    eyebrow: "Pérou · Circuit accompagné", title: "Pérou — Les merveilles Incas", duration: "11 jours", tag: "Pérou",
+    cadran: [["Destinations", "Lima, Arequipa, Titicaca, Cusco, Machu Picchu"], ["Durée", "11 jours / 9 nuits"], ["Vols", "Non inclus"], ["Pension", "Pension complète (J2 au J10)"], ["Guide", "Guides locaux francophones"], ["Train", "Machu Picchu (classe Expedition)"]],
+    price: "18 700 DH",
+    intro: [
+      "Le Pérou des Incas, du Pacifique aux sommets des Andes. Lima la coloniale, Arequipa la blanche, le lac Titicaca et ses îles de roseaux, Cusco l'impériale.",
+      "Et bien sûr le Machu Picchu, cité perdue suspendue dans les nuages, que l'on rejoint en train à travers la Vallée sacrée. Un grand voyage en pension complète, guidé en français."
+    ],
+    highlights: ["Le Machu Picchu, merveille du monde", "Le lac Titicaca, îles Uros et Llachón", "Cusco et la Vallée sacrée", "Arequipa et le canyon de Colca", "Train vers le Machu Picchu, pension complète"],
+    programme: ["Lima", "Arequipa", "Puno", "Lac Titicaca (Uros et Llachón)", "Cusco", "Machu Picchu", "Lima"],
+    inclus: ["Les transferts et excursions selon programme", "Les entrées dans les sites et musées visités", "Le logement en chambre double (hôtels 3★/3★ sup.)", "La pension complète (du petit-déjeuner J2 au petit-déjeuner J10)", "Le train Ollanta / Machu Picchu / Ollanta en classe Expedition", "Des guides locaux francophones", "L'assistance de nos agences locales"],
+    exclus: ["Les vols internationaux", "Les dépenses personnelles et pourboires"],
+    priceTable: { head: ["Triple", "Double", "Suppl. single"], rows: [["18 700 DH", "19 500 DH", "4 700 DH"]] },
+    datesList: ["12 juin", "27 sept.", "04 oct.", "19 nov."],
+    dates: { line: "Dates de départ 2026 :", note: "" },
+    cta: { title: "Envie de partir au Pérou ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-las-palmas": {
+    mediaKey: "modal-europe-1", whatsapp: "212673280009",
+    eyebrow: "Canaries · Séjour balnéaire", title: "Séjour à Las Palmas", duration: "8 jours", tag: "Espagne",
+    cadran: [["Destination", "Las Palmas de Gran Canaria"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus — Ryanair"], ["Hôtel", "3★"], ["Plage", "Las Canteras"]],
+    price: "6 900 DH",
+    intro: [
+      "Le soleil toute l'année, à quelques heures de vol. Las Palmas de Gran Canaria et sa plage de Las Canteras, l'une des plus belles d'Europe, posée au cœur de la ville.",
+      "Une semaine de douceur atlantique, entre baignades, promenades sur le front de mer et tapas au soleil."
+    ],
+    highlights: ["La plage urbaine de Las Canteras", "Le climat doux des Canaries toute l'année", "Vols et transferts inclus", "Une semaine en hôtel 3★"],
+    programme: ["Las Palmas de Gran Canaria", "Plage de Las Canteras"],
+    inclus: ["Le vol aller-retour (Ryanair)", "Les transferts", "L'hôtel 3★", "L'assistance de Voyages 21"],
+    exclus: [],
+    priceTable: { head: ["Chambre", "Prix / pers."], rows: [["Triple (3★)", "6 900 DH"], ["Double", "7 500 DH"], ["Single", "11 800 DH"]] },
+    datesList: ["22 mai", "11 juin", "09 juil.", "29 août"],
+    dates: { line: "Départs été 2026 :", note: "" },
+    cta: { title: "Envie de soleil aux Canaries ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-vienne-budapest-prague": {
+    mediaKey: "modal-europe-2", whatsapp: "212673280009",
+    eyebrow: "Europe centrale · Circuit", title: "Capitales impériales — Vienne, Budapest, Prague", duration: "6 jours", tag: "Europe",
+    cadran: [["Destinations", "Vienne, Budapest, Prague"], ["Durée", "6 jours / 5 nuits"], ["Vols", "Inclus"], ["Transport", "Bus avec guide"], ["Inclus", "Croisière sur le Danube"]],
+    price: "13 600 DH",
+    intro: [
+      "Trois capitales, trois joyaux de l'Europe impériale. Vienne et ses palais, Budapest et son Danube, Prague et ses toits d'or.",
+      "Un circuit élégant entre Mitteleuropa et romantisme, ponctué d'une croisière sur le Danube et de la visite du château de Prague."
+    ],
+    highlights: ["Vienne, Budapest et Prague en un voyage", "Croisière sur le Danube", "Visite du château de Prague", "Bus avec guide, vols inclus"],
+    programme: ["Vienne (2 nuits)", "Budapest (2 nuits)", "Prague (1 nuit)"],
+    inclus: ["Le vol aller-retour", "Le bus avec guide", "La croisière sur le Danube", "La visite du château de Prague"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "13 600 DH"]] },
+    datesList: ["13-18 mai", "17-22 juin", "08-13 juil."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie des capitales impériales ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-andalousie": {
+    mediaKey: "modal-europe-3", whatsapp: "212673280009",
+    eyebrow: "Espagne · Circuit", title: "Al-Andalus — Madrid, Grenade, Séville", duration: "7 jours", tag: "Espagne",
+    cadran: [["Destinations", "Madrid, Grenade, Séville"], ["Durée", "7 jours / 6 nuits"], ["Vols", "Inclus"], ["Inclus", "Alhambra · bateau Guadalquivir"], ["Repas", "Repas inclus"]],
+    price: "14 900 DH",
+    intro: [
+      "L'Andalousie, là où l'Orient a laissé ses plus belles traces en Europe. Madrid pour commencer, puis Grenade et l'Alhambra, palais de dentelle de pierre, et Séville la flamboyante.",
+      "Un voyage parfumé d'oranger et de jasmin, entre patios, fontaines et soirées andalouses."
+    ],
+    highlights: ["L'Alhambra de Grenade", "Madrid et Séville", "Croisière sur le Guadalquivir", "Vols et repas inclus"],
+    programme: ["Madrid (2 nuits)", "Grenade (2 nuits)", "Séville (2 nuits)"],
+    inclus: ["Le vol aller-retour", "La visite de l'Alhambra", "La croisière sur le Guadalquivir", "Les repas inclus", "Le bus avec guide"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "14 900 DH"]] },
+    datesList: ["20-26 mai", "17-23 juin", "15-21 juil."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie de l'Andalousie ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-grece-iles": {
+    mediaKey: "modal-europe-4", whatsapp: "212673280009",
+    eyebrow: "Grèce · Îles", title: "Athènes, Rhodes & Kos", duration: "8 jours", tag: "Grèce",
+    cadran: [["Destinations", "Athènes, Rhodes, Kos"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus"], ["Inclus", "Acropole · ferry Rhodes-Kos"], ["Hôtel", "à partir de 3★"]],
+    price: "14 900 DH",
+    intro: [
+      "La Grèce des dieux et des îles. Athènes et l'Acropole d'abord, berceau de notre civilisation. Puis le cap sur le Dodécanèse : Rhodes la médiévale et Kos la tranquille.",
+      "Entre sites antiques, ruelles blanches et eaux turquoise, une semaine au rythme de la mer Égée."
+    ],
+    highlights: ["L'Acropole d'Athènes", "Rhodes et sa vieille ville médiévale", "L'île de Kos", "Vols, ferry et transferts inclus"],
+    programme: ["Athènes (2 nuits)", "Rhodes (3 nuits)", "Kos (2 nuits)"],
+    inclus: ["Le vol aller-retour", "La visite de l'Acropole", "Le ferry Rhodes-Kos", "Les transferts"],
+    exclus: [],
+    priceTable: { head: ["Chambre", "Prix / pers."], rows: [["Triple (3★)", "14 900 DH"]] },
+    datesList: ["21-28 mai", "18-25 juin", "02-09 juil."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie des îles grecques ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-grece-classique": {
+    mediaKey: "modal-europe-5", whatsapp: "212673280009",
+    eyebrow: "Grèce · Circuit", title: "Athènes — Grèce classique", duration: "7 jours", tag: "Grèce",
+    cadran: [["Destinations", "Athènes, Olympie, Delphes, Météores"], ["Durée", "7 jours / 6 nuits"], ["Vols", "Inclus"], ["Transport", "Bus avec guide"], ["Hôtel", "à partir de 3★"]],
+    price: "16 700 DH",
+    intro: [
+      "Un voyage au cœur de la Grèce antique. D'Athènes à Olympie, berceau des Jeux, de l'oracle de Delphes aux monastères perchés des Météores.",
+      "Sept jours sur les traces des dieux et des philosophes, à travers des paysages où l'histoire affleure à chaque pas."
+    ],
+    highlights: ["Athènes et l'Acropole", "Olympie et Delphes", "Les Météores et leurs monastères", "Bus avec guide, vols inclus"],
+    programme: ["Athènes", "Olympie", "Delphes", "Kalambaka", "Météores"],
+    inclus: ["Le vol aller-retour", "Le bus avec guide", "Les sites archéologiques au programme"],
+    exclus: [],
+    priceTable: { head: ["Chambre", "Prix / pers."], rows: [["Triple (3★)", "16 700 DH"]] },
+    datesList: ["10-16 juin", "01-07 juil.", "26 août-01 sept."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie de la Grèce classique ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-espagne-portugal": {
+    mediaKey: "modal-europe-6", whatsapp: "212673280009",
+    eyebrow: "Espagne & Portugal · Circuit", title: "Circuit Espagne & Portugal", duration: "10 jours", tag: "Espagne & Portugal",
+    cadran: [["Destinations", "Barcelone, Valence, Grenade, Séville, Lisbonne"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus"], ["Inclus", "Alhambra · Sagrada Família"], ["Transport", "Bus avec guide"]],
+    price: "19 500 DH",
+    intro: [
+      "Toute la péninsule ibérique en un grand circuit. De Barcelone et la Sagrada Família à Lisbonne et ses tramways, en passant par Valence, Grenade et Séville.",
+      "Dix jours de Méditerranée et d'Atlantique, de tapas et de pastéis, entre Espagne flamboyante et douceur portugaise."
+    ],
+    highlights: ["La Sagrada Família de Barcelone", "L'Alhambra de Grenade", "Séville et Lisbonne", "Bus avec guide, vols inclus"],
+    programme: ["Barcelone", "Valence", "Grenade", "Séville", "Lisbonne"],
+    inclus: ["Le vol aller-retour", "Le bus avec guide", "La visite de l'Alhambra", "La visite de la Sagrada Família"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "19 500 DH"]] },
+    datesList: ["15-24 juil.", "05-14 août", "09-18 sept."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie de l'Espagne et du Portugal ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-italie": {
+    mediaKey: "modal-europe-7", whatsapp: "212673280009",
+    eyebrow: "Italie · Circuit", title: "Circuit Italie", duration: "8 jours", tag: "Italie",
+    cadran: [["Destinations", "Milan, Vérone, Venise, Pérouse, Rome"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus"], ["Inclus", "Venise · Pompéi"], ["Transport", "Bus avec guide"]],
+    price: "21 500 DH",
+    intro: [
+      "L'Italie du nord au sud, comme un musée à ciel ouvert. Milan l'élégante, Vérone et ses amours, Venise et ses canaux, puis Rome la Ville éternelle.",
+      "Huit jours de dolce vita, d'art et de gastronomie, jusqu'aux vestiges de Pompéi figés par le Vésuve."
+    ],
+    highlights: ["Venise et ses canaux", "Rome, la Ville éternelle", "Les vestiges de Pompéi", "Vérone et Milan", "Bus avec guide, vols inclus"],
+    programme: ["Milan", "Vérone", "Venise", "Pérouse", "Rome"],
+    inclus: ["Le vol au départ de Casablanca", "Le bus avec guide", "La visite de Venise", "La visite de Pompéi", "Les transferts"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "21 500 DH"]] },
+    datesList: ["06-13 mai", "27 mai-03 juin", "10-17 juin"],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie de l'Italie ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-france-suisse": {
+    mediaKey: "modal-europe-8", whatsapp: "212673280009",
+    eyebrow: "France & Suisse · Circuit", title: "France & Suisse", duration: "8 jours", tag: "France & Suisse",
+    cadran: [["Destinations", "Paris, Lyon, Zurich"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus"], ["Inclus", "Tour Eiffel · Alpes"], ["Transport", "Bus avec guide"]],
+    price: "22 400 DH",
+    intro: [
+      "De la Ville Lumière aux cimes des Alpes. Paris et sa Tour Eiffel, Lyon la gourmande, puis Zurich et les paysages suisses qui semblent peints à la main.",
+      "Huit jours entre élégance française et grandeur alpine, au fil d'une excursion au cœur des montagnes."
+    ],
+    highlights: ["Paris et la Tour Eiffel", "Lyon, capitale de la gastronomie", "Excursion dans les Alpes suisses", "Bus avec guide, vols inclus"],
+    programme: ["Paris", "Lyon", "Zurich"],
+    inclus: ["Le vol aller-retour", "Le bus avec guide", "La Tour Eiffel", "L'excursion dans les Alpes"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "22 400 DH"]] },
+    datesList: ["08-15 juil.", "05-12 août", "02-09 sept."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie de la France et de la Suisse ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "europe-angleterre-ecosse": {
+    mediaKey: "modal-europe-9", whatsapp: "212673280009",
+    eyebrow: "Royaume-Uni · Circuit", title: "Angleterre & Écosse", duration: "10 jours", tag: "Royaume-Uni",
+    cadran: [["Destinations", "Londres, Newcastle, Édimbourg"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus"], ["Inclus", "Tour de Londres · Écosse"], ["Transport", "Bus avec guide"]],
+    price: "27 000 DH",
+    intro: [
+      "De Londres aux Highlands. La capitale britannique et ses monuments d'abord, puis la route vers le nord, jusqu'à Édimbourg la majestueuse et les paysages d'Écosse.",
+      "Dix jours entre tradition anglaise et grands espaces écossais, châteaux, lochs et villes de caractère."
+    ],
+    highlights: ["Londres et ses monuments", "Édimbourg et son château", "Les paysages d'Écosse", "Bus avec guide, vols inclus"],
+    programme: ["Londres", "Newcastle", "Édimbourg"],
+    inclus: ["Le vol aller-retour", "Le bus avec guide", "Le tour de Londres", "La visite de l'Écosse"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "27 000 DH"]] },
+    datesList: ["10-19 juil.", "07-16 août", "04-13 sept."],
+    dates: { line: "Départs (et plus selon calendrier) :", note: "" },
+    cta: { title: "Envie de l'Angleterre et de l'Écosse ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "croisiere-mediterranee-espagne-italie": {
+    mediaKey: "modal-croisiere-1", whatsapp: "212673280009",
+    eyebrow: "Croisière · Méditerranée", title: "Croisière Méditerranée — Espagne & Italie", duration: "10 jours", tag: "Croisière",
+    cadran: [["Bateau", "Harmony of the Seas (Royal Caribbean)"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus — Ryanair"], ["Formule", "2 nuits hôtel + 7 nuits croisière"], ["Cabine", "Double"]],
+    price: "19 800 DH",
+    intro: [
+      "La Méditerranée vue de la mer, à bord de l'un des plus grands paquebots du monde. De Barcelone aux côtes italiennes, le Harmony of the Seas vous emmène de port en port sans jamais défaire vos valises.",
+      "Palma, La Spezia, Rome, Naples : chaque matin une nouvelle escale, chaque soir le confort d'un palace flottant."
+    ],
+    highlights: ["Le Harmony of the Seas (Royal Caribbean)", "Escales à Rome, Naples et Palma", "7 nuits de croisière + 2 nuits d'hôtel", "Vols et transferts inclus"],
+    programme: ["Barcelone", "Palma", "La Spezia", "Rome", "Naples", "Barcelone"],
+    inclus: ["Le vol aller-retour (Ryanair)", "2 nuits en hôtel 3★", "7 nuits de croisière", "Les transferts"],
+    exclus: [],
+    priceTable: { head: ["Cabine", "Prix / pers."], rows: [["Double", "19 800 DH"]] },
+    dates: { line: "Départs à partir de juin 2026.", note: "" },
+    cta: { title: "Envie d'une croisière en Méditerranée ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "croisiere-mediterranee-premium": {
+    mediaKey: "modal-croisiere-2", whatsapp: "212673280009",
+    eyebrow: "Croisière · Méditerranée", title: "Croisière Méditerranée Premium", duration: "10 jours", tag: "Croisière",
+    cadran: [["Bateau", "Royal Caribbean International"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus"], ["Formule", "2 nuits hôtel + 7 nuits croisière"], ["Cabine", "Double"]],
+    price: "21 800 DH",
+    intro: [
+      "Une croisière premium au fil de la Méditerranée occidentale. De Marseille à Barcelone, en passant par Gênes, Naples, Messine et Palma : les plus beaux ports d'Italie, de France et d'Espagne.",
+      "Sept nuits à bord d'un navire Royal Caribbean, dans un confort raffiné, escales comprises."
+    ],
+    highlights: ["Marseille, Gênes, Naples, Messine, Palma, Barcelone", "Navire Royal Caribbean", "7 nuits de croisière + 2 nuits d'hôtel", "Vols et transferts inclus"],
+    programme: ["Marseille", "Gênes", "Naples", "Messine", "Palma", "Barcelone"],
+    inclus: ["Le vol aller-retour", "2 nuits en hôtel 3★", "7 nuits de croisière", "Les transferts"],
+    exclus: [],
+    priceTable: { head: ["Cabine", "Prix / pers."], rows: [["Double", "21 800 DH"]] },
+    dates: { line: "Départs à partir de juin 2026.", note: "" },
+    cta: { title: "Envie d'une croisière premium ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "asie-chine": {
+    mediaKey: "modal-chine", whatsapp: "212673280009",
+    eyebrow: "Chine · Grand circuit", title: "Circuit Chine — Pékin, Shanghai & Merveilles", duration: "14 jours", tag: "Chine",
+    cadran: [["Destinations", "Pékin, Shanghai et merveilles"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★"], ["Guide", "Francophone"]],
+    price: "29 900 DH",
+    intro: [
+      "La Chine des merveilles, de la Grande Muraille aux gratte-ciel de Shanghai. À Pékin, la Cité interdite et le Temple du Ciel ; puis les canaux de Suzhou, le Lac de l'Ouest de Hangzhou, et la modernité vertigineuse de Shanghai.",
+      "Quatorze jours entre empire millénaire et Chine d'aujourd'hui, en hôtels 5★ et guide francophone."
+    ],
+    highlights: ["La Grande Muraille et la Cité interdite", "Le Temple du Ciel à Pékin", "Suzhou et le Lac de l'Ouest de Hangzhou", "Shanghai et Shenzhen", "Vols Qatar Airways inclus, hôtels 5★, guide francophone"],
+    programme: ["Pékin (Cité interdite, Grande Muraille, Temple du Ciel)", "Nanjing", "Suzhou", "Hangzhou (Lac de l'Ouest)", "Shanghai", "Shenzhen"],
+    inclus: ["Le vol Qatar Airways Casablanca – Pékin / Shanghai – Casablanca", "Les hôtels 5★", "Les repas mentionnés au programme", "Les visites au programme", "Un guide francophone"],
+    exclus: ["Le visa chinois (600 DH)", "Les pourboires (≈ 40 $)", "Les dépenses personnelles"],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "29 900 DH"]] },
+    datesList: ["05-18 août", "12-25 août"],
+    dates: { line: "Départs été 2026 :", note: "" },
+    cta: { title: "Envie de découvrir la Chine ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "asie-malaisie-thailande": {
+    mediaKey: "modal-malaisie", whatsapp: "212673280009",
+    eyebrow: "Malaisie & Thaïlande · Circuit", title: "Malaisie & Thaïlande — KL, Krabi & Phuket", duration: "14 jours", tag: "Asie",
+    cadran: [["Destinations", "Kuala Lumpur, Krabi, Phuket"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★"], ["Guide", "Inclus"]],
+    price: "28 500 DH",
+    intro: [
+      "Deux pays, deux ambiances. Kuala Lumpur et ses tours Petronas, les hauteurs de Genting Highlands, puis l'envol vers le sud de la Thaïlande.",
+      "Krabi et Phuket, leurs plages de carte postale et leurs îles émeraude : quatorze jours entre villes modernes et paradis balnéaires, en hôtels 5★."
+    ],
+    highlights: ["Les tours Petronas et Genting Highlands", "Les plages de Krabi et Phuket", "Vol intérieur KL – Krabi inclus", "Hôtels 5★, vols Qatar Airways, guide"],
+    programme: ["Kuala Lumpur (tours Petronas, Genting Highlands)", "Vol KL – Krabi", "Krabi", "Phuket"],
+    inclus: ["Le vol Qatar Airways Casablanca – Kuala Lumpur", "Les hôtels 5★", "Les repas mentionnés au programme", "Le vol intérieur KL – Krabi", "Un guide"],
+    exclus: [],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "28 500 DH"]] },
+    datesList: ["31 juil.-13 août", "05-18 août"],
+    dates: { line: "Départs été 2026 :", note: "" },
+    cta: { title: "Envie de la Malaisie et de la Thaïlande ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "asie-thailande-bangkok": {
+    mediaKey: "modal-bangkok", whatsapp: "212673280009",
+    eyebrow: "Thaïlande · Circuit", title: "Exotic Thailand — Bangkok, Krabi & Phuket", duration: "14 jours", tag: "Thaïlande",
+    cadran: [["Destinations", "Bangkok, Krabi, Phuket"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★ et 4★ Deluxe"], ["Guide", "Francophone"]],
+    price: "26 900 DH",
+    intro: [
+      "La Thaïlande dans toute sa diversité. Bangkok l'effervescente d'abord : ses marchés flottants, ses temples dorés et une croisière sur la Chao Phraya.",
+      "Puis le sud et ses eaux turquoise, entre Krabi et Phuket. Quatorze jours de temples, de saveurs et de plages, vols intérieurs et guide francophone compris."
+    ],
+    highlights: ["Bangkok, ses marchés flottants et ses temples", "Croisière sur la Chao Phraya", "Les plages de Krabi et Phuket", "Vol intérieur Bangkok – Krabi inclus", "Vols Qatar Airways, guide francophone"],
+    programme: ["Bangkok (marchés flottants, temples, croisière Chao Phraya)", "Vol Bangkok – Krabi", "Krabi", "Phuket"],
+    inclus: ["Le vol Qatar Airways", "Les hôtels (Bangkok 4★ Deluxe, Krabi/Phuket 5★)", "Les repas mentionnés au programme", "Les visites au programme", "Le vol intérieur Bangkok – Krabi", "Un guide francophone"],
+    exclus: [],
+    hotels: ["Bangkok — Rembrandt Hotel 4★ Deluxe", "Krabi / Phuket — hôtels 5★"],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "26 900 DH"]] },
+    datesList: ["01-14 août", "07-20 août", "11-24 août"],
+    dates: { line: "Départs été 2026 :", note: "" },
+    cta: { title: "Envie de la Thaïlande ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "asie-vietnam": {
+    mediaKey: "modal-vietnam", whatsapp: "212673280009",
+    eyebrow: "Vietnam · Grand circuit", title: "Découverte du Vietnam — Hanoi à Saigon", duration: "14 jours", tag: "Vietnam",
+    cadran: [["Destinations", "Hanoi, Halong, Hué, Hoi An, Saigon"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★"], ["Guide", "Francophone"]],
+    price: "33 900 DH",
+    intro: [
+      "Le Vietnam du nord au sud, dans toute sa beauté. Hanoi et ses ruelles, la baie d'Halong et ses pitons karstiques, Hué l'impériale, Hoi An la lanternée.",
+      "Jusqu'à Hô Chi Minh-Ville, l'ancienne Saigon trépidante. Quatorze jours d'histoire, de rizières et de croisières, en hôtels 5★ et guide francophone."
+    ],
+    highlights: ["La croisière dans la baie d'Halong (UNESCO)", "Hué impériale et Hoi An (UNESCO)", "Da Nang et China Beach", "Hô Chi Minh-Ville (Saigon)", "Vols Qatar Airways et vols intérieurs inclus, hôtels 5★"],
+    programme: ["Hanoi", "Croisière baie d'Halong (UNESCO)", "Hué (UNESCO)", "Da Nang / Hoi An", "China Beach", "Hô Chi Minh-Ville (Saigon)"],
+    inclus: ["Le vol Qatar Airways Casablanca – Hanoi / Saigon – Casablanca", "Les hôtels 5★", "Les repas mentionnés au programme", "Les vols intérieurs", "Un guide francophone"],
+    exclus: ["Le visa (800 DH)", "Les pourboires", "Les dépenses personnelles"],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["À partir de", "33 900 DH"]] },
+    datesList: ["02-15 août", "08-21 août"],
+    dates: { line: "Départs été 2026 :", note: "" },
+    cta: { title: "Envie de découvrir le Vietnam ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
+  },
+
+  "zanzibar-detente": {
+    mediaKey: "modal-zanzibar", whatsapp: "212673280009",
+    eyebrow: "Zanzibar · Séjour balnéaire", title: "Séjour à Zanzibar — Détente & Loisirs", duration: "8 jours", tag: "Zanzibar",
+    cadran: [["Destination", "Zanzibar (Tanzanie)"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus — Turkish Airlines"], ["Plages", "Nungwi et Kendwa"], ["Hôtels", "3★ / 4★"]],
+    price: "18 500 DH",
+    intro: [
+      "L'île aux épices, posée sur l'océan Indien. Stone Town et ses ruelles classées à l'UNESCO, parfum de girofle et héritage swahili ; puis le nord de l'île, ses plages de sable blanc et son lagon turquoise.",
+      "Une semaine de pure détente entre Nungwi et Kendwa, avec excursions possibles pour qui veut explorer."
+    ],
+    highlights: ["Stone Town, classée à l'UNESCO", "Les plages de Nungwi et Kendwa", "Le lagon turquoise de l'océan Indien", "Vols Turkish Airlines et transferts inclus", "Excursions optionnelles"],
+    programme: ["Stone Town (UNESCO)", "Nungwi et Kendwa (plages turquoise)", "Excursions optionnelles"],
+    inclus: ["Le vol Turkish Airlines aller-retour", "Les transferts privés", "Les taxes de séjour", "L'assurance obligatoire"],
+    exclus: ["Le visa à l'aéroport (50 USD)", "Les excursions optionnelles"],
+    hotels: ["Fun Beach Hotel 3★ (petit-déjeuner ou demi-pension)", "Breeze's Beach Club & Spa 4★ (demi-pension)"],
+    priceTable: {
+      head: ["Hôtel (juin-août)", "Single", "Double", "Triple"],
+      rows: [
+        ["Fun Beach 3★ (petit-déj)", "24 800 DH", "21 500 DH", "18 500 DH"],
+        ["Breeze's 4★ (demi-pension)", "27 500 DH", "24 300 DH", "22 500 DH"],
+        ["Fun Beach 3★ (demi-pension)", "29 700 DH", "26 000 DH", "23 900 DH"],
+        ["Breeze's 4★ (demi-pension premium)", "38 900 DH", "34 900 DH", "31 000 DH"]
+      ]
+    },
+    dates: { line: "Départs garantis (juin à août 2026).", note: "" },
+    cta: { title: "Envie de partir à Zanzibar ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   }
 
 };
