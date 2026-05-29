@@ -734,8 +734,33 @@
     }
 
     /* ── TICKER ÉQUIPE — fond sombre ──────────── */
+    /* Titre bande ticker */
+    .ticker-section {
+      background: var(--light);
+      padding-top: 52px;
+    }
+    .ticker-sup {
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .ticker-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      color: var(--navy);
+      line-height: 1.25;
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 0 96px;
+    }
     .ticker-outer {
-      padding: 24px 96px;
+      padding: 0 96px 28px;
       background: var(--light);
     }
     .ticker-wrap {
@@ -767,19 +792,28 @@
       border-right: 1px solid rgba(200,164,64,.2);
     }
     .tick-tag {
-      font-size: .7rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .16em;
-      color: var(--gold);
-      border: 1px solid rgba(200,164,64,.5);
+      letter-spacing: .12em;
+      color: #fff;
+      background: #C0392B;
+      border: 1px solid #9b1f1f;
       padding: 4px 10px;
       border-radius: 3px;
       text-transform: uppercase;
       flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tick-tag::before {
+      content: '⚠';
+      font-size: .8rem;
+      letter-spacing: 0;
     }
     .tick-sep { display: none; }
     .tick-text {
-      font-size: .9rem;
+      font-size: 1.05rem;
       font-weight: 400;
       color: var(--cream);
       letter-spacing: .01em;
@@ -791,7 +825,7 @@
       font-style: italic;
       font-weight: 700;
       font-size: 1.9rem;
-      color: #fff;
+      color: var(--gold);
       text-transform: none;
       display: block;
       line-height: 1.1;
@@ -1449,18 +1483,22 @@
   <!-- ══════════════════════════════════════════
        TICKER — équipe en action
   ══════════════════════════════════════════ -->
-  <div class="ticker-outer" aria-hidden="true">
-    <div class="ticker-wrap">
-      <div class="ticker-track">
-        <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
-        <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
-        <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
-        <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
-        <!-- duplicate pour boucle seamless -->
-        <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
-        <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
-        <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
-        <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
+  <div class="ticker-section">
+    <p class="ticker-sup">Disponibles 24h/24 · 7j/7</p>
+    <h3 class="ticker-title">En cas d'imprévu,<br>toute l'équipe se met en action.</h3>
+    <div class="ticker-outer" aria-hidden="true">
+      <div class="ticker-wrap">
+        <div class="ticker-track">
+          <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
+          <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
+          <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
+          <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
+          <!-- duplicate pour boucle seamless -->
+          <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
+          <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
+          <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
+          <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
+        </div>
       </div>
     </div>
   </div>
