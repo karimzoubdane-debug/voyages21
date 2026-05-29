@@ -148,30 +148,17 @@
       padding-top: 64px;
     }
 
-    /* ── Vidéo Google Drive ───────────────────
-       Trick : iframe élargie + margin négatif
-       pour masquer la barre UI de Drive (40px)
-    ──────────────────────────────────────────── */
-    .hero-video-wrap {
+    .hero-video {
       position: absolute;
-      top: -48px;   /* cache la barre Drive */
-      left: -2px;
-      right: -2px;
-      bottom: 0;
-      overflow: hidden;
-      pointer-events: none;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       z-index: 0;
     }
-    .hero-iframe {
-      width: 100%;
-      height: calc(100% + 56px);
-      border: 0;
-      display: block;
-      transform: scale(1.04);
-      transform-origin: center center;
-    }
 
-    /* Fallback gradient si l'iframe ne charge pas */
+    /* Fallback gradient affiché pendant le chargement */
     .hero-fallback {
       position: absolute;
       inset: 0;
@@ -354,18 +341,13 @@
   ══════════════════════════════════════════ -->
   <section class="hero">
 
-    <!-- Fallback gradient (visible si iframe lente à charger) -->
+    <!-- Fallback gradient pendant le chargement -->
     <div class="hero-fallback"></div>
 
-    <!-- Vidéo Google Drive — 0529 (1)(2).mp4 -->
-    <div class="hero-video-wrap">
-      <iframe class="hero-iframe"
-              src="https://drive.google.com/file/d/1FxibEWl1-iXAmmkiR-BHIM2_N9dXI_4C/preview"
-              allow="autoplay"
-              allowfullscreen="false"
-              frameborder="0">
-      </iframe>
-    </div>
+    <!-- Vidéo 0529 — streaming direct Google Drive -->
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="https://drive.google.com/uc?export=download&id=1FxibEWl1-iXAmmkiR-BHIM2_N9dXI_4C" type="video/mp4">
+    </video>
 
     <!-- Voile sombre -->
     <div class="hero-overlay"></div>
