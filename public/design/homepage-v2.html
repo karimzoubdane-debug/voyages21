@@ -111,12 +111,12 @@
     .nav-tel {
       font-size: .78rem;
       font-weight: 500;
-      color: var(--muted);
+      color: var(--navy);
       text-decoration: none;
       letter-spacing: .03em;
       transition: color .2s;
     }
-    .nav-tel:hover { color: var(--navy); }
+    .nav-tel:hover { color: var(--gold); }
 
     .nav-cta {
       background: var(--gold);
@@ -226,7 +226,7 @@
     .hero-sub {
       font-size: .92rem;
       font-weight: 300;
-      color: rgba(255,255,255,.65);
+      color: rgba(255,255,255,.92);
       line-height: 1.72;
       max-width: 460px;
       margin: 0 auto 40px;
@@ -315,7 +315,7 @@
       gap: 10px;
       padding: 0 40px;
       font-size: .78rem;
-      color: var(--muted);
+      color: var(--navy);
       white-space: nowrap;
     }
     .statsbar-item + .statsbar-item {
@@ -342,29 +342,11 @@
 
     .why-grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: 32px;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 0;
       align-items: start;
-    }
-
-    /* Bloc pleine largeur sous les 3 colonnes */
-    .why-full {
-      grid-column: 1 / -1;
-      border-top: 2px solid var(--gold);
-      padding-top: 22px;
-      display: flex;
-      gap: 48px;
-      align-items: flex-start;
-    }
-    .why-full-header {
-      flex-shrink: 0;
-      width: 260px;
-    }
-    .why-full-body {
-      flex: 1;
-      font-size: .82rem;
-      color: var(--muted);
-      line-height: 1.85;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .name-tag {
       font-family: 'Playfair Display', serif;
@@ -375,7 +357,10 @@
     }
 
     /* Colonne 1 — titre choc */
-    .why-title-col {}
+    .why-title-col {
+      padding: 36px 28px;
+      border-right: 1px solid var(--border);
+    }
 
     .why-h2 {
       font-family: 'Playfair Display', serif;
@@ -396,14 +381,18 @@
 
     .why-h2-sub {
       font-size: .82rem;
-      color: var(--muted);
+      color: var(--navy);
       line-height: 1.7;
       margin-top: 16px;
       max-width: 220px;
     }
 
-    /* Colonnes 2-3 — blocs idées fortes */
-    .why-block {}
+    /* Colonnes 2-4 — blocs idées fortes */
+    .why-block {
+      padding: 36px 28px;
+      border-right: 1px solid var(--border);
+    }
+    .why-block:last-child { border-right: none; }
 
     .why-block-title {
       font-size: .82rem;
@@ -426,7 +415,7 @@
 
     .why-block p {
       font-size: .8rem;
-      color: var(--muted);
+      color: var(--navy);
       line-height: 1.72;
     }
 
@@ -518,7 +507,7 @@
       background: none;
       border: none;
       font-size: 1.4rem;
-      color: var(--muted);
+      color: var(--navy);
       cursor: pointer;
       transition: color .2s;
     }
@@ -542,7 +531,7 @@
     }
     .modal-body p {
       font-size: .88rem;
-      color: #4a5568;
+      color: var(--navy);
       line-height: 1.78;
       margin-bottom: 18px;
     }
@@ -562,7 +551,7 @@
     }
     .modal-body li {
       font-size: .88rem;
-      color: #4a5568;
+      color: var(--navy);
       line-height: 1.68;
       padding-left: 20px;
       position: relative;
@@ -832,7 +821,7 @@
 
     .early-col p {
       font-size: .8rem;
-      color: var(--muted);
+      color: var(--navy);
       line-height: 1.72;
     }
 
@@ -851,7 +840,7 @@
     }
     .early-preview p {
       font-size: .8rem;
-      color: var(--muted);
+      color: var(--navy);
       line-height: 1.72;
     }
 
@@ -913,7 +902,7 @@
 
     .team-sub {
       font-size: .9rem;
-      color: rgba(255,255,255,.5);
+      color: rgba(255,255,255,.88);
       line-height: 1.7;
       max-width: 540px;
       margin: 0 auto;
@@ -952,7 +941,7 @@
       font-weight: 700;
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.35);
+      color: rgba(255,255,255,.75);
       margin-bottom: 14px;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(200,164,64,.2);
@@ -960,7 +949,7 @@
 
     .team-desc {
       font-size: .8rem;
-      color: rgba(255,255,255,.6);
+      color: rgba(255,255,255,.88);
       line-height: 1.7;
     }
 
@@ -981,7 +970,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.15rem;
-      color: rgba(255,255,255,.75);
+      color: rgba(255,255,255,.92);
       max-width: 600px;
       margin: 0 auto 16px;
       line-height: 1.6;
@@ -1123,18 +1112,17 @@
       <div class="why-block">
         <p class="why-block-title">L'accès à l'invisible,<br>sans mauvaise surprise</p>
         <p class="why-block-stat">Zéro déception<br>à l'arrivée</p>
-        <p>Sur internet, vous ne voyez que le tourisme de masse. Grâce à l'expertise de nos hommes de terrain, Voyages&nbsp;21 vous ouvre les portes d'endroits secrets, insolites et impossibles à dénicher seul. Tout est maîtrisé pour vous garantir le zéro mauvaise surprise.</p>
+        <p>Sur internet, vous ne voyez que le tourisme de masse. Grâce à l'expertise de nos hommes de terrain, Voyages&nbsp;21 vous ouvre les portes d'endroits secrets, insolites et impossibles à dénicher seul.</p>
       </div>
 
-      <!-- Ligne pleine largeur — vol annulé / équipe -->
-      <div class="why-full">
-        <div class="why-full-header">
-          <p class="why-block-title danger-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            Vol annulé · Transfert introuvable<br>Changement urgent :<br>personne au bout du fil</p>
-          <p class="why-block-stat">Votre problème devient<br>notre problème.</p>
-        </div>
-        <p class="why-full-body">Voyager seul, c'est subir les compagnies, les hôtels et les imprévus. À la moindre alerte, notre équipe s'active&nbsp;: <strong class="name-tag">Wafa</strong>&nbsp;&amp;&nbsp;<strong class="name-tag">Wafa</strong> libèrent vos réservations, <strong class="name-tag">Fouad</strong>&nbsp;&amp;&nbsp;<strong class="name-tag">Ghizlane</strong> déploient nos correspondants mondiaux, tandis que <strong class="name-tag">Houda</strong> orchestre la solution et vous rappelle personnellement pour valider votre sérénité. Zéro gestion, zéro stress&nbsp;— vous, vous profitez de votre voyage.</p>
+      <!-- Colonne 4 — vol annulé / équipe -->
+      <div class="why-block">
+        <p class="why-block-title danger-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Vol annulé · personne<br>au bout du fil
+        </p>
+        <p class="why-block-stat">Votre problème<br>devient le nôtre.</p>
+        <p>À la moindre alerte, <span class="name-tag">Wafa</span>, <span class="name-tag">Fouad</span>, <span class="name-tag">Ghizlane</span> et <span class="name-tag">Houda</span> s'activent immédiatement — des prénoms, des voix, une présence réelle. Zéro stress, vous profitez.</p>
       </div>
 
     </div>
