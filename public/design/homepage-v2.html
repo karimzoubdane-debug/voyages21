@@ -623,6 +623,18 @@
       color: var(--navy);
       font-weight: 500;
     }
+    .why-contrast-before {
+      font-size: .78rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .why-contrast-sep {
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      line-height: 1;
+    }
 
     /* grille 4 colonnes identique à why */
     .early-grid {
@@ -963,8 +975,10 @@
         <button class="btn-lire" id="btn1" onclick="openModal()">Ne laissez rien au hasard</button>
       </div>
 
-      <!-- Bande de contraste — équipe qui agit -->
+      <!-- Bande de contraste — avant/après -->
       <div class="why-contrast">
+        <span class="why-contrast-before">Sans agence&nbsp;: répondeurs automatiques, vous seul face aux compagnies.</span>
+        <span class="why-contrast-sep">›</span>
         <span class="why-contrast-label">Avec Voyages21 :</span>
         <div class="why-contrast-names">
           <strong>Wafa</strong><span>·</span>
@@ -973,7 +987,7 @@
           <strong>Majda</strong><span>·</span>
           <strong>Houda</strong>
         </div>
-        <span class="why-contrast-action">— agissent avant même que vous ayez eu à insister.</span>
+        <span class="why-contrast-action">— dès que le problème arrive, ils agissent.</span>
       </div>
 
     </div>
