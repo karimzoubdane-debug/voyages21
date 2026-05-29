@@ -439,20 +439,21 @@
       align-items: center;
       gap: 8px;
       margin-top: 16px;
-      font-size: .75rem;
+      font-size: .73rem;
       font-weight: 700;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--navy);
-      background: none;
+      color: var(--white);
+      background: var(--navy);
       border: none;
-      border-bottom: 1px solid var(--gold);
-      padding: 0 0 2px;
+      padding: 11px 20px;
       cursor: pointer;
-      transition: color .2s, gap .25s;
+      transition: background .2s, gap .25s;
     }
     .btn-lire::after { content: '→'; }
-    .btn-lire:hover { color: var(--gold); gap: 14px; }
+    .btn-lire:hover { background: var(--gold); color: var(--navy); gap: 14px; }
+    .btn-lire.active::after { content: '↑'; }
+    .btn-lire.active { background: var(--muted); }
 
     /* ── MODAL ────────────────────────────────── */
     .modal-backdrop {
@@ -651,16 +652,18 @@
       font-weight: 700;
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: var(--white);
-      background: var(--navy);
+      color: var(--navy);
+      background: var(--gold);
       border: none;
-      padding: 10px 18px;
+      padding: 11px 20px;
       cursor: pointer;
       transition: background .2s, gap .25s;
       white-space: nowrap;
     }
     .btn-malin::after { content: '→'; }
-    .btn-malin:hover { background: var(--gold); color: var(--navy); gap: 14px; }
+    .btn-malin:hover { background: var(--navy); color: var(--white); gap: 14px; }
+    .btn-malin.active::after { content: '↑'; }
+    .btn-malin.active { background: var(--muted); color: var(--white); }
 
     /* ═══════════════════════════════════════════
        SECTIONS SUIVANTES
@@ -803,7 +806,7 @@
         <div class="why-preview">
           <p>Chez Voyages21, nous croyons qu'un vrai voyage se vit l'esprit libre. Choisir notre expertise «&nbsp;cousu main&nbsp;», c'est s'offrir la certitude d'en avoir pour son argent, sans compromis sur la qualité. Un accompagnement de bout en bout, une présence humaine réelle, et vos options sécurisées dès la réservation.</p>
         </div>
-        <button class="btn-lire" onclick="openModal()">Un homme averti en vaut deux</button>
+        <button class="btn-lire" id="btn1" onclick="openModal()">Ne laissez rien au hasard</button>
       </div>
 
     </div>
@@ -838,8 +841,9 @@
         <p>Ne laissez pas le hasard décider de la réussite de vos vacances. Confiez-les à un expert pour qui votre satisfaction est une garantie, pas une option.</p>
       </div>
 
-      <div class="modal-cta">
-        <a href="#contact" class="btn-primary" onclick="closeModal()">Réserver maintenant</a>
+      <div class="modal-cta" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <a href="#destinations" class="btn-primary" onclick="closeModal()">Voir tous nos voyages</a>
+        <button onclick="closeModal()" style="background:none;border:none;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;letter-spacing:.06em;display:flex;align-items:center;gap:5px;">Replier ↑</button>
       </div>
     </div>
   </div>
@@ -891,7 +895,7 @@
         <div class="early-preview">
           <p>Le luxe du voyage ne réside pas seulement dans la destination — il se niche aussi dans sa préparation. Concevoir votre projet plusieurs mois à l'avance est le secret le mieux gardé pour conjuguer sérénité absolue et excellence tarifaire.</p>
         </div>
-        <button class="btn-malin" onclick="openModal2()">Réservé aux malins</button>
+        <button class="btn-malin" id="btn2" onclick="openModal2()">Prenez une longueur d'avance</button>
       </div>
 
     </div>
@@ -913,8 +917,9 @@
         <p>Loin de la précipitation stressante et des choix par défaut de la dernière minute, l'anticipation vous offre <strong>le privilège du choix</strong> et la certitude de la perfection.</p>
         <p>Le voyage idéal commence dès le premier jour de sa planification. <strong>Confiez-le à Voyages21 — et partez l'esprit libre.</strong></p>
       </div>
-      <div class="modal-cta">
-        <a href="#contact" class="btn-primary" onclick="closeModal2()">Je réserve maintenant</a>
+      <div class="modal-cta" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <a href="#destinations" class="btn-primary" onclick="closeModal2()">Voir tous nos voyages</a>
+        <button onclick="closeModal2()" style="background:none;border:none;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;letter-spacing:.06em;display:flex;align-items:center;gap:5px;">Replier ↑</button>
       </div>
     </div>
   </div>
@@ -942,25 +947,43 @@
 
     function openModal() {
       document.getElementById('modal').classList.add('open');
+      document.getElementById('btn1').textContent = 'Replier';
+      document.getElementById('btn1').innerHTML += ' ↑';
+      document.getElementById('btn1').classList.add('active');
+      document.getElementById('btn1').onclick = closeModal;
       document.body.style.overflow = 'hidden';
     }
 
     function closeModal(e) {
-      if (!e || e.target === document.getElementById('modal')) {
+      if (!e || e.target === document.getElementById('modal') || e.currentTarget) {
         document.getElementById('modal').classList.remove('open');
         document.body.style.overflow = '';
+        const b = document.getElementById('btn1');
+        b.textContent = 'Ne laissez rien au hasard';
+        b.innerHTML += ' →';
+        b.classList.remove('active');
+        b.onclick = openModal;
       }
     }
 
     function openModal2() {
       document.getElementById('modal2').classList.add('open');
+      document.getElementById('btn2').textContent = 'Replier';
+      document.getElementById('btn2').innerHTML += ' ↑';
+      document.getElementById('btn2').classList.add('active');
+      document.getElementById('btn2').onclick = closeModal2;
       document.body.style.overflow = 'hidden';
     }
 
     function closeModal2(e) {
-      if (!e || e.target === document.getElementById('modal2')) {
+      if (!e || e.target === document.getElementById('modal2') || e.currentTarget) {
         document.getElementById('modal2').classList.remove('open');
         document.body.style.overflow = '';
+        const b = document.getElementById('btn2');
+        b.textContent = 'Prenez une longueur d\'avance';
+        b.innerHTML += ' →';
+        b.classList.remove('active');
+        b.onclick = openModal2;
       }
     }
 
