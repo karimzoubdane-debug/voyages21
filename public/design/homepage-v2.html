@@ -742,7 +742,7 @@
       background: #1B2D4F;
       overflow: hidden;
       display: flex;
-      border-radius: 12px;
+      border-radius: 64px;
     }
     .ticker-track {
       display: flex;
@@ -756,37 +756,46 @@
     }
     .tick {
       display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      padding: 0 56px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+      padding: 21px 72px;
       height: 128px;
       flex-shrink: 0;
       white-space: nowrap;
-      font-size: .78rem;
-      font-weight: 400;
-      color: var(--cream);
-      letter-spacing: .02em;
       border-right: 1px solid rgba(200,164,64,.2);
     }
     .tick-tag {
-      font-size: .62rem;
+      font-size: .7rem;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       color: var(--gold);
       border: 1px solid rgba(200,164,64,.5);
-      padding: 2px 8px;
+      padding: 4px 10px;
       border-radius: 3px;
       text-transform: uppercase;
       flex-shrink: 0;
     }
-    .tick-sep { color: rgba(200,164,64,.5); font-size: .85rem; }
+    .tick-sep { display: none; }
+    .tick-text {
+      font-size: .9rem;
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: .01em;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
     .tick strong {
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.9rem;
       color: #fff;
       text-transform: none;
+      display: block;
+      line-height: 1.1;
+      margin-bottom: 1px;
     }
 
     /* grille 4 colonnes identique à why */
@@ -1443,15 +1452,15 @@
   <div class="ticker-outer" aria-hidden="true">
     <div class="ticker-wrap">
       <div class="ticker-track">
-        <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-sep">—</span><strong>Wafa</strong> est déjà en ligne avec la compagnie aérienne.</span>
-        <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-sep">—</span><strong>Ghizlane</strong> contourne le problème en 10 minutes.</span>
-        <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-sep">—</span><strong>Houda</strong> prend tout en charge — vous, continuez votre voyage.</span>
-        <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-sep">—</span><strong>Fouad</strong> déclenche notre réseau local immédiatement.</span>
+        <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
+        <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
+        <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
+        <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
         <!-- duplicate pour boucle seamless -->
-        <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-sep">—</span><strong>Wafa</strong> est déjà en ligne avec la compagnie aérienne.</span>
-        <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-sep">—</span><strong>Ghizlane</strong> contourne le problème en 10 minutes.</span>
-        <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-sep">—</span><strong>Houda</strong> prend tout en charge — vous, continuez votre voyage.</span>
-        <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-sep">—</span><strong>Fouad</strong> déclenche notre réseau local immédiatement.</span>
+        <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
+        <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
+        <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
+        <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
       </div>
     </div>
   </div>
@@ -1500,7 +1509,7 @@
 
     <div class="dest-header">
       <p class="dest-sup">33 circuits · 13 destinations</p>
-      <h2 class="dest-title">Le monde,<br><em>cousu main.</em></h2>
+      <h2 class="dest-title">Des horizons<br><em>taillés sur mesure.</em></h2>
       <p class="dest-sub">Depuis 2000, nous concevons des voyages d'exception pour des voyageurs qui refusent le tourisme ordinaire. Chaque itinéraire est unique, jamais catalogué.</p>
     </div>
 
