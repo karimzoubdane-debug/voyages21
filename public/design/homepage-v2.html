@@ -148,26 +148,30 @@
       padding-top: 64px;
     }
 
-    /* ── Vidéo de fond ────────────────────────
-       Pour activer : remplacer la valeur de src
-       par l'URL directe de votre fichier .mp4
-       (ex. depuis Cloudinary, Vercel Blob, etc.)
-
-       Depuis Canva :
-         1. Ouvrir le design → Partager → Télécharger → MP4
-         2. Héberger le fichier (Cloudinary, etc.)
-         3. Coller l'URL directe ici
+    /* ── Vidéo Google Drive ───────────────────
+       Trick : iframe élargie + margin négatif
+       pour masquer la barre UI de Drive (40px)
     ──────────────────────────────────────────── */
-    .hero-video {
+    .hero-video-wrap {
       position: absolute;
-      inset: 0;
+      top: -48px;   /* cache la barre Drive */
+      left: -2px;
+      right: -2px;
+      bottom: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-iframe {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      height: calc(100% + 56px);
+      border: 0;
+      display: block;
+      transform: scale(1.04);
+      transform-origin: center center;
     }
 
-    /* Fallback gradient si pas de vidéo */
+    /* Fallback gradient si l'iframe ne charge pas */
     .hero-fallback {
       position: absolute;
       inset: 0;
@@ -350,17 +354,18 @@
   ══════════════════════════════════════════ -->
   <section class="hero">
 
-    <!-- VIDÉO : remplacer src par votre lien MP4 direct
-         (depuis Canva : Partager → Télécharger → MP4,
-          puis héberger et coller l'URL ici) -->
-    <video class="hero-video"
-           autoplay muted loop playsinline
-           poster="">
-      <source src="VOTRE_VIDEO.mp4" type="video/mp4">
-    </video>
-
-    <!-- Fallback si la vidéo ne charge pas -->
+    <!-- Fallback gradient (visible si iframe lente à charger) -->
     <div class="hero-fallback"></div>
+
+    <!-- Vidéo Google Drive — 0529 (1)(2).mp4 -->
+    <div class="hero-video-wrap">
+      <iframe class="hero-iframe"
+              src="https://drive.google.com/file/d/1FxibEWl1-iXAmmkiR-BHIM2_N9dXI_4C/preview"
+              allow="autoplay"
+              allowfullscreen="false"
+              frameborder="0">
+      </iframe>
+    </div>
 
     <!-- Voile sombre -->
     <div class="hero-overlay"></div>
