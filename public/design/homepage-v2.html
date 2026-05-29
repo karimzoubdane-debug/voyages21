@@ -429,6 +429,25 @@
       line-height: 1.72;
     }
 
+    .why-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .why-list li {
+      font-size: .78rem;
+      color: var(--navy);
+      line-height: 1.65;
+      padding-left: 12px;
+      border-left: 2px solid rgba(200,164,64,.45);
+    }
+    .why-list li strong {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
     /* Colonne 4 — texte succinct */
     .why-text-col {}
 
@@ -1456,9 +1475,9 @@
       <!-- Intro gauche -->
       <div class="why-title-col">
         <h2 class="why-h2">
-          <em>L'expertise</em> d'un voyage cousu par un artisan du voyage.
+          Organiser son voyage seul<br>est <em>un plaisir.</em>
         </h2>
-        <p class="why-h2-sub">Ne laissez pas le hasard dicter vos plus beaux souvenirs. Confier votre projet à des artisans du voyage, c'est s'offrir la certitude d'une expérience maîtrisée de bout en bout.</p>
+        <p class="why-h2-sub">Mais sur place, le moindre imprévu peut vite transformer l'aventure en parcours du combattant. Confier votre projet à un artisan, c'est la certitude de n'avoir qu'à profiter.</p>
       </div>
 
       <!-- Colonne 1 — Maîtrise budgétaire & logistique -->
@@ -1466,15 +1485,23 @@
         <p class="why-block-cat">Maîtrise budgétaire &amp; logistique</p>
         <p class="why-block-title">Zéro mauvaise surprise,<br>zéro coût caché</p>
         <p class="why-block-stat">Un budget maîtrisé à 100 %</p>
-        <p>Là où un voyage improvisé cache souvent des frais imprévus (transferts manqués, hébergements non conformes, taxes cachées…), nous verrouillons chaque détail logistique en amont. Vous payez le prix juste, sans aucun recours manqué.</p>
+        <ul class="why-list">
+          <li><strong>Anticipation totale :</strong> Chaque détail logistique est verrouillé en amont pour éviter les frais imprévus (transferts ratés, hébergements non conformes, taxes cachées).</li>
+          <li><strong>Le prix juste :</strong> Une transparence totale sur les tarifs, sans aucune mauvaise surprise à l'arrivée.</li>
+          <li><strong>Garantie absolue :</strong> La certitude d'un voyage fluide, sans aucun recours manqué.</li>
+        </ul>
       </div>
 
-      <!-- Colonne 2 — Accès à l'exclusivité -->
+      <!-- Colonne 2 — Votre ADN Voyagiste -->
       <div class="why-block">
         <p class="why-block-cat">Votre ADN Voyagiste</p>
         <p class="why-block-title">L'accès à l'invisible<br>et à l'insolite</p>
         <p class="why-block-stat">Bien au-delà du tourisme de masse</p>
-        <p>Sur internet, l'exceptionnel est invisible. Grâce à notre expertise de terrain, nous vous ouvrons les portes d'adresses secrètes, d'expériences uniques et de lieux impossibles à dénicher seul.</p>
+        <ul class="why-list">
+          <li><strong>Au-delà des algorithmes :</strong> Sur internet, l'exceptionnel reste invisible ; nous cassons les codes du tourisme standardisé.</li>
+          <li><strong>Expertise de terrain :</strong> Nos équipes locales testent et sélectionnent scrupuleusement chaque étape.</li>
+          <li><strong>Adresses confidentielles :</strong> Ouverture exclusive sur des lieux secrets, des expériences uniques et des rencontres impossibles à dénicher seul.</li>
+        </ul>
       </div>
 
       <!-- Colonne 3 — Assistance humaine & immédiate -->
@@ -1482,7 +1509,11 @@
         <p class="why-block-cat">Assistance humaine &amp; immédiate</p>
         <p class="why-block-title">Une présence réelle,<br>24h/24 et 7j/7</p>
         <p class="why-block-stat">Votre sérénité est notre priorité</p>
-        <p>Un vol annulé&nbsp;? Un imprévu&nbsp;? Vous n'êtes jamais seul face à un écran ou un robot. À la moindre alerte, notre équipe locale réagit instantanément. Des prénoms, des voix, une présence physique&nbsp;: zéro stress, vous profitez.</p>
+        <ul class="why-list">
+          <li><strong>Zéro robot, zéro écran :</strong> Face à un vol annulé ou un imprévu, vous n'êtes jamais livré à vous-même.</li>
+          <li><strong>Réactivité instantanée :</strong> À la moindre alerte, notre équipe de terrain s'active immédiatement pour trouver une solution.</li>
+          <li><strong>Présence humaine :</strong> Des prénoms, des voix, une vraie présence physique à vos côtés : zéro stress, vous profitez.</li>
+        </ul>
       </div>
 
     </div>
