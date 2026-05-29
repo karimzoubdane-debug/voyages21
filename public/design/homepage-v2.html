@@ -636,6 +636,134 @@
       line-height: 1;
     }
 
+    /* ── CHAT SCREEN (col 3) ──────────────────── */
+    .chat-screen {
+      height: 152px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #f0f2f5;
+      padding: 10px 12px;
+      margin: 10px 0 0;
+      position: relative;
+    }
+    .chat-screen::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0;
+      height: 44px;
+      background: linear-gradient(transparent, #f0f2f5);
+      pointer-events: none;
+    }
+    .chat-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      animation: chatScroll 14s linear infinite;
+    }
+    @keyframes chatScroll {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .chat-bubble {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: .68rem;
+      line-height: 1.4;
+    }
+    .chat-bubble.sys {
+      background: #fee2e2;
+      color: #991b1b;
+      font-weight: 600;
+      align-self: flex-start;
+    }
+    .chat-bubble.bot {
+      background: #e5e7eb;
+      color: #6b7280;
+      align-self: flex-start;
+    }
+    .chat-bubble.cname {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: .73rem;
+      align-self: flex-end;
+      border-radius: 12px 12px 2px 12px;
+    }
+    .chat-bubble.v21 {
+      background: var(--navy);
+      color: #fff;
+      align-self: flex-end;
+      border-radius: 12px 2px 12px 12px;
+    }
+    .chat-sep {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 4px 0;
+      color: #9ca3af;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .chat-sep::before, .chat-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #d1d5db;
+    }
+
+    /* ── TICKER ÉQUIPE ─────────────────────────── */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+    }
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker 38s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .tick {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 38px;
+      height: 62px;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+    .tick strong {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: none;
+    }
+    .tick-dot { opacity: .55; font-size: 1rem; }
+    .tick-1 { background: #1B2D4F; color: #C8A440; }
+    .tick-1 strong { color: #fff; }
+    .tick-2 { background: #C8A440; color: #1B2D4F; }
+    .tick-2 strong { color: #1B2D4F; }
+    .tick-3 { background: #2D1B4F; color: #F5F0E8; }
+    .tick-3 strong { color: #C8A440; }
+    .tick-4 { background: #1B3A28; color: #C8A440; }
+    .tick-4 strong { color: #F5F0E8; }
+    .tick-5 { background: #F5F0E8; color: #1B2D4F; box-shadow: inset 0 3px 0 #C8A440, inset 0 -3px 0 #C8A440; }
+    .tick-5 strong { color: #C8A440; }
+
     /* grille 4 colonnes identique à why */
     .early-grid {
       display: grid;
@@ -960,10 +1088,36 @@
       </div>
 
       <!-- Colonne 3 — risque humain -->
+      <!-- Colonne 3 — chat animé : seul vs équipe -->
       <div class="why-block">
         <p class="why-block-title">Vol annulé,<br>personne au bout du fil</p>
-        <p class="why-block-stat">Zéro interlocuteur en cas d'imprévu</p>
-        <p>Sans agence, vous êtes seul face aux compagnies aériennes, aux hôtels et aux prestataires locaux. Chaque problème devient votre problème.</p>
+        <div class="chat-screen">
+          <div class="chat-scroll">
+            <span class="chat-bubble sys">✈ Vol XY234 annulé.</span>
+            <span class="chat-bubble bot">📞 Répondeur automatique…</span>
+            <span class="chat-bubble bot">Attente estimée : 2h30.</span>
+            <span class="chat-bubble bot">Ligne coupée.</span>
+            <div class="chat-sep">Avec Voyages21</div>
+            <span class="chat-bubble cname">Wafa</span>
+            <span class="chat-bubble v21">"Je suis sur votre dossier."</span>
+            <span class="chat-bubble cname">Housseine</span>
+            <span class="chat-bubble v21">"Je contacte la compagnie."</span>
+            <span class="chat-bubble cname">Majda</span>
+            <span class="chat-bubble v21">"Rebooking confirmé. Même classe."</span>
+            <!-- duplicate pour boucle seamless -->
+            <span class="chat-bubble sys">✈ Vol XY234 annulé.</span>
+            <span class="chat-bubble bot">📞 Répondeur automatique…</span>
+            <span class="chat-bubble bot">Attente estimée : 2h30.</span>
+            <span class="chat-bubble bot">Ligne coupée.</span>
+            <div class="chat-sep">Avec Voyages21</div>
+            <span class="chat-bubble cname">Wafa</span>
+            <span class="chat-bubble v21">"Je suis sur votre dossier."</span>
+            <span class="chat-bubble cname">Housseine</span>
+            <span class="chat-bubble v21">"Je contacte la compagnie."</span>
+            <span class="chat-bubble cname">Majda</span>
+            <span class="chat-bubble v21">"Rebooking confirmé. Même classe."</span>
+          </div>
+        </div>
       </div>
 
       <!-- Colonne 4 — texte avec fondu + lire plus -->
@@ -992,6 +1146,25 @@
 
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════════
+       TICKER — équipe en action
+  ══════════════════════════════════════════ -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="tick tick-1">VOL ANNULÉ ?<span class="tick-dot">✦</span><strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
+      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT ?<span class="tick-dot">✦</span><strong>Wafa</strong> négocie votre relogement sur place.</span>
+      <span class="tick tick-3">TRANSFERT RATÉ ?<span class="tick-dot">✦</span><strong>Housseine</strong> est déjà en route.</span>
+      <span class="tick tick-4">REBOOKING IMPOSSIBLE ?<span class="tick-dot">✦</span><strong>Majda</strong> trouve une alternative en 10 minutes.</span>
+      <span class="tick tick-5">LITIGE COMPAGNIE ?<span class="tick-dot">✦</span><strong>Houda</strong> prend en charge votre dossier.</span>
+      <!-- duplicate pour boucle seamless -->
+      <span class="tick tick-1">VOL ANNULÉ ?<span class="tick-dot">✦</span><strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
+      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT ?<span class="tick-dot">✦</span><strong>Wafa</strong> négocie votre relogement sur place.</span>
+      <span class="tick tick-3">TRANSFERT RATÉ ?<span class="tick-dot">✦</span><strong>Housseine</strong> est déjà en route.</span>
+      <span class="tick tick-4">REBOOKING IMPOSSIBLE ?<span class="tick-dot">✦</span><strong>Majda</strong> trouve une alternative en 10 minutes.</span>
+      <span class="tick tick-5">LITIGE COMPAGNIE ?<span class="tick-dot">✦</span><strong>Houda</strong> prend en charge votre dossier.</span>
+    </div>
+  </div>
 
 
   <!-- ══════════════════════════════════════════
