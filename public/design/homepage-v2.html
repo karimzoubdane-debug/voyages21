@@ -297,10 +297,247 @@
     }
 
     /* ═══════════════════════════════════════════
+       POURQUOI NOUS CHOISIR
+    ═══════════════════════════════════════════ */
+    .why {
+      background: var(--white);
+      padding: 96px 96px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .why-left {}
+
+    .why-sup {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .why-h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+
+    .why-h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* Bloc texte avec fade sur le dernier quart */
+    .why-preview {
+      position: relative;
+      max-height: 120px;
+      overflow: hidden;
+    }
+
+    .why-preview::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 72px;
+      background: linear-gradient(to bottom, transparent, var(--white));
+    }
+
+    .why-preview p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.78;
+    }
+
+    .btn-lire {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 24px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+      cursor: pointer;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: color .2s, gap .25s;
+    }
+    .btn-lire::after { content: '→'; }
+    .btn-lire:hover { color: var(--gold); gap: 16px; }
+
+    /* Colonne droite — 3 engagements */
+    .why-right {
+      padding-top: 8px;
+    }
+
+    .why-items {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .why-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .why-item-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.6rem;
+      color: rgba(200,164,64,.25);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 32px;
+    }
+
+    .why-item-body h4 {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .why-item-body p {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    /* ── MODAL ────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(11,18,32,.65);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--white);
+      max-width: 680px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 52px 52px 48px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform .35s;
+    }
+    .modal-backdrop.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1;
+      transition: color .2s;
+    }
+    .modal-close:hover { color: var(--navy); }
+
+    .modal-sup {
+      font-size: .63rem;
+      font-weight: 600;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .modal-h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.55rem;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 28px;
+    }
+
+    .modal-body p {
+      font-size: .88rem;
+      color: #4a5568;
+      line-height: 1.78;
+      margin-bottom: 18px;
+    }
+
+    .modal-body h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin: 28px 0 14px;
+    }
+
+    .modal-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .modal-body li {
+      font-size: .88rem;
+      color: #4a5568;
+      line-height: 1.68;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .modal-body li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .modal-body li strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .modal-cta {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ═══════════════════════════════════════════
        SECTIONS SUIVANTES (à compléter)
     ═══════════════════════════════════════════ */
     .section-placeholder {
-      min-height: 200px;
+      min-height: 160px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -383,6 +620,95 @@
 
 
   <!-- ══════════════════════════════════════════
+       POURQUOI NOUS CHOISIR
+  ══════════════════════════════════════════ -->
+  <section class="why" id="pourquoi">
+
+    <!-- Gauche : texte avec aperçu + lire plus -->
+    <div class="why-left">
+      <p class="why-sup">Pourquoi nous choisir</p>
+      <h2 class="why-h2">
+        L'illusion du<br>
+        <em>«&nbsp;faire soi-même&nbsp;»</em>
+      </h2>
+
+      <div class="why-preview">
+        <p>Partir à l'aventure par ses propres moyens a un parfum de liberté, mais la réalité du terrain réserve souvent un tout autre scénario. Entre un vol annulé sans aucun interlocuteur au bout du fil, une mauvaise surprise à l'arrivée, ou la perte de vos billets sans recours, le voyage de vos rêves peut instantanément se transformer en parcours du combattant.</p>
+      </div>
+
+      <button class="btn-lire" onclick="openModal()">Lire plus</button>
+    </div>
+
+    <!-- Droite : 3 engagements clés -->
+    <div class="why-right">
+      <div class="why-items">
+
+        <div class="why-item">
+          <div class="why-item-num">01</div>
+          <div class="why-item-body">
+            <h4>Accompagnement de bout en bout</h4>
+            <p>À votre écoute du premier jour des préparatifs jusqu'à votre retour à la maison.</p>
+          </div>
+        </div>
+
+        <div class="why-item">
+          <div class="why-item-num">02</div>
+          <div class="why-item-body">
+            <h4>Une présence humaine réelle</h4>
+            <p>En cas d'imprévu, pas de répondeur automatique. Un représentant Voyages21 est toujours présent sur place.</p>
+          </div>
+        </div>
+
+        <div class="why-item">
+          <div class="why-item-num">03</div>
+          <div class="why-item-body">
+            <h4>Souplesse &amp; garantie</h4>
+            <p>Logistique gérée avec la flexibilité d'un professionnel : options et tarifs sécurisés.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       MODAL — texte complet
+  ══════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modal" onclick="closeModal(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+
+      <p class="modal-sup">Pourquoi nous choisir</p>
+      <h3 class="modal-h3">L'illusion du «&nbsp;faire soi-même&nbsp;» :<br>Pourquoi risquer vos vacances&nbsp;?</h3>
+
+      <div class="modal-body">
+        <p>Partir à l'aventure par ses propres moyens a un parfum de liberté, mais la réalité du terrain réserve souvent un tout autre scénario. Entre un vol annulé sans aucun interlocuteur au bout du fil, une mauvaise surprise à l'arrivée sur le lieu d'hébergement, ou la perte de vos billets sans recours, le voyage de vos rêves peut instantanément se transformer en parcours du combattant.</p>
+
+        <p>On pense souvent économiser en organisant tout soi-même. Pourtant, la moindre fausse note logistique — un transfert raté, une option non garantie, un litige sur place — finit par coûter deux à trois fois le prix initialement prévu. Sans compter le stress qui gâche l'expérience. Pourquoi prendre un tel risque avec votre temps précieux et votre argent&nbsp;?</p>
+
+        <h4>Le Choix de la Sérénité : L'Engagement Voyages21</h4>
+
+        <p>Chez <strong>Voyages21</strong>, nous croyons qu'un vrai voyage se vit l'esprit libre. Choisir notre expertise «&nbsp;cousu main&nbsp;», c'est s'offrir la certitude d'en avoir pour son argent, sans compromis sur la qualité&nbsp;:</p>
+
+        <ul>
+          <li><strong>Un accompagnement de bout en bout :</strong> Nous sommes à votre écoute et à vos côtés, du premier jour des préparatifs jusqu'à votre retour à la maison.</li>
+          <li><strong>Une présence humaine réelle :</strong> En cas d'imprévu, pas de répondeur automatique. Un représentant de Voyages21 est toujours présent sur place pour fluidifier votre séjour.</li>
+          <li><strong>La souplesse et la garantie :</strong> Nous gérons la logistique avec la flexibilité que seul un professionnel peut offrir, en sécurisant vos options et vos tarifs.</li>
+        </ul>
+
+        <p>Ne laissez pas le hasard décider de la réussite de vos vacances. Confiez-les à un expert pour qui votre satisfaction est une garantie, pas une option.</p>
+      </div>
+
+      <div class="modal-cta">
+        <a href="#contact" class="btn-primary" onclick="closeModal()">Réserver maintenant</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
        SECTIONS SUIVANTES (prochaines étapes)
   ══════════════════════════════════════════ -->
   <div class="section-placeholder">
@@ -401,6 +727,22 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('elevated', window.scrollY > 10);
     }, { passive: true });
+
+    function openModal() {
+      document.getElementById('modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+      if (!e || e.target === document.getElementById('modal')) {
+        document.getElementById('modal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
 
 </body>
