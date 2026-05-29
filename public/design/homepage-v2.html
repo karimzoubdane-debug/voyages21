@@ -720,87 +720,40 @@
       background: #d1d5db;
     }
 
-    /* ── TICKER ÉQUIPE — fond sombre ──────────── */
-    .ticker-section { background: var(--light); padding-top: 16px; }
-    .ticker-title {
+    /* ── IMAGE CAROUSEL — défile droite→gauche ──────────── */
+    .img-tick-section { background: var(--light); padding: 36px 0 48px; overflow: hidden; }
+    .img-tick-title {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
       font-style: italic;
-      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
       color: var(--navy);
-      line-height: 1.25;
+      line-height: 1.4;
       text-align: center;
-      margin-bottom: 24px;
-      padding: 0 96px;
+      margin-bottom: 32px;
+      padding: 0 40px;
     }
-    .ticker-outer { padding: 0 96px 28px; background: var(--light); }
-    .ticker-wrap {
-      background: #1B2D4F;
-      overflow: hidden;
+    .img-tick-title em { font-style: normal; color: var(--gold); }
+    .img-tick-wrap { overflow: hidden; }
+    .img-tick-track {
       display: flex;
-      border-radius: 64px;
+      gap: 18px;
+      animation: imgTick 40s linear infinite;
+      width: max-content;
     }
-    .ticker-track {
-      display: flex;
-      white-space: nowrap;
-      animation: ticker 22s linear infinite;
-    }
-    .ticker-track:hover { animation-play-state: paused; }
-    @keyframes ticker {
+    .img-tick-track:hover { animation-play-state: paused; }
+    @keyframes imgTick {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    .tick {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 8px;
-      padding: 21px 72px;
-      height: 128px;
+    .img-tile {
+      width: 156px;
+      height: 156px;
+      border-radius: 28px;
+      background-size: cover;
+      background-position: center;
       flex-shrink: 0;
-      white-space: nowrap;
-      border-right: 1px solid rgba(200,164,64,.2);
-    }
-    .tick-tag {
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      color: #fff;
-      background: #C0392B;
-      border: 1px solid #9b1f1f;
-      padding: 4px 10px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    @keyframes blink-warn {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: .2; }
-    }
-    .tick-tag::before {
-      content: '⚠';
-      font-size: .8rem;
-      letter-spacing: 0;
-      animation: blink-warn 1.1s ease-in-out infinite;
-    }
-    .tick-text {
-      font-size: 1.05rem;
-      color: var(--cream);
-      line-height: 1.35;
-      white-space: nowrap;
-    }
-    .tick strong {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 700;
-      font-size: 1.9rem;
-      color: var(--gold);
-      display: block;
-      line-height: 1.1;
+      box-shadow: 0 4px 16px rgba(27,45,79,.15);
     }
 
     /* ══════════════════════════════════════════
@@ -1673,11 +1626,11 @@
 
       <!-- Colonne gauche — Le Problème -->
       <div class="why-left">
-        <h3 class="why-left-title">Concocter son voyage sur internet : l'illusion de l'économie, un pari à haut risque</h3>
+        <h3 class="why-left-title"><span style="color:#1A2B4C;">Concocter son voyage sur internet :</span> l'illusion de l'économie, <span style="color:#C0392B;">un pari à haut risque</span></h3>
         <ul class="why-list">
-          <li><strong>La réalité du terrain :</strong> Un projet construit seul sur écran qui peut vite basculer au moindre <span class="why-amber">imprévu logistique</span>.</li>
-          <li><strong>L'absence de filet :</strong> Aucun <span class="why-amber">interlocuteur humain</span> vers qui se tourner en cas d'urgence ou de litige sur place.</li>
-          <li><strong>Le leurre financier :</strong> Des dizaines de <span class="why-amber">taxes non déclarées</span> qui coûtent finalement plus cher que les économies espérées.</li>
+          <li><strong>Réalité amère :</strong> Un voyage bâti sur écran qui vire au parcours du combattant au moindre pépin.</li>
+          <li><strong>Livré à vous-même :</strong> Aucun humain ni assistance immédiate en cas d'urgence ou de vol annulé.</li>
+          <li><strong>Leurre financier :</strong> Des taxes et frais cachés qui coûtent finalement dix fois plus cher que les économies espérées.</li>
         </ul>
       </div>
 
@@ -1715,26 +1668,43 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       TICKER — équipe en action
+       IMAGE CAROUSEL — équipe en action
   ══════════════════════════════════════════ -->
-  <div class="ticker-section">
-    <h3 class="ticker-title">En cas d'imprévu,<br>toute l'équipe se met en action.</h3>
-    <div class="ticker-outer" aria-hidden="true">
-      <div class="ticker-wrap">
-        <div class="ticker-track">
-          <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa B.</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
-          <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
-          <span class="tick"><span class="tick-tag">Changer de vol</span><span class="tick-text"><strong>Wafa D.</strong>réorganise vos billets sans que vous ayez à lever le petit doigt.</span></span>
-          <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
-          <span class="tick"><span class="tick-tag">Reporter le voyage</span><span class="tick-text"><strong>Fouad</strong>reprogramme tout et sécurise vos conditions tarifaires.</span></span>
-          <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
-          <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-text"><strong>Wafa B.</strong>est déjà en ligne avec la compagnie aérienne.</span></span>
-          <span class="tick"><span class="tick-tag">Rebooking refusé</span><span class="tick-text"><strong>Ghizlane</strong>contourne le problème en 10 minutes.</span></span>
-          <span class="tick"><span class="tick-tag">Changer de vol</span><span class="tick-text"><strong>Wafa D.</strong>réorganise vos billets sans que vous ayez à lever le petit doigt.</span></span>
-          <span class="tick"><span class="tick-tag">Litige sur place</span><span class="tick-text"><strong>Houda</strong>prend tout en charge — vous, continuez votre voyage.</span></span>
-          <span class="tick"><span class="tick-tag">Reporter le voyage</span><span class="tick-text"><strong>Fouad</strong>reprogramme tout et sécurise vos conditions tarifaires.</span></span>
-          <span class="tick"><span class="tick-tag">Bagage égaré</span><span class="tick-text"><strong>Fouad</strong>déclenche notre réseau local immédiatement.</span></span>
-        </div>
+  <div class="img-tick-section">
+    <h3 class="img-tick-title">En cas d'imprévu,<br><em>votre problème devient notre problème</em><br>et toute l'équipe se met en action.</h3>
+    <div class="img-tick-wrap" aria-hidden="true">
+      <div class="img-tick-track">
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1520454974749-a8d17df2f6b8?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1526772662643-f8ccd6c23e21?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1501980689-03cb2f39a7a4?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1516815231560-8f41ec531527?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80')"></div>
+        <!-- duplicates for seamless loop -->
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1520454974749-a8d17df2f6b8?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1526772662643-f8ccd6c23e21?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1501980689-03cb2f39a7a4?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1516815231560-8f41ec531527?w=400&q=80')"></div>
+        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80')"></div>
       </div>
     </div>
   </div>
