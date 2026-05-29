@@ -365,9 +365,9 @@
     .why-h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 900;
-      font-size: 2.1rem;
+      font-size: clamp(2.8rem, 4vw, 3.8rem);
       color: var(--navy);
-      line-height: 1.18;
+      line-height: 1.1;
     }
     .why-h2 em {
       font-style: italic;
@@ -983,6 +983,243 @@
       color: var(--gold);
       font-style: normal;
     }
+    /* ═══════════════════════════════════════════
+       DESTINATIONS — section voyages
+    ═══════════════════════════════════════════ */
+    .dest {
+      background: var(--cream);
+      padding: 96px 0 80px;
+    }
+    .dest-header {
+      text-align: center;
+      padding: 0 48px;
+      margin-bottom: 48px;
+    }
+    .dest-sup {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .dest-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      color: var(--navy);
+      line-height: 1.06;
+      letter-spacing: -.02em;
+      margin-bottom: 18px;
+    }
+    .dest-title em { font-style: italic; color: var(--gold); }
+    .dest-sub {
+      font-size: .92rem;
+      color: var(--navy);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    /* Onglets */
+    .dest-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+    }
+    .dest-tab {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--navy);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 14px 32px;
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+      margin-bottom: -1px;
+    }
+    .dest-tab:hover { color: var(--gold); }
+    .dest-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    /* Panels */
+    .dest-panel { display: none; padding: 0 96px; }
+    .dest-panel.active { display: block; }
+    /* Grille cards */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .dest-card {
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .dest-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(27,45,79,.12); }
+    .dest-card-img {
+      height: 190px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+    .dest-card-body {
+      padding: 16px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+    .dest-card-tag {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .dest-card-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: .96rem;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+    .dest-card-dur {
+      font-size: .74rem;
+      color: var(--navy);
+      font-weight: 500;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    /* Card CTA sur-mesure */
+    .dest-card-cta {
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 32px 28px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .dest-card-cta:hover { background: #243d6a; }
+    .dest-card-cta-label {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .dest-card-cta-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 22px;
+    }
+    .dest-card-cta-btn {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 10px 20px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: opacity .2s;
+    }
+    .dest-card-cta-btn:hover { opacity: .85; }
+    /* Actions */
+    .dest-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .btn-shuffle {
+      background: none;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      padding: 11px 22px;
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .btn-shuffle:hover { background: var(--navy); color: var(--white); }
+    .btn-tous {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 12px 32px;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .btn-tous:hover { opacity: .88; }
+    /* Grille destinations monde */
+    .dest-monde-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+    .dest-monde-tile {
+      position: relative;
+      height: 175px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      transition: transform .25s;
+      cursor: default;
+    }
+    .dest-monde-tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,18,32,.8) 0%, transparent 55%);
+    }
+    .dest-monde-name {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 1;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .dest-monde-count {
+      font-family: 'DM Sans', sans-serif;
+      font-style: normal;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-top: 3px;
+    }
+
     .section-placeholder {
       min-height: 160px;
       display: flex;
@@ -1337,17 +1574,48 @@
 
 
   <!-- ══════════════════════════════════════════
-       SECTIONS SUIVANTES (prochaines étapes)
+       DESTINATIONS — Le monde cousu main
   ══════════════════════════════════════════ -->
-  <div class="section-placeholder">
-    — Section Destinations (prochaine étape) —
-  </div>
-  <div class="section-placeholder" style="background:var(--white);">
-    — Section Croisières (prochaine étape) —
-  </div>
-  <div class="section-placeholder">
-    — Section Omra &amp; Hajj (prochaine étape) —
-  </div>
+  <section class="dest" id="destinations">
+
+    <div class="dest-header">
+      <p class="dest-sup">33 circuits · 13 destinations</p>
+      <h2 class="dest-title">Le monde,<br><em>cousu main.</em></h2>
+      <p class="dest-sub">Depuis 2000, nous concevons des voyages d'exception pour des voyageurs qui refusent le tourisme ordinaire. Chaque itinéraire est unique, jamais catalogué.</p>
+    </div>
+
+    <div class="dest-tabs">
+      <button class="dest-tab active" onclick="switchDestTab('coups', this)">Nos coups de cœur</button>
+      <button class="dest-tab" onclick="switchDestTab('voyages', this)">Voir nos voyages</button>
+      <button class="dest-tab" onclick="switchDestTab('monde', this)">Découvrir le monde</button>
+    </div>
+
+    <!-- Panel 1 : Coups de cœur (aléatoire) -->
+    <div class="dest-panel active" id="panel-coups">
+      <div class="dest-grid" id="grid-coups"></div>
+      <div class="dest-actions">
+        <button class="btn-shuffle" onclick="renderCoups()">↻ Autres sélections</button>
+        <a href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html" target="_blank" class="btn-tous">Voir tous nos voyages →</a>
+      </div>
+    </div>
+
+    <!-- Panel 2 : Voir nos voyages (curated + CTA sur-mesure) -->
+    <div class="dest-panel" id="panel-voyages">
+      <div class="dest-grid" id="grid-voyages"></div>
+      <div class="dest-actions">
+        <a href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html" target="_blank" class="btn-tous">Voir tous nos voyages →</a>
+      </div>
+    </div>
+
+    <!-- Panel 3 : Découvrir le monde (13 destinations) -->
+    <div class="dest-panel" id="panel-monde">
+      <div class="dest-monde-grid" id="grid-monde"></div>
+      <div class="dest-actions">
+        <a href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html" target="_blank" class="btn-tous">Voir tous nos voyages →</a>
+      </div>
+    </div>
+
+  </section>
 
 
   <script>
@@ -1401,6 +1669,125 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeModal();
     });
+
+    // ═══ DESTINATIONS DATA ════════════════════════════
+    const IMG = {
+      turquie:  'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80',
+      egypte:   'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=600&q=80',
+      usa:      'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600&q=80',
+      cuba:     'https://images.unsplash.com/photo-1520454974749-a8d17df2f6b8?w=600&q=80',
+      perou:    'https://images.unsplash.com/photo-1526772662643-f8ccd6c23e21?w=600&q=80',
+      europe:   'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80',
+      espagne:  'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80',
+      grece:    'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=600&q=80',
+      italie:   'https://images.unsplash.com/photo-1529260830199-42c24126f198?w=600&q=80',
+      angleterre:'https://images.unsplash.com/photo-1501980689-03cb2f39a7a4?w=600&q=80',
+      chine:    'https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=600&q=80',
+      malaisie: 'https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=600&q=80',
+      vietnam:  'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80',
+      zanzibar: 'https://images.unsplash.com/photo-1516815231560-8f41ec531527?w=600&q=80',
+      croisiere:'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=600&q=80',
+    };
+
+    const VOYAGES = [
+      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Séjour à Istanbul',                       duree: '8 jours' },
+      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul & Antalya',                      duree: '8 jours' },
+      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul & Bodrum',                       duree: '8 jours' },
+      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul, Marmaris & Bodrum',             duree: '11 jours' },
+      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul & Antalya',                      duree: '11 jours' },
+      { img: IMG.egypte,    dest: 'Égypte',           titre: 'Le Caire · Nil · Hurghada',              duree: '12 jours' },
+      { img: IMG.egypte,    dest: 'Égypte',           titre: 'Le Caire & Sharm El Sheikh',             duree: '11 jours' },
+      { img: IMG.usa,       dest: 'USA & Canada',     titre: "L'Ouest Complet USA",                    duree: '13 jours' },
+      { img: IMG.usa,       dest: 'USA & Canada',     titre: 'Les Joyaux du Canada & des USA',         duree: '11 jours' },
+      { img: IMG.usa,       dest: 'USA & Canada',     titre: "Les Rocheuses & l'Ouest Classique",      duree: '17 jours' },
+      { img: IMG.cuba,      dest: 'Cuba',             titre: 'Cuba — La Havane & Varadero',            duree: '9 jours' },
+      { img: IMG.perou,     dest: 'Pérou',            titre: 'Pérou — Les Merveilles Incas',           duree: '11 jours' },
+      { img: IMG.europe,    dest: 'Europe',           titre: 'Séjour à Las Palmas',                    duree: '8 jours' },
+      { img: IMG.europe,    dest: 'Europe',           titre: 'Capitales Impériales — Vienne, Budapest, Prague', duree: '6 jours' },
+      { img: IMG.espagne,   dest: 'Europe',           titre: 'Al-Andalus — Madrid, Grenade, Séville',  duree: '7 jours' },
+      { img: IMG.grece,     dest: 'Europe',           titre: 'Athènes, Rhodes & Kos',                  duree: '8 jours' },
+      { img: IMG.grece,     dest: 'Europe',           titre: 'Athènes — Grèce Classique',              duree: '7 jours' },
+      { img: IMG.espagne,   dest: 'Europe',           titre: 'Espagne & Portugal',                     duree: '10 jours' },
+      { img: IMG.italie,    dest: 'Europe',           titre: 'Circuit Italie',                         duree: '8 jours' },
+      { img: IMG.europe,    dest: 'Europe',           titre: 'France & Suisse',                        duree: '8 jours' },
+      { img: IMG.angleterre,dest: 'Europe',           titre: 'Angleterre & Écosse',                    duree: '10 jours' },
+      { img: IMG.chine,     dest: 'Chine',            titre: 'Pékin, Shanghai & Merveilles',           duree: '14 jours' },
+      { img: IMG.malaisie,  dest: 'Malaisie & Thaïlande', titre: 'KL, Krabi & Phuket',               duree: '14 jours' },
+      { img: IMG.malaisie,  dest: 'Bangkok & Thaïlande',  titre: 'Bangkok, Krabi & Phuket',          duree: '14 jours' },
+      { img: IMG.vietnam,   dest: 'Vietnam',          titre: 'Hanoi à Saigon',                         duree: '14 jours' },
+      { img: IMG.zanzibar,  dest: 'Zanzibar',         titre: 'Zanzibar — Détente & Loisirs',           duree: '8 jours' },
+      { img: IMG.croisiere, dest: 'Croisières',       titre: 'Méditerranée — Espagne & Italie',        duree: '10 jours' },
+      { img: IMG.croisiere, dest: 'Croisières',       titre: 'Croisière Méditerranée Premium',         duree: '10 jours' },
+    ];
+
+    const DESTINATIONS = [
+      { img: IMG.turquie,    name: 'Turquie',              count: '5 circuits' },
+      { img: IMG.egypte,     name: 'Égypte',               count: '2 circuits' },
+      { img: IMG.espagne,    name: 'Europe',               count: '9 circuits' },
+      { img: IMG.zanzibar,   name: 'Zanzibar',             count: '1 circuit'  },
+      { img: IMG.usa,        name: 'USA & Canada',         count: '3 circuits' },
+      { img: IMG.cuba,       name: 'Cuba',                 count: '1 circuit'  },
+      { img: IMG.perou,      name: 'Pérou',                count: '1 circuit'  },
+      { img: IMG.chine,      name: 'Chine',                count: '1 circuit'  },
+      { img: IMG.malaisie,   name: 'Malaisie & Thaïlande', count: '2 circuits' },
+      { img: IMG.vietnam,    name: 'Vietnam',              count: '1 circuit'  },
+      { img: IMG.croisiere,  name: 'Croisières',           count: '2 circuits' },
+      { img: '',             name: 'Omra & Hajj',          count: '5 programmes', gradient: true },
+    ];
+
+    function cardHTML(v) {
+      return `<div class="dest-card">
+        <div class="dest-card-img" style="background-image:url('${v.img}')"></div>
+        <div class="dest-card-body">
+          <span class="dest-card-tag">${v.dest}</span>
+          <h3 class="dest-card-title">${v.titre}</h3>
+          <span class="dest-card-dur">${v.duree}</span>
+        </div>
+      </div>`;
+    }
+
+    function renderCoups() {
+      const shuffled = [...VOYAGES].sort(() => Math.random() - 0.5);
+      document.getElementById('grid-coups').innerHTML = shuffled.slice(0, 6).map(cardHTML).join('');
+    }
+
+    function renderVoyages() {
+      const curated = [
+        VOYAGES.find(v => v.dest === 'Turquie'),
+        VOYAGES.find(v => v.dest === 'Égypte'),
+        VOYAGES.find(v => v.dest === 'USA & Canada'),
+        VOYAGES.find(v => v.dest === 'Cuba'),
+        VOYAGES.find(v => v.dest === 'Pérou'),
+        VOYAGES.find(v => v.dest === 'Zanzibar'),
+        VOYAGES.find(v => v.dest === 'Vietnam'),
+        VOYAGES.find(v => v.dest === 'Croisières'),
+      ];
+      const ctaCard = `<a href="#contact" class="dest-card-cta">
+        <span class="dest-card-cta-label">Sur mesure</span>
+        <p class="dest-card-cta-title">Votre voyage n'existe pas encore.<br>Créons-le ensemble.</p>
+        <span class="dest-card-cta-btn">Nous contacter →</span>
+      </a>`;
+      document.getElementById('grid-voyages').innerHTML = curated.map(cardHTML).join('') + ctaCard;
+    }
+
+    function renderMonde() {
+      document.getElementById('grid-monde').innerHTML = DESTINATIONS.map(d => `
+        <div class="dest-monde-tile" style="${d.gradient ? 'background:linear-gradient(160deg,#1B6B4A 0%,#0d2c1a 100%)' : `background-image:url('${d.img}')`}">
+          <div class="dest-monde-name">${d.name}<span class="dest-monde-count">${d.count}</span></div>
+        </div>
+      `).join('');
+    }
+
+    function switchDestTab(tab, btn) {
+      document.querySelectorAll('.dest-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.dest-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    renderCoups();
+    renderVoyages();
+    renderMonde();
   </script>
 
 </body>
