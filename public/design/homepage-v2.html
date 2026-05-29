@@ -342,9 +342,36 @@
 
     .why-grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr;
       gap: 48px;
       align-items: start;
+    }
+
+    /* Bloc pleine largeur sous les 3 colonnes */
+    .why-full {
+      grid-column: 1 / -1;
+      border-top: 2px solid var(--gold);
+      padding-top: 22px;
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+    }
+    .why-full-header {
+      flex-shrink: 0;
+      width: 260px;
+    }
+    .why-full-body {
+      flex: 1;
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+    .name-tag {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: .98rem;
+      color: var(--gold);
     }
 
     /* Colonne 1 — titre choc */
@@ -718,16 +745,15 @@
 
     /* ── TICKER ÉQUIPE ─────────────────────────── */
     .ticker-wrap {
-      width: calc(100% - 80px);
-      margin: 0 40px;
-      border-radius: 14px;
+      width: 420px;
+      margin: 28px auto;
+      border-radius: 999px;
       overflow: hidden;
       display: flex;
     }
     .ticker-track {
       display: flex;
-      white-space: nowrap;
-      animation: ticker 38s linear infinite;
+      animation: ticker 30s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
     @keyframes ticker {
@@ -735,16 +761,17 @@
       100% { transform: translateX(-50%); }
     }
     .tick {
+      width: 420px;
+      flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      gap: 14px;
-      padding: 0 40px;
-      height: 62px;
-      font-size: .78rem;
-      font-weight: 500;
-      letter-spacing: .06em;
+      justify-content: center;
+      gap: 10px;
+      height: 54px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .07em;
       white-space: nowrap;
-      flex-shrink: 0;
       text-transform: uppercase;
     }
     .tick strong {
@@ -1090,20 +1117,22 @@
         <p>La moindre fausse note logistique — option non garantie, hébergement non conforme — finit par coûter bien plus que prévu. Sans recours possible.</p>
       </div>
 
-      <!-- Colonne 3 — risque humain -->
-      <div class="why-block">
-        <p class="why-block-title">Vol annulé · transfert introuvable<br>changement de vol urgent :<br>personne au bout du fil</p>
-        <p class="why-block-stat">Votre problème<br>devient le nôtre.</p>
-        <p>Voyager seul, c'est subir les compagnies, les hôtels et les imprévus. À la moindre alerte, notre équipe s'active&nbsp;: Wafa&nbsp;&amp;&nbsp;Wafa libèrent vos réservations, Fouad&nbsp;&amp;&nbsp;Ghizlane déploient nos correspondants mondiaux, tandis que Houda orchestre la solution et vous rappelle personnellement pour valider votre sérénité. Zéro gestion, zéro stress&nbsp;— vous, vous profitez de votre voyage.</p>
-      </div>
-
-      <!-- Colonne 4 — texte avec fondu + lire plus -->
+      <!-- Colonne 3 — texte + bouton -->
       <div class="why-text-col">
         <p class="why-block-title-last">Le choix de la sérénité</p>
         <div class="why-preview">
           <p>Chez Voyages21, nous croyons qu'un vrai voyage se vit l'esprit libre. Choisir notre expertise «&nbsp;cousu main&nbsp;», c'est s'offrir la certitude d'en avoir pour son argent, sans compromis sur la qualité. Un accompagnement de bout en bout, une présence humaine réelle, et vos options sécurisées dès la réservation.</p>
         </div>
         <button class="btn-lire" id="btn1" onclick="openModal()">Ne laissez rien au hasard</button>
+      </div>
+
+      <!-- Ligne pleine largeur — vol annulé / équipe -->
+      <div class="why-full">
+        <div class="why-full-header">
+          <p class="why-block-title">Vol annulé · transfert introuvable<br>changement de vol urgent :<br>personne au bout du fil</p>
+          <p class="why-block-stat">Votre problème<br>devient le nôtre.</p>
+        </div>
+        <p class="why-full-body">Voyager seul, c'est subir les compagnies, les hôtels et les imprévus. À la moindre alerte, notre équipe s'active&nbsp;: <strong class="name-tag">Wafa</strong>&nbsp;&amp;&nbsp;<strong class="name-tag">Wafa</strong> libèrent vos réservations, <strong class="name-tag">Fouad</strong>&nbsp;&amp;&nbsp;<strong class="name-tag">Ghizlane</strong> déploient nos correspondants mondiaux, tandis que <strong class="name-tag">Houda</strong> orchestre la solution et vous rappelle personnellement pour valider votre sérénité. Zéro gestion, zéro stress&nbsp;— vous, vous profitez de votre voyage.</p>
       </div>
 
     </div>
@@ -1114,17 +1143,17 @@
   ══════════════════════════════════════════ -->
   <div class="ticker-wrap" aria-hidden="true">
     <div class="ticker-track">
-      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
-      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT <span class="tick-sep">—</span> <strong>Wafa</strong> négocie votre relogement sur place.</span>
-      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Fouad</strong> appelle notre représentant sur place.</span>
-      <span class="tick tick-4">REBOOKING IMPOSSIBLE <span class="tick-sep">—</span> <strong>Ghizlane</strong> trouve une alternative en 10 minutes.</span>
-      <span class="tick tick-5">LITIGE COMPAGNIE <span class="tick-sep">—</span> <strong>Houda</strong> prend en charge votre dossier.</span>
+      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> décroche</span>
+      <span class="tick tick-2">HÉBERGEMENT <span class="tick-sep">—</span> <strong>Wafa</strong> relogement</span>
+      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Fouad</strong> intervient</span>
+      <span class="tick tick-4">REBOOKING <span class="tick-sep">—</span> <strong>Ghizlane</strong> trouve</span>
+      <span class="tick tick-5">LITIGE <span class="tick-sep">—</span> <strong>Houda</strong> orchestre</span>
       <!-- duplicate pour boucle seamless -->
-      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
-      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT <span class="tick-sep">—</span> <strong>Wafa</strong> négocie votre relogement sur place.</span>
-      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Fouad</strong> appelle notre représentant sur place.</span>
-      <span class="tick tick-4">REBOOKING IMPOSSIBLE <span class="tick-sep">—</span> <strong>Ghizlane</strong> trouve une alternative en 10 minutes.</span>
-      <span class="tick tick-5">LITIGE COMPAGNIE <span class="tick-sep">—</span> <strong>Houda</strong> prend en charge votre dossier.</span>
+      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> décroche</span>
+      <span class="tick tick-2">HÉBERGEMENT <span class="tick-sep">—</span> <strong>Wafa</strong> relogement</span>
+      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Fouad</strong> intervient</span>
+      <span class="tick tick-4">REBOOKING <span class="tick-sep">—</span> <strong>Ghizlane</strong> trouve</span>
+      <span class="tick tick-5">LITIGE <span class="tick-sep">—</span> <strong>Houda</strong> orchestre</span>
     </div>
   </div>
 
