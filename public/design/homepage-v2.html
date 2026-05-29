@@ -553,6 +553,120 @@
     }
 
     /* ═══════════════════════════════════════════
+       RÉSERVER TÔT — section centrée
+    ═══════════════════════════════════════════ */
+    .early {
+      background: var(--white);
+      padding: 96px 96px 80px;
+      text-align: center;
+    }
+
+    .early-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+      color: var(--navy);
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      margin-bottom: 20px;
+    }
+
+    .early-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* filet décoratif or sous le titre */
+    .early-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 0 auto 52px;
+    }
+    .early-rule svg {
+      display: block;
+    }
+
+    /* 3 chiffres-clés */
+    .early-kpis {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 56px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .early-kpi {
+      flex: 1;
+      max-width: 280px;
+      padding: 32px 24px;
+      border-right: 1px solid var(--border);
+    }
+    .early-kpi:last-child { border-right: none; }
+
+    .early-kpi-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 2.6rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .early-kpi-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: .04em;
+      margin-bottom: 6px;
+    }
+
+    .early-kpi-desc {
+      font-size: .76rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* paragraphe corps avec phrases-clés en or */
+    .early-body {
+      max-width: 720px;
+      margin: 0 auto 44px;
+      font-size: .92rem;
+      color: #4a5568;
+      line-height: 1.85;
+      text-align: left;
+    }
+
+    .early-body em {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .early-body strong {
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .early-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 15px 44px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .early-cta:hover { background: var(--gold); color: var(--navy); }
+
+    /* ═══════════════════════════════════════════
        SECTIONS SUIVANTES
     ═══════════════════════════════════════════ */
     .section-placeholder {
@@ -733,6 +847,70 @@
       </div>
     </div>
   </div>
+
+
+  <!-- ══════════════════════════════════════════
+       RÉSERVER TÔT
+  ══════════════════════════════════════════ -->
+  <section class="early" id="reserver-tot">
+
+    <h2 class="early-title">
+      Le monde appartient<br>
+      à ceux qui <em>réservent tôt.</em>
+    </h2>
+
+    <!-- filet décoratif SVG calligraphique -->
+    <div class="early-rule">
+      <svg width="120" height="18" viewBox="0 0 120 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 14 C20 4, 40 18, 60 9 C80 0, 100 14, 116 7"
+              stroke="#C8A440" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- 3 chiffres-clés -->
+    <div class="early-kpis">
+      <div class="early-kpi">
+        <div class="early-kpi-num">−30%</div>
+        <div class="early-kpi-label">Sur les billets de transport</div>
+        <div class="early-kpi-desc">En réservant plusieurs mois à l'avance, les tarifs aériens peuvent baisser jusqu'à 30&nbsp;%.</div>
+      </div>
+      <div class="early-kpi">
+        <div class="early-kpi-num">100%</div>
+        <div class="early-kpi-label">Des meilleures disponibilités</div>
+        <div class="early-kpi-desc">Hôtels exclusifs, suites avec vue, excursions privées — les places partent en premier.</div>
+      </div>
+      <div class="early-kpi">
+        <div class="early-kpi-num">0</div>
+        <div class="early-kpi-label">Compromis de dernière minute</div>
+        <div class="early-kpi-desc">Finis les choix par défaut. Vous voyagez exactement comme vous l'avez imaginé.</div>
+      </div>
+    </div>
+
+    <!-- corps du texte avec idées-phares colorées -->
+    <div class="early-body">
+      <p>
+        <em>Le luxe du voyage ne réside pas seulement dans la destination</em> — il se niche aussi dans sa préparation.
+        Concevoir votre projet <strong>plusieurs mois à l'avance</strong> est le secret le mieux gardé
+        pour conjuguer <em>sérénité absolue</em> et <em>excellence tarifaire</em>.
+      </p>
+      <br>
+      <p>
+        En réservant tôt, vous profitez des <strong>meilleures disponibilités</strong> dans nos hôtels les plus exclusifs
+        à des prix souvent imbattables, tout en bénéficiant de billets de transport
+        <strong>jusqu'à 30&nbsp;% moins chers</strong>.
+        Loin de la précipitation stressante et des choix par défaut de la dernière minute,
+        <em>l'anticipation vous offre le privilège du choix</em> et la certitude de la perfection.
+      </p>
+      <br>
+      <p>
+        Le voyage idéal commence dès le premier jour de sa planification.
+        <strong>Confiez-le à Voyages21 — et partez l'esprit libre.</strong>
+      </p>
+    </div>
+
+    <a href="#contact" class="early-cta">Réserver maintenant</a>
+
+  </section>
 
 
   <!-- ══════════════════════════════════════════
