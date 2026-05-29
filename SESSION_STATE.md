@@ -1,6 +1,11 @@
 # SESSION STATE — Voyages21 Site Web
 <!-- Cowork met à jour ce fichier OBLIGATOIREMENT avant fin de session ou limite de tokens -->
 
+## ⚠️ ATTENTION — PROJET EN COURS
+**Ce projet est la BROCHURE HTML standalone : `public/design/homepage-v2.html`**
+**Ce n'est PAS le site Next.js (src/app/) qui est déjà en production.**
+**Ne jamais toucher à src/app/ ni à voyages21.vercel.app.**
+
 ## DERNIERE SESSION
 - **Date :** 2026-05-29
 - **Branche Git :** `claude/confident-meitner-Fiqzd`
