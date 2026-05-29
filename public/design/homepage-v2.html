@@ -744,19 +744,17 @@
       background: #d1d5db;
     }
 
-    /* ── TICKER ÉQUIPE ─────────────────────────── */
+    /* ── TICKER ÉQUIPE — fond sombre ──────────── */
     .ticker-wrap {
-      width: 840px;
-      margin: 28px auto;
-      border-radius: 999px;
+      width: 100%;
+      background: #1B2D4F;
       overflow: hidden;
       display: flex;
-      border: 2px solid var(--navy);
-      box-shadow: 0 2px 16px rgba(27,45,79,.18);
     }
     .ticker-track {
       display: flex;
-      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+      animation: ticker 36s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
     @keyframes ticker {
@@ -764,38 +762,39 @@
       100% { transform: translateX(-50%); }
     }
     .tick {
-      width: 840px;
-      flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      height: 54px;
-      font-size: .76rem;
-      font-weight: 600;
-      letter-spacing: .07em;
+      gap: 14px;
+      padding: 0 56px;
+      height: 64px;
+      flex-shrink: 0;
       white-space: nowrap;
-      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: .02em;
+      border-right: 1px solid rgba(200,164,64,.2);
     }
+    .tick-tag {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      color: var(--gold);
+      border: 1px solid rgba(200,164,64,.5);
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .tick-sep { color: rgba(200,164,64,.5); font-size: .85rem; }
     .tick strong {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.1rem;
       font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
       text-transform: none;
     }
-    .tick-sep { opacity: .35; font-size: .65rem; letter-spacing: 0; }
-    /* 5 palettes 100 % charte — aucune couleur hors palette */
-    .tick-1 { background: var(--navy); color: var(--gold); }
-    .tick-1 strong { color: #fff; }
-    .tick-2 { background: var(--gold); color: var(--navy); }
-    .tick-2 strong { color: var(--navy); }
-    .tick-3 { background: var(--cream); color: var(--navy); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
-    .tick-3 strong { color: var(--gold); }
-    .tick-4 { background: var(--muted); color: #fff; }
-    .tick-4 strong { color: var(--gold); }
-    .tick-5 { background: var(--navy); color: var(--cream); }
-    .tick-5 strong { color: var(--gold); }
 
     /* grille 4 colonnes identique à why */
     .early-grid {
@@ -1124,7 +1123,7 @@
       <div class="why-block">
         <p class="why-block-title">L'accès à l'invisible,<br>sans mauvaise surprise</p>
         <p class="why-block-stat">Zéro déception<br>à l'arrivée</p>
-        <p>Sur internet, vous ne voyez que le tourisme de masse. Grâce à l'expertise de nos hommes de terrain, Voyages&nbsp;21 vous ouvre les portes d'endroits secrets, insolites et impossibles à dénicher seul. Avec notre sélection rigoureuse : vous vivez l'exceptionnel hors des sentiers battus, avec la certitude zéro mauvaise surprise.</p>
+        <p>Sur internet, vous ne voyez que le tourisme de masse. Grâce à l'expertise de nos hommes de terrain, Voyages&nbsp;21 vous ouvre les portes d'endroits secrets, insolites et impossibles à dénicher seul. Tout est maîtrisé pour vous garantir le zéro mauvaise surprise.</p>
       </div>
 
       <!-- Ligne pleine largeur — vol annulé / équipe -->
@@ -1132,8 +1131,8 @@
         <div class="why-full-header">
           <p class="why-block-title danger-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            Vol annulé · transfert introuvable<br>changement de vol urgent :<br>personne au bout du fil</p>
-          <p class="why-block-stat">Votre problème<br>devient le nôtre.</p>
+            Vol annulé · Transfert introuvable<br>Changement urgent :<br>personne au bout du fil</p>
+          <p class="why-block-stat">Votre problème devient<br>notre problème.</p>
         </div>
         <p class="why-full-body">Voyager seul, c'est subir les compagnies, les hôtels et les imprévus. À la moindre alerte, notre équipe s'active&nbsp;: <strong class="name-tag">Wafa</strong>&nbsp;&amp;&nbsp;<strong class="name-tag">Wafa</strong> libèrent vos réservations, <strong class="name-tag">Fouad</strong>&nbsp;&amp;&nbsp;<strong class="name-tag">Ghizlane</strong> déploient nos correspondants mondiaux, tandis que <strong class="name-tag">Houda</strong> orchestre la solution et vous rappelle personnellement pour valider votre sérénité. Zéro gestion, zéro stress&nbsp;— vous, vous profitez de votre voyage.</p>
       </div>
@@ -1146,17 +1145,15 @@
   ══════════════════════════════════════════ -->
   <div class="ticker-wrap" aria-hidden="true">
     <div class="ticker-track">
-      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> décroche</span>
-      <span class="tick tick-2">HÉBERGEMENT <span class="tick-sep">—</span> <strong>Wafa</strong> relogement</span>
-      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Fouad</strong> intervient</span>
-      <span class="tick tick-4">REBOOKING <span class="tick-sep">—</span> <strong>Ghizlane</strong> trouve</span>
-      <span class="tick tick-5">LITIGE <span class="tick-sep">—</span> <strong>Houda</strong> orchestre</span>
+      <span class="tick"><span class="tick-tag">Rebooking impossible</span><span class="tick-sep">—</span><strong>Ghizlane</strong> trouve une alternative en 10 minutes.</span>
+      <span class="tick"><span class="tick-tag">Litige compagnie</span><span class="tick-sep">—</span><strong>Houda</strong> prend en charge votre dossier.</span>
+      <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-sep">—</span><strong>Wafa</strong> vous rappelle avant même que vous ne stressiez.</span>
+      <span class="tick"><span class="tick-tag">Bagage perdu</span><span class="tick-sep">—</span><strong>Fouad</strong> active notre correspondant local sur place.</span>
       <!-- duplicate pour boucle seamless -->
-      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> décroche</span>
-      <span class="tick tick-2">HÉBERGEMENT <span class="tick-sep">—</span> <strong>Wafa</strong> relogement</span>
-      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Fouad</strong> intervient</span>
-      <span class="tick tick-4">REBOOKING <span class="tick-sep">—</span> <strong>Ghizlane</strong> trouve</span>
-      <span class="tick tick-5">LITIGE <span class="tick-sep">—</span> <strong>Houda</strong> orchestre</span>
+      <span class="tick"><span class="tick-tag">Rebooking impossible</span><span class="tick-sep">—</span><strong>Ghizlane</strong> trouve une alternative en 10 minutes.</span>
+      <span class="tick"><span class="tick-tag">Litige compagnie</span><span class="tick-sep">—</span><strong>Houda</strong> prend en charge votre dossier.</span>
+      <span class="tick"><span class="tick-tag">Vol annulé</span><span class="tick-sep">—</span><strong>Wafa</strong> vous rappelle avant même que vous ne stressiez.</span>
+      <span class="tick"><span class="tick-tag">Bagage perdu</span><span class="tick-sep">—</span><strong>Fouad</strong> active notre correspondant local sur place.</span>
     </div>
   </div>
 
