@@ -718,7 +718,9 @@
 
     /* ── TICKER ÉQUIPE ─────────────────────────── */
     .ticker-wrap {
-      width: 100%;
+      width: calc(100% - 80px);
+      margin: 0 40px;
+      border-radius: 14px;
       overflow: hidden;
       display: flex;
     }
@@ -735,12 +737,12 @@
     .tick {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 0 38px;
+      gap: 14px;
+      padding: 0 40px;
       height: 62px;
       font-size: .78rem;
       font-weight: 500;
-      letter-spacing: .05em;
+      letter-spacing: .06em;
       white-space: nowrap;
       flex-shrink: 0;
       text-transform: uppercase;
@@ -752,17 +754,18 @@
       font-weight: 700;
       text-transform: none;
     }
-    .tick-dot { opacity: .55; font-size: 1rem; }
-    .tick-1 { background: #1B2D4F; color: #C8A440; }
+    .tick-sep { opacity: .35; font-size: .65rem; letter-spacing: 0; }
+    /* 5 palettes 100 % charte — aucune couleur hors palette */
+    .tick-1 { background: var(--navy); color: var(--gold); }
     .tick-1 strong { color: #fff; }
-    .tick-2 { background: #C8A440; color: #1B2D4F; }
-    .tick-2 strong { color: #1B2D4F; }
-    .tick-3 { background: #2D1B4F; color: #F5F0E8; }
-    .tick-3 strong { color: #C8A440; }
-    .tick-4 { background: #1B3A28; color: #C8A440; }
-    .tick-4 strong { color: #F5F0E8; }
-    .tick-5 { background: #F5F0E8; color: #1B2D4F; box-shadow: inset 0 3px 0 #C8A440, inset 0 -3px 0 #C8A440; }
-    .tick-5 strong { color: #C8A440; }
+    .tick-2 { background: var(--gold); color: var(--navy); }
+    .tick-2 strong { color: var(--navy); }
+    .tick-3 { background: var(--cream); color: var(--navy); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+    .tick-3 strong { color: var(--gold); }
+    .tick-4 { background: var(--muted); color: #fff; }
+    .tick-4 strong { color: var(--gold); }
+    .tick-5 { background: var(--navy); color: var(--cream); }
+    .tick-5 strong { color: var(--gold); }
 
     /* grille 4 colonnes identique à why */
     .early-grid {
@@ -1088,36 +1091,10 @@
       </div>
 
       <!-- Colonne 3 — risque humain -->
-      <!-- Colonne 3 — chat animé : seul vs équipe -->
       <div class="why-block">
         <p class="why-block-title">Vol annulé,<br>personne au bout du fil</p>
-        <div class="chat-screen">
-          <div class="chat-scroll">
-            <span class="chat-bubble sys">✈ Vol XY234 annulé.</span>
-            <span class="chat-bubble bot">📞 Répondeur automatique…</span>
-            <span class="chat-bubble bot">Attente estimée : 2h30.</span>
-            <span class="chat-bubble bot">Ligne coupée.</span>
-            <div class="chat-sep">Avec Voyages21</div>
-            <span class="chat-bubble cname">Wafa</span>
-            <span class="chat-bubble v21">"Je suis sur votre dossier."</span>
-            <span class="chat-bubble cname">Housseine</span>
-            <span class="chat-bubble v21">"Je contacte la compagnie."</span>
-            <span class="chat-bubble cname">Majda</span>
-            <span class="chat-bubble v21">"Rebooking confirmé. Même classe."</span>
-            <!-- duplicate pour boucle seamless -->
-            <span class="chat-bubble sys">✈ Vol XY234 annulé.</span>
-            <span class="chat-bubble bot">📞 Répondeur automatique…</span>
-            <span class="chat-bubble bot">Attente estimée : 2h30.</span>
-            <span class="chat-bubble bot">Ligne coupée.</span>
-            <div class="chat-sep">Avec Voyages21</div>
-            <span class="chat-bubble cname">Wafa</span>
-            <span class="chat-bubble v21">"Je suis sur votre dossier."</span>
-            <span class="chat-bubble cname">Housseine</span>
-            <span class="chat-bubble v21">"Je contacte la compagnie."</span>
-            <span class="chat-bubble cname">Majda</span>
-            <span class="chat-bubble v21">"Rebooking confirmé. Même classe."</span>
-          </div>
-        </div>
+        <p class="why-block-stat">Votre problème<br>devient le nôtre.</p>
+        <p>Dès que l'imprévu survient, nos équipes prennent le relais. Vous n'avez rien à gérer : elles contactent les compagnies, trouvent les alternatives et vous tiennent informé à chaque étape.</p>
       </div>
 
       <!-- Colonne 4 — texte avec fondu + lire plus -->
@@ -1129,21 +1106,6 @@
         <button class="btn-lire" id="btn1" onclick="openModal()">Ne laissez rien au hasard</button>
       </div>
 
-      <!-- Bande de contraste — avant/après -->
-      <div class="why-contrast">
-        <span class="why-contrast-before">Sans agence&nbsp;: répondeurs automatiques, vous seul face aux compagnies.</span>
-        <span class="why-contrast-sep">›</span>
-        <span class="why-contrast-label">Avec Voyages21 :</span>
-        <div class="why-contrast-names">
-          <strong>Wafa</strong><span>·</span>
-          <strong>Wafa</strong><span>·</span>
-          <strong>Housseine</strong><span>·</span>
-          <strong>Majda</strong><span>·</span>
-          <strong>Houda</strong>
-        </div>
-        <span class="why-contrast-action">— dès que le problème arrive, ils agissent.</span>
-      </div>
-
     </div>
   </section>
 
@@ -1152,17 +1114,17 @@
   ══════════════════════════════════════════ -->
   <div class="ticker-wrap" aria-hidden="true">
     <div class="ticker-track">
-      <span class="tick tick-1">VOL ANNULÉ ?<span class="tick-dot">✦</span><strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
-      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT ?<span class="tick-dot">✦</span><strong>Wafa</strong> négocie votre relogement sur place.</span>
-      <span class="tick tick-3">TRANSFERT RATÉ ?<span class="tick-dot">✦</span><strong>Housseine</strong> est déjà en route.</span>
-      <span class="tick tick-4">REBOOKING IMPOSSIBLE ?<span class="tick-dot">✦</span><strong>Majda</strong> trouve une alternative en 10 minutes.</span>
-      <span class="tick tick-5">LITIGE COMPAGNIE ?<span class="tick-dot">✦</span><strong>Houda</strong> prend en charge votre dossier.</span>
+      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
+      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT <span class="tick-sep">—</span> <strong>Wafa</strong> négocie votre relogement sur place.</span>
+      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Housseine</strong> appelle notre représentant sur place.</span>
+      <span class="tick tick-4">REBOOKING IMPOSSIBLE <span class="tick-sep">—</span> <strong>Majda</strong> trouve une alternative en 10 minutes.</span>
+      <span class="tick tick-5">LITIGE COMPAGNIE <span class="tick-sep">—</span> <strong>Houda</strong> prend en charge votre dossier.</span>
       <!-- duplicate pour boucle seamless -->
-      <span class="tick tick-1">VOL ANNULÉ ?<span class="tick-dot">✦</span><strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
-      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT ?<span class="tick-dot">✦</span><strong>Wafa</strong> négocie votre relogement sur place.</span>
-      <span class="tick tick-3">TRANSFERT RATÉ ?<span class="tick-dot">✦</span><strong>Housseine</strong> est déjà en route.</span>
-      <span class="tick tick-4">REBOOKING IMPOSSIBLE ?<span class="tick-dot">✦</span><strong>Majda</strong> trouve une alternative en 10 minutes.</span>
-      <span class="tick tick-5">LITIGE COMPAGNIE ?<span class="tick-dot">✦</span><strong>Houda</strong> prend en charge votre dossier.</span>
+      <span class="tick tick-1">VOL ANNULÉ <span class="tick-sep">—</span> <strong>Wafa</strong> rappelle avant que vous raccrochiez.</span>
+      <span class="tick tick-2">HÉBERGEMENT DÉCEVANT <span class="tick-sep">—</span> <strong>Wafa</strong> négocie votre relogement sur place.</span>
+      <span class="tick tick-3">TRANSFERT RATÉ <span class="tick-sep">—</span> <strong>Housseine</strong> appelle notre représentant sur place.</span>
+      <span class="tick tick-4">REBOOKING IMPOSSIBLE <span class="tick-sep">—</span> <strong>Majda</strong> trouve une alternative en 10 minutes.</span>
+      <span class="tick tick-5">LITIGE COMPAGNIE <span class="tick-sep">—</span> <strong>Houda</strong> prend en charge votre dossier.</span>
     </div>
   </div>
 
