@@ -804,172 +804,260 @@
     }
 
     /* ══════════════════════════════════════════
-       COMMENT ÇA MARCHE — CARROUSEL
+       COMMENT ÇA MARCHE — scroll épinglé (Evaneos)
     ══════════════════════════════════════════ */
     .howit {
-      background-image: linear-gradient(rgba(20,35,64,.72), rgba(20,35,64,.78)),
+      position: relative;
+      background-image: linear-gradient(rgba(20,35,64,.55), rgba(20,35,64,.68)),
                         url('https://res.cloudinary.com/dwjh73xi4/image/upload/v1780095868/antalya_2_voyages21_pk0wht.jpg');
       background-size: cover;
-      background-position: center 40%;
-      padding: 80px 80px 88px;
+      background-position: center;
+      background-attachment: fixed;
+      padding: 0 0 110px;
+    }
+    /* Titre épinglé qui reste pendant le scroll des fiches */
+    .howit-pin {
+      position: sticky;
+      top: 64px;
+      z-index: 3;
+      text-align: center;
+      padding: 56px 20px 40px;
+      pointer-events: none;
     }
     .howit-surtitle {
       font-size: .72rem;
       font-weight: 700;
-      letter-spacing: .22em;
+      letter-spacing: .24em;
       text-transform: uppercase;
       color: #D4A373;
-      text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 14px rgba(0,0,0,.4);
     }
     .howit-title {
       font-family: 'Playfair Display', serif;
       font-weight: 900;
       font-style: italic;
-      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      font-size: clamp(1.9rem, 3.4vw, 3rem);
       color: #FDFBF7;
-      text-align: center;
-      margin-bottom: 32px;
-      line-height: 1.2;
+      line-height: 1.15;
+      text-shadow: 0 2px 24px rgba(0,0,0,.45);
     }
-    .howit-divider {
-      width: 56px;
-      height: 1px;
-      background: rgba(212,163,115,.45);
-      margin: 56px auto;
+    /* Pile de fiches qui défilent par-dessus le fond fixe */
+    .howit-cards {
+      position: relative;
+      z-index: 2;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
     }
-    /* Wrapper dots outside overflow */
-    .carr-outer { margin-bottom: 0; }
-    .carr-wrap {
+    .howit-card {
+      display: flex;
+      background: #FFFFFF;
+      box-shadow: 0 36px 80px rgba(10,18,40,.35);
       overflow: hidden;
-      border-radius: 3px;
+      min-height: 392px;
+      opacity: 0;
+      transform: translateY(48px);
+      transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
     }
-    .carr-track {
-      display: flex;
-      transition: transform .65s cubic-bezier(.4,0,.2,1);
-      will-change: transform;
-    }
-    .carr-slide {
-      min-width: 100%;
-      display: flex;
-      height: 268px;
-    }
-    .carr-left {
-      flex: 0 0 42%;
-      padding: 44px 44px;
+    .howit-card.in { opacity: 1; transform: none; }
+    .howit-card-left {
+      flex: 0 0 38%;
+      padding: 52px 44px;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
-    .carr-right {
-      flex: 1;
-      padding: 44px 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    /* Step slides */
-    .step-slide .carr-left  { background: rgba(253,251,247,.93); }
-    .step-slide .carr-right { background: rgba(26,43,76,.9); align-items: flex-end; }
-    .carr-num {
+    .howit-card-num {
       font-family: 'Playfair Display', serif;
-      font-style: italic;
       font-weight: 900;
-      font-size: 2.6rem;
-      color: #D4A373;
-      line-height: 1;
-      margin-bottom: 14px;
-    }
-    .carr-step-title {
-      font-weight: 700;
-      font-size: .98rem;
+      font-size: 2.8rem;
       color: #1A2B4C;
-      margin-bottom: 9px;
-      line-height: 1.3;
-    }
-    .carr-step-desc {
-      font-size: .83rem;
-      color: #2B3A4A;
-      line-height: 1.68;
-    }
-    .carr-deco-num {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 900;
-      font-size: 9rem;
-      color: rgba(212,163,115,.1);
       line-height: 1;
-      text-align: right;
+      margin-bottom: 24px;
     }
-    .carr-deco-label {
-      font-size: .68rem;
+    .howit-card-title {
+      font-family: 'DM Sans', sans-serif;
       font-weight: 700;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: rgba(212,163,115,.5);
-      text-align: right;
-      margin-top: -6px;
+      font-size: 1.45rem;
+      color: #1A2B4C;
+      line-height: 1.25;
+      margin-bottom: 12px;
     }
-    /* Imprevu slides */
-    .imprevu-slide .carr-left  { background: rgba(20,35,64,.92); }
-    .imprevu-slide .carr-right { background: rgba(14,26,50,.9); justify-content: center; }
-    .carr-imp-tag {
-      display: inline-flex;
+    .howit-card-sub {
+      font-size: .95rem;
+      color: #2B3A4A;
+      line-height: 1.6;
+    }
+    .howit-card-right {
+      flex: 1;
+      position: relative;
+      background: linear-gradient(155deg, #21304f 0%, #14213a 100%);
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      font-size: .63rem;
+      justify-content: center;
+      gap: 14px;
+      padding: 40px 44px 64px;
+    }
+    .howit-card-caption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      background: #102038;
+      color: #F5EFE3;
+      text-align: center;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 13px 20px;
+    }
+    .howit-card-caption b { color: #D4A373; }
+
+    /* ── Mockup CHAT ── */
+    .mock-chat {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-bubble {
+      max-width: 80%;
+      padding: 12px 15px;
+      border-radius: 14px;
+      font-size: .84rem;
+      line-height: 1.45;
+      position: relative;
+    }
+    .chat-bubble .chat-who {
+      display: block;
+      font-size: .64rem;
       font-weight: 700;
-      letter-spacing: .12em;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      opacity: .65;
+    }
+    .chat-bubble .chat-time {
+      display: block;
+      font-size: .62rem;
+      opacity: .5;
+      text-align: right;
+      margin-top: 5px;
+    }
+    .chat-in {
+      align-self: flex-start;
+      background: #fff;
+      color: #1A2B4C;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-out {
+      align-self: flex-end;
+      background: #D4A373;
+      color: #1A2B4C;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-out .chat-who { color: #4a3410; opacity: .8; }
+    .chat-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      align-self: flex-end;
+      max-width: 88%;
+    }
+    .chat-avatar {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #D4A373;
+      color: #14213a;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .chat-row .chat-bubble { max-width: 100%; }
+
+    /* ── Mockup NOTIFICATION ── */
+    .mock-notif {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255,255,255,.97);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+    }
+    .notif-avatar {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: #1A2B4C;
+      color: #D4A373;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .notif-body { flex: 1; }
+    .notif-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .notif-head strong { font-size: .88rem; color: #1A2B4C; }
+    .notif-head span { font-size: .66rem; color: #8a93a3; }
+    .notif-text { font-size: .82rem; color: #2B3A4A; line-height: 1.5; }
+    .notif-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #C0392B; margin-bottom: 7px;
+    }
+    .notif-tag::before { content: '⚠'; }
+
+    /* ── Mockup IDÉES (cartes destinations) ── */
+    .mock-ideas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .idea-chip {
+      aspect-ratio: 3/4;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    }
+    .idea-chip span {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 8px 6px 7px;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .04em;
       text-transform: uppercase;
       color: #fff;
-      background: #C0392B;
-      border: 1px solid rgba(192,57,43,.5);
-      padding: 4px 10px;
-      border-radius: 3px;
-      margin-bottom: 18px;
+      text-align: center;
+      background: linear-gradient(transparent, rgba(10,18,40,.85));
     }
-    .carr-imp-tag::before { content: '⚠'; font-size: .75rem; }
-    .carr-imp-agent {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 700;
-      font-size: 2.4rem;
-      color: #D4A373;
-      line-height: 1.1;
-    }
-    .carr-imp-action {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.15rem;
-      color: rgba(253,251,247,.82);
-      line-height: 1.55;
-    }
-    /* Dots */
-    .carr-dots {
-      display: flex;
-      justify-content: center;
-      gap: 9px;
-      margin-top: 18px;
-    }
-    .carr-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(212,163,115,.3);
-      border: none;
-      cursor: pointer;
-      transition: background .3s, transform .3s;
-      padding: 0;
-    }
-    .carr-dot.active {
-      background: #D4A373;
-      transform: scale(1.35);
-    }
+
     @media (max-width: 900px) {
-      .howit { padding: 52px 24px 60px; }
-      .carr-slide { flex-direction: column; height: auto; }
-      .carr-left, .carr-right { flex: none; width: 100%; padding: 32px 28px; }
-      .carr-deco-num { font-size: 5rem; }
+      .howit { background-attachment: scroll; padding-bottom: 64px; }
+      .howit-pin { position: static; padding: 48px 20px 32px; }
+      .howit-cards { padding: 0 20px; gap: 40px; }
+      .howit-card { flex-direction: column; min-height: 0; }
+      .howit-card-left, .howit-card-right { flex: none; width: 100%; }
+      .howit-card-right { padding: 36px 28px 60px; }
     }
 
     /* grille 4 colonnes identique à why */
@@ -1788,132 +1876,112 @@
 
 
   <!-- ══════════════════════════════════════════
-       COMMENT ÇA MARCHE — Carrousel
+       COMMENT ÇA MARCHE — scroll épinglé (Evaneos)
   ══════════════════════════════════════════ -->
   <section class="howit" id="comment-ca-marche">
 
-    <!-- Partie 1 — Construction du voyage -->
-    <p class="howit-surtitle">L'expérience Voyages 21</p>
-    <h2 class="howit-title">Comment se construit<br><em style="font-style:italic;">votre voyage sur mesure</em></h2>
-    <div class="carr-outer">
-      <div class="carr-wrap">
-        <div class="carr-track" id="track-steps">
-
-          <div class="carr-slide step-slide">
-            <div class="carr-left">
-              <div class="carr-num">01</div>
-              <h3 class="carr-step-title">Vous partagez votre projet</h3>
-              <p class="carr-step-desc">Envies, dates, budget, rythme. Un échange humain — pas un formulaire — pour saisir l'essentiel de ce que vous cherchez vraiment.</p>
-            </div>
-            <div class="carr-right">
-              <div class="carr-deco-num">01</div>
-              <p class="carr-deco-label">Étape 1 sur 3</p>
-            </div>
-          </div>
-
-          <div class="carr-slide step-slide">
-            <div class="carr-left">
-              <div class="carr-num">02</div>
-              <h3 class="carr-step-title">Nous concevons votre itinéraire</h3>
-              <p class="carr-step-desc">Sur mesure, testé par nos équipes terrain. Chaque étape choisie, chaque prestataire connu personnellement. Rien au hasard.</p>
-            </div>
-            <div class="carr-right">
-              <div class="carr-deco-num">02</div>
-              <p class="carr-deco-label">Étape 2 sur 3</p>
-            </div>
-          </div>
-
-          <div class="carr-slide step-slide">
-            <div class="carr-left">
-              <div class="carr-num">03</div>
-              <h3 class="carr-step-title">Vous partez l'esprit libre</h3>
-              <p class="carr-step-desc">Logistique verrouillée, documents en main, numéro direct de votre chargée de voyage. Votre seul rôle : profiter.</p>
-            </div>
-            <div class="carr-right">
-              <div class="carr-deco-num">03</div>
-              <p class="carr-deco-label">Étape 3 sur 3</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="carr-dots" id="dots-steps"></div>
+    <!-- Titre épinglé -->
+    <div class="howit-pin">
+      <p class="howit-surtitle">L'expérience Voyages 21</p>
+      <h2 class="howit-title">Voyages 21,<br>comment ça marche ?</h2>
     </div>
 
-    <div class="howit-divider"></div>
+    <div class="howit-cards">
 
-    <!-- Partie 2 — Imprévu -->
-    <p class="howit-surtitle">Notre réactivité</p>
-    <h2 class="howit-title">En cas d'imprévu,<br><em style="font-style:italic;">toute l'équipe se met en action</em></h2>
-    <div class="carr-outer">
-      <div class="carr-wrap">
-        <div class="carr-track" id="track-imprevus">
-
-          <div class="carr-slide imprevu-slide">
-            <div class="carr-left">
-              <span class="carr-imp-tag">Vol annulé</span>
-              <div class="carr-imp-agent">Wafa B.</div>
-            </div>
-            <div class="carr-right">
-              <p class="carr-imp-action">est déjà en ligne avec la compagnie aérienne avant même que vous ne stressiez.</p>
-            </div>
-          </div>
-
-          <div class="carr-slide imprevu-slide">
-            <div class="carr-left">
-              <span class="carr-imp-tag">Rebooking refusé</span>
-              <div class="carr-imp-agent">Ghizlane</div>
-            </div>
-            <div class="carr-right">
-              <p class="carr-imp-action">contourne le problème et trouve une alternative en moins de 10 minutes.</p>
-            </div>
-          </div>
-
-          <div class="carr-slide imprevu-slide">
-            <div class="carr-left">
-              <span class="carr-imp-tag">Changer de vol</span>
-              <div class="carr-imp-agent">Wafa D.</div>
-            </div>
-            <div class="carr-right">
-              <p class="carr-imp-action">réorganise vos billets sans que vous ayez à lever le petit doigt.</p>
-            </div>
-          </div>
-
-          <div class="carr-slide imprevu-slide">
-            <div class="carr-left">
-              <span class="carr-imp-tag">Litige sur place</span>
-              <div class="carr-imp-agent">Houda</div>
-            </div>
-            <div class="carr-right">
-              <p class="carr-imp-action">prend en charge l'intégralité du dossier — vous, continuez votre voyage.</p>
-            </div>
-          </div>
-
-          <div class="carr-slide imprevu-slide">
-            <div class="carr-left">
-              <span class="carr-imp-tag">Reporter le voyage</span>
-              <div class="carr-imp-agent">Fouad</div>
-            </div>
-            <div class="carr-right">
-              <p class="carr-imp-action">reprogramme tout et sécurise vos conditions tarifaires d'origine.</p>
-            </div>
-          </div>
-
-          <div class="carr-slide imprevu-slide">
-            <div class="carr-left">
-              <span class="carr-imp-tag">Bagage égaré</span>
-              <div class="carr-imp-agent">Fouad</div>
-            </div>
-            <div class="carr-right">
-              <p class="carr-imp-action">déclenche immédiatement notre réseau de correspondants locaux sur place.</p>
-            </div>
-          </div>
-
+      <!-- Fiche 1 — Partagez votre projet -->
+      <article class="howit-card">
+        <div class="howit-card-left">
+          <div class="howit-card-num">1</div>
+          <h3 class="howit-card-title">Partagez votre projet</h3>
+          <p class="howit-card-sub">Vos envies, vos dates, votre budget. Un premier échange humain — jamais un formulaire impersonnel — pour cerner le voyage qui vous ressemble.</p>
         </div>
-      </div>
-      <div class="carr-dots" id="dots-imprevus"></div>
-    </div>
+        <div class="howit-card-right">
+          <div class="mock-chat">
+            <div class="chat-bubble chat-in">
+              <span class="chat-who">Vous</span>
+              Bonjour, on rêve d'un Maroc authentique en avril, avec 2 nuits dans le désert.
+              <span class="chat-time">15:58</span>
+            </div>
+            <div class="chat-row">
+              <div class="chat-avatar">W</div>
+              <div class="chat-bubble chat-out">
+                <span class="chat-who">Wafa, votre conseillère</span>
+                Avec grand plaisir ! Je vous prépare une première idée d'itinéraire dès aujourd'hui.
+                <span class="chat-time">16:10</span>
+              </div>
+            </div>
+          </div>
+          <div class="howit-card-caption">Une conseillère dédiée vous répond <b>sous 24h</b>.</div>
+        </div>
+      </article>
 
+      <!-- Fiche 2 — Co-création de l'itinéraire -->
+      <article class="howit-card">
+        <div class="howit-card-left">
+          <div class="howit-card-num">2</div>
+          <h3 class="howit-card-title">Co-créez votre itinéraire sur mesure</h3>
+          <p class="howit-card-sub">Avec votre conseillère, affinez chaque étape jusqu'à la perfection. Des adresses confidentielles, testées par nos équipes de terrain.</p>
+        </div>
+        <div class="howit-card-right">
+          <div class="mock-chat">
+            <div class="chat-bubble chat-in">
+              <span class="chat-who">Vous</span>
+              On aimerait ajouter une journée et visiter Fès avec un guide local.
+              <span class="chat-time">15:58</span>
+            </div>
+            <div class="chat-row">
+              <div class="chat-avatar">W</div>
+              <div class="chat-bubble chat-out">
+                <span class="chat-who">Wafa, votre conseillère</span>
+                Parfait ✦ je vous réserve notre guide historien et une table secrète dans la médina.
+                <span class="chat-time">16:42</span>
+              </div>
+            </div>
+          </div>
+          <div class="howit-card-caption">Votre voyage se construit <b>de A à Z avec vous</b>.</div>
+        </div>
+      </article>
+
+      <!-- Fiche 3 — Partez l'esprit libre -->
+      <article class="howit-card">
+        <div class="howit-card-left">
+          <div class="howit-card-num">3</div>
+          <h3 class="howit-card-title">Partez l'esprit totalement libre</h3>
+          <p class="howit-card-sub">Logistique verrouillée, carnet de voyage en main, numéro direct de votre conseillère. Votre seul rôle, désormais : profiter.</p>
+        </div>
+        <div class="howit-card-right">
+          <div class="mock-notif">
+            <div class="notif-avatar">V</div>
+            <div class="notif-body">
+              <div class="notif-head"><strong>Tout est prêt 🎉</strong><span>il y a 2 min</span></div>
+              <div class="notif-text">Votre carnet de voyage, vos billets et vos contacts sur place sont disponibles. Bon voyage !</div>
+            </div>
+          </div>
+          <div class="howit-card-caption">Un contact joignable <b>à tout instant</b>, où que vous soyez.</div>
+        </div>
+      </article>
+
+      <!-- Fiche 4 — En cas d'imprévu -->
+      <article class="howit-card">
+        <div class="howit-card-left">
+          <div class="howit-card-num">+</div>
+          <h3 class="howit-card-title">Un imprévu ? Toute l'équipe se met en action</h3>
+          <p class="howit-card-sub">Vol annulé, litige, changement de dernière minute : vous n'êtes jamais seul. Nous prenons le relais à votre place, immédiatement.</p>
+        </div>
+        <div class="howit-card-right">
+          <div class="mock-notif">
+            <div class="notif-avatar">F</div>
+            <div class="notif-body">
+              <div class="notif-tag">Vol annulé</div>
+              <div class="notif-head"><strong>Fouad — Voyages 21</strong><span>il y a 1 min</span></div>
+              <div class="notif-text">Votre vol retour était annulé. C'est déjà réglé : je vous ai rebooké sur le vol de 14h. Rien à faire de votre côté.</div>
+            </div>
+          </div>
+          <div class="howit-card-caption">Votre équipe veille <b>7j/7</b>, partout dans le monde.</div>
+        </div>
+      </article>
+
+    </div>
   </section>
 
 
@@ -2220,40 +2288,21 @@
     renderVoyages();
     renderMonde();
 
-    // ── Carrousels "Comment ça marche" ──────────
-    function initCarr(trackId, dotsId, interval) {
-      const track = document.getElementById(trackId);
-      const dotsWrap = document.getElementById(dotsId);
-      if (!track || !dotsWrap) return;
-      const slides = Array.from(track.children);
-      const n = slides.length;
-      let cur = 0, timer;
-
-      slides.forEach((_, i) => {
-        const d = document.createElement('button');
-        d.className = 'carr-dot' + (i === 0 ? ' active' : '');
-        d.setAttribute('aria-label', 'Slide ' + (i + 1));
-        d.onclick = () => { goTo(i); stop(); start(); };
-        dotsWrap.appendChild(d);
-      });
-
-      function goTo(i) {
-        cur = ((i % n) + n) % n;
-        track.style.transform = `translateX(-${cur * 100}%)`;
-        dotsWrap.querySelectorAll('.carr-dot').forEach((d, j) =>
-          d.classList.toggle('active', j === cur));
+    // ── Reveal au scroll des fiches "Comment ça marche" ──
+    (function () {
+      const cards = document.querySelectorAll('.howit-card');
+      if (!cards.length) return;
+      if (!('IntersectionObserver' in window)) {
+        cards.forEach(c => c.classList.add('in'));
+        return;
       }
-      function next()  { goTo(cur + 1); }
-      function start() { timer = setInterval(next, interval); }
-      function stop()  { clearInterval(timer); }
-
-      track.closest('.carr-wrap').addEventListener('mouseenter', stop);
-      track.closest('.carr-wrap').addEventListener('mouseleave', start);
-      start();
-    }
-
-    initCarr('track-steps',    'dots-steps',    4500);
-    initCarr('track-imprevus', 'dots-imprevus', 3200);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.25 });
+      cards.forEach(c => io.observe(c));
+    })();
   </script>
 
 </body>
