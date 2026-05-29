@@ -584,6 +584,46 @@
     }
     .early-rule svg { display: block; }
 
+    /* bande de contraste équipe sous why-grid */
+    .why-contrast {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--border);
+      padding: 18px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .why-contrast-label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .why-contrast-names {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .why-contrast-names strong {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+    .why-contrast-names span { color: rgba(27,45,79,.3); }
+    .why-contrast-action {
+      font-size: .78rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+
     /* grille 4 colonnes identique à why */
     .early-grid {
       display: grid;
@@ -921,6 +961,19 @@
           <p>Chez Voyages21, nous croyons qu'un vrai voyage se vit l'esprit libre. Choisir notre expertise «&nbsp;cousu main&nbsp;», c'est s'offrir la certitude d'en avoir pour son argent, sans compromis sur la qualité. Un accompagnement de bout en bout, une présence humaine réelle, et vos options sécurisées dès la réservation.</p>
         </div>
         <button class="btn-lire" id="btn1" onclick="openModal()">Ne laissez rien au hasard</button>
+      </div>
+
+      <!-- Bande de contraste — équipe qui agit -->
+      <div class="why-contrast">
+        <span class="why-contrast-label">Avec Voyages21 :</span>
+        <div class="why-contrast-names">
+          <strong>Wafa</strong><span>·</span>
+          <strong>Wafa</strong><span>·</span>
+          <strong>Housseine</strong><span>·</span>
+          <strong>Majda</strong><span>·</span>
+          <strong>Houda</strong>
+        </div>
+        <span class="why-contrast-action">— agissent avant même que vous ayez eu à insister.</span>
       </div>
 
     </div>
