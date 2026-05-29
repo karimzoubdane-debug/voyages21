@@ -666,8 +666,122 @@
     .btn-malin.active { background: var(--muted); color: var(--white); }
 
     /* ═══════════════════════════════════════════
-       SECTIONS SUIVANTES
+       ÉQUIPE — présence humaine
     ═══════════════════════════════════════════ */
+    .team {
+      background: var(--navy);
+      padding: 88px 96px;
+      color: var(--white);
+    }
+
+    .team-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .team-sup {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .team-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .team-title em { font-style: italic; color: var(--gold); }
+
+    .team-sub {
+      font-size: .9rem;
+      color: rgba(255,255,255,.5);
+      line-height: 1.7;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* grille des 5 membres */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .team-member {
+      padding: 36px 24px;
+      border-right: 1px solid rgba(255,255,255,.08);
+      transition: background .25s;
+    }
+    .team-member:last-child { border-right: none; }
+    .team-member:hover { background: rgba(200,164,64,.07); }
+
+    /* prénom très grand */
+    .team-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -.01em;
+    }
+
+    .team-role {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(200,164,64,.2);
+    }
+
+    .team-desc {
+      font-size: .8rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.7;
+    }
+
+    .team-desc strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* citation de clôture */
+    .team-quote {
+      margin-top: 56px;
+      text-align: center;
+      padding-top: 48px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .team-quote blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.75);
+      max-width: 600px;
+      margin: 0 auto 16px;
+      line-height: 1.6;
+    }
+
+    .team-quote cite {
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
     .section-placeholder {
       min-height: 160px;
       display: flex;
@@ -923,6 +1037,85 @@
       </div>
     </div>
   </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ÉQUIPE — présence humaine
+  ══════════════════════════════════════════ -->
+  <section class="team" id="equipe">
+
+    <div class="team-header">
+      <p class="team-sup">Votre équipe dédiée</p>
+      <h2 class="team-title">
+        Seul, vous subissez.<br>
+        Avec nous, <em>votre problème devient le nôtre.</em>
+      </h2>
+      <p class="team-sub">
+        Pas de répondeur automatique. Jamais. Grâce à nos représentants sur place
+        dans le monde entier, vous n'êtes jamais livré à vous-même.
+        Des personnes réelles — avec un prénom, une voix, une présence.
+      </p>
+    </div>
+
+    <div class="team-grid">
+
+      <div class="team-member">
+        <div class="team-name">Wafa</div>
+        <p class="team-role">Vols &amp; Hébergements</p>
+        <p class="team-desc">
+          Dès le premier imprévu, <strong>elle appelle immédiatement notre représentant sur place</strong>.
+          Vos vols et hébergements libérés avant que vous ayez eu le temps de stresser.
+        </p>
+      </div>
+
+      <div class="team-member">
+        <div class="team-name">Wafa</div>
+        <p class="team-role">Confirmations &amp; Suivi</p>
+        <p class="team-desc">
+          Confirmations, relances, ajustements de dernière minute —
+          <strong>elle ne raccroche pas avant que tout soit réglé.</strong>
+        </p>
+      </div>
+
+      <div class="team-member">
+        <div class="team-name">Housseine</div>
+        <p class="team-role">Logistique au sol</p>
+        <p class="team-desc">
+          Transferts, timing, coordination terrain —
+          <strong>il cadence chaque étape de votre voyage</strong>
+          avec une précision qui ne laisse rien au hasard.
+        </p>
+      </div>
+
+      <div class="team-member">
+        <div class="team-name">Majda</div>
+        <p class="team-role">Opérations terrain</p>
+        <p class="team-desc">
+          Sur le terrain, <strong>elle anticipe avant que vous ne demandiez</strong>.
+          Chaque détail logistique est cadencé, vérifié, sécurisé.
+        </p>
+      </div>
+
+      <div class="team-member">
+        <div class="team-name">Houda</div>
+        <p class="team-role">Supervision &amp; Sérénité</p>
+        <p class="team-desc">
+          En coulisses, elle supervise l'ensemble.
+          <strong>Elle vous rappelle personnellement</strong>
+          pour valider chaque étape et s'assurer que votre sérénité est totale.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="team-quote">
+      <blockquote>
+        "Laissez-nous la logistique. Profitez de votre voyage."
+      </blockquote>
+      <cite>— L'équipe Voyages21</cite>
+    </div>
+
+  </section>
 
 
   <!-- ══════════════════════════════════════════
