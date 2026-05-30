@@ -1602,34 +1602,60 @@
 
       /* NAV */
       nav { padding: 0 16px; height: 52px; }
-      .nav-menu {
+      /* Panel mobile */
+      .nav-mobile-panel {
         display: none;
         position: fixed;
         top: 52px; left: 0; right: 0;
-        background: rgba(10,10,10,.97);
+        background: rgba(8,8,8,.98);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
-        padding: 8px 0 20px;
-        border-bottom: 1px solid rgba(196,154,60,.2);
+        border-bottom: 1px solid rgba(196,154,60,.25);
         z-index: 299;
+        width: 100%;
       }
-      .nav-menu.open { display: flex; }
-      .nav-menu a { height: auto; line-height: 1; padding: 14px 24px; font-size: .85rem; border-bottom: none; }
+      .nav-mobile-panel.open { display: flex; }
+      /* Items du menu dans le panel */
+      .nav-mobile-panel .nav-menu {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 8px 0 0;
+        margin: 0;
+        width: 100%;
+      }
+      .nav-mobile-panel .nav-menu li { width: 100%; }
+      .nav-mobile-panel .nav-menu a {
+        display: block;
+        width: 100%;
+        height: auto;
+        line-height: 1;
+        padding: 16px 24px;
+        font-size: .9rem;
+        font-weight: 500;
+        letter-spacing: .08em;
+        color: rgba(255,255,255,.85);
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+        box-sizing: border-box;
+      }
+      .nav-mobile-panel .nav-menu a:active { color: var(--gold); }
       .nav-menu-mobile-actions {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding: 16px 20px 0;
-        border-top: 1px solid rgba(196,154,60,.12);
-        margin-top: 8px;
+        padding: 16px 20px 24px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .nav-menu-mobile-actions .btn-primary,
       .nav-menu-mobile-actions .btn-ghost {
         display: block;
         text-align: center;
-        padding: 13px 20px;
-        font-size: .72rem;
+        padding: 14px 20px;
+        font-size: .74rem;
         box-sizing: border-box;
         width: 100%;
       }
@@ -1778,16 +1804,18 @@
 
     <a href="#" class="nav-logo">Voyages<sup>21</sup></a>
 
-    <ul class="nav-menu">
-      <li><a href="#destinations">Destinations</a></li>
-      <li><a href="#croisieres">Croisières</a></li>
-      <li><a href="#omra">Omra &amp; Hajj</a></li>
-      <li><a href="#mon-maroc">Mon Maroc</a></li>
+    <div class="nav-mobile-panel" id="navMobilePanel">
+      <ul class="nav-menu">
+        <li><a href="#destinations" onclick="closeMobileNav()">Destinations</a></li>
+        <li><a href="#croisieres"   onclick="closeMobileNav()">Croisières</a></li>
+        <li><a href="#omra"         onclick="closeMobileNav()">Omra &amp; Hajj</a></li>
+        <li><a href="#mon-maroc"    onclick="closeMobileNav()">Mon Maroc</a></li>
+      </ul>
       <div class="nav-menu-mobile-actions">
-        <a href="#destinations" class="btn-primary">Voir les programmes</a>
-        <a href="#contact" class="btn-ghost">Nous contacter</a>
+        <a href="#destinations" class="btn-primary" onclick="closeMobileNav()">Voir les programmes</a>
+        <a href="#contact"      class="btn-ghost"   onclick="closeMobileNav()">Nous contacter</a>
       </div>
-    </ul>
+    </div>
 
     <div class="nav-right">
       <a href="tel:+212522000000" class="nav-tel">+212 5 22 XX XX XX</a>
@@ -2356,16 +2384,19 @@
     // Hamburger menu mobile
     function toggleMobileNav() {
       const burger = document.getElementById('navBurger');
-      const menu   = document.querySelector('.nav-menu');
+      const panel  = document.getElementById('navMobilePanel');
       burger.classList.toggle('open');
-      menu.classList.toggle('open');
+      panel.classList.toggle('open');
+    }
+    function closeMobileNav() {
+      document.getElementById('navBurger').classList.remove('open');
+      document.getElementById('navMobilePanel').classList.remove('open');
     }
     document.addEventListener('click', e => {
-      const menu   = document.querySelector('.nav-menu');
+      const panel  = document.getElementById('navMobilePanel');
       const burger = document.getElementById('navBurger');
-      if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) {
-        menu.classList.remove('open');
-        burger.classList.remove('open');
+      if (panel && panel.classList.contains('open') && !panel.contains(e.target) && !burger.contains(e.target)) {
+        closeMobileNav();
       }
     });
 
