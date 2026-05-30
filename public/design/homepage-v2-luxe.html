@@ -726,19 +726,19 @@
     }
 
     /* ── IMPRÉVUS CAROUSEL — bande défilante cartes 312px ──────────── */
-    .imprevu-section { background: #E8F3E2; padding: 56px 0 64px; overflow: hidden; }
+    .imprevu-section { background: var(--navy); padding: 56px 0 64px; overflow: hidden; }
     .imprevu-title {
       font-family: 'Fraunces', serif;
       font-weight: 700;
       font-style: italic;
       font-size: clamp(1.2rem, 2vw, 1.7rem);
-      color: #1B3A28;
+      color: #fff;
       line-height: 1.4;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 12px;
       padding: 0 40px;
     }
-    .imprevu-title em { font-style: normal; color: #B8860B; }
+    .imprevu-title em { font-style: normal; color: var(--gold); }
     .imprevu-wrap { overflow: hidden; }
     .imprevu-track {
       display: flex;
@@ -752,16 +752,17 @@
       100% { transform: translateX(-50%); }
     }
     .imprevu-card {
-      width: 312px;
-      height: 312px;
-      border-radius: 40px;
-      background: #1E1A14;
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      background: #1E3A28;
       flex-shrink: 0;
-      padding: 28px;
+      padding: 32px 38px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,.45);
       position: relative;
       overflow: hidden;
     }
@@ -769,9 +770,9 @@
       content: '';
       position: absolute;
       top: 0; right: 0;
-      width: 130px; height: 130px;
-      border-radius: 0 40px 0 130px;
-      background: rgba(200,164,64,.07);
+      width: 90px; height: 90px;
+      border-radius: 0 50% 0 90px;
+      background: rgba(200,164,64,.09);
       pointer-events: none;
     }
     @keyframes blink-badge {
@@ -803,41 +804,43 @@
       font-family: 'Fraunces', serif;
       font-weight: 900;
       font-style: italic;
-      font-size: 1.5rem;
+      font-size: 1.15rem;
       color: #fff;
       line-height: 1.2;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .imprevu-action {
       font-family: 'Geist', sans-serif;
-      font-size: 0.875rem;
-      color: rgba(255,255,255,.78);
-      line-height: 1.6;
-      flex: 1;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,.72);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .imprevu-agent {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 12px;
-      margin-top: 18px;
-      padding-top: 14px;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 8px;
       border-top: 1px solid rgba(200,164,64,.22);
     }
     .imprevu-agent-photo {
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid rgba(200,164,64,.5);
       background: rgba(200,164,64,.15);
       flex-shrink: 0;
-      margin-left: 0;
     }
     .imprevu-agent-name {
       font-family: 'Fraunces', serif;
       font-style: italic;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--gold);
       letter-spacing: .02em;
@@ -1759,7 +1762,7 @@
   ══════════════════════════════════════════ -->
   <div class="imprevu-section">
     <h3 class="imprevu-title">En cas d'imprévu,<br><em>votre problème devient notre problème</em><br>et toute l'équipe se met en action.</h3>
-    <p style="text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:rgba(27,58,40,.55);margin-top:8px;letter-spacing:.02em;">Profitez de votre voyage — nous gérons le reste.</p>
+    <p style="text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:1.15rem;color:rgba(255,255,255,.82);margin-top:10px;margin-bottom:44px;letter-spacing:.02em;">Profitez de votre voyage — nous gérons le reste.</p>
     <div class="imprevu-wrap" aria-hidden="true">
       <div class="imprevu-track">
 
