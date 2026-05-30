@@ -1601,34 +1601,53 @@
     @media (max-width: 768px) {
 
       /* NAV */
-      nav { padding: 0 20px; height: 56px; }
+      nav { padding: 0 16px; height: 52px; }
       .nav-menu {
         display: none;
         position: fixed;
-        top: 56px; left: 0; right: 0;
-        background: rgba(12,12,12,.97);
-        backdrop-filter: blur(16px);
+        top: 52px; left: 0; right: 0;
+        background: rgba(10,10,10,.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
-        padding: 16px 0 24px;
+        padding: 8px 0 20px;
         border-bottom: 1px solid rgba(196,154,60,.2);
         z-index: 299;
       }
       .nav-menu.open { display: flex; }
-      .nav-menu a { height: auto; line-height: 1; padding: 14px 24px; font-size: .82rem; border-bottom: none; }
+      .nav-menu a { height: auto; line-height: 1; padding: 14px 24px; font-size: .85rem; border-bottom: none; }
+      .nav-menu-mobile-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px 20px 0;
+        border-top: 1px solid rgba(196,154,60,.12);
+        margin-top: 8px;
+      }
+      .nav-menu-mobile-actions .btn-primary,
+      .nav-menu-mobile-actions .btn-ghost {
+        display: block;
+        text-align: center;
+        padding: 13px 20px;
+        font-size: .72rem;
+        box-sizing: border-box;
+        width: 100%;
+      }
       .nav-tel { display: none; }
-      .nav-cta { padding: 7px 14px; font-size: .66rem; }
+      .nav-cta { display: none; }
       .nav-logo { font-size: 1.1rem; }
       .nav-burger {
         display: flex;
         flex-direction: column;
         justify-content: center;
         gap: 5px;
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         background: none;
-        border: none;
+        border: 1px solid rgba(196,154,60,.4);
+        border-radius: 6px;
         cursor: pointer;
-        padding: 4px;
+        padding: 8px;
         flex-shrink: 0;
       }
       .nav-burger span {
@@ -1636,19 +1655,19 @@
         height: 2px;
         background: var(--gold);
         border-radius: 2px;
-        transition: transform .25s, opacity .25s;
+        transition: transform .25s, opacity .2s;
       }
       .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
       .nav-burger.open span:nth-child(2) { opacity: 0; }
       .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
       /* HERO */
-      .hero { padding-top: 56px; min-height: 100svh; }
-      .hero-content { padding: 0 20px; }
-      .hero-title { letter-spacing: -.01em; }
-      .hero-sub { font-size: .85rem; max-width: 100%; margin-bottom: 28px; }
-      .hero-actions { flex-direction: column; gap: 12px; width: 100%; max-width: 340px; margin: 0 auto; }
-      .btn-primary, .btn-ghost { width: 100%; text-align: center; padding: 14px 24px; box-sizing: border-box; }
+      .hero { padding-top: 52px; min-height: 100svh; }
+      .hero-content { padding: 0 24px; }
+      .hero-title { letter-spacing: -.01em; margin-bottom: 16px; }
+      .hero-sub { font-size: .86rem; max-width: 100%; margin-bottom: 0; }
+      .hero-search { display: none; }
+      .hero-actions { display: none; }
       .hero-scroll { display: none; }
 
       /* WHY */
@@ -1764,6 +1783,10 @@
       <li><a href="#croisieres">Croisières</a></li>
       <li><a href="#omra">Omra &amp; Hajj</a></li>
       <li><a href="#mon-maroc">Mon Maroc</a></li>
+      <div class="nav-menu-mobile-actions">
+        <a href="#destinations" class="btn-primary">Voir les programmes</a>
+        <a href="#contact" class="btn-ghost">Nous contacter</a>
+      </div>
     </ul>
 
     <div class="nav-right">
