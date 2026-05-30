@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Voyages21 — Tableau de bord médias</title>
+<style>
+  :root {
+    --vert: #1B3A28;
+    --vert2: #152E1F;
+    --or: #C8A440;
+    --cream: #F5F0E8;
+    --rouge: #b23a2e;
+    --ok: #1e7e3a;
+    --gris: #3a3a3a;
+    --gris-clair: #f4f4f0;
+    --border: #e0dbd2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--gris-clair);
+    color: var(--gris);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--vert);
+    color: #fff;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,.35);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 1.1rem; font-weight: 700; }
+  header h1 span { color: var(--or); }
+  .header-sub { font-size: .75rem; opacity: .8; margin-top: .2rem; }
+  .header-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: .3rem;
+    padding: .45rem 1rem;
+    border: none; border-radius: 4px; cursor: pointer;
+    font-size: .78rem; font-weight: 700; letter-spacing: .04em;
+    transition: opacity .15s, transform .1s;
+    font-family: inherit;
+  }
+  .btn:hover { opacity: .88; }
+  .btn:active { transform: scale(.97); }
+  .btn-or { background: var(--or); color: var(--vert2); }
+  .btn-ghost { background: rgba(255,255,255,.12); color: #fff; }
+  .btn-danger { background: var(--rouge); color: #fff; }
+  .btn-small { padding: .3rem .7rem; font-size: .75rem; }
+
+  /* STATS */
+  .stats-bar {
+    background: var(--vert2);
+    color: rgba(255,255,255,.8);
+    padding: .55rem 2rem;
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    font-size: .78rem;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .stat strong { color: #fff; }
+  .stat.ok strong { color: #7ed7a2; }
+  .stat.warn strong { color: #ffc36b; }
+
+  /* CONN BOX */
+  .conn-box {
+    background: #fff3e0; border-left: 4px solid #e67e22;
+    padding: .6rem 1.2rem; font-size: .82rem;
+    margin: .8rem 2rem; border-radius: 4px; display: none;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    background: #fff;
+    padding: .7rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+  }
+  .search-wrap input {
+    padding: .42rem .9rem;
+    border: 1.5px solid var(--border); border-radius: 4px;
+    font-size: .82rem; width: 260px;
+  }
+  .search-wrap input:focus { outline: none; border-color: var(--or); }
+  .filter-btns { display: flex; gap: .4rem; }
+  .filter-btn {
+    padding: .35rem .8rem; border-radius: 20px; border: 1.5px solid var(--border);
+    background: #fff; font-size: .75rem; cursor: pointer; color: var(--gris);
+    font-family: inherit; font-weight: 600; transition: all .15s;
+  }
+  .filter-btn.active { background: var(--vert); color: #fff; border-color: var(--vert); }
+  .ms-left { margin-left: auto; }
+
+  /* GRID */
+  .grid {
+    padding: 1.2rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 1rem;
+  }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .card:hover { box-shadow: 0 3px 12px rgba(0,0,0,.1); }
+  .card.st-empty { border-color: #f5b8b1; }
+  .card.st-partial { border-color: #ffd280; }
+  .card.st-done { border-color: #b4e8c4; }
+
+  .card-head {
+    background: var(--vert);
+    padding: .55rem .9rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .card-head-title { color: #fff; font-size: .85rem; font-weight: 700; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-id { font-size: .65rem; font-family: monospace; background: rgba(0,0,0,.25); color: rgba(255,255,255,.8); padding: .12rem .45rem; border-radius: 3px; white-space: nowrap; }
+  .card-badge {
+    font-size: .65rem; font-weight: 700; padding: .15rem .5rem; border-radius: 10px; white-space: nowrap;
+  }
+  .badge-empty { background: var(--rouge); color: #fff; }
+  .badge-partial { background: #e67e22; color: #fff; }
+  .badge-done { background: var(--ok); color: #fff; }
+
+  .card-body { padding: .75rem .9rem; }
+
+  /* VIDEO ROW */
+  .video-row {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .65rem;
+  }
+  .video-row label { font-size: .72rem; font-weight: 700; color: var(--vert); white-space: nowrap; min-width: 80px; }
+  .video-row input[type=text] {
+    flex: 1; padding: .35rem .6rem; border: 1.5px solid var(--border);
+    border-radius: 4px; font-size: .75rem; font-family: monospace; min-width: 0;
+  }
+  .video-row input:focus { outline: none; border-color: var(--or); }
+  .video-row input.has-val { border-color: #a8d8b5; background: #f6fff8; }
+  .video-row .btn-small { flex-shrink: 0; }
+
+  /* IMAGES SECTION */
+  .img-section label { font-size: .72rem; font-weight: 700; color: var(--vert); display: block; margin-bottom: .4rem; }
+  .img-slots { display: flex; flex-direction: column; gap: .4rem; }
+  .img-slot {
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .slot-n {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--gris-clair); color: var(--gris);
+    font-size: .65rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .img-slot.filled .slot-n { background: var(--ok); color: #fff; }
+  .img-slot input[type=text] {
+    flex: 1; padding: .32rem .55rem; border: 1.5px solid var(--border);
+    border-radius: 4px; font-size: .72rem; font-family: monospace; min-width: 0;
+  }
+  .img-slot input:focus { outline: none; border-color: var(--or); }
+  .img-slot input.has-val { border-color: #a8d8b5; background: #f6fff8; }
+  .thumb-preview {
+    width: 38px; height: 26px; border-radius: 3px;
+    background: var(--gris-clair) center/cover no-repeat;
+    border: 1px solid var(--border); flex-shrink: 0; cursor: pointer;
+  }
+  .thumb-preview:hover { transform: scale(1.1); }
+  .btn-rm {
+    width: 20px; height: 20px; border: none; background: #fde8e8; color: var(--rouge);
+    border-radius: 3px; cursor: pointer; font-size: .85rem; line-height: 1; flex-shrink: 0;
+  }
+  .btn-rm:hover { background: #f8c9c9; }
+
+  .add-img-row {
+    margin-top: .4rem; display: flex; gap: .4rem; align-items: center;
+  }
+  .add-img-row input {
+    flex: 1; padding: .3rem .55rem; border: 1.5px dashed #ccc; border-radius: 4px;
+    font-size: .72rem; font-family: monospace; background: #fafafa; min-width: 0;
+  }
+  .add-img-row input:focus { outline: none; border-color: var(--or); background: #fff; }
+  .add-img-row button {
+    padding: .3rem .7rem; background: var(--or); color: var(--vert2);
+    border: none; border-radius: 4px; font-size: .78rem; font-weight: 700; cursor: pointer;
+  }
+
+  /* LIGHTBOX */
+  .lb { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 999; align-items: center; justify-content: center; }
+  .lb.on { display: flex; }
+  .lb img { max-width: 85vw; max-height: 85vh; object-fit: contain; border-radius: 6px; }
+  .lb-close { position: absolute; top: 1.2rem; right: 1.5rem; color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--vert); color: #fff;
+    padding: .7rem 1.3rem; border-radius: 6px; font-size: .82rem; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,0,0,.3);
+    transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 998;
+  }
+  .toast.on { transform: translateY(0); opacity: 1; }
+  .toast.err { background: var(--rouge); }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; padding: .8rem 1rem 3rem; }
+    .stats-bar { padding: .55rem 1rem; gap: 1rem; }
+    .toolbar { padding: .6rem 1rem; }
+    header { padding: 1rem; }
+    .conn-box { margin: .6rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <h1>Voyages21 — <span>Tableau de bord médias</span></h1>
+      <div class="header-sub">Injectez vos photos &amp; vidéos sur tous les circuits en une vue</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-or btn-small" onclick="window.open('BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html','_blank')">↗ Ouvrir la brochure</button>
+      <button class="btn btn-ghost btn-small" onclick="exportJSON()">⬇ Exporter JSON</button>
+      <button class="btn btn-ghost btn-small" onclick="document.getElementById('imp').click()">⬆ Importer</button>
+      <input type="file" id="imp" accept=".json" style="display:none" onchange="importJSON(this)">
+      <button class="btn btn-danger btn-small" onclick="clearAll()">✕ Tout effacer</button>
+    </div>
+  </div>
+  <div class="stats-bar" id="stats"></div>
+</header>
+
+<div class="conn-box" id="conn"></div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Rechercher un circuit…" oninput="filterCards()">
+  </div>
+  <div class="filter-btns">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">Tous</button>
+    <button class="filter-btn" data-filter="empty" onclick="setFilter('empty',this)">Vides</button>
+    <button class="filter-btn" data-filter="partial" onclick="setFilter('partial',this)">Incomplets</button>
+    <button class="filter-btn" data-filter="done" onclick="setFilter('done',this)">Complets</button>
+  </div>
+  <span class="ms-left" style="font-size:.75rem;color:#999">Sauvegarde automatique à chaque modification</span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { upload } from 'https://esm.sh/@vercel/blob@2.4.0/client';
+  window.v21upload = upload;
+</script>
+<script>
+// ─── CIRCUITS ───
+var CIRCUITS = [
+  { id: "modal-istanbul",            sl: "sl-istanbul",            label: "Istanbul Incontournable" },
+  { id: "modal-istanbul-antalya",    sl: "sl-istanbul-antalya",    label: "Istanbul & Antalya" },
+  { id: "modal-istanbul-bodrum",     sl: "sl-istanbul-bodrum",     label: "Istanbul & Bodrum" },
+  { id: "modal-marmaris-bodrum",     sl: "sl-marmaris-bodrum",     label: "Istanbul, Marmaris & Bodrum" },
+  { id: "modal-istanbul-antalya-11j",sl: "sl-istanbul-antalya-11j",label: "Istanbul & Antalya (11 jours)" },
+  { id: "modal-caire-nil-hurghada",  sl: "sl-caire-nil-hurghada",  label: "Le Caire · Nil · Hurghada" },
+  { id: "modal-caire-sharm",         sl: "sl-caire-sharm",         label: "Le Caire & Sharm El Sheikh" },
+  { id: "modal-ouest-usa",           sl: "sl-ouest-usa",           label: "L'Ouest Américain" },
+  { id: "modal-joyaux-canada",       sl: "sl-joyaux-canada",       label: "Joyaux du Canada & USA" },
+  { id: "modal-rocheuses",           sl: "sl-rocheuses",           label: "Les Rocheuses — Ouest USA" },
+  { id: "modal-cuba",                sl: "sl-cuba",                label: "Cuba — La Havane & Varadero" },
+  { id: "modal-perou",               sl: "sl-perou",               label: "Pérou — Merveilles Incas" },
+  { id: "modal-europe-1",            sl: "sl-europe-1",            label: "Las Palmas" },
+  { id: "modal-europe-2",            sl: "sl-europe-2",            label: "Imperial Capitals (Vienne, Budapest, Prague)" },
+  { id: "modal-europe-3",            sl: "sl-europe-3",            label: "Al-Andalus (Madrid, Grenade, Séville)" },
+  { id: "modal-europe-4",            sl: "sl-europe-4",            label: "Athènes, Rhodes & Kos" },
+  { id: "modal-europe-5",            sl: "sl-europe-5",            label: "Grèce Classique" },
+  { id: "modal-europe-6",            sl: "sl-europe-6",            label: "Espagne & Portugal" },
+  { id: "modal-europe-7",            sl: "sl-europe-7",            label: "Circuit Italie" },
+  { id: "modal-europe-8",            sl: "sl-europe-8",            label: "France & Suisse" },
+  { id: "modal-europe-9",            sl: "sl-europe-9",            label: "Angleterre & Écosse" },
+  { id: "modal-croisiere-1",         sl: "sl-croisiere-1",         label: "Croisière Méditerranée — Espagne & Italie" },
+  { id: "modal-croisiere-2",         sl: "sl-croisiere-2",         label: "Croisière Méditerranée Premium" },
+  { id: "modal-chine",               sl: "sl-chine",               label: "Circuit Chine" },
+  { id: "modal-malaisie",            sl: "sl-malaisie",            label: "Malaisie & Thaïlande" },
+  { id: "modal-bangkok",             sl: "sl-bangkok",             label: "Thaïlande — Bangkok, Krabi & Phuket" },
+  { id: "modal-vietnam",             sl: "sl-vietnam",             label: "Vietnam — Hanoï à Saigon" },
+  { id: "modal-zanzibar",            sl: "sl-zanzibar",            label: "Zanzibar" },
+  { id: "modal-omra-mouharram",      sl: "sl-omra-mouharram",      label: "Omra Mouharram 1448" },
+  { id: "modal-omra-06-juillet",     sl: "sl-omra-06-juillet",     label: "Omra 06 Juillet" },
+  { id: "modal-omra-08-juillet",     sl: "sl-omra-08-juillet",     label: "Omra 08 Juillet" },
+  { id: "modal-omra-istanbul",       sl: "sl-omra-istanbul",       label: "Omra via Istanbul" },
+  { id: "modal-omra-01-juillet",     sl: "sl-omra-01-juillet",     label: "Omra 01 Juillet" }
+];
+
+var MANIFEST = {};
+var ONLINE = true;
+var FILTER = 'all';
+var bc = ('BroadcastChannel' in window) ? new BroadcastChannel('v21_media') : null;
+
+function notify() { if (bc) bc.postMessage('update'); }
+
+// ─── API ───
+function apiGet() {
+  return fetch('/api/media', { cache: 'no-store' })
+    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+function apiPut(key, rec) {
+  return fetch('/api/media', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key: key, rec: rec })
+  }).then(function(r) { return r.json(); }).then(function(j) {
+    if (j && j.ok === false) throw new Error(j.error || 'Erreur API');
+    return j;
+  });
+}
+function apiPutAll(data) {
+  return fetch('/api/media', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(r) { return r.json(); });
+}
+
+function setOnline(ok, msg) {
+  ONLINE = ok;
+  var box = document.getElementById('conn');
+  if (!box) return;
+  if (ok) { box.style.display = 'none'; box.textContent = ''; }
+  else {
+    box.style.display = '';
+    box.textContent = '⚠️ ' + (msg || 'Stockage en ligne indisponible — vos modifications ne sont pas sauvegardées.');
+  }
+}
+
+function recFor(id) {
+  return MANIFEST[id] || { key: id, videoLink: '', videoUrl: '', images: [] };
+}
+function countFilled(rec) {
+  return (rec.images || []).filter(function(it) { return it && it.url; }).length;
+}
+function circuitStatus(rec) {
+  var n = countFilled(rec);
+  var hasVid = !!(rec.videoLink || rec.videoUrl);
+  if (n === 0 && !hasVid) return 'empty';
+  if (n < 4) return 'partial';
+  return 'done';
+}
+
+// ─── RENDER ───
+function render() {
+  var grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  var q = (document.getElementById('search').value || '').toLowerCase();
+  CIRCUITS.forEach(function(c) {
+    var label_lc = c.label.toLowerCase();
+    var id_lc = c.id.toLowerCase();
+    if (q && !label_lc.includes(q) && !id_lc.includes(q)) return;
+    var rec = recFor(c.id);
+    var st = circuitStatus(rec);
+    if (FILTER !== 'all' && FILTER !== st) return;
+
+    var card = document.createElement('div');
+    card.className = 'card st-' + st;
+    card.dataset.id = c.id;
+    card.innerHTML = cardHTML(c, rec, st);
+    grid.appendChild(card);
+  });
+  updateStats();
+}
+
+function cardHTML(c, rec, st) {
+  var badge = st === 'done' ? '<span class="card-badge badge-done">✓ Complet</span>'
+            : st === 'empty' ? '<span class="card-badge badge-empty">Vide</span>'
+            : '<span class="card-badge badge-partial">' + countFilled(rec) + '/4</span>';
+
+  var imgs = rec.images || [];
+  var slots = '';
+  var n = Math.max(imgs.length, 4);
+  for (var i = 0; i < n; i++) {
+    var url = (imgs[i] && imgs[i].url) || '';
+    slots += slotHTML(c.id, i, url);
+  }
+
+  var vLink = rec.videoLink || '';
+  var vUrl = rec.videoUrl || '';
+  var vDisplay = vLink || vUrl || '';
+
+  return [
+    '<div class="card-head">',
+      '<span class="card-head-title">' + esc(c.label) + '</span>',
+      '<span class="card-id">' + esc(c.sl) + '</span>',
+      badge,
+    '</div>',
+    '<div class="card-body">',
+      '<div class="video-row">',
+        '<label>Vidéo</label>',
+        '<input type="text" placeholder="YouTube / Vimeo / URL mp4…"',
+          ' value="' + esc(vDisplay) + '"',
+          ' class="' + (vDisplay ? 'has-val' : '') + '"',
+          ' data-vid="' + esc(c.id) + '"',
+          ' oninput="onVidInput(this)"',
+          ' onblur="saveVideo(\'' + c.id + '\')"',
+        '>',
+        '<button class="btn btn-small btn-danger" onclick="clearVideo(\'' + c.id + '\')">✕</button>',
+      '</div>',
+      '<div class="img-section">',
+        '<label>Photos (4 minimum)</label>',
+        '<div class="img-slots" id="slots-' + c.id + '">' + slots + '</div>',
+        '<div class="add-img-row">',
+          '<input type="text" placeholder="Ajouter une photo (URL)…" id="add-' + c.id + '">',
+          '<button onclick="addImgUrl(\'' + c.id + '\')">+</button>',
+        '</div>',
+      '</div>',
+    '</div>'
+  ].join('');
+}
+
+function slotHTML(cid, idx, url) {
+  var filled = url ? ' filled' : '';
+  var hasCls = url ? ' has-val' : '';
+  var prev = url ? 'background-image:url(\'' + url.replace(/'/g,"&#39;") + '\')' : '';
+  return [
+    '<div class="img-slot' + filled + '" id="slot-' + cid + '-' + idx + '">',
+      '<span class="slot-n">' + (idx + 1) + '</span>',
+      '<input type="text" class="' + hasCls + '"',
+        ' value="' + esc(url) + '"',
+        ' placeholder="URL image ' + (idx + 1) + '…"',
+        ' data-cid="' + esc(cid) + '" data-idx="' + idx + '"',
+        ' oninput="onImgInput(this)"',
+        ' onblur="saveImg(\'' + cid + '\', ' + idx + ')"',
+      '>',
+      '<div class="thumb-preview" style="' + prev + '"',
+        ' onclick="showLb(\'' + url.replace(/'/g,"&#39;") + '\')"',
+      '></div>',
+      '<button class="btn-rm" onclick="clearImg(\'' + cid + '\',' + idx + ')">×</button>',
+    '</div>'
+  ].join('');
+}
+
+// ─── INPUT HANDLERS ───
+function onVidInput(el) {
+  el.classList.toggle('has-val', !!el.value.trim());
+}
+function onImgInput(el) {
+  var url = el.value.trim();
+  el.classList.toggle('has-val', !!url);
+  var cid = el.dataset.cid;
+  var idx = parseInt(el.dataset.idx);
+  var slot = document.getElementById('slot-' + cid + '-' + idx);
+  if (slot) {
+    slot.classList.toggle('filled', !!url);
+    var prev = slot.querySelector('.thumb-preview');
+    if (prev) { prev.style.backgroundImage = url ? "url('" + url + "')" : ''; }
+  }
+}
+
+function saveVideo(cid) {
+  var card = document.querySelector('.card[data-id="' + cid + '"]');
+  if (!card) return;
+  var input = card.querySelector('[data-vid="' + cid + '"]');
+  var val = (input && input.value.trim()) || '';
+  var rec = JSON.parse(JSON.stringify(recFor(cid)));
+  // If it looks like a YouTube/Vimeo link → videoLink; else mp4 → videoUrl
+  if (!val) { rec.videoLink = ''; rec.videoUrl = ''; }
+  else if (/\.(mp4|webm|ogg)(\?|$)/i.test(val) || /^data:video\//i.test(val)) {
+    rec.videoUrl = val; rec.videoLink = '';
+  } else { rec.videoLink = val; rec.videoUrl = ''; }
+  MANIFEST[cid] = rec;
+  apiPut(cid, rec).then(function() { setOnline(true); notify(); refreshCard(cid); toast('✓ Vidéo enregistrée'); })
+    .catch(function(e) { setOnline(false, e.message); });
+}
+
+function clearVideo(cid) {
+  var rec = JSON.parse(JSON.stringify(recFor(cid)));
+  rec.videoLink = ''; rec.videoUrl = '';
+  MANIFEST[cid] = rec;
+  apiPut(cid, rec).then(function() { setOnline(true); notify(); refreshCard(cid); toast('Vidéo effacée'); })
+    .catch(function(e) { setOnline(false, e.message); });
+}
+
+function saveImg(cid, idx) {
+  var slot = document.getElementById('slot-' + cid + '-' + idx);
+  if (!slot) return;
+  var input = slot.querySelector('input[type=text]');
+  var url = (input && input.value.trim()) || '';
+  var rec = JSON.parse(JSON.stringify(recFor(cid)));
+  if (!rec.images) rec.images = [];
+  while (rec.images.length <= idx) rec.images.push({ url: '' });
+  rec.images[idx] = { url: url };
+  MANIFEST[cid] = rec;
+  apiPut(cid, rec).then(function() { setOnline(true); notify(); refreshCard(cid); toast('✓ Photo enregistrée'); })
+    .catch(function(e) { setOnline(false, e.message); });
+}
+
+function clearImg(cid, idx) {
+  var rec = JSON.parse(JSON.stringify(recFor(cid)));
+  if (!rec.images) rec.images = [];
+  while (rec.images.length <= idx) rec.images.push({ url: '' });
+  rec.images[idx] = { url: '' };
+  MANIFEST[cid] = rec;
+  apiPut(cid, rec).then(function() {
+    setOnline(true); notify();
+    var slot = document.getElementById('slot-' + cid + '-' + idx);
+    if (slot) {
+      var input = slot.querySelector('input[type=text]');
+      if (input) { input.value = ''; input.classList.remove('has-val'); }
+      var prev = slot.querySelector('.thumb-preview');
+      if (prev) prev.style.backgroundImage = '';
+      slot.classList.remove('filled');
+    }
+    refreshCard(cid); toast('Photo effacée');
+  }).catch(function(e) { setOnline(false, e.message); });
+}
+
+function addImgUrl(cid) {
+  var input = document.getElementById('add-' + cid);
+  if (!input) return;
+  var url = (input.value || '').trim();
+  if (!url) return;
+  var rec = JSON.parse(JSON.stringify(recFor(cid)));
+  if (!rec.images) rec.images = [];
+  rec.images.push({ url: url });
+  MANIFEST[cid] = rec;
+  input.value = '';
+  apiPut(cid, rec).then(function() { setOnline(true); notify(); refreshCard(cid, true); toast('✓ Photo ajoutée'); })
+    .catch(function(e) { setOnline(false, e.message); });
+}
+
+function refreshCard(cid, fullRedraw) {
+  var card = document.querySelector('.card[data-id="' + cid + '"]');
+  if (!card) return;
+  var c = CIRCUITS.find(function(x) { return x.id === cid; });
+  if (!c) return;
+  var rec = recFor(cid);
+  var st = circuitStatus(rec);
+  card.className = 'card st-' + st;
+  if (fullRedraw) {
+    card.innerHTML = cardHTML(c, rec, st);
+  } else {
+    var badge = card.querySelector('.card-badge');
+    if (badge) {
+      badge.className = 'card-badge badge-' + st;
+      badge.textContent = st === 'done' ? '✓ Complet' : st === 'empty' ? 'Vide' : countFilled(rec) + '/4';
+    }
+  }
+  updateStats();
+}
+
+// ─── STATS ───
+function updateStats() {
+  var total = CIRCUITS.length, done = 0, partial = 0, empty = 0, imgs = 0;
+  CIRCUITS.forEach(function(c) {
+    var rec = recFor(c.id);
+    var st = circuitStatus(rec);
+    if (st === 'done') done++;
+    else if (st === 'partial') partial++;
+    else empty++;
+    imgs += countFilled(rec);
+  });
+  var maxImgs = CIRCUITS.length * 4;
+  document.getElementById('stats').innerHTML =
+    '<span class="stat">Circuits : <strong>' + total + '</strong></span>' +
+    '<span class="stat ok">Complets : <strong>' + done + '</strong></span>' +
+    '<span class="stat warn">Incomplets : <strong>' + (partial + empty) + '</strong></span>' +
+    '<span class="stat">Photos injectées : <strong>' + imgs + '/' + maxImgs + '</strong></span>';
+}
+
+// ─── FILTER / SEARCH ───
+function filterCards() { render(); }
+function setFilter(f, btn) {
+  FILTER = f;
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  render();
+}
+
+// ─── EXPORT / IMPORT ───
+function exportJSON() {
+  var blob = new Blob([JSON.stringify(MANIFEST, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'voyages21-medias.json'; a.click();
+}
+function importJSON(input) {
+  var f = input.files && input.files[0]; if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      var data = JSON.parse(ev.target.result);
+      if (Array.isArray(data)) {
+        var obj = {};
+        data.forEach(function(o) {
+          if (!o || !o.key) return;
+          obj[o.key] = { key: o.key, videoLink: o.videoLink || '', videoUrl: o.videoUrl || '',
+            images: (o.images || []).filter(function(it) { return it && it.url; }) };
+        });
+        data = obj;
+      }
+      apiPutAll(data).then(function() {
+        MANIFEST = data; setOnline(true); notify(); render(); toast('Import réussi');
+      }).catch(function() { setOnline(false); alert('Échec import en ligne'); });
+    } catch(e) { alert('JSON invalide'); }
+  };
+  reader.readAsText(f);
+  input.value = '';
+}
+function clearAll() {
+  if (!confirm('Effacer TOUS les médias pour tous les circuits ?')) return;
+  apiPutAll({}).then(function() {
+    MANIFEST = {}; setOnline(true); notify(); render(); toast('Tout effacé');
+  }).catch(function() { setOnline(false); alert('Échec effacement'); });
+}
+
+// ─── LIGHTBOX ───
+function showLb(url) {
+  if (!url) return;
+  document.getElementById('lb-img').src = url;
+  document.getElementById('lb').classList.add('on');
+}
+function closeLb() {
+  document.getElementById('lb').classList.remove('on');
+  document.getElementById('lb-img').src = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+
+// ─── TOAST ───
+var _toastT;
+function toast(msg, err) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast on' + (err ? ' err' : '');
+  clearTimeout(_toastT);
+  _toastT = setTimeout(function() { el.classList.remove('on'); }, 2800);
+}
+
+// ─── UTILS ───
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── INIT ───
+apiGet().then(function(data) {
+  MANIFEST = data || {};
+  setOnline(true);
+  render();
+}).catch(function() {
+  setOnline(false, 'API /api/media non disponible (ouvrez depuis Vercel ou localhost). Les modifications ne seront pas sauvegardées.');
+  render();
+});
+</script>
+</body>
+</html>
