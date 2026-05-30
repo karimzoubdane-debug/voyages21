@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voyages21 — Homepage V2 Luxe</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================================================================
+       VOYAGES21 — V2 LUXE
+       Inspirations : Black Tomato · Aman Hotels · Bottega Veneta
+    ================================================================ */
+
+    /* ---- CUSTOM PROPERTIES ---- */
+    :root {
+      --green-deep:   #0d1f14;
+      --green-forest: #1B3A28;
+      --green-mid:    #2A5238;
+      --gold:         #C8A440;
+      --gold-light:   #e8c46a;
+      --gold-dim:     rgba(200,164,64,0.18);
+      --cream:        #F5F0E8;
+      --cream-warm:   #faf7f2;
+      --dark:         #0a0a0a;
+      --white:        #FFFFFF;
+      --gray-warm:    #7a7068;
+      --ease-luxe:    cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ---- RESET & BASE ---- */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      overflow-x: hidden;
+      cursor: none;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* ---- PAGE LOADER ---- */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--green-deep);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      transition: opacity 0.6s var(--ease-luxe), visibility 0.6s;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .loader-line {
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      animation: loaderExpand 1.4s var(--ease-luxe) forwards;
+      max-width: 200px;
+    }
+    @keyframes loaderExpand {
+      to { width: 200px; }
+    }
+    .loader-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      animation: fadeInUp 1s 0.8s both;
+    }
+
+    /* ---- CUSTOM CURSOR ---- */
+    #cursor-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(200,164,64,0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s var(--ease-luxe), height 0.35s var(--ease-luxe),
+                  border-color 0.3s, transform 0.12s linear;
+    }
+    body.hovering #cursor-dot { width: 10px; height: 10px; }
+    body.hovering #cursor-ring {
+      width: 56px;
+      height: 56px;
+      border-color: var(--gold);
+    }
+    body.clicking #cursor-dot { background: var(--gold-light); transform: translate(-50%,-50%) scale(1.5); }
+
+    /* ---- NOISE OVERLAY ---- */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9000;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.45;
+    }
+
+    /* ---- REVEAL ON SCROLL ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s var(--ease-luxe), transform 0.8s var(--ease-luxe);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.35s; }
+    .reveal-delay-4 { transition-delay: 0.5s; }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s var(--ease-luxe), transform 0.9s var(--ease-luxe);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s var(--ease-luxe), transform 0.9s var(--ease-luxe);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ================================================================
+       NAVBAR — 3 barres
+    ================================================================ */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
+
+    /* Bar 1 — logo */
+    .bar1 {
+      height: 48px;
+      background: var(--green-forest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(200,164,64,0.15);
+    }
+    .bar1-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .bar1-logo em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* Bar 2 — contacts / blog / about */
+    .bar2 {
+      height: 40px;
+      background: #152E1F;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid rgba(200,164,64,0.1);
+    }
+    .bar2-left { display: flex; align-items: center; gap: 2rem; color: rgba(255,255,255,0.55); }
+    .bar2-left span { display: flex; align-items: center; gap: 0.4rem; }
+    .bar2-center {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+    }
+    .bar2-right { display: flex; align-items: center; gap: 0.3rem; }
+    .bar2-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .bar2-btn:hover { color: var(--gold); }
+
+    /* Bar 3 — navigation principale */
+    .bar3 {
+      height: 68px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    .bar3.scrolled {
+      background: rgba(27,58,40,0.95);
+      backdrop-filter: blur(12px);
+    }
+    .bar3-left a {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .bar3-left a:hover { color: var(--white); }
+    .bar3-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      list-style: none;
+    }
+    .bar3-menu > li > button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      padding: 0.4rem 1rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .bar3-menu > li > button:hover { color: var(--gold); }
+    .bar3-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .bar3-right .cta-btn {
+      padding: 0.52rem 1.5rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .bar3-right .cta-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ================================================================
+       HERO
+    ================================================================ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+      padding-top: 156px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Parallax container */
+    .hero-parallax {
+      position: absolute;
+      inset: -8%;
+      z-index: 0;
+      will-change: transform;
+    }
+    .hero-bg {
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1548813395-edd5373a8e72?w=2000&q=85');
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.1s linear;
+    }
+
+    /* Cinematic gradients */
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 100% at 50% 100%, rgba(13,31,20,0.85) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 50%, rgba(13,31,20,0.5) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(13,31,20,0.3) 0%, transparent 35%, rgba(13,31,20,0.55) 100%);
+    }
+
+    /* Subtle gold horizontal line from top */
+    .hero-gold-line {
+      position: absolute;
+      top: 156px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,164,64,0.4), transparent);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 920px;
+    }
+
+    /* Eyebrow */
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 0.8s 0.5s var(--ease-luxe) both;
+    }
+    .hero-eyebrow-line { width: 40px; height: 1px; background: rgba(200,164,64,0.6); }
+    .hero-eyebrow-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: revealTitle 1s 0.75s var(--ease-luxe) both;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 400;
+    }
+    .hero-title .line { display: block; overflow: hidden; }
+
+    @keyframes revealTitle {
+      from { opacity: 0; transform: translateY(24px) skewY(1deg); }
+      to   { opacity: 1; transform: translateY(0) skewY(0); }
+    }
+
+    .hero-rule {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: fadeIn 0.8s 1.2s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeInUp 0.8s 1.3s var(--ease-luxe) both;
+    }
+
+    /* Buttons — magnetic */
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.9rem 2.2rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      border: none;
+      cursor: none;
+      transition: background 0.25s, transform 0.3s var(--ease-luxe), box-shadow 0.3s;
+      font-family: 'DM Sans', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-hero-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent);
+      border-radius: inherit;
+    }
+    .btn-hero-primary:hover {
+      background: var(--gold-light);
+      box-shadow: 0 12px 40px rgba(200,164,64,0.35);
+    }
+    .btn-arrow { transition: transform 0.25s; }
+    .btn-hero-primary:hover .btn-arrow { transform: translateX(4px); }
+
+    .btn-hero-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.88rem 2.2rem;
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.3);
+      cursor: none;
+      transition: background 0.25s, border-color 0.25s, transform 0.3s var(--ease-luxe);
+      font-family: 'DM Sans', sans-serif;
+      backdrop-filter: blur(8px);
+    }
+    .btn-hero-ghost:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* Chat bar */
+    .hero-chat {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.4rem;
+      padding: 0.7rem 1.6rem;
+      background: rgba(13,31,20,0.55);
+      border: 1px solid rgba(200,164,64,0.25);
+      border-radius: 100px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      cursor: none;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      animation: fadeInUp 0.8s 1.5s var(--ease-luxe) both;
+    }
+    .hero-chat:hover { border-color: var(--gold); color: var(--white); background: rgba(13,31,20,0.75); }
+    .hero-chat-icon { color: var(--gold); width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s 2s both;
+    }
+    .hero-scroll-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .hero-scroll-track {
+      width: 1px;
+      height: 56px;
+      background: rgba(255,255,255,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-scroll-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to bottom, var(--gold), rgba(200,164,64,0));
+      animation: scrollFill 2s ease-in-out infinite;
+    }
+    @keyframes scrollFill {
+      0%   { height: 0; top: 0; }
+      50%  { height: 100%; top: 0; }
+      100% { height: 0; top: 100%; }
+    }
+
+    /* Index number bottom right */
+    .hero-index {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      z-index: 3;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: fadeIn 1s 2s both;
+    }
+    .hero-index span { color: rgba(255,255,255,0.12); font-size: 0.6rem; }
+
+    /* ================================================================
+       SIGNATURE BAND — marquee
+    ================================================================ */
+    .sig-band {
+      background: var(--green-deep);
+      border-top: 1px solid rgba(200,164,64,0.2);
+      border-bottom: 1px solid rgba(200,164,64,0.2);
+      overflow: hidden;
+      padding: 1.6rem 0;
+    }
+    .sig-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+    }
+    .sig-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .sig-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 0 2.5rem;
+    }
+    .sig-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .sig-text strong { color: var(--gold); font-style: normal; }
+    .sig-diamond {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    /* ================================================================
+       SECTION UTILITIES
+    ================================================================ */
+    .section-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .section-title em { font-weight: 400; }
+
+    /* ================================================================
+       UNIVERS — editorial split cards
+    ================================================================ */
+    .univers {
+      padding: 8rem 0;
+      background: var(--cream-warm);
+    }
+    .univers-header {
+      padding: 0 3rem;
+      margin-bottom: 4rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .univers-header-left { display: flex; flex-direction: column; gap: 1rem; }
+    .univers-view-all {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green-forest);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 0.15rem;
+      transition: color 0.2s, gap 0.2s;
+      white-space: nowrap;
+      align-self: flex-end;
+      margin-bottom: 0.4rem;
+    }
+    .univers-view-all:hover { color: var(--gold); gap: 0.8rem; }
+
+    .univers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .univers-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: none;
+    }
+    .univers-card-bg {
+      position: absolute;
+      inset: -6%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.9s var(--ease-luxe);
+      will-change: transform;
+    }
+    .univers-card:hover .univers-card-bg { transform: scale(1.07); }
+
+    .univers-card-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(13,31,20,0) 0%,
+        rgba(13,31,20,0.2) 40%,
+        rgba(13,31,20,0.92) 100%
+      );
+      transition: opacity 0.4s;
+    }
+
+    /* Gold diagonal line */
+    .univers-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      z-index: 2;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-luxe);
+    }
+    .univers-card:hover::before { transform: scaleX(1); }
+
+    .univers-card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: 2.5rem 2rem;
+      transform: translateY(4px);
+      transition: transform 0.4s var(--ease-luxe);
+    }
+    .univers-card:hover .univers-card-body { transform: translateY(0); }
+
+    .univers-card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.5rem;
+    }
+    .univers-card-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(200,164,64,0.8);
+      margin-bottom: 0.6rem;
+    }
+    .univers-card-title {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+    .univers-card-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.65;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s var(--ease-luxe), opacity 0.4s 0.1s;
+    }
+    .univers-card:hover .univers-card-desc { max-height: 80px; opacity: 1; }
+
+    .univers-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s 0.15s, transform 0.35s 0.15s var(--ease-luxe);
+    }
+    .univers-card:hover .univers-card-cta { opacity: 1; transform: translateY(0); }
+    .univers-cta-line { width: 20px; height: 1px; background: var(--gold); }
+
+    /* ================================================================
+       CIRCUITS PHARES — magazine editorial grid
+    ================================================================ */
+    .circuits {
+      padding: 9rem 3rem;
+      background: var(--white);
+    }
+    .circuits-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4.5rem;
+      gap: 2rem;
+    }
+    .circuits-header-left { display: flex; flex-direction: column; gap: 1rem; }
+    .circuits-header-right {
+      font-size: 0.82rem;
+      color: var(--gray-warm);
+      line-height: 1.7;
+      max-width: 340px;
+    }
+    .circuits-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .circuit-card {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      background: var(--green-deep);
+    }
+    .circuit-card--hero {
+      grid-row: 1 / 3;
+    }
+    .circuit-card-img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.9s var(--ease-luxe);
+      display: block;
+    }
+    .circuit-card--hero .circuit-card-img { min-height: 560px; }
+    .circuit-card:hover .circuit-card-img { transform: scale(1.06); }
+
+    .circuit-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,31,20,0.9) 0%, rgba(13,31,20,0.1) 55%, transparent 100%);
+    }
+
+    .circuit-card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.8rem;
+      z-index: 2;
+    }
+    .circuit-card--hero .circuit-card-body { padding: 2.5rem 2.5rem; }
+
+    .circuit-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .circuit-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .circuit-card--hero .circuit-title { font-size: 1.7rem; }
+    .circuit-desc {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.45s var(--ease-luxe), opacity 0.3s;
+    }
+    .circuit-card:hover .circuit-desc { max-height: 80px; opacity: 1; }
+    .circuit-card--hero .circuit-desc { max-height: 80px; opacity: 1; }
+
+    .circuit-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.3s 0.1s, transform 0.3s 0.1s var(--ease-luxe), gap 0.2s;
+    }
+    .circuit-card:hover .circuit-link { opacity: 1; transform: translateX(0); }
+    .circuit-card--hero .circuit-link { opacity: 1; transform: none; }
+    .circuit-card:hover .circuit-link:hover { gap: 0.9rem; }
+
+    /* "Voir tous" pill */
+    .circuits-see-all {
+      display: flex;
+      justify-content: center;
+      margin-top: 4rem;
+    }
+    .btn-see-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 2.8rem;
+      border: 1px solid rgba(27,58,40,0.3);
+      color: var(--green-forest);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      transition: background 0.3s, border-color 0.3s, color 0.3s, gap 0.2s;
+      cursor: none;
+    }
+    .btn-see-all:hover {
+      background: var(--green-forest);
+      border-color: var(--green-forest);
+      color: var(--white);
+      gap: 1.4rem;
+    }
+
+    /* ================================================================
+       STATS — large editorial numbers
+    ================================================================ */
+    .stats {
+      background: var(--green-deep);
+      padding: 8rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle radial glow behind */
+    .stats::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(200,164,64,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 2rem;
+      border-right: 1px solid rgba(200,164,64,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      position: relative;
+    }
+    .stat-num::after {
+      content: attr(data-suffix);
+      font-size: 0.4em;
+      color: var(--gold);
+      vertical-align: super;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+    .stat-gold-rule { width: 24px; height: 1px; background: var(--gold); opacity: 0.5; }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+      max-width: 120px;
+    }
+
+    /* ================================================================
+       EXPÉRIENCES — horizontal scroll editorial
+    ================================================================ */
+    .exp {
+      padding: 8rem 0;
+      background: var(--cream-warm);
+      overflow: hidden;
+    }
+    .exp-header {
+      padding: 0 3rem;
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .exp-header-left { display: flex; flex-direction: column; gap: 1rem; }
+
+    .exp-scroll-hint {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-warm);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      white-space: nowrap;
+      align-self: flex-end;
+    }
+    .exp-scroll-hint::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--gray-warm);
+    }
+
+    .exp-track-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 3rem 2rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200,164,64,0.3) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .exp-track-wrap::-webkit-scrollbar { height: 2px; }
+    .exp-track-wrap::-webkit-scrollbar-thumb { background: rgba(200,164,64,0.4); }
+
+    .exp-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+    }
+
+    .exp-card {
+      display: block;
+      width: 320px;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+      cursor: none;
+    }
+    .exp-card-img-wrap {
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      position: relative;
+    }
+    .exp-card-img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.8s var(--ease-luxe);
+    }
+    .exp-card:hover .exp-card-img { transform: scale(1.06); }
+    .exp-card-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,31,20,0.75) 0%, transparent 50%);
+    }
+    .exp-card-num {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.15em;
+    }
+    .exp-card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+    }
+    .exp-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .exp-card-sub {
+      font-size: 0.74rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+    /* Gold border bottom on hover */
+    .exp-card::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-luxe);
+    }
+    .exp-card:hover::after { transform: scaleX(1); }
+
+    /* ================================================================
+       ABOUT — editorial split
+    ================================================================ */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .about-image-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .about-image {
+      width: 100%;
+      height: 100%;
+      min-height: 600px;
+      background-image: url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200&q=85');
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.9s var(--ease-luxe);
+    }
+    .about:hover .about-image { transform: scale(1.03); }
+    .about-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, rgba(13,31,20,0.5) 100%);
+    }
+    /* Floating year badge */
+    .about-year {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.12);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+
+    .about-content {
+      background: var(--green-forest);
+      padding: 6rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+    .about-content .section-label { color: rgba(200,164,64,0.8); margin-bottom: 1.5rem; }
+    .about-content .section-label::before { background: rgba(200,164,64,0.8); }
+    .about-title {
+      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.8rem;
+    }
+    .about-text {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+    .about-quote {
+      border-left: 1px solid var(--gold);
+      padding-left: 1.5rem;
+      margin: 0 0 2.5rem;
+    }
+    .about-quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1.5;
+    }
+    .about-quote-author {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.6rem;
+    }
+    .btn-about {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.9rem 0;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      width: fit-content;
+      transition: color 0.25s, border-color 0.25s, gap 0.25s;
+      cursor: none;
+    }
+    .btn-about:hover { color: var(--gold); border-color: var(--gold); gap: 1.2rem; }
+
+    /* ================================================================
+       CTA FINAL
+    ================================================================ */
+    .cta-final {
+      background: var(--cream-warm);
+      padding: 9rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle gold circles behind */
+    .cta-final::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border: 1px solid rgba(200,164,64,0.08);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .cta-final::after {
+      content: '';
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(200,164,64,0.1);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+    .cta-eyebrow { margin-bottom: 2rem; }
+    .cta-title {
+      font-size: clamp(2rem, 3.5vw, 3.4rem);
+      font-weight: 500;
+      color: var(--green-forest);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+    .cta-sub {
+      font-size: 0.9rem;
+      color: var(--gray-warm);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1.1rem 2.8rem;
+      background: var(--green-forest);
+      color: var(--white);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      border: 1px solid var(--green-forest);
+      cursor: none;
+      transition: background 0.3s, transform 0.3s var(--ease-luxe), box-shadow 0.3s;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-cta-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    }
+    .btn-cta-primary:hover {
+      background: #0d2018;
+      box-shadow: 0 16px 48px rgba(27,58,40,0.25);
+      transform: translateY(-2px);
+    }
+    .btn-cta-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1.08rem 2.5rem;
+      background: transparent;
+      color: var(--green-forest);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      border: 1px solid rgba(27,58,40,0.25);
+      cursor: none;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+    }
+    .btn-cta-wa:hover {
+      background: rgba(27,58,40,0.06);
+      border-color: rgba(27,58,40,0.5);
+    }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    .footer {
+      background: var(--green-deep);
+      padding: 5rem 3rem 2.5rem;
+      border-top: 1px solid rgba(200,164,64,0.12);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+    .footer-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .footer-brand-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-brand-text {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.8;
+      max-width: 270px;
+    }
+    .footer-col-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .footer-col ul li a:hover { color: rgba(255,255,255,0.85); }
+    .footer-col ul li a:hover .fc-arrow { transform: translateX(3px); }
+    .fc-arrow { display: inline-block; transition: transform 0.2s; font-size: 0.7em; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); letter-spacing: 0.04em; }
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.2);
+    }
+    .footer-legal a { transition: color 0.2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    /* WhatsApp */
+    .wa-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 52px;
+      height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      z-index: 999;
+      cursor: none;
+      transition: transform 0.3s var(--ease-luxe), box-shadow 0.3s;
+    }
+    .wa-btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.45); }
+    .wa-btn svg { width: 26px; height: 26px; fill: white; }
+
+    /* ================================================================
+       KEYFRAMES & UTILS
+    ================================================================ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 1100px) {
+      .circuits-grid { grid-template-columns: 1fr 1fr; }
+      .circuit-card--hero { grid-row: auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 900px) {
+      #cursor-dot, #cursor-ring { display: none; }
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+      .univers-grid { grid-template-columns: 1fr; }
+      .univers-card { aspect-ratio: 16/9; min-height: 320px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 0; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(200,164,64,0.12); padding: 1.5rem 0; }
+      .stat-item:nth-child(2n) { }
+      .stat-item:last-child { border-bottom: none; }
+      .about { grid-template-columns: 1fr; }
+      .about-content { padding: 4rem 2.5rem; }
+      .bar2 { display: none; }
+      .univers-header, .exp-header, .circuits-header { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 680px) {
+      .circuits-grid { grid-template-columns: 1fr; }
+      .bar3-right .cta-btn { display: none; }
+      .hero-title { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .univers, .circuits, .exp, .cta-final { padding-left: 0; padding-right: 0; }
+      .circuits { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .univers-header, .exp-header, .circuits-header { padding-left: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PAGE LOADER -->
+  <div id="loader">
+    <div class="loader-wordmark">Voyages<em style="color:var(--gold)">21</em></div>
+    <div class="loader-line"></div>
+    <div class="loader-sub">Maroc — Depuis 2000</div>
+  </div>
+
+  <!-- CUSTOM CURSOR -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/212661181618" class="wa-btn" aria-label="WhatsApp" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ================================================================ -->
+  <!-- NAVBAR                                                            -->
+  <!-- ================================================================ -->
+  <nav class="navbar">
+    <!-- Bar 1 -->
+    <div class="bar1">
+      <div class="bar1-logo">Voyages<em>21</em></div>
+    </div>
+
+    <!-- Bar 2 -->
+    <div class="bar2">
+      <div class="bar2-left">
+        <span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.07 2 2 2 0 012.07 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +212 661 181 618
+        </span>
+        <span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          contact@voyages21.ma
+        </span>
+      </div>
+      <div class="bar2-center">✦ Marhaba Blog</div>
+      <div class="bar2-right">
+        <button class="bar2-btn">À propos <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Bar 3 -->
+    <div class="bar3" id="bar3">
+      <div class="bar3-left">
+        <a href="#">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Accueil
+        </a>
+      </div>
+      <ul class="bar3-menu">
+        <li><button>Inspirations <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button></li>
+        <li><button>Votre style <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button></li>
+        <li><button>Explorer <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button></li>
+      </ul>
+      <div class="bar3-right">
+        <span>+212 661 181 618</span>
+        <button class="cta-btn">Contact</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================================ -->
+  <!-- HERO                                                              -->
+  <!-- ================================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-parallax" id="heroParallax">
+      <div class="hero-bg"></div>
+    </div>
+    <div class="hero-vignette"></div>
+    <div class="hero-gold-line"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Maroc — Voyages sur mesure depuis 2000</span>
+        <div class="hero-eyebrow-line"></div>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line">Depuis 2000, nous sommes</span>
+        <span class="line">les orfèvres des voyages</span>
+        <span class="line">que vous n'auriez pas pu</span>
+        <span class="line"><em>faire par vous-même.</em></span>
+      </h1>
+
+      <div class="hero-rule"></div>
+
+      <div class="hero-cta">
+        <a href="#univers" class="btn-hero-primary">
+          Découvrir nos circuits
+          <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contact" class="btn-hero-ghost">
+          Devis gratuit
+        </a>
+      </div>
+
+      <button class="hero-chat" onclick="alert('Assistant IA — bientôt disponible')">
+        <svg class="hero-chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/>
+          <path d="M19 17l.75 2.25L22 20l-2.25.75L19 23l-.75-2.25L16 20l2.25-.75L19 17z"/>
+        </svg>
+        On vous aide à choisir votre voyage
+      </button>
+    </div>
+
+    <div class="hero-scroll">
+      <span class="hero-scroll-label">Scroll</span>
+      <div class="hero-scroll-track">
+        <div class="hero-scroll-fill"></div>
+      </div>
+    </div>
+
+    <div class="hero-index">01 <span>/ 06</span></div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- SIGNATURE BAND                                                    -->
+  <!-- ================================================================ -->
+  <div class="sig-band" aria-hidden="true">
+    <div class="sig-track">
+      <!-- Dupliqué pour le défilement continu -->
+      <div class="sig-item">
+        <span class="sig-text">De l'aventure intime aux projets d'envergure, <strong>Voyages 21 signe le voyage.</strong></span>
+        <span class="sig-diamond"></span>
+      </div>
+      <div class="sig-item">
+        <span class="sig-text">De l'aventure intime aux projets d'envergure, <strong>Voyages 21 signe le voyage.</strong></span>
+        <span class="sig-diamond"></span>
+      </div>
+      <div class="sig-item">
+        <span class="sig-text">De l'aventure intime aux projets d'envergure, <strong>Voyages 21 signe le voyage.</strong></span>
+        <span class="sig-diamond"></span>
+      </div>
+      <div class="sig-item">
+        <span class="sig-text">De l'aventure intime aux projets d'envergure, <strong>Voyages 21 signe le voyage.</strong></span>
+        <span class="sig-diamond"></span>
+      </div>
+      <div class="sig-item">
+        <span class="sig-text">De l'aventure intime aux projets d'envergure, <strong>Voyages 21 signe le voyage.</strong></span>
+        <span class="sig-diamond"></span>
+      </div>
+      <div class="sig-item">
+        <span class="sig-text">De l'aventure intime aux projets d'envergure, <strong>Voyages 21 signe le voyage.</strong></span>
+        <span class="sig-diamond"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- NOS UNIVERS                                                       -->
+  <!-- ================================================================ -->
+  <section class="univers" id="univers">
+    <div class="univers-header">
+      <div class="univers-header-left">
+        <div class="section-label reveal">Nos univers</div>
+        <h2 class="section-title reveal reveal-delay-1">Choisissez<br><em>votre aventure</em></h2>
+      </div>
+      <a href="#" class="univers-view-all reveal reveal-delay-2">
+        Voir tous nos circuits
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="univers-grid">
+      <!-- Card 1 -->
+      <a href="#" class="univers-card reveal">
+        <div class="univers-card-bg" style="background-image:url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1000&q=85')"></div>
+        <div class="univers-card-shade"></div>
+        <div class="univers-card-body">
+          <div class="univers-card-num">01</div>
+          <div class="univers-card-label">Raid 4x4</div>
+          <h3 class="univers-card-title">L'Ingénierie<br>du Raid</h3>
+          <p class="univers-card-desc">4 circuits exclusifs. De l'Atlas à Chegaga, des dunes géantes aux oasis secrètes. Logistique militaire, émotion garantie.</p>
+          <div class="univers-card-cta">
+            <div class="univers-cta-line"></div>
+            Découvrir
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="#" class="univers-card reveal reveal-delay-1">
+        <div class="univers-card-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=85')"></div>
+        <div class="univers-card-shade"></div>
+        <div class="univers-card-body">
+          <div class="univers-card-num">02</div>
+          <div class="univers-card-label">Moto Expédition</div>
+          <h3 class="univers-card-title">BMW GS<br>& KTM Adventure</h3>
+          <p class="univers-card-desc">Atlantique & Anti-Atlas (930 km) ou Haut Atlas & Désert (1 180 km). Liberté ou expédition encadrée.</p>
+          <div class="univers-card-cta">
+            <div class="univers-cta-line"></div>
+            Découvrir
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="univers-card reveal reveal-delay-2">
+        <div class="univers-card-bg" style="background-image:url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1000&q=85')"></div>
+        <div class="univers-card-shade"></div>
+        <div class="univers-card-body">
+          <div class="univers-card-num">03</div>
+          <div class="univers-card-label">Circuits & Autotours</div>
+          <h3 class="univers-card-title">Le Maroc<br>Classique</h3>
+          <p class="univers-card-desc">Villes impériales, désert, montagnes, plages. En bus, en voiture ou en autotour — le même itinéraire, votre rythme.</p>
+          <div class="univers-card-cta">
+            <div class="univers-cta-line"></div>
+            Découvrir
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- CIRCUITS PHARES                                                   -->
+  <!-- ================================================================ -->
+  <section class="circuits">
+    <div class="circuits-header">
+      <div class="circuits-header-left">
+        <div class="section-label reveal">Sélection</div>
+        <h2 class="section-title reveal reveal-delay-1">Circuits phares<br><em>2026</em></h2>
+      </div>
+      <p class="circuits-header-right reveal reveal-delay-2">
+        Chaque itinéraire est conçu sur mesure depuis 25 ans. Nos guides terrain, notre logistique, votre aventure.
+      </p>
+    </div>
+
+    <div class="circuits-grid">
+      <!-- Hero card -->
+      <a href="#" class="circuit-card circuit-card--hero reveal-left">
+        <div class="circuit-card-img" style="background-image:url('https://images.unsplash.com/photo-1548813395-edd5373a8e72?w=900&q=85'); background-size:cover; background-position:center; height:100%;"></div>
+        <div class="circuit-card-overlay"></div>
+        <div class="circuit-card-body">
+          <span class="circuit-tag">4x4 · 4 jours · Circuit signature</span>
+          <h3 class="circuit-title">Raid Dunes & SSV :<br>De l'Atlas à Chegaga</h3>
+          <p class="circuit-desc">Franchissement de dunes géantes, pilotage SSV, bivouac sous les étoiles à Msoufa. L'expérience Voyages21 par excellence.</p>
+          <div class="circuit-link">
+            Découvrir ce circuit
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Small cards -->
+      <a href="#" class="circuit-card reveal reveal-delay-1">
+        <div class="circuit-card-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85'); background-size:cover; background-position:center; height:100%;"></div>
+        <div class="circuit-card-overlay"></div>
+        <div class="circuit-card-body">
+          <span class="circuit-tag">Moto · 6 jours · 930 km</span>
+          <h3 class="circuit-title">Atlantique & Anti-Atlas</h3>
+          <p class="circuit-desc">Essaouira, Mirleft, Tafraoute, col Tizi n'Test à 2 092 m.</p>
+          <div class="circuit-link">
+            Voir l'itinéraire
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="circuit-card reveal reveal-delay-2">
+        <div class="circuit-card-img" style="background-image:url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=700&q=85'); background-size:cover; background-position:center; height:100%;"></div>
+        <div class="circuit-card-overlay"></div>
+        <div class="circuit-card-body">
+          <span class="circuit-tag">Circuit · 12 jours</span>
+          <h3 class="circuit-title">Au fil des dynasties<br>et des dunes</h3>
+          <p class="circuit-desc">Villes impériales, Moyen Atlas, kasbahs du Sud.</p>
+          <div class="circuit-link">
+            Voir l'itinéraire
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="circuit-card reveal reveal-delay-1">
+        <div class="circuit-card-img" style="background-image:url('https://images.unsplash.com/photo-1509027572446-af8401acfdc3?w=700&q=85'); background-size:cover; background-position:center; height:100%;"></div>
+        <div class="circuit-card-overlay"></div>
+        <div class="circuit-card-body">
+          <span class="circuit-tag">4x4 · 8 jours</span>
+          <h3 class="circuit-title">Folies Berbères —<br>Le Raid des Contrastes</h3>
+          <p class="circuit-desc">Tizi n'Tichka, Erg Chebbi, Todra, bivouacs nomades.</p>
+          <div class="circuit-link">
+            Voir l'itinéraire
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="circuit-card reveal reveal-delay-2">
+        <div class="circuit-card-img" style="background-image:url('https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=700&q=85'); background-size:cover; background-position:center; height:100%;"></div>
+        <div class="circuit-card-overlay"></div>
+        <div class="circuit-card-body">
+          <span class="circuit-tag">Expérience · 1 jour</span>
+          <h3 class="circuit-title">Montgolfière<br>sur le désert</h3>
+          <p class="circuit-desc">Le Maroc vu du ciel, au lever du soleil.</p>
+          <div class="circuit-link">
+            Voir l'itinéraire
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="circuits-see-all reveal">
+      <a href="#" class="btn-see-all">
+        Voir tous les circuits
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- STATS                                                             -->
+  <!-- ================================================================ -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num" data-count="25" data-suffix="+">0</div>
+        <div class="stat-gold-rule"></div>
+        <div class="stat-label">Années d'expérience</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num" data-count="50" data-suffix="+">0</div>
+        <div class="stat-gold-rule"></div>
+        <div class="stat-label">Circuits & activités</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num" data-count="4" data-suffix="">0</div>
+        <div class="stat-gold-rule"></div>
+        <div class="stat-label">Univers d'expédition</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num" data-count="24" data-suffix="/7">0</div>
+        <div class="stat-gold-rule"></div>
+        <div class="stat-label">Assistance terrain</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- EXPÉRIENCES                                                       -->
+  <!-- ================================================================ -->
+  <section class="exp">
+    <div class="exp-header">
+      <div class="exp-header-left">
+        <div class="section-label reveal">À la carte</div>
+        <h2 class="section-title reveal reveal-delay-1">Expériences<br><em>& Activités</em></h2>
+      </div>
+      <div class="exp-scroll-hint reveal reveal-delay-2">Glissez pour voir</div>
+    </div>
+
+    <div class="exp-track-wrap" id="expTrack">
+      <div class="exp-track">
+        <a href="#" class="exp-card">
+          <div class="exp-card-img-wrap">
+            <div class="exp-card-img" style="background-image:url('https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=700&q=85')"></div>
+            <div class="exp-card-shade"></div>
+            <div class="exp-card-num">01</div>
+            <div class="exp-card-body">
+              <h3 class="exp-card-title">Montgolfière</h3>
+              <p class="exp-card-sub">Le Maroc vu du ciel</p>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="exp-card">
+          <div class="exp-card-img-wrap">
+            <div class="exp-card-img" style="background-image:url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=700&q=85')"></div>
+            <div class="exp-card-shade"></div>
+            <div class="exp-card-num">02</div>
+            <div class="exp-card-body">
+              <h3 class="exp-card-title">Quad Désert</h3>
+              <p class="exp-card-sub">Sensations entre dunes et vallées</p>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="exp-card">
+          <div class="exp-card-img-wrap">
+            <div class="exp-card-img" style="background-image:url('https://images.unsplash.com/photo-1574484284002-952d92456975?w=700&q=85')"></div>
+            <div class="exp-card-shade"></div>
+            <div class="exp-card-num">03</div>
+            <div class="exp-card-body">
+              <h3 class="exp-card-title">Atelier Cuisine</h3>
+              <p class="exp-card-sub">Saveurs et traditions</p>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="exp-card">
+          <div class="exp-card-img-wrap">
+            <div class="exp-card-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=85')"></div>
+            <div class="exp-card-shade"></div>
+            <div class="exp-card-num">04</div>
+            <div class="exp-card-body">
+              <h3 class="exp-card-title">Dîner de Gala</h3>
+              <p class="exp-card-sub">Élégance marocaine</p>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="exp-card">
+          <div class="exp-card-img-wrap">
+            <div class="exp-card-img" style="background-image:url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=700&q=85')"></div>
+            <div class="exp-card-shade"></div>
+            <div class="exp-card-num">05</div>
+            <div class="exp-card-body">
+              <h3 class="exp-card-title">Hammam Privé</h3>
+              <p class="exp-card-sub">Bien-être et détente</p>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="exp-card">
+          <div class="exp-card-img-wrap">
+            <div class="exp-card-img" style="background-image:url('https://images.unsplash.com/photo-1548813395-edd5373a8e72?w=700&q=85')"></div>
+            <div class="exp-card-shade"></div>
+            <div class="exp-card-num">06</div>
+            <div class="exp-card-body">
+              <h3 class="exp-card-title">Balade Dromadaire</h3>
+              <p class="exp-card-sub">Le Maroc au rythme nomade</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- À PROPOS                                                          -->
+  <!-- ================================================================ -->
+  <section class="about">
+    <div class="about-image-wrap reveal-left">
+      <div class="about-image"></div>
+      <div class="about-image-overlay"></div>
+      <div class="about-year">2000</div>
+    </div>
+    <div class="about-content">
+      <div class="section-label reveal">Notre histoire</div>
+      <h2 class="about-title reveal reveal-delay-1">25 ans de passion<br><em>pour le Maroc</em></h2>
+      <p class="about-text reveal reveal-delay-2">
+        Depuis l'an 2000, Voyages21 conçoit des voyages sur mesure pour une clientèle de passionnés et de pilotes exigeants. Nous ne vendons pas de simples voyages, mais une logistique de pointe héritée de l'esprit Rallye-Raid.
+      </p>
+      <blockquote class="about-quote reveal reveal-delay-2">
+        <p class="about-quote-text">&ldquo;Plus qu'un voyage, une trace.&rdquo;</p>
+        <div class="about-quote-author">— Karim Zoubdane, Fondateur</div>
+      </blockquote>
+      <a href="#" class="btn-about reveal reveal-delay-3">
+        Découvrir notre histoire
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- CTA FINAL                                                         -->
+  <!-- ================================================================ -->
+  <section class="cta-final" id="contact">
+    <div class="cta-inner">
+      <div class="cta-eyebrow section-label reveal" style="justify-content:center;">Votre projet</div>
+      <h2 class="cta-title reveal reveal-delay-1">Votre voyage sur mesure<br><em>commence ici</em></h2>
+      <p class="cta-sub reveal reveal-delay-2">
+        Parlez-nous de votre projet. Nous concevons, opérons et sécurisons chaque expédition avec la précision d'un état-major.
+      </p>
+      <div class="cta-buttons reveal reveal-delay-3">
+        <a href="#" class="btn-cta-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Demander un devis gratuit
+        </a>
+        <a href="https://wa.me/212661181618" target="_blank" rel="noopener" class="btn-cta-wa">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp direct
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- FOOTER                                                            -->
+  <!-- ================================================================ -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Voyages<span style="color:var(--gold)">21</span></div>
+        <div class="footer-brand-tag">Maroc · Voyages sur mesure</div>
+        <p class="footer-brand-text">Depuis 2000, nous créons des expéditions uniques au Maroc. Logistique de pointe, guides passionnés, moments inoubliables.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Circuits</div>
+        <ul>
+          <li><a href="#">Raid 4x4 <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Moto Expédition <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Circuits classiques <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Autotours <span class="fc-arrow">→</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Expériences</div>
+        <ul>
+          <li><a href="#">Montgolfière <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Quad & SSV <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Dîner de Gala <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Hammam Privé <span class="fc-arrow">→</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul>
+          <li><a href="tel:+212661181618">+212 661 181 618</a></li>
+          <li><a href="mailto:contact@voyages21.ma">contact@voyages21.ma</a></li>
+          <li><a href="#">WhatsApp <span class="fc-arrow">→</span></a></li>
+          <li><a href="#">Devis gratuit <span class="fc-arrow">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Voyages21. Tous droits réservés.</div>
+      <div class="footer-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGV</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!-- JAVASCRIPT                                                        -->
+  <!-- ================================================================ -->
+  <script>
+    /* ---- LOADER ---- */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 1800);
+    });
+
+    /* ---- CUSTOM CURSOR ---- */
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+    });
+
+    /* Ring follows with slight lag */
+    function animRing() {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    document.querySelectorAll('a, button, .univers-card, .circuit-card, .exp-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+    });
+    document.addEventListener('mousedown', () => document.body.classList.add('clicking'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('clicking'));
+
+    /* ---- HERO PARALLAX ---- */
+    const heroPx = document.getElementById('heroParallax');
+    document.addEventListener('mousemove', e => {
+      if (!heroPx) return;
+      const dx = (e.clientX / window.innerWidth  - 0.5) * 14;
+      const dy = (e.clientY / window.innerHeight - 0.5) * 8;
+      heroPx.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+
+    /* ---- BAR3 SCROLL ---- */
+    const bar3 = document.getElementById('bar3');
+    window.addEventListener('scroll', () => {
+      bar3.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    /* ---- REVEAL ON SCROLL ---- */
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => obs.observe(el));
+
+    /* ---- ANIMATED STAT COUNTERS ---- */
+    const statNums = document.querySelectorAll('.stat-num[data-count]');
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el     = e.target;
+        const target = parseInt(el.dataset.count, 10);
+        const suffix = el.dataset.suffix || '';
+        const dur    = 1600;
+        const start  = performance.now();
+        function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const ease = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(ease * target);
+          el.dataset.suffix = suffix; // keep ::after content
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+        counterObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    statNums.forEach(el => counterObs.observe(el));
+
+    /* Fix ::after pseudo content from data-suffix */
+    const styleEl = document.createElement('style');
+    statNums.forEach(el => {
+      el.setAttribute('data-suffix', el.dataset.suffix);
+    });
+
+    /* ---- DRAG-TO-SCROLL (expériences) ---- */
+    const track = document.getElementById('expTrack');
+    if (track) {
+      let isDown = false, startX, scrollLeft;
+      track.addEventListener('mousedown', e => {
+        isDown = true; track.style.cursor = 'grabbing';
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+      track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
+      track.addEventListener('mouseup',    () => { isDown = false; track.style.cursor = 'grab'; });
+      track.addEventListener('mousemove',  e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        track.scrollLeft = scrollLeft - (x - startX);
+      });
+      track.style.cursor = 'grab';
+    }
+
+    /* ---- MAGNETIC BUTTONS ---- */
+    document.querySelectorAll('.btn-hero-primary, .btn-cta-primary, .btn-see-all').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r   = btn.getBoundingClientRect();
+        const dx  = e.clientX - (r.left + r.width  / 2);
+        const dy  = e.clientY - (r.top  + r.height / 2);
+        btn.style.transform = `translate(${dx * 0.22}px, ${dy * 0.22}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  </script>
+</body>
+</html>
