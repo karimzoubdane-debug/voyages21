@@ -726,19 +726,19 @@
     }
 
     /* ── IMPRÉVUS CAROUSEL — bande défilante cartes 312px ──────────── */
-    .imprevu-section { background: var(--navy); padding: 56px 0 64px; overflow: hidden; }
+    .imprevu-section { background: #E8F3E2; padding: 56px 0 64px; overflow: hidden; }
     .imprevu-title {
       font-family: 'Fraunces', serif;
       font-weight: 700;
       font-style: italic;
       font-size: clamp(1.2rem, 2vw, 1.7rem);
-      color: #fff;
+      color: #1B3A28;
       line-height: 1.4;
       text-align: center;
       margin-bottom: 40px;
       padding: 0 40px;
     }
-    .imprevu-title em { font-style: normal; color: var(--gold); }
+    .imprevu-title em { font-style: normal; color: #B8860B; }
     .imprevu-wrap { overflow: hidden; }
     .imprevu-track {
       display: flex;
@@ -818,25 +818,29 @@
     .imprevu-agent {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: flex-start;
+      gap: 12px;
       margin-top: 18px;
       padding-top: 14px;
       border-top: 1px solid rgba(200,164,64,.22);
     }
     .imprevu-agent-photo {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid rgba(200,164,64,.4);
-      background: rgba(200,164,64,.12);
+      border: 2px solid rgba(200,164,64,.5);
+      background: rgba(200,164,64,.15);
       flex-shrink: 0;
+      margin-left: 0;
     }
     .imprevu-agent-name {
       font-family: 'Fraunces', serif;
       font-style: italic;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--gold);
+      letter-spacing: .02em;
     }
 
     /* ══════════════════════════════════════════
@@ -1755,13 +1759,13 @@
   ══════════════════════════════════════════ -->
   <div class="imprevu-section">
     <h3 class="imprevu-title">En cas d'imprévu,<br><em>votre problème devient notre problème</em><br>et toute l'équipe se met en action.</h3>
-    <p style="text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.6);margin-top:8px;letter-spacing:.02em;">Profitez de votre voyage — nous gérons le reste.</p>
+    <p style="text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:rgba(27,58,40,.55);margin-top:8px;letter-spacing:.02em;">Profitez de votre voyage — nous gérons le reste.</p>
     <div class="imprevu-wrap" aria-hidden="true">
       <div class="imprevu-track">
 
         <!-- Carte 1 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Vol annulé</div>
           <p class="imprevu-action">Vous n'avez même pas encore stressé que Wafa vous a déjà appelé. Elle gère le reroutage et sécurise votre hôtel si nécessaire.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/wafa.jpg" alt="Wafa"><span class="imprevu-agent-name">Wafa</span></div>
@@ -1769,7 +1773,7 @@
 
         <!-- Carte 2 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Bagage perdu</div>
           <p class="imprevu-action">Fouad active immédiatement notre correspondant local. Un kit de première nécessité est organisé pendant que la compagnie est mise en demeure.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/fouad.jpg" alt="Fouad"><span class="imprevu-agent-name">Fouad</span></div>
@@ -1777,7 +1781,7 @@
 
         <!-- Carte 3 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Hôtel surréservé</div>
           <p class="imprevu-action">Ghizlane vous trouve un établissement équivalent ou supérieur en moins de 20 minutes. Vous n'avez qu'à vous laisser accompagner.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane"><span class="imprevu-agent-name">Ghizlane</span></div>
@@ -1785,7 +1789,7 @@
 
         <!-- Carte 4 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Transfert manqué</div>
           <p class="imprevu-action">Houda coordonne un chauffeur de remplacement sur place. Vous ne restez jamais seul face à l'imprévu — l'équipe prend le relais.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/houda.jpg" alt="Houda"><span class="imprevu-agent-name">Houda</span></div>
@@ -1793,7 +1797,7 @@
 
         <!-- Carte 5 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Malaise en voyage</div>
           <p class="imprevu-action">Fouad contacte notre médecin partenaire sur place dans les minutes qui suivent. Votre assistance rapatriement est activée si nécessaire.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/fouad.jpg" alt="Fouad"><span class="imprevu-agent-name">Fouad</span></div>
@@ -1801,7 +1805,7 @@
 
         <!-- Carte 6 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Météo extrême</div>
           <p class="imprevu-action">Wafa réorganise votre itinéraire en temps réel. Les activités sont reprogrammées, les déplacements sécurisés — votre voyage continue.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/wafa.jpg" alt="Wafa"><span class="imprevu-agent-name">Wafa</span></div>
@@ -1809,7 +1813,7 @@
 
         <!-- Carte 7 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Vol retardé</div>
           <p class="imprevu-action">Ghizlane repousse les réservations en cascade — hôtel, guide, restaurant. Vous arrivez serein, tout est recalé sans frais.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane"><span class="imprevu-agent-name">Ghizlane</span></div>
@@ -1817,7 +1821,7 @@
 
         <!-- Carte 8 -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Formalité bloquée</div>
           <p class="imprevu-action">Houda prend en charge les démarches consulaires et coordonne avec nos contacts locaux pour débloquer la situation le plus vite possible.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/houda.jpg" alt="Houda"><span class="imprevu-agent-name">Houda</span></div>
@@ -1825,56 +1829,56 @@
 
         <!-- Duplicates pour boucle seamless -->
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Vol annulé</div>
           <p class="imprevu-action">Vous n'avez même pas encore stressé que Wafa vous a déjà appelé. Elle gère le reroutage et sécurise votre hôtel si nécessaire.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/wafa.jpg" alt="Wafa"><span class="imprevu-agent-name">Wafa</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Bagage perdu</div>
           <p class="imprevu-action">Fouad active immédiatement notre correspondant local. Un kit de première nécessité est organisé pendant que la compagnie est mise en demeure.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/fouad.jpg" alt="Fouad"><span class="imprevu-agent-name">Fouad</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Hôtel surréservé</div>
           <p class="imprevu-action">Ghizlane vous trouve un établissement équivalent ou supérieur en moins de 20 minutes. Vous n'avez qu'à vous laisser accompagner.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane"><span class="imprevu-agent-name">Ghizlane</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Transfert manqué</div>
           <p class="imprevu-action">Houda coordonne un chauffeur de remplacement sur place. Vous ne restez jamais seul face à l'imprévu — l'équipe prend le relais.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/houda.jpg" alt="Houda"><span class="imprevu-agent-name">Houda</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Malaise en voyage</div>
           <p class="imprevu-action">Fouad contacte notre médecin partenaire sur place dans les minutes qui suivent. Votre assistance rapatriement est activée si nécessaire.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/fouad.jpg" alt="Fouad"><span class="imprevu-agent-name">Fouad</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Météo extrême</div>
           <p class="imprevu-action">Wafa réorganise votre itinéraire en temps réel. Les activités sont reprogrammées, les déplacements sécurisés — votre voyage continue.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/wafa.jpg" alt="Wafa"><span class="imprevu-agent-name">Wafa</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Vol retardé</div>
           <p class="imprevu-action">Ghizlane repousse les réservations en cascade — hôtel, guide, restaurant. Vous arrivez serein, tout est recalé sans frais.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane"><span class="imprevu-agent-name">Ghizlane</span></div>
         </div>
 
         <div class="imprevu-card">
-          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Alerte</span>
+          <span class="imprevu-badge"><span class="badge-icon">⚠️</span> Imprévu</span>
           <div class="imprevu-type">Formalité bloquée</div>
           <p class="imprevu-action">Houda prend en charge les démarches consulaires et coordonne avec nos contacts locaux pour débloquer la situation le plus vite possible.</p>
           <div class="imprevu-agent"><img class="imprevu-agent-photo" src="/design/team/houda.jpg" alt="Houda"><span class="imprevu-agent-name">Houda</span></div>
