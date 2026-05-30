@@ -1177,6 +1177,118 @@
     }
 
     /* ═══════════════════════════════════════════
+       ÉQUIPE LOCALE — style Evaneos
+    ═══════════════════════════════════════════ */
+    .localteam {
+      background: linear-gradient(160deg, #1A1008 0%, #2E1C08 45%, #0E1A0E 100%);
+      padding: 80px 0 88px;
+      overflow: hidden;
+    }
+    .localteam-header {
+      text-align: center;
+      padding: 0 40px;
+      margin-bottom: 48px;
+    }
+    .localteam-surtitle {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .localteam-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+    .localteam-title mark {
+      background: none;
+      color: #fff;
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-decoration-thickness: 3px;
+      text-underline-offset: 7px;
+    }
+    .localteam-sub {
+      font-size: .92rem;
+      color: rgba(255,255,255,.68);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+    .localteam-track {
+      display: flex;
+      gap: 14px;
+      padding: 8px 48px 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .localteam-track::-webkit-scrollbar { display: none; }
+    .localteam-card {
+      flex-shrink: 0;
+      width: 214px;
+      height: 348px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      scroll-snap-align: start;
+      background: var(--ph, #2A1A08);
+      cursor: pointer;
+      transition: transform .25s;
+    }
+    .localteam-card:hover { transform: translateY(-6px); }
+    .localteam-card--dg {
+      outline: 2px solid var(--gold);
+      outline-offset: -2px;
+    }
+    .localteam-card-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    .localteam-card-photo.loaded { opacity: 1; }
+    .localteam-card-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent 0%, rgba(0,0,0,.78) 100%);
+      padding: 40px 16px 18px;
+    }
+    .localteam-card-name {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+    .localteam-card-role {
+      font-family: 'Geist', sans-serif;
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+    }
+    .localteam-card-role--dg {
+      color: var(--gold);
+    }
+    @media (max-width: 768px) {
+      .localteam-track { padding: 8px 20px 20px; }
+      .localteam-card { width: 180px; height: 292px; }
+    }
+
+    /* ═══════════════════════════════════════════
        DESTINATIONS — section voyages
     ═══════════════════════════════════════════ */
     .dest {
@@ -1911,7 +2023,6 @@
         src="/design/team/equipe-voyages21.jpg"
         alt="L'équipe Voyages21"
         class="team-photo"
-        onerror="this.style.display='none'"
       >
       <div class="team-overlay">
         <p class="team-surtitle">Voyages 21 depuis 2000</p>
@@ -1968,11 +2079,104 @@
   </section>
 
 
+  <!-- ══════════════════════════════════════════
+       ÉQUIPE LOCALE — style Evaneos (portraits)
+  ══════════════════════════════════════════ -->
+  <section class="localteam" id="equipe-locale">
+
+    <div class="localteam-header">
+      <p class="localteam-surtitle">L'équipe Voyages 21</p>
+      <h2 class="localteam-title">
+        Notre équipe connaît le Maroc<br>
+        <mark>comme personne.</mark> Et ça change tout.
+      </h2>
+      <p class="localteam-sub">
+        Depuis 2000, nos conseillers organisent avec vous un voyage unique,<br>
+        sur mesure, à votre image — une présence humaine à chaque étape.
+      </p>
+    </div>
+
+    <div class="localteam-track">
+
+      <div class="localteam-card" style="--ph:#7A4A20">
+        <img class="localteam-card-photo" src="/design/team/wafab.jpg" alt="Wafa B.">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Wafa B.</div>
+          <div class="localteam-card-role">Circuits &amp; Séjours</div>
+        </div>
+      </div>
+
+      <div class="localteam-card" style="--ph:#9B6030">
+        <img class="localteam-card-photo" src="/design/team/wafad.jpg" alt="Wafa D.">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Wafa D.</div>
+          <div class="localteam-card-role">Voyages sur mesure</div>
+        </div>
+      </div>
+
+      <div class="localteam-card" style="--ph:#1E3A5A">
+        <img class="localteam-card-photo" src="/design/team/fouad.jpg" alt="Fouad">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Fouad</div>
+          <div class="localteam-card-role">Coordination terrain</div>
+        </div>
+      </div>
+
+      <div class="localteam-card" style="--ph:#1A3D28">
+        <img class="localteam-card-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Ghizlane</div>
+          <div class="localteam-card-role">Hébergements &amp; Lodges</div>
+        </div>
+      </div>
+
+      <div class="localteam-card localteam-card--dg" style="--ph:#4A2010">
+        <img class="localteam-card-photo" src="/design/team/houda.jpg" alt="Houda">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Houda</div>
+          <div class="localteam-card-role localteam-card-role--dg">Directrice générale</div>
+        </div>
+      </div>
+
+      <div class="localteam-card" style="--ph:#7A6A30">
+        <img class="localteam-card-photo" src="/design/team/malika.jpg" alt="Malika">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Malika</div>
+          <div class="localteam-card-role">Conseillers voyages</div>
+        </div>
+      </div>
+
+      <div class="localteam-card" style="--ph:#2A4A5A">
+        <img class="localteam-card-photo" src="/design/team/rabii.jpg" alt="Rabii">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Rabii</div>
+          <div class="localteam-card-role">Guides &amp; Circuits</div>
+        </div>
+      </div>
+
+      <div class="localteam-card" style="--ph:#4A2A18">
+        <img class="localteam-card-photo" src="/design/team/karel.jpg" alt="Karel">
+        <div class="localteam-card-overlay">
+          <div class="localteam-card-name">Karel</div>
+          <div class="localteam-card-role">Logistique &amp; Transferts</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
   <script>
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('elevated', window.scrollY > 10);
     }, { passive: true });
+
+    // Fade-in photos équipe locale au chargement
+    document.querySelectorAll('.localteam-card-photo').forEach(img => {
+      if (img.complete && img.naturalWidth) img.classList.add('loaded');
+      else img.addEventListener('load', () => img.classList.add('loaded'));
+    });
 
     function openModal() {
       document.getElementById('modal').classList.add('open');
