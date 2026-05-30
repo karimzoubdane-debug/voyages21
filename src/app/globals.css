@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Geist:wght@100..900&display=swap');
 
 :root {
+  /* Ancien design system (NavBar, autres pages) */
   --red:        #8C2020;
   --navy:       #1B3A28;
   --olive-dark: #152E1F;
@@ -11,6 +12,16 @@
   --white:      #FFFFFF;
   --gray:       #6B7280;
   --light-gray: #F9F7F4;
+
+  /* Nouveau design system Luxe (homepage V2) */
+  --lx-noir:    #0C0C0C;
+  --lx-pierre:  #1E1A14;
+  --lx-laiton:  #C49A3C;
+  --lx-ivoire:  #F7F0E0;
+  --lx-blanc:   #FDFAF5;
+  --lx-clair:   #F2EAD8;
+  --lx-muet:    #8A8378;
+  --lx-border:  rgba(196,154,60,.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
