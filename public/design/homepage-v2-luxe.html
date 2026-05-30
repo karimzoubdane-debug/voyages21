@@ -726,7 +726,7 @@
     }
 
     /* ── IMPRÉVUS CAROUSEL — bande défilante cartes 312px ──────────── */
-    .imprevu-section { background: var(--navy); padding: 56px 0 64px; overflow: hidden; }
+    .imprevu-section { background: #1B3228; padding: 56px 0 64px; overflow: hidden; }
     .imprevu-title {
       font-family: 'Fraunces', serif;
       font-weight: 700;
@@ -755,14 +755,16 @@
       width: 270px;
       height: 270px;
       border-radius: 50%;
-      background: #1E3A28;
+      background: #2E5C40;
       flex-shrink: 0;
       padding: 32px 38px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 32px rgba(0,0,0,.45);
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
       position: relative;
       overflow: hidden;
     }
@@ -793,7 +795,7 @@
       text-transform: uppercase;
       color: #F5C842;
       width: fit-content;
-      margin-bottom: 14px;
+      margin: 0 auto 12px;
       animation: blink-badge 1.4s ease-in-out infinite;
     }
     .imprevu-badge .badge-icon {
@@ -822,25 +824,27 @@
     .imprevu-agent {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
+      flex-direction: row-reverse;
+      justify-content: center;
+      gap: 10px;
       margin-top: 10px;
       padding-top: 8px;
-      border-top: 1px solid rgba(200,164,64,.22);
+      border-top: 1px solid rgba(200,164,64,.28);
+      width: 100%;
     }
     .imprevu-agent-photo {
-      width: 28px;
-      height: 28px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid rgba(200,164,64,.5);
-      background: rgba(200,164,64,.15);
+      border: 2px solid rgba(200,164,64,.6);
+      background: rgba(200,164,64,.18);
       flex-shrink: 0;
     }
     .imprevu-agent-name {
       font-family: 'Fraunces', serif;
       font-style: italic;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--gold);
       letter-spacing: .02em;
