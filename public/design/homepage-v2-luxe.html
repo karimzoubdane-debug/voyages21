@@ -135,6 +135,7 @@
       white-space: nowrap;
     }
     .nav-cta:hover { background: var(--gold); color: #0C0C0C; }
+    .nav-burger { display: none; }
 
     /* ═══════════════════════════════════════════
        HERO — vidéo plein écran, overlay, titre
@@ -752,12 +753,12 @@
       100% { transform: translateX(-50%); }
     }
     .imprevu-card {
-      width: 270px;
-      height: 270px;
-      border-radius: 50%;
+      width: 260px;
+      height: 300px;
+      border-radius: 56px;
       background: #3E7A52;
       flex-shrink: 0;
-      padding: 32px 38px;
+      padding: 28px 30px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -1601,10 +1602,45 @@
 
       /* NAV */
       nav { padding: 0 20px; height: 56px; }
-      .nav-menu { display: none; }
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 56px; left: 0; right: 0;
+        background: rgba(12,12,12,.97);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        padding: 16px 0 24px;
+        border-bottom: 1px solid rgba(196,154,60,.2);
+        z-index: 299;
+      }
+      .nav-menu.open { display: flex; }
+      .nav-menu a { height: auto; line-height: 1; padding: 14px 24px; font-size: .82rem; border-bottom: none; }
       .nav-tel { display: none; }
-      .nav-cta { padding: 7px 16px; font-size: .68rem; }
+      .nav-cta { padding: 7px 14px; font-size: .66rem; }
       .nav-logo { font-size: 1.1rem; }
+      .nav-burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 36px;
+        height: 36px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        flex-shrink: 0;
+      }
+      .nav-burger span {
+        display: block;
+        height: 2px;
+        background: var(--gold);
+        border-radius: 2px;
+        transition: transform .25s, opacity .25s;
+      }
+      .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-burger.open span:nth-child(2) { opacity: 0; }
+      .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
       /* HERO */
       .hero { padding-top: 56px; min-height: 100svh; }
@@ -1622,7 +1658,7 @@
       /* IMPREVU */
       .imprevu-section { padding: 44px 0 52px; }
       .imprevu-title { padding: 0 20px; }
-      .imprevu-card { width: 220px; height: 220px; padding: 24px 26px; }
+      .imprevu-card { width: 220px; height: 260px; border-radius: 44px; padding: 22px 24px; }
       .imprevu-agent-photo { width: 36px; height: 36px; }
       .imprevu-agent-name { font-size: .9rem; }
       .imprevu-type { font-size: 1rem; }
@@ -1703,7 +1739,7 @@
       .dest-monde-tile { height: 115px; }
       .dest-monde-name { font-size: .9rem; bottom: 10px; left: 10px; }
 
-      .imprevu-card { width: 185px; height: 185px; padding: 18px 20px; }
+      .imprevu-card { width: 190px; height: 235px; border-radius: 38px; padding: 18px 20px; }
       .imprevu-track { gap: 14px; }
 
       .localteam-card { width: 150px; height: 245px; }
@@ -1733,6 +1769,9 @@
     <div class="nav-right">
       <a href="tel:+212522000000" class="nav-tel">+212 5 22 XX XX XX</a>
       <a href="#contact" class="nav-cta">Réserver</a>
+      <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
   </nav>
@@ -2290,6 +2329,33 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('elevated', window.scrollY > 10);
     }, { passive: true });
+
+    // Hamburger menu mobile
+    function toggleMobileNav() {
+      const burger = document.getElementById('navBurger');
+      const menu   = document.querySelector('.nav-menu');
+      burger.classList.toggle('open');
+      menu.classList.toggle('open');
+    }
+    document.addEventListener('click', e => {
+      const menu   = document.querySelector('.nav-menu');
+      const burger = document.getElementById('navBurger');
+      if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) {
+        menu.classList.remove('open');
+        burger.classList.remove('open');
+      }
+    });
+
+    // Vidéo hero — forcer le play sur mobile (autoplay parfois bloqué)
+    (function () {
+      const vid = document.querySelector('.hero-video');
+      if (!vid) return;
+      const tryPlay = () => vid.play().catch(() => {});
+      tryPlay();
+      ['touchstart','click','scroll'].forEach(ev =>
+        document.addEventListener(ev, tryPlay, { once: true, passive: true })
+      );
+    })();
 
     // Fade-in photos équipe locale au chargement
     document.querySelectorAll('.localteam-card-photo').forEach(img => {
