@@ -720,40 +720,95 @@
       background: #d1d5db;
     }
 
-    /* ── IMAGE CAROUSEL — défile droite→gauche ──────────── */
-    .img-tick-section { background: var(--light); padding: 36px 0 48px; overflow: hidden; }
-    .img-tick-title {
+    /* ── IMPRÉVUS CAROUSEL — bande défilante cartes 312px ──────────── */
+    .imprevu-section { background: var(--navy); padding: 56px 0 64px; overflow: hidden; }
+    .imprevu-title {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
       font-style: italic;
       font-size: clamp(1.2rem, 2vw, 1.7rem);
-      color: var(--navy);
+      color: #fff;
       line-height: 1.4;
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       padding: 0 40px;
     }
-    .img-tick-title em { font-style: normal; color: var(--gold); }
-    .img-tick-wrap { overflow: hidden; }
-    .img-tick-track {
+    .imprevu-title em { font-style: normal; color: var(--gold); }
+    .imprevu-wrap { overflow: hidden; }
+    .imprevu-track {
       display: flex;
-      gap: 18px;
-      animation: imgTick 40s linear infinite;
+      gap: 24px;
+      animation: imprevuTick 55s linear infinite;
       width: max-content;
     }
-    .img-tick-track:hover { animation-play-state: paused; }
-    @keyframes imgTick {
+    .imprevu-track:hover { animation-play-state: paused; }
+    @keyframes imprevuTick {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    .img-tile {
-      width: 156px;
-      height: 156px;
-      border-radius: 28px;
-      background-size: cover;
-      background-position: center;
+    .imprevu-card {
+      width: 312px;
+      height: 312px;
+      border-radius: 40px;
+      background: #1B3A28;
       flex-shrink: 0;
-      box-shadow: 0 4px 16px rgba(27,45,79,.15);
+      padding: 28px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .imprevu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 130px; height: 130px;
+      border-radius: 0 40px 0 130px;
+      background: rgba(200,164,64,.07);
+      pointer-events: none;
+    }
+    .imprevu-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(200,164,64,.15);
+      border: 1px solid rgba(200,164,64,.35);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      width: fit-content;
+      margin-bottom: 14px;
+    }
+    .imprevu-type {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .imprevu-action {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,.78);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .imprevu-agent {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--gold);
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(200,164,64,.22);
     }
 
     /* ══════════════════════════════════════════
@@ -1668,43 +1723,134 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       IMAGE CAROUSEL — équipe en action
+       IMPRÉVUS CAROUSEL — bande défilante cartes 312px
   ══════════════════════════════════════════ -->
-  <div class="img-tick-section">
-    <h3 class="img-tick-title">En cas d'imprévu,<br><em>votre problème devient notre problème</em><br>et toute l'équipe se met en action.</h3>
-    <div class="img-tick-wrap" aria-hidden="true">
-      <div class="img-tick-track">
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1520454974749-a8d17df2f6b8?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1526772662643-f8ccd6c23e21?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1501980689-03cb2f39a7a4?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1516815231560-8f41ec531527?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80')"></div>
-        <!-- duplicates for seamless loop -->
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1520454974749-a8d17df2f6b8?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1526772662643-f8ccd6c23e21?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1529260830199-42c24126f198?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1501980689-03cb2f39a7a4?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1516815231560-8f41ec531527?w=400&q=80')"></div>
-        <div class="img-tile" style="background-image:url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80')"></div>
+  <div class="imprevu-section">
+    <h3 class="imprevu-title">En cas d'imprévu,<br><em>votre problème devient notre problème</em><br>et toute l'équipe se met en action.</h3>
+    <div class="imprevu-wrap" aria-hidden="true">
+      <div class="imprevu-track">
+
+        <!-- Carte 1 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Vol annulé</div>
+          <p class="imprevu-action">Vous n'avez même pas encore stressé que Wafa vous a déjà appelé. Elle gère le reroutage et sécurise votre hôtel si nécessaire.</p>
+          <div class="imprevu-agent">Wafa, votre conseillère</div>
+        </div>
+
+        <!-- Carte 2 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Bagage perdu</div>
+          <p class="imprevu-action">Fouad active immédiatement notre correspondant local. Un kit de première nécessité est organisé pendant que la compagnie est mise en demeure.</p>
+          <div class="imprevu-agent">Fouad, coordinateur terrain</div>
+        </div>
+
+        <!-- Carte 3 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Hôtel surréservé</div>
+          <p class="imprevu-action">Ghizlane vous trouve un établissement équivalent ou supérieur en moins de 20 minutes. Vous n'avez qu'à vous laisser accompagner.</p>
+          <div class="imprevu-agent">Ghizlane, responsable hébergement</div>
+        </div>
+
+        <!-- Carte 4 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Transfert manqué</div>
+          <p class="imprevu-action">Houda coordonne un chauffeur de remplacement sur place. Vous ne restez jamais seul face à l'imprévu — l'équipe prend le relais.</p>
+          <div class="imprevu-agent">Houda, logistique & transferts</div>
+        </div>
+
+        <!-- Carte 5 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Malaise en voyage</div>
+          <p class="imprevu-action">Fouad contacte notre médecin partenaire sur place dans les minutes qui suivent. Votre assistance rapatriement est activée si nécessaire.</p>
+          <div class="imprevu-agent">Fouad, coordinateur terrain</div>
+        </div>
+
+        <!-- Carte 6 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Météo extrême</div>
+          <p class="imprevu-action">Wafa réorganise votre itinéraire en temps réel. Les activités sont reprogrammées, les déplacements sécurisés — votre voyage continue.</p>
+          <div class="imprevu-agent">Wafa, votre conseillère</div>
+        </div>
+
+        <!-- Carte 7 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Vol retardé</div>
+          <p class="imprevu-action">Ghizlane repousse les réservations en cascade — hôtel, guide, restaurant. Vous arrivez serein, tout est recalé sans frais.</p>
+          <div class="imprevu-agent">Ghizlane, responsable hébergement</div>
+        </div>
+
+        <!-- Carte 8 -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Formalité bloquée</div>
+          <p class="imprevu-action">Houda prend en charge les démarches consulaires et coordonne avec nos contacts locaux pour débloquer la situation le plus vite possible.</p>
+          <div class="imprevu-agent">Houda, logistique & transferts</div>
+        </div>
+
+        <!-- Duplicates pour boucle seamless -->
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Vol annulé</div>
+          <p class="imprevu-action">Vous n'avez même pas encore stressé que Wafa vous a déjà appelé. Elle gère le reroutage et sécurise votre hôtel si nécessaire.</p>
+          <div class="imprevu-agent">Wafa, votre conseillère</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Bagage perdu</div>
+          <p class="imprevu-action">Fouad active immédiatement notre correspondant local. Un kit de première nécessité est organisé pendant que la compagnie est mise en demeure.</p>
+          <div class="imprevu-agent">Fouad, coordinateur terrain</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Hôtel surréservé</div>
+          <p class="imprevu-action">Ghizlane vous trouve un établissement équivalent ou supérieur en moins de 20 minutes. Vous n'avez qu'à vous laisser accompagner.</p>
+          <div class="imprevu-agent">Ghizlane, responsable hébergement</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Transfert manqué</div>
+          <p class="imprevu-action">Houda coordonne un chauffeur de remplacement sur place. Vous ne restez jamais seul face à l'imprévu — l'équipe prend le relais.</p>
+          <div class="imprevu-agent">Houda, logistique & transferts</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Malaise en voyage</div>
+          <p class="imprevu-action">Fouad contacte notre médecin partenaire sur place dans les minutes qui suivent. Votre assistance rapatriement est activée si nécessaire.</p>
+          <div class="imprevu-agent">Fouad, coordinateur terrain</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Météo extrême</div>
+          <p class="imprevu-action">Wafa réorganise votre itinéraire en temps réel. Les activités sont reprogrammées, les déplacements sécurisés — votre voyage continue.</p>
+          <div class="imprevu-agent">Wafa, votre conseillère</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Vol retardé</div>
+          <p class="imprevu-action">Ghizlane repousse les réservations en cascade — hôtel, guide, restaurant. Vous arrivez serein, tout est recalé sans frais.</p>
+          <div class="imprevu-agent">Ghizlane, responsable hébergement</div>
+        </div>
+
+        <div class="imprevu-card">
+          <span class="imprevu-badge">⚡ Alerte</span>
+          <div class="imprevu-type">Formalité bloquée</div>
+          <p class="imprevu-action">Houda prend en charge les démarches consulaires et coordonne avec nos contacts locaux pour débloquer la situation le plus vite possible.</p>
+          <div class="imprevu-agent">Houda, logistique & transferts</div>
+        </div>
+
       </div>
     </div>
   </div>
