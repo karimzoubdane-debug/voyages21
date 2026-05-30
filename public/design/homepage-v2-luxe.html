@@ -1129,6 +1129,54 @@
     }
 
     /* ═══════════════════════════════════════════
+       PHOTO ÉQUIPE TERRAIN — placeholder
+    ═══════════════════════════════════════════ */
+    .fieldteam-section { width: 100%; overflow: hidden; }
+    .fieldteam-photo-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 480px;
+      background: linear-gradient(135deg, #1B3A28 0%, #2E5C40 50%, #C8A440 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fieldteam-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(.6);
+    }
+    .fieldteam-placeholder {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px 40px;
+      border: 2px dashed rgba(200,164,64,.45);
+      border-radius: 16px;
+      max-width: 480px;
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(4px);
+    }
+    .fieldteam-placeholder-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .fieldteam-placeholder-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .fieldteam-placeholder-hint {
+      font-family: 'Geist', sans-serif;
+      font-size: .82rem;
+      color: rgba(255,255,255,.72);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════
        DESTINATIONS — section voyages
     ═══════════════════════════════════════════ */
     .dest {
@@ -1897,80 +1945,26 @@
 
 
   <!-- ══════════════════════════════════════════
-       ÉQUIPE — présence humaine
+       PHOTO ÉQUIPE TERRAIN — placeholder
   ══════════════════════════════════════════ -->
-  <section class="team" id="equipe">
-
-    <div class="team-header">
-      <p class="team-sup">Votre équipe dédiée</p>
-      <h2 class="team-title">
-        Seul, vous subissez.<br>
-        Avec nous, <em>votre problème devient le nôtre.</em>
-      </h2>
-      <p class="team-sub">
-        Pas de répondeur automatique. Jamais. Grâce à nos représentants sur place
-        dans le monde entier, vous n'êtes jamais livré à vous-même.
-        Des personnes réelles — avec un prénom, une voix, une présence.
-      </p>
+  <section class="fieldteam-section">
+    <div class="fieldteam-photo-wrap">
+      <img
+        src="/design/team/equipe-terrain.jpg"
+        alt="L'équipe Voyages21 sur le terrain"
+        class="fieldteam-photo"
+        onerror="this.style.display='none'"
+      >
+      <div class="fieldteam-placeholder" aria-hidden="true">
+        <div class="fieldteam-placeholder-icon">📸</div>
+        <p class="fieldteam-placeholder-title">Photo à venir</p>
+        <p class="fieldteam-placeholder-hint">
+          Idéal : l'équipe dans un contexte chaleureux —<br>
+          bureau ouvert, riad, ou en déplacement terrain au Maroc.<br>
+          Lumière naturelle, posture détendue, sourires vrais.
+        </p>
+      </div>
     </div>
-
-    <div class="team-grid">
-
-      <div class="team-member">
-        <div class="team-name">Wafa</div>
-        <p class="team-role">Vols &amp; Hébergements</p>
-        <p class="team-desc">
-          Dès le premier imprévu, <strong>elle appelle immédiatement notre représentant sur place</strong>.
-          Vos vols et hébergements libérés avant que vous ayez eu le temps de stresser.
-        </p>
-      </div>
-
-      <div class="team-member">
-        <div class="team-name">Wafa</div>
-        <p class="team-role">Confirmations &amp; Suivi</p>
-        <p class="team-desc">
-          Confirmations, relances, ajustements de dernière minute —
-          <strong>elle ne raccroche pas avant que tout soit réglé.</strong>
-        </p>
-      </div>
-
-      <div class="team-member">
-        <div class="team-name">Fouad</div>
-        <p class="team-role">Correspondants mondiaux</p>
-        <p class="team-desc">
-          Il déploie notre réseau de partenaires terrain —
-          <strong>où que vous soyez, une réponse locale en quelques minutes.</strong>
-        </p>
-      </div>
-
-      <div class="team-member">
-        <div class="team-name">Ghizlane</div>
-        <p class="team-role">Solutions &amp; Alternatives</p>
-        <p class="team-desc">
-          Rebooking, relogement, ajustement de dernière minute —
-          <strong>elle trouve la sortie avant que vous ne voyiez l'impasse.</strong>
-        </p>
-      </div>
-
-      <div class="team-member">
-        <div class="team-name">Houda</div>
-        <p class="team-role">Supervision &amp; Sérénité</p>
-        <p class="team-desc">
-          En coulisses, elle supervise l'ensemble.
-          <strong>Elle vous rappelle personnellement</strong>
-          pour valider chaque étape et s'assurer que votre sérénité est totale.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="team-quote">
-      <blockquote>
-        "Laissez-nous la logistique. Profitez de votre voyage."
-      </blockquote>
-      <cite>— L'équipe Voyages21</cite>
-    </div>
-
   </section>
 
 
