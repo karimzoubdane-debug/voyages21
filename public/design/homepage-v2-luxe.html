@@ -1518,73 +1518,30 @@
        ÉQUIPE LOCALE — style Evaneos
     ═══════════════════════════════════════════ */
     .localteam {
-      background: #0C0C0C;
-      padding: 0 0 88px;
+      background: #F5F0E8;
+      padding: 100px 96px 0;
       overflow: hidden;
     }
-    /* Bande de chiffres clés — même esprit que .early */
-    .localteam-kpi {
-      display: flex;
-      border-top: 1px solid rgba(255,255,255,.07);
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      margin-bottom: 72px;
-    }
-    .localteam-kpi-item {
-      flex: 1;
-      padding: 52px 40px;
-      border-right: 1px solid rgba(255,255,255,.07);
-      transition: background .3s;
-    }
-    .localteam-kpi-item:last-child { border-right: none; }
-    .localteam-kpi-item:hover { background: rgba(255,255,255,.025); }
-    .localteam-kpi-num {
-      display: block;
-      font-family: 'Fraunces', serif;
-      font-weight: 900;
-      font-style: italic;
-      font-size: clamp(2.8rem, 5vw, 4.8rem);
-      color: var(--gold);
-      letter-spacing: -.03em;
-      line-height: 1;
-      margin-bottom: 14px;
-    }
-    .localteam-kpi-label {
-      font-family: 'Geist', sans-serif;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.5);
-      margin-bottom: 10px;
-    }
-    .localteam-kpi-text {
-      font-family: 'Geist', sans-serif;
-      font-size: .82rem;
-      color: rgba(255,255,255,.3);
-      line-height: 1.65;
-    }
-
     .localteam-header {
       text-align: center;
-      padding: 100px 40px 0;
-      margin-bottom: 0;
+      margin-bottom: 52px;
     }
     .localteam-surtitle {
-      font-size: .62rem;
-      font-weight: 600;
-      letter-spacing: .32em;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .38em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.28);
-      margin-bottom: 24px;
+      color: var(--gold);
+      margin-bottom: 18px;
     }
     .localteam-title {
       font-family: 'Fraunces', serif;
       font-weight: 900;
-      font-size: clamp(2.6rem, 5.5vw, 5rem);
-      color: #fff;
-      line-height: 1.05;
-      letter-spacing: -.03em;
-      margin-bottom: 24px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      color: #0C0C0C;
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      margin-bottom: 18px;
     }
     .localteam-title mark {
       background: none;
@@ -1592,13 +1549,66 @@
       font-style: italic;
       text-decoration: none;
     }
-    .localteam-sub {
-      font-family: 'Geist', sans-serif;
-      font-size: .88rem;
-      color: rgba(255,255,255,.32);
-      max-width: 520px;
-      margin: 0 auto 72px;
-      line-height: 1.75;
+    .localteam-rule {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+    .localteam-rule svg { display: block; }
+    .localteam-sub { display: none; }
+
+    /* Grille 4 colonnes — même structure que .early */
+    .localteam-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid rgba(13,26,20,.12);
+      border-bottom: 1px solid rgba(13,26,20,.12);
+    }
+    .localteam-col {
+      padding: 36px 28px;
+      border-right: 1px solid rgba(13,26,20,.08);
+    }
+    .localteam-col:last-child { border-right: none; }
+    .localteam-col-title {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--gold);
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(200,164,64,.5);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .localteam-col-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 2.2rem;
+      color: #C49A3C;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .localteam-col p {
+      font-size: .8rem;
+      color: rgba(13,26,20,.72);
+      line-height: 1.72;
+    }
+    /* Séparateur avant le carousel portraits */
+    .localteam-divider {
+      border: none;
+      border-top: 1px solid rgba(13,26,20,.1);
+      margin: 64px 0 0;
+    }
+    /* Titres du carousel sur fond crème */
+    .localteam-carousel-header {
+      text-align: center;
+      padding: 52px 40px 32px;
+    }
+    .localteam-carousel-label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(13,26,20,.35);
     }
     .localteam-track {
       display: flex;
@@ -2112,11 +2122,11 @@
       .localteam { padding: 0 0 60px; }
       .localteam-header { padding: 60px 20px 0; }
       .localteam-title { font-size: clamp(2rem, 8vw, 3rem); }
-      .localteam-sub { margin-bottom: 0; }
-      .localteam-kpi { flex-direction: column; }
-      .localteam-kpi-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 32px 24px; }
-      .localteam-kpi-item:last-child { border-bottom: none; }
-      .localteam-kpi-num { font-size: clamp(2.8rem, 10vw, 3.6rem); }
+      .localteam-grid { grid-template-columns: 1fr 1fr; }
+      .localteam-col { border-right: none; border-bottom: 1px solid rgba(13,26,20,.08); padding: 24px 20px; }
+      .localteam-col:nth-child(odd) { border-right: 1px solid rgba(13,26,20,.08); }
+      .localteam-col:nth-last-child(-n+2) { border-bottom: none; }
+      .localteam-col-num { font-size: 1.8rem; }
       .localteam-track { padding: 8px 16px 20px; gap: 10px; }
       .localteam-card { width: 168px; height: 268px; border-radius: 14px; }
 
@@ -2150,6 +2160,10 @@
       .dest-monde-tile { height: 115px; }
       .dest-monde-name { font-size: .9rem; bottom: 10px; left: 10px; }
 
+      .localteam-grid { grid-template-columns: 1fr; }
+      .localteam-col:nth-child(odd) { border-right: none; }
+      .localteam-col:nth-last-child(-n+2) { border-bottom: 1px solid rgba(13,26,20,.08); }
+      .localteam-col:last-child { border-bottom: none; }
       .localteam-card { width: 150px; height: 245px; }
       .localteam-title { font-size: clamp(1.4rem, 7vw, 1.9rem); }
 
@@ -2793,28 +2807,34 @@
       <h2 class="localteam-title">
         Spécialistes du voyage<br>international. <mark>26 ans</mark><br>d'expertise.
       </h2>
-      <p class="localteam-sub">
-        Billetterie aérienne, logistique sur mesure, croisières, Omra &amp; Hajj —
-        une équipe humaine dédiée à chaque étape de votre voyage.
-      </p>
+      <div class="localteam-rule">
+        <svg width="120" height="18" viewBox="0 0 120 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 9 C20 3, 40 15, 60 9 S100 3, 120 9" stroke="#C8A440" stroke-width="1.5" fill="none" opacity=".7"/>
+        </svg>
+      </div>
     </div>
 
-    <!-- KPI — même esprit que la section précédente -->
-    <div class="localteam-kpi">
-      <div class="localteam-kpi-item">
-        <span class="localteam-kpi-num">26</span>
-        <div class="localteam-kpi-label">Ans d'expérience</div>
-        <p class="localteam-kpi-text">Fondée en 2000, Voyages21 accompagne chaque client avec l'expertise d'un quart de siècle.</p>
+    <!-- Grille 4 colonnes — même structure que .early -->
+    <div class="localteam-grid">
+      <div class="localteam-col">
+        <div class="localteam-col-title">Billetterie aérienne</div>
+        <div class="localteam-col-num">26</div>
+        <p>Ans d'expertise tarifaire. Nous négocions les meilleures options de vol sur tous les continents, toute l'année.</p>
       </div>
-      <div class="localteam-kpi-item">
-        <span class="localteam-kpi-num">180+</span>
-        <div class="localteam-kpi-label">Destinations</div>
-        <p class="localteam-kpi-text">Vols, circuits, croisières — vers tous les continents, avec les meilleures options tarifaires.</p>
+      <div class="localteam-col">
+        <div class="localteam-col-title">Destinations</div>
+        <div class="localteam-col-num">180+</div>
+        <p>Circuits, croisières, séjours, Omra &amp; Hajj — notre réseau couvre le monde entier avec des partenaires triés sur le volet.</p>
       </div>
-      <div class="localteam-kpi-item">
-        <span class="localteam-kpi-num">100%</span>
-        <div class="localteam-kpi-label">Humain</div>
-        <p class="localteam-kpi-text">Aucun bot, aucune hotline. Un conseiller dédié, joignable à chaque étape de votre voyage.</p>
+      <div class="localteam-col">
+        <div class="localteam-col-title">Assistance humaine</div>
+        <div class="localteam-col-num">100%</div>
+        <p>Aucun bot, aucune hotline anonyme. Un conseiller dédié, joignable à chaque étape de votre voyage.</p>
+      </div>
+      <div class="localteam-col">
+        <div class="localteam-col-title">Logistique sur mesure</div>
+        <div class="localteam-col-num">↗</div>
+        <p>Visa, transferts, hébergements, assurances — tout est géré en interne pour que vous partiez l'esprit libre.</p>
       </div>
     </div>
 
