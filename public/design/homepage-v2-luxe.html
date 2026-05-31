@@ -978,8 +978,234 @@
       font-size: .65rem;
     }
 
+    /* ── DASHBOARD ÉQUIPE ──────────────────────── */
+    .db-section {
+      background: #F7F5F0;
+      background-image: radial-gradient(circle, rgba(13,26,20,.12) 1px, transparent 1px);
+      background-size: 22px 22px;
+      padding: 88px 60px 80px;
+      position: relative;
+    }
+    .db-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .db-surtitle {
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .db-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: #0D1A14;
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+    .db-sub {
+      font-family: 'Geist', sans-serif;
+      font-size: .9rem;
+      color: rgba(13,26,20,.45);
+    }
+    .db-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1140px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .db-col { display: flex; flex-direction: column; gap: 20px; }
 
-    /* grille 4 colonnes identique à why */
+    /* Carte */
+    .db-card {
+      background: #fff;
+      border: 1px solid rgba(200,164,64,.25);
+      border-radius: 18px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 16px rgba(13,26,20,.06);
+      transition: transform .32s cubic-bezier(.22,.68,0,1.2), box-shadow .32s ease;
+      opacity: 0;
+      transform: translateY(24px) rotate(2deg);
+      position: relative;
+      overflow: visible;
+    }
+    .db-card.revealed {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    .db-card:hover {
+      transform: translateY(-6px) rotate(0deg);
+      box-shadow: 0 12px 40px rgba(13,26,20,.13);
+    }
+    .db-card--dg {
+      border-color: var(--gold);
+      border-width: 2px;
+      background: linear-gradient(135deg, #fffdf5 0%, #fff 60%);
+    }
+
+    /* Pulse Houda */
+    .db-dg-pulse {
+      position: absolute;
+      top: -8px; right: -8px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+    }
+    .db-dg-pulse.active {
+      opacity: 1;
+      animation: dbPulseRing 1.4s ease-out infinite;
+    }
+    @keyframes dbPulseRing {
+      0%   { box-shadow: 0 0 0 0 rgba(200,164,64,.7); opacity: 1; }
+      70%  { box-shadow: 0 0 0 14px rgba(200,164,64,0); }
+      100% { box-shadow: 0 0 0 0 rgba(200,164,64,0); opacity: .6; }
+    }
+
+    /* Header carte */
+    .db-card-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid transparent;
+      transition: border-color .3s;
+      margin-bottom: 18px;
+    }
+    .db-card:hover .db-card-head { border-bottom-color: var(--gold); }
+    .db-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(200,164,64,.12);
+      border: 2px solid rgba(200,164,64,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 800;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #0D1A14;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .db-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .db-card--dg .db-avatar {
+      width: 56px; height: 56px;
+      background: rgba(200,164,64,.18);
+      border-color: var(--gold);
+    }
+    .db-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #0D1A14;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+    .db-role {
+      font-family: 'Geist', sans-serif;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(13,26,20,.4);
+    }
+    .db-card--dg .db-role { color: rgba(200,164,64,.8); }
+
+    /* Incidents */
+    .db-incidents { display: flex; flex-direction: column; gap: 14px; }
+    .db-incident {}
+    .db-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Geist', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #C0392B;
+      background: rgba(192,57,43,.08);
+      border: 1px solid rgba(192,57,43,.22);
+      border-radius: 100px;
+      padding: 3px 10px;
+      margin-bottom: 8px;
+    }
+    .db-badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #C0392B;
+      flex-shrink: 0;
+    }
+    .db-action {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: #F0F4F2;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: 'Geist', sans-serif;
+      font-size: .78rem;
+      color: #0D2B1F;
+      line-height: 1.5;
+    }
+    .db-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #1B3228;
+      color: #fff;
+      font-size: .6rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      opacity: 0;
+      transform: scale(.5);
+      transition: opacity .3s, transform .3s;
+    }
+    .db-card:hover .db-check { opacity: 1; transform: scale(1); }
+    .db-check.blink {
+      animation: dbCheckBlink .4s ease;
+    }
+    @keyframes dbCheckBlink {
+      0%, 100% { background: #1B3228; }
+      50%       { background: #4CAF71; transform: scale(1.3); }
+    }
+
+    /* Toast */
+    .db-toast {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      background: #0D1A14;
+      color: #fff;
+      font-family: 'Geist', sans-serif;
+      font-size: .78rem;
+      padding: 12px 20px;
+      border-radius: 100px;
+      border: 1px solid rgba(200,164,64,.4);
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+      transform: translateX(120%);
+      transition: transform .35s cubic-bezier(.22,.68,0,1.2);
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    .db-toast.show { transform: translateX(0); }
+    .db-toast-gold { color: var(--gold); font-weight: 700; }
+
+    /* Connection pulse on Houda triggered externally */
+    .db-card--dg.coordinating { border-color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .db-section { padding: 56px 20px 48px; }
+      .db-grid { grid-template-columns: 1fr; }
+      .db-col { gap: 16px; }
+    }
+    @media (max-width: 480px) {
+      .db-title { font-size: 1.6rem; }
+    }
     .early-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -2130,6 +2356,191 @@
 
 
   <!-- ══════════════════════════════════════════
+       DASHBOARD ÉQUIPE EN ACTION
+  ══════════════════════════════════════════ -->
+  <section class="db-section" id="dashboard-equipe">
+
+    <div class="db-header">
+      <p class="db-surtitle">L'équipe en action</p>
+      <h2 class="db-title">Qui fait quoi,<br>quand ça compte</h2>
+      <p class="db-sub">Chaque collaborateur, sa spécialité, son réflexe.</p>
+    </div>
+
+    <div class="db-grid">
+
+      <!-- COLONNE 1 : Houda + Rabii -->
+      <div class="db-col">
+
+        <div class="db-card db-card--dg" data-db-card data-delay="0">
+          <div class="db-dg-pulse" id="dbHoudaPulse"></div>
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/houda.jpg" alt="Houda"></div>
+            <div>
+              <div class="db-name">Houda</div>
+              <div class="db-role">Directrice générale</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Tous les imprévus</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Coordonne la résolution, suit chaque étape et appelle le client pour le rassurer.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-card" data-db-card data-delay="100">
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/rabii.jpg" alt="Rabii"></div>
+            <div>
+              <div class="db-name">Rabii</div>
+              <div class="db-role">Directeur des opérations</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Blocage logistique terrain</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Intervient physiquement pour débloquer la situation — transport, hébergement, prestataire.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLONNE 2 : WafaB + WafaD -->
+      <div class="db-col">
+
+        <div class="db-card" data-db-card data-delay="180">
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/wafab.jpg" alt="WafaB"></div>
+            <div>
+              <div class="db-name">WafaB</div>
+              <div class="db-role">Billetterie &amp; hébergement</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Changement de vol, report</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Reprogramme les billets, décale l'hébergement et les prestations sans frais pour le client.
+              </div>
+            </div>
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Mauvaise catégorie de chambre</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Négocie un upgrade immédiat ou reloge le client dans un établissement équivalent.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-card" data-db-card data-delay="260">
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/wafad.jpg" alt="WafaD"></div>
+            <div>
+              <div class="db-name">WafaD</div>
+              <div class="db-role">Itinéraires &amp; excursions</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Météo extrême</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Réorganise l'itinéraire en moins d'une heure avec des activités alternatives.
+              </div>
+            </div>
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Retard guide ou chauffeur</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Dépêche un remplaçant certifié et offre une compensation au client.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLONNE 3 : Fouad + Ghizlane + Karel -->
+      <div class="db-col">
+
+        <div class="db-card" data-db-card data-delay="340">
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/fouad.jpg" alt="Fouad"></div>
+            <div>
+              <div class="db-name">Fouad</div>
+              <div class="db-role">Correspondant local</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Bagage perdu</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Active le correspondant local pour livrer un kit de première nécessité dans les 2h.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-card" data-db-card data-delay="420">
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/ghizlane.jpg" alt="Ghizlane"></div>
+            <div>
+              <div class="db-name">Ghizlane</div>
+              <div class="db-role">Assistance &amp; urgences</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Problème médical soudain</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Contacte l'assistance médicale partenaire et organise le rapatriement si nécessaire.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-card" data-db-card data-delay="500" data-toast="Solution trouvée en 12 min">
+          <div class="db-card-head">
+            <div class="db-avatar"><img src="/design/team/karel.jpg" alt="Karel"></div>
+            <div>
+              <div class="db-name">Karel</div>
+              <div class="db-role">Finances &amp; urgences terrain</div>
+            </div>
+          </div>
+          <div class="db-incidents">
+            <div class="db-incident">
+              <div class="db-badge"><span class="db-badge-dot"></span>Imprévu financier ou bancaire</div>
+              <div class="db-action">
+                <span class="db-check">✓</span>
+                Carte bloquée, double débit, frais abusifs, vol de portefeuille — Karel intervient et trouve toujours une solution.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Toast global -->
+    <div class="db-toast" id="dbToast">
+      <span class="db-toast-gold">✓ Solution trouvée</span>&nbsp;en <span id="dbToastTime">–</span>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════
        MODAL — texte complet
   ══════════════════════════════════════════ -->
   <div class="modal-backdrop" id="modal" onclick="closeModal(event)">
@@ -2654,6 +3065,56 @@
     renderCoups();
     renderVoyages();
     renderMonde();
+
+    // ── Dashboard équipe ──────────────────────
+    (function () {
+      const cards = document.querySelectorAll('[data-db-card]');
+      const houdaPulse = document.getElementById('dbHoudaPulse');
+      const toast = document.getElementById('dbToast');
+      const toastTime = document.getElementById('dbToastTime');
+      let toastTimer;
+
+      // Scroll reveal avec délai staggeré
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const delay = parseInt(card.dataset.delay || 0);
+            setTimeout(() => card.classList.add('revealed'), delay);
+            observer.unobserve(card);
+          }
+        });
+      }, { threshold: 0.15 });
+      cards.forEach(c => observer.observe(c));
+
+      // Hover : checks animés en cascade + pulse Houda + toast
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          const checks = card.querySelectorAll('.db-check');
+          checks.forEach((ch, i) => {
+            setTimeout(() => {
+              ch.classList.add('blink');
+              setTimeout(() => ch.classList.remove('blink'), 450);
+            }, i * 220);
+          });
+          // Pulse Houda si ce n'est pas sa propre carte
+          if (!card.classList.contains('db-card--dg') && houdaPulse) {
+            houdaPulse.classList.add('active');
+          }
+          // Toast si data-toast présent
+          if (card.dataset.toast) {
+            const times = ['4 min','8 min','12 min','18 min'];
+            toastTime.textContent = times[Math.floor(Math.random() * times.length)];
+            clearTimeout(toastTimer);
+            toast.classList.add('show');
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+          }
+        });
+        card.addEventListener('mouseleave', () => {
+          if (houdaPulse) houdaPulse.classList.remove('active');
+        });
+      });
+    })();
 
     // Situation Room — cycle glow sur les cartes
     (function () {
