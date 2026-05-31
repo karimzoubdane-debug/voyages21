@@ -436,12 +436,53 @@
       font-weight: 700;
     }
 
+    .why-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      align-items: start;
+    }
+    .why-block-3 {
+      padding: 36px 32px 40px;
+      border-right: 1px solid rgba(196,154,60,.18);
+    }
+    .why-block-3:last-child { border-right: none; }
+    .why-block-3-title {
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: clamp(.95rem, 1.3vw, 1.2rem);
+      color: #0C0C0C;
+      line-height: 1.35;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(196,154,60,.18);
+      margin-bottom: 20px;
+    }
+    .why-block-3-body {
+      font-size: .92rem;
+      color: #3a3028;
+      line-height: 1.7;
+    }
+    .why-block-3--contrast {
+      background: #0C0C0C;
+    }
+    .why-block-3--contrast .why-block-3-title {
+      color: var(--gold);
+      border-bottom-color: rgba(200,164,64,.25);
+    }
+    .why-block-3--contrast .why-block-3-body {
+      color: rgba(245,240,232,.75);
+    }
+
     @media (max-width: 900px) {
       .why { padding: 48px 24px; }
       .why-grid { grid-template-columns: 1fr; }
       .why-left { border-right: none; border-bottom: 1px solid rgba(196,154,60,.18); }
       .why-block { border-right: none; border-bottom: 1px solid rgba(196,154,60,.18); }
       .why-block:last-child { border-bottom: none; }
+      .why-grid-3 { grid-template-columns: 1fr; }
+      .why-block-3 { border-right: none; border-bottom: 1px solid rgba(196,154,60,.18); }
+      .why-block-3:last-child { border-bottom: none; }
     }
 
     .btn-lire {
@@ -1929,6 +1970,37 @@
           <li><strong>Réactivité instantanée :</strong> En cas de perturbation, nous prenons le <strong>relais à votre place</strong>.</li>
           <li><strong>Esprit libre :</strong> Une présence locale attentive pour que votre seul rôle soit de <strong>profiter</strong>.</li>
         </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       POURQUOI NOUS CHOISIR — 3 colonnes
+  ══════════════════════════════════════════ -->
+  <section class="why" id="pourquoi-2" style="padding-top:64px;padding-bottom:80px;">
+    <div class="why-header">
+      <p class="why-surtitle">Notre différence</p>
+      <h2 class="why-main-title">Pourquoi nous choisir</h2>
+    </div>
+    <div class="why-grid-3">
+
+      <!-- Colonne 1 — Sur-mesure -->
+      <div class="why-block-3">
+        <h3 class="why-block-3-title">Le sur-mesure,<br>pas le standard</h3>
+        <p class="why-block-3-body">Nos voyages sont pensés pour vous, avec des prestations testées sur le terrain, des adresses confidentielles et rien de copié-collé. La qualité avant le volume.</p>
+      </div>
+
+      <!-- Colonne 2 — Assistance humaine -->
+      <div class="why-block-3">
+        <h3 class="why-block-3-title">Une vraie assistance<br>humaine</h3>
+        <p class="why-block-3-body">Grève, annulation, changement de billet, bagages supplémentaires… nous prenons tout en charge immédiatement. Un humain réactif, pas un robot ni une hotline au bout du monde.</p>
+      </div>
+
+      <!-- Colonne 3 — Contraste sombre -->
+      <div class="why-block-3 why-block-3--contrast">
+        <h3 class="why-block-3-title">Internet vous vend du rêve…</h3>
+        <p class="why-block-3-body">Vous composez votre voyage seul sur la base des réseaux sociaux. Vous croyez faire des économies. Mais les taxes cachées et un transfert mal négocié vous rattrapent vite. Et en cas d'imprévu&nbsp;? Vous êtes livré à vous-même, face à des répondeurs robots et des compagnies aériennes injoignables. L'économie espérée se transforme en frais imprévus… et en solitude.</p>
       </div>
 
     </div>
