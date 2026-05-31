@@ -1797,10 +1797,11 @@
       .why-header { margin-bottom: 40px; }
 
       /* SITUATION ROOM mobile */
-      .sr-section { padding: 56px 20px 48px; }
-      .sr-bento { grid-template-columns: 1fr; gap: 12px; }
-      .sr-card--hero { grid-row: auto; }
-      .sr-card--wide { flex-direction: column; gap: 14px; }
+      .sr-section { padding: 48px 16px 40px; }
+      .sr-bento { display: flex; flex-direction: column; gap: 12px; }
+      .sr-card--hero { grid-row: auto; grid-column: auto; }
+      .sr-card--wide { flex-direction: column; gap: 12px; }
+      .sr-card--wide .sr-text { max-width: 100%; }
       .sr-card--wide .sr-agent { margin-left: 0; }
       .sr-ticker-wrap { display: none; }
 
