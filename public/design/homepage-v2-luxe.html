@@ -784,7 +784,7 @@
     .imprevu-wrap { overflow: hidden; }
     .imprevu-track {
       display: flex;
-      gap: 24px;
+      gap: 0;
       animation: imprevuTick 55s linear infinite;
       width: max-content;
     }
@@ -795,17 +795,18 @@
     }
     .imprevu-card {
       width: 260px;
-      height: 300px;
+      height: 340px;
       border-radius: 56px;
       background: #3E7A52;
       flex-shrink: 0;
-      padding: 28px 30px;
+      margin-right: 24px;
+      padding: 24px 26px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
       box-shadow: 0 8px 32px rgba(0,0,0,.35);
       position: relative;
       overflow: hidden;
@@ -837,7 +838,7 @@
       text-transform: uppercase;
       color: #F5C842;
       width: fit-content;
-      margin: 0 auto 12px;
+      margin: 0 0 10px;
       animation: blink-badge 1.4s ease-in-out infinite;
     }
     .imprevu-badge .badge-icon {
@@ -848,26 +849,23 @@
       font-family: 'Fraunces', serif;
       font-weight: 900;
       font-style: italic;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: #fff;
       line-height: 1.2;
       margin-bottom: 8px;
     }
     .imprevu-action {
       font-family: 'Geist', sans-serif;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,.72);
-      line-height: 1.5;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,.78);
+      line-height: 1.55;
+      flex: 1;
     }
     .imprevu-agent {
       display: flex;
       align-items: center;
-      flex-direction: row-reverse;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: flex-start;
       gap: 10px;
       margin-top: 10px;
       padding-top: 8px;
@@ -886,7 +884,7 @@
     .imprevu-agent-info {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       gap: 2px;
     }
     .imprevu-agent-name {
@@ -1727,7 +1725,7 @@
       /* IMPREVU */
       .imprevu-section { padding: 44px 0 52px; }
       .imprevu-title { padding: 0 20px; }
-      .imprevu-card { width: 220px; height: 260px; border-radius: 44px; padding: 22px 24px; }
+      .imprevu-card { width: 220px; height: 310px; border-radius: 44px; padding: 20px 22px; }
       .imprevu-agent-photo { width: 36px; height: 36px; }
       .imprevu-agent-name { font-size: .9rem; }
       .imprevu-type { font-size: 1rem; }
@@ -1808,8 +1806,9 @@
       .dest-monde-tile { height: 115px; }
       .dest-monde-name { font-size: .9rem; bottom: 10px; left: 10px; }
 
-      .imprevu-card { width: 190px; height: 235px; border-radius: 38px; padding: 18px 20px; }
-      .imprevu-track { gap: 14px; }
+      .imprevu-card { width: 190px; height: 285px; border-radius: 38px; padding: 16px 18px; }
+      .imprevu-track { gap: 0; }
+      .imprevu-card { margin-right: 14px; }
 
       .localteam-card { width: 150px; height: 245px; }
       .localteam-title { font-size: clamp(1.4rem, 7vw, 1.9rem); }
@@ -1921,59 +1920,6 @@
     </div>
   </div>
 
-
-  <!-- ══════════════════════════════════════════
-       POURQUOI NOUS CHOISIR — 4 colonnes
-  ══════════════════════════════════════════ -->
-  <section class="why" id="pourquoi">
-    <div class="why-header">
-      <p class="why-surtitle">Notre engagement</p>
-      <h2 class="why-main-title">Pourquoi nous choisir</h2>
-    </div>
-    <div class="why-grid">
-
-      <!-- Colonne gauche — Le Problème -->
-      <div class="why-left">
-        <h3 class="why-left-title"><span style="color:#0C0C0C;">Concocter son voyage sur internet :</span> l'illusion de l'économie, <span style="color:#C0392B;">un pari à haut risque</span></h3>
-        <ul class="why-list">
-          <li><strong>Réalité amère :</strong> Un voyage bâti sur écran qui vire au parcours du combattant au moindre pépin.</li>
-          <li><strong>Livré à vous-même :</strong> Aucun humain ni assistance immédiate en cas d'urgence ou de vol annulé.</li>
-          <li><strong>Leurre financier :</strong> Des taxes et frais cachés qui coûtent finalement dix fois plus cher que les économies espérées.</li>
-        </ul>
-      </div>
-
-      <!-- Colonne 2 — Maîtrise budgétaire -->
-      <div class="why-block">
-        <h3 class="why-block-title">Maîtrise budgétaire &amp; logistique</h3>
-        <ul class="why-list">
-          <li><strong>Anticipation totale :</strong> Chaque étape verrouillée en amont pour éliminer les <strong>frais imprévus</strong>.</li>
-          <li><strong>Transparence absolue :</strong> Visibilité tarifaire complète et contractuelle, sans aucune <strong>surprise à l'arrivée</strong>.</li>
-          <li><strong>Garantie de fluidité :</strong> Un itinéraire sans accroc, entièrement orchestré par des <strong>professionnels</strong>.</li>
-        </ul>
-      </div>
-
-      <!-- Colonne 3 — Savoir-faire -->
-      <div class="why-block">
-        <h3 class="why-block-title">Notre Savoir-Faire Unique</h3>
-        <ul class="why-list">
-          <li><strong>Au-delà d'internet :</strong> Des circuits singuliers et sur mesure, à l'opposé du <strong>tourisme de masse</strong>.</li>
-          <li><strong>Expertise Voyages&nbsp;21 :</strong> Des prestations testées et validées par nos propres <strong>équipes de terrain</strong>.</li>
-          <li><strong>Adresses confidentielles :</strong> Un accès exclusif à des <strong>lieux secrets</strong> impossibles à dénicher seul.</li>
-        </ul>
-      </div>
-
-      <!-- Colonne 4 — Assistance humaine -->
-      <div class="why-block">
-        <h3 class="why-block-title">Assistance humaine &amp; immédiate</h3>
-        <ul class="why-list">
-          <li><strong>Zéro écran, zéro robot :</strong> Une équipe dédiée et joignable, jamais <strong>livré à vous-même</strong>.</li>
-          <li><strong>Réactivité instantanée :</strong> En cas de perturbation, nous prenons le <strong>relais à votre place</strong>.</li>
-          <li><strong>Esprit libre :</strong> Une présence locale attentive pour que votre seul rôle soit de <strong>profiter</strong>.</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
 
   <!-- ══════════════════════════════════════════
        POURQUOI NOUS CHOISIR — 3 colonnes
