@@ -608,33 +608,30 @@
        RÉSERVER TÔT — 4 colonnes (palette Istanbul)
     ═══════════════════════════════════════════ */
     .early {
-      background: #0C0C0C;
-      padding: 120px 80px 100px;
+      background: var(--pierre);
+      padding: 100px 96px;
     }
     .early-header {
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 52px;
     }
-    .early-eyebrow {
-      font-family: 'Geist', sans-serif;
-      font-size: .62rem;
-      font-weight: 600;
-      letter-spacing: .32em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.28);
-      margin-bottom: 24px;
-    }
+    .early-eyebrow { display: none; }
     .early-title {
       font-family: 'Fraunces', serif;
       font-weight: 900;
-      font-size: clamp(2.8rem, 6vw, 5.4rem);
-      color: #fff;
-      line-height: 1.05;
-      letter-spacing: -.03em;
-      margin-bottom: 0;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      color: var(--white);
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      margin-bottom: 18px;
     }
     .early-title em { font-style: italic; color: var(--gold); }
-    .early-rule { display: none; }
+    .early-rule {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+    .early-rule svg { display: block; }
 
     /* bande de contraste équipe sous why-grid */
     .why-contrast {
@@ -1216,82 +1213,78 @@
     @media (max-width: 480px) {
       .db-title { font-size: 1.6rem; }
     }
-    /* Stats row */
-    .early-stats {
-      display: flex;
-      border-top: 1px solid rgba(255,255,255,.07);
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      margin-bottom: 72px;
+    .early-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,.15);
+      border-bottom: 1px solid rgba(255,255,255,.15);
     }
-    .early-stat {
-      flex: 1;
-      padding: 56px 40px;
-      border-right: 1px solid rgba(255,255,255,.07);
-      transition: background .3s;
+    .early-col {
+      padding: 36px 28px;
+      border-right: 1px solid rgba(255,255,255,.12);
     }
-    .early-stat:last-child { border-right: none; }
-    .early-stat:hover { background: rgba(255,255,255,.025); }
-    .early-num {
-      display: block;
+    .early-col:last-child { border-right: none; }
+    .early-col-title {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--gold);
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(200,164,64,.5);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .early-col-num {
       font-family: 'Fraunces', serif;
       font-weight: 900;
-      font-style: italic;
-      font-size: clamp(3rem, 5.5vw, 5.2rem);
-      color: var(--gold);
-      letter-spacing: -.03em;
+      font-size: 2.2rem;
+      color: #C49A3C;
       line-height: 1;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
-    .early-stat-label {
-      font-family: 'Geist', sans-serif;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.5);
-      margin-bottom: 12px;
+    .early-col p {
+      font-size: .8rem;
+      color: rgba(255,255,255,.82);
+      line-height: 1.72;
     }
-    .early-stat-text {
-      font-family: 'Geist', sans-serif;
-      font-size: .82rem;
-      color: rgba(255,255,255,.32);
-      line-height: 1.65;
+    .early-preview {
+      position: relative;
+      max-height: 100px;
+      overflow: hidden;
     }
-
-    /* CTA centré */
-    .early-cta {
-      text-align: center;
+    .early-preview::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      background: linear-gradient(to bottom, transparent, #1E1A14);
+    }
+    .early-preview p {
+      font-size: .8rem;
+      color: rgba(255,255,255,.82);
+      line-height: 1.72;
     }
     .btn-malin {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      font-family: 'Geist', sans-serif;
-      font-size: .76rem;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: .72rem;
       font-weight: 700;
-      letter-spacing: .12em;
+      letter-spacing: .08em;
       text-transform: uppercase;
       color: #0C0C0C;
       background: var(--gold);
       border: none;
-      padding: 16px 36px;
-      border-radius: 100px;
+      padding: 11px 20px;
       cursor: pointer;
-      transition: background .25s, gap .3s, transform .25s;
+      transition: background .2s, gap .25s;
       white-space: nowrap;
     }
-    .btn-malin::after { content: '→'; font-size: .9rem; }
-    .btn-malin:hover { background: #b8922e; gap: 18px; transform: translateY(-2px); }
-    .early-note {
-      margin-top: 18px;
-      font-family: 'Geist', sans-serif;
-      font-size: .72rem;
-      color: rgba(255,255,255,.2);
-      letter-spacing: .04em;
-    }
-
-    /* old aliases unused — keep for modal compat */
-    .early-col, .early-col-title, .early-col-num, .early-preview { display: none; }
+    .btn-malin::after { content: '→'; }
+    .btn-malin:hover { background: #C49A3C; color: #0C0C0C; gap: 14px; }
+    .btn-malin.active::after { content: '↑'; }
+    .btn-malin.active { background: rgba(255,255,255,.2); color: var(--white); }
 
     /* ═══════════════════════════════════════════
        ÉQUIPE — présence humaine
@@ -2098,12 +2091,13 @@
       .btn-shuffle { width: 100%; }
 
       /* EARLY */
-      .early { padding: 72px 24px 64px; }
-      .early-header { margin-bottom: 52px; }
-      .early-stats { flex-direction: column; }
-      .early-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 36px 0; }
-      .early-stat:last-child { border-bottom: none; }
-      .early-num { font-size: clamp(3rem, 12vw, 4rem); }
+      .early { padding: 56px 20px; }
+      .early-grid { grid-template-columns: 1fr 1fr; }
+      .early-col { padding: 22px 16px; }
+      .early-col:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.12); }
+      .early-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
+      .early-col:last-child { border-bottom: none; }
+      .early-col-num { font-size: 1.8rem; }
 
       /* TEAM PHOTO GROUPE */
       .team-photo-wrap { min-height: 340px; }
@@ -2680,37 +2674,45 @@
   <section class="early" id="reserver-tot">
 
     <div class="early-header">
-      <p class="early-eyebrow">Le secret des voyageurs avisés</p>
       <h2 class="early-title">
         Le monde appartient<br>à ceux qui <em>réservent tôt.</em>
       </h2>
+      <div class="early-rule">
+        <svg width="120" height="18" viewBox="0 0 120 18" fill="none">
+          <path d="M4 14 C20 4, 40 18, 60 9 C80 0, 100 14, 116 7"
+                stroke="#C8A440" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
     </div>
 
-    <div class="early-stats">
+    <div class="early-grid">
 
-      <div class="early-stat">
-        <span class="early-num">−30%</span>
-        <div class="early-stat-label">Sur les billets</div>
-        <p class="early-stat-text">En réservant plusieurs mois à l'avance, les tarifs aériens baissent jusqu'à 30&nbsp;%. Le même vol, deux fois moins cher.</p>
+      <div class="early-col">
+        <p class="early-col-title">Billets de transport</p>
+        <div class="early-col-num">−30%</div>
+        <p>En réservant plusieurs mois à l'avance, les tarifs aériens baissent jusqu'à 30&nbsp;%. Le même vol, deux fois moins cher.</p>
       </div>
 
-      <div class="early-stat">
-        <span class="early-num">100%</span>
-        <div class="early-stat-label">Des disponibilités</div>
-        <p class="early-stat-text">Hôtels exclusifs, suites avec vue, excursions privées — les meilleures places partent en premier. Toujours.</p>
+      <div class="early-col">
+        <p class="early-col-title">Meilleures disponibilités</p>
+        <div class="early-col-num">100%</div>
+        <p>Hôtels exclusifs, suites avec vue, excursions privées — les meilleures places partent en premier. Toujours.</p>
       </div>
 
-      <div class="early-stat">
-        <span class="early-num">Zéro</span>
-        <div class="early-stat-label">Compromis</div>
-        <p class="early-stat-text">Finis les choix par défaut. Vous voyagez exactement comme vous l'avez imaginé, sans la moindre concession.</p>
+      <div class="early-col">
+        <p class="early-col-title">Compromis de dernière minute</p>
+        <div class="early-col-num">Zéro</div>
+        <p>Finis les choix par défaut. Vous voyagez exactement comme vous l'avez imaginé, sans concession.</p>
       </div>
 
-    </div>
+      <div class="early-col">
+        <p class="early-col-title">Le secret des voyageurs avisés</p>
+        <div class="early-preview">
+          <p>Le luxe du voyage ne réside pas seulement dans la destination — il se niche aussi dans sa préparation. Concevoir votre projet plusieurs mois à l'avance est le secret le mieux gardé pour conjuguer sérénité absolue et excellence tarifaire.</p>
+        </div>
+        <button class="btn-malin" id="btn2" onclick="openModal2()">Prenez une longueur d'avance</button>
+      </div>
 
-    <div class="early-cta">
-      <button class="btn-malin" id="btn2" onclick="openModal2()">Prenez une longueur d'avance</button>
-      <p class="early-note">Voyages21 — Agence de confiance depuis 2000</p>
     </div>
 
   </section>
