@@ -988,7 +988,7 @@
     }
     .fan-cards {
       display:flex; height:260px; padding:0 40px;
-      justify-content:center; align-items:flex-end;
+      justify-content:center; align-items:flex-start;
       position:relative; overflow:visible;
     }
     .fan-card { height:260px; margin:0 -40px; position:relative; width:160px; }
@@ -3771,8 +3771,7 @@
       const fanCards = Array.from(document.querySelectorAll('.fan-card'));
       if (!fanWrap || !fanCards.length) return;
 
-      const SCALE = 1.65;
-      const LIFT  = 70;
+      const SCALE = 1.55;
 
       let active = null;
 
@@ -3788,8 +3787,10 @@
         const kx    = (cRect.left + cRect.right) / 2;
         const dx    = cx - kx;
 
+        // Déploiement vers le bas — l'origine est en haut de la carte
+        face.style.transformOrigin = 'center top';
         face.style.transition = 'none';
-        face.style.transform  = `translateX(${dx}px) translateY(-${LIFT}px) rotate(0deg) scale(${SCALE})`;
+        face.style.transform  = `translateX(${dx}px) rotate(0deg) scale(${SCALE})`;
         face.style.zIndex     = '30';
         face.classList.remove('fan-pop');
         void face.offsetWidth;
@@ -3798,6 +3799,7 @@
 
       function deactivate(card) {
         const face = card.querySelector('.fan-face');
+        face.style.transformOrigin = '';
         face.style.transition = '';
         requestAnimationFrame(() => {
           face.style.transform = '';
