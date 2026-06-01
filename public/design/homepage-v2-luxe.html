@@ -3081,55 +3081,72 @@
       gap: 20px;
       transition: transform .48s cubic-bezier(.25,.46,.45,.94);
     }
+    .gcarousel-dark-band {
+      background: var(--pierre);
+      margin: 56px -72px -96px;
+      padding: 52px 72px 72px;
+    }
+    .gcarousel-dark-band .gcarousel-title { color: var(--white); }
+    .gcarousel-dark-band .gcarousel-arrow {
+      border-color: rgba(255,255,255,.15);
+      background: rgba(255,255,255,.04);
+      color: var(--white);
+    }
+    .gcarousel-dark-band .gcarousel-arrow:hover {
+      border-color: var(--gold);
+      background: rgba(196,154,60,.08);
+    }
+    .gcarousel-dark-band .gcarousel-dot { background: rgba(255,255,255,.2); }
+    .gcarousel-dark-band .gcarousel-dot.active { background: var(--gold); }
     .gcarousel-card {
       flex: 0 0 calc(33.333% - 14px);
-      background: var(--white);
-      border: 1px solid rgba(196,154,60,.15);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
       border-radius: 20px;
-      padding: 28px 24px 22px;
+      padding: 26px 22px 20px;
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
+      transition: border-color .25s, background .25s, transform .25s;
     }
     .gcarousel-card:hover {
-      border-color: var(--gold);
+      border-color: rgba(196,154,60,.45);
+      background: rgba(196,154,60,.05);
       transform: translateY(-5px);
-      box-shadow: 0 14px 42px rgba(30,26,20,.1);
     }
     .gcarousel-verified {
       position: absolute; top: 16px; right: 16px;
       display: inline-flex; align-items: center; gap: 4px;
       font-size: .62rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: #2D7A3A;
-      background: rgba(45,122,58,.08); border: 1px solid rgba(45,122,58,.2);
+      text-transform: uppercase; color: #5FC97A;
+      background: rgba(95,201,122,.1); border: 1px solid rgba(95,201,122,.25);
       border-radius: 50px; padding: 3px 9px;
     }
-    .gcarousel-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .gcarousel-stars { display: flex; gap: 3px; margin-bottom: 12px; }
     .gcarousel-stars svg { width: 15px; height: 15px; }
     .gcarousel-quote {
       font-family: 'Fraunces', serif;
-      font-size: 2.4rem; color: var(--gold);
-      line-height: .55; margin-bottom: 12px; opacity: .7;
+      font-size: 2.2rem; color: var(--gold);
+      line-height: .55; margin-bottom: 10px; opacity: .7;
     }
     .gcarousel-text {
       font-size: .86rem; line-height: 1.74;
-      color: rgba(12,12,12,.75); flex: 1; margin-bottom: 22px;
+      color: rgba(253,250,245,.75); flex: 1; margin-bottom: 20px;
     }
     .gcarousel-footer {
       display: flex; align-items: center; gap: 12px;
-      padding-top: 16px; border-top: 1px solid rgba(196,154,60,.15);
+      padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08);
     }
     .gcarousel-avatar {
       width: 38px; height: 38px; border-radius: 50%;
-      background: rgba(196,154,60,.14);
+      background: rgba(196,154,60,.15);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Fraunces', serif; font-weight: 900;
       font-size: .95rem; color: var(--gold); flex-shrink: 0;
     }
-    .gcarousel-name { font-size: .82rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
-    .gcarousel-source { font-size: .71rem; color: #8A8378; margin-top: 2px; }
-    .gcarousel-platform { margin-left: auto; opacity: .6; }
+    .gcarousel-name { font-size: .82rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+    .gcarousel-source { font-size: .71rem; color: rgba(255,255,255,.42); margin-top: 2px; }
+    .gcarousel-platform { margin-left: auto; opacity: .55; }
     .gcarousel-new {
       display: inline-block; margin-left: 6px; padding: 1px 6px;
       background: rgba(66,133,244,.1); color: #4285F4;
@@ -3148,6 +3165,7 @@
     .gcarousel-dot.active { background: var(--gold); transform: scale(1.35); }
     @media (max-width: 860px) {
       .gcarousel-card { flex: 0 0 100%; }
+      .gcarousel-dark-band { margin: 40px -20px -60px; padding: 40px 20px 52px; }
     }
     @media (min-width: 861px) and (max-width: 1100px) {
       .gcarousel-card { flex: 0 0 calc(50% - 10px); }
@@ -3236,6 +3254,7 @@
     </div>
 
     <!-- ── Carousel des vrais avis ── -->
+    <div class="gcarousel-dark-band">
     <div class="gcarousel-wrap" id="gcarouselWrap">
       <div class="gcarousel-header">
         <span class="gcarousel-title">Ce qu'ils écrivent sur Google</span>
@@ -3253,7 +3272,7 @@
         <div class="gcarousel-track" id="gcarouselTrack">
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3274,7 +3293,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3295,7 +3314,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3316,7 +3335,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3337,7 +3356,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3358,7 +3377,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3379,7 +3398,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3400,7 +3419,7 @@
           </div>
 
           <div class="gcarousel-card">
-            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Avis vérifié</span>
+            <span class="gcarousel-verified"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2D7A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vérifié par Google</span>
             <div class="gcarousel-stars">
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
               <svg viewBox="0 0 20 20" fill="#C49A3C"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.45.91-5.33L2.27 6.62l5.34-.78z"/></svg>
@@ -3425,6 +3444,7 @@
 
       <div class="gcarousel-dots" id="gcarouselDots"></div>
     </div>
+    </div><!-- /gcarousel-dark-band -->
 
   </section>
 
