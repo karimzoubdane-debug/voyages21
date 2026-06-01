@@ -21,7 +21,7 @@
       --pierre: #1E1A14;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: 'Geist', sans-serif;
@@ -839,7 +839,7 @@
     .sr-section {
       background: #0D1A14;
       padding: 40px 60px 56px;
-      overflow: visible;
+      overflow: hidden;
     }
     .sr-header {
       text-align: center;
@@ -1125,7 +1125,7 @@
     }
     .fan-action-text {
       font-family:'Geist',sans-serif;
-      font-size:1rem; font-weight:500; color:#0D1A14; line-height:1.6;
+      font-size:1.12rem; font-weight:500; color:#0D1A14; line-height:1.6;
     }
     .fan-action-text strong { font-weight:700; }
     /* Séparateur entre 2 imprévus */
@@ -2158,6 +2158,11 @@
       .nav-burger.open span:nth-child(2) { opacity: 0; }
       .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+      /* STATSBAR */
+      .statsbar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; justify-content: center; }
+      .statsbar-item + .statsbar-item { border-left: none; padding-left: 0; }
+      .statsbar-item + .statsbar-item::before { display: none; }
+
       /* HERO */
       .hero { padding-top: 52px; min-height: 100svh; }
       .hero-content { padding: 0 24px; }
@@ -2173,6 +2178,9 @@
 
       /* SITUATION ROOM mobile */
       .sr-section { padding: 48px 16px 40px; }
+      .sr-gallery { height: 460px; }
+      .sr-cards { width: 260px; height: 380px; }
+      .sr-cards li { width: 260px; height: 380px; }
       .sr-bento { display: flex; flex-direction: column; gap: 12px; }
       .sr-card--hero { grid-row: auto; grid-column: auto; }
       .sr-card--wide { flex-direction: column; gap: 12px; }
@@ -2207,6 +2215,20 @@
       .early-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
       .early-col:last-child { border-bottom: none; }
       .early-col-num { font-size: 1.8rem; }
+
+      /* TEAM (section stats + photo) */
+      .team { padding: 56px 20px; }
+      .team-section { padding: 56px 20px 64px; }
+      .team-stat { padding: 20px 16px; }
+      .team-stat-num { font-size: 2.4rem; }
+      .team-stat-label { font-size: .56rem; }
+
+      /* EARLY numbers */
+      .early { padding: 60px 20px; }
+      .early-col-num { font-size: 2rem; }
+
+      /* REVIEWS */
+      .reviews-section { padding: 56px 20px 64px; }
 
       /* TEAM PHOTO GROUPE */
       .team-photo-wrap { min-height: 340px; }
