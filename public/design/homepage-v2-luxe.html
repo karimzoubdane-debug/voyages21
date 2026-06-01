@@ -1314,33 +1314,12 @@
        SECTION PHOTO ÉQUIPE
     ═══════════════════════════════════════════ */
     .team-section {
-      width: 100%;
-      overflow: hidden;
+      background: var(--cream);
+      padding: 88px 72px 96px;
     }
-    .team-photo-wrap {
-      position: relative;
-      width: 100%;
-      min-height: 520px;
-      background: var(--navy);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .team-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      filter: brightness(.55);
-    }
-    .team-overlay {
-      position: relative;
-      z-index: 2;
+    .team-section-header {
       text-align: center;
-      padding: 80px 40px;
-      max-width: 780px;
+      margin-bottom: 64px;
     }
     .team-surtitle {
       font-size: .65rem;
@@ -1348,29 +1327,70 @@
       letter-spacing: .38em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .team-slogan {
       font-family: 'Fraunces', serif;
       font-weight: 900;
-      font-size: clamp(2rem, 4.5vw, 3.4rem);
-      color: #fff;
-      line-height: 1.15;
-      margin-bottom: 24px;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      color: var(--navy);
+      line-height: 1.12;
     }
-    .team-slogan em {
-      font-style: italic;
+    .team-slogan em { font-style: italic; color: var(--gold); }
+    .team-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .team-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(196,154,60,.25);
+      border-left: 1px solid rgba(196,154,60,.25);
+    }
+    .team-stat {
+      padding: 32px 24px;
+      border-right: 1px solid rgba(196,154,60,.25);
+      border-bottom: 1px solid rgba(196,154,60,.25);
+    }
+    .team-stat-label {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
       color: var(--gold);
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(196,154,60,.35);
+      margin-bottom: 10px;
     }
-    .team-baseline {
-      font-family: 'Geist', sans-serif;
-      font-size: .95rem;
-      color: rgba(255,255,255,.7);
-      letter-spacing: .04em;
+    .team-stat-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -.02em;
     }
-    @media (max-width: 768px) {
-      .team-photo-wrap { min-height: 380px; }
-      .team-overlay { padding: 60px 24px; }
+    .team-stat p {
+      font-size: .78rem;
+      color: rgba(12,12,12,.62);
+      line-height: 1.72;
+    }
+    .team-photo-col img {
+      width: 100%;
+      height: 100%;
+      min-height: 460px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 20px;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .team-section { padding: 60px 20px 72px; }
+      .team-2col { grid-template-columns: 1fr; gap: 48px; }
+      .team-photo-col img { min-height: 300px; }
     }
 
     /* ═══════════════════════════════════════════
@@ -2679,17 +2699,38 @@
   <!-- ══════════════════════════════════════════
        ÉQUIPE — Photo de groupe + slogan
   ══════════════════════════════════════════ -->
-  <section class="team-section">
-    <div class="team-photo-wrap">
-      <img
-        src="/design/team/equipe-voyages21.jpg"
-        alt="L'équipe Voyages21"
-        class="team-photo"
-      >
-      <div class="team-overlay">
-        <p class="team-surtitle">Voyages 21 depuis 2000</p>
-        <h2 class="team-slogan">Derrière chaque voyage d'exception,<br><em>une équipe d'exception.</em></h2>
-        <p class="team-baseline">Une présence humaine, à chaque étape de votre voyage.</p>
+  <section class="team-section" id="equipe">
+    <div class="team-section-header">
+      <p class="team-surtitle">Voyages 21 · depuis 2000</p>
+      <h2 class="team-slogan">Derrière chaque voyage d'exception,<br><em>une équipe d'exception.</em></h2>
+    </div>
+    <div class="team-2col">
+      <!-- Colonne gauche : chiffres -->
+      <div class="team-stats-grid">
+        <div class="team-stat">
+          <div class="team-stat-label">Ans d'expérience</div>
+          <div class="team-stat-num">26</div>
+          <p>Fondée en 2000, Voyages21 maîtrise chaque détail de la billetterie aérienne, de la tarification aux meilleures disponibilités.</p>
+        </div>
+        <div class="team-stat">
+          <div class="team-stat-label">Destinations desservies</div>
+          <div class="team-stat-num">180+</div>
+          <p>Circuits, croisières, séjours, Omra &amp; Hajj — notre réseau couvre le monde entier avec des partenaires triés sur le volet.</p>
+        </div>
+        <div class="team-stat">
+          <div class="team-stat-label">Conseiller dédié</div>
+          <div class="team-stat-num">100%</div>
+          <p>Aucun bot, aucune hotline anonyme. Un vrai professionnel joignable à chaque étape de votre voyage.</p>
+        </div>
+        <div class="team-stat">
+          <div class="team-stat-label">Satisfaction client</div>
+          <div class="team-stat-num">Zéro<br>défaut</div>
+          <p>Visa, transferts, hébergements, assurances — tout est orchestré en interne pour que vous partiez l'esprit libre.</p>
+        </div>
+      </div>
+      <!-- Colonne droite : photo -->
+      <div class="team-photo-col">
+        <img src="/design/team/equipe-voyages21.jpg" alt="L'équipe Voyages21" onerror="this.style.opacity='.15'">
       </div>
     </div>
   </section>
@@ -2715,115 +2756,6 @@
       </div>
     </div>
   </div>
-
-
-
-  <!-- ══════════════════════════════════════════
-       ÉQUIPE LOCALE — style Evaneos (portraits)
-  ══════════════════════════════════════════ -->
-  <section class="localteam" id="equipe-locale">
-
-    <div class="localteam-header">
-      <p class="localteam-surtitle">L'équipe Voyages 21 — depuis 2000</p>
-<div class="localteam-rule">
-        <svg width="120" height="18" viewBox="0 0 120 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 9 C20 3, 40 15, 60 9 S100 3, 120 9" stroke="#C8A440" stroke-width="1.5" fill="none" opacity=".7"/>
-        </svg>
-      </div>
-    </div>
-
-    <!-- Grille 4 colonnes — même structure que .early -->
-    <div class="localteam-grid">
-      <div class="localteam-col">
-        <div class="localteam-col-title">Ans d'expérience</div>
-        <div class="localteam-col-num">26</div>
-        <p>Fondée en 2000, Voyages21 maîtrise chaque détail de la billetterie aérienne, de la tarification aux meilleures disponibilités.</p>
-      </div>
-      <div class="localteam-col">
-        <div class="localteam-col-title">Destinations desservies</div>
-        <div class="localteam-col-num">180+</div>
-        <p>Circuits, croisières, séjours, Omra &amp; Hajj — notre réseau couvre le monde entier avec des partenaires triés sur le volet.</p>
-      </div>
-      <div class="localteam-col">
-        <div class="localteam-col-title">Conseiller dédié</div>
-        <div class="localteam-col-num">100%</div>
-        <p>Aucun bot, aucune hotline anonyme. Un vrai professionnel joignable à chaque étape de votre voyage.</p>
-      </div>
-      <div class="localteam-col">
-        <div class="localteam-col-title">Satisfaction client</div>
-        <div class="localteam-col-num">Zéro<br>défaut</div>
-        <p>Visa, transferts, hébergements, assurances — tout est orchestré en interne pour que vous partiez l'esprit libre.</p>
-      </div>
-    </div>
-
-    <div class="localteam-track">
-
-      <div class="localteam-card" style="--ph:#7A4A20">
-        <img class="localteam-card-photo" src="/design/team/wafab.jpg" alt="Wafa B.">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Wafa B.</div>
-          <div class="localteam-card-role">Billetterie aérienne</div>
-        </div>
-      </div>
-
-      <div class="localteam-card" style="--ph:#9B6030">
-        <img class="localteam-card-photo" src="/design/team/wafad.jpg" alt="Wafa D.">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Wafa D.</div>
-          <div class="localteam-card-role">Conseillère de voyages</div>
-        </div>
-      </div>
-
-      <div class="localteam-card" style="--ph:#1E3A5A">
-        <img class="localteam-card-photo" src="/design/team/fouad.jpg" alt="Fouad">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Fouad</div>
-          <div class="localteam-card-role">Logistique &amp; terrain</div>
-        </div>
-      </div>
-
-      <div class="localteam-card" style="--ph:#1A3D28">
-        <img class="localteam-card-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Ghizlane</div>
-          <div class="localteam-card-role">Hébergements &amp; Séjours</div>
-        </div>
-      </div>
-
-      <div class="localteam-card localteam-card--dg" style="--ph:#4A2010">
-        <img class="localteam-card-photo" src="/design/team/houda.jpg" alt="Houda">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Houda</div>
-          <div class="localteam-card-role localteam-card-role--dg">Directrice générale</div>
-        </div>
-      </div>
-
-      <div class="localteam-card" style="--ph:#7A6A30">
-        <img class="localteam-card-photo" src="/design/team/malika.jpg" alt="Malika">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Malika</div>
-          <div class="localteam-card-role">Conseillère voyages</div>
-        </div>
-      </div>
-
-      <div class="localteam-card" style="--ph:#2A4A5A">
-        <img class="localteam-card-photo" src="/design/team/rabii.jpg" alt="Rabii">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Rabii</div>
-          <div class="localteam-card-role">Opérations &amp; circuits</div>
-        </div>
-      </div>
-
-      <div class="localteam-card" style="--ph:#4A2A18">
-        <img class="localteam-card-photo" src="/design/team/karel.jpg" alt="Karel">
-        <div class="localteam-card-overlay">
-          <div class="localteam-card-name">Karel</div>
-          <div class="localteam-card-role">Finances &amp; urgences</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
 
 
