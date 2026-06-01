@@ -775,6 +775,8 @@
     .sr-header {
       text-align: center;
       margin-bottom: 52px;
+      position: relative;
+      z-index: 5;
     }
     .sr-live {
       display: inline-flex;
@@ -1026,14 +1028,14 @@
       animation:fanDotBlink 1.4s ease-in-out infinite;
     }
     @keyframes fanDotBlink { 0%,100%{opacity:1;} 50%{opacity:.15;} }
-    /* Titre incident — gras + souligné couleur accent */
+    /* Titre incident — rouge-orange, une seule ligne */
     .fan-incident {
       font-family:'Fraunces',serif; font-style:italic; font-weight:900;
-      font-size:.92rem; letter-spacing:-.015em;
-      padding:6px 12px 0; line-height:1.2;
-      color:#0D1A14;
-      text-decoration:underline; text-decoration-color:rgba(192,57,43,.35);
-      text-underline-offset:3px; position:relative; z-index:2;
+      font-size:.88rem; letter-spacing:-.015em;
+      padding:4px 12px 0; line-height:1.25;
+      color:#D35400;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      position:relative; z-index:2;
     }
     /* Boîte action */
     .fan-action-box {
@@ -1067,7 +1069,7 @@
     }
     .fan-agent-left { flex:1; min-width:0; }
     .fan-agent-name {
-      font-family:'Fraunces',serif; font-size:.85rem; font-weight:900;
+      font-family:'Fraunces',serif; font-size:.72rem; font-weight:900;
       font-style:italic; color:#fff; line-height:1.1;
     }
     .fan-agent-role {
@@ -2383,7 +2385,7 @@
         <!-- Card 1 — Houda (DG) — or/gold -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Tous les imprévus</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Tous les imprévus</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
@@ -2402,7 +2404,7 @@
         <!-- Card 2 — Rabii — vert foncé -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Blocage terrain</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Blocage logistique terrain</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
@@ -2421,15 +2423,15 @@
         <!-- Card 3 — WafaB — rouge -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Vol / Report</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Changement de vol, report</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text"><strong>Reprogramme</strong> les billets, décale l'hébergement &amp; les prestations <strong>sans frais</strong>.</div>
             </div>
             <hr class="fan-sep">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Chambre inadaptée</div>
-            <div class="fan-incident" style="font-size:.8rem">Mauvaise catégorie à l'arrivée</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
+            <div class="fan-incident">Mauvaise catégorie à l'arrivée</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text">Négocie un <strong>upgrade immédiat</strong> ou reloge dans un établissement équivalent.</div>
@@ -2447,15 +2449,15 @@
         <!-- Card 4 — WafaD — bleu -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Météo extrême</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Météo extrême</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text"><strong>Réorganise l'itinéraire</strong> en moins d'une heure avec des activités alternatives.</div>
             </div>
             <hr class="fan-sep">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Guide absent</div>
-            <div class="fan-incident" style="font-size:.8rem">Retard guide ou chauffeur</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
+            <div class="fan-incident">Retard guide ou chauffeur</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text">Dépêche un <strong>remplaçant certifié</strong> + compensation offerte au client.</div>
@@ -2473,7 +2475,7 @@
         <!-- Card 5 — Fouad — vert -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Bagage perdu</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Bagage perdu à l'arrivée</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
@@ -2492,7 +2494,7 @@
         <!-- Card 6 — Ghizlane — violet -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Problème médical</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Malaise, allergie, fracture</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
@@ -2511,7 +2513,7 @@
         <!-- Card 7 — Karel — orange -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu financier</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
             <div class="fan-incident">Carte bloquée, vol, frais abusifs</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
@@ -3775,46 +3777,62 @@
     renderVoyages();
     renderMonde();
 
-    // ── Fan de cartes — centrage au survol ──────────
+    // ── Fan de cartes — révélation progressive au passage de la souris ──
     (function () {
-      const fanWrap    = document.querySelector('.fan-cards');
-      const fanCards   = document.querySelectorAll('.fan-card');
+      const fanWrap  = document.querySelector('.fan-cards');
+      const fanCards = Array.from(document.querySelectorAll('.fan-card'));
       if (!fanWrap || !fanCards.length) return;
 
-      const SCALE    = 1.85;   // agrandissement
-      const LIFT     = 150;    // pixels vers le haut
+      const SCALE = 1.65;
+      const LIFT  = 130;
 
-      fanCards.forEach(card => {
+      let active = null;
+
+      function activate(card) {
+        if (active === card) return;
+        if (active) deactivate(active);
+        active = card;
+
+        const face  = card.querySelector('.fan-face');
+        const wRect = fanWrap.getBoundingClientRect();
+        const cRect = card.getBoundingClientRect();
+        const cx    = (wRect.left + wRect.right) / 2;
+        const kx    = (cRect.left + cRect.right) / 2;
+        const dx    = cx - kx;
+
+        face.style.transition = 'none';
+        face.style.transform  = `translateX(${dx}px) translateY(-${LIFT}px) rotate(0deg) scale(${SCALE})`;
+        face.style.zIndex     = '30';
+        face.classList.remove('fan-pop');
+        void face.offsetWidth;
+        face.classList.add('fan-pop', 'fan-active');
+      }
+
+      function deactivate(card) {
         const face = card.querySelector('.fan-face');
-        if (!face) return;
-
-        card.addEventListener('mouseenter', () => {
-          // Centre du conteneur éventail
-          const wRect = fanWrap.getBoundingClientRect();
-          const cRect = card.getBoundingClientRect();
-          const cx    = (wRect.left + wRect.right) / 2;
-          const kx    = (cRect.left + cRect.right) / 2;
-          const dx    = cx - kx;                           // offset horizontal vers centre
-
-          face.style.transition = 'none';
-          face.style.transform  = `translateX(${dx}px) translateY(-${LIFT}px) rotate(0deg) scale(${SCALE})`;
-          face.style.zIndex     = '30';
-
-          // Flash
-          face.classList.remove('fan-pop');
-          void face.offsetWidth;                           // force reflow pour réinitialiser l'animation
-          face.classList.add('fan-pop', 'fan-active');
+        face.style.transition = '';
+        requestAnimationFrame(() => {
+          face.style.transform = '';
+          face.style.zIndex    = '';
         });
+        face.classList.remove('fan-pop', 'fan-active');
+      }
 
-        card.addEventListener('mouseleave', () => {
-          // Restaurer la transition CSS avant de lâcher le transform
-          face.style.transition = '';
-          requestAnimationFrame(() => {
-            face.style.transform = '';
-            face.style.zIndex    = '';
-          });
-          face.classList.remove('fan-pop', 'fan-active');
+      // Détecter la carte la plus proche du pointeur sur l'axe X
+      fanWrap.addEventListener('mousemove', e => {
+        const mx = e.clientX;
+        let minDist = Infinity, closest = null;
+        fanCards.forEach(card => {
+          const r  = card.getBoundingClientRect();
+          const cx = (r.left + r.right) / 2;
+          const d  = Math.abs(mx - cx);
+          if (d < minDist) { minDist = d; closest = card; }
         });
+        if (closest) activate(closest);
+      });
+
+      fanWrap.addEventListener('mouseleave', () => {
+        if (active) { deactivate(active); active = null; }
       });
     })();
 
