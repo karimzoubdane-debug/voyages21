@@ -978,32 +978,18 @@
     }
 
     /* ── FAN DE CARTES IMPRÉVUS ──────────────────── */
-    .fan-wrap { max-width:1100px; margin:0 auto; padding:200px 0 0; overflow:visible; }
+    .fan-wrap { max-width:1100px; margin:0 auto; padding:64px 0 0; overflow:visible; }
     .fan-hint {
-      text-align:center;
-      font-family:'Geist',sans-serif;
-      font-size:.63rem;
-      font-weight:700;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.22);
-      margin-bottom:20px;
+      text-align:center; font-family:'Geist',sans-serif;
+      font-size:.63rem; font-weight:700; letter-spacing:.22em;
+      text-transform:uppercase; color:rgba(255,255,255,.22); margin-bottom:22px;
     }
     .fan-cards {
-      display:flex;
-      height:240px;
-      padding:0 80px;
-      justify-content:center;
-      align-items:flex-end;
-      position:relative;
-      overflow:visible;
+      display:flex; height:260px; padding:0 40px;
+      justify-content:center; align-items:flex-end;
+      position:relative; overflow:visible;
     }
-    .fan-card {
-      height:240px;
-      margin:0 -38px;
-      position:relative;
-      width:150px;
-    }
+    .fan-card { height:260px; margin:0 -40px; position:relative; width:160px; }
     .fan-card::after {
       bottom:0; content:''; left:-60px;
       position:absolute; right:-60px; top:0; z-index:10;
@@ -1013,136 +999,132 @@
       position:absolute; right:0; top:0;
       transition:800ms cubic-bezier(0.19,1,0.22,1) transform;
       border-radius:14px; overflow:hidden;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.09);
+    }
+    /* Barre couleur en haut de chaque carte */
+    .fan-face::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:5px; z-index:1;
     }
     .fan-face::after {
-      animation:none; background:#fff;
-      bottom:0; content:''; left:0;
-      opacity:0; position:absolute; right:0; top:0;
-      pointer-events:none;
+      animation:none; background:#fff; bottom:0; content:''; left:0;
+      opacity:0; position:absolute; right:0; top:0; pointer-events:none;
     }
-    /* Badge rouge clignotant */
+    /* Badge rouge */
     .fan-badge-live {
       display:inline-flex; align-items:center; gap:5px;
       font-family:'Geist',sans-serif;
-      font-size:.52rem; font-weight:700; letter-spacing:.1em;
+      font-size:.5rem; font-weight:700; letter-spacing:.1em;
       text-transform:uppercase; color:#C0392B;
-      background:rgba(255,255,255,.88);
-      border:1px solid rgba(192,57,43,.28);
+      background:rgba(192,57,43,.09); border:1px solid rgba(192,57,43,.28);
       border-radius:100px; padding:3px 9px;
-      margin:14px 0 0 12px; width:fit-content;
+      margin:18px 0 0 12px; width:fit-content; position:relative; z-index:2;
     }
     .fan-badge-dot {
       width:5px; height:5px; border-radius:50%;
       background:#C0392B; flex-shrink:0;
       animation:fanDotBlink 1.4s ease-in-out infinite;
     }
-    @keyframes fanDotBlink {
-      0%,100% { opacity:1; }
-      50%      { opacity:.2; }
-    }
-    /* Titre incident */
+    @keyframes fanDotBlink { 0%,100%{opacity:1;} 50%{opacity:.15;} }
+    /* Titre incident — gras + souligné couleur accent */
     .fan-incident {
-      font-family:'Fraunces',serif;
-      font-style:italic; font-weight:900;
-      font-size:.95rem; letter-spacing:-.015em;
-      padding:7px 12px 0; line-height:1.2;
+      font-family:'Fraunces',serif; font-style:italic; font-weight:900;
+      font-size:.92rem; letter-spacing:-.015em;
+      padding:6px 12px 0; line-height:1.2;
+      color:#0D1A14;
+      text-decoration:underline; text-decoration-color:rgba(192,57,43,.35);
+      text-underline-offset:3px; position:relative; z-index:2;
     }
     /* Boîte action */
     .fan-action-box {
-      margin:10px 10px 0;
-      background:rgba(255,255,255,.42);
+      margin:8px 10px 0; background:#EEF3F0;
       border-radius:8px; padding:8px 10px;
-      display:flex; align-items:flex-start; gap:7px;
+      display:flex; align-items:flex-start; gap:7px; position:relative; z-index:2;
     }
     .fan-check-icon {
       width:16px; height:16px; border-radius:50%;
-      background:#1B3228; color:#fff; font-size:.52rem;
+      background:#C0392B; color:#fff; font-size:.52rem;
       display:flex; align-items:center; justify-content:center;
       flex-shrink:0; margin-top:1px;
     }
     .fan-action-text {
       font-family:'Geist',sans-serif;
-      font-size:.59rem; color:rgba(0,0,0,.72); line-height:1.45;
+      font-size:.58rem; font-weight:500; color:#0D1A14; line-height:1.5;
     }
-    /* Agent */
+    .fan-action-text strong { font-weight:700; }
+    /* Séparateur entre 2 imprévus */
+    .fan-sep {
+      margin:8px 10px 0;
+      border:none; border-top:1px solid rgba(0,0,0,.08);
+    }
+    /* Pied de carte — agent */
     .fan-agent-info {
       position:absolute; bottom:0; left:0; right:0;
-      padding:9px 12px 12px;
-      background:rgba(0,0,0,.22);
-      border-top:1px solid rgba(255,255,255,.18);
+      padding:9px 12px 11px; background:#0D1A14;
+      border-top:2px solid rgba(200,164,64,.35);
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+      z-index:2;
     }
+    .fan-agent-left { flex:1; min-width:0; }
     .fan-agent-name {
-      font-family:'Fraunces',serif;
-      font-size:.82rem; font-weight:900;
-      font-style:italic; color:#fff;
+      font-family:'Fraunces',serif; font-size:.85rem; font-weight:900;
+      font-style:italic; color:#fff; line-height:1.1;
     }
     .fan-agent-role {
-      font-family:'Geist',sans-serif;
-      font-size:.52rem; font-weight:600;
-      letter-spacing:.09em; text-transform:uppercase;
-      color:rgba(255,255,255,.6); margin-top:2px;
+      font-family:'Geist',sans-serif; font-size:.5rem; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase;
+      color:rgba(200,164,64,.8); margin-top:2px;
     }
-    .fan-card:hover::after { top:-175px; }
+    .fan-agent-photo {
+      width:54px; height:54px; border-radius:50%;
+      object-fit:cover; flex-shrink:0;
+      border:2px solid rgba(200,164,64,.55);
+      background:rgba(200,164,64,.15);
+    }
+    .fan-card:hover::after { top:-180px; }
 
-    /* card 1 — rouge — rot -31.25° offset 50px */
-    .fan-card:nth-child(1) .fan-face {
-      background:linear-gradient(-135deg,hsla(0,100%,80%,1),hsla(0,90%,45%,1));
-      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(0,100%,80%,.75);
-      transform:translateY(50px) rotate(-31.25deg);
-    }
-    .fan-card:nth-child(1) .fan-incident { color:hsla(0,100%,38%,1); text-shadow:-.025em .025em 0 hsla(0,100%,75%,1); }
-    .fan-card:nth-child(1):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(0,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    /* Barre top par carte */
+    .fan-card:nth-child(1) .fan-face::before { background:var(--gold); }
+    .fan-card:nth-child(2) .fan-face::before { background:#1B3A28; }
+    .fan-card:nth-child(3) .fan-face::before { background:#C0392B; }
+    .fan-card:nth-child(4) .fan-face::before { background:#2874A6; }
+    .fan-card:nth-child(5) .fan-face::before { background:#1E8449; }
+    .fan-card:nth-child(6) .fan-face::before { background:#7D3C98; }
+    .fan-card:nth-child(7) .fan-face::before { background:#D35400; }
+    /* Houda — badge gold (DG) */
+    .fan-card:nth-child(1) .fan-badge-live { color:#7A5800; background:rgba(200,164,64,.1); border-color:rgba(200,164,64,.4); }
+    .fan-card:nth-child(1) .fan-badge-dot { background:var(--gold); animation:none; }
+    .fan-card:nth-child(1) .fan-check-icon { background:var(--gold); color:#0D1A14; }
+    .fan-card:nth-child(1) .fan-incident { text-decoration-color:rgba(200,164,64,.5); }
+
+    /* Transforms — 7 cartes */
+    .fan-card:nth-child(1) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(48px) rotate(-30deg); }
+    .fan-card:nth-child(1):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
     .fan-card:nth-child(1):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
-    /* card 2 — magenta — rot -18.75° offset 30px */
-    .fan-card:nth-child(2) .fan-face {
-      background:linear-gradient(-135deg,hsla(300,100%,80%,1),hsla(300,90%,45%,1));
-      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(300,100%,80%,.75);
-      transform:translateY(30px) rotate(-18.75deg);
-    }
-    .fan-card:nth-child(2) .fan-incident { color:hsla(300,100%,38%,1); text-shadow:-.025em .025em 0 hsla(300,100%,75%,1); }
-    .fan-card:nth-child(2):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(300,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(2) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(32px) rotate(-20deg); }
+    .fan-card:nth-child(2):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
     .fan-card:nth-child(2):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
-    /* card 3 — bleu — rot -6.25° offset 10px */
-    .fan-card:nth-child(3) .fan-face {
-      background:linear-gradient(-135deg,hsla(240,100%,80%,1),hsla(240,90%,45%,1));
-      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(240,100%,80%,.75);
-      transform:translateY(10px) rotate(-6.25deg);
-    }
-    .fan-card:nth-child(3) .fan-incident { color:hsla(240,100%,38%,1); text-shadow:-.025em .025em 0 hsla(240,100%,75%,1); }
-    .fan-card:nth-child(3):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(240,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(3) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(16px) rotate(-10deg); }
+    .fan-card:nth-child(3):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
     .fan-card:nth-child(3):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
-    /* card 4 — teal — rot 6.25° offset 10px */
-    .fan-card:nth-child(4) .fan-face {
-      background:linear-gradient(-135deg,hsla(180,100%,80%,1),hsla(180,90%,45%,1));
-      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(180,100%,80%,.75);
-      transform:translateY(10px) rotate(6.25deg);
-    }
-    .fan-card:nth-child(4) .fan-incident { color:hsla(180,100%,30%,1); text-shadow:-.025em .025em 0 hsla(180,100%,75%,1); }
-    .fan-card:nth-child(4):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(180,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(4) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(0px) rotate(0deg); }
+    .fan-card:nth-child(4):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
     .fan-card:nth-child(4):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
-    /* card 5 — vert — rot 18.75° offset 30px */
-    .fan-card:nth-child(5) .fan-face {
-      background:linear-gradient(-135deg,hsla(120,100%,80%,1),hsla(120,90%,38%,1));
-      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(120,100%,80%,.75);
-      transform:translateY(30px) rotate(18.75deg);
-    }
-    .fan-card:nth-child(5) .fan-incident { color:hsla(120,100%,25%,1); text-shadow:-.025em .025em 0 hsla(120,100%,70%,1); }
-    .fan-card:nth-child(5):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(120,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(5) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(16px) rotate(10deg); }
+    .fan-card:nth-child(5):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
     .fan-card:nth-child(5):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
-    /* card 6 — or/jaune — rot 31.25° offset 50px */
-    .fan-card:nth-child(6) .fan-face {
-      background:linear-gradient(-135deg,hsla(48,100%,78%,1),hsla(40,90%,48%,1));
-      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(48,100%,78%,.75);
-      transform:translateY(50px) rotate(31.25deg);
-    }
-    .fan-card:nth-child(6) .fan-incident { color:hsla(40,100%,30%,1); text-shadow:-.025em .025em 0 hsla(48,100%,72%,1); }
-    .fan-card:nth-child(6):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(48,100%,78%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(6) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(32px) rotate(20deg); }
+    .fan-card:nth-child(6):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
     .fan-card:nth-child(6):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    .fan-card:nth-child(7) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(48px) rotate(30deg); }
+    .fan-card:nth-child(7):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(7):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
     @keyframes fanFlash {
       0%   { opacity:.85; transform:scale(1); }
@@ -2415,98 +2397,149 @@
       <p class="fan-hint">Survolez un scénario</p>
       <div class="fan-cards">
 
-        <!-- Card 1 — Vol annulé -->
+        <!-- Card 1 — Houda (DG) — or/gold -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Vol annulé</div>
-            <div class="fan-incident">Vol annulé</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Tous les imprévus</div>
+            <div class="fan-incident">Tous les imprévus</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Reroutage &amp; hébergement sécurisés avant que vous raccrochiez.</div>
+              <div class="fan-action-text"><strong>Coordonne</strong> la résolution, suit chaque étape et <strong>appelle le client</strong> pour le rassurer.</div>
             </div>
             <div class="fan-agent-info">
-              <div class="fan-agent-name">Wafa</div>
-              <div class="fan-agent-role">Billetterie &amp; hébergement</div>
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">Houda</div>
+                <div class="fan-agent-role">Directrice générale</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/houda.jpg" alt="Houda">
             </div>
           </div>
         </div>
 
-        <!-- Card 2 — Hôtel surréservé -->
+        <!-- Card 2 — Rabii — vert foncé -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Hôtel surréservé</div>
-            <div class="fan-incident">Hôtel surréservé</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Blocage terrain</div>
+            <div class="fan-incident">Blocage logistique terrain</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Établissement équivalent ou supérieur trouvé en moins de 20 minutes.</div>
+              <div class="fan-action-text"><strong>Intervient physiquement</strong> pour débloquer la situation — transport, hébergement, prestataire.</div>
             </div>
             <div class="fan-agent-info">
-              <div class="fan-agent-name">Ghizlane</div>
-              <div class="fan-agent-role">Hôtels &amp; séjours</div>
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">Rabii</div>
+                <div class="fan-agent-role">Dir. des opérations</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/rabii.jpg" alt="Rabii">
             </div>
           </div>
         </div>
 
-        <!-- Card 3 — Bagage perdu -->
+        <!-- Card 3 — WafaB — rouge -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Bagage perdu</div>
-            <div class="fan-incident">Bagage perdu</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Vol / Report</div>
+            <div class="fan-incident">Changement de vol, report</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Kit d'urgence livré &amp; correspondant local activé. Compagnie mise en demeure.</div>
+              <div class="fan-action-text"><strong>Reprogramme</strong> les billets, décale l'hébergement &amp; les prestations <strong>sans frais</strong>.</div>
+            </div>
+            <hr class="fan-sep">
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Chambre inadaptée</div>
+            <div class="fan-incident" style="font-size:.8rem">Mauvaise catégorie à l'arrivée</div>
+            <div class="fan-action-box">
+              <div class="fan-check-icon">✓</div>
+              <div class="fan-action-text">Négocie un <strong>upgrade immédiat</strong> ou reloge dans un établissement équivalent.</div>
             </div>
             <div class="fan-agent-info">
-              <div class="fan-agent-name">Fouad</div>
-              <div class="fan-agent-role">Correspondant local</div>
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">WafaB</div>
+                <div class="fan-agent-role">Billetterie &amp; hébergement</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/wafa.jpg" alt="WafaB">
             </div>
           </div>
         </div>
 
-        <!-- Card 4 — Vol retardé -->
-        <div class="fan-card">
-          <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Vol retardé</div>
-            <div class="fan-incident">Vol retardé</div>
-            <div class="fan-action-box">
-              <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Hôtel, guide, restaurant — réservations recalées en cascade sans surcoût.</div>
-            </div>
-            <div class="fan-agent-info">
-              <div class="fan-agent-name">Ghizlane</div>
-              <div class="fan-agent-role">Hôtels &amp; séjours</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5 — Météo extrême -->
+        <!-- Card 4 — WafaD — bleu -->
         <div class="fan-card">
           <div class="fan-face">
             <div class="fan-badge-live"><span class="fan-badge-dot"></span>Météo extrême</div>
             <div class="fan-incident">Météo extrême</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Itinéraire réorganisé en temps réel. Vous arrivez serein, tout est géré.</div>
+              <div class="fan-action-text"><strong>Réorganise l'itinéraire</strong> en moins d'une heure avec des activités alternatives.</div>
+            </div>
+            <hr class="fan-sep">
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Guide absent</div>
+            <div class="fan-incident" style="font-size:.8rem">Retard guide ou chauffeur</div>
+            <div class="fan-action-box">
+              <div class="fan-check-icon">✓</div>
+              <div class="fan-action-text">Dépêche un <strong>remplaçant certifié</strong> + compensation offerte au client.</div>
             </div>
             <div class="fan-agent-info">
-              <div class="fan-agent-name">Wafa</div>
-              <div class="fan-agent-role">Billetterie &amp; hébergement</div>
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">WafaD</div>
+                <div class="fan-agent-role">Terrain &amp; excursions</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/wafad.jpg" alt="WafaD" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
 
-        <!-- Card 6 — Malaise en voyage -->
+        <!-- Card 5 — Fouad — vert -->
         <div class="fan-card">
           <div class="fan-face">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Malaise voyage</div>
-            <div class="fan-incident">Malaise en voyage</div>
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Bagage perdu</div>
+            <div class="fan-incident">Bagage perdu à l'arrivée</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Médecin partenaire contacté sur place. Assistance rapatriement activée si besoin.</div>
+              <div class="fan-action-text">Active le correspondant local pour livrer un <strong>kit de première nécessité</strong> dans les 2 heures.</div>
             </div>
             <div class="fan-agent-info">
-              <div class="fan-agent-name">Fouad</div>
-              <div class="fan-agent-role">Correspondant local</div>
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">Fouad</div>
+                <div class="fan-agent-role">Correspondant local</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/fouad.jpg" alt="Fouad">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 — Ghizlane — violet -->
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Problème médical</div>
+            <div class="fan-incident">Malaise, allergie, fracture</div>
+            <div class="fan-action-box">
+              <div class="fan-check-icon">✓</div>
+              <div class="fan-action-text">Contacte <strong>l'assistance médicale partenaire</strong> et organise le rapatriement si nécessaire.</div>
+            </div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">Ghizlane</div>
+                <div class="fan-agent-role">Hôtels &amp; séjours</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 7 — Karel — orange -->
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu financier</div>
+            <div class="fan-incident">Carte bloquée, vol, frais abusifs</div>
+            <div class="fan-action-box">
+              <div class="fan-check-icon">✓</div>
+              <div class="fan-action-text">Intervient et <strong>trouve toujours une solution</strong> — quelle que soit la situation.</div>
+            </div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-left">
+                <div class="fan-agent-name">Karel</div>
+                <div class="fan-agent-role">Finance &amp; assistance</div>
+              </div>
+              <img class="fan-agent-photo" src="/design/team/karel.jpg" alt="Karel" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
