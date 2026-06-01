@@ -16,9 +16,14 @@
 - **PR ouverte** : #15 (draft)
 - **Branche production** : main (auto-déployée sur Vercel)
 
-## RÈGLE ABSOLUE
-- **Ne jamais toucher à `src/`** — l'app Next.js (production) n'est pas le sujet de travail.
-- Tout le travail se fait dans **`public/design/`** uniquement.
+## ⚠️ RÈGLES ABSOLUES — NE JAMAIS ENFREINDRE
+
+> **`voyages21.vercel.app` est le site de PRODUCTION Next.js — il ne doit JAMAIS être modifié.**
+> **Tout le travail se fait EXCLUSIVEMENT dans `public/design/` sur la branche `claude/confident-meitner-Fiqzd`.**
+
+- **INTERDIT** : toucher à `src/`, `main`, ou tout ce qui déploie sur `voyages21.vercel.app`
+- **OBLIGATOIRE** : travailler uniquement dans `public/design/` sur la branche `claude/confident-meitner-Fiqzd`
+- **DISSOCIATION** : `voyages21.vercel.app` (production Next.js) ≠ `voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app` (maquette HTML — site de travail)
 - WordPress, Elementor, WP Travel Engine sont abandonnés définitivement. Ne jamais les suggérer.
 
 ## Fichiers actifs
