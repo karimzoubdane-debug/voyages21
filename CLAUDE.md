@@ -57,11 +57,12 @@ public/design/
 ## Données Google Business réelles
 - Note : **4.5★ / 19 avis** — Voyages 21 Marrakech
 - **Lien panel avis** : `https://www.google.com/maps/place/Voyages+21/@31.6492146,-8.0132699,17z/data=!4m8!3m7!1s0xdafee8c8505a33d:0x87ee7364e2894fe7!8m2!3d31.6492146!4d-8.0132699!9m1!1b1!16s%2Fg%2F11bc7119df`
-- Lien court direct (formulaire rédaction) : disponible après validation Google Business → `g.page/r/.../review`
+- **Lien direct formulaire rédaction (✅ actif)** : `https://search.google.com/local/writereview?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc`
+  - Place ID calculé depuis feature ID `0xdafee8c8505a33d:0x87ee7364e2894fe7` (protobuf + base64url)
+  - Ouvre directement le formulaire avec étoiles + champ texte, le client se connecte avec son Gmail
 
 ## Ce qui reste à faire
 - **Priorité 1** : Remplacer les 6 review cards fictives par les vrais avis Google (le client doit fournir les textes des 19 avis par screenshot ou copie-colle)
-- **Priorité 2** : Une fois validation Google Business finalisée → remplacer les liens panel par le lien direct `g.page/r/.../review`
 - **Optionnel** : Mettre à jour les reviews dans `avis.html` (même travail)
 
 ## Architecture Next.js (production — ne pas modifier)
