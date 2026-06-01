@@ -769,7 +769,7 @@
     /* ── SITUATION ROOM ── */
     .sr-section {
       background: #0D1A14;
-      padding: 80px 60px 72px;
+      padding: 40px 60px 56px;
       overflow: visible;
     }
     .sr-header {
@@ -978,7 +978,7 @@
     }
 
     /* ── FAN DE CARTES IMPRÉVUS ──────────────────── */
-    .fan-wrap { max-width:1100px; margin:0 auto; padding:64px 0 0; overflow:visible; }
+    .fan-wrap { max-width:1100px; margin:0 auto; padding:16px 0 0; overflow:visible; }
     .fan-hint {
       text-align:center; font-family:'Geist',sans-serif;
       font-size:.63rem; font-weight:700; letter-spacing:.22em;
@@ -1081,7 +1081,9 @@
       border:2px solid rgba(200,164,64,.55);
       background:rgba(200,164,64,.15);
     }
-    .fan-card:hover::after { top:-180px; }
+    /* Hover géré par JS */
+    .fan-face.fan-active { box-shadow:0 18px 52px rgba(0,0,0,.45) !important; }
+    .fan-face.fan-pop::after  { animation:fanFlash 260ms ease-out forwards; }
 
     /* Barre top par carte */
     .fan-card:nth-child(1) .fan-face::before { background:var(--gold); }
@@ -1098,33 +1100,14 @@
     .fan-card:nth-child(1) .fan-incident { text-decoration-color:rgba(200,164,64,.5); }
 
     /* Transforms — 7 cartes */
+    /* Positions éventail — transforms par défaut */
     .fan-card:nth-child(1) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(48px) rotate(-30deg); }
-    .fan-card:nth-child(1):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(1):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
-
     .fan-card:nth-child(2) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(32px) rotate(-20deg); }
-    .fan-card:nth-child(2):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(2):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
-
     .fan-card:nth-child(3) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(16px) rotate(-10deg); }
-    .fan-card:nth-child(3):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(3):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
-
     .fan-card:nth-child(4) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(0px) rotate(0deg); }
-    .fan-card:nth-child(4):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(4):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
-
     .fan-card:nth-child(5) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(16px) rotate(10deg); }
-    .fan-card:nth-child(5):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(5):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
-
     .fan-card:nth-child(6) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(32px) rotate(20deg); }
-    .fan-card:nth-child(6):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(6):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
-
     .fan-card:nth-child(7) .fan-face { box-shadow:-5px 5px 8px rgba(0,0,0,.22),inset 0 0 0 1px rgba(0,0,0,.07); transform:translateY(48px) rotate(30deg); }
-    .fan-card:nth-child(7):hover .fan-face { box-shadow:0 14px 44px rgba(0,0,0,.38); transform:translateY(-100px) rotate(0deg) scale(1.5); transition-duration:0ms; z-index:20; }
-    .fan-card:nth-child(7):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
 
     @keyframes fanFlash {
       0%   { opacity:.85; transform:scale(1); }
@@ -3240,6 +3223,49 @@
     renderCoups();
     renderVoyages();
     renderMonde();
+
+    // ── Fan de cartes — centrage au survol ──────────
+    (function () {
+      const fanWrap    = document.querySelector('.fan-cards');
+      const fanCards   = document.querySelectorAll('.fan-card');
+      if (!fanWrap || !fanCards.length) return;
+
+      const SCALE    = 1.85;   // agrandissement
+      const LIFT     = 150;    // pixels vers le haut
+
+      fanCards.forEach(card => {
+        const face = card.querySelector('.fan-face');
+        if (!face) return;
+
+        card.addEventListener('mouseenter', () => {
+          // Centre du conteneur éventail
+          const wRect = fanWrap.getBoundingClientRect();
+          const cRect = card.getBoundingClientRect();
+          const cx    = (wRect.left + wRect.right) / 2;
+          const kx    = (cRect.left + cRect.right) / 2;
+          const dx    = cx - kx;                           // offset horizontal vers centre
+
+          face.style.transition = 'none';
+          face.style.transform  = `translateX(${dx}px) translateY(-${LIFT}px) rotate(0deg) scale(${SCALE})`;
+          face.style.zIndex     = '30';
+
+          // Flash
+          face.classList.remove('fan-pop');
+          void face.offsetWidth;                           // force reflow pour réinitialiser l'animation
+          face.classList.add('fan-pop', 'fan-active');
+        });
+
+        card.addEventListener('mouseleave', () => {
+          // Restaurer la transition CSS avant de lâcher le transform
+          face.style.transition = '';
+          requestAnimationFrame(() => {
+            face.style.transform = '';
+            face.style.zIndex    = '';
+          });
+          face.classList.remove('fan-pop', 'fan-active');
+        });
+      });
+    })();
 
     // Scroll reveal cartes avis
     (function () {
