@@ -2,54 +2,79 @@
 
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
-- **Fondateur** : Karim Zoubdane
-- **Stack** : Next.js 14 App Router, React (client components), CSS Modules
+- **Fondateur** : Karim Zoubdane (karimzoubdane@gmail.com)
+- **Stack** : Next.js 14 App Router (production) + maquette HTML standalone (en cours)
 
 ## URLs
-- **Production** : https://voyages21.vercel.app/
-- **Preview branch** : https://voyages21-git-claude-websi-3d5966-karimzoubdane-debugs-projects.vercel.app/
-- **Mot-clé** : "site web V21" → https://voyages21.vercel.app/
+- **Production (Next.js)** : https://voyages21.vercel.app/
+- **Maquette en cours** : https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/design/homepage-v2-luxe.html
+- **Page avis (maquette)** : https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/design/avis.html
 
 ## Dépôt GitHub
 - **Repo** : karimzoubdane-debug/voyages21
-- **Branche de travail** : claude/website-work-tj3vz
+- **Branche de travail active** : `claude/confident-meitner-Fiqzd`
+- **PR ouverte** : #15 (draft)
 - **Branche production** : main (auto-déployée sur Vercel)
 
-## Règle absolue
-WordPress, Elementor, WP Travel Engine sont abandonnés définitivement. Ne jamais les suggérer.
+## RÈGLE ABSOLUE
+- **Ne jamais toucher à `src/`** — l'app Next.js (production) n'est pas le sujet de travail.
+- Tout le travail se fait dans **`public/design/`** uniquement.
+- WordPress, Elementor, WP Travel Engine sont abandonnés définitivement. Ne jamais les suggérer.
 
-## Architecture
+## Fichiers actifs
+```
+public/design/
+  homepage-v2-luxe.html   — maquette principale (~3 300 lignes), HTML standalone
+  avis.html               — page avis clients standalone
+  team/                   — photos équipe (houda.jpg, wafa.jpg, fouad.jpg,
+                            ghizlane.jpg, rabii.jpg)
+```
+
+## Design system (maquette)
+- **Fonts** : Fraunces (titres, italic, 900) · Geist (corps, UI)
+- **Couleurs** :
+  - `--navy` : #0C0C0C
+  - `--gold` : #C49A3C
+  - `--cream` : #F7F0E0
+  - `--white` : #FDFAF5
+  - `--pierre` : #1E1A14
+  - Section sombre (imprévus) : #0D1A14
+
+## Structure de homepage-v2-luxe.html (sections dans l'ordre)
+1. **Hero** — barre de recherche destinations, vidéo/fond sombre
+2. **"Le monde appartient à ceux…"** — 4 colonnes KPI, fond crème
+3. **Pourquoi Voyages21** — why-blocks 3 colonnes
+4. **"En cas d'imprévu"** (`sr-section`, fond #0D1A14)
+   - Éventail de 7 cartes blanches interactives (JS)
+   - Cartes : Houda (DG, badge gold), Rabii, WafaB (2 imprévus), WafaD (2 imprévus), Fouad, Ghizlane, Karel
+   - **Comportement hover** : snap au centre de l'éventail + monte 150px + scale 1.85× (instantané) → ressort élastique 800ms au départ
+   - Chaque carte : barre couleur top, badge rouge clignotant, titre Fraunces souligné, boîte action fond #EEF3F0, photo agent 54px à droite, pied fond #0D1A14
+   - Ticker résolutions défilant en bas
+5. **Localteam** — équipe photos, fond crème
+6. **Avis clients** — 6 review cards, fond pierre (`--pierre`)
+7. **CTA + offres**
+
+## Données Google Business réelles
+- Note : **4.5★ / 19 avis** — Voyages 21 Marrakech
+- **Lien panel avis** : `https://www.google.com/maps/place/Voyages+21/@31.6492146,-8.0132699,17z/data=!4m8!3m7!1s0xdafee8c8505a33d:0x87ee7364e2894fe7!8m2!3d31.6492146!4d-8.0132699!9m1!1b1!16s%2Fg%2F11bc7119df`
+- Lien court direct (formulaire rédaction) : disponible après validation Google Business → `g.page/r/.../review`
+
+## Ce qui reste à faire
+- **Priorité 1** : Remplacer les 6 review cards fictives par les vrais avis Google (le client doit fournir les textes des 19 avis par screenshot ou copie-colle)
+- **Priorité 2** : Une fois validation Google Business finalisée → remplacer les liens panel par le lien direct `g.page/r/.../review`
+- **Optionnel** : Mettre à jour les reviews dans `avis.html` (même travail)
+
+## Architecture Next.js (production — ne pas modifier)
 ```
 src/
   app/
-    page.jsx              — Page d'accueil (client component)
+    page.jsx              — Page d'accueil
     home.module.css       — Styles homepage
-    globals.css           — Styles globaux (navbar, footer, keyframes)
-    about/page.jsx        — Page À propos (#expertise, #engagements)
+    globals.css           — Styles globaux (navbar, footer)
+    about/page.jsx        — Page À propos
     contact/page.jsx      — Page Contact
     layout.jsx            — Layout racine (NavBar + Footer + WhatsApp)
   components/
-    NavBar.jsx            — Header 3 barres fixe (48+40+68=156px)
+    NavBar.jsx            — Header 3 barres fixes (156px total)
     Footer.jsx            — Footer vert foncé
 ```
-
-## Design system
-- **Couleurs** : forest green #1B3A28 (bar1), #152E1F (bar2), gold #C8A440, cream #F5F0E8
-- **Fonts** : Playfair Display (titres, italic), DM Sans (corps, UI)
-- **Header** : 3 barres fixes, total 156px
-  - Bar 1 (48px, #1B3A28) : logo centré
-  - Bar 2 (40px, #152E1F) : contacts gauche | MARHABA BLOG centre | About dropdown droite
-  - Bar 3 (68px, transparent→vert) : ← Accueil gauche | menus clic centre | téléphone+Contact droite
-- **Mega menus** : position fixed top 156px, s'ouvrent au CLIC uniquement (pas au survol)
-- **Dropdown About** : position absolute sous bar2, animation slideDown
-
-## État de la version actuelle (V1 — mise en prod)
-- Header 3 barres complet avec mega menus (Inspirations, Choisissez votre style, Explorer)
-- Panel Inspirations : 4 blocs (Séjours 2×2, Circuits 2×2, Avec qui partir 2×2, Voir tous nos circuits + cadran), séparateurs dorés, maxWidth 1200px
-- Panel Styles : 3 grandes cartes + cadran, centré
-- Panel Explorer : 2 grandes cartes + cadran, centré
-- About : dropdown au clic, slide-down animé
-- Bouton ← Accueil visible sur toutes les pages (bar3 gauche)
-- Bandeau signature agrandi : "De l'aventure intime aux projets d'envergure, Voyages 21 signe le voyage."
-- Page About avec sections #expertise et #engagements
-- Mega menus clic uniquement (pas de survol intempestif sur les autres pages)
