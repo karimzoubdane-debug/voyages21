@@ -776,7 +776,7 @@
       text-align: center;
       margin-bottom: 52px;
       position: relative;
-      z-index: 5;
+      z-index: 50;
     }
     .sr-live {
       display: inline-flex;
@@ -1003,6 +1003,7 @@
       border-radius:14px; overflow:hidden;
       background:#fff;
       border:1px solid rgba(0,0,0,.09);
+      text-align:center;
     }
     /* Barre couleur en haut de chaque carte */
     .fan-face::before {
@@ -1020,7 +1021,7 @@
       text-transform:uppercase; color:#C0392B;
       background:rgba(192,57,43,.09); border:1px solid rgba(192,57,43,.28);
       border-radius:100px; padding:3px 9px;
-      margin:18px 0 0 12px; width:fit-content; position:relative; z-index:2;
+      margin:18px auto 0; width:fit-content; position:relative; z-index:2;
     }
     .fan-badge-dot {
       width:5px; height:5px; border-radius:50%;
@@ -1031,17 +1032,18 @@
     /* Titre incident — rouge-orange, une seule ligne */
     .fan-incident {
       font-family:'Fraunces',serif; font-style:italic; font-weight:900;
-      font-size:.88rem; letter-spacing:-.015em;
-      padding:4px 12px 0; line-height:1.25;
+      font-size:.82rem; letter-spacing:-.015em;
+      padding:4px 8px 0; line-height:1.25;
       color:#D35400;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      position:relative; z-index:2;
+      white-space:nowrap; overflow:hidden; text-overflow:clip;
+      position:relative; z-index:2; text-align:center;
     }
     /* Boîte action */
     .fan-action-box {
       margin:8px 10px 0; background:#EEF3F0;
       border-radius:8px; padding:8px 10px;
       display:flex; align-items:flex-start; gap:7px; position:relative; z-index:2;
+      text-align:left;
     }
     .fan-check-icon {
       width:16px; height:16px; border-radius:50%;
@@ -1073,8 +1075,8 @@
       font-style:italic; color:#fff; line-height:1.1;
     }
     .fan-agent-role {
-      font-family:'Geist',sans-serif; font-size:.5rem; font-weight:700;
-      letter-spacing:.1em; text-transform:uppercase;
+      font-family:'Geist',sans-serif; font-size:.42rem; font-weight:700;
+      letter-spacing:.08em; text-transform:uppercase;
       color:rgba(200,164,64,.8); margin-top:2px;
     }
     .fan-agent-photo {
@@ -2405,7 +2407,7 @@
         <div class="fan-card">
           <div class="fan-face">
             <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Blocage logistique terrain</div>
+            <div class="fan-incident">Blocage terrain</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text"><strong>Intervient physiquement</strong> pour débloquer la situation — transport, hébergement, prestataire.</div>
@@ -2424,17 +2426,10 @@
         <div class="fan-card">
           <div class="fan-face">
             <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Changement de vol, report</div>
+            <div class="fan-incident">Vol retardé / report</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text"><strong>Reprogramme</strong> les billets, décale l'hébergement &amp; les prestations <strong>sans frais</strong>.</div>
-            </div>
-            <hr class="fan-sep">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Mauvaise catégorie à l'arrivée</div>
-            <div class="fan-action-box">
-              <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Négocie un <strong>upgrade immédiat</strong> ou reloge dans un établissement équivalent.</div>
             </div>
             <div class="fan-agent-info">
               <div class="fan-agent-left">
@@ -2455,13 +2450,6 @@
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text"><strong>Réorganise l'itinéraire</strong> en moins d'une heure avec des activités alternatives.</div>
             </div>
-            <hr class="fan-sep">
-            <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Retard guide ou chauffeur</div>
-            <div class="fan-action-box">
-              <div class="fan-check-icon">✓</div>
-              <div class="fan-action-text">Dépêche un <strong>remplaçant certifié</strong> + compensation offerte au client.</div>
-            </div>
             <div class="fan-agent-info">
               <div class="fan-agent-left">
                 <div class="fan-agent-name">WafaD</div>
@@ -2476,7 +2464,7 @@
         <div class="fan-card">
           <div class="fan-face">
             <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Bagage perdu à l'arrivée</div>
+            <div class="fan-incident">Bagage perdu</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text">Active le correspondant local pour livrer un <strong>kit de première nécessité</strong> dans les 2 heures.</div>
@@ -2495,7 +2483,7 @@
         <div class="fan-card">
           <div class="fan-face">
             <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Malaise, allergie, fracture</div>
+            <div class="fan-incident">Urgence médicale</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text">Contacte <strong>l'assistance médicale partenaire</strong> et organise le rapatriement si nécessaire.</div>
@@ -2514,7 +2502,7 @@
         <div class="fan-card">
           <div class="fan-face">
             <div class="fan-badge-live"><span class="fan-badge-dot"></span>Imprévu</div>
-            <div class="fan-incident">Carte bloquée, vol, frais abusifs</div>
+            <div class="fan-incident">Frais abusifs</div>
             <div class="fan-action-box">
               <div class="fan-check-icon">✓</div>
               <div class="fan-action-text">Intervient et <strong>trouve toujours une solution</strong> — quelle que soit la situation.</div>
@@ -3784,7 +3772,7 @@
       if (!fanWrap || !fanCards.length) return;
 
       const SCALE = 1.65;
-      const LIFT  = 130;
+      const LIFT  = 70;
 
       let active = null;
 
