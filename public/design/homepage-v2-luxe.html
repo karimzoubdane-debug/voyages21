@@ -2494,8 +2494,9 @@
 
     <!-- En-tête -->
     <div class="args-intro" data-args>
-      <p class="args-eyebrow">La vraie question</p>
-      <h2 class="args-title">Internet vous vend du rêve…<br><em>Qui vous aide quand ça déraille&nbsp;?</em></h2>
+      <p class="args-eyebrow">Le fil conducteur de Voyages&nbsp;21</p>
+      <h2 class="args-title">Pourquoi nous choisir&nbsp;?</h2>
+      <p class="args-subtitle">Internet vous vend du rêve.<br><em>Mais qui vous aide quand ça déraille&nbsp;?</em></p>
     </div>
 
     <!-- Acte 1 — Problème -->
@@ -2524,11 +2525,11 @@
           </div>
           <p class="args-sol-badge args-sol-badge--gold">Sur-mesure garanti</p>
         </div>
-        <h3 class="args-sol-title">Je ne copie pas Internet,<br>je vous écoute</h3>
+        <h3 class="args-sol-title">Voyages&nbsp;21 ne copie pas Internet.<br>Nous vous écoutons.</h3>
         <p class="args-sol-body">Votre voyage est construit pièce par pièce avec vous. Aucun standard, aucune usine à forfaits. Chaque détail compte : vos envies, votre rythme, votre budget réel.</p>
         <ul class="args-sol-checks">
-          <li>Itinéraire 100 % personnalisé</li>
-          <li>Adresses confidentielles testées terrain</li>
+          <li>Itinéraire 100&nbsp;% personnalisé</li>
+          <li>Adresses confidentielles testées sur le terrain</li>
           <li>Aucune commission cachée</li>
         </ul>
       </div>
@@ -2538,28 +2539,26 @@
           <div class="args-sol-icon args-sol-icon--green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
-          <p class="args-sol-badge args-sol-badge--green">Assistance 7j/7</p>
+          <p class="args-sol-badge args-sol-badge--green">Une équipe humaine</p>
         </div>
-        <h3 class="args-sol-title">Un humain,<br>pas un robot</h3>
-        <p class="args-sol-body">Grève, annulation, bagage supplémentaire ? J'interviens immédiatement. Pas de hotline lointaine, pas de formulaire sans réponse. Un vrai contact, réactif, qui règle vos problèmes en direct.</p>
+        <h3 class="args-sol-title">Houda, Wafa, Fouad ou Ghizlane<br>prennent votre appel.</h3>
+        <p class="args-sol-body">Pas de hotline lointaine, pas de formulaire sans réponse. En cas de grève, d'annulation, de bagage supplémentaire ou de tout imprévu, l'un d'eux intervient pour vous.</p>
         <ul class="args-sol-checks">
-          <li>Joignable sur place pendant votre voyage</li>
-          <li>Résolution moyenne en moins de 20 minutes</li>
-          <li>Équipe locale mobilisée 7j/7</li>
+          <li>Une équipe réactive, joignable pendant votre voyage</li>
+          <li>Des vraies personnes qui règlent vos problèmes en direct</li>
         </ul>
       </div>
 
     </div>
 
-    <!-- Acte 3 — Conclusion CTA -->
+    <!-- Acte 4 — Conclusion -->
     <div class="args-conclusion" data-args data-args-delay="200">
-      <div class="args-conclusion-eq">
-        <span class="args-eq-term">Sur-mesure</span>
-        <span class="args-eq-op">+</span>
-        <span class="args-eq-term">Humain</span>
-        <span class="args-eq-op">=</span>
-        <span class="args-eq-result">Zéro mauvaise surprise</span>
-      </div>
+      <p class="args-conclusion-quote">
+        Parce qu'un voyage ne devrait jamais rimer avec solitude face aux imprévus.<br>
+        Chez Voyages&nbsp;21, chaque itinéraire est pensé avec vous, et chaque aléa est géré par l'un des nôtres — Houda, Wafa, Fouad ou Ghizlane.<br>
+        Vous n'êtes pas un numéro de dossier. Vous êtes un voyageur accompagné, du premier souhait jusqu'au retour.
+      </p>
+      <p class="args-conclusion-tagline">Voilà pourquoi nous choisir.</p>
       <a href="#destinations" class="args-cta">Construire mon voyage →</a>
     </div>
 
@@ -2594,6 +2593,15 @@
       letter-spacing: -.02em;
     }
     .args-title em { font-style: italic; color: var(--gold); }
+    .args-subtitle {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      font-weight: 400;
+      color: rgba(255,255,255,.55);
+      line-height: 1.45;
+      margin-top: 20px;
+    }
+    .args-subtitle em { font-style: italic; color: var(--gold); opacity: .9; }
 
     /* Problème */
     .args-problem {
@@ -2760,37 +2768,28 @@
     /* Conclusion */
     .args-conclusion {
       text-align: center;
-      padding: 56px 40px;
+      padding: 56px 56px;
       background: rgba(196,154,60,.06);
       border: 1px solid rgba(196,154,60,.2);
       border-radius: 24px;
     }
-    .args-conclusion-eq {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-    .args-eq-term {
+    .args-conclusion-quote {
       font-family: 'Fraunces', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      font-weight: 700;
-      color: rgba(255,255,255,.65);
-    }
-    .args-eq-op {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--gold);
-    }
-    .args-eq-result {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 900;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      font-weight: 400;
       font-style: italic;
+      color: rgba(255,255,255,.65);
+      line-height: 1.75;
+      max-width: 720px;
+      margin: 0 auto 24px;
+    }
+    .args-conclusion-tagline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 900;
       color: var(--gold);
       letter-spacing: -.02em;
+      margin-bottom: 36px;
     }
     .args-cta {
       display: inline-flex;
