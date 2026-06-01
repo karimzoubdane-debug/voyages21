@@ -990,6 +990,8 @@
       display:flex; height:260px; padding:0 40px;
       justify-content:center; align-items:flex-start;
       position:relative; overflow:visible;
+      margin-top: 40px;
+      padding-bottom: 220px;
     }
     .fan-card { height:260px; margin:0 -40px; position:relative; width:160px; }
     .fan-card::after {
@@ -3072,26 +3074,12 @@
       transition: transform .48s cubic-bezier(.25,.46,.45,.94);
     }
     .gcarousel-dark-band {
-      background: var(--pierre);
-      margin: 56px -72px -96px;
-      padding: 52px 72px 72px;
+      margin-top: 56px;
     }
-    .gcarousel-dark-band .gcarousel-title { color: var(--white); }
-    .gcarousel-dark-band .gcarousel-arrow {
-      border-color: rgba(255,255,255,.15);
-      background: rgba(255,255,255,.04);
-      color: var(--white);
-    }
-    .gcarousel-dark-band .gcarousel-arrow:hover {
-      border-color: var(--gold);
-      background: rgba(196,154,60,.08);
-    }
-    .gcarousel-dark-band .gcarousel-dot { background: rgba(255,255,255,.2); }
-    .gcarousel-dark-band .gcarousel-dot.active { background: var(--gold); }
     .gcarousel-card {
       flex: 0 0 calc(33.333% - 14px);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.1);
+      background: var(--pierre);
+      border: 1px solid rgba(196,154,60,.18);
       border-radius: 20px;
       padding: 26px 22px 20px;
       display: flex;
@@ -3100,8 +3088,8 @@
       transition: border-color .25s, background .25s, transform .25s;
     }
     .gcarousel-card:hover {
-      border-color: rgba(196,154,60,.45);
-      background: rgba(196,154,60,.05);
+      border-color: rgba(196,154,60,.55);
+      background: #251F17;
       transform: translateY(-5px);
     }
     .gcarousel-verified {
@@ -3155,7 +3143,7 @@
     .gcarousel-dot.active { background: var(--gold); transform: scale(1.35); }
     @media (max-width: 860px) {
       .gcarousel-card { flex: 0 0 100%; }
-      .gcarousel-dark-band { margin: 40px -20px -60px; padding: 40px 20px 52px; }
+      .gcarousel-dark-band { margin-top: 36px; }
     }
     @media (min-width: 861px) and (max-width: 1100px) {
       .gcarousel-card { flex: 0 0 calc(50% - 10px); }
