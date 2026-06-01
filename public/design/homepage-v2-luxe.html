@@ -771,14 +771,14 @@
     /* ═══ GSAP GALLERY — "En cas d'imprévu" ═══════════════════════════════ */
     .sr-gallery {
       position: relative;
-      height: 400px;
+      height: 520px;
       overflow: hidden;
       margin: 48px 0 20px;
     }
     .sr-cards {
       position: absolute;
-      width: 220px;
-      height: 310px;
+      width: 300px;
+      height: 420px;
       top: 46%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -788,12 +788,12 @@
     .sr-cards li {
       position: absolute;
       top: 0; left: 0;
-      width: 220px; height: 310px;
-      border-radius: 14px;
+      width: 300px; height: 420px;
+      border-radius: 16px;
       overflow: hidden;
       background: #fff;
       border: 1px solid rgba(0,0,0,.09);
-      box-shadow: -4px 6px 18px rgba(0,0,0,.28);
+      box-shadow: -4px 6px 24px rgba(0,0,0,.32);
       display: flex; flex-direction: column;
       text-align: center;
     }
@@ -3664,11 +3664,9 @@
 
     // ── GSAP Seamless Card Loop — "En cas d'imprévu" ──────────────────────
     (function () {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-      gsap.registerPlugin(ScrollTrigger);
+      if (typeof gsap === 'undefined') return;
 
       const spacing = 0.15;
-      const snap    = gsap.utils.snap(spacing);
       const cards   = gsap.utils.toArray('.sr-cards li');
       if (!cards.length) return;
 
@@ -3684,41 +3682,19 @@
         paused: true
       });
 
-      let iteration = 0;
+      let cur = 0;
 
-      const trigger = ScrollTrigger.create({
-        trigger: '.sr-section',
-        start: 'top 80px',
-        end: '+=1800',
-        pin: true,
-        onUpdate(self) {
-          if (self.progress === 1 && self.direction > 0 && !self.wrapping) {
-            wrapFwd(self);
-          } else if (self.progress < 1e-5 && self.direction < 0 && !self.wrapping) {
-            wrapBwd(self);
-          } else {
-            scrub.vars.totalTime = snap((iteration + self.progress) * seamlessLoop.duration());
-            scrub.invalidate().restart();
-            self.wrapping = false;
-          }
-        }
-      });
-
-      function wrapFwd(t) { iteration++; t.wrapping = true; t.scroll(t.start + 1); }
-      function wrapBwd(t) {
-        iteration--;
-        if (iteration < 0) { iteration = 9; seamlessLoop.totalTime(seamlessLoop.totalTime() + seamlessLoop.duration() * 10); scrub.pause(); }
-        t.wrapping = true; t.scroll(t.end - 1);
-      }
       function scrubTo(totalTime) {
-        const progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
-        if (progress > 1) wrapFwd(trigger);
-        else if (progress < 0) wrapBwd(trigger);
-        else trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
+        cur = totalTime;
+        scrub.vars.totalTime = totalTime;
+        scrub.invalidate().restart();
       }
 
-      document.querySelector('.sr-next').addEventListener('click', () => scrubTo(scrub.vars.totalTime + spacing));
-      document.querySelector('.sr-prev').addEventListener('click', () => scrubTo(scrub.vars.totalTime - spacing));
+      document.querySelector('.sr-next').addEventListener('click', () => scrubTo(cur + spacing));
+      document.querySelector('.sr-prev').addEventListener('click', () => scrubTo(cur - spacing));
+
+      // Auto-advance every 2.2s
+      setInterval(() => scrubTo(cur + spacing), 2200);
 
       function buildSrSeamlessLoop(items, spacing) {
         const overlap = Math.ceil(1 / spacing);
