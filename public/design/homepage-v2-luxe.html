@@ -1401,42 +1401,57 @@
       background: var(--cream);
       padding: 88px 72px 96px;
     }
-    .team-section-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .team-surtitle {
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .38em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-    }
-    .team-slogan {
-      font-family: 'Fraunces', serif;
-      font-weight: 900;
-      font-size: clamp(2rem, 4.5vw, 3.2rem);
-      color: var(--navy);
-      line-height: 1.12;
-    }
-    .team-slogan em { font-style: italic; color: var(--gold); }
     .team-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 72px;
       align-items: start;
     }
+    /* Colonne gauche chiffres */
+    .team-stats-col { display: flex; flex-direction: column; gap: 36px; }
+    .team-stats-header { }
+    .team-surtitle {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .team-stats-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    .team-stats-title em { font-style: italic; color: var(--gold); }
     .team-stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       border-top: 1px solid rgba(196,154,60,.25);
       border-left: 1px solid rgba(196,154,60,.25);
     }
+    /* Colonne droite photo + slogan */
+    .team-photo-col { display: flex; flex-direction: column; gap: 0; }
+    .team-slogan-cap {
+      background: var(--navy);
+      padding: 28px 32px;
+      border-radius: 16px 16px 0 0;
+    }
+    .team-slogan {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(1.3rem, 2.4vw, 1.85rem);
+      color: var(--white);
+      line-height: 1.18;
+    }
+    .team-slogan em { font-style: italic; color: var(--gold); }
     .team-stat {
       padding: 32px 24px;
-      border-right: 1px solid rgba(76,175,113,.2);
-      border-bottom: 1px solid rgba(76,175,113,.2);
+      border-right: 1px solid rgba(196,154,60,.2);
+      border-bottom: 1px solid rgba(196,154,60,.2);
     }
     .team-stat:last-child { border-right: none; }
     .team-stat-label {
@@ -1446,7 +1461,7 @@
       text-transform: uppercase;
       color: var(--gold);
       padding-bottom: 8px;
-      border-bottom: 2px solid rgba(76,175,113,.35);
+      border-bottom: 2px solid rgba(45,122,79,.3);
       margin-bottom: 10px;
     }
     .team-stat-num {
@@ -1454,11 +1469,10 @@
       font-weight: 900;
       font-style: italic;
       font-size: clamp(2rem, 3.5vw, 3.2rem);
-      color: #4CAF71;
+      color: #2D7A4F;
       line-height: 1;
       margin-bottom: 10px;
       letter-spacing: -.02em;
-      text-shadow: 0 2px 18px rgba(76,175,113,.2);
     }
     .team-stat p {
       font-size: .9rem;
@@ -1478,6 +1492,8 @@
       .team-section { padding: 60px 20px 72px; }
       .team-2col { grid-template-columns: 1fr; gap: 48px; }
       .team-photo-col img { min-height: 300px; }
+      .team-slogan-cap { padding: 22px 24px; border-radius: 12px 12px 0 0; }
+      .team-slogan { font-size: clamp(1.15rem, 5vw, 1.6rem); }
     }
 
     /* ═══════════════════════════════════════════
@@ -3055,36 +3071,43 @@
        ÉQUIPE — Photo de groupe + slogan
   ══════════════════════════════════════════ -->
   <section class="team-section" id="equipe">
-    <div class="team-section-header">
-      <p class="team-surtitle">Voyages 21 · depuis 2000</p>
-      <h2 class="team-slogan">Derrière chaque voyage d'exception,<br><em>une équipe d'exception.</em></h2>
-    </div>
     <div class="team-2col">
-      <!-- Colonne gauche : chiffres -->
-      <div class="team-stats-grid">
-        <div class="team-stat">
-          <div class="team-stat-label">Ans d'expérience</div>
-          <div class="team-stat-num">26</div>
-          <p>Fondée en 2000, Voyages21 maîtrise chaque détail de la billetterie aérienne, de la tarification aux meilleures disponibilités.</p>
+
+      <!-- Colonne gauche : titre stats + grille chiffres -->
+      <div class="team-stats-col">
+        <div class="team-stats-header">
+          <p class="team-surtitle">Voyages&nbsp;21 · depuis 2000</p>
+          <h2 class="team-stats-title">26 ans d'expertise,<br><em>des chiffres qui parlent.</em></h2>
         </div>
-        <div class="team-stat">
-          <div class="team-stat-label">Destinations desservies</div>
-          <div class="team-stat-num">180+</div>
-          <p>Circuits, croisières, séjours, Omra &amp; Hajj — notre réseau couvre le monde entier avec des partenaires triés sur le volet.</p>
-        </div>
-        <div class="team-stat">
-          <div class="team-stat-label">Conseiller dédié</div>
-          <div class="team-stat-num">100%</div>
-          <p>Aucun bot, aucune hotline anonyme. Un vrai professionnel joignable à chaque étape de votre voyage.</p>
-        </div>
-        <div class="team-stat">
-          <div class="team-stat-label">Satisfaction client</div>
-          <div class="team-stat-num">Zéro<br>défaut</div>
-          <p>Visa, transferts, hébergements, assurances — tout est orchestré en interne pour que vous partiez l'esprit libre.</p>
+        <div class="team-stats-grid">
+          <div class="team-stat">
+            <div class="team-stat-label">Ans d'expérience</div>
+            <div class="team-stat-num">26</div>
+            <p>Fondée en 2000, Voyages21 maîtrise chaque détail de la billetterie aérienne, de la tarification aux meilleures disponibilités.</p>
+          </div>
+          <div class="team-stat">
+            <div class="team-stat-label">Destinations desservies</div>
+            <div class="team-stat-num">180+</div>
+            <p>Circuits, croisières, séjours, Omra &amp; Hajj — notre réseau couvre le monde entier avec des partenaires triés sur le volet.</p>
+          </div>
+          <div class="team-stat">
+            <div class="team-stat-label">Conseiller dédié</div>
+            <div class="team-stat-num">100%</div>
+            <p>Aucun bot, aucune hotline anonyme. Un vrai professionnel joignable à chaque étape de votre voyage.</p>
+          </div>
+          <div class="team-stat">
+            <div class="team-stat-label">Satisfaction client</div>
+            <div class="team-stat-num">Zéro<br>défaut</div>
+            <p>Visa, transferts, hébergements, assurances — tout est orchestré en interne pour que vous partiez l'esprit libre.</p>
+          </div>
         </div>
       </div>
-      <!-- Colonne droite : photo -->
+
+      <!-- Colonne droite : slogan juste au-dessus de la photo -->
       <div class="team-photo-col">
+        <div class="team-slogan-cap">
+          <h2 class="team-slogan">Derrière chaque voyage d'exception,<br><em>une équipe d'exception.</em></h2>
+        </div>
         <img src="/design/team/equipe-voyages21.jpg" alt="L'équipe Voyages21" onerror="this.style.opacity='.15'">
       </div>
     </div>
