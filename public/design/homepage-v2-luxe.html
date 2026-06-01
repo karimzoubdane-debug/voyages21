@@ -770,6 +770,7 @@
     .sr-section {
       background: #0D1A14;
       padding: 80px 60px 72px;
+      overflow: visible;
     }
     .sr-header {
       text-align: center;
@@ -974,6 +975,143 @@
     .sr-ticker-time {
       color: rgba(255,255,255,.2);
       font-size: .65rem;
+    }
+
+    /* ── FAN DE CARTES IMPRÉVUS ──────────────────── */
+    .fan-wrap { max-width:1100px; margin:0 auto; padding:200px 0 0; overflow:visible; }
+    .fan-hint {
+      text-align:center;
+      font-family:'Geist',sans-serif;
+      font-size:.63rem;
+      font-weight:700;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.22);
+      margin-bottom:20px;
+    }
+    .fan-cards {
+      display:flex;
+      height:240px;
+      padding:0 80px;
+      justify-content:center;
+      align-items:flex-end;
+      position:relative;
+      overflow:visible;
+    }
+    .fan-card {
+      height:240px;
+      margin:0 -38px;
+      position:relative;
+      width:150px;
+    }
+    .fan-card::after {
+      bottom:0; content:''; left:-60px;
+      position:absolute; right:-60px; top:0; z-index:10;
+    }
+    .fan-face {
+      bottom:0; left:0; pointer-events:none;
+      position:absolute; right:0; top:0;
+      transition:800ms cubic-bezier(0.19,1,0.22,1) transform;
+      border-radius:14px; overflow:hidden;
+    }
+    .fan-face::after {
+      animation:none; background:#fff;
+      bottom:0; content:''; left:0;
+      opacity:0; position:absolute; right:0; top:0;
+      pointer-events:none;
+    }
+    .fan-scenario {
+      font-family:'Fraunces',serif;
+      font-style:italic; font-weight:900;
+      font-size:1.08rem; letter-spacing:-.015em;
+      padding:16px 14px 0; line-height:1.2;
+    }
+    .fan-agent-info {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:10px 14px 14px;
+      background:linear-gradient(to top, rgba(0,0,0,.45), transparent);
+    }
+    .fan-agent-name {
+      font-family:'Fraunces',serif;
+      font-size:.82rem; font-weight:900;
+      font-style:italic; color:#fff;
+    }
+    .fan-agent-desc {
+      font-family:'Geist',sans-serif;
+      font-size:.6rem; color:rgba(255,255,255,.82);
+      line-height:1.4; margin-top:3px;
+    }
+    .fan-time-label {
+      font-family:'Geist',sans-serif;
+      font-size:.54rem; font-weight:700;
+      letter-spacing:.07em; text-transform:uppercase;
+      color:rgba(255,255,255,.5); margin-top:5px;
+    }
+    .fan-card:hover::after { top:-175px; }
+
+    /* card 1 — rouge — rot -31.25° offset 50px */
+    .fan-card:nth-child(1) .fan-face {
+      background:linear-gradient(-135deg,hsla(0,100%,80%,1),hsla(0,90%,45%,1));
+      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(0,100%,80%,.75);
+      transform:translateY(50px) rotate(-31.25deg);
+    }
+    .fan-card:nth-child(1) .fan-scenario { color:hsla(0,100%,38%,1); text-shadow:-.025em .025em 0 hsla(0,100%,75%,1); }
+    .fan-card:nth-child(1):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(0,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(1):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    /* card 2 — magenta — rot -18.75° offset 30px */
+    .fan-card:nth-child(2) .fan-face {
+      background:linear-gradient(-135deg,hsla(300,100%,80%,1),hsla(300,90%,45%,1));
+      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(300,100%,80%,.75);
+      transform:translateY(30px) rotate(-18.75deg);
+    }
+    .fan-card:nth-child(2) .fan-scenario { color:hsla(300,100%,38%,1); text-shadow:-.025em .025em 0 hsla(300,100%,75%,1); }
+    .fan-card:nth-child(2):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(300,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(2):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    /* card 3 — bleu — rot -6.25° offset 10px */
+    .fan-card:nth-child(3) .fan-face {
+      background:linear-gradient(-135deg,hsla(240,100%,80%,1),hsla(240,90%,45%,1));
+      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(240,100%,80%,.75);
+      transform:translateY(10px) rotate(-6.25deg);
+    }
+    .fan-card:nth-child(3) .fan-scenario { color:hsla(240,100%,38%,1); text-shadow:-.025em .025em 0 hsla(240,100%,75%,1); }
+    .fan-card:nth-child(3):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(240,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(3):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    /* card 4 — teal — rot 6.25° offset 10px */
+    .fan-card:nth-child(4) .fan-face {
+      background:linear-gradient(-135deg,hsla(180,100%,80%,1),hsla(180,90%,45%,1));
+      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(180,100%,80%,.75);
+      transform:translateY(10px) rotate(6.25deg);
+    }
+    .fan-card:nth-child(4) .fan-scenario { color:hsla(180,100%,30%,1); text-shadow:-.025em .025em 0 hsla(180,100%,75%,1); }
+    .fan-card:nth-child(4):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(180,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(4):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    /* card 5 — vert — rot 18.75° offset 30px */
+    .fan-card:nth-child(5) .fan-face {
+      background:linear-gradient(-135deg,hsla(120,100%,80%,1),hsla(120,90%,38%,1));
+      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(120,100%,80%,.75);
+      transform:translateY(30px) rotate(18.75deg);
+    }
+    .fan-card:nth-child(5) .fan-scenario { color:hsla(120,100%,25%,1); text-shadow:-.025em .025em 0 hsla(120,100%,70%,1); }
+    .fan-card:nth-child(5):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(120,100%,80%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(5):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    /* card 6 — or/jaune — rot 31.25° offset 50px */
+    .fan-card:nth-child(6) .fan-face {
+      background:linear-gradient(-135deg,hsla(48,100%,78%,1),hsla(40,90%,48%,1));
+      box-shadow:-5px 5px 5px hsla(0,0%,0%,.18),inset 0 0 0 2px hsla(48,100%,78%,.75);
+      transform:translateY(50px) rotate(31.25deg);
+    }
+    .fan-card:nth-child(6) .fan-scenario { color:hsla(40,100%,30%,1); text-shadow:-.025em .025em 0 hsla(48,100%,72%,1); }
+    .fan-card:nth-child(6):hover .fan-face { box-shadow:0 12px 32px hsla(0,0%,0%,.45),inset 0 0 0 2px hsla(48,100%,78%,.75); transform:translateY(-100px) rotate(0deg) scale(1.55); transition-duration:0ms; z-index:20; }
+    .fan-card:nth-child(6):hover .fan-face::after { animation:fanFlash 260ms ease-out forwards; }
+
+    @keyframes fanFlash {
+      0%   { opacity:.85; transform:scale(1); }
+      100% { opacity:0;   transform:scale(1.15); }
     }
 
     /* ── DASHBOARD ÉQUIPE ──────────────────────── */
@@ -2474,80 +2612,78 @@
       <p class="sr-sub">Profitez de votre voyage — nous gérons le reste.</p>
     </div>
 
-    <div class="sr-bento" id="srBento">
+    <!-- Fan de cartes — hover pour voir la résolution -->
+    <div class="fan-wrap">
+      <p class="fan-hint">Survolez un scénario</p>
+      <div class="fan-cards">
 
-      <!-- HERO — Houda -->
-      <div class="sr-card sr-card--hero" data-sr>
-        <div class="sr-badge-live"><span class="sr-badge-live-dot"></span>Supervision</div>
-        <div class="sr-incident">Veille permanente &amp; coordination</div>
-        <p class="sr-text">Chaque imprévu remonte à Houda. Elle orchestre la réponse de toute l'équipe au plus haut niveau — et s'assure que chaque client est protégé, quoi qu'il arrive. Elle fait faire.</p>
-        <div class="sr-agent">
-          <img class="sr-agent-photo" src="/design/team/houda.jpg" alt="Houda">
-          <div>
-            <div class="sr-agent-name">Houda</div>
-            <div class="sr-agent-role">Directrice générale</div>
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-scenario">Vol annulé</div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-name">Wafa</div>
+              <div class="fan-agent-desc">Reroutage &amp; hébergement sécurisés avant que vous raccrochiez.</div>
+              <div class="fan-time-label">Résolu · 8 min</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Vol annulé — Wafa -->
-      <div class="sr-card" data-sr>
-        <div class="sr-badge-live"><span class="sr-badge-live-dot"></span>Imprévu</div>
-        <div class="sr-incident">Vol annulé</div>
-        <p class="sr-text">Vous n'avez pas encore stressé que Wafa vous a déjà appelé. Elle gère le reroutage et sécurise votre hébergement.</p>
-        <div class="sr-agent">
-          <img class="sr-agent-photo" src="/design/team/wafa.jpg" alt="Wafa">
-          <div><div class="sr-agent-name">Wafa</div></div>
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-scenario">Hôtel surréservé</div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-name">Ghizlane</div>
+              <div class="fan-agent-desc">Équivalent ou supérieur trouvé en 20 min — vous n'avez qu'à suivre.</div>
+              <div class="fan-time-label">Résolu · 18 min</div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Bagage perdu — Fouad -->
-      <div class="sr-card" data-sr>
-        <div class="sr-badge-live"><span class="sr-badge-live-dot"></span>Imprévu</div>
-        <div class="sr-incident">Bagage perdu</div>
-        <p class="sr-text">Fouad active notre correspondant local. Un kit de première nécessité est organisé pendant que la compagnie est mise en demeure.</p>
-        <div class="sr-agent">
-          <img class="sr-agent-photo" src="/design/team/fouad.jpg" alt="Fouad">
-          <div><div class="sr-agent-name">Fouad</div></div>
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-scenario">Bagage perdu</div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-name">Fouad</div>
+              <div class="fan-agent-desc">Kit d'urgence &amp; correspondant local activé pendant que la compagnie est mise en demeure.</div>
+              <div class="fan-time-label">Résolu · 12 min</div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Hôtel surréservé — Ghizlane -->
-      <div class="sr-card" data-sr>
-        <div class="sr-badge-live"><span class="sr-badge-live-dot"></span>Imprévu</div>
-        <div class="sr-incident">Hôtel surréservé</div>
-        <p class="sr-text">Ghizlane vous trouve un établissement équivalent ou supérieur en moins de 20 minutes. Vous n'avez qu'à suivre.</p>
-        <div class="sr-agent">
-          <img class="sr-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane">
-          <div><div class="sr-agent-name">Ghizlane</div></div>
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-scenario">Vol retardé</div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-name">Ghizlane</div>
+              <div class="fan-agent-desc">Hôtel, guide, restaurant — toutes les réservations recalées en cascade.</div>
+              <div class="fan-time-label">Résolu · 5 min</div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Vol retardé — Ghizlane -->
-      <div class="sr-card" data-sr>
-        <div class="sr-badge-live"><span class="sr-badge-live-dot"></span>Imprévu</div>
-        <div class="sr-incident">Vol retardé</div>
-        <p class="sr-text">Ghizlane repousse les réservations en cascade — hôtel, guide, restaurant. Vous arrivez serein, tout est recalé.</p>
-        <div class="sr-agent">
-          <img class="sr-agent-photo" src="/design/team/ghizlane.jpg" alt="Ghizlane">
-          <div><div class="sr-agent-name">Ghizlane</div></div>
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-scenario">Météo extrême</div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-name">Wafa</div>
+              <div class="fan-agent-desc">Itinéraire réorganisé en temps réel, vous arrivez serein.</div>
+              <div class="fan-time-label">Résolu · 22 min</div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Météo + Malaise — ligne wide -->
-      <div class="sr-card sr-card--wide" data-sr>
-        <div class="sr-badge-live" style="flex-shrink:0"><span class="sr-badge-live-dot"></span>Imprévu</div>
-        <div>
-          <div class="sr-incident">Météo extrême · Malaise en voyage</div>
-          <p class="sr-text">Wafa réorganise l'itinéraire en temps réel. Fouad contacte notre médecin partenaire sur place dans les minutes qui suivent et active si besoin l'assistance rapatriement.</p>
+        <div class="fan-card">
+          <div class="fan-face">
+            <div class="fan-scenario">Malaise en voyage</div>
+            <div class="fan-agent-info">
+              <div class="fan-agent-name">Fouad</div>
+              <div class="fan-agent-desc">Médecin partenaire sur place + assistance rapatriement activée si besoin.</div>
+              <div class="fan-time-label">Résolu · 4 min</div>
+            </div>
+          </div>
         </div>
-        <div class="sr-agent" style="margin-left:auto;flex-shrink:0">
-          <img class="sr-agent-photo" src="/design/team/wafa.jpg" alt="Wafa">
-          <img class="sr-agent-photo" src="/design/team/fouad.jpg" alt="Fouad" style="margin-left:-14px">
-          <div><div class="sr-agent-name">Wafa &amp; Fouad</div></div>
-        </div>
-      </div>
 
+      </div>
     </div>
 
     <!-- Ticker résolutions -->
