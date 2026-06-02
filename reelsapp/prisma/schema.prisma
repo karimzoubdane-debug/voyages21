@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  clerkId   String    @unique
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+model Project {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  name      String
+  prompt    String
+  sourceUrl String?
+  status    ProjectStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  videos    Video[]
+  clips     Clip[]
+}
+
+model Video {
+  id            String      @id @default(cuid())
+  projectId     String
+  project       Project     @relation(fields: [projectId], references: [id])
+  youtubeId     String
+  title         String
+  channelName   String
+  duration      Int
+  viewCount     BigInt      @default(0)
+  likeCount     BigInt      @default(0)
+  viralityScore Float       @default(0)
+  thumbnailUrl  String?
+  transcript    String?     @db.Text
+  status        VideoStatus @default(PENDING)
+  createdAt     DateTime    @default(now())
+  clips         Clip[]
+}
+
+model Clip {
+  id          String     @id @default(cuid())
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id])
+  videoId     String
+  video       Video      @relation(fields: [videoId], references: [id])
+  platform    Platform
+  startTime   Float
+  endTime     Float
+  title       String?
+  subtitle    String?    @db.Text
+  ctaText     String?
+  outputPath  String?
+  status      ClipStatus @default(PENDING)
+  validated   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+}
+
+enum ProjectStatus {
+  PENDING
+  PROCESSING
+  DONE
+  ERROR
+}
+
+enum VideoStatus {
+  PENDING
+  TRANSCRIBING
+  SEGMENTING
+  DONE
+  ERROR
+}
+
+enum ClipStatus {
+  PENDING
+  GENERATING
+  DONE
+  ERROR
+}
+
+enum Platform {
+  YOUTUBE_SHORT
+  INSTAGRAM_REEL
+  TIKTOK
+}
