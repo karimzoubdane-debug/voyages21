@@ -1,6 +1,6 @@
 import { inngest } from "@/lib/inngest";
 import { prisma } from "@/lib/prisma";
-import { downloadVideo } from "@/lib/ytdl";
+import { getVideoUrl } from "@/lib/ytdl";
 import { generateClip } from "@/lib/ffmpeg";
 import { put } from "@vercel/blob";
 import fs from "fs";
@@ -14,8 +14,10 @@ export const generateClips = inngest.createFunction(
       return prisma.video.findUniqueOrThrow({ where: { id: videoId } });
     });
 
-    const localPath = await step.run("download-video", async () => {
-      return downloadVideo(video.youtubeId);
+    // Get direct CDN URL — FFmpeg will HTTP-seek to the right timestamp,
+    // downloading only the ~30s segment instead of the full video.
+    const videoUrl = await step.run("get-video-url", async () => {
+      return getVideoUrl(video.youtubeId);
     });
 
     for (const clipId of clipIds) {
@@ -29,7 +31,7 @@ export const generateClips = inngest.createFunction(
 
         const outputName = `clip_${clipId}.mp4`;
         const outputPath = await generateClip({
-          inputPath: localPath,
+          inputPath: videoUrl,
           startSec: clip.startTime,
           endSec: clip.endTime,
           ctaText: clip.ctaText ?? undefined,
