@@ -104,6 +104,7 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 
 /* tableau de prix (identique à la brochure) */
 .ptable{width:100%;border-collapse:collapse;margin:.5rem 0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+[dir="rtl"] .ptable{direction:rtl;}
 .ptable th,.ptable td{padding:.7rem .9rem;text-align:start;font-size:.9rem;border-bottom:1px solid var(--line);}
 .ptable thead th{background:var(--forest);color:#fff;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;}
 .ptable tbody th{font-weight:700;color:var(--forest);font-family:'Playfair Display',serif;}
