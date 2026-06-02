@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Voyages 21 — Sélection 2026</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:  #1B2D4F;
+  --or:    #C8A440;
+  --vert:  #1B3A28;
+  --creme: #F5F0E8;
+  --blanc: #FFFFFF;
+  --gris:  #666;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--creme);
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, var(--vert) 0%, var(--navy) 100%);
+  color: var(--blanc);
+  text-align: center;
+  padding: 2.5rem 1rem 2rem;
+}
+
+.logo-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.logo-emblem {
+  width: 56px; height: 56px;
+  border: 2px solid var(--or);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+}
+
+header h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.or { color: var(--or); }
+
+header .tagline {
+  font-size: 0.95rem;
+  opacity: 0.88;
+  letter-spacing: 0.5px;
+  margin-top: 0.4rem;
+}
+
+.gold-bar {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--or), transparent);
+  margin: 1.2rem auto 0;
+  width: 200px;
+}
+
+/* ── NAV ── */
+nav {
+  background: var(--blanc);
+  border-bottom: 2px solid var(--or);
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+nav button {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+  transition: all 0.25s;
+}
+
+nav button:hover { background: var(--creme); }
+nav button.active {
+  background: var(--navy);
+  color: var(--blanc);
+  border-color: var(--navy);
+}
+
+/* ── SECTIONS ── */
+section { display: none; padding: 2.5rem 1rem; max-width: 1100px; margin: 0 auto; }
+section.active { display: block; animation: fadein 0.35s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.sec-header { text-align: center; margin-bottom: 2rem; }
+.sec-header h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2rem;
+  color: var(--navy);
+}
+.sec-header p { color: var(--or); font-weight: 500; margin-top: 0.3rem; }
+
+/* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--blanc);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  transition: transform 0.25s, box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 24px rgba(0,0,0,0.15); }
+
+.card-img {
+  height: 175px;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.card-img::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+.card-img span {
+  position: relative;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--or);
+  background: rgba(0,0,0,0.5);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+/* destination gradient backgrounds */
+.bg-maroc   { background: linear-gradient(160deg, #8B4513 0%, #D2691E 40%, #C8860A 100%); }
+.bg-turquie { background: linear-gradient(160deg, #006994 0%, #4FC3F7 60%, #1E90FF 100%); }
+.bg-egypte  { background: linear-gradient(160deg, #DAA520 0%, #CD853F 50%, #8B4513 100%); }
+.bg-europe  { background: linear-gradient(160deg, #1B2D4F 0%, #4B6584 60%, #8395A7 100%); }
+.bg-ameriques { background: linear-gradient(160deg, #2ECC71 0%, #27AE60 40%, #1A5C38 100%); }
+.bg-asie    { background: linear-gradient(160deg, #E74C3C 0%, #C0392B 40%, #6C2121 100%); }
+
+.card-body { padding: 1.2rem 1.2rem 1rem; flex: 1; display: flex; flex-direction: column; }
+.card-body h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+.card-body p { font-size: 0.88rem; color: var(--gris); flex: 1; }
+
+.card-footer {
+  padding: 0.8rem 1.2rem;
+  border-top: 1px solid #EEE;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.prix { font-weight: 700; color: #C0392B; font-size: 1rem; }
+.badge {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  background: #E8F5E9;
+  color: #2E7D32;
+  white-space: nowrap;
+}
+
+/* ── CONTACT ── */
+#contact { max-width: 700px; }
+.contact-box {
+  background: var(--blanc);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  padding: 2rem;
+  text-align: center;
+}
+.contact-box h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.8rem;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.contact-box .sub { color: var(--or); margin-bottom: 1.5rem; }
+.contacts { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--creme);
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+.contact-icon { font-size: 1.2rem; }
+.wa-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.9rem 2.5rem;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+}
+.wa-btn:hover { background: #1DA851; }
+.note {
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+  color: var(--gris);
+  font-style: italic;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--vert);
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.85rem;
+}
+footer strong { color: var(--or); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.5rem; }
+  .sec-header h2 { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-line">
+    <div class="logo-emblem">✦</div>
+    <h1>VOYAGES <span class="or">21</span></h1>
+    <div class="logo-emblem">✦</div>
+  </div>
+  <p class="tagline">Agence de voyages sur mesure · Maroc · Depuis 2000</p>
+  <div class="gold-bar"></div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <button class="active" onclick="show('maroc',this)">🇲🇦 Maroc</button>
+  <button onclick="show('turquie',this)">🇹🇷 Turquie</button>
+  <button onclick="show('egypte',this)">🇪🇬 Égypte</button>
+  <button onclick="show('asie',this)">🌏 Asie</button>
+  <button onclick="show('europe',this)">🏰 Europe</button>
+  <button onclick="show('ameriques',this)">🌎 Amériques</button>
+  <button onclick="show('contact',this)">📞 Contact</button>
+</nav>
+
+<!-- ══ MAROC ══ -->
+<section id="maroc" class="active">
+  <div class="sec-header">
+    <h2>Mon Maroc 2026</h2>
+    <p>Désert, kasbahs et grands espaces — le Maroc autrement</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img bg-maroc"><span>Sahara · Merzouga</span></div>
+      <div class="card-body">
+        <h3>Merzouga &amp; Désert</h3>
+        <p>Erg Chebbi, nuit sous tente berbère, lever de soleil sur les dunes d'or. Expérience inoubliable.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">À partir de 4 500 DH</span>
+        <span class="badge">3–4 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-maroc"><span>Lacs · Dayet Aoua</span></div>
+      <div class="card-body">
+        <h3>Circuit Lacs &amp; Ifrane</h3>
+        <p>Azrou, Ifrane la Suisse marocaine, lacs Dayet Aoua et Aguelmame Sidi Ali. Nature préservée.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">À partir de 3 900 DH</span>
+        <span class="badge">3 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-maroc"><span>Vallées · Sud Marocain</span></div>
+      <div class="card-body">
+        <h3>Ouarzazate &amp; Draa</h3>
+        <p>Aït Benhaddou (UNESCO), vallée du Draa, palmeraies de Zagora. Un décor de cinéma.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">À partir de 5 200 DH</span>
+        <span class="badge">4–5 jours</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ TURQUIE ══ -->
+<section id="turquie">
+  <div class="sec-header">
+    <h2>Turquie 2026</h2>
+    <p>Istanbul, Bosphore et riviera turque</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img bg-turquie"><span>Istanbul</span></div>
+      <div class="card-body">
+        <h3>Séjour Istanbul</h3>
+        <p>Hippodrome, Mosquée Bleue, Topkapi, croisière Bosphore, Îles Princesses. L'Orient à son plus beau.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">9 700 DH</span>
+        <span class="badge">6 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-turquie"><span>Istanbul · Antalya</span></div>
+      <div class="card-body">
+        <h3>Istanbul &amp; Antalya</h3>
+        <p>Le charme de la mégalopole + détente en all-inclusive sur la côte méditerranéenne.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">16 300 DH</span>
+        <span class="badge">8 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-turquie"><span>Grand Tour</span></div>
+      <div class="card-body">
+        <h3>Istanbul · Marmaris · Bodrum</h3>
+        <p>Croisière Bosphore + Marmaris + Bodrum all-inclusive. Le meilleur de la Turquie en un seul voyage.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">23 500 DH</span>
+        <span class="badge">10 jours</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ÉGYPTE ══ -->
+<section id="egypte">
+  <div class="sec-header">
+    <h2>Égypte 2026</h2>
+    <p>Pyramides, croisière du Nil &amp; mer Rouge</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img bg-egypte"><span>Caire · Nil · Hurghada</span></div>
+      <div class="card-body">
+        <h3>Caire · Nil · Hurghada</h3>
+        <p>Pyramides, Sphinx, Musée du Caire + croisière Nil (Assouan, Louxor, Vallée des Rois) + plages all-inclusive.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">19 300 DH</span>
+        <span class="badge">Départs garantis</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-egypte"><span>Caire · Sharm</span></div>
+      <div class="card-body">
+        <h3>Caire &amp; Sharm El Sheikh</h3>
+        <p>Le Caire historique (3 nuits + spectacle son &amp; lumière sur le Nil) + Sharm El Sheikh all-inclusive (7 nuits).</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">19 300 DH</span>
+        <span class="badge">10 jours</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ASIE ══ -->
+<section id="asie">
+  <div class="sec-header">
+    <h2>Asie 2026</h2>
+    <p>Vietnam, Thaïlande, Malaisie — l'Asie du Sud-Est au complet</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img bg-asie"><span>Vietnam</span></div>
+      <div class="card-body">
+        <h3>Vietnam Essentiel</h3>
+        <p>Hanoi, Baie d'Ha Long (croisière), Hoi An (UNESCO), Ho Chi Minh-Ville. Le Vietnam du Nord au Sud.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">Sur devis</span>
+        <span class="badge">12 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-asie"><span>Thaïlande</span></div>
+      <div class="card-body">
+        <h3>Bangkok &amp; Thaïlande</h3>
+        <p>Bangkok (temples, marché flottant), Chiang Mai (éléphants, jungle), île Koh Samui (plages paradisiaques).</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">Sur devis</span>
+        <span class="badge">10–14 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-asie"><span>Malaisie</span></div>
+      <div class="card-body">
+        <h3>Malaisie &amp; Singapour</h3>
+        <p>Kuala Lumpur (Petronas), Cameron Highlands, Penang (Patrimoine UNESCO), Singapour futuriste.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">Sur devis</span>
+        <span class="badge">12 jours</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ EUROPE ══ -->
+<section id="europe">
+  <div class="sec-header">
+    <h2>Europe 2026</h2>
+    <p>Capitales impériales, îles grecques &amp; al-Andalus</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img bg-europe"><span>Europe Centrale</span></div>
+      <div class="card-body">
+        <h3>Capitales Impériales</h3>
+        <p>Vienne, Budapest, Prague — architecture baroque, café viennois, châteaux médiévaux.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">13 600 DH</span>
+        <span class="badge">8 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-europe"><span>Espagne</span></div>
+      <div class="card-body">
+        <h3>Al-Andalus</h3>
+        <p>Madrid, Grenade (Alhambra), Séville (cathédrale, flamenco) — l'héritage arabo-andalou.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">14 900 DH</span>
+        <span class="badge">8 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-europe"><span>Grèce</span></div>
+      <div class="card-body">
+        <h3>Athènes · Rhodes · Kos</h3>
+        <p>Acropole d'Athènes + croisière vers Rhodes et Kos — mer Égée, falaises blanches, eaux turquoises.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">14 900 DH</span>
+        <span class="badge">9 jours</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ AMÉRIQUES ══ -->
+<section id="ameriques">
+  <div class="sec-header">
+    <h2>Amériques 2026</h2>
+    <p>USA, Canada, Cuba &amp; Pérou — le Nouveau Monde</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img bg-ameriques"><span>USA · Ouest</span></div>
+      <div class="card-body">
+        <h3>L'Ouest Américain</h3>
+        <p>Los Angeles, Grand Canyon, Monument Valley, Las Vegas. Départs garantis, guide francophone.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">21 250 DH</span>
+        <span class="badge">10 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-ameriques"><span>Cuba</span></div>
+      <div class="card-body">
+        <h3>Cuba — Havane &amp; Varadero</h3>
+        <p>La Havane (Vieille Ville, Malecón), Viñales, Trinidad coloniale, Varadero all-inclusive.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">17 000 DH</span>
+        <span class="badge">10 jours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img bg-ameriques"><span>Pérou</span></div>
+      <div class="card-body">
+        <h3>Pérou — Les Incas</h3>
+        <p>Lima, Arequipa, Lac Titicaca, Cusco, Machu Picchu. Le joyau des civilisations précolombiennes.</p>
+      </div>
+      <div class="card-footer">
+        <span class="prix">18 700 DH</span>
+        <span class="badge">12 jours</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="contact-box">
+    <h2>Réservez votre voyage</h2>
+    <p class="sub">Voyages sur mesure · Devis gratuit sous 24h</p>
+
+    <div class="contacts">
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <span>+212 5 37 73 43 43</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📱</span>
+        <span>+212 6 61 23 45 67</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <span>contact@voyages21.ma</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <span>Rabat, Maroc</span>
+      </div>
+    </div>
+
+    <a class="wa-btn" href="https://wa.me/212661234567?text=Bonjour%2C%20je%20souhaite%20un%20devis%20pour%20un%20voyage." target="_blank">
+      💬 WhatsApp — Demander un devis
+    </a>
+
+    <p class="note">
+      Agence agréée · IATA · RC 12345 Rabat · Fondée en 2000 par Karim Zoubdane<br/>
+      Voyages 21 — De l'aventure intime aux projets d'envergure.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Voyages 21</strong> · Agence de voyages sur mesure · Rabat, Maroc · Depuis 2000<br/>
+  <span style="font-size:0.78rem; opacity:0.7; margin-top:0.3rem; display:block;">
+    Tous les prix sont indicatifs et exprimés en dirhams marocains (DH) · Sélection 2026
+  </span>
+</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
