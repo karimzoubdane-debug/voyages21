@@ -2453,10 +2453,16 @@
     // ── WHATSAPP POPUP ──
     // Lancer les sliders au chargement, puis appliquer les medias personnalises
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); });
+        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); handleHash(); });
     } else {
         initSliders();
         loadMedia();
+        handleHash();
+    }
+
+    function handleHash() {
+        var hash = window.location.hash.slice(1);
+        if (hash) switchTab(hash);
     }
 
     // Mise a jour en direct quand les medias sont modifies dans l'admin (autre onglet)
