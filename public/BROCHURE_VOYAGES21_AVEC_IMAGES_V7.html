@@ -740,6 +740,7 @@
 <button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde<span class="nav-caret">▾</span></button>
 <button class="nav-title" id="navCroisiere" onclick="switchTab('croisiere')">Croisières</button>
 <button class="nav-title" id="navOmra" onclick="switchTab('omra')">Omra</button>
+<button class="nav-title" id="navMaroc" onclick="switchTab('maroc')">Mon Maroc</button>
 </nav>
 <!-- MEGA PANNEAU DESTINATIONS -->
 <div class="mega-panel" id="destPanel">
@@ -1351,6 +1352,54 @@
 <button class="btn-details" onclick="location.href='voyages/omra-01-juillet.html'">Voir détails</button>
 <button class="btn-video" onclick="openVideo('modal-omra-01-juillet')">▶ Voir la vidéo</button>
 </div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB MON MAROC -->
+<div class="tab-content" id="maroc">
+<h2 class="section-title">Mon Maroc 2026</h2>
+<p class="section-subtitle">Désert, lacs et grands espaces — Le Maroc autrement</p>
+<div class="circuits-grid">
+<!-- Circuit Merzouga -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-merzouga"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-merzouga')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-merzouga')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-merzouga', 0)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 1)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Merzouga — Marrakech · Ouarzazate · Dadès</h3>
+<div class="circuit-meta">
+<span class="meta-item">Départ garanti chaque jour en 2026</span>
+</div>
+<p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
+<div class="prix-label">À partir de 1 200 DH</div>
+<button class="btn-details" onclick="openModal('modal-merzouga')">Voir détails</button>
+</div>
+</div>
+<!-- Circuit Bin El Ouidane -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-binouidane"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-binouidane')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-binouidane')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-binouidane', 0)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 1)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Bin El Ouidane — La beauté divine de la nature</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 2 jours</span>
+<span class="meta-item"> 1 nuit</span>
+</div>
+<p class="circuit-description">Week-end nature au lac de Bin El Ouidane. Programme de visites organisé, hôtel et transport inclus. Départs : 03-04 mai, 10-11 mai 2026 et autres dates.</p>
+<div class="prix-label">À partir de 1 100 DH</div>
+<button class="btn-details" onclick="openModal('modal-binouidane')">Voir détails</button>
+</div>
+</div>
+<!-- Circuit Dakhla -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-dakhla"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-dakhla')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-dakhla')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-dakhla', 0)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 1)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Dakhla — Wini Bik</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 4 jours</span>
+<span class="meta-item"> 3 nuits</span>
+</div>
+<p class="circuit-description">Séjour tout compris à Dakhla, perle du Sud marocain. Vols, hôtel, excursions et transport inclus. Lagune turquoise, kitesurf et couchers de soleil inoubliables.</p>
+<div class="prix-label">À partir de 5 500 DH</div>
+<button class="btn-details" onclick="openModal('modal-dakhla')">Voir détails</button>
 </div>
 </div>
 </div>
@@ -2413,5 +2462,95 @@
         v21bc.onmessage = function () { loadMedia(); };
     }
     </script>
+
+<!-- Modal Merzouga -->
+<div class="modal" id="modal-merzouga">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Merzouga — Marrakech · Ouarzazate · Dadès</h2>
+<button class="close" onclick="closeModal('modal-merzouga')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Départ :</strong> Garanti chaque jour en 2026</p>
+<p><strong>Itinéraire :</strong> Marrakech → Ouarzazate → Gorges du Dadès → Gorges de Todra → Merzouga (dunes Erg Chebbi)</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Nuit sous tente berbère au bord des dunes</li>
+<li>Formule hébergement en hôtel selon option choisie</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Formule</th><th>Prix par personne</th></tr>
+<tr><td>Départ partagé</td><td>1 200 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus :</strong>
+<ul>
+<li>Transport (départ Marrakech)</li>
+<li>Hébergement</li>
+<li>Repas mentionnés au programme</li>
+<li>Balade à dos de dromadaire</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal Bin El Ouidane -->
+<div class="modal" id="modal-binouidane">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Bin El Ouidane — La beauté divine de la nature</h2>
+<button class="close" onclick="closeModal('modal-binouidane')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée :</strong> 2 jours / 1 nuit</p>
+<p><strong>Dates :</strong> 03-04 mai 2026 · 10-11 mai 2026 · et autres dates</p>
+<p><strong>Programme :</strong> Départ tôt le matin, visite du lac de Bin El Ouidane, programme d'activités nature organisé, nuit à l'hôtel, retour le lendemain.</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Formule</th><th>Prix par personne</th></tr>
+<tr><td>En double</td><td>1 100 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus :</strong>
+<ul>
+<li>Transport (départ Marrakech)</li>
+<li>1 nuit à l'hôtel</li>
+<li>Programme de visites organisé</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal Dakhla -->
+<div class="modal" id="modal-dakhla">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Dakhla — Wini Bik (Séjour 4 jours / 3 nuits)</h2>
+<button class="close" onclick="closeModal('modal-dakhla')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée :</strong> 4 jours / 3 nuits</p>
+<p><strong>Destination :</strong> Dakhla, perle du Sahara atlantique</p>
+<p><strong>Programme :</strong> Vol aller-retour, transferts, excursions découverte de la lagune, activités nautiques (kitesurf, paddle), visites de la ville.</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Formule</th><th>Prix par personne</th></tr>
+<tr><td>Tout compris</td><td>À partir de 5 500 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus :</strong>
+<ul>
+<li>Vols aller-retour</li>
+<li>Hôtel (3 nuits)</li>
+<li>Excursions</li>
+<li>Transport sur place</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 
 </body></html>
