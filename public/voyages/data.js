@@ -1296,6 +1296,212 @@ window.VOYAGES = {
       note: "بخصوص الفنادق 5 نجوم، الغرف الثلاثية والرباعية بأسرّة إضافية. جواز سفر صالح لمدة لا تقل عن 8 أشهر قبل السفر. الأسعار قابلة للتغيير حسب الطيران."
     },
     cta: { title: "هل تنوون أداء العمرة؟", text: "ننظّم رحلتكم على المقاس وفق تواريخكم ورغباتكم — Voyages 21، منذ سنة 2000." }
+  },
+
+  "maroc-merzouga": {
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Départ garanti 2026",
+    title: "Merzouga — Marrakech · Ouarzazate · Dadès",
+    duration: "Circuit",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Marrakech"],
+      ["Destination", "Merzouga — Erg Chebbi"],
+      ["Étapes", "Ouarzazate · Dadès · Todra · Merzouga"],
+      ["Transport", "Inclus — véhicule touristique"],
+      ["Pension", "Hébergement + repas mentionnés"],
+      ["Départs", "Garantis chaque jour en 2026"]
+    ],
+    price: "1 200 DH",
+    intro: [
+      "Quelque part au-delà des Haut Atlas et des kasbahs de terre ocre, les dunes de l'Erg Chebbi surgissent de la plaine comme une promesse de bout du monde. Ce circuit vous emmène de Marrakech au cœur du Sahara marocain, à travers des paysages qui changent à chaque virage.",
+      "La route longe les gorges du Dadès, suspendues entre falaises roses et jardins d'amandiers. Plus loin, les gorges de Todra, failles vertigineuses où le soleil ne pénètre qu'à certaines heures. Et enfin Merzouga, ses dunes qui rougeoient au coucher du soleil, et une nuit en tente berbère au silence du désert.",
+      "Un départ garanti chaque jour, au départ de Marrakech. Transport, hébergement et repas mentionnés inclus — il ne reste qu'à laisser le Maroc vous surprendre."
+    ],
+    highlights: [
+      "Les gorges du Dadès et les kasbahs de terre rose",
+      "Les gorges de Todra, failles spectaculaires au cœur du Haut Atlas",
+      "Les dunes de l'Erg Chebbi à Merzouga, au lever et coucher du soleil",
+      "Nuit sous tente berbère au bord des dunes",
+      "Balade à dos de dromadaire incluse"
+    ],
+    days: [
+      { num: "J1", title: "Marrakech – Ouarzazate – Dadès",
+        text: "Départ de Marrakech tôt le matin. Route vers Ouarzazate via le col du Tichka (2 260 m). Visite de la kasbah Aït Ben Haddou (classée UNESCO). Poursuite vers les gorges du Dadès. Installation et nuit.",
+        meta: [["Nuit", "Gorges du Dadès"]] },
+      { num: "J2", title: "Dadès – Gorges de Todra – Merzouga",
+        text: "Après le petit-déjeuner, visite des gorges de Todra. Route vers Errachidia puis Merzouga. Arrivée aux dunes en fin d'après-midi. Balade à dos de dromadaire au coucher du soleil. Nuit sous tente berbère.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Camp désert — Merzouga"]] },
+      { num: "J3", title: "Merzouga – Retour Marrakech",
+        text: "Lever au soleil sur les dunes. Petit-déjeuner au camp. Route retour vers Marrakech. Arrivée en fin de journée.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Transport en véhicule touristique (départ Marrakech)",
+      "Hébergement (2 nuits : hôtel + nuit en tente berbère)",
+      "Repas mentionnés au programme",
+      "Balade à dos de dromadaire",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les repas non mentionnés",
+      "Les extras et les boissons",
+      "Les pourboires des guides et chauffeurs"
+    ],
+    hotels: ["Hôtel en route (Dadès ou Todra)", "Camp berbère sous tente — Merzouga"],
+    priceTable: {
+      head: ["Catégorie", "Type", "Prix / pers."],
+      rows: [
+        ["Partagé", "Standard", "1 200 DH"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Marrakech", "Ouarzazate", "Aït Ben Haddou", "Gorges du Dadès", "Gorges de Todra", "Merzouga"],
+    dates: {
+      line: "Départ garanti chaque jour en 2026, au départ de Marrakech.",
+      note: "Contactez-nous pour les disponibilités et tarifs groupes."
+    },
+    cta: {
+      title: "Envie de découvrir le désert marocain ?",
+      text: "Nous organisons votre circuit sur mesure, selon vos dates et votre groupe — comme nous le faisons depuis 2000."
+    }
+  },
+
+  "maroc-bin-el-ouidane": {
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Week-end nature 2026",
+    title: "Bin El Ouidane — La beauté divine de la nature",
+    duration: "2 jours / 1 nuit",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Marrakech"],
+      ["Destination", "Lac de Bin El Ouidane"],
+      ["Durée", "2 jours / 1 nuit"],
+      ["Transport", "Inclus"],
+      ["Pension", "Hôtel + programme organisé"],
+      ["Prochains départs", "03–04 mai · 10–11 mai 2026"]
+    ],
+    price: "1 100 DH",
+    intro: [
+      "À deux heures de Marrakech, niché entre les plis du Haut Atlas, le lac de Bin El Ouidane est l'un des plus beaux secrets du Maroc. Ses eaux turquoise découpent la montagne, les aigles planent dans le silence, et le temps s'étire à la mesure du paysage.",
+      "Ce week-end nature est conçu pour souffler : programme de visites organisé, hôtel au bord du lac, transport pris en charge depuis Marrakech. Deux jours, une nuit, pour se rappeler que le plus beau voyage est parfois le plus proche."
+    ],
+    highlights: [
+      "Le lac de Bin El Ouidane, joyau turquoise du Haut Atlas",
+      "Programme de visites et activités nature organisé",
+      "Hôtel au bord du lac",
+      "Transport inclus depuis Marrakech",
+      "Week-end accessible à tous"
+    ],
+    days: [
+      { num: "J1", title: "Marrakech – Bin El Ouidane",
+        text: "Départ de Marrakech tôt le matin. Route vers Azilal et Bin El Ouidane. Arrivée au lac, installation à l'hôtel. Après-midi : programme de visites et activités nature au bord de l'eau. Soirée et nuit au lac.",
+        meta: [["Nuit", "Bin El Ouidane"]] },
+      { num: "J2", title: "Bin El Ouidane – Marrakech",
+        text: "Petit-déjeuner à l'hôtel. Matinée libre au bord du lac. Départ après le déjeuner, retour à Marrakech en fin d'après-midi.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Transport aller-retour depuis Marrakech",
+      "1 nuit à l'hôtel au bord du lac",
+      "Programme de visites organisé",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les repas non mentionnés",
+      "Les activités nautiques en option",
+      "Les extras"
+    ],
+    hotels: ["Hôtel au bord du lac de Bin El Ouidane"],
+    priceTable: {
+      head: ["Catégorie", "Type", "Prix / pers."],
+      rows: [
+        ["Double", "Standard", "1 100 DH"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Marrakech", "Azilal", "Bin El Ouidane", "Marrakech"],
+    dates: {
+      line: "Prochains départs : 03–04 mai · 10–11 mai 2026 · et autres dates.",
+      note: "Contactez-nous pour les disponibilités et tarifs groupes."
+    },
+    cta: {
+      title: "Envie d'un week-end au cœur de la nature ?",
+      text: "Nous organisons votre escapade sur mesure, selon vos dates — comme nous le faisons depuis 2000."
+    }
+  },
+
+  "maroc-dakhla": {
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Wini Bik — Dakhla 2026",
+    title: "Dakhla — Wini Bik",
+    duration: "4 jours / 3 nuits",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destination", "Dakhla, Sahara atlantique"],
+      ["Durée", "4 jours / 3 nuits"],
+      ["Vols", "Inclus — aller-retour"],
+      ["Pension", "Hôtel + excursions + transport"],
+      ["Formule", "Tout compris"]
+    ],
+    price: "5 500 DH",
+    intro: [
+      "Dakhla est une péninsule posée entre deux infinis : le Sahara d'un côté, l'Atlantique de l'autre. Une lagune turquoise de 40 kilomètres, battue par un vent régulier qui en a fait la capitale mondiale du kitesurf — et un paradis pour ceux qui cherchent simplement l'espace, le silence et la lumière.",
+      "Ce séjour est un tout compris : vols, hôtel, excursions et transport sur place. Quatre jours pour découvrir la lagune de Dakhla depuis une pirogue, vous perdre dans les dunes roses de Lassarga, ou regarder les kitesurfeurs tracer sur l'eau comme des oiseaux. Le tout dans une lumière que l'Atlantique rend incomparable.",
+      "Wini Bik — littéralement « je suis avec toi » — c'est l'esprit de ce voyage : une destination hors des sentiers battus, organisée avec le soin de Voyages 21 depuis Marrakech."
+    ],
+    highlights: [
+      "La lagune de Dakhla, turquoise et venteuse, entre désert et océan",
+      "Les dunes roses de Lassarga au coucher du soleil",
+      "Excursions organisées : lagune, dunes, ville",
+      "Vols aller-retour et transport sur place inclus",
+      "Capital mondiale du kitesurf et paradis de la glisse"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca – Dakhla",
+        text: "Vol au départ de Casablanca vers Dakhla. Accueil à l'aéroport et transfert à l'hôtel. Installation et présentation du séjour. Soirée libre.",
+        meta: [["Nuit", "Dakhla"]] },
+      { num: "J2", title: "Dakhla — Excursion lagune et dunes",
+        text: "Journée d'excursion : balade en pirogue sur la lagune de Dakhla, visite des dunes roses de Lassarga. Coucher de soleil face à l'Atlantique. Retour à l'hôtel.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Dakhla"]] },
+      { num: "J3", title: "Dakhla — Ville et activités libres",
+        text: "Matinée : visite de la ville de Dakhla, marché aux poissons, corniche. Après-midi libre : plage, kitesurf (en option), kayak. Soirée à l'hôtel.",
+        meta: [["Repas", "petit-déjeuner"], ["Nuit", "Dakhla"]] },
+      { num: "J4", title: "Dakhla – Casablanca",
+        text: "Petit-déjeuner à l'hôtel. Transfert à l'aéroport. Vol retour vers Casablanca. Fin de nos services.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Le billet d'avion aller-retour Casablanca / Dakhla",
+      "3 nuits à l'hôtel à Dakhla",
+      "Excursions (lagune, dunes de Lassarga)",
+      "Transferts aéroport / hôtel",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les activités nautiques en option (kitesurf, paddle)",
+      "Les repas non mentionnés",
+      "Les extras et les boissons",
+      "Les pourboires"
+    ],
+    hotels: ["Hôtel à Dakhla (3 nuits)"],
+    priceTable: {
+      head: ["Catégorie", "Type", "Prix / pers."],
+      rows: [
+        ["Double", "Tout compris", "5 500 DH"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Casablanca", "Dakhla", "Lagune", "Lassarga", "Casablanca"],
+    dates: {
+      line: "Départs disponibles en 2026 depuis Casablanca.",
+      note: "Contactez-nous pour les disponibilités et tarifs groupes."
+    },
+    cta: {
+      title: "Envie de découvrir Dakhla ?",
+      text: "Nous organisons votre séjour sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
+    }
   }
 
 };
