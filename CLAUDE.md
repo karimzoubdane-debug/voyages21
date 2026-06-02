@@ -7,14 +7,23 @@
 
 ## URLs
 - **Production (Next.js)** : https://voyages21.vercel.app/
-- **Maquette en cours** : https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/design/homepage-v2-luxe.html
-- **Page avis (maquette)** : https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/design/avis.html
+- **Maquette outgoing (Vercel `voyages21-monde`)** : https://voyages21-monde.vercel.app/homepage-v2-luxe.html
+- **Page avis (maquette)** : https://voyages21-monde.vercel.app/avis.html
+- **Ancien URL preview** : https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/design/homepage-v2-luxe.html
 
 ## Dépôt GitHub
 - **Repo** : karimzoubdane-debug/voyages21
 - **Branche de travail active** : `claude/confident-meitner-Fiqzd`
 - **PR ouverte** : #15 (draft)
 - **Branche production** : main (auto-déployée sur Vercel)
+
+## Vercel — Projet `voyages21-monde` (maquette outgoing)
+- **Project ID** : `prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ`
+- **Production Branch** : `claude/confident-meitner-Fiqzd` ✅ configuré
+- **Output Directory** : `public/design`
+- **Domaine custom** : `voyages21.com` (ajouté dans Vercel ✅)
+- **DNS** : A records `voyages21.com` et `*.voyages21.com` → `216.150.1.1` ✅ configuré chez Vala/StackCP
+- **État** : propagation DNS en cours (15 min à 24h) — voyages21.com affichera la maquette dès propagation
 
 ## ⚠️ RÈGLES ABSOLUES — NE JAMAIS ENFREINDRE
 
@@ -67,8 +76,11 @@ public/design/
   - Ouvre directement le formulaire avec étoiles + champ texte, le client se connecte avec son Gmail
 
 ## Ce qui reste à faire
-- **Priorité 1** : Remplacer les 6 review cards fictives par les vrais avis Google (le client doit fournir les textes des 19 avis par screenshot ou copie-colle)
+- **Priorité 1** : Vérifier que `voyages21.com` affiche bien la maquette (propagation DNS en cours)
+- **Priorité 2** : Remplacer les 6 review cards fictives par les vrais avis Google (le client doit fournir les textes des 19 avis par screenshot ou copie-colle)
+- **Priorité 3** : Mettre à jour le numéro WhatsApp dans `index.html` (page maintenance) — actuellement placeholder `+212600000000`
 - **Optionnel** : Mettre à jour les reviews dans `avis.html` (même travail)
+- **Optionnel** : Ajouter photos équipe dans `public/design/team/` (houda.jpg, rabii.jpg, wafa.jpg, fouad.jpg, ghizlane.jpg)
 
 ## Architecture Next.js (production — ne pas modifier)
 ```
