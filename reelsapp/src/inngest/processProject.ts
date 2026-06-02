@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { inngest } from "@/lib/inngest";
 import { prisma } from "@/lib/prisma";
 import { searchYouTubeVideos } from "@/lib/youtube";
 
-const client = inngest as any;
-
-export const processProject = client.createFunction(
-  { id: "process-project" },
-  { event: "project/process" },
+export const processProject = inngest.createFunction(
+  { id: "process-project", triggers: { event: "project/process" } } as any,
   async ({ event, step }: any) => {
     const { projectId } = event.data;
 
