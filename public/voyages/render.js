@@ -69,7 +69,7 @@
         : (v.hebergement ? '<div class="stay">' + v.hebergement + "</div>" : "");
     var priceHtml = "";
     if (v.priceTable) {
-        priceHtml = '<table class="ptable"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
+        priceHtml = '<table class="ptable" dir="ltr"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
                 return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : "<td>" + c + "</td>"; }).join("") + "</tr>";
             }).join("") + "</tbody></table>";
