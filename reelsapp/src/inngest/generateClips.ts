@@ -1,6 +1,5 @@
 import { inngest } from "@/lib/inngest";
 import { prisma } from "@/lib/prisma";
-import { getVideoUrl } from "@/lib/ytdl";
 import { generateClip } from "@/lib/ffmpeg";
 import { put } from "@vercel/blob";
 import fs from "fs";
@@ -14,12 +13,6 @@ export const generateClips = inngest.createFunction(
       return prisma.video.findUniqueOrThrow({ where: { id: videoId } });
     });
 
-    // Get direct CDN URL — FFmpeg will HTTP-seek to the right timestamp,
-    // downloading only the ~30s segment instead of the full video.
-    const videoUrl = await step.run("get-video-url", async () => {
-      return getVideoUrl(video.youtubeId);
-    });
-
     for (const clipId of clipIds) {
       await step.run(`generate-clip-${clipId}`, async () => {
         const clip = await prisma.clip.findUniqueOrThrow({ where: { id: clipId } });
@@ -29,25 +22,34 @@ export const generateClips = inngest.createFunction(
           data: { status: "GENERATING" },
         });
 
-        const outputName = `clip_${clipId}.mp4`;
-        const outputPath = await generateClip({
-          inputPath: videoUrl,
-          startSec: clip.startTime,
-          endSec: clip.endTime,
-          ctaText: clip.ctaText ?? undefined,
-          outputName,
-        });
+        try {
+          const outputName = `clip_${clipId}.mp4`;
+          const outputPath = await generateClip({
+            youtubeId: video.youtubeId,
+            startSec: clip.startTime,
+            endSec: clip.endTime,
+            ctaText: clip.ctaText ?? undefined,
+            outputName,
+          });
 
-        const fileBuffer = fs.readFileSync(outputPath);
-        const blob = await put(`clips/${clipId}.mp4`, fileBuffer, {
-          access: "public",
-          contentType: "video/mp4",
-        });
+          const fileBuffer = fs.readFileSync(outputPath);
+          const blob = await put(`clips/${clipId}.mp4`, fileBuffer, {
+            access: "public",
+            contentType: "video/mp4",
+          });
 
-        await prisma.clip.update({
-          where: { id: clipId },
-          data: { status: "DONE", outputPath: blob.url },
-        });
+          await prisma.clip.update({
+            where: { id: clipId },
+            data: { status: "DONE", outputPath: blob.url },
+          });
+        } catch (err) {
+          // Surface the error in the DB so the UI can show it and allow retry
+          await prisma.clip.update({
+            where: { id: clipId },
+            data: { status: "ERROR" },
+          });
+          throw err; // re-throw so Inngest logs the full stack trace
+        }
       });
     }
 

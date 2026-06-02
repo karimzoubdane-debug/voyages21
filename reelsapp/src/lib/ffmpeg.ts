@@ -1,10 +1,9 @@
 import ffmpegStatic from "ffmpeg-static";
-import { exec } from "child_process";
-import { promisify } from "util";
+import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
+import { streamVideoSegment } from "./ytdl";
 
-const execAsync = promisify(exec);
 const FFMPEG = ffmpegStatic ?? "ffmpeg";
 const TMP_DIR = "/tmp/reelsapp";
 
@@ -12,74 +11,60 @@ function ensureTmpDir() {
   if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR, { recursive: true });
 }
 
-export async function reframeToVertical(
-  inputPath: string,
-  outputName: string
-): Promise<string> {
-  ensureTmpDir();
-  const outputPath = path.join(TMP_DIR, outputName);
-  await execAsync(
-    `"${FFMPEG}" -i "${inputPath}" -vf "crop=ih*9/16:ih,scale=1080:1920" -c:v libx264 -preset fast -crf 23 -c:a aac -y "${outputPath}"`
-  );
-  return outputPath;
-}
-
-export async function cutClip(
-  inputPath: string,
-  startSec: number,
-  endSec: number,
-  outputName: string
-): Promise<string> {
-  ensureTmpDir();
-  const outputPath = path.join(TMP_DIR, outputName);
-  const duration = endSec - startSec;
-  await execAsync(
-    `"${FFMPEG}" -ss ${startSec} -i "${inputPath}" -t ${duration} -c:v libx264 -preset fast -crf 23 -c:a aac -y "${outputPath}"`
-  );
-  return outputPath;
-}
-
-export async function burnSubtitles(
-  inputPath: string,
-  srtPath: string,
-  outputName: string
-): Promise<string> {
-  ensureTmpDir();
-  const outputPath = path.join(TMP_DIR, outputName);
-  await execAsync(
-    `"${FFMPEG}" -i "${inputPath}" -vf "subtitles='${srtPath}':force_style='FontSize=22,PrimaryColour=&Hffffff,OutlineColour=&H000000,Outline=2,Alignment=2'" -c:v libx264 -preset fast -crf 23 -c:a aac -y "${outputPath}"`
-  );
-  return outputPath;
-}
-
-export async function addTextOverlay(
-  inputPath: string,
-  text: string,
-  outputName: string
-): Promise<string> {
-  ensureTmpDir();
-  const outputPath = path.join(TMP_DIR, outputName);
-  const safeText = text.replace(/'/g, "\\'");
-  await execAsync(
-    `"${FFMPEG}" -i "${inputPath}" -vf "drawtext=text='${safeText}':fontsize=28:fontcolor=white:x=(w-text_w)/2:y=h-80:box=1:boxcolor=black@0.5:boxborderw=10" -c:v libx264 -preset fast -crf 23 -c:a aac -y "${outputPath}"`
-  );
-  return outputPath;
-}
-
+// Single-pass: stream from YouTube → crop 9:16 → cut to duration → output MP4.
+// ctaText is burned in if provided.
 export async function generateClip(params: {
-  inputPath: string;
+  youtubeId: string;
   startSec: number;
   endSec: number;
-  srtPath?: string;
   ctaText?: string;
   outputName: string;
 }): Promise<string> {
-  const { inputPath, startSec, endSec, srtPath, ctaText, outputName } = params;
+  const { youtubeId, startSec, endSec, ctaText, outputName } = params;
+  ensureTmpDir();
+  const outputPath = path.join(TMP_DIR, outputName);
+  const duration = endSec - startSec;
 
-  let current = await cutClip(inputPath, startSec, endSec, `cut_${outputName}`);
-  current = await reframeToVertical(current, `reframed_${outputName}`);
-  if (srtPath) current = await burnSubtitles(current, srtPath, `sub_${outputName}`);
-  if (ctaText) current = await addTextOverlay(current, ctaText, outputName);
+  let vf = "crop=ih*9/16:ih,scale=1080:1920";
+  if (ctaText) {
+    const safe = ctaText.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/:/g, "\\:");
+    vf += `,drawtext=text='${safe}':fontsize=28:fontcolor=white:x=(w-text_w)/2:y=h-80:box=1:boxcolor=black@0.5:boxborderw=10`;
+  }
 
-  return current;
+  const args = [
+    "-i", "pipe:0",
+    "-t", String(duration),
+    "-vf", vf,
+    "-c:v", "libx264",
+    "-preset", "fast",
+    "-crf", "23",
+    "-c:a", "aac",
+    "-y", outputPath,
+  ];
+
+  // Stream starting at startSec so ytdl fetches only what FFmpeg needs
+  const ytStream = streamVideoSegment(youtubeId, Math.floor(startSec * 1000));
+
+  return new Promise((resolve, reject) => {
+    const proc = spawn(FFMPEG, args);
+
+    ytStream.pipe(proc.stdin!);
+
+    let stderr = "";
+    proc.stderr?.on("data", (d: Buffer) => { stderr += d.toString(); });
+
+    proc.on("close", (code: number | null) => {
+      if (code === 0) {
+        resolve(outputPath);
+      } else {
+        reject(new Error(`FFmpeg exited ${code}: ${stderr.slice(-800)}`));
+      }
+    });
+
+    proc.on("error", (err: Error) => reject(err));
+    ytStream.on("error", (err: Error) => {
+      proc.stdin?.destroy();
+      reject(err);
+    });
+  });
 }

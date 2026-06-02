@@ -71,7 +71,8 @@ export default function ProjectPage() {
     const hasInProgress = data.clips?.some(
       (c) => c.status === "PENDING" || c.status === "GENERATING"
     );
-    if (hasInProgress) {
+    const hasProjectInProgress = data.status === "PENDING" || data.status === "PROCESSING";
+    if (hasInProgress || hasProjectInProgress) {
       pollTimeout.current = setTimeout(fetchAndSchedule, 3000);
     }
   }, [id]);
@@ -87,6 +88,20 @@ export default function ProjectPage() {
     setGenerating((prev) => ({ ...prev, [videoId]: true }));
     try {
       await fetch("/api/clips", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoId }),
+      });
+      await fetchAndSchedule();
+    } finally {
+      setGenerating((prev) => ({ ...prev, [videoId]: false }));
+    }
+  };
+
+  const handleRetryClips = async (videoId: string) => {
+    setGenerating((prev) => ({ ...prev, [videoId]: true }));
+    try {
+      await fetch("/api/clips/retry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ videoId }),
@@ -157,6 +172,8 @@ export default function ProjectPage() {
               generating[v.id] ||
               videoClips.some((c) => c.status === "PENDING" || c.status === "GENERATING");
             const hasClips = videoClips.length > 0;
+            const hasError = videoClips.some((c) => c.status === "ERROR");
+            const allDone = hasClips && videoClips.every((c) => c.status === "DONE");
 
             return (
               <div key={v.id} className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
@@ -181,14 +198,28 @@ export default function ProjectPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex-shrink-0 flex items-center">
-                    <button
-                      onClick={() => handleGenerateClips(v.id)}
-                      disabled={isGenerating || hasClips}
-                      className="bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm px-4 py-2 rounded-lg transition"
-                    >
-                      {isGenerating ? "Génération..." : hasClips ? "Clips générés ✓" : "Générer clips"}
-                    </button>
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    {!hasClips && (
+                      <button
+                        onClick={() => handleGenerateClips(v.id)}
+                        disabled={isGenerating}
+                        className="bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm px-4 py-2 rounded-lg transition"
+                      >
+                        {isGenerating ? "Génération..." : "Générer clips"}
+                      </button>
+                    )}
+                    {hasClips && allDone && (
+                      <span className="text-green-400 text-sm">Clips prêts ✓</span>
+                    )}
+                    {hasClips && (hasError || isGenerating) && (
+                      <button
+                        onClick={() => handleRetryClips(v.id)}
+                        disabled={isGenerating}
+                        className="bg-orange-600 hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm px-4 py-2 rounded-lg transition"
+                      >
+                        {isGenerating ? "En cours..." : "Réessayer"}
+                      </button>
+                    )}
                   </div>
                 </div>
 
