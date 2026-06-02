@@ -14,5 +14,15 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
   if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  return NextResponse.json(project);
+  // viewCount/likeCount are BigInt — NextResponse.json can't serialize them.
+  const serialized = {
+    ...project,
+    videos: project.videos.map((v) => ({
+      ...v,
+      viewCount: v.viewCount.toString(),
+      likeCount: v.likeCount.toString(),
+    })),
+  };
+
+  return NextResponse.json(serialized);
 }
