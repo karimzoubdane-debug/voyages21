@@ -1987,7 +1987,7 @@
       overflow: hidden;
       transition: transform .25s, box-shadow .25s;
     }
-    .dest-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(27,45,79,.12); }
+    .dest-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(27,45,79,.12); cursor: pointer; }
     .dest-card-img {
       height: 190px;
       background-size: cover;
@@ -4079,34 +4079,34 @@
     };
 
     const VOYAGES = [
-      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Séjour à Istanbul',                       duree: '8 jours' },
-      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul & Antalya',                      duree: '8 jours' },
-      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul & Bodrum',                       duree: '8 jours' },
-      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul, Marmaris & Bodrum',             duree: '11 jours' },
-      { img: IMG.turquie,   dest: 'Turquie',          titre: 'Istanbul & Antalya',                      duree: '11 jours' },
-      { img: IMG.egypte,    dest: 'Égypte',           titre: 'Le Caire · Nil · Hurghada',              duree: '12 jours' },
-      { img: IMG.egypte,    dest: 'Égypte',           titre: 'Le Caire & Sharm El Sheikh',             duree: '11 jours' },
-      { img: IMG.usa,       dest: 'USA & Canada',     titre: "L'Ouest Complet USA",                    duree: '13 jours' },
-      { img: IMG.usa,       dest: 'USA & Canada',     titre: 'Les Joyaux du Canada & des USA',         duree: '11 jours' },
-      { img: IMG.usa,       dest: 'USA & Canada',     titre: "Les Rocheuses & l'Ouest Classique",      duree: '17 jours' },
-      { img: IMG.cuba,      dest: 'Cuba',             titre: 'Cuba — La Havane & Varadero',            duree: '9 jours' },
-      { img: IMG.perou,     dest: 'Pérou',            titre: 'Pérou — Les Merveilles Incas',           duree: '11 jours' },
-      { img: IMG.europe,    dest: 'Europe',           titre: 'Séjour à Las Palmas',                    duree: '8 jours' },
-      { img: IMG.europe,    dest: 'Europe',           titre: 'Capitales Impériales — Vienne, Budapest, Prague', duree: '6 jours' },
-      { img: IMG.espagne,   dest: 'Europe',           titre: 'Al-Andalus — Madrid, Grenade, Séville',  duree: '7 jours' },
-      { img: IMG.grece,     dest: 'Europe',           titre: 'Athènes, Rhodes & Kos',                  duree: '8 jours' },
-      { img: IMG.grece,     dest: 'Europe',           titre: 'Athènes — Grèce Classique',              duree: '7 jours' },
-      { img: IMG.espagne,   dest: 'Europe',           titre: 'Espagne & Portugal',                     duree: '10 jours' },
-      { img: IMG.italie,    dest: 'Europe',           titre: 'Circuit Italie',                         duree: '8 jours' },
-      { img: IMG.europe,    dest: 'Europe',           titre: 'France & Suisse',                        duree: '8 jours' },
-      { img: IMG.angleterre,dest: 'Europe',           titre: 'Angleterre & Écosse',                    duree: '10 jours' },
-      { img: IMG.chine,     dest: 'Chine',            titre: 'Pékin, Shanghai & Merveilles',           duree: '14 jours' },
-      { img: IMG.malaisie,  dest: 'Malaisie & Thaïlande', titre: 'KL, Krabi & Phuket',               duree: '14 jours' },
-      { img: IMG.malaisie,  dest: 'Bangkok & Thaïlande',  titre: 'Bangkok, Krabi & Phuket',          duree: '14 jours' },
-      { img: IMG.vietnam,   dest: 'Vietnam',          titre: 'Hanoi à Saigon',                         duree: '14 jours' },
-      { img: IMG.zanzibar,  dest: 'Zanzibar',         titre: 'Zanzibar — Détente & Loisirs',           duree: '8 jours' },
-      { img: IMG.croisiere, dest: 'Croisières',       titre: 'Méditerranée — Espagne & Italie',        duree: '10 jours' },
-      { img: IMG.croisiere, dest: 'Croisières',       titre: 'Croisière Méditerranée Premium',         duree: '10 jours' },
+      { img: IMG.turquie,   dest: 'Turquie',              titre: 'Séjour à Istanbul',                       duree: '8 jours',  link: 'voyages/turquie-sejour-istanbul.html' },
+      { img: IMG.turquie,   dest: 'Turquie',              titre: 'Istanbul & Antalya',                      duree: '8 jours',  link: 'voyages/turquie-istanbul-antalya.html' },
+      { img: IMG.turquie,   dest: 'Turquie',              titre: 'Istanbul & Bodrum',                       duree: '8 jours',  link: 'voyages/turquie-istanbul-bodrum.html' },
+      { img: IMG.turquie,   dest: 'Turquie',              titre: 'Istanbul, Marmaris & Bodrum',             duree: '11 jours', link: 'voyages/turquie-istanbul-marmaris-bodrum.html' },
+      { img: IMG.turquie,   dest: 'Turquie',              titre: 'Istanbul & Antalya',                      duree: '11 jours', link: 'voyages/turquie-istanbul-antalya-11j.html' },
+      { img: IMG.egypte,    dest: 'Égypte',               titre: 'Le Caire · Nil · Hurghada',              duree: '12 jours', link: 'voyages/egypte-caire-nil-hurghada.html' },
+      { img: IMG.egypte,    dest: 'Égypte',               titre: 'Le Caire & Sharm El Sheikh',             duree: '11 jours', link: 'voyages/egypte-caire-sharm.html' },
+      { img: IMG.usa,       dest: 'USA & Canada',         titre: "L'Ouest Complet USA",                    duree: '13 jours', link: 'voyages/usa-ouest-complet.html' },
+      { img: IMG.usa,       dest: 'USA & Canada',         titre: 'Les Joyaux du Canada & des USA',         duree: '11 jours', link: 'voyages/canada-usa-joyaux.html' },
+      { img: IMG.usa,       dest: 'USA & Canada',         titre: "Les Rocheuses & l'Ouest Classique",      duree: '17 jours', link: 'voyages/usa-rocheuses.html' },
+      { img: IMG.cuba,      dest: 'Cuba',                 titre: 'Cuba — La Havane & Varadero',            duree: '9 jours',  link: 'voyages/cuba-havane-varadero.html' },
+      { img: IMG.perou,     dest: 'Pérou',                titre: 'Pérou — Les Merveilles Incas',           duree: '11 jours', link: 'voyages/perou-merveilles-incas.html' },
+      { img: IMG.europe,    dest: 'Europe',               titre: 'Séjour à Las Palmas',                    duree: '8 jours',  link: 'voyages/europe-las-palmas.html' },
+      { img: IMG.europe,    dest: 'Europe',               titre: 'Capitales Impériales — Vienne, Budapest, Prague', duree: '6 jours', link: 'voyages/europe-vienne-budapest-prague.html' },
+      { img: IMG.espagne,   dest: 'Europe',               titre: 'Al-Andalus — Madrid, Grenade, Séville',  duree: '7 jours',  link: 'voyages/europe-andalousie.html' },
+      { img: IMG.grece,     dest: 'Europe',               titre: 'Athènes, Rhodes & Kos',                  duree: '8 jours',  link: 'voyages/europe-grece-iles.html' },
+      { img: IMG.grece,     dest: 'Europe',               titre: 'Athènes — Grèce Classique',              duree: '7 jours',  link: 'voyages/europe-grece-classique.html' },
+      { img: IMG.espagne,   dest: 'Europe',               titre: 'Espagne & Portugal',                     duree: '10 jours', link: 'voyages/europe-espagne-portugal.html' },
+      { img: IMG.italie,    dest: 'Europe',               titre: 'Circuit Italie',                         duree: '8 jours',  link: 'voyages/europe-italie.html' },
+      { img: IMG.europe,    dest: 'Europe',               titre: 'France & Suisse',                        duree: '8 jours',  link: 'voyages/europe-france-suisse.html' },
+      { img: IMG.angleterre,dest: 'Europe',               titre: 'Angleterre & Écosse',                    duree: '10 jours', link: 'voyages/europe-angleterre-ecosse.html' },
+      { img: IMG.chine,     dest: 'Chine',                titre: 'Pékin, Shanghai & Merveilles',           duree: '14 jours', link: 'voyages/asie-chine.html' },
+      { img: IMG.malaisie,  dest: 'Malaisie & Thaïlande', titre: 'KL, Krabi & Phuket',                   duree: '14 jours', link: 'voyages/asie-malaisie-thailande.html' },
+      { img: IMG.malaisie,  dest: 'Bangkok & Thaïlande',  titre: 'Bangkok, Krabi & Phuket',              duree: '14 jours', link: 'voyages/asie-thailande-bangkok.html' },
+      { img: IMG.vietnam,   dest: 'Vietnam',              titre: 'Hanoi à Saigon',                         duree: '14 jours', link: 'voyages/asie-vietnam.html' },
+      { img: IMG.zanzibar,  dest: 'Zanzibar',             titre: 'Zanzibar — Détente & Loisirs',           duree: '8 jours',  link: 'voyages/zanzibar-detente.html' },
+      { img: IMG.croisiere, dest: 'Croisières',           titre: 'Méditerranée — Espagne & Italie',        duree: '10 jours', link: 'voyages/croisiere-mediterranee-espagne-italie.html' },
+      { img: IMG.croisiere, dest: 'Croisières',           titre: 'Croisière Méditerranée Premium',         duree: '10 jours', link: 'voyages/croisiere-mediterranee-premium.html' },
     ];
 
     const DESTINATIONS = [
@@ -4125,14 +4125,16 @@
     ];
 
     function cardHTML(v) {
-      return `<div class="dest-card">
+      const tag = v.link ? `a href="${v.link}"` : 'div';
+      const endTag = v.link ? 'a' : 'div';
+      return `<${tag} class="dest-card" style="text-decoration:none;color:inherit">
         <div class="dest-card-img" style="background-image:url('${v.img}')"></div>
         <div class="dest-card-body">
           <span class="dest-card-tag">${v.dest}</span>
           <h3 class="dest-card-title">${v.titre}</h3>
           <span class="dest-card-dur">${v.duree}</span>
         </div>
-      </div>`;
+      </${endTag}>`;
     }
 
     function goSearch() {
