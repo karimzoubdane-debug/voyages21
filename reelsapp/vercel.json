@@ -7,6 +7,9 @@
     },
     "src/app/api/projects/route.ts": {
       "maxDuration": 30
+    },
+    "src/app/api/clips/route.ts": {
+      "maxDuration": 30
     }
   }
 }
