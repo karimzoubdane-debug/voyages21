@@ -1,0 +1,281 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Fichier central des médias de la brochure Voyages21. Modifiez les URLs pour remplacer les placeholders Unsplash par vos vraies photos.",
+    "instructions": "Pour chaque slider, renseignez 4 URLs d'images (Cloudinary, Google Drive direct, ou toute URL publique). L'ordre des images = ordre du carousel."
+  },
+  "sliders": {
+    "sl-istanbul": {
+      "titre": "Istanbul Incontournable",
+      "images": [
+        "https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1530796688-003e1d1d74fe?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1543783207-ec64e4d88ea7?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-istanbul-antalya": {
+      "titre": "Istanbul & Antalya",
+      "images": [
+        "https://images.unsplash.com/photo-1594561173580-a3c4d9d2e1a4?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-istanbul-bodrum": {
+      "titre": "Istanbul & Bodrum",
+      "images": [
+        "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578950435899-6a6cc57a3e96?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1594561173580-a3c4d9d2e1a4?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-marmaris-bodrum": {
+      "titre": "Marmaris & Bodrum",
+      "images": [
+        "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578950435899-6a6cc57a3e96?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-istanbul-antalya-11j": {
+      "titre": "Istanbul & Antalya 11 jours",
+      "images": [
+        "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-caire-nil-hurghada": {
+      "titre": "Le Caire, Nil & Hurghada",
+      "images": [
+        "https://images.unsplash.com/photo-1548091975-7a5d7a8d3ad0?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1502747812442-2e6bbabdf466?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1564939408877-4bc664a82834?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-caire-sharm": {
+      "titre": "Le Caire & Sharm el Sheikh",
+      "images": [
+        "https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1548091975-7a5d7a8d3ad0?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1502747812442-2e6bbabdf466?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-ouest-usa": {
+      "titre": "Ouest Américain",
+      "images": [
+        "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1a2?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-joyaux-canada": {
+      "titre": "Joyaux du Canada",
+      "images": [
+        "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1494256997604-768753d69862?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-rocheuses": {
+      "titre": "Les Rocheuses Canadiennes",
+      "images": [
+        "https://images.unsplash.com/photo-1500590127867-e6a76f2e5781?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1a2?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-cuba": {
+      "titre": "Cuba",
+      "images": [
+        "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1563207153-4be887cbcf21?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1518639192441-d95b7b290e7b?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1573968773099-8e8d7dcecce8?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-perou": {
+      "titre": "Pérou",
+      "images": [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1526772662643-f27d3b3dc93e?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1580227974546-c7b5e7dd2ade?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1539330692-14a6d8640b79?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-1": {
+      "titre": "Europe — Circuit 1",
+      "images": [
+        "https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1539020741572-1dac79c5a75d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-2": {
+      "titre": "Europe — Circuit 2",
+      "images": [
+        "https://images.unsplash.com/photo-1509475826633-fed498a75b89?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1551634979-2e9c6d5c2552?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519731488035-b78de86be987?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-3": {
+      "titre": "Europe — Circuit 3",
+      "images": [
+        "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1597466765994-67f49e7d0c11?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1558618047-3c8c76ca5e65?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1573206885956-4e3b09ca8b40?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-4": {
+      "titre": "Europe — Circuit 4",
+      "images": [
+        "https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1467269204165-00842e7f8e73?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-5": {
+      "titre": "Europe — Circuit 5",
+      "images": [
+        "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1467269204165-00842e7f8e73?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-6": {
+      "titre": "Europe — Circuit 6",
+      "images": [
+        "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1597466765994-67f49e7d0c11?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1559087867-ce5f9e8e9e39?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-7": {
+      "titre": "Europe — Circuit 7",
+      "images": [
+        "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1529260830199-42c24126234d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1518105779366-5a84b6c2ef4b?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-8": {
+      "titre": "Europe — Circuit 8",
+      "images": [
+        "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1573843981267-be1480176484?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1560564403-d5bf7f0a7f75?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-europe-9": {
+      "titre": "Europe — Circuit 9",
+      "images": [
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1569154651012-953b05ac37c9?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1568021560862-da8b8a4e5a91?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1597934347566-a9a24ce5db46?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-chine": {
+      "titre": "Chine",
+      "images": [
+        "https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1547060373-f12bda14e575?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1532339786-a6e7e7d9b6e2?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-malaisie": {
+      "titre": "Malaisie",
+      "images": [
+        "https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1548549932-3e68e82b41d5?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1518109011963-08c5f660c96d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1587502537668-66b50b65c15b?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-bangkok": {
+      "titre": "Bangkok & Thaïlande",
+      "images": [
+        "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1570122906-c0a27a7c4e78?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1518109011963-08c5f660c96d?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1587502537668-66b50b65c15b?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-vietnam": {
+      "titre": "Vietnam",
+      "images": [
+        "https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1528702600-9c4c8f2aa94c?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1558618047-3c8c76ca5e65?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1587559045816-8b4b1a1b7e40?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-zanzibar": {
+      "titre": "Zanzibar",
+      "images": [
+        "https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1564979268819-f0e3dbdf4d5f?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1547060373-f12bda14e575?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-croisiere-1": {
+      "titre": "Croisière — Circuit 1",
+      "images": [
+        "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1523906834998-d82fb1939ba4?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-croisiere-2": {
+      "titre": "Croisière — Circuit 2",
+      "images": [
+        "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1523906834998-d82fb1939ba4?w=800&h=500&fit=crop&q=80"
+      ]
+    },
+    "sl-omra-mouharram": {
+      "titre": "Omra — Mouharram",
+      "images": ["", "", "", ""]
+    },
+    "sl-omra-06-juillet": {
+      "titre": "Omra — 06 Juillet",
+      "images": ["", "", "", ""]
+    },
+    "sl-omra-08-juillet": {
+      "titre": "Omra — 08 Juillet",
+      "images": ["", "", "", ""]
+    },
+    "sl-omra-istanbul": {
+      "titre": "Omra Istanbul",
+      "images": ["", "", "", ""]
+    },
+    "sl-omra-01-juillet": {
+      "titre": "Omra — 01 Juillet",
+      "images": ["", "", "", ""]
+    }
+  }
+}
