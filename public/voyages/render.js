@@ -38,8 +38,15 @@
     };
     var L = LABELS[v.lang] || LABELS.fr;
 
+    // En arabe (RTL), un nombre composé "17 200" est réordonné en "200 17" par l'algorithme
+    // bidirectionnel. On isole chaque suite de chiffres dans un span LTR pour la lire correctement.
+    function bidiNum(s) {
+        if (v.lang !== "ar" || s == null) return s;
+        return String(s).replace(/(\d[\d ]*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
+    }
+
     var cadran = (v.cadran || []).map(function (r) {
-        return '<div class="cadran-row"><span class="k">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>';
+        return '<div class="cadran-row"><span class="k">' + r[0] + '</span><span class="v">' + bidiNum(r[1]) + '</span></div>';
     }).join("");
 
     var intro = (v.intro || []).map(function (p) { return "<p>" + p + "</p>"; }).join("");
@@ -71,12 +78,12 @@
     if (v.priceTable) {
         priceHtml = '<table class="ptable" dir="ltr"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
-                return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : "<td>" + c + "</td>"; }).join("") + "</tr>";
+                return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : '<td>' + bidiNum(c) + "</td>"; }).join("") + "</tr>";
             }).join("") + "</tbody></table>";
     }
-    var childrenHtml = v.children ? '<p class="note"><b>' + L.childPrices + "</b> " + v.children + "</p>" : "";
+    var childrenHtml = v.children ? '<p class="note"><b>' + L.childPrices + "</b> " + bidiNum(v.children) + "</p>" : "";
     var datesListHtml = (v.datesList && v.datesList.length)
-        ? '<div class="datechips">' + v.datesList.map(function (x) { return "<span>" + x + "</span>"; }).join("") + "</div>"
+        ? '<div class="datechips">' + v.datesList.map(function (x) { return "<span>" + bidiNum(x) + "</span>"; }).join("") + "</div>"
         : "";
     var inclusBlock = '<div class="incbox in"><h3>' + L.includes + '</h3><ul class="ticks">' + inc + "</ul></div>";
     if (exc) inclusBlock = '<div class="twocol">' + inclusBlock + '<div class="incbox out"><h3>' + L.excludes + '</h3><ul class="ticks">' + exc + "</ul></div></div>";
@@ -96,7 +103,7 @@
         + '<button class="sound-toggle" id="soundBtn" onclick="toggleSound()">' + L.soundOn + '</button>'
         + '</div><div class="thumbs" id="thumbs" style="display:none"></div></div>'
         + '<aside class="cadran">' + cadran
-        + '<div class="cadran-price">' + L.from + ' <b>' + (v.price || "—") + "</b></div>"
+        + '<div class="cadran-price">' + L.from + ' <b>' + bidiNum(v.price || "—") + "</b></div>"
         + '<button class="btn btn-gold full" onclick="ask(\'\')">' + L.quote + '</button>'
         + '<button class="btn btn-gold full" id="voirVideo" style="display:none;background:transparent;color:var(--forest);border:1px solid var(--gold);margin-top:.5rem">' + L.seeVideo + '</button>'
         + '<div class="cadran-note">' + L.trust + '</div>'
@@ -107,7 +114,7 @@
         + '<section id="inclus"><h2 class="sec-title">' + L.included + "</h2>" + inclusBlock + "</section>"
         + '<section id="hebergement"><h2 class="sec-title">' + L.accommodation + "</h2>" + hotelsHtml + "</section>"
         + '<section id="carte"><h2 class="sec-title">' + L.mapTitle + '</h2><div class="route">' + route + "</div></section>"
-        + '<section id="dates"><h2 class="sec-title">' + L.datesPrices + "</h2>" + (dates.line ? '<div class="stay">' + dates.line + "</div>" : "") + datesListHtml + priceHtml + childrenHtml + (dates.note ? '<p class="note">' + dates.note + "</p>" : "") + "</section>"
+        + '<section id="dates"><h2 class="sec-title">' + L.datesPrices + "</h2>" + (dates.line ? '<div class="stay">' + bidiNum(dates.line) + "</div>" : "") + datesListHtml + priceHtml + childrenHtml + (dates.note ? '<p class="note">' + bidiNum(dates.note) + "</p>" : "") + "</section>"
         + '<div class="cta-final"><h3>' + (cta.title || "") + "</h3><p>" + (cta.text || "") + '</p><button class="btn btn-gold" onclick="ask(\'\')">' + L.quoteWa + '</button></div>'
         + "</div>"
         + '<div class="vmodal" id="vmodal" onclick="if(event.target===this)closeVideo()"><div class="box"><button class="close" onclick="closeVideo()">×</button><div class="ratio" id="vframe"></div></div></div>'
