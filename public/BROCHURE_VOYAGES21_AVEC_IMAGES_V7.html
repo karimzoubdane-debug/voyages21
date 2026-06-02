@@ -1372,6 +1372,7 @@
 <p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
 <div class="prix-label">À partir de 1 200 DH</div>
 <button class="btn-details" onclick="openModal('modal-merzouga')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-merzouga')">▶ Voir la vidéo</button>
 </div>
 </div>
 <!-- Circuit Bin El Ouidane -->
@@ -1386,6 +1387,7 @@
 <p class="circuit-description">Week-end nature au lac de Bin El Ouidane. Programme de visites organisé, hôtel et transport inclus. Départs : 03-04 mai, 10-11 mai 2026 et autres dates.</p>
 <div class="prix-label">À partir de 1 100 DH</div>
 <button class="btn-details" onclick="openModal('modal-binouidane')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-binouidane')">▶ Voir la vidéo</button>
 </div>
 </div>
 <!-- Circuit Dakhla -->
@@ -1400,6 +1402,7 @@
 <p class="circuit-description">Séjour tout compris à Dakhla, perle du Sud marocain. Vols, hôtel, excursions et transport inclus. Lagune turquoise, kitesurf et couchers de soleil inoubliables.</p>
 <div class="prix-label">À partir de 5 500 DH</div>
 <button class="btn-details" onclick="openModal('modal-dakhla')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-dakhla')">▶ Voir la vidéo</button>
 </div>
 </div>
 </div>
@@ -2471,20 +2474,20 @@
 <button class="close" onclick="closeModal('modal-merzouga')">×</button>
 </div>
 <div class="modal-body">
-<p><strong>Départ :</strong> Garanti chaque jour en 2026</p>
-<p><strong>Itinéraire :</strong> Marrakech → Ouarzazate → Gorges du Dadès → Gorges de Todra → Merzouga (dunes Erg Chebbi)</p>
+<p><strong>Départ:</strong> Garanti chaque jour en 2026</p>
+<p><strong>Programme:</strong>Marrakech → Ouarzazate → Gorges du Dadès → Gorges de Todra → Merzouga (dunes Erg Chebbi)</p>
 <h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
 <ul style="margin-left: 1.5rem;">
 <li>Nuit sous tente berbère au bord des dunes</li>
-<li>Formule hébergement en hôtel selon option choisie</li>
+<li>Hôtel selon option choisie</li>
 </ul>
 <h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
 <table class="prix-table">
-<tr><th>Formule</th><th>Prix par personne</th></tr>
-<tr><td>Départ partagé</td><td>1 200 DH</td></tr>
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Partagé</td><td>Standard</td><td>1 200 DH</td></tr>
 </table>
 <div class="compris-list">
-<strong>Inclus :</strong>
+<strong>Inclus:</strong>
 <ul>
 <li>Transport (départ Marrakech)</li>
 <li>Hébergement</li>
@@ -2492,7 +2495,9 @@
 <li>Balade à dos de dromadaire</li>
 </ul>
 </div>
-</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> Tarifs enfants sur demande
+</p></div>
 </div>
 </div>
 
@@ -2504,23 +2509,29 @@
 <button class="close" onclick="closeModal('modal-binouidane')">×</button>
 </div>
 <div class="modal-body">
-<p><strong>Durée :</strong> 2 jours / 1 nuit</p>
-<p><strong>Dates :</strong> 03-04 mai 2026 · 10-11 mai 2026 · et autres dates</p>
-<p><strong>Programme :</strong> Départ tôt le matin, visite du lac de Bin El Ouidane, programme d'activités nature organisé, nuit à l'hôtel, retour le lendemain.</p>
+<p><strong>Durée:</strong> 2 jours / 1 nuit</p>
+<p><strong>Spécial:</strong>03-04 mai · 10-11 mai 2026 et autres dates</p>
+<p><strong>Programme:</strong>Départ Marrakech tôt le matin • Visite lac de Bin El Ouidane • Activités nature • Nuit hôtel • Retour J2</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Hôtel au bord du lac</li>
+</ul>
 <h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
 <table class="prix-table">
-<tr><th>Formule</th><th>Prix par personne</th></tr>
-<tr><td>En double</td><td>1 100 DH</td></tr>
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Double</td><td>Standard</td><td>1 100 DH</td></tr>
 </table>
 <div class="compris-list">
-<strong>Inclus :</strong>
+<strong>Inclus:</strong>
 <ul>
 <li>Transport (départ Marrakech)</li>
 <li>1 nuit à l'hôtel</li>
 <li>Programme de visites organisé</li>
 </ul>
 </div>
-</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> Tarifs enfants sur demande
+</p></div>
 </div>
 </div>
 
@@ -2528,20 +2539,23 @@
 <div class="modal" id="modal-dakhla">
 <div class="modal-content">
 <div class="modal-header">
-<h2>Dakhla — Wini Bik (Séjour 4 jours / 3 nuits)</h2>
+<h2>Dakhla — Wini Bik</h2>
 <button class="close" onclick="closeModal('modal-dakhla')">×</button>
 </div>
 <div class="modal-body">
-<p><strong>Durée :</strong> 4 jours / 3 nuits</p>
-<p><strong>Destination :</strong> Dakhla, perle du Sahara atlantique</p>
-<p><strong>Programme :</strong> Vol aller-retour, transferts, excursions découverte de la lagune, activités nautiques (kitesurf, paddle), visites de la ville.</p>
+<p><strong>Durée:</strong> 4 jours / 3 nuits</p>
+<p><strong>Programme:</strong>Vol aller-retour • Transferts • Excursions lagune • Activités nautiques (kitesurf, paddle) • Visites ville</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Hôtel à Dakhla (3 nuits)</li>
+</ul>
 <h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
 <table class="prix-table">
-<tr><th>Formule</th><th>Prix par personne</th></tr>
-<tr><td>Tout compris</td><td>À partir de 5 500 DH</td></tr>
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Double</td><td>Tout compris</td><td>5 500 DH</td></tr>
 </table>
 <div class="compris-list">
-<strong>Inclus :</strong>
+<strong>Inclus:</strong>
 <ul>
 <li>Vols aller-retour</li>
 <li>Hôtel (3 nuits)</li>
@@ -2549,7 +2563,9 @@
 <li>Transport sur place</li>
 </ul>
 </div>
-</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> Tarifs enfants sur demande
+</p></div>
 </div>
 </div>
 
