@@ -3,6 +3,166 @@
    les médias (vidéo/photos) de la médiathèque en ligne (/api/media).
    Pour une page en arabe : data.voyage.lang = "ar" et la coquille <html dir="rtl" lang="ar">. */
 (function () {
+
+    // ─── Header partagé — même nav que la homepage ────────────────────────
+    (function injectNav() {
+        // Polices Fraunces + Geist pour le logo et les boutons nav
+        var fonts = document.createElement('link');
+        fonts.rel = 'stylesheet';
+        fonts.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,900&family=Geist:wght@400;500;600;700&display=swap';
+        document.head.appendChild(fonts);
+
+        var style = document.createElement('style');
+        style.textContent = [
+            'body{padding-top:64px;}',
+            'nav#site-nav{position:fixed;inset:0 0 auto;z-index:300;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,26,20,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(76,175,113,.12);transition:box-shadow .3s;}',
+            'nav#site-nav.elevated{box-shadow:0 4px 32px rgba(0,0,0,.5);}',
+            '.vn-logo{font-family:"Fraunces",serif;font-weight:900;font-size:1.35rem;color:#FDFAF5;text-decoration:none;letter-spacing:.02em;flex-shrink:0;}',
+            '.vn-logo sup{font-size:.48em;font-family:"Geist",sans-serif;font-weight:700;color:#C49A3C;vertical-align:super;margin-left:1px;letter-spacing:.06em;}',
+            '.vn-center{display:flex;position:absolute;left:50%;transform:translateX(-50%);}',
+            '.vn-title{padding:0 22px;height:64px;line-height:64px;border:none;background:transparent;cursor:pointer;font-family:"Geist",sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,250,245,.7);text-decoration:none;border-bottom:2px solid transparent;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:color .2s,border-color .2s;}',
+            '.vn-title:hover{color:#C49A3C;border-bottom-color:rgba(196,154,60,.4);}',
+            '.vn-title.open{color:#C49A3C;border-bottom-color:#C49A3C;}',
+            '.vn-caret{font-size:.55rem;transition:transform .25s;}',
+            '.vn-title.open .vn-caret{transform:rotate(180deg);}',
+            '.vn-right{display:flex;align-items:center;gap:20px;flex-shrink:0;}',
+            '.vn-tel{font-size:.75rem;font-weight:400;color:rgba(253,250,245,.65);text-decoration:none;letter-spacing:.06em;transition:color .2s;}',
+            '.vn-tel:hover{color:#C49A3C;}',
+            '.vn-cta{background:transparent;color:#C49A3C;border:1px solid rgba(196,154,60,.6);padding:8px 22px;font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s,color .2s;white-space:nowrap;}',
+            '.vn-cta:hover{background:#C49A3C;color:#0C0C0C;}',
+            '.vn-burger{display:none;}',
+            '.vn-mobile-panel{display:none;}',
+            '.vn-mega{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,18,14,.97);border-bottom:2px solid #C49A3C;box-shadow:0 8px 32px rgba(0,0,0,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:299;}',
+            '.vn-mega.open{display:block;}',
+            '.vn-mega-inner{max-width:900px;margin:0 auto;display:flex;min-height:200px;}',
+            '.vn-mega-continents{width:200px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;padding:1rem 0;border-right:1px solid rgba(196,154,60,.15);flex-shrink:0;}',
+            '.vn-cont{text-align:left;padding:.8rem 1.4rem;border:none;background:transparent;cursor:pointer;font-family:"Geist",sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(253,250,245,.55);border-left:3px solid transparent;transition:all .2s;}',
+            '.vn-cont:hover{background:rgba(255,255,255,.04);color:rgba(253,250,245,.9);}',
+            '.vn-cont.active{background:rgba(196,154,60,.06);border-left-color:#C49A3C;color:#C49A3C;}',
+            '.vn-mega-countries{flex:1;padding:1.5rem 2rem;}',
+            '.vn-col{display:none;flex-direction:column;gap:.2rem;}',
+            '.vn-col.active{display:flex;}',
+            '.vn-col a{color:rgba(253,250,245,.75);text-decoration:none;padding:.6rem .8rem;border-radius:4px;font-family:"Geist",sans-serif;font-size:.9rem;font-weight:400;transition:all .2s;}',
+            '.vn-col a:hover{background:rgba(196,154,60,.08);color:#C49A3C;padding-left:1.2rem;}',
+            '@media(max-width:768px){',
+            'body{padding-top:52px;}',
+            'nav#site-nav{padding:0 16px;height:52px;}',
+            '.vn-center{display:none;}',
+            '.vn-mega{top:52px;}',
+            '.vn-tel,.vn-cta{display:none;}',
+            '.vn-logo{font-size:1.1rem;}',
+            '.vn-burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(196,154,60,.4);border-radius:6px;cursor:pointer;padding:8px;flex-shrink:0;}',
+            '.vn-burger span{display:block;height:2px;background:#C49A3C;border-radius:2px;transition:transform .25s,opacity .2s;}',
+            '.vn-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}',
+            '.vn-burger.open span:nth-child(2){opacity:0;}',
+            '.vn-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}',
+            '.vn-mobile-panel{display:none;position:fixed;top:52px;left:0;right:0;background:rgba(13,26,20,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-direction:column;border-bottom:1px solid rgba(76,175,113,.25);z-index:299;width:100%;}',
+            '.vn-mobile-panel.open{display:flex;}',
+            '.vn-mobile-panel ul{display:flex;flex-direction:column;list-style:none;padding:8px 0 0;margin:0;width:100%;}',
+            '.vn-mobile-panel li{width:100%;}',
+            '.vn-mobile-panel a{display:block;width:100%;height:auto;line-height:1;padding:16px 24px;font-size:.9rem;font-weight:500;letter-spacing:.08em;color:rgba(255,255,255,.85);text-decoration:none;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);box-sizing:border-box;}',
+            '.vn-mobile-panel a:active{color:#C49A3C;}',
+            '}'
+        ].join('');
+        document.head.appendChild(style);
+
+        document.body.insertAdjacentHTML('afterbegin',
+            '<nav id="site-nav">'
+            + '<a href="../" class="vn-logo">Voyages<sup>21</sup></a>'
+            + '<div class="vn-center">'
+            + '<button class="vn-title" id="vnDest" onclick="vnToggleDest(this)">Destinations Monde <span class="vn-caret">▾</span></button>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#croisiere" class="vn-title">Croisières</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#omra" class="vn-title">Omra</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#maroc" class="vn-title">Mon Maroc</a>'
+            + '</div>'
+            + '<div class="vn-mobile-panel" id="vnMobilePanel">'
+            + '<ul>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#europe" onclick="vnCloseMenu()">Europe</a></li>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#egypte" onclick="vnCloseMenu()">Afrique</a></li>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#usa" onclick="vnCloseMenu()">Amériques</a></li>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#chine" onclick="vnCloseMenu()">Asie</a></li>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#croisiere" onclick="vnCloseMenu()">Croisières</a></li>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#omra" onclick="vnCloseMenu()">Omra</a></li>'
+            + '<li><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#maroc" onclick="vnCloseMenu()">Mon Maroc</a></li>'
+            + '</ul></div>'
+            + '<div class="vn-right">'
+            + '<a href="tel:+212673280009" class="vn-tel">+212 6 73 28 00 09</a>'
+            + '<a href="../#contact" class="vn-cta">Réserver</a>'
+            + '<button class="vn-burger" id="vnBurger" aria-label="Menu" onclick="vnToggleMenu()">'
+            + '<span></span><span></span><span></span></button>'
+            + '</div></nav>'
+            + '<div class="vn-mega" id="vnMega">'
+            + '<div class="vn-mega-inner">'
+            + '<div class="vn-mega-continents">'
+            + '<button class="vn-cont active" onclick="vnShowContinent(\'vc-europe\',this)">Europe</button>'
+            + '<button class="vn-cont" onclick="vnShowContinent(\'vc-afrique\',this)">Afrique</button>'
+            + '<button class="vn-cont" onclick="vnShowContinent(\'vc-ameriques\',this)">Amériques</button>'
+            + '<button class="vn-cont" onclick="vnShowContinent(\'vc-asie\',this)">Asie</button>'
+            + '</div>'
+            + '<div class="vn-mega-countries">'
+            + '<div class="vn-col active" id="vc-europe">'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#europe">Circuits Europe</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#turquie">Turquie</a>'
+            + '</div>'
+            + '<div class="vn-col" id="vc-afrique">'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#egypte">Égypte</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#zanzibar">Zanzibar</a>'
+            + '</div>'
+            + '<div class="vn-col" id="vc-ameriques">'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#usa">USA &amp; Canada</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#cuba">Cuba</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#perou">Pérou</a>'
+            + '</div>'
+            + '<div class="vn-col" id="vc-asie">'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#chine">Chine</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#malaisie">Malaisie &amp; Thaïlande</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#bangkok">Bangkok &amp; Thaïlande</a>'
+            + '<a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#vietnam">Vietnam</a>'
+            + '</div>'
+            + '</div></div></div>'
+        );
+
+        window.vnToggleDest = function (btn) {
+            var mega = document.getElementById('vnMega');
+            var open = mega.classList.toggle('open');
+            btn.classList.toggle('open', open);
+        };
+        window.vnShowContinent = function (colId, btn) {
+            document.querySelectorAll('.vn-col').forEach(function (c) { c.classList.remove('active'); });
+            document.querySelectorAll('.vn-cont').forEach(function (b) { b.classList.remove('active'); });
+            var col = document.getElementById(colId);
+            if (col) col.classList.add('active');
+            if (btn) btn.classList.add('active');
+        };
+        window.vnToggleMenu = function () {
+            document.getElementById('vnBurger').classList.toggle('open');
+            document.getElementById('vnMobilePanel').classList.toggle('open');
+        };
+        window.vnCloseMenu = function () {
+            document.getElementById('vnBurger').classList.remove('open');
+            document.getElementById('vnMobilePanel').classList.remove('open');
+        };
+        document.addEventListener('click', function (e) {
+            var panel = document.getElementById('vnMobilePanel');
+            var burger = document.getElementById('vnBurger');
+            if (panel && panel.classList.contains('open') && !panel.contains(e.target) && !burger.contains(e.target)) {
+                window.vnCloseMenu();
+            }
+            var mega = document.getElementById('vnMega');
+            var dest = document.getElementById('vnDest');
+            if (mega && mega.classList.contains('open') && !mega.contains(e.target) && dest && !dest.contains(e.target)) {
+                mega.classList.remove('open');
+                dest.classList.remove('open');
+            }
+        });
+
+        window.addEventListener('scroll', function () {
+            var nav = document.getElementById('site-nav');
+            if (nav) nav.classList.toggle('elevated', window.scrollY > 10);
+        });
+    })();
+
+    // ─── Contenu page voyage ──────────────────────────────────────────────
     var slug = document.body.getAttribute("data-voyage");
     var v = (window.VOYAGES || {})[slug];
     var app = document.getElementById("app");
@@ -14,7 +174,7 @@
 
     var LABELS = {
         fr: {
-            back: "‹ Retour à la brochure", soundOn: "Activer le son", soundOff: "Couper le son",
+            back: "‹ Accueil", soundOn: "Activer le son", soundOff: "Couper le son",
             from: "À partir de", quote: "Demander un devis", quoteWa: "Demander un devis sur WhatsApp",
             seeVideo: "Voir la vidéo", trust: "Sur mesure · Voyages 21, depuis 2000",
             why: "Pourquoi vous allez adorer ce voyage", itinDays: "Itinéraire jour par jour", itin: "Itinéraire",
@@ -25,7 +185,7 @@
             askText: function (t, l) { return "Bonjour, je suis intéressé(e) par le voyage « " + t + " »" + (l ? " (" + l + ")" : "") + ". Pouvez-vous me faire une proposition ?"; }
         },
         ar: {
-            back: "‹ العودة إلى الكتيّب", soundOn: "تشغيل الصوت", soundOff: "كتم الصوت",
+            back: "‹ الرئيسية", soundOn: "تشغيل الصوت", soundOff: "كتم الصوت",
             from: "ابتداءً من", quote: "اطلب عرض سعر", quoteWa: "اطلب عرض سعر عبر واتساب",
             seeVideo: "شاهد الفيديو", trust: "رحلة على المقاس · Voyages 21 منذ 2000",
             why: "لماذا ستحبّون هذه الرحلة", itinDays: "البرنامج يوماً بيوم", itin: "البرنامج",
@@ -92,8 +252,7 @@
         : ((v.programme && v.programme.length) ? '<ol class="steps">' + v.programme.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" : "");
 
     app.innerHTML =
-        '<div class="topbar"><div class="topbar-inner"><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">' + L.back + '</a><span class="brand">VOYAGES 21</span></div></div>'
-        + '<div class="page">'
+        '<div class="page">'
         + (v.eyebrow ? '<div class="eyebrow">' + v.eyebrow + "</div>" : "")
         + '<h1 class="voyage-title">' + v.title + (v.duration ? ' <span class="dur-badge">' + v.duration + "</span>" : "") + "</h1>"
         + '<div class="hero-row">'
@@ -193,11 +352,11 @@
         a.addEventListener("click", function (e) {
             e.preventDefault();
             var t = document.querySelector(a.getAttribute("href"));
-            if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 52, behavior: "smooth" });
+            if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
         });
     });
     window.addEventListener("scroll", function () {
-        var y = window.scrollY + 90, cur = links[0];
+        var y = window.scrollY + 100, cur = links[0];
         links.forEach(function (a) { var t = document.querySelector(a.getAttribute("href")); if (t && t.offsetTop <= y) cur = a; });
         links.forEach(function (a) { a.classList.toggle("active", a === cur); });
     });
