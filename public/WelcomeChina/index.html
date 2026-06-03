@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WelcomeChina - Morocco Circuits 2026</title>
+<style>
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ :root {
+ --rouge: #8C2020;
+ --navy: #1B2D4F;
+ --or: #C8860A;
+ --creme: #F5F0E8;
+ --azur: #0099CC;
+ --corail: #FF6B6B;
+ --jaune: #FFD700;
+ --bleu-pale: #E0F7FF;
+ --blanc: #FFFFFF;
+ }
+
+ body {
+ font-family: 'DM Sans', sans-serif;
+ background-color: var(--creme);
+ color: var(--navy);
+ line-height: 1.6;
+ }
+
+ /* HEADER */
+ header {
+ background: linear-gradient(135deg, var(--navy), var(--rouge));
+ color: var(--blanc);
+ padding: 1.5rem 1rem;
+ text-align: center;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ }
+
+ header h1 {
+ font-size: 1.8rem;
+ font-weight: 700;
+ margin-bottom: 0.3rem;
+ font-family: 'Playfair Display', serif;
+ }
+
+header p {
+ font-size: 0.9rem;
+ opacity: 0.95;
+ }
+
+ .home-return {
+ position: absolute;
+ left: 1.25rem;
+ top: 50%;
+ transform: translateY(-50%);
+ display: inline-flex;
+ align-items: center;
+ gap: 0.45rem;
+ padding: 0.55rem 0.85rem;
+ border: 1px solid rgba(255,255,255,0.55);
+ border-radius: 999px;
+ color: var(--blanc);
+ text-decoration: none;
+ font-size: 0.82rem;
+ font-weight: 700;
+ letter-spacing: 0.02em;
+ background: rgba(255,255,255,0.12);
+ transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+ }
+
+ .home-return:hover {
+ background: rgba(255,255,255,0.22);
+ border-color: rgba(255,255,255,0.85);
+ transform: translateY(-50%) translateX(-2px);
+ }
+
+ .home-return-icon {
+ font-size: 1rem;
+ line-height: 1;
+ }
+
+ /* NAV TABS */
+ .nav-tabs {
+ display: flex;
+ justify-content: center;
+ gap: 0;
+ background-color: var(--blanc);
+ padding: 0.5rem;
+ margin: 0;
+ flex-wrap: wrap;
+ border-bottom: 3px solid var(--or);
+ }
+
+ .tab-button {
+ padding: 0.8rem 1.5rem;
+ border: none;
+ background: transparent;
+ cursor: pointer;
+ font-size: 1rem;
+ font-weight: 600;
+ color: var(--navy);
+ transition: all 0.3s ease;
+ border-bottom: 3px solid transparent;
+ margin-bottom: -0.5rem;
+ }
+
+ .tab-button:hover {
+ background-color: var(--bleu-pale);
+ color: var(--azur);
+ }
+
+ .tab-button.active {
+ border-bottom-color: var(--azur);
+ color: var(--azur);
+ background-color: var(--bleu-pale);
+ }
+
+ /* CONTAINER */
+ .container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 2rem 1rem;
+ }
+
+ /* TAB CONTENT */
+ .tab-content {
+ display: none;
+ }
+
+ .tab-content.active {
+ display: block;
+ animation: fadeIn 0.4s ease-in;
+ }
+
+ @keyframes fadeIn {
+ from { opacity: 0; }
+ to { opacity: 1; }
+ }
+
+ /* SECTION TITLE */
+ .section-title {
+ font-family: 'Playfair Display', serif;
+ font-size: 2.2rem;
+ color: var(--navy);
+ margin-bottom: 0.5rem;
+ text-align: center;
+ }
+
+ .section-subtitle {
+ color: var(--or);
+ text-align: center;
+ font-size: 1rem;
+ margin-bottom: 2rem;
+ font-weight: 500;
+ }
+
+ /* CIRCUITS GRID */
+ .circuits-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 2rem;
+ margin-bottom: 2rem;
+ }
+
+ /* CIRCUIT CARD */
+ .circuit-card {
+ background: var(--blanc);
+ border-radius: 12px;
+ overflow: hidden;
+ box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+ transition: all 0.3s ease;
+ cursor: pointer;
+ display: flex;
+ flex-direction: column;
+ }
+
+ .circuit-card:hover {
+ transform: translateY(-8px);
+ box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+ }
+
+ .circuit-image {
+ width: 100%;
+ height: 220px;
+ background: linear-gradient(135deg, var(--azur), var(--bleu-pale));
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ color: var(--blanc);
+ font-size: 3rem;
+ font-weight: 700;
+ background-size: cover;
+ background-position: center;
+ background-repeat: no-repeat;
+ position: relative;
+ }
+
+ .circuit-image::after {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: rgba(0,0,0,0.2);
+ }
+
+ .circuit-content {
+ padding: 1.5rem;
+ flex-grow: 1;
+ display: flex;
+ flex-direction: column;
+ }
+
+ .circuit-title {
+ font-family: 'Playfair Display', serif;
+ font-size: 1.4rem;
+ color: var(--navy);
+ margin-bottom: 0.5rem;
+ }
+
+ .circuit-meta {
+ display: flex;
+ gap: 1rem;
+ margin-bottom: 1rem;
+ flex-wrap: wrap;
+ font-size: 0.9rem;
+ }
+
+ .meta-item {
+ display: flex;
+ align-items: center;
+ gap: 0.3rem;
+ color: var(--or);
+ font-weight: 600;
+ }
+
+ .circuit-description {
+ color: #666;
+ font-size: 0.95rem;
+ margin-bottom: 1rem;
+ flex-grow: 1;
+ }
+
+.prix-label {
+ color: var(--rouge);
+ font-weight: 700;
+ font-size: 1.2rem;
+ margin-top: auto;
+ }
+
+ #omra .prix-label {
+ direction: ltr;
+ unicode-bidi: isolate;
+ text-align: left;
+ }
+
+ .btn-details {
+ margin-top: 1rem;
+ padding: 0.8rem;
+ background: linear-gradient(135deg, var(--azur), var(--navy));
+ color: var(--blanc);
+ border: none;
+ border-radius: 6px;
+ cursor: pointer;
+ font-weight: 600;
+ transition: all 0.3s ease;
+ }
+
+ .btn-details:hover {
+ transform: scale(1.05);
+ box-shadow: 0 4px 12px rgba(0,153,204,0.3);
+ }
+
+ /* MODAL */
+ .modal {
+ display: none;
+ position: fixed;
+ z-index: 10001;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0,0,0,0.5);
+ overflow-y: auto;
+ animation: fadeIn 0.3s ease;
+ }
+
+ .modal.active {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+
+ .modal-content {
+ background-color: var(--blanc);
+ padding: 2rem;
+ border-radius: 12px;
+ max-width: 600px;
+ width: 90%;
+ max-height: 80vh;
+ overflow-y: auto;
+ box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+ }
+
+ .modal-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 1.5rem;
+ border-bottom: 2px solid var(--or);
+ padding-bottom: 1rem;
+ }
+
+ .modal-header h2 {
+ font-family: 'Playfair Display', serif;
+ color: var(--navy);
+ }
+
+ .close {
+ font-size: 2rem;
+ font-weight: bold;
+ color: var(--or);
+ cursor: pointer;
+ background: none;
+ border: none;
+ transition: color 0.3s;
+ }
+
+ .close:hover {
+ color: var(--rouge);
+ }
+
+ .modal-body {
+ color: #333;
+ line-height: 1.7;
+ }
+
+ .prix-table {
+ width: 100%;
+ border-collapse: collapse;
+ margin: 1rem 0;
+ font-size: 0.9rem;
+ }
+
+ .prix-table th, .prix-table td {
+ padding: 0.8rem;
+ text-align: left;
+ border-bottom: 1px solid #ddd;
+ }
+
+ .prix-table th {
+ background-color: var(--bleu-pale);
+ color: var(--navy);
+ font-weight: 700;
+ }
+
+ .prix-table tr:hover {
+ background-color: var(--bleu-pale);
+ }
+
+ .compris-list {
+ background-color: var(--bleu-pale);
+ padding: 1rem;
+ border-radius: 6px;
+ margin: 1rem 0;
+ font-size: 0.9rem;
+ }
+
+ .compris-list ul {
+ margin-left: 1.5rem;
+ }
+
+ .compris-list li {
+ margin-bottom: 0.5rem;
+ }
+
+ /* FOOTER */
+ footer {
+ background: var(--navy);
+ color: var(--blanc);
+ padding: 2rem 1rem;
+ text-align: center;
+ margin-top: 3rem;
+ }
+
+ footer p {
+ margin-bottom: 0.8rem;
+ }
+
+ .contact-info {
+ display: flex;
+ justify-content: center;
+ gap: 1rem;
+ flex-wrap: wrap;
+ font-size: 0.9rem;
+ margin: 1rem 0;
+ }
+
+ .contact-info a {
+ color: var(--azur);
+ text-decoration: none;
+ transition: color 0.3s;
+ }
+
+ .contact-info a:hover {
+ color: var(--or);
+ }
+
+ /* RESPONSIVE */
+ @media (max-width: 768px) {
+ .container {
+ padding: 1rem;
+ }
+
+ .circuits-grid {
+ grid-template-columns: 1fr;
+ }
+
+ header h1 {
+ font-size: 1.4rem;
+ }
+
+ .home-return {
+ position: static;
+ transform: none;
+ margin: 0 auto 0.75rem;
+ width: max-content;
+ }
+
+ .home-return:hover {
+ transform: translateX(-2px);
+ }
+
+ .section-title {
+ font-size: 1.6rem;
+ }
+
+ .modal-content {
+ padding: 1rem;
+ margin: 0 1rem;
+ }
+
+ .tab-button {
+ padding: 0.6rem 1rem;
+ font-size: 0.9rem;
+ }
+ }
+
+        /* ── IMAGE SLIDER ── */
+        .img-slider {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #1B2D4F;
+        }
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+        .slide.active { opacity: 1; }
+        .slide video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+            padding: 0;
+            line-height: 1;
+        }
+        .slider-arrow:hover { background: rgba(0,0,0,0.7); }
+        .slider-prev { left: 8px; }
+        .slider-next { right: 8px; }
+        .slider-dots {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+        .slider-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.2s;
+        }
+        .slider-dot.active { background: #fff; }
+
+        /* MENU PRINCIPAL (3 titres) */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: var(--blanc);
+            border-bottom: 3px solid var(--or);
+            position: relative;
+            z-index: 200;
+        }
+        .nav-title {
+            padding: 1rem 1.8rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-title:hover { color: var(--azur); background: var(--bleu-pale); }
+        .nav-title.active { color: var(--azur); border-bottom-color: var(--azur); }
+        .nav-caret { font-size: 0.65rem; transition: transform 0.25s ease; }
+        .nav-title.open .nav-caret { transform: rotate(180deg); }
+
+        /* MEGA PANNEAU DESTINATIONS */
+        .mega-panel {
+            display: none;
+            background: var(--blanc);
+            border-bottom: 3px solid var(--or);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+            position: relative;
+            z-index: 199;
+        }
+        .mega-panel.open { display: block; animation: fadeIn 0.25s ease; }
+        .mega-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            min-height: 230px;
+        }
+        .mega-continents {
+            width: 240px;
+            background: var(--creme);
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 0;
+        }
+        .mega-cont {
+            text-align: left;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .mega-cont:hover { background: rgba(0,0,0,0.04); }
+        .mega-cont.active {
+            background: var(--blanc);
+            border-left-color: var(--or);
+            color: var(--rouge);
+        }
+        .mega-countries { flex: 1; padding: 1.5rem 2rem; }
+        .mega-col { display: none; flex-direction: column; gap: 0.2rem; }
+        .mega-col.active { display: flex; animation: fadeIn 0.2s ease; }
+        .mega-col a {
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.6rem 0.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mega-col a:hover { background: var(--bleu-pale); color: var(--azur); padding-left: 1rem; }
+        @media (max-width: 700px) {
+            .nav-title { padding: 0.8rem 1rem; font-size: 0.95rem; }
+            .mega-inner { flex-direction: column; min-height: 0; }
+            .mega-continents { width: 100%; flex-direction: row; flex-wrap: wrap; padding: 0.4rem; }
+            .mega-cont { flex: 1 1 auto; text-align: center; border-left: none; border-bottom: 3px solid transparent; padding: 0.6rem 0.4rem; }
+            .mega-cont.active { border-left: none; border-bottom-color: var(--or); }
+            .mega-countries { padding: 1rem; }
+        }
+
+        /* OMRA */
+        .omra-card {
+            max-width: 640px;
+            margin: 1rem auto;
+            background: var(--blanc);
+            border: 1px solid #e6ddcb;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+        .omra-card p { margin-bottom: 1rem; }
+        .omra-cta {
+            display: inline-block;
+            margin-top: 0.5rem;
+            background: #25D366;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .omra-cta:hover { transform: scale(1.04); }
+
+        /* BOUTON + POPUP VIDEO */
+        .btn-video {
+            display: block;
+            width: 100%;
+            margin-top: 0.5rem;
+            background: transparent;
+            color: var(--rouge);
+            border: 2px solid var(--rouge);
+            border-radius: 8px;
+            padding: 0.6rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-video:hover { background: var(--rouge); color: #fff; }
+        .video-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10002;
+            background: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .video-modal.active { display: flex; }
+        .video-modal-box { position: relative; width: 100%; max-width: 640px; }
+        .video-close {
+            position: absolute;
+            top: -42px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .video-frame {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-soon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding: 1.5rem;
+            gap: 1rem;
+        }
+        .video-soon a { color: #25D366; font-weight: 700; text-decoration: none; }
+
+        /* WECHAT FLOTTANT */
+        .wa-float {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .wa-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #07C160;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .wa-btn:hover { transform: scale(1.08); }
+        .wa-btn span { color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.01em; }
+        .wa-bubble {
+            position: relative;
+            background: #fff;
+            color: var(--navy);
+            padding: 0.7rem 2rem 0.7rem 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            max-width: 230px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.3;
+            animation: waPop 0.3s ease;
+        }
+        .wa-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            right: 24px;
+            border-width: 7px 7px 0;
+            border-style: solid;
+            border-color: #fff transparent transparent;
+        }
+        .wa-bubble-link { color: var(--navy); text-decoration: none; display: block; }
+        .wa-bubble-link:hover { color: #07C160; }
+        .wa-bubble-close {
+            position: absolute;
+            top: 4px;
+            right: 7px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            line-height: 1;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+        }
+        @keyframes waPop {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+            .wa-float { right: 14px; bottom: 14px; }
+            .wa-bubble { max-width: 180px; font-size: 0.82rem; }
+            .wa-btn { width: 54px; height: 54px; }
+            .wa-btn span { font-size: 0.66rem; }
+        }
+        .wechat-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10003;
+            background: rgba(0,0,0,0.78);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .wechat-modal.active { display: flex; }
+        .wechat-box {
+            position: relative;
+            width: min(360px, 92vw);
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.3rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+        }
+        .wechat-close {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            border: none;
+            background: transparent;
+            font-size: 1.7rem;
+            line-height: 1;
+            cursor: pointer;
+            color: #666;
+        }
+        .wechat-box h3 {
+            color: var(--navy);
+            font-size: 1.15rem;
+            margin-bottom: 0.35rem;
+        }
+        .wechat-box p {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .wechat-box img {
+            width: 100%;
+            max-width: 290px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+
+/* ── SOUS-NAV MON MAROC ── */
+.maroc-subnav {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.2rem 0 1.5rem;
+  border-bottom: 2px solid var(--or);
+  padding-bottom: 0;
+}
+.maroc-tab-btn {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.maroc-tab-btn:hover { color: var(--azur); }
+.maroc-tab-btn.active {
+  color: var(--azur);
+  border-bottom-color: var(--azur);
+}
+.maroc-subtab { display: none; }
+.maroc-subtab.active { display: block; animation: fadeIn 0.35s ease; }
+
+
+/* WelcomeChina: brochure clone reduced to Morocco circuits only */
+html { scroll-behavior: smooth; }
+.main-nav #navDest,
+.main-nav #navCroisiere,
+.main-nav #navOmra,
+#destPanel,
+#maroc-sejours,
+.maroc-subnav #btn-sejours {
+  display: none !important;
+}
+#turquie, #egypte, #usa, #cuba, #perou, #europe, #chine, #malaisie,
+#bangkok, #vietnam, #zanzibar, #croisiere, #omra {
+  display: none !important;
+}
+#maroc, #maroc-circuits {
+  display: block !important;
+}
+.main-nav {
+  justify-content: center;
+}
+#navMaroc {
+  color: var(--azur);
+  border-bottom-color: var(--azur);
+  background: var(--bleu-pale);
+}
+.maroc-subnav {
+  justify-content: center;
+}
+
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header>
+<a class="home-return" href="/WelcomeChina/" aria-label="Retour à l'accueil">
+<span class="home-return-icon">←</span>
+<span>WelcomeChina</span>
+</a>
+<h1>WelcomeChina</h1>
+<p>Morocco circuits 2026 — 4-star full-board group programs</p>
+</header>
+
+<!-- NAV MENU (3 titres) -->
+<nav class="main-nav">
+<button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde<span class="nav-caret">▾</span></button>
+<button class="nav-title" id="navCroisiere" onclick="switchTab('croisiere')">Croisières</button>
+<button class="nav-title" id="navOmra" onclick="switchTab('omra')">Omra</button>
+<button class="nav-title" id="navMaroc" onclick="switchTab('maroc')">Maroc Circuits</button>
+</nav>
+<!-- MEGA PANNEAU DESTINATIONS -->
+<div class="mega-panel" id="destPanel">
+<div class="mega-inner">
+<div class="mega-continents">
+<button class="mega-cont active" onclick="showContinent('c-europe', this)">Europe</button>
+<button class="mega-cont" onclick="showContinent('c-afrique', this)">Afrique</button>
+<button class="mega-cont" onclick="showContinent('c-ameriques', this)">Amériques</button>
+<button class="mega-cont" onclick="showContinent('c-asie', this)">Asie</button>
+</div>
+<div class="mega-countries">
+<div class="mega-col active" id="c-europe">
+<a role="button" onclick="switchTab('europe')">Circuits Europe</a>
+<a role="button" onclick="switchTab('turquie')">Turquie</a>
+</div>
+<div class="mega-col" id="c-afrique">
+<a role="button" onclick="switchTab('egypte')">Égypte</a>
+<a role="button" onclick="switchTab('zanzibar')">Zanzibar</a>
+</div>
+<div class="mega-col" id="c-ameriques">
+<a role="button" onclick="switchTab('usa')">USA &amp; Canada</a>
+<a role="button" onclick="switchTab('cuba')">Cuba</a>
+<a role="button" onclick="switchTab('perou')">Pérou</a>
+</div>
+<div class="mega-col" id="c-asie">
+<a role="button" onclick="switchTab('chine')">Chine</a>
+<a role="button" onclick="switchTab('malaisie')">Malaisie &amp; Thaïlande</a>
+<a role="button" onclick="switchTab('bangkok')">Bangkok &amp; Thaïlande</a>
+<a role="button" onclick="switchTab('vietnam')">Vietnam</a>
+</div>
+</div>
+</div>
+</div>
+<!-- CONTAINER -->
+<div class="container">
+<!-- TAB TURQUIE -->
+<div class="tab-content active" id="turquie">
+<h2 class="section-title">Turquie 2026</h2>
+<p class="section-subtitle">Découvrez Istanbul, Antalya, Bodrum et bien plus...</p>
+<div class="circuits-grid">
+<!-- Circuit 1: Istanbul -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-istanbul"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1530796688-003e1d1d74fe?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543783207-ec64e4d88ea7?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-istanbul')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-istanbul')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-istanbul', 0)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul', 1)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul', 2)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Séjour Istanbul</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Visite Hippodrome, Mosquée Bleue, Topkapi, Bosphore et Îles Princesses. Incluant croisière et transferts.</p>
+<div class="prix-label">À partir de 9 700 DH</div>
+<button class="btn-details" onclick="openModal('modal-istanbul')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-istanbul')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 2: Istanbul & Antalya -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-istanbul-antalya"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1594561173580-a3c4d9d2e1a4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-istanbul-antalya')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-istanbul-antalya')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-istanbul-antalya', 0)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-antalya', 1)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-antalya', 2)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-antalya', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Istanbul &amp; Antalya</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Combiné idéal : Istanbul (1 nuit) + Antalya ALL INC (5 nuits) + détente balnéaire.</p>
+<div class="prix-label">À partir de 16 300 DH</div>
+<button class="btn-details" onclick="openModal('modal-istanbul-antalya')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-istanbul-antalya')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 3: Istanbul & Bodrum -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-istanbul-bodrum"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1578950435899-6a6cc57a3e96?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1594561173580-a3c4d9d2e1a4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-istanbul-bodrum')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-istanbul-bodrum')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-istanbul-bodrum', 0)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-bodrum', 1)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-bodrum', 2)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-bodrum', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Istanbul &amp; Bodrum</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Istanbul (1 nuit) + Bodrum ALL INC (5 nuits) avec vue mer. Plages turquoises et charme côtier.</p>
+<div class="prix-label">À partir de 16 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-istanbul-bodrum')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-istanbul-bodrum')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 4: Istanbul, Marmaris & Bodrum -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-marmaris-bodrum"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1578950435899-6a6cc57a3e96?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-marmaris-bodrum')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-marmaris-bodrum')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-marmaris-bodrum', 0)"></button><button class="slider-dot" onclick="goSlide('sl-marmaris-bodrum', 1)"></button><button class="slider-dot" onclick="goSlide('sl-marmaris-bodrum', 2)"></button><button class="slider-dot" onclick="goSlide('sl-marmaris-bodrum', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Istanbul, Marmaris &amp; Bodrum</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 11 jours</span>
+<span class="meta-item"> 10 nuits</span>
+</div>
+<p class="circuit-description">Grand tour : Istanbul (3) + Marmaris (3) + Bodrum (4) ALL INC. Croisière Bosphore incluse.</p>
+<div class="prix-label">À partir de 23 500 DH</div>
+<button class="btn-details" onclick="openModal('modal-marmaris-bodrum')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-marmaris-bodrum')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 5: Istanbul & Antalya 11j -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-istanbul-antalya-11j"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1549122728-f519709caa9c?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-istanbul-antalya-11j')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-istanbul-antalya-11j')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-istanbul-antalya-11j', 0)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-antalya-11j', 1)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-antalya-11j', 2)"></button><button class="slider-dot" onclick="goSlide('sl-istanbul-antalya-11j', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Istanbul &amp; Antalya (11j)</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 11 jours</span>
+<span class="meta-item"> 10 nuits</span>
+</div>
+<p class="circuit-description">Istanbul (3 nuits visite + Bosphore) + Antalya ALL INC (7 nuits). Détente prolongée.</p>
+<div class="prix-label">À partir de 19 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-istanbul-antalya-11j')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-istanbul-antalya-11j')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB ÉGYPTE -->
+<div class="tab-content" id="egypte">
+<h2 class="section-title">Égypte 2026</h2>
+<p class="section-subtitle">Pyramides, Nil et Mer Rouge — L'Égypte incontournable</p>
+<div class="circuits-grid">
+<!-- Circuit 6: Le Caire - Croisière Nil - Hurghada -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-caire-nil-hurghada"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548091975-7a5d7a8d3ad0?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1502747812442-2e6bbabdf466?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1564939408877-4bc664a82834?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-caire-nil-hurghada')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-caire-nil-hurghada')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-caire-nil-hurghada', 0)"></button><button class="slider-dot" onclick="goSlide('sl-caire-nil-hurghada', 1)"></button><button class="slider-dot" onclick="goSlide('sl-caire-nil-hurghada', 2)"></button><button class="slider-dot" onclick="goSlide('sl-caire-nil-hurghada', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Caire • Nil • Hurghada</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 12 jours</span>
+<span class="meta-item"> 11 nuits</span>
+</div>
+<p class="circuit-description">Le Caire (Pyramides, Sphinx, Musée) + Croisière Nil (Assouan, Louxor, Vallée des Rois) + Hurghada détente.</p>
+<div class="prix-label">19 300 DH</div>
+<button class="btn-details" onclick="openModal('modal-caire-nil-hurghada')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-caire-nil-hurghada')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 7: Le Caire & Sharm El Sheikh -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-caire-sharm"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548091975-7a5d7a8d3ad0?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1502747812442-2e6bbabdf466?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-caire-sharm')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-caire-sharm')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-caire-sharm', 0)"></button><button class="slider-dot" onclick="goSlide('sl-caire-sharm', 1)"></button><button class="slider-dot" onclick="goSlide('sl-caire-sharm', 2)"></button><button class="slider-dot" onclick="goSlide('sl-caire-sharm', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Caire &amp; Sharm El Sheikh</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 11 jours</span>
+<span class="meta-item"> 10 nuits</span>
+</div>
+<p class="circuit-description">Le Caire (3 nuits visites + Nil spectacle) + Sharm El Sheikh ALL INC (7 nuits) — Merveilles et détente.</p>
+<div class="prix-label">19 300 DH</div>
+<button class="btn-details" onclick="openModal('modal-caire-sharm')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-caire-sharm')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB USA & CANADA -->
+<div class="tab-content" id="usa">
+<h2 class="section-title">USA &amp; Canada 2026</h2>
+<p class="section-subtitle">L'Ouest américain, les Rocheuses et le Canada merveilleux</p>
+<div class="circuits-grid">
+<!-- Circuit 1: L'Ouest Complet -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-ouest-usa"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1a2?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-ouest-usa')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-ouest-usa')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-ouest-usa', 0)"></button><button class="slider-dot" onclick="goSlide('sl-ouest-usa', 1)"></button><button class="slider-dot" onclick="goSlide('sl-ouest-usa', 2)"></button><button class="slider-dot" onclick="goSlide('sl-ouest-usa', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">L'Ouest Complet-USA</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 13 jours</span>
+<span class="meta-item"> 12 nuits</span>
+</div>
+<p class="circuit-description">Los Angeles, Grand Canyon, Monument Valley, Las Vegas. Visite complète de l'Ouest américain. Départs garantis.</p>
+<div class="prix-label">À partir de 21 250 DH</div>
+<button class="btn-details" onclick="openModal('modal-ouest-usa')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-ouest-usa')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 2: Les joyaux Canada & USA -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-joyaux-canada"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1494256997604-768753d69862?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-joyaux-canada')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-joyaux-canada')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-joyaux-canada', 0)"></button><button class="slider-dot" onclick="goSlide('sl-joyaux-canada', 1)"></button><button class="slider-dot" onclick="goSlide('sl-joyaux-canada', 2)"></button><button class="slider-dot" onclick="goSlide('sl-joyaux-canada', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Les joyaux au Canada et des USA</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 11 jours</span>
+<span class="meta-item"> 10 nuits</span>
+</div>
+<p class="circuit-description">Montréal, Québec, Boston, New York, Niagara, Toronto, Ottawa. Tour complet du Canada et Est des USA.</p>
+<div class="prix-label">À partir de 20 550 DH</div>
+<button class="btn-details" onclick="openModal('modal-joyaux-canada')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-joyaux-canada')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit 3: Les Rocheuses et l'Ouest -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-rocheuses"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1500590127867-e6a76f2e5781?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1a2?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-rocheuses')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-rocheuses')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-rocheuses', 0)"></button><button class="slider-dot" onclick="goSlide('sl-rocheuses', 1)"></button><button class="slider-dot" onclick="goSlide('sl-rocheuses', 2)"></button><button class="slider-dot" onclick="goSlide('sl-rocheuses', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Les Rocheuses et l'Ouest classique-USA</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 17 jours</span>
+<span class="meta-item"> 16 nuits</span>
+</div>
+<p class="circuit-description">Los Angeles, Bryce Canyon, Grand Canyon, Monument Valley, Yellowstone, Grand Teton, San Francisco.</p>
+<div class="prix-label">À partir de 32 000 DH</div>
+<button class="btn-details" onclick="openModal('modal-rocheuses')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-rocheuses')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB CUBA -->
+<div class="tab-content" id="cuba">
+<h2 class="section-title">Cuba 2026</h2>
+<p class="section-subtitle">La Havane, Trinidad, Varadero — L'île enchantée</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-cuba"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1563207153-4be887cbcf21?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518639192441-d95b7b290e7b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1573968773099-8e8d7dcecce8?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-cuba')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-cuba')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-cuba', 0)"></button><button class="slider-dot" onclick="goSlide('sl-cuba', 1)"></button><button class="slider-dot" onclick="goSlide('sl-cuba', 2)"></button><button class="slider-dot" onclick="goSlide('sl-cuba', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Cuba — Havane &amp; Varadero</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 9 jours</span>
+<span class="meta-item"> 8 nuits</span>
+</div>
+<p class="circuit-description">La Havane (Vieille Ville, Malecón), Viñales (vallée du tabac), Trinidad (architecture coloniale), Varadero (plages all-inclusive).</p>
+<div class="prix-label">À partir de 17 000 DH</div>
+<button class="btn-details" onclick="openModal('modal-cuba')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-cuba')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB PÉROU -->
+<div class="tab-content" id="perou">
+<h2 class="section-title">Pérou 2026</h2>
+<p class="section-subtitle">Lima, Machu Picchu, Cusco — Les merveilles Incas</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-perou"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1526772662643-f27d3b3dc93e?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1580227974546-c7b5e7dd2ade?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539330692-14a6d8640b79?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-perou')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-perou')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-perou', 0)"></button><button class="slider-dot" onclick="goSlide('sl-perou', 1)"></button><button class="slider-dot" onclick="goSlide('sl-perou', 2)"></button><button class="slider-dot" onclick="goSlide('sl-perou', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Pérou — Les merveilles Incas</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 11 jours</span>
+<span class="meta-item"> 9 nuits</span>
+</div>
+<p class="circuit-description">Lima, Arequipa, Puno, Lac Titicaca, Cusco, Machu Picchu. Voyage au cœur de la civilisation Inca.</p>
+<div class="prix-label">À partir de 18 700 DH</div>
+<button class="btn-details" onclick="openModal('modal-perou')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-perou')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB EUROPE -->
+<div class="tab-content" id="europe">
+<h2 class="section-title">Europe 2026</h2>
+<p class="section-subtitle">Circuits et croisières à travers l'Europe</p>
+<div class="circuits-grid">
+<!-- Las Palmas -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-1"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539020741572-1dac79c5a75d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-1')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-1')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-1', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-1', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-1', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-1', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Séjour à Las Palmas</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Capitale de l'île, Las Palmas de Gran Canaria avec plages et découvertes balnéaires.</p>
+<div class="prix-label">À partir de 6 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-1')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-1')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Vienna-Budapest-Prague -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-2"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1509475826633-fed498a75b89?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1551634979-2e9c6d5c2552?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519731488035-b78de86be987?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-2')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-2')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-2', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-2', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-2', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-2', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Imperial Capitals</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 6 jours</span>
+<span class="meta-item"> 5 nuits</span>
+</div>
+<p class="circuit-description">Vienna, Budapest, Prague — Les capitales impériales d'Europe Centrale.</p>
+<div class="prix-label">À partir de 13 600 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-2')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-2')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Al-Andalus -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-3"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1597466765994-67f49e7d0c11?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1558618047-3c8c76ca5e65?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1573206885956-4e3b09ca8b40?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-3')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-3')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-3', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-3', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-3', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-3', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Al-Andalus</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 7 jours</span>
+<span class="meta-item"> 6 nuits</span>
+</div>
+<p class="circuit-description">Madrid, Granada, Seville — Une histoire fascinante d'Espagne.</p>
+<div class="prix-label">À partir de 14 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-3')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-3')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Athens-Rhodes-Kos -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-4"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1467269204165-00842e7f8e73?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-4')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-4')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-4', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-4', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-4', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-4', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Athens-Rhodes-Kos</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Îles grecques : Athènes, Rhodes, Kos — Îles paradisiaques.</p>
+<div class="prix-label">À partir de 14 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-4')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-4')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Athens Classical Greece -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-5"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1467269204165-00842e7f8e73?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-5')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-5')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-5', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-5', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-5', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-5', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Athens Classical Greece</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 7 jours</span>
+<span class="meta-item"> 6 nuits</span>
+</div>
+<p class="circuit-description">Grèce classique : Athènes, Olympie, Delphes, Kalambaka.</p>
+<div class="prix-label">À partir de 16 700 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-5')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-5')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Espagne & Portugal -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-6"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1597466765994-67f49e7d0c11?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559087867-ce5f9e8e9e39?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-6')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-6')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-6', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-6', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-6', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-6', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Espagne &amp; Portugal</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 10 jours</span>
+<span class="meta-item"> 9 nuits</span>
+</div>
+<p class="circuit-description">Barcelona, Valencia, Granada, Seville, Lisbon — Circuit complet.</p>
+<div class="prix-label">À partir de 19 500 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-6')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-6')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit Italy -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-7"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1529260830199-42c24126234d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518105779366-5a84b6c2ef4b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-7')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-7')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-7', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-7', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-7', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-7', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Circuit Italy</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Milan, Verona, Venice, Perugia, Naples, Salerno, Rome.</p>
+<div class="prix-label">À partir de 21 500 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-7')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-7')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- France & Suisse -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-8"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1573843981267-be1480176484?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1560564403-d5bf7f0a7f75?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-8')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-8')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-8', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-8', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-8', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-8', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">France &amp; Suisse</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Paris, Lyon, Zurich — Circuit classique Europe.</p>
+<div class="prix-label">À partir de 22 400 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-8')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-8')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Angleterre & Écosse -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-europe-9"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1569154651012-953b05ac37c9?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1568021560862-da8b8a4e5a91?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1597934347566-a9a24ce5db46?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-europe-9')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-europe-9')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-europe-9', 0)"></button><button class="slider-dot" onclick="goSlide('sl-europe-9', 1)"></button><button class="slider-dot" onclick="goSlide('sl-europe-9', 2)"></button><button class="slider-dot" onclick="goSlide('sl-europe-9', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Angleterre &amp; Écosse</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 10 jours</span>
+<span class="meta-item"> 9 nuits</span>
+</div>
+<p class="circuit-description">Londres, Newcastle, Édimbourg — Îles Britanniques.</p>
+<div class="prix-label">À partir de 27 000 DH</div>
+<button class="btn-details" onclick="openModal('modal-europe-9')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-europe-9')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB CHINE -->
+<div class="tab-content" id="chine">
+<h2 class="section-title">Chine 2026</h2>
+<p class="section-subtitle">Pékin, Grande Muraille, Shanghai — Le Pays du Milieu vous attend</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-chine"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1547060373-f12bda14e575?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1532339786-a6e7e7d9b6e2?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-chine')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-chine')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-chine', 0)"></button><button class="slider-dot" onclick="goSlide('sl-chine', 1)"></button><button class="slider-dot" onclick="goSlide('sl-chine', 2)"></button><button class="slider-dot" onclick="goSlide('sl-chine', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Circuit Chine — Pékin • Shanghai &amp; Merveilles</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 14 jours</span>
+<span class="meta-item"> 11 nuits</span>
+</div>
+<p class="circuit-description">Pékin (Cité Interdite, Grande Muraille) • Nanjing • Hangzhou (Lac Ouest) • Suzhou (canaux &amp; soie) • Shanghai (Le Bund, Pudong). Hôtels 5 tout au long du circuit.</p>
+<div class="prix-label">À partir de 29 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-chine')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-chine')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB MALAISIE & THAÏLANDE -->
+<div class="tab-content" id="malaisie">
+<h2 class="section-title">Malaisie &amp; Thaïlande 2026</h2>
+<p class="section-subtitle">Kuala Lumpur • Krabi • Phuket — L'Asie du Sud-Est à son meilleur</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-malaisie"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548549932-3e68e82b41d5?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518109011963-08c5f660c96d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1587502537668-66b50b65c15b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-malaisie')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-malaisie')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-malaisie', 0)"></button><button class="slider-dot" onclick="goSlide('sl-malaisie', 1)"></button><button class="slider-dot" onclick="goSlide('sl-malaisie', 2)"></button><button class="slider-dot" onclick="goSlide('sl-malaisie', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Malaisie &amp; Thaïlande — KL, Krabi &amp; Phuket</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 14 jours</span>
+<span class="meta-item"> 11 nuits</span>
+</div>
+<p class="circuit-description">Kuala Lumpur (Tours Petronas, Genting Highlands) • Krabi (excursion 4 îles, Sofitel 5 bord de mer) • Phuket (Koh Phi Phi, Dusit Laguna 5). Hôtels 5 tout au long du circuit avec Qatar Airways.</p>
+<div class="prix-label">À partir de 28 500 DH</div>
+<button class="btn-details" onclick="openModal('modal-malaisie')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-malaisie')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB BANGKOK -->
+<div class="tab-content" id="bangkok">
+<h2 class="section-title">Bangkok &amp; Thaïlande 2026</h2>
+<p class="section-subtitle">Bangkok, Krabi &amp; Phuket — Exotic Thailand : Les Paradis du Siam</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-bangkok"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570122906-c0a27a7c4e78?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518109011963-08c5f660c96d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1587502537668-66b50b65c15b?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-bangkok')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-bangkok')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-bangkok', 0)"></button><button class="slider-dot" onclick="goSlide('sl-bangkok', 1)"></button><button class="slider-dot" onclick="goSlide('sl-bangkok', 2)"></button><button class="slider-dot" onclick="goSlide('sl-bangkok', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Bangkok, Krabi &amp; Phuket</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 14 jours</span>
+<span class="meta-item"> 11 nuits</span>
+</div>
+<p class="circuit-description">Bangkok (marché flottant, temples, croisière Chao Phraya) • Krabi (Sofitel 5, excursion 4 îles) • Phuket (Dusit Laguna 5, Koh Phi Phi). Qatar Airways.</p>
+<div class="prix-label">À partir de 26 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-bangkok')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-bangkok')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB VIETNAM -->
+<div class="tab-content" id="vietnam">
+<h2 class="section-title">Vietnam 2026</h2>
+<p class="section-subtitle">Hanoi, Baie d'Halong, Hué, Da Nang &amp; Saigon — Découverte du Vietnam</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-vietnam"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528702600-9c4c8f2aa94c?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1558618047-3c8c76ca5e65?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1587559045816-8b4b1a1b7e40?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-vietnam')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-vietnam')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-vietnam', 0)"></button><button class="slider-dot" onclick="goSlide('sl-vietnam', 1)"></button><button class="slider-dot" onclick="goSlide('sl-vietnam', 2)"></button><button class="slider-dot" onclick="goSlide('sl-vietnam', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Découverte du Vietnam — Hanoi à Saigon</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 14 jours</span>
+<span class="meta-item"> 11 nuits</span>
+</div>
+<p class="circuit-description">Hanoi • Croisière Baie d'Halong (UNESCO) • Hué (UNESCO) • Da Nang &amp; Golden Bridge • Hoi An • Saigon • Delta du Mékong. Hôtels 5 tout au long du circuit. Qatar Airways.</p>
+<div class="prix-label">À partir de 33 900 DH</div>
+<button class="btn-details" onclick="openModal('modal-vietnam')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-vietnam')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB ZANZIBAR -->
+<div class="tab-content" id="zanzibar">
+<h2 class="section-title">Zanzibar 2026</h2>
+<p class="section-subtitle">L'île aux épices — Plages paradisiaques de l'Afrique de l'Est</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-zanzibar"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1564979268819-f0e3dbdf4d5f?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1547060373-f12bda14e575?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-zanzibar')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-zanzibar')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-zanzibar', 0)"></button><button class="slider-dot" onclick="goSlide('sl-zanzibar', 1)"></button><button class="slider-dot" onclick="goSlide('sl-zanzibar', 2)"></button><button class="slider-dot" onclick="goSlide('sl-zanzibar', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Séjour à Zanzibar — Détente &amp; Loisirs</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 8 jours</span>
+<span class="meta-item"> 7 nuits</span>
+</div>
+<p class="circuit-description">Zanzibar, archipel tanzanien aux plages turquoise. Stone Town (patrimoine UNESCO), plages de sable blanc, culture swahilie. Choix d'hôtels 3 ou 4. Vol Turkish Air.</p>
+<div class="prix-label">À partir de 18 500 DH</div>
+<button class="btn-details" onclick="openModal('modal-zanzibar')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-zanzibar')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB CROISIÈRES -->
+<div class="tab-content" id="croisiere">
+<h2 class="section-title">Croisières 2026</h2>
+<p class="section-subtitle">Croisières Méditerranée — Luxe et détente en mer</p>
+<div class="circuits-grid">
+<!-- Croisière Espagne Italie -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-croisiere-1"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1523906834998-d82fb1939ba4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-croisiere-1')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-croisiere-1')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-croisiere-1', 0)"></button><button class="slider-dot" onclick="goSlide('sl-croisiere-1', 1)"></button><button class="slider-dot" onclick="goSlide('sl-croisiere-1', 2)"></button><button class="slider-dot" onclick="goSlide('sl-croisiere-1', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Croisière Méditerranée</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 10 jours</span>
+<span class="meta-item"> 9 nuits</span>
+</div>
+<p class="circuit-description">Espagne • Italie — Barcelona, Palma, La Spezia, Rome, Naples.</p>
+<div class="prix-label">À partir de 19 800 DH</div>
+<button class="btn-details" onclick="openModal('modal-croisiere-1')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-croisiere-1')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Croisière France Italie Malte Espagne -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-croisiere-2"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1523906834998-d82fb1939ba4?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-croisiere-2')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-croisiere-2')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-croisiere-2', 0)"></button><button class="slider-dot" onclick="goSlide('sl-croisiere-2', 1)"></button><button class="slider-dot" onclick="goSlide('sl-croisiere-2', 2)"></button><button class="slider-dot" onclick="goSlide('sl-croisiere-2', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Croisière Méditerranée Premium</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 10 jours</span>
+<span class="meta-item"> 9 nuits</span>
+</div>
+<p class="circuit-description">France • Italie • Malte • Espagne — Marseille, Gênes, Naples, Messine.</p>
+<div class="prix-label">À partir de 21 800 DH</div>
+<button class="btn-details" onclick="openModal('modal-croisiere-2')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-croisiere-2')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB OMRA -->
+<div class="tab-content" id="omra">
+<h2 class="section-title">Omra</h2>
+<p class="section-subtitle">Programmes Omra 2026 — vols directs, hôtels proches du Haram</p>
+<div class="circuits-grid">
+<!-- Omra Mouharram 1448 -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-omra-mouharram"><div class="slide active" style="background-image: linear-gradient(160deg, #25543b 0%, #152e1f 100%)"></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Omra Mouharram 1448<br><small style="font-size:1.5em;direction:rtl;display:block;font-weight:600;color:#7A5A10;">عمرة محرّم 1448</small></h3>
+<div class="circuit-meta">
+<span class="meta-item"> 14 nuits</span>
+<span class="meta-item"> Vol direct RAM</span>
+</div>
+<p class="circuit-description">Vol direct Royal Air Maroc vers Médine. 4 nuits à Médine + 10 nuits à Makkah. Départs le 29 juillet ou le 05 août 2026.</p>
+<div class="prix-label" dir="ltr">À partir de 17 200 DH</div>
+<button class="btn-details" onclick="location.href='voyages/omra-mouharram.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-omra-mouharram')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Omra 06 Juillet -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-omra-06-juillet"><div class="slide active" style="background-image: linear-gradient(160deg, #25543b 0%, #152e1f 100%)"></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Omra 06 Juillet<br><small style="font-size:1.5em;direction:rtl;display:block;font-weight:600;color:#7A5A10;">عمرة 06 يوليوز</small></h3>
+<div class="circuit-meta">
+<span class="meta-item"> 12 nuits</span>
+<span class="meta-item"> Vol direct RAM</span>
+</div>
+<p class="circuit-description">Vol direct Royal Air Maroc. 4 nuits à Médine + 8 nuits à Makkah, hôtels haut de gamme. Départs les 06 · 10 · 18 · 25 juillet 2026.</p>
+<div class="prix-label" dir="ltr">À partir de 21 500 DH</div>
+<button class="btn-details" onclick="location.href='voyages/omra-06-juillet.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-omra-06-juillet')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Omra 08 Juillet -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-omra-08-juillet"><div class="slide active" style="background-image: linear-gradient(160deg, #25543b 0%, #152e1f 100%)"></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Omra 08 Juillet<br><small style="font-size:1.5em;direction:rtl;display:block;font-weight:600;color:#7A5A10;">عمرة 08 يوليوز</small></h3>
+<div class="circuit-meta">
+<span class="meta-item"> 10 nuits</span>
+<span class="meta-item"> Vol direct RAM</span>
+</div>
+<p class="circuit-description">Vol direct Royal Air Maroc. 4 nuits à Médine + 6 nuits à Makkah. Départs du 08 au 18 juillet 2026.</p>
+<div class="prix-label" dir="ltr">À partir de 16 850 DH</div>
+<button class="btn-details" onclick="location.href='voyages/omra-08-juillet.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-omra-08-juillet')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Omra via Istanbul -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-omra-istanbul"><div class="slide active" style="background-image: linear-gradient(160deg, #25543b 0%, #152e1f 100%)"></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Omra via Istanbul<br><small style="font-size:1.5em;direction:rtl;display:block;font-weight:600;color:#7A5A10;">عمرة مع إسطنبول</small></h3>
+<div class="circuit-meta">
+<span class="meta-item"> 14 nuits</span>
+<span class="meta-item"> Turkish Airlines</span>
+</div>
+<p class="circuit-description">Turkish Airlines via Istanbul. 4 nuits à Istanbul + 6 à Makkah + 4 à Médine. Départs du 05 au 19 juillet 2026.</p>
+<div class="prix-label" dir="ltr">À partir de 20 000 DH</div>
+<button class="btn-details" onclick="location.href='voyages/omra-istanbul.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-omra-istanbul')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Omra 01 Juillet -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-omra-01-juillet"><div class="slide active" style="background-image: linear-gradient(160deg, #25543b 0%, #152e1f 100%)"></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Omra 01 Juillet<br><small style="font-size:1.5em;direction:rtl;display:block;font-weight:600;color:#7A5A10;">عمرة 01 يوليوز</small></h3>
+<div class="circuit-meta">
+<span class="meta-item"> 12 nuits</span>
+<span class="meta-item"> Vol direct RAM</span>
+</div>
+<p class="circuit-description">Vol direct Royal Air Maroc, formule économique. 4 nuits à Médine + 8 nuits à Makkah. Départs les 01 · 05 · 08 juillet 2026.</p>
+<div class="prix-label" dir="ltr">À partir de 15 900 DH</div>
+<button class="btn-details" onclick="location.href='voyages/omra-01-juillet.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-omra-01-juillet')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB MON MAROC -->
+<div class="tab-content" id="maroc">
+<h2 class="section-title">Mon Maroc 2026</h2>
+<p class="section-subtitle">Désert, lacs et grands espaces — Le Maroc autrement</p>
+
+<!-- Sous-navigation -->
+<div class="maroc-subnav">
+  <button class="maroc-tab-btn active" id="btn-sejours" onclick="switchMarocTab('sejours',this)">Séjours</button>
+  <button class="maroc-tab-btn" id="btn-circuits" onclick="switchMarocTab('circuits',this)">Circuits</button>
+</div>
+
+<!-- ── SÉJOURS (existants) ── -->
+<div class="maroc-subtab active" id="maroc-sejours">
+<div class="circuits-grid">
+<!-- Circuit Merzouga -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-merzouga"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-merzouga')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-merzouga')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-merzouga', 0)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 1)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Merzouga — Marrakech · Ouarzazate · Dadès</h3>
+<div class="circuit-meta">
+<span class="meta-item">Départ garanti chaque jour en 2026</span>
+</div>
+<p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
+<div class="prix-label">À partir de 1 200 DH</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-merzouga.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-merzouga')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit Bin El Ouidane -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-binouidane"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-binouidane')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-binouidane')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-binouidane', 0)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 1)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Bin El Ouidane — La beauté divine de la nature</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 2 jours</span>
+<span class="meta-item"> 1 nuit</span>
+</div>
+<p class="circuit-description">Week-end nature au lac de Bin El Ouidane. Programme de visites organisé, hôtel et transport inclus. Départs : 03-04 mai, 10-11 mai 2026 et autres dates.</p>
+<div class="prix-label">À partir de 1 100 DH</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-bin-el-ouidane.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-binouidane')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit Dakhla -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-dakhla"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-dakhla')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-dakhla')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-dakhla', 0)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 1)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Dakhla — Wini Bik</h3>
+<div class="circuit-meta">
+<span class="meta-item"> 4 jours</span>
+<span class="meta-item"> 3 nuits</span>
+</div>
+<p class="circuit-description">Séjour tout compris à Dakhla, perle du Sud marocain. Vols, hôtel, excursions et transport inclus. Lagune turquoise, kitesurf et couchers de soleil inoubliables.</p>
+<div class="prix-label">À partir de 5 500 DH</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-dakhla.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-dakhla')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ── CIRCUITS (nouveaux — TO) ── -->
+<div class="maroc-subtab" id="maroc-circuits">
+<div class="circuits-grid">
+
+<!-- Circuit 1 : Imperial Cities & Southern Morocco -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-imperial-south"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-imperial-south')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-imperial-south')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-imperial-south', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Imperial Cities &amp; Southern Morocco</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 8 jours / 7 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Chefchaouen · Fez (UNESCO) · Sahara Merzouga · Aït Ben Haddou (UNESCO) · Marrakech. Monuments inclus : Bou Inania Madrasa, Aït Ben Haddou, Bahia Palace.</p>
+<div class="prix-label">À partir de 1 117 USD</div>
+<button class="btn-details" onclick="location.href='/WelcomeChina/voyages/maroc-circuit-imperial-south.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-imperial-south')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 2 : Imperial Cities Tour -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-imperial-cities"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539437829697-1b4ed5aebd86?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1575468130797-aa950b68aeec?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-imperial-cities')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-imperial-cities')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-imperial-cities', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Imperial Cities Tour</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 8 jours / 7 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Tanger · Meknès · Fez (UNESCO) · Marrakech. Monuments inclus : Kasbah de Tanger, Mausolée Moulay Ismail, Al Attarine Madrasa, Bahia Palace.</p>
+<div class="prix-label">À partir de 1 116 USD</div>
+<button class="btn-details" onclick="location.href='/WelcomeChina/voyages/maroc-circuit-imperial-cities.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-imperial-cities')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 3 : Best of Morocco -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-best-morocco"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1597940610882-39d1a6d7e9c4?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-best-morocco')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-best-morocco')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-best-morocco', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Best of Morocco — Cities, Heritage &amp; Sahara</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 10 jours / 9 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Tanger · Chefchaouen · Fez · Merzouga (Sahara) · Ouarzazate · Marrakech. Le Maroc complet des côtes atlantiques aux dunes du désert.</p>
+<div class="prix-label">À partir de 1 250 USD</div>
+<button class="btn-details" onclick="location.href='/WelcomeChina/voyages/maroc-circuit-best-morocco.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-best-morocco')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 4 : Discover the Kingdom -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-discover-kingdom"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1539020140153-e8c237112e53?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1566573728069-56ee4c7d21f7?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1511283876573-1f8f1dbf554d?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-discover-kingdom')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-discover-kingdom')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-discover-kingdom', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Discover the Kingdom</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 12 jours / 11 nuits</span>
+</div>
+<p class="circuit-description">Marrakech · Casablanca · Meknès · Fez · Merzouga · Ouarzazate · Agadir · Marrakech. Une découverte du Royaume entre villes impériales, Moyen Atlas, Sahara et côte atlantique.</p>
+<div class="prix-label">À partir de 1 474 USD</div>
+<button class="btn-details" onclick="location.href='/WelcomeChina/voyages/maroc-circuit-discover-kingdom.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-discover-kingdom')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 5 : Grand Discovery -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-grand-discovery"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-grand-discovery')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-grand-discovery')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-grand-discovery', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Splendid Morocco — Grand Discovery</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 15 jours / 14 nuits</span>
+</div>
+<p class="circuit-description">Marrakech · Casablanca · Rabat · Meknès · Fez · Chefchaouen · Merzouga · Ouarzazate · Essaouira · Agadir · Marrakech. Le grand tour complet du Maroc imperial, saharien et atlantique.</p>
+<div class="prix-label">À partir de 1 907 USD</div>
+<button class="btn-details" onclick="location.href='/WelcomeChina/voyages/maroc-circuit-grand-discovery.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-grand-discovery')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<!-- MODALES -->
+<!-- Modal Istanbul -->
+<div class="modal" id="modal-istanbul">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Séjour à Istanbul</h2>
+<button class="close" onclick="closeModal('modal-istanbul')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Spécial:</strong>Juillet &amp; Août 2026</p>
+<p><strong>Programme:</strong>Hippodrome • Mosquée Bleue • Palais Topkapi • Croisière Bosphore • Îles Princesses • Journées libres</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Comfortlife 3 Laleli</li>
+<li>All Season 4 Fatih</li>
+<li>Taksim Square 4</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Triple 3</td><td>Low</td><td>9 700 DH</td></tr>
+<tr><td>Triple 4</td><td>Mid</td><td>9 900 DH</td></tr>
+<tr><td>Triple 4</td><td>High</td><td>11 900 DH</td></tr>
+<tr><td>Double 3</td><td>Low</td><td>9 900 DH</td></tr>
+<tr><td>Double 4</td><td>Mid</td><td>10 900 DH</td></tr>
+<tr><td>Double 4</td><td>High</td><td>12 600 DH</td></tr>
+<tr><td>Single 4</td><td>Mid</td><td>13 900 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Vols Turkish Air (Casablanca ↔ Istanbul)</li>
+<li>7 nuits hébergement (formule B&amp;B)</li>
+<li>Croisière Bosphore (demi-journée)</li>
+<li>Transferts aéroport/hôtel</li>
+<li>Guide arabophone</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> 0-2 ans: 1 500 DH | 2-6 ans: 6 900 DH | 7-11 ans: 8 700-10 100 DH
+ </p></div>
+</div>
+</div>
+<!-- Modal Istanbul & Antalya -->
+<div class="modal" id="modal-istanbul-antalya">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Istanbul &amp; Antalya</h2>
+<button class="close" onclick="closeModal('modal-istanbul-antalya')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Programme:</strong>Istanbul (1 nuit) → Antalya ALL INC (5 nuits) → Istanbul (1 nuit) → Casablanca</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hôtels</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Beyazsamay 4 + Kemer Ring Beach Resort 5</li>
+<li>Taksim Gonen 4 + Kemer Ring Beach Resort 5</li>
+<li>Taksim Square 4 + Sirene Belek Resort 5 (Sea View)</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Type Chambre</th><th>Low</th><th>Mid</th><th>High</th></tr>
+<tr><td>Triple</td><td>16 300 DH</td><td>16 500 DH</td><td>20 500 DH</td></tr>
+<tr><td>Double</td><td>17 900 DH</td><td>18 500 DH</td><td>22 500 DH</td></tr>
+<tr><td>Single</td><td>23 800 DH</td><td>24 500 DH</td><td>31 800 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Vols Turkish Air (40kg) + AJet Air (20kg)</li>
+<li>2 nuits Istanbul B&amp;B + 5 nuits Antalya ALL INC</li>
+<li>Tous transferts</li>
+<li>Guide francophone</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> 0-2 ans: 1 800 DH | 2-6 ans: 8 900 DH
+ </p></div>
+</div>
+</div>
+<!-- Modal Istanbul & Bodrum -->
+<div class="modal" id="modal-istanbul-bodrum">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Istanbul &amp; Bodrum</h2>
+<button class="close" onclick="closeModal('modal-istanbul-bodrum')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Programme:</strong>Istanbul (1 nuit) → Bodrum ALL INC + Vue Mer (5 nuits) → Istanbul → Casablanca</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hôtels</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Beyazsamay 4 + Club Blue Dream Resort 5</li>
+<li>Taksim Gonen 4 + Club Blue Dream 5</li>
+<li>Taksim Square 4 + La Blanche Island 5</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Type Chambre</th><th>Low</th><th>Mid</th><th>High</th></tr>
+<tr><td>Triple</td><td>16 900 DH</td><td>17 500 DH</td><td>20 500 DH</td></tr>
+<tr><td>Double</td><td>19 700 DH</td><td>19 900 DH</td><td>24 900 DH</td></tr>
+<tr><td>Single</td><td>24 500 DH</td><td>24 600 DH</td><td>40 500 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Vols Turkish Air + AJet Air</li>
+<li>2 nuits Istanbul B&amp;B + 5 nuits Bodrum ALL INC + Vue Mer</li>
+<li>Tous transferts</li>
+</ul>
+</div></div>
+</div>
+</div>
+<!-- Modal Marmaris & Bodrum -->
+<div class="modal" id="modal-marmaris-bodrum">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Istanbul, Marmaris &amp; Bodrum</h2>
+<button class="close" onclick="closeModal('modal-marmaris-bodrum')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 11 jours / 10 nuits</p>
+<p><strong>Programme:</strong>Istanbul (3) → Marmaris ALL INC (3) → Bodrum ALL INC + Vue Mer (4)</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Type Chambre</th><th>Low</th><th>Mid</th><th>High</th></tr>
+<tr><td>Triple</td><td>23 500 DH</td><td>23 900 DH</td><td>27 500 DH</td></tr>
+<tr><td>Double</td><td>24 700 DH</td><td>25 700 DH</td><td>29 500 DH</td></tr>
+<tr><td>Single</td><td>35 000 DH</td><td>35 900 DH</td><td>44 500 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Vols Turkish Air</li>
+<li>3 nuits Istanbul B&amp;B</li>
+<li>3 nuits Marmaris ALL INC + 4 nuits Bodrum ALL INC + Vue Mer</li>
+<li>Croisière Bosphore</li>
+<li>Tous transferts</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates:</strong> 31/07 • 03/08 • 04/08 • 09/08 • 10/08 • 16/08 • 17/08 • 21/08
+ </p></div>
+</div>
+</div>
+<!-- Modal Istanbul & Antalya 11j -->
+<div class="modal" id="modal-istanbul-antalya-11j">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Istanbul &amp; Antalya (11 jours)</h2>
+<button class="close" onclick="closeModal('modal-istanbul-antalya-11j')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 11 jours / 10 nuits</p>
+<p><strong>Programme:</strong>Istanbul (3 nuits visite + Bosphore offerte) → Antalya ALL INC (7 nuits) → Casablanca</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Type Chambre</th><th>Low</th><th>Mid</th><th>High</th></tr>
+<tr><td>Triple</td><td>19 900 DH</td><td>20 500 DH</td><td>25 500 DH</td></tr>
+<tr><td>Double</td><td>21 000 DH</td><td>21 500 DH</td><td>26 500 DH</td></tr>
+<tr><td>Single</td><td>29 500 DH</td><td>29 900 DH</td><td>39 900 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Vols Turkish Air</li>
+<li>3 nuits Istanbul B&amp;B + 7 nuits Antalya ALL INC</li>
+<li>Croisière Bosphore offerte</li>
+<li>Tous transferts</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates:</strong> 23/07 • 24/07 • 30/07 • 31/07 • 06/08 • 07/08 • 13/08 • 14/08 • 20/08 • 21/08
+ </p></div>
+</div>
+</div>
+<!-- Modal Caire - Nil - Hurghada -->
+<div class="modal" id="modal-caire-nil-hurghada">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Le Caire • Croisière Nil • Hurghada</h2>
+<button class="close" onclick="closeModal('modal-caire-nil-hurghada')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 12 jours / 11 nuits</p>
+<p><strong>Date fixe:</strong> 17 → 28 Août 2026</p>
+<p><strong>Programme:</strong>Casablanca → Le Caire (1 nuit) → Pyramides/Sphinx/Musée → Assouan/Kom Ombo/Edfou/Louxor (Croisière 5) → Hurghada ALL INC (4 nuits) → Le Caire (2 nuits) → Casablanca</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Le Caire: Hôtel 4 sup. (1 nuit arrivée + 2 nuits retour)</li>
+<li>Croisière: 5 pension complète (3 nuits)</li>
+<li>Hurghada: 4 luxe ALL INC (4 nuits)</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarif</h4>
+<p style="font-size: 1.1rem; font-weight: 700; color: var(--rouge);">19 300 DH (chambre double ou triple)</p>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Royal Air Maroc (2×23kg + bagage main)</li>
+<li>Tous hébergements</li>
+<li>Transferts privés</li>
+<li>Guide francophone</li>
+<li>Taxes</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; padding: 1rem; background-color: #fff3cd; border-radius: 6px; font-size: 0.9rem;">
+<strong> À prévoir:</strong>Dépenses perso • Pourboires (20$/adulte, 5$/enfant) • Visa Égypte: 600 DH (2 photos + CIN + relevés 3 mois + attestion travail)
+ </p></div>
+</div>
+</div>
+<!-- Modal Caire & Sharm El Sheikh -->
+<div class="modal" id="modal-caire-sharm">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Le Caire &amp; Sharm El Sheikh</h2>
+<button class="close" onclick="closeModal('modal-caire-sharm')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 11 jours / 10 nuits</p>
+<p><strong>Programme:</strong>Le Caire (3 nuits visites + dîner croisière Nil) → Sharm El Sheikh ALL INC 5 (7 nuits libres) → Casablanca via Le Caire</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hôtels</h4>
+<ul style="margin-left: 1.5rem;">
+<li><strong>Option A:</strong>Marriott Cairo City View 5 + Aurora Oriental Resort Sharm El Sheikh Garden View 5</li>
+<li><strong>Option B:</strong>Marriott &amp; Omar Khayyam Casino City View 5 + Cleopatra Luxury Resort ou Movenpick 5</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs Le Caire</h4>
+<p>Double: 19 800 DH | Triple: 19 600 DH | Supplément Single: +5 900 DH</p>
+<h4 style="margin-top: 1rem; color: var(--navy);">Tarifs Sharm</h4>
+<p>Enfants 2-5,99 ans: 8 900 DH | 6-11,99 ans (1er): 11 900 DH | 4-11,99 ans (2e): 14 900 DH</p>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Billets avion Casa/Caire/Sharm/Casa</li>
+<li>3 nuits Caire 5 B&amp;B + 7 nuits Sharm 5 ALL INC soft</li>
+<li>Excursion complète Caire + 1 déjeuner + dîner croisière Nil avec spectacle</li>
+<li>Transferts Deluxe A/C + guide pro</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; padding: 1rem; background-color: #fff3cd; border-radius: 6px; font-size: 0.9rem;">
+<strong>Conditions:</strong>Visa: 600 DH (dossier 15j avant) • Annulation: 30-15j (50%) • 14-8j (70%) • &lt;7j (100%) • Paiement: 50% à confirmation + 50% max 30j avant
+ </p>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Périodes:</strong> 16→26 Juillet | 23 Juillet→02 Août | 06→16 Août | 10→20 Août | 13→23 Août | 20→30 Août | 30 Août→09 Sept
+ </p></div>
+</div>
+</div>
+<!-- Modal L'Ouest Complet-USA -->
+<div class="modal" id="modal-ouest-usa">
+<div class="modal-content">
+<div class="modal-header">
+<h2>L'Ouest Complet-USA</h2>
+<button class="close" onclick="closeModal('modal-ouest-usa')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 13 jours / 12 nuits</p>
+<p><strong>Programme:</strong>Los Angeles → Grand Canyon → Monument Valley → Las Vegas → San Francisco → Monterey → Los Angeles</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs par personne en DH</h4>
+<table class="prix-table">
+<tr><th>Chambre Triple</th><th>Chambre Double</th><th>Supplément Single</th><th>Enfant -12 ans</th></tr>
+<tr><td>21 250</td><td>22 400</td><td>7 650</td><td>18 900</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>12 nuits d'hôtel avec petit-déjeuner</li>
+<li>10 repas mentionnés</li>
+<li>Entrées selon programme</li>
+<li>Accompagnateur francophone</li>
+<li>Transferts d'aéroports</li>
+<li>Autocar climatisé 38-56 places</li>
+<li>Taxes et services</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; padding: 1rem; background-color: #fff3cd; border-radius: 6px; font-size: 0.9rem;">
+<strong>Vols:</strong>Non inclus | <strong>Type:</strong>GIR* - Départ Garantis | <strong>Paiement:</strong> 50% à confirmation + 50% max 30j avant
+ </p>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates disponibles:</strong> 25/03 • 15/04 • 27/05 • 08/07 • 29/07 • 23/09 • 20/10
+ </p></div>
+</div>
+</div>
+<!-- Modal Les joyaux Canada & USA -->
+<div class="modal" id="modal-joyaux-canada">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Les joyaux au Canada et des USA</h2>
+<button class="close" onclick="closeModal('modal-joyaux-canada')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 11 jours / 10 nuits</p>
+<p><strong>Programme:</strong>Montréal → Québec → Boston → New York → Washington → Pays Amish → Niagara → Toronto → 1000 Îles → Ottawa → Montréal</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs par personne en DH</h4>
+<table class="prix-table">
+<tr><th>Chambre Triple</th><th>Chambre Double</th><th>Supplément Single</th><th>Enfant -12 ans</th></tr>
+<tr><td>20 550</td><td>21 800</td><td>8 200</td><td>17 600</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>10 nuits d'hôtel avec petit-déjeuner</li>
+<li>9 repas mentionnés</li>
+<li>Croisière 1000 Îles</li>
+<li>Accompagnateur francophone + guides locaux</li>
+<li>Transferts d'aéroports</li>
+<li>Autocar climatisé</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates disponibles:</strong> 12/05 • 09/06 • 30/06 • 14/07 • 04/08 • 11/08 • 02/09 • 08/09 • 15/09 • 22/09 • 29/09 • 06/10
+ </p></div>
+</div>
+</div>
+<!-- Modal Les Rocheuses et l'Ouest -->
+<div class="modal" id="modal-rocheuses">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Les Rocheuses et l'Ouest classique-USA</h2>
+<button class="close" onclick="closeModal('modal-rocheuses')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 17 jours / 16 nuits</p>
+<p><strong>Programme:</strong>Los Angeles → Las Vegas → Bryce Canyon → Grand Canyon → Monument Valley → Yellowstone → Grand Teton → San Francisco → Los Angeles</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs par personne en DH</h4>
+<table class="prix-table">
+<tr><th>Chambre Triple</th><th>Chambre Double</th><th>Supplément Single</th><th>Enfant -12 ans</th></tr>
+<tr><td>32 000</td><td>34 000</td><td>13 600</td><td>27 300</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>16 nuits d'hôtel avec petit-déjeuner</li>
+<li>15 repas mentionnés</li>
+<li>Entrées selon programme</li>
+<li>Accompagnateur francophone</li>
+<li>Autocar climatisé 38-56 places</li>
+<li>Taxes et services</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates disponibles:</strong> 20/05 • 27/05 • 03/06 • 24/06 • 05/08 • 12/08 • 02/09 • 16/09
+ </p></div>
+</div>
+</div>
+<!-- Modal Cuba -->
+<div class="modal" id="modal-cuba">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Cuba — La Havane &amp; Varadero</h2>
+<button class="close" onclick="closeModal('modal-cuba')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 9 jours / 8 nuits</p>
+<p><strong>Programme:</strong>Casablanca → La Havane (vieille ville, Malecón, musées) → Viñales (vallée du tabac) → Trinidad (architecture coloniale) → Varadero (plages all-inclusive) → Casablanca</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs par personne en DH (minimum 4 personnes)</h4>
+<table class="prix-table">
+<tr><th>Chambre Double</th><th>Supplément Single</th></tr>
+<tr><td>17 000</td><td>3 400</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Hébergements proposés ou similaires</li>
+<li>Repas selon programme + boissons incluses</li>
+<li>Toutes les visites avec guide local francophone</li>
+<li>Carte de tourisme (visa) obligatoire</li>
+<li>Assistance de nos représentants sur place</li>
+<li>Visa online</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; padding: 1rem; background-color: #fff3cd; border-radius: 6px; font-size: 0.9rem;">
+<strong>Non compris:</strong>Vols internationaux • Assurance assistance-rapatriement (obligatoire) • Pourboires • Port des bagages
+ </p>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates de départ:</strong> 09/05 • 21/06 • 11/10
+ </p></div>
+</div>
+</div>
+<!-- Modal Pérou -->
+<div class="modal" id="modal-perou">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Pérou — Les merveilles Incas</h2>
+<button class="close" onclick="closeModal('modal-perou')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 11 jours / 9 nuits</p>
+<p><strong>Programme:</strong>Lima → Arequipa → Puno → Lac Titicaca (Îles Uros &amp; Llachon) → Cusco → Machu Picchu → Lima</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs par personne en DH</h4>
+<table class="prix-table">
+<tr><th>Ville</th><th>En Triple</th><th>En Double</th><th>Supplément Single</th></tr>
+<tr><td>Lima</td><td>18 700</td><td>19 500</td><td>4 700</td></tr>
+<tr><td>Arequipa</td><td>18 700</td><td>19 500</td><td>4 700</td></tr>
+<tr><td>Puno</td><td>18 700</td><td>19 500</td><td>4 700</td></tr>
+<tr><td>Cusco</td><td>18 700</td><td>19 500</td><td>4 700</td></tr>
+<tr><td>Machu Picchu Pueblo</td><td>18 700</td><td>19 500</td><td>4 700</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Transferts et excursions selon programme</li>
+<li>Entrées dans les sites et musées visités</li>
+<li>Logement en chambre double en hôtels 3/3sup</li>
+<li>Pension complète (petit-déjeuner J2 au petit-déjeuner J10)</li>
+<li>Train Ollanta/Machu-Picchu/Ollanta en classe Expedition</li>
+<li>Relais de guides locaux francophones</li>
+<li>Assistance de nos agences locales</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Dates de départ 2026:</strong> 12 Juin • 27 Septembre • 04 Octobre • 19 Novembre
+ </p></div>
+</div>
+</div>
+<!-- MODALES EUROPE -->
+<div class="modal" id="modal-europe-1">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Séjour à Las Palmas</h2>
+<button class="close" onclick="closeModal('modal-europe-1')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Prix dès:</strong> 6 900 DH (Triple 3★) | 7 500 DH (Double) | 11 800 DH (Single)</p>
+<p><strong>Destinations:</strong> Las Palmas de Gran Canaria — Plage de Las Canteras</p>
+<p><strong>Inclus:</strong> Vol Ryanair • Transferts • Hôtel 3★ • Assistance Voyages 21</p>
+<p><strong>Dates:</strong> 22 Mai, 11 Juin, 09 Juillet, 29 Août 2026</p>
+
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal-europe-2">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Imperial Capitals — Vienna, Budapest, Prague</h2>
+<button class="close" onclick="closeModal('modal-europe-2')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 6 jours / 5 nuits</p>
+<p><strong>Prix:</strong> À partir de 13 600 DH</p>
+<p><strong>Itinéraire:</strong> Vienne (2n) • Budapest (2n) • Prague (1n)</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Bus avec guide • Bateau Danube • Visite Château Prague</p>
+<p><strong>Dates:</strong> 13-18 Mai, 17-22 Juin, 08-13 Juillet et plus</p>
+
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal-europe-3">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Al-Andalus — Madrid, Granada, Seville</h2>
+<button class="close" onclick="closeModal('modal-europe-3')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 7 jours / 6 nuits</p>
+<p><strong>Prix:</strong> À partir de 14 900 DH</p>
+<p><strong>Itinéraire:</strong> Madrid (2n) • Granada (2n) • Seville (2n)</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Visite Alhambra • Bateau Guadalquivir • Repas inclus</p>
+<p><strong>Dates:</strong> 20-26 Mai, 17-23 Juin, 15-21 Juillet et plus</p>
+
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal-europe-4">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Athens, Rhodes & Kos</h2>
+<button class="close" onclick="closeModal('modal-europe-4')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Prix dès:</strong> 14 900 DH (Triple 3★)</p>
+<p><strong>Iles:</strong> Athènes (2n) • Rhodes (3n) • Kos (2n)</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Visite Acropole • Ferry Rhodes-Kos • Transferts</p>
+<p><strong>Dates:</strong> 21-28 Mai, 18-25 Juin, 02-09 Juillet et plus</p>
+
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal-europe-5">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Athens Classical Greece</h2>
+<button class="close" onclick="closeModal('modal-europe-5')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 7 jours / 6 nuits</p>
+<p><strong>Prix dès:</strong> 16 700 DH (Triple 3★)</p>
+<p><strong>Circuit:</strong> Athènes • Olympie • Delphes • Kalambaka • Météores</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Bus avec guide • Sites archéologiques</p>
+<p><strong>Dates:</strong> 10-16 Juin, 01-07 Juillet, 26 Août-01 Sept et plus</p>
+
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal-europe-6">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Circuit Espagne &amp; Portugal</h2>
+<button class="close" onclick="closeModal('modal-europe-6')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 10 jours / 9 nuits</p>
+<p><strong>Prix:</strong> À partir de 19 500 DH</p>
+<p><strong>Itinéraire:</strong> Barcelona • Valencia • Granada • Seville • Lisbon</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Bus avec guide • Visite Alhambra • Sagrada Familia</p>
+<p><strong>Dates:</strong> 15-24 Juillet, 05-14 Août, 09-18 Septembre et plus</p>
+
+</div>
+</div>
+</div>
+
+<!-- MODALES EUROPE 7-9 -->
+<div class="modal" id="modal-europe-7">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Circuit Italie</h2>
+<button class="close" onclick="closeModal('modal-europe-7')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Prix:</strong> À partir de 21 500 DH</p>
+<p><strong>Itinéraire:</strong> Milan • Vérone • Venise • Pérouse • Rome</p>
+<p><strong>Inclus:</strong> Vol CASA • Bus avec guide • Visite Venise • Visite Pompéi • Transferts</p>
+<p><strong>Dates:</strong> 06-13 Mai, 27 Mai-03 Juin, 10-17 Juin et plus</p>
+
+</div></div></div>
+
+<div class="modal" id="modal-europe-8">
+<div class="modal-content">
+<div class="modal-header">
+<h2>France &amp; Suisse</h2>
+<button class="close" onclick="closeModal('modal-europe-8')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Prix:</strong> À partir de 22 400 DH</p>
+<p><strong>Itinéraire:</strong> Paris • Lyon • Zurich</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Bus avec guide • Tour Eiffel • Excursion Alpes</p>
+<p><strong>Dates:</strong> 08-15 Juillet, 05-12 Août, 02-09 Septembre et plus</p>
+
+</div></div></div>
+
+<div class="modal" id="modal-europe-9">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Angleterre &amp; Ecosse</h2>
+<button class="close" onclick="closeModal('modal-europe-9')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 10 jours / 9 nuits</p>
+<p><strong>Prix:</strong> À partir de 27 000 DH</p>
+<p><strong>Itinéraire:</strong> Londres • Newcastle • Edimbourg</p>
+<p><strong>Inclus:</strong> Vol aller-retour • Bus avec guide • Tour de Londres • Visite Ecosse</p>
+<p><strong>Dates:</strong> 10-19 Juillet, 07-16 Août, 04-13 Septembre et plus</p>
+
+</div></div></div>
+
+<!-- MODALES CROISIERES -->
+<div class="modal" id="modal-croisiere-1">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Croisière Méditerranée — Espagne &amp; Italie</h2>
+<button class="close" onclick="closeModal('modal-croisiere-1')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 10 jours / 9 nuits</p>
+<p><strong>Prix Cabine Double:</strong> 19 800 DH</p>
+<p><strong>Bateau:</strong> Harmony of the Seas — Royal Caribbean</p>
+<p><strong>Itinéraire:</strong> Barcelona • Palma • La Spezia • Rome • Naples • Barcelona</p>
+<p><strong>Inclus:</strong> Vol aller-retour Ryanair • 2 nuits hôtel 3★ • 7 nuits croisière • Transferts</p>
+<p><strong>À partir de Juin 2026</strong></p>
+
+</div></div></div>
+
+<div class="modal" id="modal-croisiere-2">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Croisière Méditerranée Premium</h2>
+<button class="close" onclick="closeModal('modal-croisiere-2')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 10 jours / 9 nuits</p>
+<p><strong>Prix Cabine Double:</strong> 21 800 DH</p>
+<p><strong>Bateau:</strong> Royal Caribbean International</p>
+<p><strong>Itinéraire:</strong> Marseille • Gênes • Naples • Messine • Palma • Barcelona</p>
+<p><strong>Inclus:</strong> Vol aller-retour • 2 nuits hôtel 3★ • 7 nuits croisière • Transferts</p>
+<p><strong>À partir de Juin 2026</strong></p>
+
+</div></div></div>
+
+<!-- MODALES NOUVELLES DESTINATIONS -->
+<div class="modal" id="modal-chine">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Circuit Chine — Pékin, Shanghai &amp; Merveilles</h2>
+<button class="close" onclick="closeModal('modal-chine')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 14 jours / 11 nuits — Hôtels 5★</p>
+<p><strong>Programme:</strong> Pékin (Cité Interdite, Grande Muraille, Temple du Ciel) • Nanjing • Suzhou • Hangzhou (Lac de l'Ouest) • Shanghai • Shenzhen</p>
+<h4 style="margin-top:1.2rem;color:var(--navy)">Hébergement</h4>
+<ul><li>Hôtels 5 étoiles normes locales tout au long du circuit</li></ul>
+
+<h4 style="margin-top:1.2rem;color:var(--navy)">Tarifs</h4>
+<p><strong>À partir de 29 900 DH</strong></p>
+<p><strong>Inclus:</strong> Vol Qatar Airways CASA–PÉKIN / SHANGHAI–CASA • Hôtels 5★ • Repas mentionnés • Visites • Guide francophone</p>
+<p><strong>Non compris:</strong> Visa chinois 600 DHS • Pourboires ~40$ • Dépenses personnelles</p>
+<p><strong>Dates:</strong> 05-18 Août • 12-25 Août 2026</p>
+</div></div></div>
+
+<div class="modal" id="modal-malaisie">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Malaisie &amp; Thaïlande — KL, Krabi &amp; Phuket</h2>
+<button class="close" onclick="closeModal('modal-malaisie')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 14 jours / 11 nuits — Hôtels 5★</p>
+<p><strong>Programme:</strong> Kuala Lumpur (Tours Petronas, Genting Highlands) • Vol KL–Krabi • Krabi • Phuket</p>
+<h4 style="margin-top:1.2rem;color:var(--navy)">Hébergement</h4>
+<ul><li>Hôtels 5 étoiles tout au long du circuit</li></ul>
+
+<h4 style="margin-top:1.2rem;color:var(--navy)">Tarifs</h4>
+<p><strong>À partir de 28 500 DH</strong></p>
+<p><strong>Inclus:</strong> Vol Qatar Airways CASA–KL • Hôtels 5★ • Repas mentionnés • Vol intérieur KL–Krabi • Guide</p>
+<p><strong>Dates:</strong> 31 Juillet–13 Août • 05–18 Août 2026</p>
+</div></div></div>
+
+<div class="modal" id="modal-bangkok">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Exotic Thailand — Bangkok, Krabi &amp; Phuket</h2>
+<button class="close" onclick="closeModal('modal-bangkok')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 14 jours / 11 nuits — Hôtels 5★ et 4★ Deluxe</p>
+<p><strong>Programme:</strong> Bangkok (marchés flottants, temples, croisière Chao Phraya) • Vol Bangkok–Krabi • Krabi • Phuket</p>
+<h4 style="margin-top:1.2rem;color:var(--navy)">Hébergement</h4>
+<ul>
+<li>Bangkok : Rembrandt Hotel 4★ Deluxe</li>
+<li>Krabi / Phuket : Hôtels 5★</li>
+</ul>
+
+<h4 style="margin-top:1.2rem;color:var(--navy)">Tarifs</h4>
+<p><strong>À partir de 26 900 DH</strong></p>
+<p><strong>Inclus:</strong> Vol Qatar Airways • Hôtels • Repas mentionnés • Visites • Vol intérieur Bangkok–Krabi • Guide francophone</p>
+<p><strong>Dates:</strong> 01-14 Août • 07-20 Août • 11-24 Août 2026</p>
+</div></div></div>
+
+<div class="modal" id="modal-vietnam">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Découverte du Vietnam — Hanoi à Saigon</h2>
+<button class="close" onclick="closeModal('modal-vietnam')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 14 jours / 11 nuits — Hôtels 5★</p>
+<p><strong>Programme:</strong> Hanoi • Croisière Baie d'Halong (UNESCO) • Hué (UNESCO) • Da Nang / Hoi An • China Beach • Ho Chi Minh-Ville (Saigon)</p>
+<h4 style="margin-top:1.2rem;color:var(--navy)">Hébergement</h4>
+<ul><li>Hôtels 5 étoiles tout au long du circuit</li></ul>
+
+<h4 style="margin-top:1.2rem;color:var(--navy)">Tarifs</h4>
+<p><strong>À partir de 33 900 DH</strong></p>
+<p><strong>Inclus:</strong> Vol Qatar Airways CASA–HANOI / SAIGON–CASA • Hôtels 5★ • Repas mentionnés • Vols intérieurs • Guide francophone</p>
+<p><strong>Non compris:</strong> Visa 800 DHS • Pourboires • Dépenses personnelles</p>
+<p><strong>Dates:</strong> 02-15 Août • 08-21 Août 2026</p>
+</div></div></div>
+
+<div class="modal" id="modal-zanzibar">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Séjour à Zanzibar — Détente &amp; Loisirs</h2>
+<button class="close" onclick="closeModal('modal-zanzibar')">&#215;</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 8 jours / 7 nuits</p>
+<p><strong>Programme:</strong> Stone Town (UNESCO) • Nungwi &amp; Kendwa (plages turquoise) • Excursions optionnelles</p>
+<h4 style="margin-top:1.2rem;color:var(--navy)">Hébergement</h4>
+<ul>
+<li>Fun Beach Hotel 3★ (petit-déjeuner ou demi-pension)</li>
+<li>Breeze's Beach Club &amp; Spa 4★ (demi-pension)</li>
+</ul>
+
+<h4 style="margin-top:1.2rem;color:var(--navy)">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Hôtel</th><th>Single</th><th>Double</th><th>Triple</th></tr>
+<tr><td>Fun Beach 3★ BB (Juin-Août)</td><td>24 800 DH</td><td>21 500 DH</td><td>18 500 DH</td></tr>
+<tr><td>Breeze's 4★ DP (Juin-Août)</td><td>27 500 DH</td><td>24 300 DH</td><td>22 500 DH</td></tr>
+<tr><td>Fun Beach 3★ DP (Juin-Août)</td><td>29 700 DH</td><td>26 000 DH</td><td>23 900 DH</td></tr>
+<tr><td>Breeze's 4★ DP Premium</td><td>38 900 DH</td><td>34 900 DH</td><td>31 000 DH</td></tr>
+</table>
+<p><strong>Inclus:</strong> Vol Turkish Air aller-retour • Transferts privés • Taxes séjour • Assurance obligatoire</p>
+<p><strong>Non compris:</strong> Visa aéroport 50 USD • Excursions optionnelles</p>
+</div></div></div>
+
+<!-- POPUP VIDEO (partagee) -->
+<div class="video-modal" id="videoModal">
+<div class="video-modal-box">
+<button class="video-close" aria-label="Fermer" onclick="closeVideo()">×</button>
+<div class="video-frame" id="videoFrame"></div>
+</div>
+</div>
+
+<!-- WECHAT FLOTTANT -->
+<div class="wa-float">
+<div class="wa-bubble" id="waBubble">
+<button class="wa-bubble-close" aria-label="Fermer" onclick="document.getElementById('waBubble').style.display='none';return false;">×</button>
+<button class="wa-bubble-link" type="button" onclick="openWechat();return false;" style="border:0;background:transparent;font:inherit;text-align:left;cursor:pointer;">Scan WeChat to contact us</button>
+</div>
+<button class="wa-btn" type="button" onclick="openWechat();return false;" aria-label="Open WeChat QR"><span>WeChat</span></button>
+</div>
+
+<!-- WECHAT QR POPUP -->
+<div class="wechat-modal" id="wechatModal" onclick="if(event.target===this)closeWechat()">
+<div class="wechat-box">
+<button class="wechat-close" aria-label="Close" onclick="closeWechat()">×</button>
+<h3>WeChat</h3>
+<p>Scan this QR code to contact Voyages 21.</p>
+<img src="/WelcomeChina/assets/wechat-qr.jpeg" alt="Voyages 21 WeChat QR code">
+</div>
+</div>
+
+<!-- JAVASCRIPT COMPLET -->
+    <script>
+    // ── SLIDER ENGINE ──
+    var sliderState = {};
+    var sliderTimers = {};
+
+    function openWechat() {
+        document.getElementById('wechatModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeWechat() {
+        document.getElementById('wechatModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function initSliders() {
+        var sliders = document.querySelectorAll('.img-slider');
+        for (var i = 0; i < sliders.length; i++) {
+            var sl = sliders[i];
+            var id = sl.getAttribute('data-slider-id');
+            sliderState[id] = 0;
+            var slides = sl.querySelectorAll('.slide');
+            if (slides.length > 1) {
+                (function(sid) {
+                    sliderTimers[sid] = setInterval(function() { autoNext(sid); }, 3500);
+                })(id);
+            }
+        }
+    }
+
+    function showSlide(sliderId, index) {
+        var sl = document.querySelector('.img-slider[data-slider-id="' + sliderId + '"]');
+        if (!sl) return;
+        var slides = sl.querySelectorAll('.slide');
+        var dots   = sl.querySelectorAll('.slider-dot');
+        var n = slides.length;
+        index = ((index % n) + n) % n;
+        sliderState[sliderId] = index;
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].classList.toggle('active', i === index);
+        }
+        for (var i = 0; i < dots.length; i++) {
+            dots[i].classList.toggle('active', i === index);
+        }
+        // Lecture auto de la diapo video (mp4) dans la galerie
+        for (var j = 0; j < slides.length; j++) {
+            var vid = slides[j].querySelector('video');
+            if (!vid) continue;
+            if (j === index) {
+                clearInterval(sliderTimers[sliderId]);
+                vid.muted = true;
+                try { vid.currentTime = 0; } catch (e) {}
+                (function (sid, vv) {
+                    vv.onended = function () {
+                        showSlide(sid, (sliderState[sid] || 0) + 1);
+                        sliderTimers[sid] = setInterval(function () { autoNext(sid); }, 3500);
+                    };
+                    var pr = vv.play();
+                    if (pr && pr.catch) pr.catch(function () {
+                        // Pas encore pret : relance des que des donnees arrivent.
+                        var onReady = function () {
+                            vv.removeEventListener('canplay', onReady);
+                            vv.muted = true;
+                            vv.play().catch(function () {});
+                        };
+                        vv.addEventListener('canplay', onReady);
+                        // Filet de securite : ne jamais figer le carrousel.
+                        sliderTimers[sid] = setInterval(function () { autoNext(sid); }, 5000);
+                    });
+                })(sliderId, vid);
+            } else {
+                try { vid.pause(); } catch (e) {}
+            }
+        }
+    }
+
+    function autoNext(id) { showSlide(id, (sliderState[id] || 0) + 1); }
+
+    function prevSlide(sliderId) {
+        clearInterval(sliderTimers[sliderId]);
+        showSlide(sliderId, (sliderState[sliderId] || 0) - 1);
+        sliderTimers[sliderId] = setInterval(function() { autoNext(sliderId); }, 3500);
+    }
+
+    function nextSlide(sliderId) {
+        clearInterval(sliderTimers[sliderId]);
+        showSlide(sliderId, (sliderState[sliderId] || 0) + 1);
+        sliderTimers[sliderId] = setInterval(function() { autoNext(sliderId); }, 3500);
+    }
+
+    function goSlide(sliderId, index) {
+        clearInterval(sliderTimers[sliderId]);
+        showSlide(sliderId, index);
+        sliderTimers[sliderId] = setInterval(function() { autoNext(sliderId); }, 3500);
+    }
+
+    // ── MENU PRINCIPAL + ONGLETS ──
+    function closeDest() {
+        var panel = document.getElementById('destPanel');
+        if (panel) panel.classList.remove('open');
+        var navDest = document.getElementById('navDest');
+        if (navDest) navDest.classList.remove('open');
+    }
+
+    function toggleDest(btn) {
+        var panel = document.getElementById('destPanel');
+        var open = panel.classList.toggle('open');
+        btn.classList.toggle('open', open);
+    }
+
+    function showContinent(colId, btn) {
+        var cols = document.querySelectorAll('.mega-col');
+        for (var i = 0; i < cols.length; i++) cols[i].classList.remove('active');
+        var col = document.getElementById(colId);
+        if (col) col.classList.add('active');
+        var conts = document.querySelectorAll('.mega-cont');
+        for (var i = 0; i < conts.length; i++) conts[i].classList.remove('active');
+        if (btn) btn.classList.add('active');
+    }
+
+    function switchTab(tabName) {
+        var tabs = document.querySelectorAll('.tab-content');
+        for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+        var target = document.getElementById(tabName);
+        if (target) target.classList.add('active');
+        var titles = document.querySelectorAll('.nav-title');
+        for (var i = 0; i < titles.length; i++) titles[i].classList.remove('active');
+        if (tabName === 'croisiere') {
+            document.getElementById('navCroisiere').classList.add('active');
+        } else if (tabName === 'omra') {
+            document.getElementById('navOmra').classList.add('active');
+        } else if (tabName === 'maroc') {
+            document.getElementById('navMaroc').classList.add('active');
+        } else {
+            document.getElementById('navDest').classList.add('active');
+        }
+        closeDest();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openInitialTabFromHash() {
+        var tabName = (window.location.hash || '').replace('#', '');
+        if (!tabName) return;
+        var allowed = {
+            europe: true, turquie: true, egypte: true, zanzibar: true,
+            usa: true, cuba: true, perou: true, chine: true,
+            malaisie: true, bangkok: true, vietnam: true,
+            croisiere: true, omra: true, maroc: true
+        };
+        if (allowed[tabName]) switchTab(tabName);
+    }
+
+    // Fermer le menu Destinations en cliquant en dehors
+    document.addEventListener('click', function(e) {
+        var panel = document.getElementById('destPanel');
+        var navDest = document.getElementById('navDest');
+        if (!panel || !navDest) return;
+        if (panel.classList.contains('open') &&
+            !panel.contains(e.target) && !navDest.contains(e.target)) {
+            closeDest();
+        }
+    });
+
+    // ── MODALES ──
+    // Voyages disposant d'une page detail dediee : "Voir details" y redirige.
+    // (Les autres ouvrent encore la modale classique, le temps de creer leurs pages.)
+    var DETAIL_PAGES = {
+        'modal-istanbul': 'voyages/turquie-sejour-istanbul.html',
+        'modal-istanbul-antalya': 'voyages/turquie-istanbul-antalya.html',
+        'modal-istanbul-bodrum': 'voyages/turquie-istanbul-bodrum.html',
+        'modal-marmaris-bodrum': 'voyages/turquie-istanbul-marmaris-bodrum.html',
+        'modal-istanbul-antalya-11j': 'voyages/turquie-istanbul-antalya-11j.html',
+        'modal-caire-nil-hurghada': 'voyages/egypte-caire-nil-hurghada.html',
+        'modal-caire-sharm': 'voyages/egypte-caire-sharm.html',
+        'modal-ouest-usa': 'voyages/usa-ouest-complet.html',
+        'modal-joyaux-canada': 'voyages/canada-usa-joyaux.html',
+        'modal-rocheuses': 'voyages/usa-rocheuses.html',
+        'modal-cuba': 'voyages/cuba-havane-varadero.html',
+        'modal-perou': 'voyages/perou-merveilles-incas.html',
+        'modal-europe-1': 'voyages/europe-las-palmas.html',
+        'modal-europe-2': 'voyages/europe-vienne-budapest-prague.html',
+        'modal-europe-3': 'voyages/europe-andalousie.html',
+        'modal-europe-4': 'voyages/europe-grece-iles.html',
+        'modal-europe-5': 'voyages/europe-grece-classique.html',
+        'modal-europe-6': 'voyages/europe-espagne-portugal.html',
+        'modal-europe-7': 'voyages/europe-italie.html',
+        'modal-europe-8': 'voyages/europe-france-suisse.html',
+        'modal-europe-9': 'voyages/europe-angleterre-ecosse.html',
+        'modal-croisiere-1': 'voyages/croisiere-mediterranee-espagne-italie.html',
+        'modal-croisiere-2': 'voyages/croisiere-mediterranee-premium.html',
+        'modal-chine': 'voyages/asie-chine.html',
+        'modal-malaisie': 'voyages/asie-malaisie-thailande.html',
+        'modal-bangkok': 'voyages/asie-thailande-bangkok.html',
+        'modal-vietnam': 'voyages/asie-vietnam.html',
+        'modal-zanzibar': 'voyages/zanzibar-detente.html'
+    };
+    function openModal(modalId) {
+        if (DETAIL_PAGES[modalId]) { window.location.href = DETAIL_PAGES[modalId]; return; }
+        document.getElementById(modalId).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Fermer modale en cliquant sur fond
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            e.target.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // ── POPUP VIDEO + MEDIAS PERSONNALISES (saisis dans admin-medias.html) ──
+    // Liens YouTube par fiche (fallback code). Ex: 'modal-istanbul': 'ID_YOUTUBE'
+    var CIRCUIT_VIDEOS = {
+    };
+
+    // Medias partages via le stockage en ligne (Vercel Blob), lus depuis /api/media.
+    var V21_MEDIA = {};
+
+    function loadMedia() {
+        return fetch('/api/media', { cache: 'no-store' })
+            .then(function (r) { return r.ok ? r.json() : {}; })
+            .then(function (map) { V21_MEDIA = map || {}; applyMediaOverrides(); })
+            .catch(function () { /* pas de medias : on garde la brochure d'origine */ });
+    }
+
+    function extractYouTubeId(u) {
+        u = String(u || '').trim();
+        if (/^[A-Za-z0-9_-]{11}$/.test(u)) return u;
+        var m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([A-Za-z0-9_-]{11})/);
+        return m ? m[1] : '';
+    }
+
+    function buildLinkEmbed(value) {
+        value = String(value || '').trim();
+        if (!value) return '';
+        if (/^data:video\//i.test(value) || /\.(mp4|webm|ogg)(\?|$)/i.test(value)) {
+            return '<video src="' + value + '" controls autoplay playsinline ' +
+                'style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video>';
+        }
+        var vm = value.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+        if (vm) {
+            return '<iframe src="https://player.vimeo.com/video/' + vm[1] + '?autoplay=1" ' +
+                'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+        }
+        var yt = extractYouTubeId(value);
+        if (yt) {
+            return '<iframe src="https://www.youtube.com/embed/' + yt +
+                '?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        }
+        return '<div class="video-soon"><a href="' + value + '" target="_blank" rel="noopener">Voir la vidéo</a></div>';
+    }
+
+    function openVideo(key) {
+        var frame = document.getElementById('videoFrame');
+        var rec = V21_MEDIA[key] || {};
+        var html = '';
+        if (rec.videoLink) {
+            html = buildLinkEmbed(rec.videoLink);
+        } else if (CIRCUIT_VIDEOS[key]) {
+            html = buildLinkEmbed(CIRCUIT_VIDEOS[key]);
+        } else if (rec.videoUrl) {
+            html = buildLinkEmbed(rec.videoUrl);
+        }
+        if (html) {
+            frame.innerHTML = html;
+        } else {
+            frame.innerHTML = '<div class="video-soon"><strong>Vidéo bientôt disponible</strong>' +
+                '<button type="button" onclick="closeVideo();openWechat();return false;" ' +
+                'style="border:0;background:transparent;color:#25D366;font-weight:700;cursor:pointer">Contact WeChat</button></div>';
+        }
+        document.getElementById('videoModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Applique les images personnalisees aux sliders (ne change que le fond, aucune structure)
+    function mediaItemSrc(it) {
+        if (!it) return '';
+        return it.url || '';
+    }
+    function applyMediaOverrides() {
+        try {
+            Object.keys(V21_MEDIA).forEach(function (key) {
+                var rec = V21_MEDIA[key] || {};
+                var sliderId = key.replace(/^modal-/, 'sl-');
+                var slider = document.querySelector('[data-slider-id="' + sliderId + '"]');
+                if (!slider) return;
+
+                // 1) Images personnalisees -> fond des diapos d'origine
+                var imgs = rec.images || [];
+                if (imgs.length) {
+                    slider.querySelectorAll('.slide:not(.slide-video)').forEach(function (sl, i) {
+                        var src = mediaItemSrc(imgs[i % imgs.length]);
+                        if (src) sl.style.backgroundImage = "url('" + src + "')";
+                    });
+                }
+
+                // 2) Diapo video (mp4) auto-jouee : reconcilier (eviter les doublons)
+                var oldSlide = slider.querySelector('.slide-video');
+                if (oldSlide) oldSlide.remove();
+                var oldDot = slider.querySelector('[data-dot-video]');
+                if (oldDot) oldDot.remove();
+
+                if (rec.videoUrl) {
+                    var slide = document.createElement('div');
+                    slide.className = 'slide slide-video';
+                    var v = document.createElement('video');
+                    v.src = rec.videoUrl;
+                    v.muted = true;
+                    v.defaultMuted = true;
+                    v.preload = 'auto';
+                    v.setAttribute('playsinline', '');
+                    v.setAttribute('muted', '');
+                    slide.appendChild(v);
+                    var arrow = slider.querySelector('.slider-arrow');
+                    if (arrow) slider.insertBefore(slide, arrow); else slider.appendChild(slide);
+
+                    var dots = slider.querySelector('.slider-dots');
+                    if (dots) {
+                        var idx = slider.querySelectorAll('.slide').length - 1;
+                        var dot = document.createElement('button');
+                        dot.className = 'slider-dot';
+                        dot.setAttribute('data-dot-video', '1');
+                        (function (sid, ix) { dot.onclick = function () { goSlide(sid, ix); }; })(sliderId, idx);
+                        dots.appendChild(dot);
+                    }
+                }
+            });
+        } catch (e) { /* ne jamais casser l'affichage existant */ }
+    }
+
+    function closeVideo() {
+        document.getElementById('videoFrame').innerHTML = '';
+        document.getElementById('videoModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Fermer la popup video en cliquant sur le fond
+    document.getElementById('videoModal').addEventListener('click', function(e) {
+        if (e.target === this) closeVideo();
+    });
+
+    // ── WHATSAPP POPUP ──
+    // Lancer les sliders au chargement, puis appliquer les medias personnalises
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); openInitialTabFromHash(); });
+    } else {
+        initSliders();
+        loadMedia();
+        openInitialTabFromHash();
+    }
+
+    function switchMarocTab(tab, btn) {
+        document.querySelectorAll('.maroc-subtab').forEach(function(el){ el.classList.remove('active'); });
+        document.querySelectorAll('.maroc-tab-btn').forEach(function(el){ el.classList.remove('active'); });
+        document.getElementById('maroc-' + tab).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // Mise a jour en direct quand les medias sont modifies dans l'admin (autre onglet)
+    if ('BroadcastChannel' in window) {
+        var v21bc = new BroadcastChannel('v21_media');
+        v21bc.onmessage = function () { loadMedia(); };
+    }
+    </script>
+
+<!-- Modal Merzouga -->
+<div class="modal" id="modal-merzouga">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Merzouga — Marrakech · Ouarzazate · Dadès</h2>
+<button class="close" onclick="closeModal('modal-merzouga')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Départ:</strong> Garanti chaque jour en 2026</p>
+<p><strong>Programme:</strong>Marrakech → Ouarzazate → Gorges du Dadès → Gorges de Todra → Merzouga (dunes Erg Chebbi)</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Nuit sous tente berbère au bord des dunes</li>
+<li>Hôtel selon option choisie</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Partagé</td><td>Standard</td><td>1 200 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Transport (départ Marrakech)</li>
+<li>Hébergement</li>
+<li>Repas mentionnés au programme</li>
+<li>Balade à dos de dromadaire</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> Tarifs enfants sur demande
+</p></div>
+</div>
+</div>
+
+<!-- Modal Bin El Ouidane -->
+<div class="modal" id="modal-binouidane">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Bin El Ouidane — La beauté divine de la nature</h2>
+<button class="close" onclick="closeModal('modal-binouidane')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 2 jours / 1 nuit</p>
+<p><strong>Spécial:</strong>03-04 mai · 10-11 mai 2026 et autres dates</p>
+<p><strong>Programme:</strong>Départ Marrakech tôt le matin • Visite lac de Bin El Ouidane • Activités nature • Nuit hôtel • Retour J2</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Hôtel au bord du lac</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Double</td><td>Standard</td><td>1 100 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Transport (départ Marrakech)</li>
+<li>1 nuit à l'hôtel</li>
+<li>Programme de visites organisé</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> Tarifs enfants sur demande
+</p></div>
+</div>
+</div>
+
+<!-- Modal Dakhla -->
+<div class="modal" id="modal-dakhla">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Dakhla — Wini Bik</h2>
+<button class="close" onclick="closeModal('modal-dakhla')">×</button>
+</div>
+<div class="modal-body">
+<p><strong>Durée:</strong> 4 jours / 3 nuits</p>
+<p><strong>Programme:</strong>Vol aller-retour • Transferts • Excursions lagune • Activités nautiques (kitesurf, paddle) • Visites ville</p>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Hébergement</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Hôtel à Dakhla (3 nuits)</li>
+</ul>
+<h4 style="margin-top: 1.5rem; color: var(--navy);">Tarifs</h4>
+<table class="prix-table">
+<tr><th>Catégorie</th><th>Type</th><th>Prix</th></tr>
+<tr><td>Double</td><td>Tout compris</td><td>5 500 DH</td></tr>
+</table>
+<div class="compris-list">
+<strong>Inclus:</strong>
+<ul>
+<li>Vols aller-retour</li>
+<li>Hôtel (3 nuits)</li>
+<li>Excursions</li>
+<li>Transport sur place</li>
+</ul>
+</div>
+<p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+<strong>Enfants:</strong> Tarifs enfants sur demande
+</p></div>
+</div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof switchTab === 'function') switchTab('maroc');
+  if (typeof switchMarocTab === 'function') {
+    var btn = document.getElementById('btn-circuits');
+    if (btn) switchMarocTab('circuits', btn);
+  }
+  var nav = document.getElementById('navMaroc');
+  if (nav) nav.textContent = 'Maroc Circuits';
+});
+</script>
+
+</body></html>
