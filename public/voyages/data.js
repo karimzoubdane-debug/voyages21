@@ -1805,6 +1805,95 @@ window.VOYAGES = {
     }
   },
 
+  "maroc-circuit-discover-kingdom": {
+    mediaKey: "modal-circuit-discover-kingdom",
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Circuits 2026",
+    title: "Discover the Kingdom",
+    duration: "12 jours / 11 nuits",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Marrakech"],
+      ["Arrivée", "Marrakech"],
+      ["Durée", "12 jours / 11 nuits"],
+      ["Transport", "Véhicule touristique"],
+      ["Pension", "Pension complète"],
+      ["Guide", "Guides locaux selon les étapes"]
+    ],
+    price: "1 474 USD",
+    intro: [
+      "Un circuit complet pour traverser le Royaume dans ses grandes lignes : Marrakech, Casablanca, Meknès, Fez, les reliefs du Moyen Atlas, le Sahara de Merzouga, Ouarzazate, Agadir et retour vers Marrakech.",
+      "Pensé comme une découverte structurée du Maroc impérial, saharien et atlantique, ce voyage mêle patrimoine, paysages de montagne, désert, route des kasbahs et temps libre sur la côte."
+    ],
+    highlights: [
+      "Marrakech, Casablanca, Meknès et Fez",
+      "Volubilis, Moulay Idriss et les sites impériaux",
+      "Ifrane et le Moyen Atlas",
+      "Expérience Sahara à Merzouga",
+      "Gorges de Todra, vallée du Dadès et Ouarzazate",
+      "Agadir et la côte atlantique"
+    ],
+    days: [
+      ["Jour 1", "Arrivée à Marrakech", "Accueil à l'aéroport Marrakech-Menara, transfert à l'hôtel et première découverte libre selon l'heure d'arrivée."],
+      ["Jour 2", "Marrakech", "Visite guidée de Marrakech : Koutoubia, Bahia Palace, Menara, remparts et place Jemaa El-Fna."],
+      ["Jour 3", "Marrakech · Casablanca", "Route vers Casablanca, tour panoramique : place Mohammed V, Habous, corniche Ain Diab et mosquée Hassan II en extérieur."],
+      ["Jour 4", "Casablanca · Meknès · Volubilis · Fez", "Départ vers Fez avec visite de Meknès, Heri es-Souani, Volubilis et Moulay Idriss."],
+      ["Jour 5", "Fez", "Journée de visite de Fez : médina, université Al Quaraouiyine, Attarine Madrasa, quartiers artisanaux, tanneries et Mellah."],
+      ["Jour 6", "Fez · Merzouga", "Traversée d'Ifrane, des forêts de cèdres, Midelt et de la vallée du Ziz jusqu'à Merzouga."],
+      ["Jour 7", "Merzouga · Ouarzazate", "Route via Erfoud, les gorges de Todra, la vallée du Dadès et la route des mille kasbahs."],
+      ["Jour 8", "Ouarzazate · Agadir", "Visite extérieure de la kasbah de Taourirt et route vers Agadir par l'Anti-Atlas."],
+      ["Jour 9", "Agadir", "Journée libre à Agadir pour profiter de la plage, de l'hôtel ou d'excursions optionnelles."],
+      ["Jour 10", "Agadir · Marrakech", "Retour vers Marrakech par autoroute, installation et temps libre."],
+      ["Jour 11", "Marrakech", "Journée libre à Marrakech : souks, détente, excursions optionnelles, hammam ou dîner spectacle."],
+      ["Jour 12", "Marrakech · Départ", "Transfert à l'aéroport Marrakech-Menara selon l'horaire du vol et assistance au départ."]
+    ],
+    inclus: [
+      "Hébergement en chambre double avec salle de bain privée dans les hôtels mentionnés ou similaires",
+      "Taxes de séjour et de promotion touristique",
+      "Transport avec véhicule privé",
+      "Taxes locales et TVA 20%",
+      "Guide local anglophone ou sinophone selon les étapes",
+      "Assistance pendant tout le séjour",
+      "Deux petites bouteilles d'eau minérale par personne et par jour pendant les trajets",
+      "Tous les services mentionnés au programme"
+    ],
+    exclus: [
+      "Supplément single",
+      "Extras et dépenses personnelles",
+      "Pourboires guide, chauffeur, restaurants et hôtels",
+      "Billets d'avion",
+      "Visite intérieure de la mosquée Hassan II",
+      "Fantasia Chez Ali à Marrakech",
+      "Tous les services non mentionnés au programme"
+    ],
+    hotels: [
+      "Marrakech — hôtel 4★",
+      "Casablanca — hôtel 4★",
+      "Fez — hôtel 4★",
+      "Merzouga — hôtel ou camp désert",
+      "Ouarzazate — hôtel 4★",
+      "Agadir — hôtel 4★"
+    ],
+    priceTable: {
+      head: ["Saison", "Base 20", "Base 25", "Base 30", "Base 35", "Base 40", "Suppl. single"],
+      rows: [
+        ["Haute saison", "1 910 USD", "1 850 USD", "1 829 USD", "1 771 USD", "1 692 USD", "521 USD"],
+        ["Basse saison", "1 650 USD", "1 602 USD", "1 588 USD", "1 540 USD", "1 474 USD", "425 USD"]
+      ],
+      note: "Prix par personne en hôtels 4★, pension complète. Conversion appliquée : 1 EUR = 1,20 USD."
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Marrakech", "Casablanca", "Meknès", "Volubilis", "Fez", "Merzouga", "Ouarzazate", "Agadir", "Marrakech"],
+    dates: {
+      line: "Départs 2026 à la demande, individuels ou en groupe.",
+      note: "Saisonnalité selon la grille Maroc circuits 2026."
+    },
+    cta: {
+      title: "12 jours pour découvrir le Royaume",
+      text: "Nous concevons ce circuit pour groupes et voyageurs individuels, avec la même logique de service Voyages 21."
+    }
+  },
+
   "maroc-circuit-grand-discovery": {
     mediaKey: "modal-circuit-grand-discovery",
     whatsapp: "212673280009",
