@@ -10,30 +10,30 @@ on:
 jobs:
   fix:
     runs-on: ubuntu-latest
-    env:
-      VTOKEN: ${{ secrets.VERCEL_TOKEN }}
-      PROJECT_ID: prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ
     steps:
-      - name: Patch Vercel project (static, no build)
+      - name: Patch Vercel project and show full response
+        env:
+          VTOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          cat > /tmp/payload.json << 'PAYLOAD'
-          {"framework":null,"buildCommand":"","outputDirectory":"public/design","installCommand":"","devCommand":""}
-          PAYLOAD
+          echo "Token length: ${#VTOKEN}"
+          echo "Token prefix: ${VTOKEN:0:8}..."
+
+          echo '{"framework":null,"buildCommand":"","outputDirectory":"public/design","installCommand":"","devCommand":""}' > /tmp/payload.json
+          cat /tmp/payload.json
+
           HTTP=$(curl -s -o /tmp/resp.json -w "%{http_code}" \
-            -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}" \
+            -X PATCH "https://api.vercel.com/v9/projects/prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ" \
             -H "Authorization: Bearer ${VTOKEN}" \
             -H "Content-Type: application/json" \
             --data @/tmp/payload.json)
-          echo "HTTP: $HTTP"
-          cat /tmp/resp.json | python3 -m json.tool | head -20 || cat /tmp/resp.json
-          test "$HTTP" -eq 200
 
-      - name: Trigger production redeploy via Vercel API
-        run: |
-          cat > /tmp/deploy.json << DPAYLOAD
-          {"name":"voyages21-monde","target":"production","gitSource":{"type":"github","repo":"karimzoubdane-debug/voyages21","ref":"claude/confident-meitner-Fiqzd"}}
-          DPAYLOAD
-          curl -s -X POST "https://api.vercel.com/v13/deployments" \
-            -H "Authorization: Bearer ${VTOKEN}" \
-            -H "Content-Type: application/json" \
-            --data @/tmp/deploy.json | python3 -m json.tool | head -10 || echo done
+          echo "=== HTTP STATUS: $HTTP ==="
+          echo "=== RESPONSE BODY ==="
+          cat /tmp/resp.json || echo "(empty response)"
+
+          if [ "$HTTP" = "200" ]; then
+            echo "SUCCESS - project patched!"
+          else
+            echo "FAILED - HTTP $HTTP"
+            exit 1
+          fi
