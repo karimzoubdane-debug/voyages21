@@ -48,20 +48,36 @@ export async function generateClip(params: {
   }
 
   const { videoUrl, audioUrl } = await getStreamUrls(youtubeId);
+  const isMuxed = videoUrl === audioUrl;
 
-  const args = [
-    "-ss", String(startSec), "-i", videoUrl,
-    "-ss", String(startSec), "-i", audioUrl,
-    "-map", "0:v:0",
-    "-map", "1:a:0",
-    "-t", String(duration),
-    "-vf", vf,
-    "-c:v", "libx264",
-    "-preset", "fast",
-    "-crf", "23",
-    "-c:a", "aac",
-    "-y", outputPath,
-  ];
+  // Muxed fallback: single input, both tracks in one stream.
+  // DASH default: two inputs, FFmpeg seeks each independently via HTTP range.
+  const args = isMuxed
+    ? [
+        "-ss", String(startSec), "-i", videoUrl,
+        "-map", "0:v:0",
+        "-map", "0:a:0",
+        "-t", String(duration),
+        "-vf", vf,
+        "-c:v", "libx264",
+        "-preset", "fast",
+        "-crf", "23",
+        "-c:a", "aac",
+        "-y", outputPath,
+      ]
+    : [
+        "-ss", String(startSec), "-i", videoUrl,
+        "-ss", String(startSec), "-i", audioUrl,
+        "-map", "0:v:0",
+        "-map", "1:a:0",
+        "-t", String(duration),
+        "-vf", vf,
+        "-c:v", "libx264",
+        "-preset", "fast",
+        "-crf", "23",
+        "-c:a", "aac",
+        "-y", outputPath,
+      ];
 
   return new Promise((resolve, reject) => {
     const proc = spawn(FFMPEG, args);
