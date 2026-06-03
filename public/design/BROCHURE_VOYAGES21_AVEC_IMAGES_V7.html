@@ -828,6 +828,36 @@ body { padding-top: 64px; }
   .wa-float span { display:none; }
   .wa-float { padding:14px; border-radius:50%; }
 }
+
+/* Sous-onglets Mon Maroc */
+.maroc-subtabs {
+  display: flex;
+  gap: .5rem;
+  margin: 1.2rem 0 1.4rem;
+  border-bottom: 2px solid #e8e0d0;
+}
+.maroc-subtab {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  padding: .55rem 1.3rem;
+  font-family: 'Geist', sans-serif;
+  font-size: .92rem;
+  font-weight: 700;
+  color: #6b7065;
+  cursor: pointer;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  transition: color .2s, border-color .2s;
+}
+.maroc-subtab.active {
+  color: #C49A3C;
+  border-bottom-color: #C49A3C;
+}
+.maroc-subtab:hover:not(.active) {
+  color: #1E1A14;
+}
 </style>
 </head>
 <body>
@@ -1477,24 +1507,19 @@ body { padding-top: 64px; }
 <div class="tab-content" id="maroc">
 <h2 class="section-title">Mon Maroc 2026</h2>
 <p class="section-subtitle">Désert, lacs et grands espaces — Le Maroc autrement</p>
+
+<!-- Sous-onglets Séjours / Circuits -->
+<div class="maroc-subtabs">
+  <button class="maroc-subtab active" onclick="switchMarocTab('sejours',this)">Séjours</button>
+  <button class="maroc-subtab" onclick="switchMarocTab('circuits',this)">Circuits</button>
+</div>
+
+<!-- Séjours -->
+<div class="maroc-subtab-content" id="maroc-sejours">
 <div class="circuits-grid">
-<!-- Circuit Merzouga -->
+<!-- Séjour Bin El Ouidane -->
 <div class="circuit-card">
-<div class="img-slider" data-slider-id="sl-merzouga"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-merzouga')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-merzouga')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-merzouga', 0)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 1)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 2)"></button></div></div>
-<div class="circuit-content">
-<h3 class="circuit-title">Merzouga — Marrakech · Ouarzazate · Dadès</h3>
-<div class="circuit-meta">
-<span class="meta-item">Départ garanti chaque jour en 2026</span>
-</div>
-<p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
-<div class="prix-label">À partir de 1 200 DH</div>
-<button class="btn-details" onclick="location.href='voyages/maroc-merzouga.html'">Voir détails</button>
-<button class="btn-video" onclick="openVideo('modal-merzouga')">▶ Voir la vidéo</button>
-</div>
-</div>
-<!-- Circuit Bin El Ouidane -->
-<div class="circuit-card">
-<div class="img-slider" data-slider-id="sl-binouidane"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-binouidane')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-binouidane')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-binouidane', 0)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 1)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 2)"></button></div></div>
+<div class="img-slider" data-slider-id="sl-binouidane" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-binouidane')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-binouidane')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-binouidane', 0)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 1)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 2)"></button></div></div>
 <div class="circuit-content">
 <h3 class="circuit-title">Bin El Ouidane — La beauté divine de la nature</h3>
 <div class="circuit-meta">
@@ -1507,9 +1532,9 @@ body { padding-top: 64px; }
 <button class="btn-video" onclick="openVideo('modal-binouidane')">▶ Voir la vidéo</button>
 </div>
 </div>
-<!-- Circuit Dakhla -->
+<!-- Séjour Dakhla -->
 <div class="circuit-card">
-<div class="img-slider" data-slider-id="sl-dakhla"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-dakhla')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-dakhla')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-dakhla', 0)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 1)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 2)"></button></div></div>
+<div class="img-slider" data-slider-id="sl-dakhla" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-dakhla')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-dakhla')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-dakhla', 0)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 1)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 2)"></button></div></div>
 <div class="circuit-content">
 <h3 class="circuit-title">Dakhla — Wini Bik</h3>
 <div class="circuit-meta">
@@ -1523,6 +1548,28 @@ body { padding-top: 64px; }
 </div>
 </div>
 </div>
+</div>
+
+<!-- Circuits -->
+<div class="maroc-subtab-content" id="maroc-circuits" style="display:none">
+<div class="circuits-grid">
+<!-- Circuit Merzouga -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-merzouga" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-merzouga')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-merzouga')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-merzouga', 0)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 1)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Merzouga — Marrakech · Ouarzazate · Dadès</h3>
+<div class="circuit-meta">
+<span class="meta-item">Départ garanti chaque jour en 2026</span>
+</div>
+<p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
+<div class="prix-label">À partir de 1 200 DH</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-merzouga.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-merzouga')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 <!-- MODALES -->
 <!-- Modal Istanbul -->
@@ -2355,6 +2402,16 @@ body { padding-top: 64px; }
         if (btn) btn.classList.add('active');
     }
 
+    function switchMarocTab(subtab, btn) {
+        var panels = document.querySelectorAll('.maroc-subtab-content');
+        for (var i = 0; i < panels.length; i++) panels[i].style.display = 'none';
+        var target = document.getElementById('maroc-' + subtab);
+        if (target) target.style.display = '';
+        var btns = document.querySelectorAll('.maroc-subtab');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+        if (btn) btn.classList.add('active');
+    }
+
     function switchTab(tabName) {
         var tabs = document.querySelectorAll('.tab-content');
         for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
@@ -2366,6 +2423,8 @@ body { padding-top: 64px; }
             document.getElementById('navCroisiere').classList.add('active');
         } else if (tabName === 'omra') {
             document.getElementById('navOmra').classList.add('active');
+        } else if (tabName === 'maroc') {
+            document.getElementById('navMaroc').classList.add('active');
         } else {
             document.getElementById('navDest').classList.add('active');
         }
@@ -2512,6 +2571,7 @@ body { padding-top: 64px; }
                 var sliderId = key.replace(/^modal-/, 'sl-');
                 var slider = document.querySelector('[data-slider-id="' + sliderId + '"]');
                 if (!slider) return;
+                if (slider.dataset.noOverride) return;
 
                 // 1) Images personnalisees -> fond des diapos d'origine
                 var imgs = rec.images || [];
