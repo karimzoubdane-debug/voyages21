@@ -12,6 +12,7 @@ interface Clip {
   endTime: number;
   status: string;
   outputPath: string | null;
+  subtitle: string | null;
 }
 
 interface Video {
@@ -248,6 +249,11 @@ export default function ProjectPage() {
                             <div className="mt-2 h-1 bg-gray-700 rounded-full overflow-hidden">
                               <div className="h-full bg-blue-500 rounded-full animate-pulse w-2/3" />
                             </div>
+                          )}
+                          {clip.status === "ERROR" && clip.subtitle && (
+                            <p className="mt-2 text-[10px] text-red-400/80 break-words leading-tight">
+                              {clip.subtitle}
+                            </p>
                           )}
                           {clip.status === "DONE" && clip.outputPath && (
                             <a
