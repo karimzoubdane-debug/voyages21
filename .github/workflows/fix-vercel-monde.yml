@@ -2,25 +2,18 @@ name: Fix voyages21-monde Vercel settings
 
 on:
   workflow_dispatch:
-    inputs:
-      vercel_token:
-        description: 'Vercel API token'
-        required: true
-        type: string
 
 jobs:
   fix:
     runs-on: ubuntu-latest
     steps:
-      - name: Mask token
-        run: echo "::add-mask::${{ github.event.inputs.vercel_token }}"
-
-      - name: Update voyages21-monde project settings
+      - name: Update voyages21-monde project settings (framework=static, no build)
         run: |
           echo "Patching project prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ..."
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X PATCH \
+          HTTP_CODE=$(curl -s -o /tmp/vercel_resp.json -w "%{http_code}" \
+            -X PATCH \
             https://api.vercel.com/v9/projects/prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ \
-            -H "Authorization: Bearer ${{ github.event.inputs.vercel_token }}" \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{
               "framework": null,
@@ -29,18 +22,33 @@ jobs:
               "installCommand": "",
               "devCommand": ""
             }')
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-          BODY=$(echo "$RESPONSE" | head -1)
+          cat /tmp/vercel_resp.json | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+print('name:', d.get('name','?'))
+print('framework:', d.get('framework','null (static)'))
+print('buildCommand:', repr(d.get('buildCommand','?')))
+print('outputDirectory:', d.get('outputDirectory','?'))
+" 2>/dev/null || cat /tmp/vercel_resp.json
           echo "HTTP $HTTP_CODE"
-          echo "$BODY" | python3 -c "import sys,json; d=json.load(sys.stdin); print('name:', d.get('name','?')); print('framework:', d.get('framework','null')); print('buildCommand:', d.get('buildCommand','(empty)')); print('outputDirectory:', d.get('outputDirectory','?'))" 2>/dev/null || echo "$BODY"
           [ "$HTTP_CODE" = "200" ] || exit 1
 
-      - name: Trigger new deployment
+      - name: Get latest deployment SHA and trigger new deployment
         run: |
-          echo "Triggering redeploy..."
+          echo "Fetching latest commit on claude/confident-meitner-Fiqzd..."
+          SHA=$(curl -s \
+            https://api.github.com/repos/karimzoubdane-debug/voyages21/git/ref/heads/claude%2Fconfident-meitner-Fiqzd \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['object']['sha'])")
+          echo "SHA: $SHA"
+
+          echo "Triggering Vercel deployment..."
           curl -s -X POST \
             https://api.vercel.com/v13/deployments \
-            -H "Authorization: Bearer ${{ github.event.inputs.vercel_token }}" \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d '{"name":"voyages21-monde","gitSource":{"type":"github","repoId":"karimzoubdane-debug/voyages21","ref":"claude/confident-meitner-Fiqzd"}}' | \
-            python3 -c "import sys,json; d=json.load(sys.stdin); print('Deploy URL:', d.get('url','?')); print('State:', d.get('readyState','?'))" 2>/dev/null || echo "Redeploy triggered"
+            -d "{\"name\":\"voyages21-monde\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repo\":\"karimzoubdane-debug/voyages21\",\"ref\":\"claude/confident-meitner-Fiqzd\",\"sha\":\"$SHA\"}}" \
+            | python3 -c "import sys,json; d=json.load(sys.stdin); print('URL:', d.get('url','?')); print('State:', d.get('readyState','?'))" 2>/dev/null || echo "Redeploy triggered"
+
+      - name: Done
+        run: echo "voyages21-monde.vercel.app will be live in ~30 seconds"
