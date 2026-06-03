@@ -726,6 +726,35 @@
             .wa-btn { width: 54px; height: 54px; }
             .wa-btn svg { width: 30px; height: 30px; }
         }
+
+/* ── SOUS-NAV MON MAROC ── */
+.maroc-subnav {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.2rem 0 1.5rem;
+  border-bottom: 2px solid var(--or);
+  padding-bottom: 0;
+}
+.maroc-tab-btn {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.maroc-tab-btn:hover { color: var(--azur); }
+.maroc-tab-btn.active {
+  color: var(--azur);
+  border-bottom-color: var(--azur);
+}
+.maroc-subtab { display: none; }
+.maroc-subtab.active { display: block; animation: fadeIn 0.35s ease; }
 </style>
 </head>
 <body>
@@ -1360,6 +1389,15 @@
 <div class="tab-content" id="maroc">
 <h2 class="section-title">Mon Maroc 2026</h2>
 <p class="section-subtitle">Désert, lacs et grands espaces — Le Maroc autrement</p>
+
+<!-- Sous-navigation -->
+<div class="maroc-subnav">
+  <button class="maroc-tab-btn active" id="btn-sejours" onclick="switchMarocTab('sejours',this)">Séjours</button>
+  <button class="maroc-tab-btn" id="btn-circuits" onclick="switchMarocTab('circuits',this)">Circuits</button>
+</div>
+
+<!-- ── SÉJOURS (existants) ── -->
+<div class="maroc-subtab active" id="maroc-sejours">
 <div class="circuits-grid">
 <!-- Circuit Merzouga -->
 <div class="circuit-card">
@@ -1404,6 +1442,70 @@
 <button class="btn-details" onclick="location.href='voyages/maroc-dakhla.html'">Voir détails</button>
 <button class="btn-video" onclick="openVideo('modal-dakhla')">▶ Voir la vidéo</button>
 </div>
+</div>
+</div>
+</div>
+
+<!-- ── CIRCUITS (nouveaux — TO) ── -->
+<div class="maroc-subtab" id="maroc-circuits">
+<div class="circuits-grid">
+
+<!-- Circuit 1 : Imperial Cities & Southern Morocco -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-imperial-south"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-imperial-south')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-imperial-south')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-imperial-south', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Imperial Cities &amp; Southern Morocco</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 8 jours / 7 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Chefchaouen · Fez (UNESCO) · Sahara Merzouga · Aït Ben Haddou (UNESCO) · Marrakech. Monuments inclus : Bou Inania Madrasa, Aït Ben Haddou, Bahia Palace.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-video" onclick="openVideo('modal-circuit-imperial-south')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 2 : Imperial Cities Tour -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-imperial-cities"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539437829697-1b4ed5aebd86?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1575468130797-aa950b68aeec?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-imperial-cities')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-imperial-cities')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-imperial-cities', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Imperial Cities Tour</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 8 jours / 7 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Tanger · Meknès · Fez (UNESCO) · Marrakech. Monuments inclus : Kasbah de Tanger, Mausolée Moulay Ismail, Al Attarine Madrasa, Bahia Palace.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-video" onclick="openVideo('modal-circuit-imperial-cities')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 3 : Best of Morocco -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-best-morocco"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1597940610882-39d1a6d7e9c4?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-best-morocco')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-best-morocco')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-best-morocco', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Best of Morocco — Cities, Heritage &amp; Sahara</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 10 jours / 9 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Tanger · Chefchaouen · Fez · Merzouga (Sahara) · Ouarzazate · Marrakech. Le Maroc complet des côtes atlantiques aux dunes du désert.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-video" onclick="openVideo('modal-circuit-best-morocco')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 4 : Grand Discovery -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-grand-discovery"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-grand-discovery')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-grand-discovery')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-grand-discovery', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Splendid Morocco — Grand Discovery</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 15 jours / 14 nuits</span>
+</div>
+<p class="circuit-description">Marrakech · Casablanca · Rabat · Meknès · Fez · Chefchaouen · Merzouga · Ouarzazate · Essaouira · Agadir · Marrakech. Le grand tour complet du Maroc imperial, saharien et atlantique.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-video" onclick="openVideo('modal-circuit-grand-discovery')">▶ Voir la vidéo</button>
+</div>
+</div>
+
 </div>
 </div>
 </div>
@@ -2457,6 +2559,13 @@
     } else {
         initSliders();
         loadMedia();
+    }
+
+    function switchMarocTab(tab, btn) {
+        document.querySelectorAll('.maroc-subtab').forEach(function(el){ el.classList.remove('active'); });
+        document.querySelectorAll('.maroc-tab-btn').forEach(function(el){ el.classList.remove('active'); });
+        document.getElementById('maroc-' + tab).classList.add('active');
+        btn.classList.add('active');
     }
 
     // Mise a jour en direct quand les medias sont modifies dans l'admin (autre onglet)
