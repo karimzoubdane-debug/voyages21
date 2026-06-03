@@ -1,18 +1,63 @@
 import ytdl from "@distube/ytdl-core";
 
+// Parse a Netscape cookies.txt export (the format most "Get cookies.txt"
+// browser extensions produce). Columns are tab-separated:
+//   domain  includeSubdomains  path  secure  expiry  name  value
+// Comment lines start with '#', except the "#HttpOnly_" prefix which flags an
+// http-only cookie whose domain follows.
+function parseNetscapeCookies(raw: string): unknown[] {
+  const out: unknown[] = [];
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    let rest = trimmed;
+    let httpOnly = false;
+    if (rest.startsWith("#HttpOnly_")) {
+      httpOnly = true;
+      rest = rest.slice("#HttpOnly_".length);
+    } else if (rest.startsWith("#")) {
+      continue; // real comment
+    }
+    const parts = rest.split("\t");
+    if (parts.length < 7) continue;
+    const [domain, includeSub, path, secure, expiry, name, value] = parts;
+    out.push({
+      name,
+      value,
+      domain,
+      path: path || "/",
+      secure: secure?.toUpperCase() === "TRUE",
+      httpOnly,
+      hostOnly: includeSub?.toUpperCase() !== "TRUE",
+      expirationDate: Number(expiry) > 0 ? Number(expiry) : undefined,
+      sameSite: "no_restriction",
+    });
+  }
+  return out;
+}
+
 // Parse the optional browser-exported cookie jar. Cookies tied to a logged-in
 // Google account dramatically reduce YouTube's "Sign in to confirm you're not a
-// bot" / 403 responses on datacenter IPs (Vercel).
+// bot" / 403 responses on datacenter IPs (Vercel). Accepts either a JSON array
+// (EditThisCookie style) or a pasted Netscape cookies.txt export.
 function parseCookies(): unknown[] {
-  const raw = process.env.YOUTUBE_COOKIES_JSON;
+  const raw = process.env.YOUTUBE_COOKIES_JSON?.trim();
   if (!raw) return [];
-  try {
-    const cookies = JSON.parse(raw);
-    return Array.isArray(cookies) ? cookies : [];
-  } catch {
-    console.warn("[ytdl] YOUTUBE_COOKIES_JSON is not valid JSON — ignoring");
-    return [];
+  if (raw.startsWith("[")) {
+    try {
+      const cookies = JSON.parse(raw);
+      return Array.isArray(cookies) ? cookies : [];
+    } catch {
+      console.warn("[ytdl] YOUTUBE_COOKIES_JSON looks like JSON but failed to parse — ignoring");
+      return [];
+    }
   }
+  // Otherwise treat it as a Netscape cookies.txt dump.
+  const parsed = parseNetscapeCookies(raw);
+  if (parsed.length === 0) {
+    console.warn("[ytdl] YOUTUBE_COOKIES_JSON is neither valid JSON nor a cookies.txt export — ignoring");
+  }
+  return parsed;
 }
 
 // Build the request agent. The root cause of GENERATING -> ERROR in production is
