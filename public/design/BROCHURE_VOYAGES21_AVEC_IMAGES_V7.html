@@ -2566,11 +2566,28 @@ header { display: none !important; }
     // Medias partages via le stockage en ligne (Vercel Blob), lus depuis /api/media.
     var V21_MEDIA = {};
 
+    var API_MEDIA_URL = 'https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/api/media';
     function loadMedia() {
+        // Try relative URL first (works when served from Next.js).
+        // If empty or failed, fall back to absolute CORS-enabled URL.
         return fetch('/api/media', { cache: 'no-store' })
-            .then(function (r) { return r.ok ? r.json() : {}; })
-            .then(function (map) { V21_MEDIA = map || {}; applyMediaOverrides(); })
-            .catch(function () { /* pas de medias : on garde la brochure d'origine */ });
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (map) {
+                if (map && Object.keys(map).length > 0) {
+                    V21_MEDIA = map; applyMediaOverrides(); return;
+                }
+                // Fallback : static site -> fetch from Next.js preview (CORS headers enabled)
+                return fetch(API_MEDIA_URL, { cache: 'no-store' })
+                    .then(function (r) { return r.ok ? r.json() : {}; })
+                    .then(function (m) { V21_MEDIA = m || {}; applyMediaOverrides(); })
+                    .catch(function () {});
+            })
+            .catch(function () {
+                return fetch(API_MEDIA_URL, { cache: 'no-store' })
+                    .then(function (r) { return r.ok ? r.json() : {}; })
+                    .then(function (m) { V21_MEDIA = m || {}; applyMediaOverrides(); })
+                    .catch(function () {});
+            });
     }
 
     function extractYouTubeId(u) {
