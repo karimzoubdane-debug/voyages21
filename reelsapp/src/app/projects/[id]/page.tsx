@@ -214,10 +214,10 @@ export default function ProjectPage() {
                     {hasClips && (hasError || isGenerating) && (
                       <button
                         onClick={() => handleRetryClips(v.id)}
-                        disabled={isGenerating}
+                        disabled={generating[v.id]}
                         className="bg-orange-600 hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm px-4 py-2 rounded-lg transition"
                       >
-                        {isGenerating ? "En cours..." : "Réessayer"}
+                        {generating[v.id] ? "En cours..." : "Réessayer"}
                       </button>
                     )}
                   </div>
