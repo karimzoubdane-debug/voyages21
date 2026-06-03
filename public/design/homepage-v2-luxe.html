@@ -2523,20 +2523,20 @@
     <!-- Centre : boutons nav (desktop) -->
     <div class="nav-center" id="navCenter">
       <button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
-      <a href="/voyages/croisiere-mediterranee-espagne-italie.html" class="nav-title">Croisières</a>
-      <a href="/voyages/omra.html"                                  class="nav-title">Omra</a>
+      <a href="/voyages/destinations/croisieres.html" class="nav-title">Croisières</a>
+      <a href="/voyages/destinations/omra.html"       class="nav-title">Omra</a>
       <a href="/voyages/maroc-merzouga.html"                        class="nav-title">Mon Maroc</a>
     </div>
 
     <!-- Mobile panel -->
     <div class="nav-mobile-panel" id="navMobilePanel">
       <ul class="nav-menu">
-        <li><a href="/voyages/europe-las-palmas.html"                         onclick="closeMobileNav()">Europe</a></li>
-        <li><a href="/voyages/egypte-caire-nil-hurghada.html"                 onclick="closeMobileNav()">Afrique</a></li>
-        <li><a href="/voyages/usa-ouest-complet.html"                         onclick="closeMobileNav()">Amériques</a></li>
-        <li><a href="/voyages/asie-chine.html"                                onclick="closeMobileNav()">Asie</a></li>
-        <li><a href="/voyages/croisiere-mediterranee-espagne-italie.html"     onclick="closeMobileNav()">Croisières</a></li>
-        <li><a href="/voyages/omra.html"                                      onclick="closeMobileNav()">Omra</a></li>
+        <li><a href="/voyages/destinations/europe.html"        onclick="closeMobileNav()">Europe</a></li>
+        <li><a href="/voyages/destinations/egypte.html"        onclick="closeMobileNav()">Afrique</a></li>
+        <li><a href="/voyages/destinations/usa-canada.html"    onclick="closeMobileNav()">Amériques</a></li>
+        <li><a href="/voyages/destinations/chine.html"         onclick="closeMobileNav()">Asie</a></li>
+        <li><a href="/voyages/destinations/croisieres.html"    onclick="closeMobileNav()">Croisières</a></li>
+        <li><a href="/voyages/destinations/omra.html"          onclick="closeMobileNav()">Omra</a></li>
         <li><a href="/voyages/maroc-merzouga.html"                            onclick="closeMobileNav()">Mon Maroc</a></li>
       </ul>
     </div>
@@ -2562,23 +2562,23 @@
       </div>
       <div class="mega-countries">
         <div class="mega-col active" id="c-europe">
-          <a href="/voyages/europe-las-palmas.html">Circuits Europe</a>
-          <a href="/voyages/turquie-sejour-istanbul.html">Turquie</a>
+          <a href="/voyages/destinations/europe.html">Circuits Europe</a>
+          <a href="/voyages/destinations/turquie.html">Turquie</a>
         </div>
         <div class="mega-col" id="c-afrique">
-          <a href="/voyages/egypte-caire-nil-hurghada.html">Égypte</a>
-          <a href="/voyages/zanzibar-detente.html">Zanzibar</a>
+          <a href="/voyages/destinations/egypte.html">Égypte</a>
+          <a href="/voyages/destinations/zanzibar.html">Zanzibar</a>
         </div>
         <div class="mega-col" id="c-ameriques">
-          <a href="/voyages/usa-ouest-complet.html">USA &amp; Canada</a>
-          <a href="/voyages/cuba-havane-varadero.html">Cuba</a>
-          <a href="/voyages/perou-merveilles-incas.html">Pérou</a>
+          <a href="/voyages/destinations/usa-canada.html">USA &amp; Canada</a>
+          <a href="/voyages/destinations/cuba.html">Cuba</a>
+          <a href="/voyages/destinations/perou.html">Pérou</a>
         </div>
         <div class="mega-col" id="c-asie">
-          <a href="/voyages/asie-chine.html">Chine</a>
-          <a href="/voyages/asie-malaisie-thailande.html">Malaisie &amp; Thaïlande</a>
-          <a href="/voyages/asie-thailande-bangkok.html">Bangkok &amp; Thaïlande</a>
-          <a href="/voyages/asie-vietnam.html">Vietnam</a>
+          <a href="/voyages/destinations/chine.html">Chine</a>
+          <a href="/voyages/destinations/malaisie-thailande.html">Malaisie &amp; Thaïlande</a>
+          <a href="/voyages/destinations/malaisie-thailande.html">Bangkok &amp; Thaïlande</a>
+          <a href="/voyages/destinations/vietnam.html">Vietnam</a>
         </div>
       </div>
     </div>
@@ -4141,18 +4141,18 @@
     ];
 
     const DESTINATIONS = [
-      { img: IMG.turquie,    name: 'Turquie',              count: '5 circuits',    link: '/voyages/turquie-sejour-istanbul.html' },
-      { img: IMG.egypte,     name: 'Égypte',               count: '2 circuits',    link: '/voyages/egypte-caire-nil-hurghada.html' },
-      { img: IMG.espagne,    name: 'Europe',               count: '9 circuits',    link: '/voyages/europe-las-palmas.html' },
-      { img: IMG.zanzibar,   name: 'Zanzibar',             count: '1 circuit',     link: '/voyages/zanzibar-detente.html' },
-      { img: IMG.usa,        name: 'USA & Canada',         count: '3 circuits',    link: '/voyages/usa-ouest-complet.html' },
-      { img: IMG.cuba,       name: 'Cuba',                 count: '1 circuit',     link: '/voyages/cuba-havane-varadero.html' },
-      { img: IMG.perou,      name: 'Pérou',                count: '1 circuit',     link: '/voyages/perou-merveilles-incas.html' },
-      { img: IMG.chine,      name: 'Chine',                count: '1 circuit',     link: '/voyages/asie-chine.html' },
-      { img: IMG.malaisie,   name: 'Malaisie & Thaïlande', count: '2 circuits',    link: '/voyages/asie-malaisie-thailande.html' },
-      { img: IMG.vietnam,    name: 'Vietnam',              count: '1 circuit',     link: '/voyages/asie-vietnam.html' },
-      { img: IMG.croisiere,  name: 'Croisières',           count: '2 circuits',    link: '/voyages/croisiere-mediterranee-espagne-italie.html' },
-      { img: '',             name: 'Omra & Hajj',          count: '5 programmes',  link: '/voyages/omra.html', gradient: true },
+      { img: IMG.turquie,    name: 'Turquie',              count: '5 circuits',    link: '/voyages/destinations/turquie.html' },
+      { img: IMG.egypte,     name: 'Égypte',               count: '2 circuits',    link: '/voyages/destinations/egypte.html' },
+      { img: IMG.espagne,    name: 'Europe',               count: '9 circuits',    link: '/voyages/destinations/europe.html' },
+      { img: IMG.zanzibar,   name: 'Zanzibar',             count: '1 circuit',     link: '/voyages/destinations/zanzibar.html' },
+      { img: IMG.usa,        name: 'USA & Canada',         count: '3 circuits',    link: '/voyages/destinations/usa-canada.html' },
+      { img: IMG.cuba,       name: 'Cuba',                 count: '1 circuit',     link: '/voyages/destinations/cuba.html' },
+      { img: IMG.perou,      name: 'Pérou',                count: '1 circuit',     link: '/voyages/destinations/perou.html' },
+      { img: IMG.chine,      name: 'Chine',                count: '1 circuit',     link: '/voyages/destinations/chine.html' },
+      { img: IMG.malaisie,   name: 'Malaisie & Thaïlande', count: '2 circuits',    link: '/voyages/destinations/malaisie-thailande.html' },
+      { img: IMG.vietnam,    name: 'Vietnam',              count: '1 circuit',     link: '/voyages/destinations/vietnam.html' },
+      { img: IMG.croisiere,  name: 'Croisières',           count: '2 circuits',    link: '/voyages/destinations/croisieres.html' },
+      { img: '',             name: 'Omra & Hajj',          count: '5 programmes',  link: '/voyages/destinations/omra.html', gradient: true },
     ];
 
     function cardHTML(v) {
