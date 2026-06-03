@@ -11,29 +11,23 @@ jobs:
   fix:
     runs-on: ubuntu-latest
     steps:
-      - name: Patch Vercel project and show full response
+      - name: Test basic execution
+        run: |
+          echo "Runner is alive"
+          date
+          echo "Secret set: ${{ secrets.VERCEL_TOKEN != '' }}"
+
+      - name: Call Vercel API
         env:
           VTOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          echo "Token length: ${#VTOKEN}"
-          echo "Token prefix: ${VTOKEN:0:8}..."
-
-          echo '{"framework":null,"buildCommand":"","outputDirectory":"public/design","installCommand":"","devCommand":""}' > /tmp/payload.json
-          cat /tmp/payload.json
-
-          HTTP=$(curl -s -o /tmp/resp.json -w "%{http_code}" \
+          echo "Calling Vercel API..."
+          RESULT=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -X PATCH "https://api.vercel.com/v9/projects/prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ" \
             -H "Authorization: Bearer ${VTOKEN}" \
             -H "Content-Type: application/json" \
-            --data @/tmp/payload.json)
-
-          echo "=== HTTP STATUS: $HTTP ==="
-          echo "=== RESPONSE BODY ==="
-          cat /tmp/resp.json || echo "(empty response)"
-
-          if [ "$HTTP" = "200" ]; then
-            echo "SUCCESS - project patched!"
-          else
-            echo "FAILED - HTTP $HTTP"
-            exit 1
-          fi
+            -d '{"framework":null,"buildCommand":"","outputDirectory":"public/design","installCommand":""}')
+          echo "$RESULT"
+          HTTP_CODE=$(echo "$RESULT" | grep HTTP_CODE | cut -d: -f2)
+          echo "Final HTTP code: $HTTP_CODE"
+          [ "$HTTP_CODE" = "200" ]
