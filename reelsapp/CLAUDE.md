@@ -59,3 +59,16 @@ Le job YouTube tourne (PENDING → DONE avec 3 vidéos). Il reste à implémente
 - `DATABASE_URL` = postgresql pooler port 6543
 - `YOUTUBE_API_KEY`
 - `INNGEST_EVENT_KEY` + `INNGEST_SIGNING_KEY` (auto via intégration Vercel)
+- `BLOB_READ_WRITE_TOKEN` (Vercel Blob, pour stocker les clips)
+
+### Récupération vidéo YouTube — anti-blocage (CRITIQUE)
+YouTube bloque les IP datacenter de Vercel (HTTP 403) → c'est la cause n°1 des
+clips qui passent `GENERATING → ERROR`. Deux leviers, optionnels et combinables,
+lus par `src/lib/ytdl.ts` :
+- `YOUTUBE_PROXY_URL` : proxy (idéalement **résidentiel**) au format
+  `http://user:pass@host:port`. Fait sortir la requête d'une IP non-flaggée.
+  C'est la solution la plus fiable.
+- `YOUTUBE_COOKIES_JSON` : tableau JSON de cookies exportés d'un navigateur
+  connecté à un compte Google (extension « Get cookies.txt LOCALLY »).
+- En plus : retry x3 avec backoff (1s/2s/4s) + user-agent navigateur déjà câblés.
+Sans proxy ni cookies, l'échec sur Vercel reste probable.
