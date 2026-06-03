@@ -1,0 +1,24 @@
+name: Verification brochure
+
+on:
+  push:
+    paths:
+      - "public/BROCHURE_VOYAGES21_AVEC_IMAGES_*.html"
+      - "scripts/check_brochure.py"
+      - ".github/workflows/check-brochure.yml"
+  pull_request:
+    paths:
+      - "public/BROCHURE_VOYAGES21_AVEC_IMAGES_*.html"
+      - "scripts/check_brochure.py"
+      - ".github/workflows/check-brochure.yml"
+
+jobs:
+  controle-structurel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Controle structurel de la brochure
+        run: python3 scripts/check_brochure.py public/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html
