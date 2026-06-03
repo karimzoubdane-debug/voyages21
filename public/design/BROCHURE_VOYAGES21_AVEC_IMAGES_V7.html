@@ -2568,22 +2568,34 @@ header { display: none !important; }
 
     var API_MEDIA_URL = 'https://voyages21-git-claude-confident-meitner-fiqzd-voyages21.vercel.app/api/media';
     function loadMedia() {
-        // Try relative URL first (works when served from Next.js).
-        // If empty or failed, fall back to absolute CORS-enabled URL.
-        return fetch('/api/media', { cache: 'no-store' })
+        // Primary: static manifest bundled with the site (works on voyages21.com with no API needed)
+        return fetch('/media-manifest.json', { cache: 'no-store' })
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (map) {
                 if (map && Object.keys(map).length > 0) {
                     V21_MEDIA = map; applyMediaOverrides(); return;
                 }
-                // Fallback : static site -> fetch from Next.js preview (CORS headers enabled)
-                return fetch(API_MEDIA_URL, { cache: 'no-store' })
-                    .then(function (r) { return r.ok ? r.json() : {}; })
-                    .then(function (m) { V21_MEDIA = m || {}; applyMediaOverrides(); })
-                    .catch(function () {});
+                // Fallback: live Next.js API (relative, works on voyages21-git-* preview deployments)
+                return fetch('/api/media', { cache: 'no-store' })
+                    .then(function (r) { return r.ok ? r.json() : null; })
+                    .then(function (map2) {
+                        if (map2 && Object.keys(map2).length > 0) {
+                            V21_MEDIA = map2; applyMediaOverrides(); return;
+                        }
+                        return fetch(API_MEDIA_URL, { cache: 'no-store' })
+                            .then(function (r) { return r.ok ? r.json() : {}; })
+                            .then(function (m) { V21_MEDIA = m || {}; applyMediaOverrides(); })
+                            .catch(function () {});
+                    })
+                    .catch(function () {
+                        return fetch(API_MEDIA_URL, { cache: 'no-store' })
+                            .then(function (r) { return r.ok ? r.json() : {}; })
+                            .then(function (m) { V21_MEDIA = m || {}; applyMediaOverrides(); })
+                            .catch(function () {});
+                    });
             })
             .catch(function () {
-                return fetch(API_MEDIA_URL, { cache: 'no-store' })
+                return fetch('/api/media', { cache: 'no-store' })
                     .then(function (r) { return r.ok ? r.json() : {}; })
                     .then(function (m) { V21_MEDIA = m || {}; applyMediaOverrides(); })
                     .catch(function () {});
