@@ -2401,11 +2401,25 @@ header p {
             document.getElementById('navCroisiere').classList.add('active');
         } else if (tabName === 'omra') {
             document.getElementById('navOmra').classList.add('active');
+        } else if (tabName === 'maroc') {
+            document.getElementById('navMaroc').classList.add('active');
         } else {
             document.getElementById('navDest').classList.add('active');
         }
         closeDest();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openInitialTabFromHash() {
+        var tabName = (window.location.hash || '').replace('#', '');
+        if (!tabName) return;
+        var allowed = {
+            europe: true, turquie: true, egypte: true, zanzibar: true,
+            usa: true, cuba: true, perou: true, chine: true,
+            malaisie: true, bangkok: true, vietnam: true,
+            croisiere: true, omra: true, maroc: true
+        };
+        if (allowed[tabName]) switchTab(tabName);
     }
 
     // Fermer le menu Destinations en cliquant en dehors
@@ -2605,10 +2619,11 @@ header p {
     // ── WHATSAPP POPUP ──
     // Lancer les sliders au chargement, puis appliquer les medias personnalises
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); });
+        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); openInitialTabFromHash(); });
     } else {
         initSliders();
         loadMedia();
+        openInitialTabFromHash();
     }
 
     function switchMarocTab(tab, btn) {
