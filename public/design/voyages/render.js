@@ -160,6 +160,16 @@
             var nav = document.getElementById('site-nav');
             if (nav) nav.classList.toggle('elevated', window.scrollY > 10);
         });
+
+        // Bouton WhatsApp flottant
+        var waStyle = document.createElement('style');
+        waStyle.textContent = '.wa-float{position:fixed;bottom:28px;right:28px;z-index:500;display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;padding:12px 20px 12px 14px;border-radius:999px;font-family:"Geist",sans-serif;font-size:.85rem;font-weight:600;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:transform .2s,box-shadow .2s;letter-spacing:.02em;white-space:nowrap;}.wa-float:hover{transform:scale(1.05);box-shadow:0 6px 28px rgba(37,211,102,.6);}@media(max-width:600px){.wa-float span{display:none;}.wa-float{padding:14px;border-radius:50%;}}';
+        document.head.appendChild(waStyle);
+        document.body.insertAdjacentHTML('beforeend',
+            '<a href="https://wa.me/212614152686" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">'
+            + '<svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.862L.06 23.25l5.586-1.457A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 01-5.003-1.367l-.358-.213-3.317.864.888-3.226-.233-.37A9.783 9.783 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182c5.422 0 9.818 4.396 9.818 9.818 0 5.422-4.396 9.818-9.818 9.818z"/></svg>'
+            + '<span>+212 6 14 15 26 86</span></a>'
+        );
     })();
 
     // ─── Contenu page voyage ──────────────────────────────────────────────

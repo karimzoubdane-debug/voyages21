@@ -1,13 +1,13 @@
 /* Voyages21 — feuille de style partagée des pages voyage (mise en page type Intrepid) */
 :root{
-    --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --gold-soft:#E4D2A0;
-    --cream:#F5F0E8; --ink:#23291f; --muted:#6b7065; --line:#e6e0d4;
+    --forest:#1E1A14; --forest2:#0C0C0C; --gold:#C49A3C; --gold-soft:#E4D2A0;
+    --cream:#F7F0E0; --white:#FDFAF5; --ink:#1E1A14; --muted:#6b7065; --line:#ddd4c0;
     --green:#2e7d4f; --red:#b23a2e;
     --maxw:1060px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;}
-h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:700;}
+body{font-family:'Geist',-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:700;}
 img{max-width:100%;display:block;}
 
 /* conteneur unique : toutes les sections à la même largeur */
