@@ -50,9 +50,40 @@
  font-family: 'Playfair Display', serif;
  }
 
- header p {
+header p {
  font-size: 0.9rem;
  opacity: 0.95;
+ }
+
+ .home-return {
+ position: absolute;
+ left: 1.25rem;
+ top: 50%;
+ transform: translateY(-50%);
+ display: inline-flex;
+ align-items: center;
+ gap: 0.45rem;
+ padding: 0.55rem 0.85rem;
+ border: 1px solid rgba(255,255,255,0.55);
+ border-radius: 999px;
+ color: var(--blanc);
+ text-decoration: none;
+ font-size: 0.82rem;
+ font-weight: 700;
+ letter-spacing: 0.02em;
+ background: rgba(255,255,255,0.12);
+ transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+ }
+
+ .home-return:hover {
+ background: rgba(255,255,255,0.22);
+ border-color: rgba(255,255,255,0.85);
+ transform: translateY(-50%) translateX(-2px);
+ }
+
+ .home-return-icon {
+ font-size: 1rem;
+ line-height: 1;
  }
 
  /* NAV TABS */
@@ -389,6 +420,17 @@
 
  header h1 {
  font-size: 1.4rem;
+ }
+
+ .home-return {
+ position: static;
+ transform: none;
+ margin: 0 auto 0.75rem;
+ width: max-content;
+ }
+
+ .home-return:hover {
+ transform: translateX(-2px);
  }
 
  .section-title {
@@ -760,6 +802,10 @@
 <body>
 <!-- HEADER -->
 <header>
+<a class="home-return" href="/design/homepage-v2-luxe.html" aria-label="Retour à l'accueil">
+<span class="home-return-icon">←</span>
+<span>Accueil</span>
+</a>
 <h1>VOYAGES 21</h1>
 <p>Vos circuits et séjours 2026 — Marrakech</p>
 </header>
