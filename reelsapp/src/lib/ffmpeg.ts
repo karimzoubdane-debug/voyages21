@@ -50,11 +50,20 @@ export async function generateClip(params: {
   const { videoUrl, audioUrl } = await getStreamUrls(youtubeId);
   const isMuxed = videoUrl === audioUrl;
 
+  // HTTP input flags: reconnect on drop, spoof browser user-agent so
+  // YouTube CDN doesn't reject FFmpeg's default Lavf user-agent.
+  const httpFlags = [
+    "-reconnect", "1",
+    "-reconnect_streamed", "1",
+    "-reconnect_delay_max", "5",
+    "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+  ];
+
   // Muxed fallback: single input, both tracks in one stream.
   // DASH default: two inputs, FFmpeg seeks each independently via HTTP range.
   const args = isMuxed
     ? [
-        "-ss", String(startSec), "-i", videoUrl,
+        ...httpFlags, "-ss", String(startSec), "-i", videoUrl,
         "-map", "0:v:0",
         "-map", "0:a:0",
         "-t", String(duration),
@@ -66,8 +75,8 @@ export async function generateClip(params: {
         "-y", outputPath,
       ]
     : [
-        "-ss", String(startSec), "-i", videoUrl,
-        "-ss", String(startSec), "-i", audioUrl,
+        ...httpFlags, "-ss", String(startSec), "-i", videoUrl,
+        ...httpFlags, "-ss", String(startSec), "-i", audioUrl,
         "-map", "0:v:0",
         "-map", "1:a:0",
         "-t", String(duration),
