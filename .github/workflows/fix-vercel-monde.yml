@@ -8,34 +8,12 @@ on:
       - '.github/workflows/fix-vercel-monde.yml'
 
 jobs:
-  fix:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: claude/confident-meitner-Fiqzd
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Call Vercel API and save result
-        env:
-          VTOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Trigger deploy hook for claude/confident-meitner-Fiqzd
         run: |
-          HTTP=$(curl -s -o /tmp/resp.json -w "%{http_code}" \
-            -X PATCH "https://api.vercel.com/v9/projects/prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ" \
-            -H "Authorization: Bearer ${VTOKEN}" \
-            -H "Content-Type: application/json" \
-            -d '{"framework":null,"buildCommand":"","outputDirectory":"public/design","installCommand":""}')
-
-          echo "HTTP_STATUS: $HTTP" > .github/vercel-debug.txt
-          echo "RESPONSE:" >> .github/vercel-debug.txt
-          cat /tmp/resp.json >> .github/vercel-debug.txt
-
-          cat .github/vercel-debug.txt
-
-      - name: Commit debug result
-        run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add .github/vercel-debug.txt
-          git diff --cached --quiet || git commit -m "debug: Vercel API response [skip ci]"
-          git push origin claude/confident-meitner-Fiqzd
+          echo "Calling deploy hook..."
+          curl -s -X POST \
+            "https://api.vercel.com/v1/integrations/deploy/prj_LEzTq4OIoLjZLOLeo4c5it7tu2rJ/o4695FPawD"
+          echo "Done"
