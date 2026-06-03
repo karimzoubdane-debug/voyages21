@@ -1506,6 +1506,422 @@ window.VOYAGES = {
       title: "Envie de découvrir Dakhla ?",
       text: "Nous organisons votre séjour sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000."
     }
+  },
+
+  "maroc-circuit-imperial-south": {
+    mediaKey: "modal-circuit-imperial-south",
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Circuits 2026",
+    title: "Imperial Cities & Southern Morocco",
+    duration: "8 jours / 7 nuits",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Arrivée", "Marrakech"],
+      ["Durée", "8 jours / 7 nuits"],
+      ["Transport", "Véhicule touristique"],
+      ["Pension", "Logement + petits-déjeuners"],
+      ["Guide", "Arabophone + local UNESCO"]
+    ],
+    price: "Sur devis",
+    intro: [
+      "Du blanc immaculé de Casablanca jusqu'aux dunes ocres de l'Erg Chebbi, ce circuit vous mène à travers les grandes pages de l'histoire marocaine. Vous traverserez les villes impériales, vous perdrez dans les ruelles de la médina de Fez classée UNESCO, et vous éveillerez au son du désert à Merzouga.",
+      "La route descend ensuite vers Aït Ben Haddou, kasbah de terre millénaire inscrite elle aussi au patrimoine mondial, avant d'achever son chemin dans la douceur rouge de Marrakech. Huit jours pour toucher le Maroc dans sa plus grande diversité — côtes atlantiques, villes impériales, Sahara et routes des kasbahs."
+    ],
+    highlights: [
+      "La médina de Fez (UNESCO) et la Bou Inania Madrasa",
+      "Chefchaouen, la ville bleue du Rif",
+      "Les dunes de l'Erg Chebbi à Merzouga, nuit sous tente berbère",
+      "Aït Ben Haddou, kasbah millénaire classée UNESCO",
+      "Le Bahia Palace et la Koutoubia à Marrakech"
+    ],
+    days: [
+      { num: "J1", title: "Arrivée à Casablanca",
+        text: "Accueil à l'aéroport Mohammed V. Visite de la Mosquée Hassan II, l'une des plus grandes du monde. Installation à l'hôtel.",
+        meta: [["Nuit", "Casablanca"]] },
+      { num: "J2", title: "Casablanca – Rabat – Chefchaouen",
+        text: "Départ pour Rabat, capitale du royaume. Visite du Mausolée Mohammed V et de la Tour Hassan. Route vers Chefchaouen, la perle bleue du Rif. Découverte des ruelles aux teintes indigo et cobalt.",
+        meta: [["Nuit", "Chefchaouen"]] },
+      { num: "J3", title: "Chefchaouen – Fez",
+        text: "Matinée libre à Chefchaouen. Route vers Fez, capitale spirituelle du Maroc. Première découverte des remparts et de la médina.",
+        meta: [["Nuit", "Fez"]] },
+      { num: "J4", title: "Fez — Ville impériale (UNESCO)",
+        text: "Journée complète dans la médina de Fez, la plus grande médina du monde. Visite guidée : Bou Inania Madrasa, tanneries Chouara, fondouk des marchands, quartier Al-Andalus.",
+        meta: [["Nuit", "Fez"], ["Guide", "local inclus"]] },
+      { num: "J5", title: "Fez – Route du désert – Merzouga",
+        text: "Départ tôt vers le Sahara. Route via Midelt et Errachidia. Arrivée à Merzouga en fin d'après-midi. Balade à dos de dromadaire au coucher du soleil. Nuit sous tente berbère.",
+        meta: [["Nuit", "Camp berbère — Merzouga"]] },
+      { num: "J6", title: "Merzouga – Ouarzazate – Aït Ben Haddou",
+        text: "Lever sur les dunes au soleil matinal. Route des kasbahs vers Ouarzazate. Visite d'Aït Ben Haddou, village fortifié classé au patrimoine mondial UNESCO.",
+        meta: [["Nuit", "Ouarzazate"]] },
+      { num: "J7", title: "Ouarzazate – Marrakech",
+        text: "Traversée du col du Tichka (2 260 m). Arrivée à Marrakech. Découverte de la place Jemaa el-Fna et du souk.",
+        meta: [["Nuit", "Marrakech"]] },
+      { num: "J8", title: "Marrakech — Visite et départ",
+        text: "Visite du Bahia Palace et de la Koutoubia. Après-midi libre dans les souks. Transfert à l'aéroport selon votre vol.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Transport en véhicule touristique climatisé",
+      "7 nuits en hôtels et camp berbère",
+      "Petits-déjeuners inclus chaque matin",
+      "Guide arabophone pour le circuit",
+      "Guide local pour la médina de Fez",
+      "Balade à dos de dromadaire à Merzouga",
+      "Les visites de sites mentionnés au programme",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les vols internationaux",
+      "Les déjeuners et dîners sauf mention",
+      "Les entrées dans les musées non mentionnées",
+      "Les pourboires et extras personnels"
+    ],
+    hotels: [
+      "Casablanca — hôtel 4★",
+      "Chefchaouen — riad de charme",
+      "Fez — riad médina 4★",
+      "Merzouga — camp berbère sous tente",
+      "Ouarzazate — hôtel 4★",
+      "Marrakech — hôtel 4★"
+    ],
+    priceTable: {
+      head: ["Formule", "Type", "Prix / pers."],
+      rows: [
+        ["Standard", "Sur devis groupe", "Nous contacter"],
+        ["Privé", "Sur mesure", "Nous contacter"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Casablanca", "Rabat", "Chefchaouen", "Fez", "Merzouga", "Aït Ben Haddou", "Ouarzazate", "Marrakech"],
+    dates: {
+      line: "Départs 2026 à la demande, individuels ou en groupe.",
+      note: "Contactez-nous pour un devis personnalisé selon vos dates."
+    },
+    cta: {
+      title: "8 jours, deux univers — villes impériales et désert",
+      text: "Nous concevons ce circuit sur mesure depuis Casablanca, pour groupes ou voyageurs individuels — avec les mêmes soins depuis 2000."
+    }
+  },
+
+  "maroc-circuit-imperial-cities": {
+    mediaKey: "modal-circuit-imperial-cities",
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Circuits 2026",
+    title: "Imperial Cities Tour",
+    duration: "8 jours / 7 nuits",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Arrivée", "Marrakech"],
+      ["Durée", "8 jours / 7 nuits"],
+      ["Transport", "Véhicule touristique"],
+      ["Pension", "Logement + petits-déjeuners"],
+      ["Guide", "Arabophone + guides locaux"]
+    ],
+    price: "Sur devis",
+    intro: [
+      "Le Maroc est une mosaïque de villes impériales, chacune portant l'empreinte d'une dynastie différente. Ce circuit vous invite à les traverser une à une : Casablanca et sa mosquée face à l'Atlantique, Rabat la capitale royale, Tanger la cosmopolite, Meknès l'élégante, Fez la mystique, et enfin Marrakech l'insoumise.",
+      "Huit jours pour lire l'histoire du Maroc dans ses pierres, ses mosquées, ses palais et ses médinas. Un voyage dans le temps autant qu'un voyage dans l'espace."
+    ],
+    highlights: [
+      "Rabat : Mausolée Mohammed V et Tour Hassan",
+      "Tanger : Kasbah et vue sur le Détroit de Gibraltar",
+      "Meknès : Mausolée Moulay Ismail, perle de la dynastique alaouite",
+      "Fez (UNESCO) : Al Attarine Madrasa, tanneries, souks impériaux",
+      "Marrakech : Bahia Palace, Saadian Tombs, souks de la médina"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — arrivée",
+        text: "Accueil à l'aéroport Mohammed V. Visite de la Mosquée Hassan II. Installation à l'hôtel.",
+        meta: [["Nuit", "Casablanca"]] },
+      { num: "J2", title: "Casablanca – Rabat",
+        text: "Route vers Rabat. Visite du Mausolée Mohammed V, de la Tour Hassan, de la Kasbah des Oudayas et des remparts almohades.",
+        meta: [["Nuit", "Rabat"]] },
+      { num: "J3", title: "Rabat – Tanger",
+        text: "Route vers Tanger via Asilah. Visite de la médina et de la Kasbah de Tanger, avec vue panoramique sur le Détroit de Gibraltar.",
+        meta: [["Nuit", "Tanger"]] },
+      { num: "J4", title: "Tanger – Meknès",
+        text: "Route vers Meknès. Visite de la ville impériale : Bab Mansour, Mausolée Moulay Ismail, grenier Heri es-Souani. Excursion aux ruines de Volubilis (site romain UNESCO).",
+        meta: [["Nuit", "Meknès ou Fez"]] },
+      { num: "J5", title: "Fez — Ville impériale (UNESCO)",
+        text: "Journée dans la médina de Fez. Visite guidée : Al Attarine Madrasa, tanneries Chouara, Kissaria, quartier des potiers.",
+        meta: [["Nuit", "Fez"], ["Guide", "local inclus"]] },
+      { num: "J6", title: "Fez — journée libre / Azrou",
+        text: "Matinée libre dans Fez. En option : excursion à Azrou et sa forêt de cèdres. Après-midi retour à la médina.",
+        meta: [["Nuit", "Fez"]] },
+      { num: "J7", title: "Fez – Marrakech",
+        text: "Route vers Marrakech via le Moyen Atlas. Arrivée en soirée. Découverte de Jemaa el-Fna.",
+        meta: [["Nuit", "Marrakech"]] },
+      { num: "J8", title: "Marrakech — Visite et départ",
+        text: "Visite du Bahia Palace, des Tombeaux Saadiens, de la Koutoubia. Après-midi libre dans les souks. Transfert à l'aéroport.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Transport en véhicule touristique climatisé",
+      "7 nuits en hôtels et riads",
+      "Petits-déjeuners inclus chaque matin",
+      "Guide arabophone pour le circuit",
+      "Guides locaux pour Fez et Meknès",
+      "Visite de Volubilis incluse",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les vols internationaux",
+      "Les déjeuners et dîners sauf mention",
+      "Les billets d'entrée non mentionnés",
+      "Les pourboires et extras personnels"
+    ],
+    hotels: [
+      "Casablanca — hôtel 4★",
+      "Rabat — hôtel 4★",
+      "Tanger — hôtel 4★",
+      "Fez — riad médina 4★",
+      "Marrakech — hôtel 4★"
+    ],
+    priceTable: {
+      head: ["Formule", "Type", "Prix / pers."],
+      rows: [
+        ["Standard", "Sur devis groupe", "Nous contacter"],
+        ["Privé", "Sur mesure", "Nous contacter"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Casablanca", "Rabat", "Tanger", "Meknès", "Fez", "Marrakech"],
+    dates: {
+      line: "Départs 2026 à la demande, individuels ou en groupe.",
+      note: "Contactez-nous pour un devis personnalisé selon vos dates."
+    },
+    cta: {
+      title: "Six villes impériales, un seul circuit",
+      text: "Nous concevons ce voyage sur mesure pour groupes ou individus — comme nous le faisons depuis 2000."
+    }
+  },
+
+  "maroc-circuit-best-morocco": {
+    mediaKey: "modal-circuit-best-morocco",
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Circuits 2026",
+    title: "Best of Morocco — Cities, Heritage & Sahara",
+    duration: "10 jours / 9 nuits",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Arrivée", "Marrakech"],
+      ["Durée", "10 jours / 9 nuits"],
+      ["Transport", "Véhicule touristique"],
+      ["Pension", "Logement + petits-déjeuners"],
+      ["Guide", "Arabophone + guides locaux"]
+    ],
+    price: "Sur devis",
+    intro: [
+      "Ce circuit est la quintessence du Maroc : dix jours pour toucher chaque facette d'un pays d'une richesse exceptionnelle. Des rives atlantiques de Casablanca aux dunes du Sahara, en passant par Chefchaouen la bleue, les médinas impériales et les routes de kasbahs du Sud.",
+      "Dix étapes, des siècles d'histoire, des paysages qui se renouvellent à chaque aurore. Le meilleur du Maroc, composé comme un voyage complet que l'on ne regrettera pas."
+    ],
+    highlights: [
+      "Mosquée Hassan II de Casablanca, l'une des plus grandes du monde",
+      "Chefchaouen, la ville bleue du Rif marocain",
+      "Fez (UNESCO) : médina, tanneries, madrasas",
+      "Merzouga — nuit sous tente berbère face à l'Erg Chebbi",
+      "Aït Ben Haddou (UNESCO) et les routes des kasbahs",
+      "Marrakech : Bahia Palace, Tombeaux Saadiens, souks"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — arrivée",
+        text: "Accueil à l'aéroport. Visite de la Mosquée Hassan II. Installation à l'hôtel.",
+        meta: [["Nuit", "Casablanca"]] },
+      { num: "J2", title: "Casablanca – Rabat",
+        text: "Visite du Mausolée Mohammed V, de la Tour Hassan et de la Kasbah des Oudayas. Route côtière vers le Nord.",
+        meta: [["Nuit", "Rabat"]] },
+      { num: "J3", title: "Rabat – Tanger – Grottes d'Hercule",
+        text: "Route vers Tanger. Visite des Grottes d'Hercule, de Cap Spartel et de la Kasbah de Tanger avec vue sur le Détroit.",
+        meta: [["Nuit", "Tanger"]] },
+      { num: "J4", title: "Tanger – Chefchaouen",
+        text: "Route vers Chefchaouen, la ville bleue du Rif. Découverte des ruelles, fontaines et places de cette médina unique.",
+        meta: [["Nuit", "Chefchaouen"]] },
+      { num: "J5", title: "Chefchaouen – Fez",
+        text: "Route via Ouazzane vers Fez. Arrivée et première exploration de la médina en soirée.",
+        meta: [["Nuit", "Fez"]] },
+      { num: "J6", title: "Fez — Ville impériale (UNESCO)",
+        text: "Journée complète dans la médina de Fez : Bou Inania Madrasa, tanneries Chouara, Kissaria, musée de Batha.",
+        meta: [["Nuit", "Fez"], ["Guide", "local inclus"]] },
+      { num: "J7", title: "Fez – Sahara – Merzouga",
+        text: "Longue route vers le Sahara via Midelt. Arrivée à Merzouga. Dromadaire au coucher du soleil. Nuit en camp berbère.",
+        meta: [["Nuit", "Camp berbère — Merzouga"]] },
+      { num: "J8", title: "Merzouga – Ouarzazate – Aït Ben Haddou",
+        text: "Lever au soleil sur les dunes. Route des kasbahs vers Ouarzazate. Visite d'Aït Ben Haddou (UNESCO).",
+        meta: [["Nuit", "Ouarzazate"]] },
+      { num: "J9", title: "Ouarzazate – Marrakech",
+        text: "Traversée du col du Tichka. Arrivée à Marrakech. Place Jemaa el-Fna en soirée.",
+        meta: [["Nuit", "Marrakech"]] },
+      { num: "J10", title: "Marrakech — Visite et départ",
+        text: "Visite du Bahia Palace, des Tombeaux Saadiens et de la Koutoubia. Transfert à l'aéroport.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Transport en véhicule touristique climatisé",
+      "9 nuits en hôtels, riads et camp berbère",
+      "Petits-déjeuners inclus chaque matin",
+      "Guide arabophone pour le circuit",
+      "Guide local pour la médina de Fez",
+      "Balade à dos de dromadaire à Merzouga",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les vols internationaux",
+      "Les déjeuners et dîners sauf mention",
+      "Les billets d'entrée non mentionnés",
+      "Les pourboires et extras personnels"
+    ],
+    hotels: [
+      "Casablanca — hôtel 4★",
+      "Rabat — hôtel 4★",
+      "Tanger — hôtel 4★",
+      "Chefchaouen — riad de charme",
+      "Fez — riad médina 4★",
+      "Merzouga — camp berbère sous tente",
+      "Ouarzazate — hôtel 4★",
+      "Marrakech — hôtel 4★"
+    ],
+    priceTable: {
+      head: ["Formule", "Type", "Prix / pers."],
+      rows: [
+        ["Standard", "Sur devis groupe", "Nous contacter"],
+        ["Privé", "Sur mesure", "Nous contacter"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Casablanca", "Rabat", "Tanger", "Chefchaouen", "Fez", "Merzouga", "Ouarzazate", "Marrakech"],
+    dates: {
+      line: "Départs 2026 à la demande, individuels ou en groupe.",
+      note: "Contactez-nous pour un devis personnalisé selon vos dates."
+    },
+    cta: {
+      title: "Le Maroc complet en 10 jours",
+      text: "Côtes atlantiques, villes impériales, Sahara et routes des kasbahs — nous vous composons ce voyage sur mesure depuis 2000."
+    }
+  },
+
+  "maroc-circuit-grand-discovery": {
+    mediaKey: "modal-circuit-grand-discovery",
+    whatsapp: "212673280009",
+    eyebrow: "Mon Maroc · Circuits 2026",
+    title: "Splendid Morocco — Grand Discovery",
+    duration: "15 jours / 14 nuits",
+    tag: "Maroc",
+    cadran: [
+      ["Départ", "Marrakech"],
+      ["Arrivée", "Marrakech"],
+      ["Durée", "15 jours / 14 nuits"],
+      ["Transport", "Véhicule touristique"],
+      ["Pension", "Logement + petits-déjeuners"],
+      ["Guide", "Arabophone + guides locaux"]
+    ],
+    price: "Sur devis",
+    intro: [
+      "Quinze jours pour découvrir le Maroc dans toute son ampleur. Ce grand circuit vous mène des palais ocre de Marrakech jusqu'à la façade atlantique d'Essaouira et Agadir, en passant par les médinas impériales, la ville bleue de Chefchaouen, les dunes infinies de Merzouga et les kasbahs de terre du Sud.",
+      "C'est le voyage pour ceux qui veulent ne rien manquer : les grandes villes, les paysages contrastés, le Sahara, l'Atlantique et les routes millénaires des caravanes. Un grand tour qui revient à son point de départ, riche de chaque étape parcourue."
+    ],
+    highlights: [
+      "Marrakech : Bahia Palace, Tombeaux Saadiens, Jemaa el-Fna",
+      "Casablanca : Mosquée Hassan II face à l'Atlantique",
+      "Chefchaouen, la perle bleue du Rif",
+      "Fez (UNESCO) : Bou Inania Madrasa, tanneries Chouara",
+      "Merzouga — nuit sous tente berbère face à l'Erg Chebbi",
+      "Aït Ben Haddou (UNESCO) et les routes des kasbahs",
+      "Essaouira : Skala de la Ville, médina et port atlantique"
+    ],
+    days: [
+      { num: "J1", title: "Marrakech — arrivée",
+        text: "Accueil à l'aéroport. Visite de la Koutoubia et de la place Jemaa el-Fna. Installation à l'hôtel.",
+        meta: [["Nuit", "Marrakech"]] },
+      { num: "J2", title: "Marrakech — Bahia, Saadiens, souks",
+        text: "Journée dans la médina : Bahia Palace, Tombeaux Saadiens, Medersa Ben Youssef, souks et teintureries.",
+        meta: [["Nuit", "Marrakech"]] },
+      { num: "J3", title: "Marrakech – Casablanca",
+        text: "Route vers Casablanca. Visite de la Mosquée Hassan II. Promenade sur la Corniche atlantique.",
+        meta: [["Nuit", "Casablanca"]] },
+      { num: "J4", title: "Casablanca – Rabat",
+        text: "Route vers la capitale. Mausolée Mohammed V, Tour Hassan, Kasbah des Oudayas, remparts almohades.",
+        meta: [["Nuit", "Rabat"]] },
+      { num: "J5", title: "Rabat – Meknès – Volubilis",
+        text: "Route vers Meknès. Visite de Bab Mansour, Mausolée Moulay Ismail, grenier Heri es-Souani. Excursion aux ruines romaines de Volubilis (UNESCO).",
+        meta: [["Nuit", "Meknès ou Fez"]] },
+      { num: "J6", title: "Fez — Ville impériale (UNESCO)",
+        text: "Journée dans la médina de Fez : Bou Inania Madrasa, tanneries Chouara, Kissaria, musée de Batha.",
+        meta: [["Nuit", "Fez"], ["Guide", "local inclus"]] },
+      { num: "J7", title: "Fez — journée libre",
+        text: "Deuxième journée à Fez pour explorer à votre rythme : souks, quartier al-Andalus, fondouks, ateliers d'artisans.",
+        meta: [["Nuit", "Fez"]] },
+      { num: "J8", title: "Fez – Chefchaouen",
+        text: "Route vers Chefchaouen, la ville bleue du Rif. Arrivée et découverte des ruelles aux tons bleu cobalt.",
+        meta: [["Nuit", "Chefchaouen"]] },
+      { num: "J9", title: "Chefchaouen — journée et route",
+        text: "Matinée libre à Chefchaouen. Déjeuner. Route vers Fez ou le Sud selon programme.",
+        meta: [["Nuit", "Route vers le Sud"]] },
+      { num: "J10", title: "Route du désert – Merzouga",
+        text: "Longue route vers le Sahara via Midelt. Arrivée à Merzouga. Balade à dos de dromadaire. Nuit en camp berbère.",
+        meta: [["Nuit", "Camp berbère — Merzouga"]] },
+      { num: "J11", title: "Merzouga – Ouarzazate",
+        text: "Lever au soleil. Route des kasbahs : Rissani, Tinghir, gorges de Todra, Skoura, Ouarzazate.",
+        meta: [["Nuit", "Ouarzazate"]] },
+      { num: "J12", title: "Ouarzazate – Aït Ben Haddou – Marrakech",
+        text: "Visite d'Aït Ben Haddou (UNESCO). Traversée du Tichka. Arrivée à Marrakech en soirée.",
+        meta: [["Nuit", "Marrakech"]] },
+      { num: "J13", title: "Marrakech – Essaouira",
+        text: "Route vers Essaouira. Visite de la Skala de la Ville, du port de pêche et de la médina classée UNESCO.",
+        meta: [["Nuit", "Essaouira"]] },
+      { num: "J14", title: "Essaouira – Agadir",
+        text: "Route côtière vers Agadir. Découverte de la baie, de la Kasbah et de la corniche atlantique.",
+        meta: [["Nuit", "Agadir"]] },
+      { num: "J15", title: "Agadir – Marrakech — départ",
+        text: "Route retour vers Marrakech. Transfert à l'aéroport selon votre vol de retour.",
+        meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Transport en véhicule touristique climatisé",
+      "14 nuits en hôtels, riads et camp berbère",
+      "Petits-déjeuners inclus chaque matin",
+      "Guide arabophone pour l'ensemble du circuit",
+      "Guide local pour la médina de Fez",
+      "Balade à dos de dromadaire à Merzouga",
+      "Visite de Volubilis incluse",
+      "L'assistance de Voyages 21"
+    ],
+    exclus: [
+      "Les vols internationaux",
+      "Les déjeuners et dîners sauf mention",
+      "Les billets d'entrée non mentionnés",
+      "Les pourboires et extras personnels"
+    ],
+    hotels: [
+      "Marrakech — hôtel 4★",
+      "Casablanca — hôtel 4★",
+      "Rabat — hôtel 4★",
+      "Fez — riad médina 4★",
+      "Chefchaouen — riad de charme",
+      "Merzouga — camp berbère sous tente",
+      "Ouarzazate — hôtel 4★",
+      "Essaouira — riad médina",
+      "Agadir — hôtel 4★"
+    ],
+    priceTable: {
+      head: ["Formule", "Type", "Prix / pers."],
+      rows: [
+        ["Standard", "Sur devis groupe", "Nous contacter"],
+        ["Privé", "Sur mesure", "Nous contacter"]
+      ]
+    },
+    children: "Tarifs enfants sur demande",
+    route: ["Marrakech", "Casablanca", "Rabat", "Meknès", "Fez", "Chefchaouen", "Merzouga", "Ouarzazate", "Essaouira", "Agadir", "Marrakech"],
+    dates: {
+      line: "Départs 2026 à la demande, individuels ou en groupe.",
+      note: "Contactez-nous pour un devis personnalisé selon vos dates."
+    },
+    cta: {
+      title: "15 jours, le grand tour du Maroc",
+      text: "Des villes impériales à l'Atlantique, en passant par le Sahara — nous vous composons ce voyage sur mesure depuis 2000."
+    }
   }
 
 };
