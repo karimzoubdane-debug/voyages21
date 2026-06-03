@@ -1,11 +1,44 @@
 import ffmpegStatic from "ffmpeg-static";
-import { spawn } from "child_process";
+import { spawn, execFileSync } from "child_process";
 import path from "path";
 import fs from "fs";
 import { getStreamUrls } from "./ytdl";
 
 const FFMPEG = ffmpegStatic ?? "ffmpeg";
 const TMP_DIR = "/tmp/reelsapp";
+
+// The bundled ffmpeg-static binary is often compiled without libfreetype, so
+// the `drawtext` filter is missing. Probe the binary once and cache the result
+// so a CTA overlay degrades gracefully (clip without text) instead of crashing
+// the whole encode with "No such filter: 'drawtext'".
+let drawtextSupport: boolean | null = null;
+function hasDrawtext(): boolean {
+  if (drawtextSupport !== null) return drawtextSupport;
+  try {
+    const filters = execFileSync(FFMPEG, ["-hide_banner", "-filters"], {
+      encoding: "utf8",
+    });
+    drawtextSupport = /\bdrawtext\b/.test(filters);
+  } catch {
+    drawtextSupport = false;
+  }
+  return drawtextSupport;
+}
+
+// When drawtext IS available we still need a font: serverless runtimes have no
+// fontconfig, so pass an explicit fontfile if we can find one bundled or on the
+// system. Returns "" when none is found (let ffmpeg try its default).
+let resolvedFontFile: string | null = null;
+function findFontFile(): string {
+  if (resolvedFontFile !== null) return resolvedFontFile;
+  const candidates = [
+    path.join(process.cwd(), "public", "fonts", "DejaVuSans.ttf"),
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+  ];
+  resolvedFontFile = candidates.find((p) => fs.existsSync(p)) ?? "";
+  return resolvedFontFile;
+}
 
 function ensureTmpDir() {
   if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR, { recursive: true });
@@ -43,8 +76,16 @@ export async function generateClip(params: {
 
   let vf = "crop=ih*9/16:ih,scale=1080:1920";
   if (ctaText) {
-    const safe = ctaText.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/:/g, "\\:");
-    vf += `,drawtext=text='${safe}':fontsize=28:fontcolor=white:x=(w-text_w)/2:y=h-80:box=1:boxcolor=black@0.5:boxborderw=10`;
+    if (hasDrawtext()) {
+      const safe = ctaText.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/:/g, "\\:");
+      const fontFile = findFontFile();
+      const fontArg = fontFile ? `fontfile='${fontFile.replace(/'/g, "\\'")}':` : "";
+      vf += `,drawtext=${fontArg}text='${safe}':fontsize=28:fontcolor=white:x=(w-text_w)/2:y=h-80:box=1:boxcolor=black@0.5:boxborderw=10`;
+    } else {
+      console.warn(
+        "[ffmpeg] drawtext filter unavailable in this build — skipping CTA overlay",
+      );
+    }
   }
 
   const { videoUrl, audioUrl } = await getStreamUrls(youtubeId);
