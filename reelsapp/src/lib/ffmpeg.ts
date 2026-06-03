@@ -11,6 +11,20 @@ function ensureTmpDir() {
   if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR, { recursive: true });
 }
 
+// On Vercel the traced binary can lose its +x bit. Ensure it's executable once.
+let ffmpegReady = false;
+function ensureFfmpegExecutable() {
+  if (ffmpegReady) return;
+  if (ffmpegStatic && fs.existsSync(ffmpegStatic)) {
+    try {
+      fs.chmodSync(ffmpegStatic, 0o755);
+    } catch {
+      // best-effort; ignore if not permitted
+    }
+  }
+  ffmpegReady = true;
+}
+
 // Single-pass: stream from YouTube → crop 9:16 → cut to duration → output MP4.
 // ctaText is burned in if provided.
 export async function generateClip(params: {
@@ -22,6 +36,7 @@ export async function generateClip(params: {
 }): Promise<string> {
   const { youtubeId, startSec, endSec, ctaText, outputName } = params;
   ensureTmpDir();
+  ensureFfmpegExecutable();
   const outputPath = path.join(TMP_DIR, outputName);
   const duration = endSec - startSec;
 
