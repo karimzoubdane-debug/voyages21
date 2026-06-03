@@ -16,13 +16,27 @@ function buildAgent() {
   }
 }
 
-// Streams the video starting at startMs (milliseconds), audio+video combined.
-// Pipe the result into FFmpeg stdin — avoids downloading the full file.
-export function streamVideoSegment(youtubeId: string, startMs: number): Readable {
-  const url = `https://www.youtube.com/watch?v=${youtubeId}`;
+function youtubeUrl(youtubeId: string) {
+  return `https://www.youtube.com/watch?v=${youtubeId}`;
+}
+
+// Best video-only DASH stream starting at startMs.
+export function streamVideo(youtubeId: string, startMs: number): Readable {
   const agent = buildAgent();
-  return ytdl(url, {
-    filter: "audioandvideo",
+  return ytdl(youtubeUrl(youtubeId), {
+    quality: "highestvideo",
+    filter: "videoonly",
+    begin: startMs,
+    agent,
+  }) as unknown as Readable;
+}
+
+// Best audio-only DASH stream starting at startMs.
+export function streamAudio(youtubeId: string, startMs: number): Readable {
+  const agent = buildAgent();
+  return ytdl(youtubeUrl(youtubeId), {
+    quality: "highestaudio",
+    filter: "audioonly",
     begin: startMs,
     agent,
   }) as unknown as Readable;

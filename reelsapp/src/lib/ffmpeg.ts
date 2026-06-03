@@ -2,7 +2,8 @@ import ffmpegStatic from "ffmpeg-static";
 import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
-import { streamVideoSegment } from "./ytdl";
+import type { Writable } from "stream";
+import { streamVideo, streamAudio } from "./ytdl";
 
 const FFMPEG = ffmpegStatic ?? "ffmpeg";
 const TMP_DIR = "/tmp/reelsapp";
@@ -25,8 +26,8 @@ function ensureFfmpegExecutable() {
   ffmpegReady = true;
 }
 
-// Single-pass: stream from YouTube → crop 9:16 → cut to duration → output MP4.
-// ctaText is burned in if provided.
+// Two-pass: video-only DASH stream on fd 3, audio-only DASH stream on fd 4.
+// FFmpeg muxes + crops 9:16 + cuts to duration. ctaText is burned in if provided.
 export async function generateClip(params: {
   youtubeId: string;
   startSec: number;
@@ -47,7 +48,10 @@ export async function generateClip(params: {
   }
 
   const args = [
-    "-i", "pipe:0",
+    "-i", "pipe:3",        // video stream on fd 3
+    "-i", "pipe:4",        // audio stream on fd 4
+    "-map", "0:v:0",
+    "-map", "1:a:0",
     "-t", String(duration),
     "-vf", vf,
     "-c:v", "libx264",
@@ -57,13 +61,25 @@ export async function generateClip(params: {
     "-y", outputPath,
   ];
 
-  // Stream starting at startSec so ytdl fetches only what FFmpeg needs
-  const ytStream = streamVideoSegment(youtubeId, Math.floor(startSec * 1000));
+  const startMs = Math.floor(startSec * 1000);
+  const videoStream = streamVideo(youtubeId, startMs);
+  const audioStream = streamAudio(youtubeId, startMs);
 
   return new Promise((resolve, reject) => {
-    const proc = spawn(FFMPEG, args);
+    const proc = spawn(FFMPEG, args, {
+      stdio: ["ignore", "pipe", "pipe", "pipe", "pipe"],
+    });
 
-    ytStream.pipe(proc.stdin!);
+    const fd3 = proc.stdio[3] as Writable | null;
+    const fd4 = proc.stdio[4] as Writable | null;
+
+    if (!fd3 || !fd4) {
+      reject(new Error("FFmpeg stdio fds 3/4 not available"));
+      return;
+    }
+
+    videoStream.pipe(fd3);
+    audioStream.pipe(fd4);
 
     let stderr = "";
     proc.stderr?.on("data", (d: Buffer) => { stderr += d.toString(); });
@@ -77,9 +93,13 @@ export async function generateClip(params: {
     });
 
     proc.on("error", (err: Error) => reject(err));
-    ytStream.on("error", (err: Error) => {
-      proc.stdin?.destroy();
+
+    const abort = (err: Error) => {
+      fd3.destroy();
+      fd4.destroy();
       reject(err);
-    });
+    };
+    videoStream.on("error", abort);
+    audioStream.on("error", abort);
   });
 }
