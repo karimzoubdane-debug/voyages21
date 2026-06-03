@@ -22,7 +22,6 @@ export function streamVideoSegment(youtubeId: string, startMs: number): Readable
   const url = `https://www.youtube.com/watch?v=${youtubeId}`;
   const agent = buildAgent();
   return ytdl(url, {
-    quality: "highestvideo",
     filter: "audioandvideo",
     begin: startMs,
     agent,
