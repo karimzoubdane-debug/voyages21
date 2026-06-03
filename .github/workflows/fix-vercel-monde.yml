@@ -3,50 +3,37 @@ name: Fix voyages21-monde Vercel settings
 on:
   push:
     branches:
-      - claude/confident-meitner-Fiqzd
+      - 'claude/confident-meitner-Fiqzd'
     paths:
       - '.github/workflows/fix-vercel-monde.yml'
 
 jobs:
   fix:
     runs-on: ubuntu-latest
+    env:
+      VTOKEN: ${{ secrets.VERCEL_TOKEN }}
+      PROJECT_ID: prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ
     steps:
-      - name: Update voyages21-monde project settings (framework=static, no build)
+      - name: Patch Vercel project (static, no build)
         run: |
-          echo "Patching project prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ..."
-          HTTP_CODE=$(curl -s -o /tmp/vercel_resp.json -w "%{http_code}" \
-            -X PATCH \
-            https://api.vercel.com/v9/projects/prj_LEzTq40IoLjZL0Leo4c5it7tu2rJ \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+          cat > /tmp/payload.json << 'PAYLOAD'
+          {"framework":null,"buildCommand":"","outputDirectory":"public/design","installCommand":"","devCommand":""}
+          PAYLOAD
+          HTTP=$(curl -s -o /tmp/resp.json -w "%{http_code}" \
+            -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}" \
+            -H "Authorization: Bearer ${VTOKEN}" \
             -H "Content-Type: application/json" \
-            -d '{
-              "framework": null,
-              "buildCommand": "",
-              "outputDirectory": "public/design",
-              "installCommand": "",
-              "devCommand": ""
-            }')
-          cat /tmp/vercel_resp.json | python3 -c "
-import sys,json
-d=json.load(sys.stdin)
-print('name:', d.get('name','?'))
-print('framework:', d.get('framework','null (static)'))
-print('buildCommand:', repr(d.get('buildCommand','?')))
-print('outputDirectory:', d.get('outputDirectory','?'))
-" 2>/dev/null || cat /tmp/vercel_resp.json
-          echo "HTTP $HTTP_CODE"
-          [ "$HTTP_CODE" = "200" ] || exit 1
+            --data @/tmp/payload.json)
+          echo "HTTP: $HTTP"
+          cat /tmp/resp.json | python3 -m json.tool | head -20 || cat /tmp/resp.json
+          test "$HTTP" -eq 200
 
-      - name: Trigger new production deployment
+      - name: Trigger production redeploy via Vercel API
         run: |
-          SHA="${{ github.sha }}"
-          echo "Triggering Vercel deployment for SHA: $SHA"
-          curl -s -X POST \
-            https://api.vercel.com/v13/deployments \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+          cat > /tmp/deploy.json << DPAYLOAD
+          {"name":"voyages21-monde","target":"production","gitSource":{"type":"github","repo":"karimzoubdane-debug/voyages21","ref":"claude/confident-meitner-Fiqzd"}}
+          DPAYLOAD
+          curl -s -X POST "https://api.vercel.com/v13/deployments" \
+            -H "Authorization: Bearer ${VTOKEN}" \
             -H "Content-Type: application/json" \
-            -d "{\"name\":\"voyages21-monde\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repo\":\"karimzoubdane-debug/voyages21\",\"ref\":\"claude/confident-meitner-Fiqzd\",\"sha\":\"$SHA\"}}" \
-            | python3 -c "import sys,json; d=json.load(sys.stdin); print('Deploy URL:', d.get('url','?')); print('State:', d.get('readyState','?'))" 2>/dev/null || echo "Redeploy triggered"
-
-      - name: Done
-        run: echo "voyages21-monde.vercel.app will be live in ~60 seconds"
+            --data @/tmp/deploy.json | python3 -m json.tool | head -10 || echo done
