@@ -1,8 +1,5 @@
 import ytdl from "@distube/ytdl-core";
 
-// Build an agent with session cookies to bypass YouTube bot detection on datacenter IPs.
-// YOUTUBE_COOKIES_JSON must be a JSON array of cookie objects exported from a browser
-// (e.g. via "EditThisCookie" or "Get cookies.txt LOCALLY" Chrome extensions).
 function buildAgent() {
   const raw = process.env.YOUTUBE_COOKIES_JSON;
   if (!raw) return ytdl.createAgent([]);
@@ -20,26 +17,33 @@ export interface StreamUrls {
   audioUrl: string;
 }
 
-// Resolve the direct googlevideo URLs for the best video-only + audio-only
-// DASH formats. FFmpeg seeks these with HTTP range requests (-ss), so we never
-// download the whole file and time-seeking works (unlike ytdl's `begin`, which
-// is unsupported for DASH formats).
+// Resolve direct googlevideo URLs. Prefers DASH (video-only + audio-only) so
+// FFmpeg can seek with HTTP range requests without downloading the full file.
+// Falls back to the best muxed stream when DASH is unavailable — in that case
+// videoUrl === audioUrl and ffmpeg.ts uses a single -i input.
 export async function getStreamUrls(youtubeId: string): Promise<StreamUrls> {
   const agent = buildAgent();
   const info = await ytdl.getInfo(`https://www.youtube.com/watch?v=${youtubeId}`, { agent });
 
-  const video = ytdl.chooseFormat(info.formats, {
-    quality: "highestvideo",
-    filter: "videoonly",
-  });
-  const audio = ytdl.chooseFormat(info.formats, {
-    quality: "highestaudio",
-    filter: "audioonly",
-  });
+  const all = info.formats;
+  const videoOnly = all.filter(f => f.hasVideo && !f.hasAudio && f.url);
+  const audioOnly = all.filter(f => !f.hasVideo && f.hasAudio && f.url);
 
-  if (!video?.url || !audio?.url) {
-    throw new Error("Could not resolve video/audio stream URLs from YouTube");
+  if (videoOnly.length > 0 && audioOnly.length > 0) {
+    const bestVideo = videoOnly.reduce((a, b) => ((b.height ?? 0) > (a.height ?? 0) ? b : a));
+    const bestAudio = audioOnly.reduce((a, b) => ((b.audioBitrate ?? 0) > (a.audioBitrate ?? 0) ? b : a));
+    return { videoUrl: bestVideo.url!, audioUrl: bestAudio.url! };
   }
 
-  return { videoUrl: video.url, audioUrl: audio.url };
+  const muxed = all.filter(f => f.hasVideo && f.hasAudio && f.url);
+  if (muxed.length > 0) {
+    const best = muxed.reduce((a, b) => ((b.height ?? 0) > (a.height ?? 0) ? b : a));
+    console.warn(`[ytdl] No DASH streams for ${youtubeId}, using muxed fallback (${best.height}p)`);
+    return { videoUrl: best.url!, audioUrl: best.url! };
+  }
+
+  throw new Error(
+    `No playable formats for ${youtubeId}. ` +
+    `Total=${all.length} VideoOnly=${videoOnly.length} AudioOnly=${audioOnly.length} Muxed=${muxed.length}`
+  );
 }
