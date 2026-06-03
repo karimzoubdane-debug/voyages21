@@ -13,7 +13,12 @@ export const generateClips = inngest.createFunction(
       return prisma.video.findUniqueOrThrow({ where: { id: videoId } });
     });
 
+    let done = 0;
+    let failed = 0;
+
     for (const clipId of clipIds) {
+      // Each clip is its own step that NEVER throws — so one failing clip
+      // can't abort the whole run and leave the others stuck in PENDING.
       await step.run(`generate-clip-${clipId}`, async () => {
         const clip = await prisma.clip.findUniqueOrThrow({ where: { id: clipId } });
 
@@ -42,17 +47,23 @@ export const generateClips = inngest.createFunction(
             where: { id: clipId },
             data: { status: "DONE", outputPath: blob.url },
           });
+          done++;
+          return { clipId, ok: true };
         } catch (err) {
-          // Surface the error in the DB so the UI can show it and allow retry
+          // Store the error message in `subtitle` so it shows up in the UI
+          // for debugging (temporary), and log it for Vercel/Inngest logs.
+          const message = err instanceof Error ? err.message : String(err);
+          console.error(`Clip ${clipId} failed:`, message);
           await prisma.clip.update({
             where: { id: clipId },
-            data: { status: "ERROR" },
+            data: { status: "ERROR", subtitle: message.slice(0, 500) },
           });
-          throw err; // re-throw so Inngest logs the full stack trace
+          failed++;
+          return { clipId, ok: false, error: message.slice(0, 200) };
         }
       });
     }
 
-    return { videoId, clipsGenerated: clipIds.length };
+    return { videoId, done, failed };
   }
 );
