@@ -2690,13 +2690,20 @@ header { display: none !important; }
         if (e.target === this) closeVideo();
     });
 
+    // ── HASH NAVIGATION (liens depuis la page d'accueil) ──
+    function handleHash() {
+        var hash = window.location.hash.replace('#', '');
+        if (hash) switchTab(hash);
+    }
+
     // ── WHATSAPP POPUP ──
     // Lancer les sliders au chargement, puis appliquer les medias personnalises
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); });
+        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); handleHash(); });
     } else {
         initSliders();
         loadMedia();
+        handleHash();
     }
 
     function switchMarocTab(tab, btn) {
