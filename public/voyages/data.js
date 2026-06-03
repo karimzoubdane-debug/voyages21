@@ -1523,7 +1523,7 @@ window.VOYAGES = {
       ["Pension", "Logement + petits-déjeuners"],
       ["Guide", "Arabophone + local UNESCO"]
     ],
-    price: "Sur devis",
+    price: "1 117 USD",
     intro: [
       "Du blanc immaculé de Casablanca jusqu'aux dunes ocres de l'Erg Chebbi, ce circuit vous mène à travers les grandes pages de l'histoire marocaine. Vous traverserez les villes impériales, vous perdrez dans les ruelles de la médina de Fez classée UNESCO, et vous éveillerez au son du désert à Merzouga.",
       "La route descend ensuite vers Aït Ben Haddou, kasbah de terre millénaire inscrite elle aussi au patrimoine mondial, avant d'achever son chemin dans la douceur rouge de Marrakech. Huit jours pour toucher le Maroc dans sa plus grande diversité — côtes atlantiques, villes impériales, Sahara et routes des kasbahs."
@@ -1586,11 +1586,12 @@ window.VOYAGES = {
       "Marrakech — hôtel 4★"
     ],
     priceTable: {
-      head: ["Formule", "Type", "Prix / pers."],
+      head: ["Saison", "Base 20", "Base 25", "Base 30", "Base 35", "Base 40", "Suppl. single"],
       rows: [
-        ["Standard", "Sur devis groupe", "Nous contacter"],
-        ["Privé", "Sur mesure", "Nous contacter"]
-      ]
+        ["Haute saison", "1 512 USD", "1 423 USD", "1 362 USD", "1 314 USD", "1 284 USD", "414 USD"],
+        ["Basse saison", "1 314 USD", "1 231 USD", "1 182 USD", "1 140 USD", "1 117 USD", "372 USD"]
+      ],
+      note: "Prix par personne en hôtels 4★, pension complète. Conversion appliquée : 1 EUR = 1,20 USD."
     },
     children: "Tarifs enfants sur demande",
     route: ["Casablanca", "Rabat", "Chefchaouen", "Fez", "Merzouga", "Aït Ben Haddou", "Ouarzazate", "Marrakech"],
@@ -1619,7 +1620,7 @@ window.VOYAGES = {
       ["Pension", "Logement + petits-déjeuners"],
       ["Guide", "Arabophone + guides locaux"]
     ],
-    price: "Sur devis",
+    price: "1 116 USD",
     intro: [
       "Le Maroc est une mosaïque de villes impériales, chacune portant l'empreinte d'une dynastie différente. Ce circuit vous invite à les traverser une à une : Casablanca et sa mosquée face à l'Atlantique, Rabat la capitale royale, Tanger la cosmopolite, Meknès l'élégante, Fez la mystique, et enfin Marrakech l'insoumise.",
       "Huit jours pour lire l'histoire du Maroc dans ses pierres, ses mosquées, ses palais et ses médinas. Un voyage dans le temps autant qu'un voyage dans l'espace."
@@ -1680,11 +1681,12 @@ window.VOYAGES = {
       "Marrakech — hôtel 4★"
     ],
     priceTable: {
-      head: ["Formule", "Type", "Prix / pers."],
+      head: ["Saison", "Base 20", "Base 25", "Base 30", "Base 35", "Base 40", "Suppl. single"],
       rows: [
-        ["Standard", "Sur devis groupe", "Nous contacter"],
-        ["Privé", "Sur mesure", "Nous contacter"]
-      ]
+        ["Haute saison", "1 524 USD", "1 422 USD", "1 356 USD", "1 308 USD", "1 272 USD", "438 USD"],
+        ["Basse saison", "1 290 USD", "1 236 USD", "1 182 USD", "1 140 USD", "1 116 USD", "385 USD"]
+      ],
+      note: "Prix par personne en hôtels 4★, pension complète. Conversion appliquée : 1 EUR = 1,20 USD."
     },
     children: "Tarifs enfants sur demande",
     route: ["Casablanca", "Rabat", "Tanger", "Meknès", "Fez", "Marrakech"],
@@ -1713,7 +1715,7 @@ window.VOYAGES = {
       ["Pension", "Logement + petits-déjeuners"],
       ["Guide", "Arabophone + guides locaux"]
     ],
-    price: "Sur devis",
+    price: "1 250 USD",
     intro: [
       "Ce circuit est la quintessence du Maroc : dix jours pour toucher chaque facette d'un pays d'une richesse exceptionnelle. Des rives atlantiques de Casablanca aux dunes du Sahara, en passant par Chefchaouen la bleue, les médinas impériales et les routes de kasbahs du Sud.",
       "Dix étapes, des siècles d'histoire, des paysages qui se renouvellent à chaque aurore. Le meilleur du Maroc, composé comme un voyage complet que l'on ne regrettera pas."
@@ -1784,11 +1786,12 @@ window.VOYAGES = {
       "Marrakech — hôtel 4★"
     ],
     priceTable: {
-      head: ["Formule", "Type", "Prix / pers."],
+      head: ["Saison", "Base 20", "Base 25", "Base 30", "Base 35", "Base 40", "Suppl. single"],
       rows: [
-        ["Standard", "Sur devis groupe", "Nous contacter"],
-        ["Privé", "Sur mesure", "Nous contacter"]
-      ]
+        ["Haute saison", "1 634 USD", "1 585 USD", "1 571 USD", "1 524 USD", "1 458 USD", "508 USD"],
+        ["Basse saison", "1 392 USD", "1 354 USD", "1 344 USD", "1 306 USD", "1 250 USD", "372 USD"]
+      ],
+      note: "Prix par personne en hôtels 4★, pension complète. Conversion appliquée : 1 EUR = 1,20 USD."
     },
     children: "Tarifs enfants sur demande",
     route: ["Casablanca", "Rabat", "Tanger", "Chefchaouen", "Fez", "Merzouga", "Ouarzazate", "Marrakech"],
@@ -1817,7 +1820,7 @@ window.VOYAGES = {
       ["Pension", "Logement + petits-déjeuners"],
       ["Guide", "Arabophone + guides locaux"]
     ],
-    price: "Sur devis",
+    price: "1 907 USD",
     intro: [
       "Quinze jours pour découvrir le Maroc dans toute son ampleur. Ce grand circuit vous mène des palais ocre de Marrakech jusqu'à la façade atlantique d'Essaouira et Agadir, en passant par les médinas impériales, la ville bleue de Chefchaouen, les dunes infinies de Merzouga et les kasbahs de terre du Sud.",
       "C'est le voyage pour ceux qui veulent ne rien manquer : les grandes villes, les paysages contrastés, le Sahara, l'Atlantique et les routes millénaires des caravanes. Un grand tour qui revient à son point de départ, riche de chaque étape parcourue."
@@ -1906,11 +1909,12 @@ window.VOYAGES = {
       "Agadir — hôtel 4★"
     ],
     priceTable: {
-      head: ["Formule", "Type", "Prix / pers."],
+      head: ["Saison", "Base 20", "Base 25", "Base 30", "Base 35", "Base 40", "Suppl. single"],
       rows: [
-        ["Standard", "Sur devis groupe", "Nous contacter"],
-        ["Privé", "Sur mesure", "Nous contacter"]
-      ]
+        ["Haute saison", "2 508 USD", "2 434 USD", "2 413 USD", "2 342 USD", "2 240 USD", "685 USD"],
+        ["Basse saison", "2 124 USD", "2 064 USD", "2 050 USD", "1 992 USD", "1 907 USD", "534 USD"]
+      ],
+      note: "Prix par personne en hôtels 4★, pension complète. Conversion appliquée : 1 EUR = 1,20 USD."
     },
     children: "Tarifs enfants sur demande",
     route: ["Marrakech", "Casablanca", "Rabat", "Meknès", "Fez", "Chefchaouen", "Merzouga", "Ouarzazate", "Essaouira", "Agadir", "Marrakech"],

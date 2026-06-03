@@ -79,7 +79,8 @@
         priceHtml = '<table class="ptable" dir="ltr"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
                 return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : '<td>' + bidiNum(c) + "</td>"; }).join("") + "</tr>";
-            }).join("") + "</tbody></table>";
+            }).join("") + "</tbody></table>"
+            + (v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "");
     }
     var childrenHtml = v.children ? '<p class="note"><b>' + L.childPrices + "</b> " + bidiNum(v.children) + "</p>" : "";
     var datesListHtml = (v.datesList && v.datesList.length)
