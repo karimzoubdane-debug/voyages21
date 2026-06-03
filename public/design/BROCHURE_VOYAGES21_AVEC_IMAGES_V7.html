@@ -4,10 +4,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Voyages 21 - Brochures 2026</title>
+<title>Voyages 21 — Brochures 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,900&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
  * {
  margin: 0;
@@ -35,8 +35,16 @@
  }
 
  /* HEADER */
- header { display: none; }
- /* padding-top géré par override nav en fin de style */
+ header {
+ background: linear-gradient(135deg, var(--navy), var(--rouge));
+ color: var(--blanc);
+ padding: 1.5rem 1rem;
+ text-align: center;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ }
 
  header h1 {
  font-size: 1.8rem;
@@ -722,8 +730,40 @@
             .wa-btn svg { width: 30px; height: 30px; }
         }
 
-/* ═══ NAV HOMEPAGE UNIFIÉE ═══ */
-body { padding-top: 64px; }
+/* ── SOUS-NAV MON MAROC ── */
+.maroc-subnav {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.2rem 0 1.5rem;
+  border-bottom: 2px solid var(--or);
+  padding-bottom: 0;
+}
+.maroc-tab-btn {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.maroc-tab-btn:hover { color: var(--azur); }
+.maroc-tab-btn.active {
+  color: var(--azur);
+  border-bottom-color: var(--azur);
+}
+.maroc-subtab { display: none; }
+.maroc-subtab.active { display: block; animation: fadeIn 0.35s ease; }
+
+body { padding-top: 64px !important; font-family:'Geist',-apple-system,sans-serif !important; }
+h1,h2,h3,h4 { font-family:'Fraunces',Georgia,serif !important; }
+header { display: none !important; }
+
+/* ── NEW DARK NAV ── */
 .main-nav {
   position: fixed !important;
   inset: 0 0 auto !important;
@@ -741,9 +781,9 @@ body { padding-top: 64px; }
   flex-wrap: nowrap !important;
 }
 .main-nav.elevated { box-shadow: 0 4px 32px rgba(0,0,0,.5); }
-.nav-logo { font-family:'Fraunces',serif; font-weight:900; font-size:1.35rem; color:#FDFAF5; text-decoration:none; letter-spacing:.02em; flex-shrink:0; }
-.nav-logo sup { font-size:.48em; font-family:'Geist',sans-serif; font-weight:700; color:#C49A3C; vertical-align:super; margin-left:1px; letter-spacing:.06em; }
-.nav-center { display:flex; position:absolute; left:50%; transform:translateX(-50%); }
+.nav-logo { font-family:'Fraunces',serif !important; font-weight:900; font-size:1.35rem; color:#FDFAF5; text-decoration:none; letter-spacing:.02em; flex-shrink:0; }
+.nav-logo sup { font-size:.48em; font-family:'Geist',sans-serif !important; font-weight:700; color:#C49A3C; vertical-align:super; margin-left:1px; letter-spacing:.06em; }
+.nav-center { display:flex !important; position:absolute; left:50%; transform:translateX(-50%); background:transparent !important; padding:0 !important; border:none !important; flex-wrap:nowrap !important; }
 .nav-title {
   padding: 0 22px !important;
   height: 64px !important;
@@ -760,7 +800,7 @@ body { padding-top: 64px; }
   text-decoration: none;
   border-bottom: 2px solid transparent !important;
   display: inline-flex !important;
-  align-items: center;
+  align-items: center !important;
   gap: 6px;
   white-space: nowrap;
   transition: color .2s, border-color .2s;
@@ -770,7 +810,7 @@ body { padding-top: 64px; }
 .nav-title.active { color:#C49A3C !important; border-bottom-color:#C49A3C !important; background:transparent !important; }
 .nav-caret { font-size:.55rem; transition:transform .25s; }
 .nav-title.open .nav-caret { transform:rotate(180deg); }
-.nav-right { display:flex; align-items:center; gap:20px; flex-shrink:0; }
+.nav-right { display:flex !important; align-items:center !important; gap:20px; flex-shrink:0; }
 .nav-tel { font-size:.75rem; font-weight:400; color:rgba(253,250,245,.65); text-decoration:none; letter-spacing:.06em; transition:color .2s; }
 .nav-tel:hover { color:#C49A3C; }
 .nav-cta { background:transparent; color:#C49A3C; border:1px solid rgba(196,154,60,.6); padding:8px 22px; font-size:.72rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; transition:background .2s,color .2s; white-space:nowrap; }
@@ -800,8 +840,8 @@ body { padding-top: 64px; }
 .mega-col.active { display:flex !important; animation:none !important; }
 .mega-col a { color:rgba(253,250,245,.75) !important; text-decoration:none !important; padding:.6rem .8rem !important; border-radius:4px; font-family:'Geist',sans-serif !important; font-size:.9rem !important; font-weight:400 !important; transition:all .2s; cursor:pointer; background:transparent !important; }
 .mega-col a:hover { background:rgba(196,154,60,.08) !important; color:#C49A3C !important; padding-left:1.2rem !important; }
-.wa-float { position:fixed; bottom:28px; right:28px; z-index:500; display:flex; align-items:center; gap:10px; background:#25D366; color:#fff; text-decoration:none; padding:12px 20px 12px 14px; border-radius:999px; font-family:'Geist',sans-serif; font-size:.85rem; font-weight:600; box-shadow:0 4px 20px rgba(37,211,102,.45); transition:transform .2s,box-shadow .2s; letter-spacing:.02em; white-space:nowrap; }
-.wa-float:hover { transform:scale(1.05); box-shadow:0 6px 28px rgba(37,211,102,.6); }
+.wa-float-new { position:fixed; bottom:28px; right:28px; z-index:500; display:flex; align-items:center; gap:10px; background:#25D366; color:#fff; text-decoration:none; padding:12px 20px 12px 14px; border-radius:999px; font-family:'Geist',sans-serif; font-size:.85rem; font-weight:600; box-shadow:0 4px 20px rgba(37,211,102,.45); transition:transform .2s,box-shadow .2s; letter-spacing:.02em; white-space:nowrap; }
+.wa-float-new:hover { transform:scale(1.05); box-shadow:0 6px 28px rgba(37,211,102,.6); }
 @media(max-width:768px) {
   body { padding-top:52px !important; }
   .main-nav { padding:0 16px !important; height:52px !important; }
@@ -825,43 +865,16 @@ body { padding-top: 64px; }
   .nav-mobile-panel li { width:100%; }
   .nav-mobile-panel a { display:block; width:100%; height:auto; line-height:1; padding:16px 24px; font-size:.9rem; font-weight:500; letter-spacing:.08em; color:rgba(255,255,255,.85); text-decoration:none; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.06); box-sizing:border-box; cursor:pointer; }
   .nav-mobile-panel a:active { color:#C49A3C; }
-  .wa-float span { display:none; }
-  .wa-float { padding:14px; border-radius:50%; }
+  .wa-float-new span { display:none; }
+  .wa-float-new { padding:14px; border-radius:50%; }
 }
-
-/* Sous-onglets Mon Maroc */
-.maroc-subtabs {
-  display: flex;
-  gap: .5rem;
-  margin: 1.2rem 0 1.4rem;
-  border-bottom: 2px solid #e8e0d0;
-}
-.maroc-subtab {
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  padding: .55rem 1.3rem;
-  font-family: 'Geist', sans-serif;
-  font-size: .92rem;
-  font-weight: 700;
-  color: #6b7065;
-  cursor: pointer;
-  letter-spacing: .03em;
-  text-transform: uppercase;
-  transition: color .2s, border-color .2s;
-}
-.maroc-subtab.active {
-  color: #C49A3C;
-  border-bottom-color: #C49A3C;
-}
-.maroc-subtab:hover:not(.active) {
-  color: #1E1A14;
-}
+/* Sous-nav Mon Maroc — override to match gold charter */
+.maroc-tab-btn:hover { color:#C49A3C !important; }
+.maroc-tab-btn.active { color:#C49A3C !important; border-bottom-color:#C49A3C !important; }
 </style>
 </head>
 <body>
-<!-- NAV PRINCIPALE -->
+<!-- NAV PRINCIPALE SOMBRE -->
 <nav class="main-nav" id="nav">
   <a href="/" class="nav-logo">Voyages<sup>21</sup></a>
   <div class="nav-center" id="navCenter">
@@ -883,8 +896,8 @@ body { padding-top: 64px; }
   </div>
   <div class="nav-right">
     <a href="tel:+212673280009" class="nav-tel">+212 6 73 28 00 09</a>
-    <a href="https://wa.me/212614152686" target="_blank" rel="noopener" class="nav-cta">Réserver</a>
-    <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
+    <a href="https://wa.me/212614152686" class="nav-cta">Réserver</a>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobileNav()">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -1508,16 +1521,30 @@ body { padding-top: 64px; }
 <h2 class="section-title">Mon Maroc 2026</h2>
 <p class="section-subtitle">Désert, lacs et grands espaces — Le Maroc autrement</p>
 
-<!-- Sous-onglets Séjours / Circuits -->
-<div class="maroc-subtabs">
-  <button class="maroc-subtab active" onclick="switchMarocTab('sejours',this)">Séjours</button>
-  <button class="maroc-subtab" onclick="switchMarocTab('circuits',this)">Circuits</button>
+<!-- Sous-navigation -->
+<div class="maroc-subnav">
+  <button class="maroc-tab-btn active" id="btn-sejours" onclick="switchMarocTab('sejours',this)">Séjours</button>
+  <button class="maroc-tab-btn" id="btn-circuits" onclick="switchMarocTab('circuits',this)">Circuits</button>
 </div>
 
-<!-- Séjours -->
-<div class="maroc-subtab-content" id="maroc-sejours">
+<!-- ── SÉJOURS (existants) ── -->
+<div class="maroc-subtab active" id="maroc-sejours">
 <div class="circuits-grid">
-<!-- Séjour Bin El Ouidane -->
+<!-- Circuit Merzouga -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-merzouga" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-merzouga')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-merzouga')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-merzouga', 0)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 1)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Merzouga — Marrakech · Ouarzazate · Dadès</h3>
+<div class="circuit-meta">
+<span class="meta-item">Départ garanti chaque jour en 2026</span>
+</div>
+<p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
+<div class="prix-label">À partir de 1 200 DH</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-merzouga.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-merzouga')">▶ Voir la vidéo</button>
+</div>
+</div>
+<!-- Circuit Bin El Ouidane -->
 <div class="circuit-card">
 <div class="img-slider" data-slider-id="sl-binouidane" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-binouidane')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-binouidane')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-binouidane', 0)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 1)"></button><button class="slider-dot" onclick="goSlide('sl-binouidane', 2)"></button></div></div>
 <div class="circuit-content">
@@ -1532,7 +1559,7 @@ body { padding-top: 64px; }
 <button class="btn-video" onclick="openVideo('modal-binouidane')">▶ Voir la vidéo</button>
 </div>
 </div>
-<!-- Séjour Dakhla -->
+<!-- Circuit Dakhla -->
 <div class="circuit-card">
 <div class="img-slider" data-slider-id="sl-dakhla" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-dakhla')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-dakhla')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-dakhla', 0)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 1)"></button><button class="slider-dot" onclick="goSlide('sl-dakhla', 2)"></button></div></div>
 <div class="circuit-content">
@@ -1550,26 +1577,72 @@ body { padding-top: 64px; }
 </div>
 </div>
 
-<!-- Circuits -->
-<div class="maroc-subtab-content" id="maroc-circuits" style="display:none">
+<!-- ── CIRCUITS (nouveaux — TO) ── -->
+<div class="maroc-subtab" id="maroc-circuits">
 <div class="circuits-grid">
-<!-- Circuit Merzouga -->
+
+<!-- Circuit 1 : Imperial Cities & Southern Morocco -->
 <div class="circuit-card">
-<div class="img-slider" data-slider-id="sl-merzouga" data-no-override="true"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-merzouga')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-merzouga')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-merzouga', 0)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 1)"></button><button class="slider-dot" onclick="goSlide('sl-merzouga', 2)"></button></div></div>
+<div class="img-slider" data-slider-id="sl-circuit-imperial-south"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-imperial-south')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-imperial-south')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-imperial-south', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-south', 3)"></button></div></div>
 <div class="circuit-content">
-<h3 class="circuit-title">Merzouga — Marrakech · Ouarzazate · Dadès</h3>
+<h3 class="circuit-title">Imperial Cities &amp; Southern Morocco</h3>
 <div class="circuit-meta">
-<span class="meta-item">Départ garanti chaque jour en 2026</span>
+<span class="meta-item">🗓 8 jours / 7 nuits</span>
 </div>
-<p class="circuit-description">Traversée des kasbahs du Dadès et des gorges de Todra. Nuit sous la tente au cœur des dunes de l'Erg Chebbi. Hébergement, repas mentionnés et transport inclus.</p>
-<div class="prix-label">À partir de 1 200 DH</div>
-<button class="btn-details" onclick="location.href='voyages/maroc-merzouga.html'">Voir détails</button>
-<button class="btn-video" onclick="openVideo('modal-merzouga')">▶ Voir la vidéo</button>
-</div>
-</div>
+<p class="circuit-description">Casablanca · Rabat · Chefchaouen · Fez (UNESCO) · Sahara Merzouga · Aït Ben Haddou (UNESCO) · Marrakech. Monuments inclus : Bou Inania Madrasa, Aït Ben Haddou, Bahia Palace.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-circuit-imperial-south.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-imperial-south')">▶ Voir la vidéo</button>
 </div>
 </div>
 
+<!-- Circuit 2 : Imperial Cities Tour -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-imperial-cities"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539437829697-1b4ed5aebd86?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1575468130797-aa950b68aeec?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-imperial-cities')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-imperial-cities')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-imperial-cities', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-imperial-cities', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Imperial Cities Tour</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 8 jours / 7 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Tanger · Meknès · Fez (UNESCO) · Marrakech. Monuments inclus : Kasbah de Tanger, Mausolée Moulay Ismail, Al Attarine Madrasa, Bahia Palace.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-circuit-imperial-cities.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-imperial-cities')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 3 : Best of Morocco -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-best-morocco"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1597940610882-39d1a6d7e9c4?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-best-morocco')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-best-morocco')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-best-morocco', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-best-morocco', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Best of Morocco — Cities, Heritage &amp; Sahara</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 10 jours / 9 nuits</span>
+</div>
+<p class="circuit-description">Casablanca · Rabat · Tanger · Chefchaouen · Fez · Merzouga (Sahara) · Ouarzazate · Marrakech. Le Maroc complet des côtes atlantiques aux dunes du désert.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-circuit-best-morocco.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-best-morocco')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+<!-- Circuit 4 : Grand Discovery -->
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-circuit-grand-discovery"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-grand-discovery')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-grand-discovery')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-grand-discovery', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-grand-discovery', 3)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Splendid Morocco — Grand Discovery</h3>
+<div class="circuit-meta">
+<span class="meta-item">🗓 15 jours / 14 nuits</span>
+</div>
+<p class="circuit-description">Marrakech · Casablanca · Rabat · Meknès · Fez · Chefchaouen · Merzouga · Ouarzazate · Essaouira · Agadir · Marrakech. Le grand tour complet du Maroc imperial, saharien et atlantique.</p>
+<div class="prix-label">Sur devis</div>
+<button class="btn-details" onclick="location.href='voyages/maroc-circuit-grand-discovery.html'">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-circuit-grand-discovery')">▶ Voir la vidéo</button>
+</div>
+</div>
+
+</div>
+</div>
 </div>
 <!-- MODALES -->
 <!-- Modal Istanbul -->
@@ -2284,9 +2357,9 @@ body { padding-top: 64px; }
 <div class="wa-float">
 <div class="wa-bubble" id="waBubble">
 <button class="wa-bubble-close" aria-label="Fermer" onclick="document.getElementById('waBubble').style.display='none';return false;">×</button>
-<a class="wa-bubble-link" href="https://wa.me/212673280009?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%20au%20sujet%20de%20vos%20voyages." target="_blank" rel="noopener">Souhaitez-vous être contacté ?</a>
+<a class="wa-bubble-link" href="https://wa.me/212614152686?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%20au%20sujet%20de%20vos%20voyages." target="_blank" rel="noopener">Souhaitez-vous être contacté ?</a>
 </div>
-<a class="wa-btn" href="https://wa.me/212673280009?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%20au%20sujet%20de%20vos%20voyages." target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+<a class="wa-btn" href="https://wa.me/212614152686?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%20au%20sujet%20de%20vos%20voyages." target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.003 3.2c-7.06 0-12.79 5.73-12.79 12.79 0 2.26.59 4.46 1.71 6.4L3.2 28.8l6.57-1.72a12.74 12.74 0 0 0 6.23 1.59h.01c7.05 0 12.79-5.73 12.79-12.79 0-3.42-1.33-6.63-3.75-9.05a12.7 12.7 0 0 0-9.05-3.63zm0 23.4h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.01 1.05 1.07-3.91-.25-.4a10.57 10.57 0 0 1-1.62-5.64c0-5.86 4.77-10.63 10.63-10.63 2.84 0 5.51 1.11 7.52 3.12a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.62-10.62 10.62zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.18.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.54-.71-.55-.18-.01-.4-.01-.61-.01-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.44 5.45 4.82.76.33 1.36.53 1.82.68.77.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.74.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37z"/></svg>
 </a>
 </div>
@@ -2399,16 +2472,6 @@ body { padding-top: 64px; }
         if (col) col.classList.add('active');
         var conts = document.querySelectorAll('.mega-cont');
         for (var i = 0; i < conts.length; i++) conts[i].classList.remove('active');
-        if (btn) btn.classList.add('active');
-    }
-
-    function switchMarocTab(subtab, btn) {
-        var panels = document.querySelectorAll('.maroc-subtab-content');
-        for (var i = 0; i < panels.length; i++) panels[i].style.display = 'none';
-        var target = document.getElementById('maroc-' + subtab);
-        if (target) target.style.display = '';
-        var btns = document.querySelectorAll('.maroc-subtab');
-        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
         if (btn) btn.classList.add('active');
     }
 
@@ -2552,7 +2615,7 @@ body { padding-top: 64px; }
             frame.innerHTML = html;
         } else {
             frame.innerHTML = '<div class="video-soon"><strong>Vidéo bientôt disponible</strong>' +
-                '<a href="https://wa.me/212673280009?text=Bonjour%2C%20je%20souhaite%20voir%20la%20vid%C3%A9o%20de%20ce%20circuit." ' +
+                '<a href="https://wa.me/212614152686?text=Bonjour%2C%20je%20souhaite%20voir%20la%20vid%C3%A9o%20de%20ce%20circuit." ' +
                 'target="_blank" rel="noopener">Demander la vidéo sur WhatsApp</a></div>';
         }
         document.getElementById('videoModal').classList.add('active');
@@ -2630,47 +2693,55 @@ body { padding-top: 64px; }
     // ── WHATSAPP POPUP ──
     // Lancer les sliders au chargement, puis appliquer les medias personnalises
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); handleHash(); });
+        document.addEventListener('DOMContentLoaded', function () { initSliders(); loadMedia(); });
     } else {
         initSliders();
         loadMedia();
-        handleHash();
     }
 
-    function handleHash() {
-        var hash = window.location.hash.slice(1);
-        if (hash) switchTab(hash);
+    function switchMarocTab(tab, btn) {
+        document.querySelectorAll('.maroc-subtab').forEach(function(el){ el.classList.remove('active'); });
+        document.querySelectorAll('.maroc-tab-btn').forEach(function(el){ el.classList.remove('active'); });
+        document.getElementById('maroc-' + tab).classList.add('active');
+        btn.classList.add('active');
     }
-
-    function toggleMobileNav() {
-        document.getElementById('navBurger').classList.toggle('open');
-        document.getElementById('navMobilePanel').classList.toggle('open');
-    }
-    function closeMobileNav() {
-        document.getElementById('navBurger').classList.remove('open');
-        document.getElementById('navMobilePanel').classList.remove('open');
-    }
-    document.addEventListener('click', function(e) {
-        var panel = document.getElementById('navMobilePanel');
-        var burger = document.getElementById('navBurger');
-        if (panel && panel.classList.contains('open') && !panel.contains(e.target) && burger && !burger.contains(e.target)) closeMobileNav();
-        var mega = document.getElementById('destPanel');
-        var dest = document.getElementById('navDest');
-        if (mega && mega.classList.contains('open') && !mega.contains(e.target) && dest && !dest.contains(e.target)) {
-            mega.classList.remove('open'); dest.classList.remove('open');
-        }
-    });
-    window.addEventListener('scroll', function() {
-        var nav = document.getElementById('nav');
-        if (nav) nav.classList.toggle('elevated', window.scrollY > 10);
-    });
 
     // Mise a jour en direct quand les medias sont modifies dans l'admin (autre onglet)
     if ('BroadcastChannel' in window) {
         var v21bc = new BroadcastChannel('v21_media');
         v21bc.onmessage = function () { loadMedia(); };
     }
-    </script>
+    
+    function toggleMobileNav() {
+        var panel = document.getElementById('navMobilePanel');
+        var burger = document.getElementById('navBurger');
+        if (!panel) return;
+        var open = panel.classList.toggle('open');
+        if (burger) burger.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function closeMobileNav() {
+        var panel = document.getElementById('navMobilePanel');
+        var burger = document.getElementById('navBurger');
+        if (panel) panel.classList.remove('open');
+        if (burger) burger.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    // Close mobile nav on outside click
+    document.addEventListener('click', function(e) {
+        var panel = document.getElementById('navMobilePanel');
+        var burger = document.getElementById('navBurger');
+        if (panel && panel.classList.contains('open') && burger &&
+            !panel.contains(e.target) && !burger.contains(e.target)) {
+            closeMobileNav();
+        }
+    });
+    // Scroll elevation
+    window.addEventListener('scroll', function() {
+        var nav = document.getElementById('nav');
+        if (nav) nav.classList.toggle('elevated', window.scrollY > 10);
+    }, { passive: true });
+</script>
 
 <!-- Modal Merzouga -->
 <div class="modal" id="modal-merzouga">
@@ -2775,9 +2846,4 @@ body { padding-top: 64px; }
 </div>
 </div>
 
-
-<a href="https://wa.me/212614152686" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.862L.06 23.25l5.586-1.457A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 01-5.003-1.367l-.358-.213-3.317.864.888-3.226-.233-.37A9.783 9.783 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182c5.422 0 9.818 4.396 9.818 9.818 0 5.422-4.396 9.818-9.818 9.818z"/></svg>
-  <span>+212 6 14 15 26 86</span>
-</a>
 </body></html>
