@@ -68,7 +68,9 @@ lus par `src/lib/ytdl.ts` :
 - `YOUTUBE_PROXY_URL` : proxy (idéalement **résidentiel**) au format
   `http://user:pass@host:port`. Fait sortir la requête d'une IP non-flaggée.
   C'est la solution la plus fiable.
-- `YOUTUBE_COOKIES_JSON` : tableau JSON de cookies exportés d'un navigateur
-  connecté à un compte Google (extension « Get cookies.txt LOCALLY »).
+- `YOUTUBE_COOKIES_JSON` : cookies d'un navigateur connecté à un compte Google.
+  Accepte **deux formats** : un tableau JSON (style EditThisCookie) **ou** le
+  contenu brut d'un export `cookies.txt` Netscape (extension « Get cookies.txt
+  LOCALLY » → on colle le contenu du .txt tel quel).
 - En plus : retry x3 avec backoff (1s/2s/4s) + user-agent navigateur déjà câblés.
 Sans proxy ni cookies, l'échec sur Vercel reste probable.
