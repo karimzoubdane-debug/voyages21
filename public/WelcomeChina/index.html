@@ -475,7 +475,8 @@ transform: translateX(-2px);
             transition: opacity 0.7s ease;
         }
         .slide.active { opacity: 1; }
-        .slide video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .slide video,
+        .img-slider video.slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -1662,7 +1663,7 @@ html { scroll-behavior: smooth; }
 
 <!-- Circuit 4 : Discover the Kingdom -->
 <div class="circuit-card">
-<div class="img-slider" data-slider-id="sl-circuit-discover-kingdom"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1539020140153-e8c237112e53?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1566573728069-56ee4c7d21f7?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=500&fit=crop&q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1511283876573-1f8f1dbf554d?w=800&h=500&fit=crop&q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-discover-kingdom')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-discover-kingdom')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-discover-kingdom', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 3)"></button></div></div>
+<div class="img-slider" data-slider-id="sl-circuit-discover-kingdom"><video class="slide active" autoplay muted playsinline loop preload="metadata"><source src="/WelcomeChina/assets/discover-kingdom/morocco-cinematic-travel-video.mp4" type="video/mp4"></video><div class="slide" style="background-image: url('/WelcomeChina/assets/discover-kingdom/marrakech.jpg')"></div><div class="slide" style="background-image: url('/WelcomeChina/assets/discover-kingdom/casablanca.jpg')"></div><div class="slide" style="background-image: url('/WelcomeChina/assets/discover-kingdom/fez.jpg')"></div><div class="slide" style="background-image: url('/WelcomeChina/assets/discover-kingdom/meknes.jpg')"></div><div class="slide" style="background-image: url('/WelcomeChina/assets/discover-kingdom/merzouga.jpg')"></div><div class="slide" style="background-image: url('/WelcomeChina/assets/discover-kingdom/ouarzazate.jpg')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-circuit-discover-kingdom')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-circuit-discover-kingdom')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-circuit-discover-kingdom', 0)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 1)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 2)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 3)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 4)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 5)"></button><button class="slider-dot" onclick="goSlide('sl-circuit-discover-kingdom', 6)"></button></div></div>
 <div class="circuit-content">
 <h3 class="circuit-title">Discover the Kingdom</h3>
 <div class="circuit-meta">

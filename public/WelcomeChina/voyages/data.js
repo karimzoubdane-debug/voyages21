@@ -1840,8 +1840,7 @@ window.VOYAGES = {
         { url: "/WelcomeChina/assets/discover-kingdom/meknes.jpg" },
         { url: "/WelcomeChina/assets/discover-kingdom/volubilis.jpg" },
         { url: "/WelcomeChina/assets/discover-kingdom/merzouga.jpg" },
-        { url: "/WelcomeChina/assets/discover-kingdom/ouarzazate.jpg" },
-        { url: "/WelcomeChina/assets/discover-kingdom/agadir.jpg" }
+        { url: "/WelcomeChina/assets/discover-kingdom/ouarzazate.jpg" }
       ]
     },
     whatsapp: "212673280009",
