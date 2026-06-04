@@ -19,6 +19,7 @@ export default function HelloMorrocoCover() {
         >
           <source src="/WelcomeChina/assets/hello-morocco-cover.mp4" type="video/mp4" />
         </video>
+        <div className="introTitle" aria-hidden="true">WELCOME CHINA</div>
         <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
         <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
       </div>
@@ -78,6 +79,44 @@ export default function HelloMorrocoCover() {
           height: 100%;
           object-fit: fill;
           background: #000;
+        }
+
+        .introTitle {
+          position: absolute;
+          z-index: 3;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          color: #fff8ea;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: clamp(2.6rem, 7vw, 7.5rem);
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          white-space: nowrap;
+          text-shadow: 0 12px 42px rgba(0, 0, 0, 0.58);
+          pointer-events: none;
+          opacity: 0;
+          animation: welcomeChinaFade 4.4s ease forwards;
+          animation-delay: 0.5s;
+        }
+
+        @keyframes welcomeChinaFade {
+          0% {
+            opacity: 0;
+            transform: translate(-50%, -47%);
+          }
+          18% {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+          }
+          58% {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+          }
+          100% {
+            opacity: 0;
+            transform: translate(-50%, -53%);
+          }
         }
 
         .hotspot {
