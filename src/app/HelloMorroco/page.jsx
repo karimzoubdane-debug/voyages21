@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const TITLE_TRANSLATIONS = [
+  { start: 0, end: 2.7, title: "Welcome to Morocco" },
   { start: 2.7, end: 4.1, title: "The Blue of Chefchaouen" },
   { start: 4.1, end: 5.45, title: "The Story of Ait Benhaddou" },
   { start: 5.45, end: 6.85, title: "The Grandeur of Casablanca" },
@@ -53,8 +54,8 @@ export default function HelloMorrocoCover() {
           <span>WELCOME CHINA</span>
         </div>
         {activeTitle && (
-          <div className="titleTranslation" aria-hidden="true">
-            {activeTitle.title}
+          <div className="titleReplacement" aria-hidden="true">
+            <span>{activeTitle.title}</span>
           </div>
         )}
         <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
@@ -155,20 +156,25 @@ export default function HelloMorrocoCover() {
           }
         }
 
-        .titleTranslation {
+        .titleReplacement {
           position: absolute;
           z-index: 3;
           left: 50%;
-          top: 37.2%;
-          width: min(58%, 880px);
-          min-height: 74px;
+          top: 31.5%;
+          width: min(66%, 1040px);
+          min-height: 178px;
           display: flex;
           align-items: center;
           justify-content: center;
           transform: translateX(-50%);
-          padding: 8px 36px;
-          border-radius: 999px;
-          background: linear-gradient(90deg, rgba(83, 15, 16, 0.78), rgba(21, 58, 45, 0.7));
+          padding: 18px 46px;
+          border-radius: 32px;
+          background: linear-gradient(90deg, rgba(63, 9, 12, 0.96), rgba(15, 49, 38, 0.94));
+          box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18);
+          pointer-events: none;
+        }
+
+        .titleReplacement span {
           color: #fff8ea;
           font-family: Georgia, "Times New Roman", serif;
           font-size: clamp(1.45rem, 3.1vw, 3.4rem);
@@ -176,7 +182,6 @@ export default function HelloMorrocoCover() {
           text-align: center;
           line-height: 1;
           text-shadow: 0 5px 22px rgba(0, 0, 0, 0.52);
-          pointer-events: none;
         }
 
         .hotspot {
@@ -251,11 +256,15 @@ export default function HelloMorrocoCover() {
             font-size: clamp(2rem, 9vw, 4.4rem);
           }
 
-          .titleTranslation {
-            top: 36.8%;
-            width: 72%;
-            min-height: 52px;
-            padding: 7px 18px;
+          .titleReplacement {
+            top: 29.5%;
+            width: 80%;
+            min-height: 112px;
+            padding: 12px 20px;
+            border-radius: 20px;
+          }
+
+          .titleReplacement span {
             font-size: clamp(1rem, 4.2vw, 1.75rem);
           }
 
