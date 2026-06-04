@@ -823,6 +823,29 @@ header p {
             margin: 0 auto;
             border-radius: 10px;
         }
+        .language-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 0.85rem;
+            padding: 4px;
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.12);
+        }
+        .lang-btn {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            background: transparent;
+            color: #fff;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .lang-btn.active {
+            background: #fff;
+            color: var(--navy);
+        }
 
 /* ── SOUS-NAV MON MAROC ── */
 .maroc-subnav {
@@ -894,6 +917,10 @@ html { scroll-behavior: smooth; }
 </a>
 <h1>WelcomeChina</h1>
 <p>Morocco circuits 2026 — 4-star full-board group programs</p>
+<div class="language-switch" role="group" aria-label="Language">
+<button class="lang-btn active" type="button" data-lang-switch="en" onclick="setWelcomeLang('en')">English</button>
+<button class="lang-btn" type="button" data-lang-switch="zh" onclick="setWelcomeLang('zh')">中文</button>
+</div>
 </header>
 
 <!-- NAV MENU (3 titres) -->
@@ -2403,6 +2430,154 @@ html { scroll-behavior: smooth; }
         document.body.style.overflow = '';
     }
 
+    var WELCOME_LANG = {
+        en: {
+            htmlLang: 'en',
+            homeAria: 'Back to WelcomeChina home',
+            header: 'Morocco circuits 2026 — 4-star full-board group programs',
+            navDest: 'World Destinations',
+            navCruise: 'Cruises',
+            navOmra: 'Umrah',
+            navMaroc: 'Morocco Circuits',
+            title: 'Morocco 2026',
+            subtitle: 'Desert, imperial cities and Atlantic coast — Morocco crafted for Chinese travelers',
+            sejours: 'Stays',
+            circuits: 'Circuits',
+            details: 'View details',
+            video: '▶ Watch the video',
+            from: 'From ',
+            bubble: 'Scan WeChat to contact us',
+            close: 'Close',
+            modalText: 'Scan this QR code to contact Voyages 21.',
+            meta: {
+                '🗓 8 jours / 7 nuits': '8 days / 7 nights',
+                '🗓 10 jours / 9 nuits': '10 days / 9 nights',
+                '🗓 12 jours / 11 nuits': '12 days / 11 nights',
+                '🗓 15 jours / 14 nuits': '15 days / 14 nights'
+            },
+            cards: {
+                'Imperial Cities & Southern Morocco': {
+                    title: 'Imperial Cities & Southern Morocco',
+                    desc: 'Casablanca · Rabat · Chefchaouen · Fez (UNESCO) · Sahara Merzouga · Aït Ben Haddou (UNESCO) · Marrakech. Included monuments: Bou Inania Madrasa, Aït Ben Haddou, Bahia Palace.'
+                },
+                'Imperial Cities Tour': {
+                    title: 'Imperial Cities Tour',
+                    desc: 'Casablanca · Rabat · Tangier · Meknes · Fez (UNESCO) · Marrakech. Included monuments: Tangier Kasbah, Moulay Ismail Mausoleum, Al Attarine Madrasa, Bahia Palace.'
+                },
+                'Best of Morocco — Cities, Heritage & Sahara': {
+                    title: 'Best of Morocco — Cities, Heritage & Sahara',
+                    desc: 'Casablanca · Rabat · Tangier · Chefchaouen · Fez · Merzouga (Sahara) · Ouarzazate · Marrakech. The complete Morocco, from Atlantic shores to desert dunes.'
+                },
+                'Discover the Kingdom': {
+                    title: 'Discover the Kingdom',
+                    desc: 'Marrakech · Casablanca · Meknes · Fez · Merzouga · Ouarzazate · Agadir · Marrakech. A Kingdom discovery through imperial cities, Middle Atlas, Sahara and Atlantic coast.'
+                },
+                'Splendid Morocco — Grand Discovery': {
+                    title: 'Splendid Morocco — Grand Discovery',
+                    desc: 'Marrakech · Casablanca · Rabat · Meknes · Fez · Chefchaouen · Merzouga · Ouarzazate · Essaouira · Agadir · Marrakech. The full grand tour of imperial, Saharan and Atlantic Morocco.'
+                }
+            }
+        },
+        zh: {
+            htmlLang: 'zh-CN',
+            homeAria: '返回 WelcomeChina 首页',
+            header: '2026 摩洛哥线路 — 四星酒店全膳团队行程',
+            navDest: '世界目的地',
+            navCruise: '邮轮',
+            navOmra: '副朝',
+            navMaroc: '摩洛哥线路',
+            title: '2026 摩洛哥',
+            subtitle: '沙漠、皇城与大西洋海岸 — 为中国客人定制的摩洛哥',
+            sejours: '度假',
+            circuits: '线路',
+            details: '查看详情',
+            video: '▶ 观看视频',
+            from: '起价 ',
+            bubble: '扫码微信联系我们',
+            close: '关闭',
+            modalText: '请扫描二维码联系 Voyages 21。',
+            meta: {
+                '🗓 8 jours / 7 nuits': '8 天 / 7 晚',
+                '🗓 10 jours / 9 nuits': '10 天 / 9 晚',
+                '🗓 12 jours / 11 nuits': '12 天 / 11 晚',
+                '🗓 15 jours / 14 nuits': '15 天 / 14 晚'
+            },
+            cards: {
+                'Imperial Cities & Southern Morocco': {
+                    title: '摩洛哥皇城与南部沙漠',
+                    desc: '卡萨布兰卡 · 拉巴特 · 舍夫沙万 · 非斯（UNESCO）· 梅尔祖卡撒哈拉 · 阿伊特本哈杜（UNESCO）· 马拉喀什。包含景点：布伊纳尼亚神学院、阿伊特本哈杜、巴伊亚宫。'
+                },
+                'Imperial Cities Tour': {
+                    title: '摩洛哥皇城之旅',
+                    desc: '卡萨布兰卡 · 拉巴特 · 丹吉尔 · 梅克内斯 · 非斯（UNESCO）· 马拉喀什。包含景点：丹吉尔古堡、穆莱伊斯梅尔陵、阿塔林神学院、巴伊亚宫。'
+                },
+                'Best of Morocco — Cities, Heritage & Sahara': {
+                    title: '摩洛哥精华 — 城市、文化遗产与撒哈拉',
+                    desc: '卡萨布兰卡 · 拉巴特 · 丹吉尔 · 舍夫沙万 · 非斯 · 梅尔祖卡（撒哈拉）· 瓦尔扎扎特 · 马拉喀什。从大西洋海岸到沙漠沙丘，完整体验摩洛哥。'
+                },
+                'Discover the Kingdom': {
+                    title: '探索摩洛哥王国',
+                    desc: '马拉喀什 · 卡萨布兰卡 · 梅克内斯 · 非斯 · 梅尔祖卡 · 瓦尔扎扎特 · 阿加迪尔 · 马拉喀什。穿越皇城、中阿特拉斯、撒哈拉与大西洋海岸。'
+                },
+                'Splendid Morocco — Grand Discovery': {
+                    title: '壮丽摩洛哥 — 深度大环线',
+                    desc: '马拉喀什 · 卡萨布兰卡 · 拉巴特 · 梅克内斯 · 非斯 · 舍夫沙万 · 梅尔祖卡 · 瓦尔扎扎特 · 索维拉 · 阿加迪尔 · 马拉喀什。皇城、撒哈拉与大西洋的完整大环线。'
+                }
+            }
+        }
+    };
+
+    function setText(sel, value) {
+        var el = document.querySelector(sel);
+        if (el && value) el.textContent = value;
+    }
+
+    function setWelcomeLang(lang) {
+        var dict = WELCOME_LANG[lang] || WELCOME_LANG.en;
+        localStorage.setItem('welcomeChinaLang', lang);
+        document.documentElement.lang = dict.htmlLang;
+        document.documentElement.dir = 'ltr';
+        document.title = 'WelcomeChina - ' + dict.navMaroc + ' 2026';
+        document.querySelectorAll('[data-lang-switch]').forEach(function (btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-lang-switch') === lang);
+        });
+        var home = document.querySelector('.home-return');
+        if (home) home.setAttribute('aria-label', dict.homeAria);
+        setText('header p', dict.header);
+        setText('#navDest', dict.navDest);
+        setText('#navCroisiere', dict.navCruise);
+        setText('#navOmra', dict.navOmra);
+        setText('#navMaroc', dict.navMaroc);
+        setText('#maroc .section-title', dict.title);
+        setText('#maroc .section-subtitle', dict.subtitle);
+        setText('#btn-sejours', dict.sejours);
+        setText('#btn-circuits', dict.circuits);
+        document.querySelectorAll('.btn-details').forEach(function (btn) { btn.textContent = dict.details; });
+        document.querySelectorAll('.btn-video').forEach(function (btn) { btn.textContent = dict.video; });
+        document.querySelectorAll('.prix-label').forEach(function (el) {
+            el.textContent = el.textContent.replace(/^À partir de\s+|^From\s+|^起价\s+/, dict.from);
+        });
+        var bubble = document.querySelector('.wa-bubble-link');
+        if (bubble) bubble.textContent = dict.bubble;
+        var close = document.querySelector('.wechat-close');
+        if (close) close.setAttribute('aria-label', dict.close);
+        setText('.wechat-box p', dict.modalText);
+        document.querySelectorAll('#maroc-circuits .circuit-card').forEach(function (card) {
+            var title = card.querySelector('.circuit-title');
+            var desc = card.querySelector('.circuit-description');
+            var meta = card.querySelector('.meta-item');
+            var key = title && (title.getAttribute('data-card-key') || title.textContent.trim());
+            var metaKey = meta && (meta.getAttribute('data-meta-key') || meta.textContent.trim());
+            if (title && !title.getAttribute('data-card-key')) title.setAttribute('data-card-key', key);
+            if (meta && !meta.getAttribute('data-meta-key')) meta.setAttribute('data-meta-key', metaKey);
+            if (dict.cards[key]) {
+                title.textContent = dict.cards[key].title;
+                desc.textContent = dict.cards[key].desc;
+            }
+            if (meta && dict.meta[metaKey]) meta.textContent = dict.meta[metaKey];
+        });
+    }
+
     function initSliders() {
         var sliders = document.querySelectorAll('.img-slider');
         for (var i = 0; i < sliders.length; i++) {
@@ -2869,8 +3044,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var btn = document.getElementById('btn-circuits');
     if (btn) switchMarocTab('circuits', btn);
   }
-  var nav = document.getElementById('navMaroc');
-  if (nav) nav.textContent = 'Maroc Circuits';
+  if (typeof setWelcomeLang === 'function') setWelcomeLang(localStorage.getItem('welcomeChinaLang') || 'en');
 });
 </script>
 
