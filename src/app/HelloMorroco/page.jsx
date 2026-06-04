@@ -42,7 +42,7 @@ export default function HelloMorrocoCover() {
         <video
           ref={videoRef}
           className="coverVideo"
-          src="/WelcomeChina/assets/hello-morocco-cover.mp4"
+          src="/WelcomeChina/assets/hello-morocco-cover.mp4?v=20260604-hello-morocco"
           autoPlay
           muted
           loop
