@@ -35,7 +35,7 @@
  header {
  background: linear-gradient(135deg, #7F1016 0%, var(--rouge) 54%, var(--navy) 100%);
  color: var(--blanc);
- padding: 0.45rem 1rem;
+ padding: 0.35rem 1rem;
  text-align: center;
  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
  position: sticky;
@@ -45,7 +45,7 @@
  grid-template-columns: auto 1fr auto;
  align-items: center;
  column-gap: 1rem;
- min-height: 76px;
+ min-height: 58px;
  }
 
  header h1 {
@@ -62,6 +62,7 @@ header p {
  opacity: 0.95;
  margin: 0.15rem 0 0;
  grid-column: 2;
+ display: none;
  }
 
  .agency-brand {
@@ -79,7 +80,7 @@ header p {
  background: rgba(255,248,234,0.14);
  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
  grid-column: 1;
- grid-row: 1 / span 3;
+ grid-row: 1;
  justify-self: start;
  }
 
@@ -436,14 +437,14 @@ grid-template-columns: 1fr;
 }
 
 header {
-grid-template-columns: 1fr;
-row-gap: 0.25rem;
+grid-template-columns: 1fr auto;
+row-gap: 0.15rem;
 padding: 0.55rem 0.8rem;
 }
 
 header h1 {
 font-size: 1.4rem;
-grid-column: 1;
+grid-column: 1 / -1;
 }
 
 header p {
@@ -457,6 +458,11 @@ margin: 0 auto 0.15rem;
 width: max-content;
 grid-column: 1;
 grid-row: auto;
+}
+
+.language-switch {
+grid-column: 2;
+grid-row: 1;
 }
 
 .agency-brand:hover {
@@ -856,13 +862,13 @@ transform: translateX(-2px);
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            margin-top: 0.25rem;
+            margin-top: 0;
             padding: 3px;
             border: 1px solid rgba(255,255,255,0.35);
             border-radius: 999px;
             background: rgba(255,255,255,0.12);
-            grid-column: 2;
-            justify-self: center;
+            grid-column: 3;
+            justify-self: end;
         }
         .lang-btn {
             border: 0;
@@ -910,9 +916,7 @@ transform: translateX(-2px);
 
 /* WelcomeChina: brochure clone reduced to Morocco circuits only */
 html { scroll-behavior: smooth; }
-.main-nav #navDest,
-.main-nav #navCroisiere,
-.main-nav #navOmra,
+.main-nav,
 #destPanel,
 #maroc-sejours,
 .maroc-subnav #btn-sejours {
@@ -924,14 +928,6 @@ html { scroll-behavior: smooth; }
 }
 #maroc, #maroc-circuits {
   display: block !important;
-}
-.main-nav {
-  justify-content: center;
-}
-#navMaroc {
-  color: var(--azur);
-  border-bottom-color: var(--azur);
-  background: var(--bleu-pale);
 }
 .maroc-subnav {
   justify-content: center;
