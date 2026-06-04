@@ -15,7 +15,12 @@ export default function HelloMorrocoCover() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          controls={false}
+          webkit-playsinline="true"
+          x5-playsinline="true"
+          x5-video-player-type="h5-page"
+          x5-video-player-fullscreen="false"
         />
         <div className="chinaIntro" aria-hidden="true">
           <span>WELCOME CHINA</span>
@@ -31,6 +36,9 @@ export default function HelloMorrocoCover() {
               x
             </button>
             <img src="/WelcomeChina/assets/wechat-qr.jpeg" alt="Voyages 21 WeChat QR code" />
+            <a className="wechatSave" href="/WelcomeChina/assets/wechat-qr.jpeg" download>
+              Save QR / 保存二维码
+            </a>
           </div>
         </div>
       )}
@@ -41,6 +49,8 @@ export default function HelloMorrocoCover() {
           margin: 0;
           min-height: 100%;
           background: #071711;
+          overscroll-behavior: none;
+          touch-action: manipulation;
         }
 
         :global(body > header),
@@ -84,6 +94,7 @@ export default function HelloMorrocoCover() {
           z-index: 1;
           display: block;
           object-fit: cover;
+          object-position: center center;
           background: #a80f18;
         }
 
@@ -130,6 +141,8 @@ export default function HelloMorrocoCover() {
           cursor: pointer;
           text-decoration: none;
           outline-offset: 6px;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
         }
 
         .hotspot.start {
@@ -151,6 +164,8 @@ export default function HelloMorrocoCover() {
           justify-content: center;
           padding: 20px;
           background: rgba(0, 0, 0, 0.18);
+          -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
         }
 
         .wechatBox {
@@ -185,14 +200,70 @@ export default function HelloMorrocoCover() {
           box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
         }
 
+        .wechatSave {
+          display: block;
+          margin-top: 10px;
+          padding: 12px 14px;
+          border-radius: 8px;
+          background: #12382f;
+          color: #fff;
+          font-family: Arial, sans-serif;
+          font-size: 0.95rem;
+          font-weight: 800;
+          text-align: center;
+          text-decoration: none;
+        }
+
         @media (max-width: 640px) {
+          .videoStage {
+            width: 100vw;
+            height: 100vh;
+            height: 100svh;
+            min-height: 100vh;
+            min-height: 100svh;
+            min-width: 177.7778vh;
+            min-width: 177.7778svh;
+          }
+
+          .coverVideo {
+            object-position: 50% 50%;
+          }
+
           .chinaIntro span {
             font-size: clamp(2rem, 9vw, 4.4rem);
           }
 
           .hotspot {
-            top: 78.5%;
-            height: 15%;
+            top: 77%;
+            height: 17%;
+          }
+
+          .hotspot.start {
+            left: 14%;
+            width: 34%;
+          }
+
+          .hotspot.contact {
+            left: 52%;
+            width: 34%;
+          }
+
+          .wechatModal {
+            align-items: flex-end;
+            padding: 16px;
+          }
+
+          .wechatBox {
+            width: min(360px, 94vw);
+            padding: 14px;
+            border-radius: 12px;
+          }
+
+          .wechatClose {
+            top: -12px;
+            right: -8px;
+            width: 38px;
+            height: 38px;
           }
         }
       `}</style>
