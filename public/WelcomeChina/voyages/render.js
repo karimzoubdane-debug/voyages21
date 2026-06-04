@@ -373,6 +373,7 @@
     var route = (v.route || v.programme || []).map(function (s, i) {
         return (i ? '<span class="sep">—</span>' : "") + '<span class="stop">' + s + "</span>";
     }).join("");
+    var mapVisual = v.mapImage ? '<figure class="route-map"><img src="' + v.mapImage + '" alt="' + L.mapTitle + ' - ' + v.title + '" loading="lazy"></figure>' : "";
     var dates = v.dates || {};
     var cta = v.cta || {};
 
@@ -419,7 +420,7 @@
         + '<section id="itineraire"><h2 class="sec-title">' + itinTitle + "</h2>" + itinBody + "</section>"
         + '<section id="inclus"><h2 class="sec-title">' + L.included + "</h2>" + inclusBlock + "</section>"
         + '<section id="hebergement"><h2 class="sec-title">' + L.accommodation + "</h2>" + hotelsHtml + "</section>"
-        + '<section id="carte"><h2 class="sec-title">' + L.mapTitle + '</h2><div class="route">' + route + "</div></section>"
+        + '<section id="carte"><h2 class="sec-title">' + L.mapTitle + '</h2>' + mapVisual + '<div class="route">' + route + "</div></section>"
         + '<section id="dates"><h2 class="sec-title">' + L.datesPrices + "</h2>" + (dates.line ? '<div class="stay">' + bidiNum(dates.line) + "</div>" : "") + datesListHtml + priceHtml + childrenHtml + (dates.note ? '<p class="note">' + bidiNum(dates.note) + "</p>" : "") + "</section>"
         + '<div class="cta-final"><h3>' + (cta.title || "") + "</h3><p>" + (cta.text || "") + '</p><button class="btn btn-gold" onclick="ask(\'\')">' + L.quoteWa + '</button></div>'
         + "</div>"

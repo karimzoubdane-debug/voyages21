@@ -1510,6 +1510,7 @@ window.VOYAGES = {
 
   "maroc-circuit-imperial-south": {
     mediaKey: "modal-circuit-imperial-south",
+    mapImage: "/WelcomeChina/assets/maps/imperial-south.png",
     fallbackMedia: {
       images: [
         { url: "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80" },
@@ -1615,6 +1616,7 @@ window.VOYAGES = {
 
   "maroc-circuit-imperial-cities": {
     mediaKey: "modal-circuit-imperial-cities",
+    mapImage: "/WelcomeChina/assets/maps/imperial-cities.png",
     fallbackMedia: {
       images: [
         { url: "https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80" },
@@ -1718,6 +1720,7 @@ window.VOYAGES = {
 
   "maroc-circuit-best-morocco": {
     mediaKey: "modal-circuit-best-morocco",
+    mapImage: "/WelcomeChina/assets/maps/best-morocco.png",
     fallbackMedia: {
       images: [
         { url: "https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80" },
@@ -1831,6 +1834,7 @@ window.VOYAGES = {
 
   "maroc-circuit-discover-kingdom": {
     mediaKey: "modal-circuit-discover-kingdom",
+    mapImage: "/WelcomeChina/assets/maps/discover-kingdom.png",
     fallbackMedia: {
       videoUrl: "/WelcomeChina/assets/discover-kingdom/morocco-cinematic-travel-video.mp4",
       images: [
@@ -1944,6 +1948,7 @@ window.VOYAGES = {
 
   "maroc-circuit-grand-discovery": {
     mediaKey: "modal-circuit-grand-discovery",
+    mapImage: "/WelcomeChina/assets/maps/grand-discovery.png",
     fallbackMedia: {
       images: [
         { url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80" },

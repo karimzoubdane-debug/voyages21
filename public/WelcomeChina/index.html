@@ -722,16 +722,18 @@ transform: translateX(-2px);
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: #07C160;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 14px rgba(0,0,0,0.25);
             transition: transform 0.2s ease;
             cursor: pointer;
+            padding: 8px;
+            overflow: hidden;
         }
         .wa-btn:hover { transform: scale(1.08); }
-        .wa-btn span { color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.01em; }
+        .wa-btn img { width: 100%; height: 100%; object-fit: contain; }
         .wa-bubble {
             position: relative;
             background: #fff;
@@ -776,7 +778,6 @@ transform: translateX(-2px);
             .wa-float { right: 14px; bottom: 14px; }
             .wa-bubble { max-width: 180px; font-size: 0.82rem; }
             .wa-btn { width: 54px; height: 54px; }
-            .wa-btn span { font-size: 0.66rem; }
         }
         .wechat-modal {
             display: none;
@@ -2395,6 +2396,17 @@ html { scroll-behavior: smooth; }
 <p><strong>Non compris:</strong> Visa aéroport 50 USD • Excursions optionnelles</p>
 </div></div></div>
 
+<footer>
+<p><strong>Voyages 21</strong></p>
+<div class="contact-info">
+<span>Bd Prince My Abdellah, IMM.TAIBA 1er étage, Appt. N°1, Marrakech 40000, Maroc</span>
+<span>Téléphone : +212 673 28 00 09 / +212 524 33 10 07 / +212 524 30 51 52</span>
+<a href="mailto:contact@voyages21.com">contact@voyages21.com</a>
+<a href="mailto:karimzoubdane@voyages21.com">karimzoubdane@voyages21.com</a>
+<span>Lun – Ven : 9h – 18h30 · Sam : 9h – 13h</span>
+</div>
+</footer>
+
 <!-- POPUP VIDEO (partagee) -->
 <div class="video-modal" id="videoModal">
 <div class="video-modal-box">
@@ -2409,7 +2421,7 @@ html { scroll-behavior: smooth; }
 <button class="wa-bubble-close" aria-label="Fermer" onclick="document.getElementById('waBubble').style.display='none';return false;">×</button>
 <button class="wa-bubble-link" type="button" onclick="openWechat();return false;" style="border:0;background:transparent;font:inherit;text-align:left;cursor:pointer;">Scan WeChat to contact us</button>
 </div>
-<button class="wa-btn" type="button" onclick="openWechat();return false;" aria-label="Open WeChat QR"><span>WeChat</span></button>
+<button class="wa-btn" type="button" onclick="openWechat();return false;" aria-label="Open WeChat QR"><img src="/WelcomeChina/assets/wechat-logo.png" alt="WeChat"></button>
 </div>
 
 <!-- WECHAT QR POPUP -->
