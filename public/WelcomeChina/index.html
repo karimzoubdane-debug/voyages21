@@ -13,14 +13,14 @@
  }
 
  :root {
- --rouge: #8C2020;
- --navy: #1B2D4F;
- --or: #C8860A;
- --creme: #F5F0E8;
- --azur: #0099CC;
- --corail: #FF6B6B;
- --jaune: #FFD700;
- --bleu-pale: #E0F7FF;
+ --rouge: #B21E23;
+ --navy: #12382F;
+ --or: #D6A936;
+ --creme: #FFF8EA;
+ --azur: #0E7C66;
+ --corail: #C93A32;
+ --jaune: #F4D56A;
+ --bleu-pale: #F7E8D0;
  --blanc: #FFFFFF;
  }
 
@@ -33,7 +33,7 @@
 
  /* HEADER */
  header {
- background: linear-gradient(135deg, var(--navy), var(--rouge));
+ background: linear-gradient(135deg, #7F1016 0%, var(--rouge) 54%, var(--navy) 100%);
  color: var(--blanc);
  padding: 1.5rem 1rem;
  text-align: center;
@@ -55,35 +55,38 @@ header p {
  opacity: 0.95;
  }
 
- .home-return {
+ .agency-brand {
  position: absolute;
  left: 1.25rem;
  top: 50%;
  transform: translateY(-50%);
  display: inline-flex;
  align-items: center;
- gap: 0.45rem;
- padding: 0.55rem 0.85rem;
- border: 1px solid rgba(255,255,255,0.55);
- border-radius: 999px;
+ gap: 0.6rem;
+ padding: 0.35rem 0.8rem 0.35rem 0.45rem;
+ border: 1px solid rgba(214,169,54,0.62);
+ border-radius: 10px;
  color: var(--blanc);
  text-decoration: none;
- font-size: 0.82rem;
- font-weight: 700;
+ font-size: 0.9rem;
+ font-weight: 800;
  letter-spacing: 0.02em;
- background: rgba(255,255,255,0.12);
+ background: rgba(255,248,234,0.14);
  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
  }
 
- .home-return:hover {
- background: rgba(255,255,255,0.22);
- border-color: rgba(255,255,255,0.85);
+ .agency-brand:hover {
+ background: rgba(255,248,234,0.22);
+ border-color: rgba(214,169,54,0.9);
  transform: translateY(-50%) translateX(-2px);
  }
 
- .home-return-icon {
- font-size: 1rem;
- line-height: 1;
+ .agency-brand img {
+ width: 46px;
+ height: 46px;
+ object-fit: contain;
+ border-radius: 8px;
+ background: var(--blanc);
  }
 
  /* NAV TABS */
@@ -428,16 +431,16 @@ header p {
  font-size: 1.4rem;
  }
 
- .home-return {
- position: static;
- transform: none;
- margin: 0 auto 0.75rem;
- width: max-content;
- }
+.agency-brand {
+position: static;
+transform: none;
+margin: 0 auto 0.75rem;
+width: max-content;
+}
 
- .home-return:hover {
- transform: translateX(-2px);
- }
+.agency-brand:hover {
+transform: translateX(-2px);
+}
 
  .section-title {
  font-size: 1.6rem;
@@ -635,7 +638,7 @@ header p {
 
         /* BOUTON + POPUP VIDEO */
         .btn-video {
-            display: block;
+            display: none !important;
             width: 100%;
             margin-top: 0.5rem;
             background: transparent;
@@ -779,20 +782,23 @@ header p {
             position: fixed;
             inset: 0;
             z-index: 10003;
-            background: rgba(0,0,0,0.78);
+            background: transparent;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            pointer-events: none;
         }
         .wechat-modal.active { display: flex; }
         .wechat-box {
             position: relative;
-            width: min(520px, 92vw);
+            width: min(330px, 86vw);
             background: #fff;
-            border-radius: 16px;
-            padding: 0.9rem;
+            border: 1px solid rgba(214,169,54,0.35);
+            border-radius: 8px;
+            padding: 0.65rem;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            pointer-events: auto;
         }
         .wechat-close {
             position: absolute;
@@ -817,11 +823,11 @@ header p {
         }
         .wechat-box img {
             width: 100%;
-            max-width: 460px;
+            max-width: 300px;
             height: auto;
             display: block;
             margin: 0 auto;
-            border-radius: 10px;
+            border-radius: 6px;
         }
         .language-switch {
             display: inline-flex;
@@ -911,9 +917,9 @@ html { scroll-behavior: smooth; }
 <body>
 <!-- HEADER -->
 <header>
-<a class="home-return" href="/WelcomeChina/" aria-label="Retour à l'accueil">
-<span class="home-return-icon">←</span>
-<span>WelcomeChina</span>
+<a class="agency-brand" href="/WelcomeChina/" aria-label="Voyages 21">
+<img src="/WelcomeChina/assets/voyages21-logo.jpg" alt="Voyages 21">
+<span>Voyages 21</span>
 </a>
 <h1>WelcomeChina</h1>
 <p>Morocco circuits 2026 — 4-star full-board group programs</p>
@@ -2431,7 +2437,7 @@ html { scroll-behavior: smooth; }
     var WELCOME_LANG = {
         en: {
             htmlLang: 'en',
-            homeAria: 'Back to WelcomeChina home',
+            homeAria: 'Voyages 21 agency',
             header: 'Morocco circuits 2026 — 4-star full-board group programs',
             navDest: 'World Destinations',
             navCruise: 'Cruises',
@@ -2477,7 +2483,7 @@ html { scroll-behavior: smooth; }
         },
         zh: {
             htmlLang: 'zh-CN',
-            homeAria: '返回 WelcomeChina 首页',
+            homeAria: 'Voyages 21 旅行社',
             header: '2026 摩洛哥线路 — 四星酒店全膳团队行程',
             navDest: '世界目的地',
             navCruise: '邮轮',
@@ -2537,7 +2543,7 @@ html { scroll-behavior: smooth; }
         document.querySelectorAll('[data-lang-switch]').forEach(function (btn) {
             btn.classList.toggle('active', btn.getAttribute('data-lang-switch') === lang);
         });
-        var home = document.querySelector('.home-return');
+        var home = document.querySelector('.agency-brand');
         if (home) home.setAttribute('aria-label', dict.homeAria);
         setText('header p', dict.header);
         setText('#navDest', dict.navDest);

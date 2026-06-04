@@ -1,8 +1,8 @@
 /* Voyages21 — feuille de style partagée des pages voyage (mise en page type Intrepid) */
 :root{
-    --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --gold-soft:#E4D2A0;
-    --cream:#F5F0E8; --ink:#23291f; --muted:#6b7065; --line:#e6e0d4;
-    --green:#2e7d4f; --red:#b23a2e;
+    --forest:#12382F; --forest2:#0B251F; --gold:#D6A936; --gold-soft:#F4D56A;
+    --cream:#FFF8EA; --ink:#23291f; --muted:#6b7065; --line:#eadfca;
+    --green:#0E7C66; --red:#B21E23;
     --maxw:1060px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -11,7 +11,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:700;}
 img{max-width:100%;display:block;}
 
 /* barre retour (statique) */
-.topbar{background:var(--forest);color:#fff;}
+.topbar{background:linear-gradient(135deg,#7F1016 0%,var(--red) 54%,var(--forest) 100%);color:#fff;}
 .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:1rem;padding:.7rem 1.2rem;}
 .topbar a{color:#fff;text-decoration:none;font-size:.85rem;font-weight:600;opacity:.9;}
 .topbar a:hover{opacity:1;}
@@ -145,13 +145,13 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 .video-soon{display:flex;flex-direction:column;gap:.6rem;align-items:center;justify-content:center;height:100%;color:#fff;text-align:center;padding:1rem;}
 .video-soon a{color:var(--gold-soft);}
 
-.wechat-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;z-index:1200;align-items:center;justify-content:center;padding:20px;}
+.wechat-modal{position:fixed;inset:0;background:transparent;display:none;z-index:1200;align-items:center;justify-content:center;padding:20px;pointer-events:none;}
 .wechat-modal.active{display:flex;}
-.wechat-box{position:relative;width:min(520px,92vw);background:#fff;border-radius:16px;padding:.9rem;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.wechat-box{position:relative;width:min(330px,86vw);background:#fff;border:1px solid rgba(214,169,54,.35);border-radius:8px;padding:.65rem;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);pointer-events:auto;}
 .wechat-close{position:absolute;top:8px;right:10px;border:none;background:transparent;font-size:1.7rem;line-height:1;cursor:pointer;color:#666;}
 .wechat-box h3{font-size:1.2rem;color:var(--forest);margin-bottom:.35rem;}
 .wechat-box p{font-size:.9rem;color:var(--muted);margin-bottom:1rem;}
-.wechat-box img{width:100%;max-width:460px;height:auto;display:block;margin:0 auto;border-radius:10px;}
+.wechat-box img{width:100%;max-width:300px;height:auto;display:block;margin:0 auto;border-radius:6px;}
 
 @media(max-width:820px){
     .hero-row{grid-template-columns:1fr;}
