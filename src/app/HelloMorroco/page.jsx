@@ -1,14 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const TITLE_TRANSLATIONS = [
+  { start: 2.7, end: 4.1, title: "The Blue of Chefchaouen" },
+  { start: 4.1, end: 5.45, title: "The Story of Ait Benhaddou" },
+  { start: 5.45, end: 6.85, title: "The Grandeur of Casablanca" },
+  { start: 6.85, end: 8.3, title: "The Energy of Marrakech" },
+  { start: 8.3, end: 10, title: "The Magic of the Sahara" },
+  { start: 10, end: 11.25, title: "The Breeze of Essaouira" },
+  { start: 11.25, end: 12.55, title: "The Gateway to Tangier" },
+  { start: 12.55, end: 13.9, title: "The Sun of Agadir" },
+  { start: 13.9, end: 15.2, title: "The Elegance of Riads" },
+  { start: 15.2, end: 16.55, title: "Your Haven of Peace" },
+  { start: 16.55, end: 17.9, title: "The Flavors of Morocco" },
+  { start: 17.9, end: 20.2, title: "Contact us for your 2026 adventure" },
+];
 
 export default function HelloMorrocoCover() {
   const [wechatOpen, setWechatOpen] = useState(false);
+  const [videoTime, setVideoTime] = useState(0);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    let frameId;
+    const tick = () => {
+      if (videoRef.current) {
+        setVideoTime(videoRef.current.currentTime || 0);
+      }
+      frameId = requestAnimationFrame(tick);
+    };
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
+  const activeTitle = TITLE_TRANSLATIONS.find((item) => videoTime >= item.start && videoTime < item.end);
 
   return (
     <main className="cover" aria-label="Hello Morocco">
       <div className="videoStage">
-        <div className="introTitle" aria-hidden="true">WELCOME CHINA</div>
+        <video
+          ref={videoRef}
+          className="coverVideo"
+          src="/WelcomeChina/assets/hello-morocco-cover.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        <div className="chinaIntro" aria-hidden="true">
+          <span>WELCOME CHINA</span>
+        </div>
+        {activeTitle && (
+          <div className="titleTranslation" aria-hidden="true">
+            {activeTitle.title}
+          </div>
+        )}
         <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
         <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
       </div>
@@ -61,47 +109,79 @@ export default function HelloMorrocoCover() {
           transform: translate(-50%, -50%);
         }
 
-        .introTitle {
+        .coverVideo,
+        .chinaIntro {
           position: absolute;
-          z-index: 3;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          color: #fff8ea;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(2.6rem, 7vw, 7.5rem);
-          font-weight: 800;
-          letter-spacing: 0.08em;
-          white-space: nowrap;
-          text-shadow: 0 12px 42px rgba(0, 0, 0, 0.58);
-          pointer-events: none;
-          opacity: 0;
-          animation: welcomeChinaFade 4.4s ease forwards;
-          animation-delay: 0.5s;
+          inset: 0;
+          width: 100%;
+          height: 100%;
         }
 
-        @keyframes welcomeChinaFade {
-          0% {
-            opacity: 0;
-            transform: translate(-50%, -47%);
-          }
-          18% {
+        .coverVideo {
+          z-index: 1;
+          display: block;
+          object-fit: cover;
+          background: #a80f18;
+        }
+
+        .chinaIntro {
+          z-index: 4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #a80f18;
+          pointer-events: none;
+          animation: chinaIntroFade 2.65s ease forwards;
+        }
+
+        .chinaIntro span {
+          color: #d8ad3f;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: clamp(2.8rem, 7.6vw, 8rem);
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-shadow: 0 10px 34px rgba(42, 0, 0, 0.48);
+          white-space: nowrap;
+        }
+
+        @keyframes chinaIntroFade {
+          0%,
+          62% {
             opacity: 1;
-            transform: translate(-50%, -50%);
-          }
-          58% {
-            opacity: 1;
-            transform: translate(-50%, -50%);
           }
           100% {
             opacity: 0;
-            transform: translate(-50%, -53%);
+            visibility: hidden;
           }
+        }
+
+        .titleTranslation {
+          position: absolute;
+          z-index: 3;
+          left: 50%;
+          top: 37.2%;
+          width: min(58%, 880px);
+          min-height: 74px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transform: translateX(-50%);
+          padding: 8px 36px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, rgba(83, 15, 16, 0.78), rgba(21, 58, 45, 0.7));
+          color: #fff8ea;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: clamp(1.45rem, 3.1vw, 3.4rem);
+          font-weight: 800;
+          text-align: center;
+          line-height: 1;
+          text-shadow: 0 5px 22px rgba(0, 0, 0, 0.52);
+          pointer-events: none;
         }
 
         .hotspot {
           position: absolute;
-          z-index: 2;
+          z-index: 6;
           top: 79%;
           height: 14%;
           border: 0;
@@ -167,6 +247,18 @@ export default function HelloMorrocoCover() {
         }
 
         @media (max-width: 640px) {
+          .chinaIntro span {
+            font-size: clamp(2rem, 9vw, 4.4rem);
+          }
+
+          .titleTranslation {
+            top: 36.8%;
+            width: 72%;
+            min-height: 52px;
+            padding: 7px 18px;
+            font-size: clamp(1rem, 4.2vw, 1.75rem);
+          }
+
           .hotspot {
             top: 78.5%;
             height: 15%;
