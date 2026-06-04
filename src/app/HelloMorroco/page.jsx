@@ -68,7 +68,9 @@ export default function HelloMorrocoCover() {
         <button className="soundToggle" type="button" aria-label={muted ? "Activer le son" : "Couper le son"} onClick={toggleSound}>
           {muted ? "Sound" : "Mute"}
         </button>
-        <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
+        <a className="hotspot start" href="/WelcomeChina/" aria-label="The magic starts here">
+          <span>The magic starts here</span>
+        </a>
         <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
       </div>
 
@@ -203,6 +205,10 @@ export default function HelloMorrocoCover() {
           touch-action: manipulation;
         }
 
+        .hotspot span {
+          display: none;
+        }
+
         .hotspot.start {
           left: 17.8%;
           width: 29.2%;
@@ -294,12 +300,14 @@ export default function HelloMorrocoCover() {
           .videoStage {
             width: 100vw;
             height: 56.25vw;
-            min-height: 0;
-            min-width: 0;
+            min-height: 100vh;
+            min-height: 100svh;
+            min-width: 177.7778vh;
+            min-width: 177.7778svh;
           }
 
           .coverVideo {
-            object-fit: contain;
+            object-fit: cover;
             object-position: 50% 50%;
           }
 
@@ -315,19 +323,34 @@ export default function HelloMorrocoCover() {
             white-space: normal;
           }
 
-          .hotspot {
-            top: 79%;
-            height: 14%;
+          .hotspot.start {
+            left: 50%;
+            top: auto;
+            bottom: max(28px, env(safe-area-inset-bottom));
+            width: min(280px, 78vw);
+            height: 46px;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(216, 173, 63, 0.78);
+            border-radius: 999px;
+            background: rgba(168, 15, 24, 0.86);
+            color: #fff8ea;
+            box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(3px);
           }
 
-          .hotspot.start {
-            left: 17.8%;
-            width: 29.2%;
+          .hotspot.start span {
+            display: block;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
           }
 
           .hotspot.contact {
-            left: 52.9%;
-            width: 29.2%;
+            display: none;
           }
 
           .soundToggle {
