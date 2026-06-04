@@ -54,9 +54,18 @@ export default function HelloMorrocoCover() {
           background: #071711;
         }
 
+        :global(body > header),
+        :global(body > footer),
+        :global(.whatsapp-btn) {
+          display: none !important;
+        }
+
         .cover {
-          position: relative;
+          position: fixed;
+          inset: 0;
+          z-index: 10000;
           min-height: 100vh;
+          min-height: 100svh;
           overflow: hidden;
           color: #fff8ea;
           font-family: "DM Sans", Arial, sans-serif;
