@@ -7,33 +7,21 @@ export default function HelloMorrocoCover() {
 
   return (
     <main className="cover" aria-label="Hello Morocco">
-      <video
-        className="coverVideo"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-      >
-        <source src="/WelcomeChina/assets/hello-morocco-cover.mp4" type="video/mp4" />
-      </video>
-
-      <div className="veil" />
-
-      <section className="magazine">
-        <div className="kicker">Voyages 21 presente</div>
-        <h1>Hello Morocco</h1>
-        <p>Luxury Morocco circuits crafted for Chinese travelers</p>
-        <div className="actions">
-          <a className="primary" href="/WelcomeChina/">
-            La magie commence ici
-          </a>
-          <button className="secondary" type="button" onClick={() => setWechatOpen(true)}>
-            Nous contacter
-          </button>
-        </div>
-      </section>
+      <div className="videoStage">
+        <video
+          className="coverVideo"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-label="Hello Morocco cover video"
+        >
+          <source src="/WelcomeChina/assets/hello-morocco-cover.mp4" type="video/mp4" />
+        </video>
+        <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
+        <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
+      </div>
 
       {wechatOpen && (
         <div className="wechatModal" role="dialog" aria-modal="true" aria-label="WeChat contact" onClick={() => setWechatOpen(false)}>
@@ -67,104 +55,53 @@ export default function HelloMorrocoCover() {
           min-height: 100vh;
           min-height: 100svh;
           overflow: hidden;
-          color: #fff8ea;
-          font-family: "DM Sans", Arial, sans-serif;
-          display: flex;
-          align-items: stretch;
-          justify-content: center;
+          background: #000;
+        }
+
+        .videoStage {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          width: 100vw;
+          height: 56.25vw;
+          min-height: 100vh;
+          min-height: 100svh;
+          min-width: 177.7778vh;
+          min-width: 177.7778svh;
+          transform: translate(-50%, -50%);
         }
 
         .coverVideo {
-          position: fixed;
+          position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          background: #071711;
+          object-fit: fill;
+          background: #000;
         }
 
-        .veil {
-          position: fixed;
-          inset: 0;
-          background:
-            linear-gradient(90deg, rgba(7, 23, 17, 0.84) 0%, rgba(127, 16, 22, 0.38) 44%, rgba(7, 23, 17, 0.36) 100%),
-            linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0%, rgba(0, 0, 0, 0.62) 100%);
-          pointer-events: none;
-        }
-
-        .magazine {
-          position: relative;
-          z-index: 1;
-          width: min(1120px, calc(100% - 40px));
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          align-items: flex-start;
-          padding: 52px 0 58px;
-        }
-
-        .kicker {
-          font-size: 0.78rem;
-          line-height: 1;
-          text-transform: uppercase;
-          letter-spacing: 0.24em;
-          color: #f4d56a;
-          font-weight: 800;
-          margin-bottom: 14px;
-        }
-
-        h1 {
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(3.5rem, 11vw, 8.8rem);
-          line-height: 0.88;
-          margin: 0;
-          max-width: 780px;
-          text-transform: uppercase;
-          letter-spacing: 0;
-          text-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
-        }
-
-        p {
-          font-size: clamp(1rem, 2vw, 1.35rem);
-          max-width: 620px;
-          margin: 20px 0 28px;
-          color: rgba(255, 248, 234, 0.9);
-          font-weight: 700;
-        }
-
-        .actions {
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        .primary,
-        .secondary {
-          min-height: 48px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 999px;
-          padding: 0 22px;
-          font: inherit;
-          font-weight: 900;
-          text-decoration: none;
+        .hotspot {
+          position: absolute;
+          z-index: 2;
+          top: 79%;
+          height: 14%;
+          border: 0;
+          padding: 0;
+          background: transparent;
+          color: transparent;
           cursor: pointer;
-          border: 1px solid rgba(255, 248, 234, 0.62);
-          box-shadow: 0 12px 34px rgba(0, 0, 0, 0.26);
+          text-decoration: none;
+          outline-offset: 6px;
         }
 
-        .primary {
-          background: #d6a936;
-          color: #0b251f;
-          border-color: #f4d56a;
+        .hotspot.start {
+          left: 17.8%;
+          width: 29.2%;
         }
 
-        .secondary {
-          background: rgba(7, 23, 17, 0.46);
-          color: #fff8ea;
-          backdrop-filter: blur(8px);
+        .hotspot.contact {
+          left: 52.9%;
+          width: 29.2%;
         }
 
         .wechatModal {
@@ -211,18 +148,9 @@ export default function HelloMorrocoCover() {
         }
 
         @media (max-width: 640px) {
-          .magazine {
-            width: min(100% - 28px, 420px);
-            padding-bottom: 34px;
-          }
-
-          .actions {
-            width: 100%;
-          }
-
-          .primary,
-          .secondary {
-            width: 100%;
+          .hotspot {
+            top: 78.5%;
+            height: 15%;
           }
         }
       `}</style>
