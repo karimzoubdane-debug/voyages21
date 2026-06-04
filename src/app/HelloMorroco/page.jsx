@@ -8,17 +8,6 @@ export default function HelloMorrocoCover() {
   return (
     <main className="cover" aria-label="Hello Morocco">
       <div className="videoStage">
-        <video
-          className="coverVideo"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-label="Hello Morocco cover video"
-        >
-          <source src="/WelcomeChina/assets/hello-morocco-cover.mp4" type="video/mp4" />
-        </video>
         <div className="introTitle" aria-hidden="true">WELCOME CHINA</div>
         <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
         <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
@@ -70,15 +59,6 @@ export default function HelloMorrocoCover() {
           min-width: 177.7778vh;
           min-width: 177.7778svh;
           transform: translate(-50%, -50%);
-        }
-
-        .coverVideo {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: fill;
-          background: #000;
         }
 
         .introTitle {
