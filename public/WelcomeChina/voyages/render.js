@@ -316,7 +316,6 @@
             accommodation: "Accommodation", mapTitle: "Route at a glance", datesPrices: "Dates & prices",
             childPrices: "Children prices:", photos: "photos", videoSoon: "Video coming soon", openLink: "Open link",
             tabWhy: "Trip", tabItin: "Itinerary", tabIncl: "Included", tabHotel: "Hotels", tabMap: "Route", tabDates: "Dates & prices",
-            wechatText: "Scan this QR code to contact Voyages 21.",
             askText: function (t, l) { return "Hello, I am interested in the trip \"" + t + "\"" + (l ? " (" + l + ")" : "") + ". Could you send me an offer?"; }
         },
         zh: {
@@ -328,7 +327,6 @@
             accommodation: "住宿", mapTitle: "线路一览", datesPrices: "日期与价格",
             childPrices: "儿童价格：", photos: "张照片", videoSoon: "视频即将上线", openLink: "打开链接",
             tabWhy: "线路", tabItin: "行程", tabIncl: "包含", tabHotel: "住宿", tabMap: "路线", tabDates: "日期与价格",
-            wechatText: "请扫描二维码联系 Voyages 21。",
             askText: function (t, l) { return "您好，我对“" + t + "”线路感兴趣" + (l ? "（" + l + "）" : "") + "，请给我一份报价。"; }
         },
         ar: {
@@ -426,7 +424,7 @@
         + '<div class="cta-final"><h3>' + (cta.title || "") + "</h3><p>" + (cta.text || "") + '</p><button class="btn btn-gold" onclick="ask(\'\')">' + L.quoteWa + '</button></div>'
         + "</div>"
         + '<div class="vmodal" id="vmodal" onclick="if(event.target===this)closeVideo()"><div class="box"><button class="close" onclick="closeVideo()">×</button><div class="ratio" id="vframe"></div></div></div>'
-        + '<div class="wechat-modal" id="wechatModal" onclick="if(event.target===this)closeWechat()"><div class="wechat-box"><button class="wechat-close" onclick="closeWechat()">×</button><h3>WeChat</h3><p>' + L.wechatText + '</p><img src="/WelcomeChina/assets/wechat-qr.jpeg" alt="Voyages 21 WeChat QR code"></div></div>'
+        + '<div class="wechat-modal" id="wechatModal" onclick="if(event.target===this)closeWechat()"><div class="wechat-box"><button class="wechat-close" onclick="closeWechat()">×</button><img src="/WelcomeChina/assets/wechat-qr.jpeg" alt="Voyages 21 WeChat QR code"></div></div>'
         + '<div class="gallery" id="gallery" onclick="if(event.target===this)closeGallery()"><div class="gbox"><button class="gallery-close" onclick="closeGallery()">×</button><div class="gallery-inner" id="galleryInner"></div></div></div>';
 
     // ===== Médias en ligne + comportements =====

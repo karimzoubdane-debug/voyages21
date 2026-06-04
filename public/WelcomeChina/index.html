@@ -787,10 +787,10 @@ header p {
         .wechat-modal.active { display: flex; }
         .wechat-box {
             position: relative;
-            width: min(360px, 92vw);
+            width: min(520px, 92vw);
             background: #fff;
             border-radius: 16px;
-            padding: 1.3rem;
+            padding: 0.9rem;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.35);
         }
@@ -817,7 +817,7 @@ header p {
         }
         .wechat-box img {
             width: 100%;
-            max-width: 290px;
+            max-width: 460px;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -2409,8 +2409,6 @@ html { scroll-behavior: smooth; }
 <div class="wechat-modal" id="wechatModal" onclick="if(event.target===this)closeWechat()">
 <div class="wechat-box">
 <button class="wechat-close" aria-label="Close" onclick="closeWechat()">×</button>
-<h3>WeChat</h3>
-<p>Scan this QR code to contact Voyages 21.</p>
 <img src="/WelcomeChina/assets/wechat-qr.jpeg" alt="Voyages 21 WeChat QR code">
 </div>
 </div>
@@ -2448,7 +2446,6 @@ html { scroll-behavior: smooth; }
             from: 'From ',
             bubble: 'Scan WeChat to contact us',
             close: 'Close',
-            modalText: 'Scan this QR code to contact Voyages 21.',
             meta: {
                 '🗓 8 jours / 7 nuits': '8 days / 7 nights',
                 '🗓 10 jours / 9 nuits': '10 days / 9 nights',
@@ -2495,7 +2492,6 @@ html { scroll-behavior: smooth; }
             from: '起价 ',
             bubble: '扫码微信联系我们',
             close: '关闭',
-            modalText: '请扫描二维码联系 Voyages 21。',
             meta: {
                 '🗓 8 jours / 7 nuits': '8 天 / 7 晚',
                 '🗓 10 jours / 9 nuits': '10 天 / 9 晚',
@@ -2561,7 +2557,6 @@ html { scroll-behavior: smooth; }
         if (bubble) bubble.textContent = dict.bubble;
         var close = document.querySelector('.wechat-close');
         if (close) close.setAttribute('aria-label', dict.close);
-        setText('.wechat-box p', dict.modalText);
         document.querySelectorAll('#maroc-circuits .circuit-card').forEach(function (card) {
             var title = card.querySelector('.circuit-title');
             var desc = card.querySelector('.circuit-description');

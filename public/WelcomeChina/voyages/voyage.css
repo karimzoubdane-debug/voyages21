@@ -147,11 +147,11 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 
 .wechat-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;z-index:1200;align-items:center;justify-content:center;padding:20px;}
 .wechat-modal.active{display:flex;}
-.wechat-box{position:relative;width:min(360px,92vw);background:#fff;border-radius:16px;padding:1.3rem;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.wechat-box{position:relative;width:min(520px,92vw);background:#fff;border-radius:16px;padding:.9rem;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);}
 .wechat-close{position:absolute;top:8px;right:10px;border:none;background:transparent;font-size:1.7rem;line-height:1;cursor:pointer;color:#666;}
 .wechat-box h3{font-size:1.2rem;color:var(--forest);margin-bottom:.35rem;}
 .wechat-box p{font-size:.9rem;color:var(--muted);margin-bottom:1rem;}
-.wechat-box img{width:100%;max-width:290px;height:auto;display:block;margin:0 auto;border-radius:10px;}
+.wechat-box img{width:100%;max-width:460px;height:auto;display:block;margin:0 auto;border-radius:10px;}
 
 @media(max-width:820px){
     .hero-row{grid-template-columns:1fr;}
