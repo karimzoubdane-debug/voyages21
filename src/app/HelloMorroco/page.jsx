@@ -1,18 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function HelloMorrocoCover() {
   const [wechatOpen, setWechatOpen] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const toolbarPatterns = ["vercel toolbar", "vercel-toolbar", "_vercel"];
+    const removeToolbar = () => {
+      document.querySelectorAll("iframe, button, div, aside").forEach((node) => {
+        const text = [
+          node.id,
+          node.className,
+          node.getAttribute("aria-label"),
+          node.getAttribute("title"),
+          node.getAttribute("src"),
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (toolbarPatterns.some((pattern) => text.includes(pattern))) {
+          node.remove();
+        }
+      });
+    };
+    removeToolbar();
+    const observer = new MutationObserver(removeToolbar);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleSound = () => {
+    const nextMuted = !muted;
+    setMuted(nextMuted);
+    if (videoRef.current) {
+      videoRef.current.muted = nextMuted;
+      if (!nextMuted) videoRef.current.play().catch(() => {});
+    }
+  };
 
   return (
     <main className="cover" aria-label="Hello Morocco">
       <div className="videoStage">
         <video
+          ref={videoRef}
           className="coverVideo"
           src="/WelcomeChina/assets/hello-morocco-cover.mp4?v=20260604-new-cover"
           autoPlay
-          muted
+          muted={muted}
           loop
           playsInline
           preload="metadata"
@@ -23,8 +60,14 @@ export default function HelloMorrocoCover() {
           x5-video-player-fullscreen="false"
         />
         <div className="chinaIntro" aria-hidden="true">
-          <span>WELCOME CHINA</span>
+          <span>
+            <span>WELCOME</span>
+            <span>CHINA</span>
+          </span>
         </div>
+        <button className="soundToggle" type="button" aria-label={muted ? "Activer le son" : "Couper le son"} onClick={toggleSound}>
+          {muted ? "Sound" : "Mute"}
+        </button>
         <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
         <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
       </div>
@@ -55,8 +98,15 @@ export default function HelloMorrocoCover() {
 
         :global(body > header),
         :global(body > footer),
-        :global(.whatsapp-btn) {
+        :global(.whatsapp-btn),
+        :global([data-vercel-toolbar]),
+        :global([data-vercel-toolbar-button]),
+        :global([id*="vercel-toolbar" i]),
+        :global([class*="vercel-toolbar" i]),
+        :global(iframe[src*="vercel" i]) {
           display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
         }
 
         .cover {
@@ -109,6 +159,10 @@ export default function HelloMorrocoCover() {
         }
 
         .chinaIntro span {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.28em;
           color: #d8ad3f;
           font-family: Georgia, "Times New Roman", serif;
           font-size: clamp(2.8rem, 7.6vw, 8rem);
@@ -116,6 +170,10 @@ export default function HelloMorrocoCover() {
           letter-spacing: 0.08em;
           text-shadow: 0 10px 34px rgba(42, 0, 0, 0.48);
           white-space: nowrap;
+        }
+
+        .chinaIntro span span {
+          display: inline-block;
         }
 
         @keyframes chinaIntroFade {
@@ -153,6 +211,24 @@ export default function HelloMorrocoCover() {
         .hotspot.contact {
           left: 52.9%;
           width: 29.2%;
+        }
+
+        .soundToggle {
+          position: absolute;
+          z-index: 7;
+          right: 18px;
+          top: 18px;
+          min-width: 72px;
+          height: 36px;
+          border: 1px solid rgba(255, 255, 255, 0.48);
+          border-radius: 999px;
+          background: rgba(10, 18, 15, 0.58);
+          color: #fff8ea;
+          font-family: Arial, sans-serif;
+          font-size: 0.76rem;
+          font-weight: 800;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
         }
 
         .wechatModal {
@@ -217,35 +293,49 @@ export default function HelloMorrocoCover() {
         @media (max-width: 640px) {
           .videoStage {
             width: 100vw;
-            height: 100vh;
-            height: 100svh;
-            min-height: 100vh;
-            min-height: 100svh;
-            min-width: 177.7778vh;
-            min-width: 177.7778svh;
+            height: 56.25vw;
+            min-height: 0;
+            min-width: 0;
           }
 
           .coverVideo {
+            object-fit: contain;
             object-position: 50% 50%;
           }
 
+          .chinaIntro {
+            position: fixed;
+          }
+
           .chinaIntro span {
-            font-size: clamp(2rem, 9vw, 4.4rem);
+            flex-direction: column;
+            gap: 0;
+            font-size: clamp(2.5rem, 14vw, 5.7rem);
+            line-height: 0.95;
+            white-space: normal;
           }
 
           .hotspot {
-            top: 77%;
-            height: 17%;
+            top: 79%;
+            height: 14%;
           }
 
           .hotspot.start {
-            left: 14%;
-            width: 34%;
+            left: 17.8%;
+            width: 29.2%;
           }
 
           .hotspot.contact {
-            left: 52%;
-            width: 34%;
+            left: 52.9%;
+            width: 29.2%;
+          }
+
+          .soundToggle {
+            top: calc(50% - 28.125vw + 8px);
+            right: 10px;
+            min-width: 56px;
+            height: 30px;
+            font-size: 0.66rem;
           }
 
           .wechatModal {

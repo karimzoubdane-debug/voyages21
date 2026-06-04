@@ -437,40 +437,77 @@ grid-template-columns: 1fr;
 }
 
 header {
-grid-template-columns: 1fr auto auto;
-row-gap: 0.15rem;
-padding: 0.55rem 0.8rem;
+grid-template-columns: auto minmax(0, 1fr) auto;
+row-gap: 0.4rem;
+column-gap: 0.55rem;
+padding: 0.5rem 0.65rem;
+min-height: 0;
 }
 
 header h1 {
-font-size: 1.4rem;
-grid-column: 1 / -1;
+font-size: 1.16rem;
+grid-column: 2;
+grid-row: 1;
+min-width: 0;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 header p {
-grid-column: 1;
+display: none;
 }
 
 .agency-brand {
 position: static;
 transform: none;
-margin: 0 auto 0.15rem;
-width: max-content;
+margin: 0;
+width: auto;
 grid-column: 1;
-grid-row: auto;
+grid-row: 1;
+padding: 0.18rem;
+gap: 0;
+border-radius: 8px;
+justify-self: start;
+align-self: center;
+}
+
+.agency-brand span {
+display: none;
+}
+
+.agency-brand img {
+width: 36px;
+height: 36px;
 }
 
 .language-switch {
 grid-column: 3;
 grid-row: 1;
+justify-self: end;
+align-self: center;
+display: inline-flex;
+gap: 3px;
+margin: 0;
+padding: 3px;
+border: 1px solid rgba(255,255,255,0.28);
+border-radius: 999px;
+background: rgba(255,255,255,0.12);
+white-space: nowrap;
 }
 
 .video-entry-link {
-grid-column: 2;
-grid-row: 1;
+grid-column: 1 / -1;
+grid-row: 2;
+justify-self: center;
 min-height: 32px;
-padding: 0 0.72rem;
+padding: 0 0.9rem;
 font-size: 0.76rem;
+}
+
+.lang-btn {
+font-size: 0.72rem;
+padding: 0.25rem 0.52rem;
 }
 
 .agency-brand:hover {
