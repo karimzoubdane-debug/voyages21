@@ -1,47 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-const TITLE_TRANSLATIONS = [
-  { start: 0, end: 2.7, title: "Welcome to Morocco" },
-  { start: 2.7, end: 4.1, title: "The Blue of Chefchaouen" },
-  { start: 4.1, end: 5.45, title: "The Story of Ait Benhaddou" },
-  { start: 5.45, end: 6.85, title: "The Grandeur of Casablanca" },
-  { start: 6.85, end: 8.3, title: "The Energy of Marrakech" },
-  { start: 8.3, end: 10, title: "The Magic of the Sahara" },
-  { start: 10, end: 11.25, title: "The Breeze of Essaouira" },
-  { start: 11.25, end: 12.55, title: "The Gateway to Tangier" },
-  { start: 12.55, end: 13.9, title: "The Sun of Agadir" },
-  { start: 13.9, end: 15.2, title: "The Elegance of Riads" },
-  { start: 15.2, end: 16.55, title: "Your Haven of Peace" },
-  { start: 16.55, end: 17.9, title: "The Flavors of Morocco" },
-  { start: 17.9, end: 20.2, title: "Contact us for your 2026 adventure" },
-];
+import { useState } from "react";
 
 export default function HelloMorrocoCover() {
   const [wechatOpen, setWechatOpen] = useState(false);
-  const [videoTime, setVideoTime] = useState(0);
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    let frameId;
-    const tick = () => {
-      if (videoRef.current) {
-        setVideoTime(videoRef.current.currentTime || 0);
-      }
-      frameId = requestAnimationFrame(tick);
-    };
-    frameId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameId);
-  }, []);
-
-  const activeTitle = TITLE_TRANSLATIONS.find((item) => videoTime >= item.start && videoTime < item.end);
 
   return (
     <main className="cover" aria-label="Hello Morocco">
       <div className="videoStage">
         <video
-          ref={videoRef}
           className="coverVideo"
           src="/WelcomeChina/assets/hello-morocco-cover.mp4?v=20260604-hello-morocco"
           autoPlay
@@ -53,11 +20,6 @@ export default function HelloMorrocoCover() {
         <div className="chinaIntro" aria-hidden="true">
           <span>WELCOME CHINA</span>
         </div>
-        {activeTitle && (
-          <div className="titleReplacement" aria-hidden="true">
-            <span>{activeTitle.title}</span>
-          </div>
-        )}
         <a className="hotspot start" href="/WelcomeChina/" aria-label="La magie commence ici" />
         <button className="hotspot contact" type="button" aria-label="Nous contacter" onClick={() => setWechatOpen(true)} />
       </div>
@@ -156,34 +118,6 @@ export default function HelloMorrocoCover() {
           }
         }
 
-        .titleReplacement {
-          position: absolute;
-          z-index: 3;
-          left: 50%;
-          top: 31.5%;
-          width: min(66%, 1040px);
-          min-height: 178px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transform: translateX(-50%);
-          padding: 18px 46px;
-          border-radius: 32px;
-          background: linear-gradient(90deg, rgba(63, 9, 12, 0.96), rgba(15, 49, 38, 0.94));
-          box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18);
-          pointer-events: none;
-        }
-
-        .titleReplacement span {
-          color: #fff8ea;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(1.45rem, 3.1vw, 3.4rem);
-          font-weight: 800;
-          text-align: center;
-          line-height: 1;
-          text-shadow: 0 5px 22px rgba(0, 0, 0, 0.52);
-        }
-
         .hotspot {
           position: absolute;
           z-index: 6;
@@ -254,18 +188,6 @@ export default function HelloMorrocoCover() {
         @media (max-width: 640px) {
           .chinaIntro span {
             font-size: clamp(2rem, 9vw, 4.4rem);
-          }
-
-          .titleReplacement {
-            top: 29.5%;
-            width: 80%;
-            min-height: 112px;
-            padding: 12px 20px;
-            border-radius: 20px;
-          }
-
-          .titleReplacement span {
-            font-size: clamp(1rem, 4.2vw, 1.75rem);
           }
 
           .hotspot {
