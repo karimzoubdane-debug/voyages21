@@ -18,13 +18,6 @@ export default function HelloMorrocoCover() {
         x5-video-player-fullscreen="false"
       />
 
-      <div className="chinaIntro" aria-hidden="true">
-        <span>
-          <span>WELCOME</span>
-          <span>CHINA</span>
-        </span>
-      </div>
-
       <a className="magicButton" href="/WelcomeChina/" aria-label="Open WelcomeChina brochure">
         Click me to start the magic
       </a>
@@ -34,7 +27,7 @@ export default function HelloMorrocoCover() {
         :global(body) {
           margin: 0;
           min-height: 100%;
-          background: #a80f18;
+          background: #000;
           overscroll-behavior: none;
           touch-action: manipulation;
         }
@@ -52,11 +45,10 @@ export default function HelloMorrocoCover() {
           min-height: 100vh;
           min-height: 100svh;
           overflow: hidden;
-          background: #a80f18;
+          background: #000;
         }
 
-        .coverVideo,
-        .chinaIntro {
+        .coverVideo {
           position: absolute;
           inset: 0;
           width: 100%;
@@ -69,46 +61,6 @@ export default function HelloMorrocoCover() {
           object-fit: cover;
           object-position: center center;
           background: #a80f18;
-        }
-
-        .chinaIntro {
-          z-index: 3;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #a80f18;
-          pointer-events: none;
-          animation: chinaIntroFade 2.8s ease forwards;
-        }
-
-        .chinaIntro span {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.28em;
-          color: #d8ad3f;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(2.8rem, 7.6vw, 8rem);
-          font-weight: 900;
-          letter-spacing: 0.08em;
-          text-shadow: 0 10px 34px rgba(42, 0, 0, 0.48);
-          white-space: nowrap;
-        }
-
-        .chinaIntro span span {
-          display: inline-block;
-        }
-
-        @keyframes chinaIntroFade {
-          0%,
-          64% {
-            opacity: 1;
-            visibility: visible;
-          }
-          100% {
-            opacity: 0;
-            visibility: hidden;
-          }
         }
 
         .magicButton {
@@ -142,14 +94,6 @@ export default function HelloMorrocoCover() {
         }
 
         @media (max-width: 640px) {
-          .chinaIntro span {
-            flex-direction: column;
-            gap: 0;
-            font-size: clamp(2.5rem, 14vw, 5.7rem);
-            line-height: 0.95;
-            white-space: normal;
-          }
-
           .magicButton {
             min-width: min(310px, 82vw);
             min-height: 48px;
