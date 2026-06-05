@@ -24,18 +24,6 @@ body {
   overflow-x: hidden;
 }
 
-[data-vercel-toolbar],
-[data-vercel-toolbar-button],
-[id*="vercel-toolbar" i],
-[class*="vercel-toolbar" i],
-iframe[src*="vercel" i],
-button[aria-label*="Vercel" i],
-div[aria-label*="Vercel" i] {
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', Georgia, serif;
 }

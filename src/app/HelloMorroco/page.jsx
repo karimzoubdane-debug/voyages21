@@ -1,36 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export default function HelloMorrocoCover() {
   const [wechatOpen, setWechatOpen] = useState(false);
   const [muted, setMuted] = useState(true);
   const videoRef = useRef(null);
-
-  useEffect(() => {
-    const toolbarPatterns = ["vercel toolbar", "vercel-toolbar", "_vercel"];
-    const removeToolbar = () => {
-      document.querySelectorAll("iframe, button, div, aside").forEach((node) => {
-        const text = [
-          node.id,
-          node.className,
-          node.getAttribute("aria-label"),
-          node.getAttribute("title"),
-          node.getAttribute("src"),
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-        if (toolbarPatterns.some((pattern) => text.includes(pattern))) {
-          node.remove();
-        }
-      });
-    };
-    removeToolbar();
-    const observer = new MutationObserver(removeToolbar);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, []);
 
   const toggleSound = () => {
     const nextMuted = !muted;
@@ -100,15 +75,8 @@ export default function HelloMorrocoCover() {
 
         :global(body > header),
         :global(body > footer),
-        :global(.whatsapp-btn),
-        :global([data-vercel-toolbar]),
-        :global([data-vercel-toolbar-button]),
-        :global([id*="vercel-toolbar" i]),
-        :global([class*="vercel-toolbar" i]),
-        :global(iframe[src*="vercel" i]) {
+        :global(.whatsapp-btn) {
           display: none !important;
-          visibility: hidden !important;
-          pointer-events: none !important;
         }
 
         .cover {
