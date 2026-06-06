@@ -2593,8 +2593,8 @@
     <div class="hero-fallback"></div>
 
     <!-- Vidéo 0529 — streaming direct Google Drive -->
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="https://res.cloudinary.com/dwjh73xi4/video/upload/v1780042020/0529_1_2_wrzi1s.mp4" type="video/mp4">
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
+      <source id="heroVideoSource" src="https://res.cloudinary.com/dwjh73xi4/video/upload/v1780042020/0529_1_2_wrzi1s.mp4" type="video/mp4">
     </video>
 
     <!-- Voile sombre -->
@@ -2603,13 +2603,13 @@
     <!-- Texte -->
     <div class="hero-content">
 
-      <p class="hero-label">Voyages d'Été 2026</p>
+      <p class="hero-label" id="heroLabel">Voyages d'Été 2026</p>
 
-      <h1 class="hero-title">
+      <h1 class="hero-title" id="heroTitle">
         Ici commence<br>votre bonheur.
       </h1>
 
-      <p class="hero-sub">
+      <p class="hero-sub" id="heroSubtitle">
         L'avenir appartient à ceux qui réservent tôt :<br>
         tarifs exclusifs, options garanties.
       </p>
@@ -2622,7 +2622,7 @@
       </div>
 
       <div class="hero-actions">
-        <a href="#destinations" class="btn-primary">Voir les programmes</a>
+        <a href="#destinations" class="btn-primary" id="heroButton">Voir les programmes</a>
         <a href="#contact"      class="btn-ghost">Nous contacter</a>
       </div>
 
@@ -4028,6 +4028,69 @@
     });
 
     // Vidéo hero — forcer le play sur mobile (autoplay parfois bloqué)
+    // Reglages admin de l'accueil brochure.
+    (function () {
+      const KEY = '__homepageCover';
+      const DEFAULTS = {
+        videoUrl: '',
+        label: "Voyages d'Ete 2026",
+        title: "Ici commence\nvotre bonheur.",
+        subtitle: "L'avenir appartient a ceux qui reservent tot :\ntarifs exclusifs, options garanties.",
+        buttonText: "Voir les programmes",
+        fontStyle: "editorial"
+      };
+      function escText(value) {
+        return String(value || '').replace(/[&<>"']/g, ch => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[ch]));
+      }
+      function lines(value) {
+        return escText(value).replace(/\n/g, '<br>');
+      }
+      function fontCss(style) {
+        if (style === 'modern') return { family: "'Geist', sans-serif", style: 'normal', weight: '800' };
+        if (style === 'classic') return { family: "'Fraunces', Georgia, serif", style: 'normal', weight: '800' };
+        if (style === 'script') return { family: "'Brush Script MT', 'Segoe Script', cursive", style: 'normal', weight: '400' };
+        return { family: "'Fraunces', Georgia, serif", style: 'italic', weight: '900' };
+      }
+      function applyHomeCover(data) {
+        const cfg = Object.assign({}, DEFAULTS, data || {});
+        const video = document.getElementById('heroVideo');
+        const source = document.getElementById('heroVideoSource');
+        const label = document.getElementById('heroLabel');
+        const title = document.getElementById('heroTitle');
+        const sub = document.getElementById('heroSubtitle');
+        const button = document.getElementById('heroButton');
+        if (cfg.videoUrl && video && source && source.src !== cfg.videoUrl) {
+          source.src = cfg.videoUrl;
+          video.load();
+          video.play().catch(() => {});
+        }
+        if (label) label.textContent = cfg.label || DEFAULTS.label;
+        if (title) {
+          const css = fontCss(cfg.fontStyle);
+          title.innerHTML = lines(cfg.title || DEFAULTS.title);
+          title.style.fontFamily = css.family;
+          title.style.fontStyle = css.style;
+          title.style.fontWeight = css.weight;
+        }
+        if (sub) sub.innerHTML = lines(cfg.subtitle || DEFAULTS.subtitle);
+        if (button) button.textContent = cfg.buttonText || DEFAULTS.buttonText;
+      }
+      function loadHomeCover() {
+        fetch('/api/media', { cache: 'no-store' })
+          .then(r => r.ok ? r.json() : {})
+          .then(data => applyHomeCover(data && data[KEY]))
+          .catch(() => {});
+      }
+      window.v21ApplyHomeCover = applyHomeCover;
+      loadHomeCover();
+      if ('BroadcastChannel' in window) {
+        const bc = new BroadcastChannel('v21_media');
+        bc.onmessage = loadHomeCover;
+      }
+    })();
+
     (function () {
       const vid = document.querySelector('.hero-video');
       if (!vid) return;

@@ -98,6 +98,29 @@
         transition: transform 0.3s ease; z-index: 100;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
+    .cover-panel {
+        background: #fff; border: 1px solid #e3ddd0; border-radius: 10px;
+        padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .cover-panel h2 { font-size: 1.15rem; color: var(--forest); margin-bottom: 0.2rem; }
+    .cover-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+    .cover-grid .wide { grid-column: 1 / -1; }
+    select.admin-select {
+        flex: 1; min-width: 180px; padding: 0.55rem 0.7rem; border: 1px solid #ccc;
+        border-radius: 6px; font-size: 0.9rem; font-family: inherit; background: #fff;
+    }
+    textarea {
+        width: 100%; min-height: 64px; padding: 0.55rem 0.7rem; border: 1px solid #ccc;
+        border-radius: 6px; font-size: 0.9rem; font-family: inherit; resize: vertical;
+    }
+    .cover-preview {
+        margin-top: .7rem; border-radius: 8px; min-height: 120px; padding: 1rem;
+        background: linear-gradient(135deg, #1B3A28, #0d160f); color: #fff;
+        display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    }
+    .cover-preview-title { font-family: Georgia, serif; font-size: 1.9rem; font-style: italic; line-height: 1.05; }
+    .cover-preview-sub { margin-top: .4rem; font-size: .8rem; opacity: .78; }
+    @media (max-width: 720px) { .cover-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -123,6 +146,62 @@
         Cliquez <em>« Exporter »</em> pour garder une sauvegarde du contenu.
     </div>
     <div class="warn" id="connBox" style="display:none"></div>
+
+    <section class="cover-panel" id="coverEditor">
+        <h2>Accueil brochure</h2>
+        <div class="hint">Modifiez ici la cover de la page d'accueil de la brochure : video, titre, bouton et calligraphie.</div>
+        <div class="cover-grid">
+            <div class="wide">
+                <div class="section-label">Video de cover</div>
+                <div class="row">
+                    <input type="url" id="homeVideoUrl" placeholder="Coller un lien MP4 / Cloudinary / Vercel Blob">
+                    <button class="mini" type="button" onclick="saveHomeCover()">Appliquer</button>
+                    <button class="mini clear" type="button" onclick="clearHomeVideo()">Effacer</button>
+                </div>
+                <div class="row" style="margin-top:.4rem">
+                    <label class="hint">ou televerser une video&nbsp;: </label>
+                    <input type="file" id="homeVideoFile" accept="video/*" onchange="uploadHomeVideo(this)">
+                </div>
+                <div class="status" id="homeVideoStatus">Video actuelle par defaut.</div>
+            </div>
+            <div>
+                <div class="section-label">Petit label</div>
+                <input type="text" id="homeLabel" placeholder="Voyages d'Ete 2026">
+            </div>
+            <div>
+                <div class="section-label">Bouton principal</div>
+                <input type="text" id="homeButtonText" placeholder="Voir les programmes">
+            </div>
+            <div class="wide">
+                <div class="section-label">Grand texte</div>
+                <textarea id="homeTitle" placeholder="Ici commence&#10;votre bonheur."></textarea>
+            </div>
+            <div class="wide">
+                <div class="section-label">Sous-texte</div>
+                <textarea id="homeSubtitle" placeholder="L'avenir appartient a ceux qui reservent tot :&#10;tarifs exclusifs, options garanties."></textarea>
+            </div>
+            <div>
+                <div class="section-label">Calligraphie</div>
+                <select class="admin-select" id="homeFontStyle" onchange="renderHomePreview()">
+                    <option value="editorial">Editorial luxe italique</option>
+                    <option value="classic">Classique serif</option>
+                    <option value="modern">Moderne sobre</option>
+                    <option value="script">Calligraphie douce</option>
+                </select>
+            </div>
+            <div>
+                <div class="section-label">Actions</div>
+                <div class="row">
+                    <button class="mini" type="button" onclick="saveHomeCover()">Enregistrer l'accueil</button>
+                    <button class="mini clear" type="button" onclick="resetHomeCover()">Retour defaut</button>
+                </div>
+            </div>
+        </div>
+        <div class="cover-preview">
+            <div class="cover-preview-title" id="homePreviewTitle">Ici commence<br>votre bonheur.</div>
+            <div class="cover-preview-sub" id="homePreviewSub">L'avenir appartient a ceux qui reservent tot.</div>
+        </div>
+    </section>
 
     <label class="picker-label" for="picker">Choisissez un voyage à renseigner :</label>
     <select class="picker" id="picker" onchange="selectProduct(this.value)">
@@ -188,6 +267,15 @@
     // MANIFEST = source de vérité partagée par toute l'équipe et les visiteurs.
     // Les fichiers sont téléversés directement vers Blob ; le manifeste ne
     // contient que des URL (JSON léger).
+    var HOME_COVER_KEY = '__homepageCover';
+    var DEFAULT_HOME_COVER = {
+        videoUrl: '',
+        label: "Voyages d'Ete 2026",
+        title: "Ici commence\nvotre bonheur.",
+        subtitle: "L'avenir appartient a ceux qui reservent tot :\ntarifs exclusifs, options garanties.",
+        buttonText: "Voir les programmes",
+        fontStyle: "editorial"
+    };
     var MANIFEST = {};
     var ONLINE = true;
 
@@ -241,6 +329,98 @@
     function notify() { if (bc) bc.postMessage('update'); }
 
     function emptyRec(key) { return { key: key, videoLink: '', videoUrl: '', images: [] }; }
+    function clone(obj) { return JSON.parse(JSON.stringify(obj)); }
+    function homeCover() {
+        return Object.assign({}, DEFAULT_HOME_COVER, MANIFEST[HOME_COVER_KEY] || {});
+    }
+    function setHomeFields(data) {
+        data = Object.assign({}, DEFAULT_HOME_COVER, data || {});
+        document.getElementById('homeVideoUrl').value = data.videoUrl || '';
+        document.getElementById('homeLabel').value = data.label || '';
+        document.getElementById('homeTitle').value = data.title || '';
+        document.getElementById('homeSubtitle').value = data.subtitle || '';
+        document.getElementById('homeButtonText').value = data.buttonText || '';
+        document.getElementById('homeFontStyle').value = data.fontStyle || 'editorial';
+        renderHomePreview();
+        updateHomeVideoStatus(data);
+    }
+    function readHomeFields() {
+        return {
+            videoUrl: document.getElementById('homeVideoUrl').value.trim(),
+            label: document.getElementById('homeLabel').value.trim(),
+            title: document.getElementById('homeTitle').value.trim(),
+            subtitle: document.getElementById('homeSubtitle').value.trim(),
+            buttonText: document.getElementById('homeButtonText').value.trim(),
+            fontStyle: document.getElementById('homeFontStyle').value || 'editorial'
+        };
+    }
+    function homeFontCss(style) {
+        if (style === 'modern') return { family: "'DM Sans', Arial, sans-serif", style: 'normal', weight: '800' };
+        if (style === 'classic') return { family: "Georgia, serif", style: 'normal', weight: '700' };
+        if (style === 'script') return { family: "'Brush Script MT', 'Segoe Script', cursive", style: 'normal', weight: '400' };
+        return { family: "Georgia, serif", style: 'italic', weight: '700' };
+    }
+    function renderHomePreview() {
+        var data = readHomeFields ? readHomeFields() : homeCover();
+        var title = document.getElementById('homePreviewTitle');
+        var sub = document.getElementById('homePreviewSub');
+        if (!title || !sub) return;
+        var css = homeFontCss(data.fontStyle);
+        title.innerHTML = esc(data.title || DEFAULT_HOME_COVER.title).replace(/\n/g, '<br>');
+        title.style.fontFamily = css.family;
+        title.style.fontStyle = css.style;
+        title.style.fontWeight = css.weight;
+        sub.innerHTML = esc(data.subtitle || DEFAULT_HOME_COVER.subtitle).replace(/\n/g, '<br>');
+    }
+    function updateHomeVideoStatus(data) {
+        var el = document.getElementById('homeVideoStatus');
+        if (!el) return;
+        if (data && data.videoUrl) { el.textContent = 'Video de cover personnalisee en ligne'; el.className = 'status set'; }
+        else { el.textContent = 'Video actuelle par defaut.'; el.className = 'status'; }
+    }
+    function saveHomeCover() {
+        var rec = Object.assign({}, DEFAULT_HOME_COVER, readHomeFields());
+        MANIFEST[HOME_COVER_KEY] = rec;
+        return apiPutAll(MANIFEST).then(function () {
+            setOnline(true);
+            renderHomePreview();
+            updateHomeVideoStatus(rec);
+            toast('Accueil brochure enregistre');
+            notify();
+        }).catch(function (e) {
+            setOnline(false);
+            alert("Impossible d'enregistrer l'accueil brochure : " + ((e && e.message) || e));
+        });
+    }
+    function uploadHomeVideo(input) {
+        var f = input.files && input.files[0];
+        if (!f) return;
+        input.value = '';
+        checkVideoFile(f);
+        var el = document.getElementById('homeVideoStatus');
+        if (el) { el.textContent = 'Televersement de la video de cover...'; el.className = 'status'; }
+        uploadFile(f).then(function (url) {
+            document.getElementById('homeVideoUrl').value = url;
+            return saveHomeCover();
+        }).catch(function (e) {
+            setOnline(false);
+            updateHomeVideoStatus(homeCover());
+            alert('Echec du televersement de la video de cover : ' + ((e && e.message) || e));
+        });
+    }
+    function clearHomeVideo() {
+        document.getElementById('homeVideoUrl').value = '';
+        saveHomeCover();
+    }
+    function resetHomeCover() {
+        if (!confirm("Remettre l'accueil brochure par defaut ?")) return;
+        delete MANIFEST[HOME_COVER_KEY];
+        setHomeFields(DEFAULT_HOME_COVER);
+        apiPutAll(MANIFEST).then(function () {
+            toast('Accueil remis par defaut');
+            notify();
+        }).catch(function () { setOnline(false); alert("Echec de l'enregistrement en ligne."); });
+    }
 
     var currentKey = '';
     var currentRec = null;
@@ -556,10 +736,16 @@
     }
 
     // ── Démarrage ──
+    ['homeLabel','homeTitle','homeSubtitle','homeButtonText','homeFontStyle'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', renderHomePreview);
+    });
+    setHomeFields(DEFAULT_HOME_COVER);
     buildPicker();
     apiGet().then(function (data) {
         MANIFEST = data || {};
         setOnline(true);
+        setHomeFields(homeCover());
         refreshPickerMarks();
     }).catch(function () {
         setOnline(false, 'Stockage en ligne non disponible — le store Blob est-il activé sur Vercel ? Vous pouvez tout de même préparer le contenu, mais il ne sera pas enregistré tant que la connexion n\'est pas établie.');
