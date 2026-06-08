@@ -1303,6 +1303,7 @@ window.VOYAGES = {
   },
 
   "maroc-merzouga": {
+    mediaKey: "modal-maroc-merzouga",
     whatsapp: "212673280009",
     eyebrow: "Mon Maroc · Départ garanti 2026",
     title: "Merzouga — Marrakech · Ouarzazate · Dadès",
@@ -1372,6 +1373,7 @@ window.VOYAGES = {
   },
 
   "maroc-bin-el-ouidane": {
+    mediaKey: "modal-maroc-bin-el-ouidane",
     whatsapp: "212673280009",
     eyebrow: "Mon Maroc · Week-end nature 2026",
     title: "Bin El Ouidane — La beauté divine de la nature",
@@ -1436,6 +1438,7 @@ window.VOYAGES = {
   },
 
   "maroc-dakhla": {
+    mediaKey: "modal-maroc-dakhla",
     whatsapp: "212673280009",
     eyebrow: "Mon Maroc · Wini Bik — Dakhla 2026",
     title: "Dakhla — Wini Bik",
