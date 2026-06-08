@@ -1,11 +1,12 @@
 import { handleUpload } from '@vercel/blob/client';
+import { canWriteMedia } from '../../admin/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 // Upload direct navigateur -> Vercel Blob (contourne la limite de taille des
-// fonctions serverless, indispensable pour les vidéos). Ce endpoint ne fait que
-// délivrer un jeton signé ; le fichier ne transite jamais par la fonction.
+// fonctions serverless, indispensable pour les videos). Ce endpoint ne fait que
+// delivrer un jeton signe ; le fichier ne transite jamais par la fonction.
 const ALLOWED = [
   'image/jpeg',
   'image/png',
@@ -18,6 +19,10 @@ const ALLOWED = [
 ];
 
 export async function POST(request) {
+  if (!canWriteMedia(request)) {
+    return Response.json({ ok: false, error: 'Session admin requise.' }, { status: 401 });
+  }
+
   const body = await request.json();
   try {
     const json = await handleUpload({
