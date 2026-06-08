@@ -7,6 +7,12 @@ const HTML_TARGETS = new Set([
 
 export async function middleware(request) {
   const url = new URL(request.url);
+
+  if (url.pathname === '/admin-medias.html') {
+    const target = new URL('/admin-medias-secure.html', request.url);
+    return NextResponse.rewrite(target);
+  }
+
   if (!HTML_TARGETS.has(url.pathname) || url.searchParams.get('__v21_static') === '1') {
     return NextResponse.next();
   }
@@ -27,5 +33,9 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/design/homepage-v2-luxe.html', '/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html'],
+  matcher: [
+    '/admin-medias.html',
+    '/design/homepage-v2-luxe.html',
+    '/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html',
+  ],
 };
