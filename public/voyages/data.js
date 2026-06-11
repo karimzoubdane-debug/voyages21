@@ -529,7 +529,7 @@ window.VOYAGES = {
       ["Pension", "3 nuits B&B · 7 nuits tout compris"],
       ["Hôtels", "5★"]
     ],
-    price: "17 700 DH",
+    price: "19 600 DH",
     intro: [
       "Le Caire pour commencer : trois jours au cœur de l'Égypte éternelle, entre les pyramides de Gizeh, le Sphinx, les ruelles animées de Khan El Khalili et les mosquées d'Al-Hussein et Al-Azhar. Un soir, vous dînerez sur le Nil, au rythme d'un spectacle folklorique.",
       "Puis Sharm El Sheikh, joyau de la mer Rouge. Sept nuits en formule tout compris dans un resort 5★, face à l'un des plus beaux jardins de corail du monde : farniente, baignades et soleil garanti.",
@@ -577,13 +577,14 @@ window.VOYAGES = {
     ],
     hotels: ["Option A : Marriott Cairo City View 5★ + Aurora Oriental Resort Sharm El Sheikh 5★ (vue jardin)", "Option B : Marriott & Omar Khayyam Casino City View 5★ + Cleopatra Luxury Resort ou Mövenpick 5★"],
     priceTable: {
-      head: ["Option", "Chambre double", "Chambre triple", "Supplement single"],
+      head: ["Chambre", "Prix / pers."],
       rows: [
-        ["Option A - Marriott Cairo City View 5* + Aurora Oriental Resort 5*", "17 900 DH", "17 700 DH", "+ 4 900 DH"],
-        ["Option B - Marriott & Omar Khayyam Casino 5* + Cleopatra Luxury Resort ou Movenpick 5*", "19 800 DH", "19 600 DH", "+ 5 900 DH"]
+        ["Triple", "19 600 DH"],
+        ["Double", "19 800 DH"],
+        ["Supplément single", "+ 5 900 DH"]
       ]
     },
-    children: "Option A : 2-5 ans 8 900 DH ; 6-11 ans (1er enfant) 12 000 DH ; 4-11 ans (2e enfant) 13 500 DH. Option B : 2-5 ans 8 900 DH ; 6-11 ans (1er enfant) 11 900 DH ; 4-11 ans (2e enfant) 14 900 DH",
+    children: "2–5 ans : 8 900 DH · 6–11 ans (1ᵉʳ) : 11 900 DH · 4–11 ans (2ᵉ) : 14 900 DH",
     datesList: ["16→26 juil.", "23 juil.→2 août", "6→16 août", "10→20 août", "13→23 août", "20→30 août", "30 août→9 sept."],
     route: ["Casablanca", "Le Caire", "Sharm El Sheikh", "Le Caire", "Casablanca"],
     dates: {
