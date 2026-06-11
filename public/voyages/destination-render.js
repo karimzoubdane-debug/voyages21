@@ -36,7 +36,8 @@
       + '<div class="body">'
       + '<div class="tag">' + esc(v.tag || cfg.title) + '</div>'
       + '<h2 class="title">' + esc(v.title) + '</h2>'
-      + '<div class="meta">' + bidiNum([v.duration, v.price].filter(Boolean).join(' \u00b7 ')) + '</div>'
+      + (v.duration ? '<div class="meta">' + bidiNum(v.duration) + '</div>' : '')
+      + (v.price ? '<div class="card-price">' + bidiNum(v.price) + '</div>' : '')
       + '<p class="excerpt">' + esc(intro) + '</p>'
       + '<a class="more" href="../' + esc(slug) + '.html">Voir plus</a>'
       + '</div>'

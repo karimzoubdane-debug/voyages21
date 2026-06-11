@@ -168,7 +168,21 @@ h1, h2, h3 {
 .meta {
   color: var(--muted);
   font-size: .86rem;
-  margin-bottom: .75rem;
+  margin-bottom: .35rem;
+}
+
+.card-price {
+  color: var(--forest);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.62rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  margin: .15rem 0 .85rem;
+}
+
+.card-price span[dir="ltr"] {
+  font-weight: 800;
 }
 
 .excerpt {
