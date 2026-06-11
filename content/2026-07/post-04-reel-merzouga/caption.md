@@ -24,5 +24,5 @@ Merzouga se mérite — et se prépare. Bivouac privé, chamelier qui connaît c
 ## Vidéo (générée avec Higgsfield, seedance_2_0)
 
 - **Job ID Higgsfield** : `a6d19753-37ee-40d3-ae9b-f840aba919ed`
-- **Téléchargement** : (sera complété à la fin du rendu)
-- **Score de viralité** : (sera complété après analyse)
+- **Téléchargement (MP4 720p, 15 s, audio inclus)** : https://d8j0ntlcm91z4.cloudfront.net/user_3DrnEP6MWcOADYof2iApd0HQrOD/hf_20260611_190621_a6d19753-37ee-40d3-ae9b-f840aba919ed.mp4
+- **Analyse de viralité** : job `e352993c-a423-4a33-a3c3-2612642371dd` (tableau de bord dans l'interface Higgsfield)
