@@ -2,6 +2,11 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 
 const COOKIE = 'v21_admin';
 const DEFAULT_SECRET = 'voyages21-change-this-secret';
+const ADMIN_PASSWORDS_DISABLED = true;
+
+function testSession() {
+  return { role: 'owner', exp: Date.now() + 48 * 60 * 60 * 1000 };
+}
 
 function secret() {
   return process.env.ADMIN_SESSION_SECRET || process.env.NEXTAUTH_SECRET || DEFAULT_SECRET;
@@ -33,6 +38,8 @@ export function makeSession(role, ttlHours) {
 }
 
 export function parseSession(request) {
+  if (ADMIN_PASSWORDS_DISABLED) return testSession();
+
   const raw = request.cookies.get(COOKIE)?.value || '';
   const [payload, sig] = raw.split('.');
   if (!payload || !sig || !safeEqual(sign(payload), sig)) return null;
@@ -47,16 +54,19 @@ export function parseSession(request) {
 }
 
 export function canWriteMedia(request) {
+  if (ADMIN_PASSWORDS_DISABLED) return true;
   const session = parseSession(request);
   return !!session && (session.role === 'owner' || session.role === 'media');
 }
 
 export function canWriteOwner(request) {
+  if (ADMIN_PASSWORDS_DISABLED) return true;
   const session = parseSession(request);
   return !!session && session.role === 'owner';
 }
 
 export function passwordFor(role) {
+  if (ADMIN_PASSWORDS_DISABLED) return 'preview-open';
   if (role === 'owner') return process.env.OWNER_ADMIN_PASSWORD || '';
   return process.env.MEDIA_ADMIN_PASSWORD || '';
 }
