@@ -15,6 +15,10 @@
     });
   }
 
+  function bidiNum(s) {
+    return esc(s).replace(/(\d[\d ]*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
+  }
+
   function firstImage(v) {
     var rec = media[v.mediaKey] || {};
     var img = rec.images && rec.images[0] && rec.images[0].url;
@@ -32,7 +36,7 @@
       + '<div class="body">'
       + '<div class="tag">' + esc(v.tag || cfg.title) + '</div>'
       + '<h2 class="title">' + esc(v.title) + '</h2>'
-      + '<div class="meta">' + esc([v.duration, v.price].filter(Boolean).join(' · ')) + '</div>'
+      + '<div class="meta">' + bidiNum([v.duration, v.price].filter(Boolean).join(' \u00b7 ')) + '</div>'
       + '<p class="excerpt">' + esc(intro) + '</p>'
       + '<a class="more" href="../' + esc(slug) + '.html">Voir plus</a>'
       + '</div>'
