@@ -1,4 +1,5 @@
 import { list, put } from '@vercel/blob';
+import { canWriteMedia } from '../admin/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -45,17 +46,24 @@ export async function GET(request) {
     const data = await readManifest();
     return Response.json(data, { headers: noStore });
   } catch {
-    // Pas de store Blob configuré (ou indisponible) : la brochure garde l'original.
+    // Pas de store Blob configure (ou indisponible) : la brochure garde l'original.
     return Response.json({}, { headers: noStore });
   }
 }
 
 export async function PUT(request) {
+  if (!canWriteMedia(request)) {
+    return Response.json(
+      { ok: false, error: 'Session admin requise.' },
+      { status: 401, headers: noStore },
+    );
+  }
+
   try {
     const body = await request.json();
     let data;
-    // Mise à jour d'un seul produit : lecture-fusion-écriture (évite d'écraser
-    // le travail d'un autre membre de l'équipe sur un autre voyage).
+    // Mise a jour d'un seul produit : lecture-fusion-ecriture (evite d'ecraser
+    // le travail d'un autre membre de l'equipe sur un autre voyage).
     if (body && typeof body.key === 'string' && body.rec) {
       data = await readManifest();
       data[body.key] = body.rec;
