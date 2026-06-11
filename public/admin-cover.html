@@ -134,7 +134,7 @@ function mediaInfo(m){const bits=[];bits.push(m.type==="video"?"Video":"Image");
 function saveDraftOnly(){writeLocalCover();renderPerformance()}
 function writeLocalCover(){const json=JSON.stringify(cover);localStorage.setItem("v21_cover_draft",json);localStorage.setItem("v21_cover_shared",json);try{sessionStorage.setItem("v21_cover_draft",json)}catch(e){}}
 function readLocalCover(){const raw=localStorage.getItem("v21_cover_shared")||localStorage.getItem("v21_cover_draft")||sessionStorage.getItem("v21_cover_draft");if(!raw)return null;try{return JSON.parse(raw)}catch(e){return null}}
-function openPreview(){syncFieldsToCover();writeLocalCover();const encoded=encodeCoverForUrl(cover);const url=encoded?`cover-ete-2026.html#cover=${encoded}`:"cover-ete-2026.html";window.location.href=url}
+function openPreview(){syncFieldsToCover();writeLocalCover();const encoded=encodeCoverForUrl(cover);const url=encoded?`cover-ete-2026-prix.html#cover=${encoded}`:"cover-ete-2026-prix.html";window.location.href=url}
 function encodeCoverForUrl(data){const json=JSON.stringify(data);if(json.length>90000)return "";try{return btoa(unescape(encodeURIComponent(json)))}catch(e){return ""}}
 function clone(value){return JSON.parse(JSON.stringify(value))}
 function openMediaDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open("v21_cover_media",1);req.onupgradeneeded=()=>req.result.createObjectStore("files");req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
