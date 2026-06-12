@@ -19,7 +19,21 @@ court-circuiter et aller droit au but).
 - **« point V21 »** (ou « où on en est ») = récap de situation : étapes
   faites, état du PR, en attente côté Karim, prochaines étapes.
 
-## 📍 Dernier point (mis à jour le 12/06/2026 — soir)
+## 📍 Dernier point (mis à jour le 12/06/2026 — nuit)
+- ✅ Skill **tour-de-controle** TESTÉ avec succès sur la veille Apify
+  (2 sous-agents Sonnet en parallèle + vérification adversariale Fable 5).
+  Leçon technique : `call-actor` Apify est bloqué par les permissions dans
+  les sous-agents → les runs Apify se lancent depuis la session principale,
+  les sous-agents analysent les datasets (lecture seule OK).
+- ✅ VEILLE LIVRÉE (dossier `content-studio/veille/`) :
+  - `2026-06-12-scan-4-concurrents.md` — scan Apify des 4 comptes de Karim
+    (71 posts + profils, chiffres vérifiés item par item). Enseignement clé :
+    **l'Égypte est quasi absente chez les concurrents** → boulevard pour V21.
+  - `2026-06-12-agences-maroc-outgoing-incoming.md` — 16 agences marocaines
+    confirmées par run Apify de contrôle, top 5 à surveiller
+    (Suenos 164k, AjiNsafro 70k, Monarch, Travelino, Atlantis).
+
+## 📍 Point précédent (12/06/2026 — soir)
 - Système installé : 4 connecteurs OK (Higgsfield, Drive, Notion, Apify).
 - Dossier Drive `VOYAGES21-CONTENT-STUDIO` créé + partagé par lien.
 - ✅ TESTÉ en session neuve : Notion répond (page « Voyages21 Content
@@ -42,15 +56,16 @@ court-circuiter et aller droit au but).
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
-0. ⚡ D'ABORD : tester le skill **tour-de-controle** (fraîchement installé,
-   chargé seulement en session neuve) en l'appliquant à la veille Apify
-   ci-dessous — Karim dira « tour de contrôle » sur cette tâche.
-1. Veille Apify : liste d'agences marocaines **outgoing + incoming** actives
-   sur les réseaux, et premier scan des 4 comptes concurrents donnés par
-   Karim (formats qui marchent, fréquence, accroches).
-2. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
+1. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
    IG/FB) — demander à Karim les dates/villes/prix OU les lire sur le site.
    Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.
+   Nourrir la campagne avec les enseignements de la veille :
+   Reels + carrousels d'offres chiffrées, darija, CTA « écris ÉGYPTE en
+   commentaire ». ⚠️ Karim (12/06) : PAS de combo Omra + Le Caire/Louxor —
+   idée écartée ; les produits réels sont sur www.voyages21.com (source
+   unique des dates/villes/prix).
+2. Reconfirmer le handle @premices.voyages (scraping bloqué le 12/06) et
+   surveiller les 5 comptes prioritaires de la liste agences.
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).
