@@ -1,11 +1,12 @@
 # Calendrier éditorial Voyages21
 
-Tient lieu de tableau Notion en attendant la connexion du MCP Notion.
-Statuts : 💡 idée → 🎨 généré → ✅ validé Karim → 📤 publié
-
-| Date cible | Plateforme | Format | Sujet / accroche | Asset (lien ou job_id) | Statut |
-|---|---|---|---|---|---|
-| — | — | — | — | — | 💡 |
+**⚠️ Le calendrier vit désormais dans Notion** (installé le 12/06/2026) :
+base « 📅 Calendrier éditorial Voyages21 » dans la page « Voyages21 Content
+Studio » — https://app.notion.com/p/b8d650921cbd47c5b8d00570e4d16785
+(data source id `0bd16790-40ac-470d-8e59-12eae406df2b`).
+Colonnes : Sujet/accroche, Date cible, Plateforme, Format, Pilier, Campagne,
+Asset, Statut, Notes. Statuts : 💡 Idée → 🎨 Généré → ✅ Validé Karim → 📤 Publié.
+Ce fichier ne sert plus que de référence des piliers.
 
 ## Piliers de contenu (proposition initiale, à ajuster après interview)
 1. **Inspiration destinations** — cartes visuelles Maroc + international

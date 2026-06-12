@@ -20,6 +20,10 @@ court-circuiter et aller droit au but).
   existe encore (à réutiliser ou archiver plus tard).
 - Mode de travail demandé par Karim : UNE étape à la fois, attendre son
   « go » entre chaque.
+- ✅ Calendrier éditorial installé dans Notion : base « 📅 Calendrier
+  éditorial Voyages21 » (data source `0bd16790-40ac-470d-8e59-12eae406df2b`,
+  https://app.notion.com/p/b8d650921cbd47c5b8d00570e4d16785) + 3 idées
+  Égypte pré-remplies en 💡 Idée.
 - Interview de marque : Q1, Q2, Q3 répondues (voir aboutme.md).
   Restent **Q4 (rythme de publication + temps de validation)** et
   **Q5 (3-5 comptes concurrents à surveiller)**.
@@ -27,10 +31,11 @@ court-circuiter et aller droit au but).
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
-1. Installer le calendrier éditorial dans la page Notion.
-2. Finir l'interview : poser Q4 et Q5.
-3. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
+1. Finir l'interview : poser Q4 (rythme de publication + temps de
+   validation) et Q5 (3-5 comptes concurrents à surveiller).
+2. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
    IG/FB) — demander à Karim les dates/villes/prix OU les lire sur le site.
+   Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).

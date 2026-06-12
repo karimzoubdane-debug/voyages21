@@ -9,8 +9,8 @@ de production de contenu.
 |---|---|---|
 | Higgsfield (MCP) | Génération images / vidéos / audio, upscale, analyse de vidéos | ✅ opérationnel |
 | Google Drive (MCP) | Réception de vos photos/vidéos sources | ✅ opérationnel (lecture) |
-| Notion (MCP) | Calendrier de publication, validation des accroches | ⏳ à connecter — en attendant, `calendrier-editorial.md` joue ce rôle |
-| Apify (MCP) | Veille des contenus viraux concurrents | ⏳ à connecter |
+| Notion (MCP) | Calendrier de publication, validation des accroches | ✅ opérationnel — calendrier installé le 12/06/2026 |
+| Apify (MCP) | Veille des contenus viraux concurrents | ✅ opérationnel (testé le 12/06/2026) |
 
 ## Comment transmettre vos propres images et vidéos (pour retravail)
 
