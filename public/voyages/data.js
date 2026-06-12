@@ -1003,6 +1003,89 @@ window.VOYAGES = {
     cta: { title: "Envie de partir à Zanzibar ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+  "asie-azerbaidjan-turquie": {
+    mediaKey: "modal-azerbaidjan-turquie",
+    whatsapp: "212673280009",
+    eyebrow: "Asie · Combiné septembre 2026",
+    title: "Combiné Azerbaïdjan & Turquie",
+    duration: "12 jours",
+    tag: "Asie",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Bakou, Gabala et Istanbul"],
+      ["Durée", "12 jours / 10 nuits"],
+      ["Vols", "Inclus — Turkish Airlines"],
+      ["Pension", "Petit-déjeuner"],
+      ["Date", "15 au 26 septembre 2026"],
+      ["Hôtels", "3★ ou 4★ selon formule"]
+    ],
+    price: "16 750 DH",
+    intro: [
+      "Ce combiné relie les lumières de Bakou, les paysages de montagne de Gabala et l'énergie d'Istanbul dans un même voyage de douze jours.",
+      "En Azerbaïdjan, vous découvrez la vieille ville classée UNESCO, les Flame Towers, le musée du Tapis, le centre Heydar Aliyev, les paysages du Grand Caucase et la station de Tufandag.",
+      "Le séjour se termine à Istanbul avec une journée de visite, du temps libre et des options comme les Îles des Princesses, Sapanca & Masukiye ou un dîner sur le Bosphore."
+    ],
+    highlights: [
+      "Bakou : vieille ville, Highland Park, Flame Towers et boulevard de la mer Caspienne",
+      "Centre Heydar Aliyev, musée du Tapis, Gala et Gobustan selon programme",
+      "Excursions vers Guba, Gabala, le lac Nohur et Tufandag",
+      "Quatre nuits à Istanbul avec visite de ville et journées libres",
+      "Vols Casablanca — Istanbul — Bakou — Istanbul — Casablanca inclus"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — Istanbul — Bakou", text: "Rendez-vous à l'aéroport de Casablanca et envol Turkish Airlines vers Istanbul, puis continuation vers Bakou.", meta: [["Nuit", "à bord / arrivée Bakou"]] },
+      { num: "J2", title: "Bakou — tour panoramique", text: "Arrivée à Bakou, accueil, transfert à l'hôtel puis visite de Highland Park, des Flame Towers, du boulevard de la mer Caspienne, du musée du Tapis et de la rue Nizami.", meta: [["Nuit", "Bakou"]] },
+      { num: "J3", title: "Vieille ville de Bakou", text: "Découverte d'Icherisheher, de la Tour de la Vierge, du Palais des Chirvanchahs, du Centre Heydar Aliyev, du panneau I Love Baku et du complexe de Gala.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Bakou"]] },
+      { num: "J4", title: "Bakou — Guba — Bakou", text: "Excursion vers Guba à travers les paysages du Grand Caucase avec découverte du Village Rouge et des traditions locales.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Bakou"]] },
+      { num: "J5", title: "Bakou — Gabala", text: "Route vers Gabala avec visite de la mosquée Juma de Shamakhi, de la cascade Yeddi Gozel et du lac Nohur.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Gabala"]] },
+      { num: "J6", title: "Gabala — Tufandag", text: "Découverte de la station de montagne Tufandag avec trajet en téléphérique et temps libre face aux paysages du Caucase.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Gabala"]] },
+      { num: "J7", title: "Gabala — Bakou", text: "Retour vers Bakou à travers les paysages de montagne, puis temps shopping dans les grands centres commerciaux.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Bakou"]] },
+      { num: "J8", title: "Bakou — Istanbul", text: "Transfert à l'aéroport de Bakou, envol vers Istanbul, accueil et transfert à l'hôtel. Après-midi libre.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Istanbul"]] },
+      { num: "J9", title: "Istanbul — visite de ville", text: "Journée de visite : Pierre Loti, Miniatürk, Balat, Aya Sophia, Mosquée Bleue, Hippodrome, Palais de Topkapi et Grand Bazar selon programme.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Istanbul"]] },
+      { num: "J10-11", title: "Istanbul — journées libres", text: "Journées libres avec options possibles : Sapanca & Masukiye, Îles des Princesses ou dîner de gala en bateau sur le Bosphore.", meta: [["Repas", "petit-déjeuner"], ["Nuits", "Istanbul"]] },
+      { num: "J12", title: "Istanbul — Casablanca", text: "Petit-déjeuner, transfert à l'aéroport d'Istanbul et envol retour vers Casablanca.", meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Billet d'avion aller-retour Casablanca — Istanbul — Bakou — Istanbul — Casablanca sur Turkish Airlines",
+      "4 nuits à Bakou avec petit-déjeuner",
+      "2 nuits à Gabala avec petit-déjeuner",
+      "4 nuits à Istanbul avec petit-déjeuner",
+      "Activités et tickets d'entrée mentionnés au programme",
+      "Transport privé pendant tout le circuit en Azerbaïdjan",
+      "Transferts arrivée et départ à Bakou et Istanbul",
+      "Excursion d'une journée à Istanbul selon programme",
+      "Guide arabophone pendant les excursions",
+      "Assistance Voyages 21"
+    ],
+    exclus: [
+      "Dépenses personnelles",
+      "Pourboires pour guide et chauffeur",
+      "Activités et entrées non mentionnées dans le programme",
+      "Dîners indiqués comme optionnels"
+    ],
+    hotels: [
+      "Formule 3★ : Hotel Alba Bakou, Hotel Lakeside Gabala, Hotel Vatan 3★ sup Istanbul",
+      "Formule 4★ : Hotel Qafqaz Sahil Bakou, Hotel Karvansaray Gabala, Hotel Taksim Express Istanbul"
+    ],
+    priceTable: {
+      head: ["Formule", "Triple", "Double", "Single"],
+      rows: [
+        ["Hôtels 3★", "16 750 DH", "17 100 DH", "19 650 DH"],
+        ["Hôtels 4★", "17 900 DH", "18 500 DH", "21 600 DH"]
+      ]
+    },
+    children: "Moins de 2 ans : 3 300 DH · 2 à 11 ans : 11 300 DH en formule 3★, 12 000 DH en formule 4★",
+    route: ["Casablanca", "Istanbul", "Bakou", "Guba", "Gabala", "Istanbul", "Casablanca"],
+    dates: {
+      line: "Départ du 15 au 26 septembre 2026.",
+      note: "Tarifs sous réserve de disponibilité à la confirmation."
+    },
+    cta: {
+      title: "Envie de découvrir Bakou et Istanbul ?",
+      text: "Nous préparons votre départ avec les vols, les hôtels, les visites et l'assistance Voyages 21."
+    }
+  },
+
   "omra-mouharram": {
     lang: "ar",
     mediaKey: "modal-omra",
