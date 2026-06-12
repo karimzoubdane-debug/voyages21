@@ -973,6 +973,63 @@ window.VOYAGES = {
     cta: { title: "Envie d'une croisière premium ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+  "croisiere-turquie-grece": {
+    mediaKey: "modal-croisiere-turquie-grece", whatsapp: "212673280009",
+    eyebrow: "Croisière · Méditerranée 2026",
+    title: "Croisière Turquie & Grèce",
+    duration: "8 jours",
+    tag: "Croisières",
+    cadran: [
+      ["Départ", "Port Istanbul"],
+      ["Itinéraire", "Istanbul · Bodrum · Rhodes · Mykonos · Athènes"],
+      ["Durée", "8 jours / 7 nuits"],
+      ["Bateau", "Aroya"],
+      ["Compagnie", "Aroya Cruises"],
+      ["Pension", "Pension complète avec boissons soft"],
+      ["Vols", "Non inclus"]
+    ],
+    price: "13 900 DH",
+    intro: [
+      "Une croisière méditerranéenne au départ d'Istanbul, entre Turquie et îles grecques.",
+      "À bord du bateau Aroya, vous profitez de sept nuits en cabine intérieure double, en pension complète avec boissons soft.",
+      "L'itinéraire relie Istanbul, Bodrum, Rhodes, Mykonos, Athènes Le Pirée et des journées en mer."
+    ],
+    highlights: [
+      "Croisière 7 nuits / 8 jours à bord du bateau Aroya",
+      "Itinéraire : Istanbul, en mer, Bodrum, Rhodes, Mykonos, Athènes Le Pirée, en mer, Istanbul",
+      "Pension complète avec boissons soft en cabine intérieure",
+      "Transferts aéroport — port Istanbul — aéroport inclus",
+      "Assistance Voyages 21"
+    ],
+    days: [
+      { num: "J1", title: "Embarquement à Istanbul", text: "Transfert vers le port d'Istanbul et embarquement à bord du bateau Aroya.", meta: [["Nuit", "à bord"]] },
+      { num: "J2", title: "En mer", text: "Journée de navigation pour profiter des services du bateau et de la pension complète.", meta: [["Repas", "pension complète"]] },
+      { num: "J3", title: "Bodrum", text: "Escale à Bodrum, port turc animé aux eaux claires et à l'ambiance méditerranéenne.", meta: [["Nuit", "à bord"]] },
+      { num: "J4", title: "Rhodes", text: "Escale à Rhodes, île grecque connue pour sa vieille ville et son patrimoine méditerranéen.", meta: [["Nuit", "à bord"]] },
+      { num: "J5", title: "Mykonos", text: "Escale à Mykonos, entre ruelles blanches, mer Égée et atmosphère des Cyclades.", meta: [["Nuit", "à bord"]] },
+      { num: "J6", title: "Athènes Le Pirée", text: "Escale au Pirée, porte d'entrée d'Athènes et de ses sites antiques.", meta: [["Nuit", "à bord"]] },
+      { num: "J7", title: "En mer", text: "Journée de navigation retour vers Istanbul.", meta: [["Repas", "pension complète"]] },
+      { num: "J8", title: "Débarquement à Istanbul", text: "Débarquement au port d'Istanbul puis transfert vers l'aéroport selon programme.", meta: [["Fin", "services"]] }
+    ],
+    inclus: [
+      "Transferts aéroport — port Istanbul — aéroport",
+      "Séjour 7 nuits / 8 jours en croisière en pension complète avec boissons soft",
+      "Cabine intérieure double",
+      "Assistance Voyages 21"
+    ],
+    exclus: [
+      "Billet d'avion",
+      "Excursions non mentionnées au programme",
+      "Extras et dépenses personnelles"
+    ],
+    hotels: ["Bateau Aroya — cabine intérieure double"],
+    priceTable: { head: ["Cabine", "Prix / pers."], rows: [["Cabine intérieure double", "13 900 DH"]] },
+    route: ["Istanbul", "En mer", "Bodrum", "Rhodes", "Mykonos", "Athènes Le Pirée", "En mer", "Istanbul"],
+    datesList: ["20/06 au 27/06/2026", "04/07 au 11/07/2026"],
+    dates: { line: "Départs 2026 : 20/06 et 04/07.", note: "Tarifs et disponibilités sous réserve de confirmation." },
+    cta: { title: "Envie de cette croisière Turquie Grèce ?", text: "Nous préparons votre cabine, vos transferts et l'assistance Voyages 21." }
+  },
+
   "croisiere-turquie-egypte": {
     mediaKey: "modal-croisiere-turquie-egypte", whatsapp: "212673280009",
     eyebrow: "Croisière · Méditerranée 2026",
