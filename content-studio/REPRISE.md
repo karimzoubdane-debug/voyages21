@@ -10,6 +10,15 @@
 **« V21 STUDIO »**  (ou « V21 STUDIO : » + une demande précise si Karim veut
 court-circuiter et aller droit au but).
 
+## 🗣️ Vocabulaire de pilotage (règles de nommage)
+- **« tour de contrôle »** = déclenche le skill d'orchestration
+  `.claude/skills/tour-de-controle/` (planifier → déléguer à des sous-agents
+  Haiku/Sonnet → vérifier). À réserver aux grosses tâches multi-lots
+  (veille multi-comptes, production de séries de contenus). Installé le
+  12/06/2026 — À TESTER en nouvelle session.
+- **« point V21 »** (ou « où on en est ») = récap de situation : étapes
+  faites, état du PR, en attente côté Karim, prochaines étapes.
+
 ## 📍 Dernier point (mis à jour le 12/06/2026 — soir)
 - Système installé : 4 connecteurs OK (Higgsfield, Drive, Notion, Apify).
 - Dossier Drive `VOYAGES21-CONTENT-STUDIO` créé + partagé par lien.
@@ -33,6 +42,9 @@ court-circuiter et aller droit au but).
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
+0. ⚡ D'ABORD : tester le skill **tour-de-controle** (fraîchement installé,
+   chargé seulement en session neuve) en l'appliquant à la veille Apify
+   ci-dessous — Karim dira « tour de contrôle » sur cette tâche.
 1. Veille Apify : liste d'agences marocaines **outgoing + incoming** actives
    sur les réseaux, et premier scan des 4 comptes concurrents donnés par
    Karim (formats qui marchent, fréquence, accroches).
