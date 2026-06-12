@@ -42,7 +42,20 @@ Fichier central lu par Claude avant toute production de contenu.
   - **Budget publicitaire** (Meta Ads + Google Ads) : à fixer ensemble après
     recherches (audiences, mots-clés, CPC par marché). Accès aux comptes pub
     par délégation officielle uniquement (jamais de partage de mot de passe).
-- **Q2. Plateformes prioritaires** : (Instagram ? TikTok ? Facebook ? WhatsApp ?)
+- **Q2. Plateformes prioritaires** ✅ (12/06/2026) — Comptes existants :
+  - Instagram : **@voyages21maroc** (Meta Verified)
+  - Facebook : **« Voyages Maroc »** (3,5 K amis, Marrakech — profil à
+    faire évoluer vers une Page pro pour les ads)
+  - TikTok : **@voyages.maroc** (73 abonnés, bio à créer)
+  - WhatsApp Business : 0661247049 (canal de conversion : statuts + catalogue)
+  - YouTube : identifiants à communiquer par Karim (➡️ À LUI RAPPELER)
+  - Snapchat, LinkedIn : pas encore créés
+  - **Priorités recommandées par Claude** : P1 Instagram + Facebook (outgoing
+    Maroc/Omra), P2 TikTok (à rebrander), P3 YouTube Shorts (incoming
+    international/SEO), LinkedIn seulement en phase B2B (entreprises/CE),
+    Snapchat en phase 3 si budget ads dédié.
+  - **Google Business Profile** : oui, intégré au calendrier — Claude prépare
+    les posts/offres prêts à coller (publication manuelle par Karim au début).
 - **Q3. Objectif n°1 des 3 prochains mois** : (notoriété ? leads Omra ? été 2026 ?)
 - **Q4. Rythme de publication souhaité et temps de validation dispo/semaine** :
 - **Q5. Concurrents/comptes de référence à surveiller** : (3-5 comptes IG/TikTok)

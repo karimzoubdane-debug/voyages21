@@ -1,5 +1,16 @@
 # Voyages21 — Fiche projet
 
+## ⚡ Content Studio (système de création de contenu IA)
+Pour TOUTE tâche de contenu/marketing (visuels, vidéos, posts, calendrier,
+ads, veille concurrents), lire d'abord le dossier `content-studio/` :
+`aboutme.md` (profil de marque + réponses interview), `prompts-higgsfield.md`,
+`calendrier-editorial.md`, `README.md` (canaux médias + règles).
+Médias sources : dossier Drive `VOYAGES21-CONTENT-STUDIO`
+(id `1PPELuQYdp4sN9gXJHZ6ND5s6fJS_UpK5`). Tableau de bord : page Notion
+« Voyages21 Content Studio ». Connecteurs : Higgsfield, Google Drive,
+Notion, Apify. Karim peut démarrer une session par « V21 STUDIO : … »
+suivi de son instruction — aucun contexte à répéter.
+
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
 - **Fondateur** : Karim Zoubdane
