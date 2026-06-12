@@ -56,6 +56,15 @@ Fichier central lu par Claude avant toute production de contenu.
     Snapchat en phase 3 si budget ads dédié.
   - **Google Business Profile** : oui, intégré au calendrier — Claude prépare
     les posts/offres prêts à coller (publication manuelle par Karim au début).
+- **Q3. Objectif n°1 (juin→sept. 2026)** ✅ (12/06/2026) — Vendre les voyages
+  OUTGOING vers l'étranger via www.voyages21.com (PAS le Maroc en priorité).
+  Ordre de priorité des destinations :
+  1. **Égypte** — PRIORITÉ ABSOLUE : stock de billets d'avion à écouler (urgence).
+  2. **Turquie** (Istanbul-Antalya, départs été déjà programmés).
+  3. Autres destinations programmées ensuite.
+  Règle : Claude demande TOUJOURS à Karim quels voyages prioriser avant
+  de produire (ne jamais supposer le programme/les dates/les prix —
+  les tirer des fiches du site).
 - **Q3. Objectif n°1 des 3 prochains mois** : (notoriété ? leads Omra ? été 2026 ?)
 - **Q4. Rythme de publication souhaité et temps de validation dispo/semaine** :
 - **Q5. Concurrents/comptes de référence à surveiller** : (3-5 comptes IG/TikTok)
