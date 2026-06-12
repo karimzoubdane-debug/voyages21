@@ -15,12 +15,18 @@ de production de contenu.
 ## Comment transmettre vos propres images et vidéos (pour retravail)
 
 ### Canal 1 — Google Drive (recommandé pour les lots et les vidéos)
-1. Créez un dossier `VOYAGES21-MEDIA-SOURCES` dans votre Drive.
-2. Déposez-y vos fichiers, puis **clic droit → Partager → « Tous les
-   utilisateurs disposant du lien » (lecteur)** — sans cela Higgsfield ne peut
-   pas récupérer le fichier (vérifié : un fichier privé est refusé).
-3. Dites à Claude « retravaille les fichiers du dossier MEDIA-SOURCES » :
-   il les importe dans Higgsfield via leur lien et lance le retravail.
+**Dossier officiel unique** : `VOYAGES21-CONTENT-STUDIO`
+(https://drive.google.com/drive/folders/1PPELuQYdp4sN9gXJHZ6ND5s6fJS_UpK5)
+— créé le 12/06/2026. Règle « from scratch » : tout autre média présent dans
+le Drive est ignoré par le système.
+
+1. Déposez vos fichiers dans le sous-dossier `01-SOURCES-A-DEPOSER-ICI`.
+2. Une seule fois : **clic droit sur `VOYAGES21-CONTENT-STUDIO` → Partager →
+   « Tous les utilisateurs disposant du lien » (lecteur)** — sans cela
+   Higgsfield ne peut pas récupérer les fichiers (vérifié : fichier privé refusé).
+3. Dites à Claude « retravaille les fichiers du dossier sources » :
+   il les importe dans Higgsfield et lance le retravail. Les sorties validées
+   sont référencées dans `02-RESULTATS-GENERES`.
    Limite : ~50 Mo par fichier pour l'import par URL. Compressez les grosses
    vidéos ou découpez-les avant dépôt.
 
