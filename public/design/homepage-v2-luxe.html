@@ -2522,7 +2522,7 @@
 
     <!-- Centre : boutons nav (desktop) -->
     <div class="nav-center" id="navCenter">
-      <button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
+      <button type="button" class="nav-title active" id="navDest" onclick="toggleDest(event, this)">Destinations Monde <span class="nav-caret">▾</span></button>
       <a href="/voyages/destinations/croisieres.html" class="nav-title">Croisières</a>
       <a href="/voyages/destinations/omra.html"       class="nav-title">Omra</a>
       <a href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#maroc"       class="nav-title">Mon Maroc</a>
@@ -2544,7 +2544,7 @@
     <div class="nav-right">
       <a href="tel:+212673280009" class="nav-tel">+212 6 73 28 00 09</a>
       <a href="#contact" class="nav-cta">Réserver</a>
-      <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
+      <button type="button" class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav(event)">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -2555,10 +2555,10 @@
   <div class="mega-panel" id="destPanel">
     <div class="mega-inner">
       <div class="mega-continents">
-        <button class="mega-cont active" onclick="showContinent('c-europe', this)">Europe</button>
-        <button class="mega-cont" onclick="showContinent('c-afrique', this)">Afrique</button>
-        <button class="mega-cont" onclick="showContinent('c-ameriques', this)">Amériques</button>
-        <button class="mega-cont" onclick="showContinent('c-asie', this)">Asie</button>
+        <button type="button" class="mega-cont active" onclick="showContinent('c-europe', this, event)">Europe</button>
+        <button type="button" class="mega-cont" onclick="showContinent('c-afrique', this, event)">Afrique</button>
+        <button type="button" class="mega-cont" onclick="showContinent('c-ameriques', this, event)">Amériques</button>
+        <button type="button" class="mega-cont" onclick="showContinent('c-asie', this, event)">Asie</button>
       </div>
       <div class="mega-countries">
         <div class="mega-col active" id="c-europe">
@@ -3990,27 +3990,35 @@
     }, { passive: true });
 
     // Hamburger menu mobile
-    function toggleDest(btn) {
-      var panel = document.getElementById('destPanel');
-      var open = panel.classList.toggle('open');
+    function toggleDest(event, btn) {
+      if (event) event.stopPropagation();
+      const panel = document.getElementById('destPanel');
+      if (!panel || !btn) return;
+      const open = panel.classList.toggle('open');
       btn.classList.toggle('open', open);
+      btn.classList.toggle('active', open);
     }
-    function showContinent(colId, btn) {
-      document.querySelectorAll('.mega-col').forEach(function(c) { c.classList.remove('active'); });
-      document.querySelectorAll('.mega-cont').forEach(function(b) { b.classList.remove('active'); });
-      var col = document.getElementById(colId);
+    function showContinent(colId, btn, event) {
+      if (event) event.stopPropagation();
+      document.querySelectorAll('.mega-col').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.mega-cont').forEach(b => b.classList.remove('active'));
+      const col = document.getElementById(colId);
       if (col) col.classList.add('active');
       if (btn) btn.classList.add('active');
     }
-    function toggleMobileNav() {
+    function toggleMobileNav(event) {
+      if (event) event.stopPropagation();
       const burger = document.getElementById('navBurger');
-      const panel  = document.getElementById('navMobilePanel');
+      const panel = document.getElementById('navMobilePanel');
+      if (!burger || !panel) return;
       burger.classList.toggle('open');
       panel.classList.toggle('open');
     }
     function closeMobileNav() {
-      document.getElementById('navBurger').classList.remove('open');
-      document.getElementById('navMobilePanel').classList.remove('open');
+      const burger = document.getElementById('navBurger');
+      const panel = document.getElementById('navMobilePanel');
+      if (burger) burger.classList.remove('open');
+      if (panel) panel.classList.remove('open');
     }
     document.addEventListener('click', e => {
       // Ferme mobile nav
@@ -4234,10 +4242,12 @@
     }
 
     function goSearch() {
-      const q = document.getElementById('hero-search-input').value.trim();
+      const input = document.getElementById('hero-search-input');
+      const q = input ? input.value.trim() : '';
       if (!q) return;
       filterDest(q);
-      document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' });
+      const destSection = document.getElementById('destinations');
+      if (destSection) destSection.scrollIntoView({ behavior: 'smooth' });
     }
 
     function filterDest(q) {
@@ -4250,8 +4260,10 @@
       // Active l'onglet "Voir nos voyages"
       document.querySelectorAll('.dest-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.dest-panel').forEach(p => p.classList.remove('active'));
-      document.querySelector('[onclick*="voyages"]').classList.add('active');
-      document.getElementById('panel-voyages').classList.add('active');
+      const voyagesTab = document.querySelector('[onclick*="voyages"]');
+      if (voyagesTab) voyagesTab.classList.add('active');
+      const panelVoyages = document.getElementById('panel-voyages');
+      if (panelVoyages) panelVoyages.classList.add('active');
       const ctaCard = `<a href="#contact" class="dest-card-cta">
         <span class="dest-card-cta-label">Sur mesure</span>
         <p class="dest-card-cta-title">Votre voyage n'existe pas encore.<br>Créons-le ensemble.</p>
@@ -4261,9 +4273,12 @@
         (filtered.length ? filtered.map(cardHTML).join('') : '<p style="color:var(--navy);padding:24px 0;grid-column:1/-1">Aucun résultat pour « ' + q + ' ».</p>') + ctaCard;
     }
 
-    document.getElementById('hero-search-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') goSearch();
-    });
+    const searchInput = document.getElementById('hero-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') goSearch();
+      });
+    }
 
     function renderCoups() {
       const shuffled = [...VOYAGES].sort(() => Math.random() - 0.5);
@@ -4286,7 +4301,8 @@
         <p class="dest-card-cta-title">Votre voyage n'existe pas encore.<br>Créons-le ensemble.</p>
         <span class="dest-card-cta-btn">Nous contacter →</span>
       </a>`;
-      document.getElementById('grid-voyages').innerHTML = curated.map(cardHTML).join('') + ctaCard;
+      const voyagesGrid = document.getElementById('grid-voyages');
+      if (voyagesGrid) voyagesGrid.innerHTML = curated.map(cardHTML).join('') + ctaCard;
     }
 
     function renderMonde() {
@@ -4443,7 +4459,7 @@
   <!-- ══════════════════════════════════════════
        FOOTER
   ══════════════════════════════════════════ -->
-  <footer class="site-footer">
+  <footer class="site-footer" id="contact">
 
     <!-- Bande supérieure — logo + baseline -->
     <div class="footer-top">
