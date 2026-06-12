@@ -24,15 +24,18 @@ court-circuiter et aller droit au but).
   éditorial Voyages21 » (data source `0bd16790-40ac-470d-8e59-12eae406df2b`,
   https://app.notion.com/p/b8d650921cbd47c5b8d00570e4d16785) + 3 idées
   Égypte pré-remplies en 💡 Idée.
-- Interview de marque : Q1, Q2, Q3 répondues (voir aboutme.md).
-  Restent **Q4 (rythme de publication + temps de validation)** et
-  **Q5 (3-5 comptes concurrents à surveiller)**.
+- ✅ Interview de marque TERMINÉE : Q1→Q5 répondues (voir aboutme.md).
+  Q4 : 4 posts/sem (IG+FB+TikTok), validation 30 min le samedi.
+  Q5 : 4 comptes donnés (@yaallatour, @simplymorocco, @qafilat.tayba,
+  @vacancia.ma) + mission : liste Apify d'agences marocaines
+  outgoing/incoming. Règle : reposer Q1-Q5 régulièrement pour mise à jour.
 - Priorité business n°1 : OUTGOING via voyages21.com → **Égypte d'abord**
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
-1. Finir l'interview : poser Q4 (rythme de publication + temps de
-   validation) et Q5 (3-5 comptes concurrents à surveiller).
+1. Veille Apify : liste d'agences marocaines **outgoing + incoming** actives
+   sur les réseaux, et premier scan des 4 comptes concurrents donnés par
+   Karim (formats qui marchent, fréquence, accroches).
 2. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
    IG/FB) — demander à Karim les dates/villes/prix OU les lire sur le site.
    Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.

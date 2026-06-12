@@ -65,6 +65,26 @@ Fichier central lu par Claude avant toute production de contenu.
   Règle : Claude demande TOUJOURS à Karim quels voyages prioriser avant
   de produire (ne jamais supposer le programme/les dates/les prix —
   les tirer des fiches du site).
-- **Q3. Objectif n°1 des 3 prochains mois** : (notoriété ? leads Omra ? été 2026 ?)
-- **Q4. Rythme de publication souhaité et temps de validation dispo/semaine** :
-- **Q5. Concurrents/comptes de référence à surveiller** : (3-5 comptes IG/TikTok)
+- **Q4. Rythme de publication + validation** ✅ (12/06/2026) —
+  - **4 publications/semaine** pour commencer, sur **Instagram + Facebook +
+    TikTok** (même contenu décliné par plateforme).
+  - Jours/horaires choisis par Claude selon les meilleures pratiques
+    (audience Maroc, heure locale) : **mardi 18h30, jeudi 18h30,
+    samedi 11h, dimanche 18h30** — à ajuster ensuite selon les stats réelles.
+  - **Validation : 30 min le samedi** — Claude prépare le lot de la semaine
+    suivante pour le samedi matin ; Karim valide en une session.
+    En plus, Karim est disponible ponctuellement quand Claude le demande.
+- **Q5. Concurrents / comptes de référence** ✅ (12/06/2026) —
+  - Donnés par Karim (Instagram) :
+    1. @yaallatour — https://www.instagram.com/yaallatour
+    2. @simplymorocco — https://www.instagram.com/simplymorocco
+    3. @qafilat.tayba — https://www.instagram.com/qafilat.tayba
+    4. @vacancia.ma — https://www.instagram.com/vacancia.ma
+  - **Mission confiée à Claude** : établir via Apify une liste d'agences
+    marocaines actives en **outgoing** ET en **incoming** pour compléter
+    la veille (➡️ étape dédiée).
+
+## Règle de mise à jour de l'interview
+Les réponses Q1→Q5 ne sont jamais figées : Claude repose régulièrement ces
+mêmes questions à Karim (suggestion : 1 fois/mois ou à chaque changement de
+campagne) pour garder ce fichier à jour.
