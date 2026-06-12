@@ -1,9 +1,10 @@
 # Veille concurrentielle Instagram — 4 comptes — 12 juin 2026
 
-**Méthode :** apify/instagram-scraper  
-**Run profils :** `tUooWU9SelgOa1FrW` — Dataset `fEHGHMrYP7igIcs1w` (4 fiches)  
-**Run posts :** `MGe0dItR7GKKjqJp3` — Dataset `o2HhCbyTQa3V0Ctiq` (72 items, dont 52 posts issus des 4 comptes cibles + 20 posts UGC/influenceurs tagguant les agences, exclus de l'analyse)  
+**Méthode :** apify/instagram-scraper
+**Run profils :** `tUooWU9SelgOa1FrW` — Dataset `fEHGHMrYP7igIcs1w` (4 fiches)
+**Run posts :** `MGe0dItR7GKKjqJp3` — Dataset `o2HhCbyTQa3V0Ctiq` (72 items : 65 posts des 4 comptes cibles + 7 posts UGC/influenceurs taggant les agences, exclus de l'analyse)
 **Fenêtre temporelle posts :** ~mars 2026 → 12 juin 2026 (≈ 12 semaines)
+**Contrôle qualité (12/06/2026) :** chaque chiffre (followers, likes, commentaires, vues) recoupé item par item contre les datasets Apify ; classements top 3 recalculés sur likes + commentaires.
 
 ---
 
@@ -15,28 +16,26 @@
 - **Catégorie :** Travel agency
 
 ### Posts dans le dataset : 20 (dont 3 épinglés exclus de la fréquence)
-Posts non épinglés datés : 2026-06-12 (×2), 06-11 (×2), 06-09 (×4), 06-05 (×3), 06-04 (×3), 06-02 (×1), 06-01 (×1), 04-20 (épinglé), 04-09 (épinglé), 07-18-2025 (épinglé).  
-Posts non épinglés : 17. Fenêtre effective non épinglée : 01/06 → 12/06 = ~1,7 semaine → **≈ 10 posts/semaine** (pic de publication pendant le Hadj 2026).  
-Post unique hors-pic : 1 post Omra/Turquie du 09/06 → thème régulier sous-jacent.
+Posts non épinglés : 17, quasi tous publiés entre le 01/06 et le 12/06 (~1,7 semaine) → **≈ 10 posts/semaine** (pic de publication pendant le Hadj 2026). Hors pic, cadence régulière sous-jacente (1 post Omra/Turquie le 09/06).
 
-### Répartition des formats
-- Reels (Video/clips) : 16 posts
-- Photos (Image) : 3 posts
+### Répartition des formats (17 non épinglés)
+- Reels (Video/clips) : 15
+- Photos (Image) : 2
 - Carrousels (Sidecar) : 0
-- **→ 94 % Reels**
+- **→ 88 % Reels**
 
 ### Top 3 posts par engagement (likes + commentaires, hors épinglés)
 
 | # | URL | Format | Likes | Coms | Vues reel | 1re ligne caption |
 |---|-----|--------|-------|------|-----------|-------------------|
-| 1 | https://www.instagram.com/p/DZPbutaC4Uh/ | Reel | 248 | 19 | 10 297 vues | "لسنا مجرد وكالة أسفار" |
-| 2 | https://www.instagram.com/p/DZNkrp-CEWZ/ | Reel | 165 | 14 | 5 741 vues | "بحمد الله وفضله تمت زيارة الروضة الشريفة 🕌. #حج2026_1447🕋" |
-| 3 | https://www.instagram.com/p/DZDuCK9Ck4h/ | Reel | 168 | 17 | 4 861 vues | "ليسوا مجرد مرشدين.." |
+| 1 | https://www.instagram.com/p/DZPbutaC4Uh/ | Reel | 248 | 19 | 10 297 | "لسنا مجرد وكالة أسفار" |
+| 2 | https://www.instagram.com/p/DZDuCK9Ck4h/ | Reel | 168 | 17 | 4 861 | "ليسوا مجرد مرشدين.." |
+| 3 | https://www.instagram.com/p/DZNkrp-CEWZ/ | Reel | 165 | 14 | 5 741 | "بحمد الله وفضله تمت زيارة الروضة الشريفة 🕌. #حج2026_1447🕋" |
 
 **Posts épinglés notables (exclus du calcul fréquence) :**
+- https://www.instagram.com/p/DXXDQCHgpi1/ — Reel Hadj 2026 : 135 likes, 3 coms, 4 916 play
 - https://www.instagram.com/p/DMQNc_cCiAf/ — Reel Hadj 2025 : 46 likes, 1 com, 5 950 play
 - https://www.instagram.com/p/DZFTGn6ibly/ — Reel témoignage : 53 likes, 2 coms, 2 554 play
-- https://www.instagram.com/p/DZXjIwxiOYD/ (épinglé Hadj 2026) : 135 likes, 3 coms
 
 ### Thèmes / Destinations
 - Très concentré sur **Hadj 2026** (saison Hadj = pic de publication)
@@ -56,36 +55,37 @@ Quasi exclusivement **arabe classique / darija marocaine** (très peu de frança
 - **Bio :** "🇲🇦 Agence de voyages en ligne 🇲🇦 | Voyagez maintenant et payez plutard | Voyage Istanbul ✈️ Voyage Dubai ✈️ Voyage Asie"
 - **Lien :** https://vacancia.ma/voyages
 
-### Posts dans le dataset : 17 (dont 1 épinglé UGC influenceuse @maroua_merzouqui)
-Posts propres non épinglés identifiés : 14. Fenêtre : 24/03 → 12/06 = ~11,5 semaines. **≈ 1,2 post/semaine** (propres), mais la cadence réelle est plus haute — le dataset est plafonné à ~20/compte.  
-Note : 2 posts UGC d'influenceuses (@maroua_merzouqui, @lady_skalli) taggant @vacancia.ma ont été inclus dans le dataset — ils ne sont PAS des publications du compte, exclus de l'analyse formelle.
+### Posts dans le dataset : 17 posts propres (dont 1 épinglé)
+Non épinglés : 16. Fenêtre : 24/03 → 12/06 = ~11,5 semaines → **≈ 1,4 post/semaine** dans le dataset (cadence réelle probablement plus haute, dataset plafonné à ~20/compte).
+Note : 5 posts UGC d'influenceuses (@maroua_merzouqui ×2, @lady_skalli) et créateurs taggant les agences figurent dans le dataset global — exclus de l'analyse des comptes.
 
-### Répartition des formats (posts propres)
+### Répartition des formats (16 non épinglés)
 - Reels (Video/clips) : 12
 - Carrousels (Sidecar) : 3
 - Photos (Image) : 1
-- **→ 80 % Reels, 20 % Carrousels/Photos**
+- **→ 75 % Reels, 25 % Carrousels/Photos**
 
-### Top 3 posts par engagement (likes + commentaires, posts propres)
+### Top 3 posts par engagement (likes + commentaires, posts propres non épinglés)
 
 | # | URL | Format | Likes | Coms | Vues reel | 1re ligne caption |
 |---|-----|--------|-------|------|-----------|-------------------|
-| 1 | https://www.instagram.com/p/DYo9YhegdXn/ | Reel | 377 | 14 | 153 771 play | "Reservation 0600.600.000" |
-| 2 | https://www.instagram.com/p/DXTrWu4ALhZ/ | Reel | 859 | 38 | 337 125 play | "Reservation 0600.600.000" |
-| 3 | https://www.instagram.com/p/DZFivwkN-x-/ | Reel | 492 | 33 | 185 956 play | "Reservation 0600.600.000" |
+| 1 | https://www.instagram.com/p/DXTrWu4ALhZ/ | Reel | 859 | 38 | 337 125 | "Reservation 0600.600.000" |
+| 2 | https://www.instagram.com/p/DYMopYYjQUg/ | Carrousel | 697 | 14 | — | "✈️ OFFRES LIMITÉES – EARLYBOOKING ÉTÉ 2026 PRIX CHOC 🔥" |
+| 3 | https://www.instagram.com/p/DZFivwkN-x-/ | Reel | 492 | 33 | 185 956 | "Reservation 0600.600.000" |
 
-**Post épinglé UGC notable :**  
-@maroua_merzouqui (épinglé par vacancia.ma) : https://www.instagram.com/p/DW1zCvvDphv/ — 4 883 likes, 53 coms, 1 321 148 play — caption : "Je pensais avoir une escale d'1h. C'était 25."
+*(Le carrousel n°2 — offres chiffrées « à partir de 19 900 DH », paiement 10× sans frais — avait été omis du classement initial ; réintégré au contrôle qualité.)*
+
+**Post épinglé UGC notable :**
+@maroua_merzouqui (taggant vacancia.ma) : https://www.instagram.com/p/DW1zCvvDphv/ — 4 883 likes, 53 coms, 1 321 148 play — caption : "Je pensais avoir une escale d'1h. C'était 25."
 
 ### Thèmes / Destinations
 - **Turquie dominant** : Istanbul, Antalya, Marmaris, Ölüdeniz, Fethiye (≥ 70 % des posts)
 - Offres early-booking été 2026 (Bali, Malaisie, Phuket, Singapour, Égypte, Hammamet)
 - Vol direct Marrakech–Antalya (argument fort, partenariat Turkish Airlines)
 - Facilités de paiement 10× sans frais (argument récurrent)
-- Prix prize Royal Air Maroc outgoing
 
 ### Langue
-**Français** dominant (70 %), arabe dans certains posts secondaires.
+**Français** dominant (70 %), arabe dans certains posts.
 
 ---
 
@@ -96,24 +96,24 @@ Note : 2 posts UGC d'influenceuses (@maroua_merzouqui, @lady_skalli) taggant @va
 - **Bio :** "Réserver c'est voyager 🌍 | Découvrez le monde avec nous et transformez vos rêves en réalité 🏝️"
 - **Lien :** http://www.yaallatour.com/
 
-### Posts dans le dataset : 11 (dont 2 posts UGC @dr.nouhailabahtat taggant @yaallatour — exclus)
-Posts propres : 9. Fenêtre : 03/05 → 10/06 = ~5,5 semaines. **≈ 1,6 post/semaine** (propres).
+### Posts dans le dataset : 10 posts propres (+ 2 UGC @dr.nouhailabahtat exclus)
+Fenêtre : 03/05 → 10/06 = ~5,5 semaines → **≈ 1,8 post/semaine**.
 
-### Répartition des formats (posts propres)
-- Photos (Image) : 6
-- Reels (Video/clips) : 2
+### Répartition des formats (10 posts propres)
+- Photos (Image) : 8
+- Reels (Video/clips) : 1
 - Carrousels (Sidecar) : 1
-- **→ 67 % Photos, 22 % Reels, 11 % Carrousels**
+- **→ 80 % Photos**
 
 ### Top 3 posts par engagement (likes + commentaires, posts propres)
 
 | # | URL | Format | Likes | Coms | 1re ligne caption |
 |---|-----|--------|-------|------|-------------------|
-| 1 | https://www.instagram.com/p/DWrK8JTjSa_/ | Photo | 105 | 68 | "صيف 2026 غادي يكون مختلف مع Yaalla Tour 😍" |
-| 2 | https://www.instagram.com/p/DW683eJARvK/ | Photo | 245 | 24 | "زنجبار… ماشي غير وجهة، تجربة ما كاتعاودش !" |
+| 1 | https://www.instagram.com/p/DW683eJARvK/ | Photo | 245 | 24 | "زنجبار… ماشي غير وجهة، تجربة ما كاتعاودش !" |
+| 2 | https://www.instagram.com/p/DWrK8JTjSa_/ | Photo | 105 | 68 | "صيف 2026 غادي يكون مختلف مع Yaalla Tour 😍" |
 | 3 | https://www.instagram.com/p/DZaX079BgoL/ | Reel | 87 | 27 | "🌴 كاينين وجهات زوينين..." |
 
-**UGC influenceuse notable (taggant @yaallatour, dans le dataset) :**  
+**UGC influenceuse notable (taggant @yaallatour, dans le dataset) :**
 @dr.nouhailabahtat : https://www.instagram.com/p/DXPwmWMjRNo/ — 393 260 likes, 414 coms, 6 536 485 play — caption : "كانت هادي هي رحلتي الأولى لزانزيبار"
 
 ### Thèmes / Destinations
@@ -135,32 +135,32 @@ Posts propres : 9. Fenêtre : 03/05 → 10/06 = ~5,5 semaines. **≈ 1,6 post/se
 - **Bio :** "We craft memories. Join us 👇🏼"
 - **Lien :** https://simply-morocco.com/private-tours
 
-### Posts dans le dataset : 20 (dont 1 épinglé)
-Posts non épinglés : 19. Fenêtre : 12/05 → 12/06 = ~4,4 semaines. **≈ 4,3 posts/semaine**.
+### Posts dans le dataset : 18 (dont 1 épinglé)
+Non épinglés : 17. Fenêtre : 12/05 → 12/06 = ~4,4 semaines → **≈ 4 posts/semaine**.
 
-### Répartition des formats
-- Reels (Video/clips) : 18
-- Photos (Image) : 2
-- Carrousels (Sidecar) : 0
-- **→ 90 % Reels**
+### Répartition des formats (17 non épinglés)
+- Reels (Video/clips) : 16
+- Photos (Image) : 1
+- **→ 94 % Reels**
 
 ### Top 3 posts par engagement (likes + commentaires, hors épinglés)
 
 | # | URL | Format | Likes | Coms | Vues reel | 1re ligne caption |
 |---|-----|--------|-------|------|-----------|-------------------|
-| 1 | https://www.instagram.com/p/DZTQl4VR5FE/ | Reel | 6 519 | 136 | 89 574 play | "National Anthem of Morocco 🇲🇦 vs 🇳🇴" |
-| 2 | https://www.instagram.com/p/DZaUanbRArx/ | Reel | 2 014 | 39 | 52 050 play | "Can you locate this road in Morocco? 😍" |
-| 3 | https://www.instagram.com/p/DY0Md88pIKf/ | Reel | 2 451 | 18 | 60 409 play | "Anywhere anytime Moroccan mint tea 😍" |
+| 1 | https://www.instagram.com/p/DZTQl4VR5FE/ | Reel | 6 519 | 136 | 89 574 | "National Anthem of Morocco 🇲🇦 vs 🇳🇴" |
+| 2 | https://www.instagram.com/p/DYpLkljxqhK/ | Photo | 3 991 | 65 | — | "Morocco is heating up ☀️🇲🇦" |
+| 3 | https://www.instagram.com/p/DYXuCZOxFNV/ | Reel | 2 662 | 19 | 59 581 | "Summer is here 😍" |
 
-**Post épinglé :**  
+*(Les posts n°2 et n°3 avaient été manqués au premier passage — l'item n°2 n'apparaissait que sur la 2e page du dataset ; réintégrés au contrôle qualité.)*
+
+**Post épinglé :**
 https://www.instagram.com/p/Cu43Z5WMxwp/ — Reel danse folklorique (2023) : 78 906 likes, 935 coms, 1 809 006 play
 
 ### Thèmes / Destinations
 - **Maroc exclusivement** (incoming : touristes étrangers vers le Maroc)
 - Lifestyle marocain : thé à la menthe, côtes, médinas, désert, Chefchaouen, Imsouane, Marrakech
-- Questions interactives ("Can you locate…", "What's your favorite city…")
+- Questions interactives ("Can you locate…", "What's your favorite city…") + actu météo/foot
 - Contenu UGC : crédit photo systématique (@photographe)
-- Actualité football (Maroc vs Norvège)
 
 ### Langue
 **Anglais** exclusivement — audience internationale.
@@ -169,23 +169,23 @@ https://www.instagram.com/p/Cu43Z5WMxwp/ — Reel danse folklorique (2023) : 78 
 
 ## Ce qui marche chez eux — 7 enseignements pour Voyages21
 
-### 1. Le Reel courte accroche = format roi (vacancia.ma, simplymorocco, qafilat.tayba)
-3 des 4 comptes sont à 80-94 % Reels. Les reels de vacancia.ma avec caption minimaliste "Reservation 0600.600.000" cumulent 337 000 et 185 000 play. La vidéo vend sans texte, le CTA est dans la caption, pas dans le visuel.
+### 1. Le Reel courte accroche = format roi… et le carrousel d'offres chiffrées juste derrière
+3 des 4 comptes sont à 75-94 % Reels. Les reels de vacancia.ma avec caption minimaliste "Reservation 0600.600.000" cumulent 337 000 et 185 000 play : la vidéo vend, le CTA est dans la caption. Mais son 2e meilleur post est un **carrousel d'offres avec prix affichés** ("à partir de 19 900 DH", 10× sans frais) — le prix chiffré + urgence ("places limitées") fait l'engagement. Pour la campagne Égypte : alterner Reels d'ambiance et carrousels d'offres chiffrées.
 
 ### 2. L'UGC influenceuse multiplie la portée × 10 sans budget production
-Les posts @maroua_merzouqui pour vacancia.ma (1,3 M play) et @dr.nouhailabahtat pour yaallatour (6,5 M play) dominent leurs datasets respectifs d'un facteur 10. Le partenariat influenceur storytelling ("Je pensais avoir une escale d'1h. C'était 25.") surperforme tous les posts maison. Directement actionnable pour Voyages21 sur Égypte et Turquie.
+Les posts @maroua_merzouqui pour vacancia.ma (1,3 M play) et @dr.nouhailabahtat pour yaallatour (6,5 M play) dominent leurs comptes d'un facteur 10. Le storytelling influenceur ("Je pensais avoir une escale d'1h. C'était 25.") surperforme tous les posts maison. Directement actionnable pour Voyages21 sur Égypte et Turquie.
 
-### 3. Zanzibar/exotique fonctionne en darija — pas besoin du français
-Yaallatour génère son meilleur engagement organique (105 likes/68 coms — ratio commentaires élevé) avec une caption entièrement en darija : "صيف 2026 غادي يكون مختلف". La communauté marocaine répond à la langue du quotidien, même pour des destinations premium.
+### 3. La darija crée la conversation — pas besoin du français
+Yaallatour génère son meilleur ratio commentaires (105 likes / 68 coms) avec une caption entièrement en darija : "صيف 2026 غادي يكون مختلف". La communauté marocaine répond à la langue du quotidien, même pour des destinations premium.
 
 ### 4. Le combo Omra + destination touristique est un produit différenciant actif
-Qafilat Tayba (Omra + Istanbul), Yaallatour (Omra + Istanbul + Sharm) : les deux agences proposent explicitement ce bundle. Aucune ne le fait sur l'**Égypte** hors-Sharm. C'est un angle disponible pour Voyages21 : **Omra + Le Caire / Louxor**.
+Qafilat Tayba (Omra + Istanbul), Yaallatour (Omra + Istanbul + Sharm) : les deux proposent ce bundle. Aucune ne le fait sur **l'Égypte hors-Sharm**. Angle disponible pour Voyages21 : **Omra + Le Caire / Louxor**.
 
 ### 5. Turquie = volume, Égypte = quasi absente chez les concurrents
-Turquie (Istanbul, Antalya) est le thème le plus publié par vacancia.ma et yaallatour. L'Égypte n'apparaît que dans 1 carrousel early-booking de vacancia.ma (liste de destinations) et dans 1 post yaallatour (Sharm + Istanbul). **Avantage concurrentiel disponible** : Voyages21 peut occuper le terrain Égypte sans compétition directe en contenu.
+La Turquie (Istanbul, Antalya) est le thème le plus publié par vacancia.ma et yaallatour. L'Égypte n'apparaît que dans 1 carrousel early-booking de vacancia.ma et 1 post yaallatour (Sharm + Istanbul). **Avantage concurrentiel disponible : occuper le terrain Égypte sans compétition directe en contenu.**
 
 ### 6. L'appel à l'action en commentaire génère du CRM organique
-Yaallatour utilise systématiquement "كتب 'شرم الشيخ' فالكومنتير" ou "كتب 'إسطنبول'" — technique qui remonte les intéressés dans l'algorithme et alimente un pipe commercial. Résultat : 68 commentaires sur un post photo, très au-dessus de la moyenne.
+Yaallatour utilise systématiquement "كتب 'شرم الشيخ' فالكومنتير" — technique qui remonte les intéressés dans l'algorithme et alimente un pipe commercial. Résultat : 68 commentaires sur un post photo, très au-dessus de sa moyenne.
 
-### 7. La fréquence haute récompense — mais le fond prime sur la forme
-Simplymorocco (4,3 posts/sem, 477 k followers) prouve qu'une fréquence soutenue entretient l'audience, mais son contenu est 100 % Maroc incoming (non concurrent pour Voyages21). Vacancia.ma publie à haute fréquence des Reels quasi-identiques sur Turquie (même caption "Reservation 0600.600.000") et accumule 100k+ play : la répétition sur une destination fonctionne pour ancrer une association dans l'esprit de l'audience. Pour Voyages21 : **publier 2-3 Reels Égypte/semaine de façon répétée** crée l'association "Voyages21 = Égypte" avant la saison.
+### 7. La répétition sur une destination = ancrage de marque
+Vacancia.ma publie des Reels quasi identiques sur la Turquie (même caption "Reservation 0600.600.000") et cumule 100 k+ play par post : la répétition crée l'association "Vacancia = Turquie". Pour Voyages21 : **publier 2-3 contenus Égypte/semaine de façon répétée** ancre "Voyages21 = Égypte" avant la haute saison.
