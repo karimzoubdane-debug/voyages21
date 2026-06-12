@@ -53,24 +53,22 @@
 
     /* Logo */
     .nav-logo {
-      font-family: 'Fraunces', serif;
-      font-weight: 900;
-      font-size: 1.35rem;
-      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 76px;
+      min-width: 76px;
+      height: 54px;
       text-decoration: none;
-      letter-spacing: .02em;
       flex-shrink: 0;
     }
-    .nav-logo sup {
-      font-size: .48em;
-      font-family: 'Geist', sans-serif;
-      font-weight: 700;
-      color: var(--gold);
-      vertical-align: super;
-      margin-left: 1px;
-      letter-spacing: .06em;
+    .nav-logo img {
+      display: block;
+      width: 68px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 12px rgba(0,0,0,.25));
     }
-
     /* Menu central */
     .nav-menu {
       display: flex;
@@ -2265,7 +2263,8 @@
       .nav-mobile-panel .nav-menu a:active { color: var(--gold); }
       .nav-tel { display: none; }
       .nav-cta { display: none; }
-      .nav-logo { font-size: 1.1rem; }
+      .nav-logo { width: 62px; min-width: 62px; height: 52px; }
+      .nav-logo img { width: 56px; }
       .nav-burger {
         display: flex;
         flex-direction: column;
@@ -2519,7 +2518,7 @@
   ══════════════════════════════════════════ -->
   <nav id="nav">
 
-    <a href="/" class="nav-logo">Voyages<sup>21</sup></a>
+    <a href="/" class="nav-logo" aria-label="Voyages 21"><img src="/logo-voyages21.png" alt="Voyages 21"></a>
 
     <!-- Centre : boutons nav (desktop) -->
     <div class="nav-center" id="navCenter">
