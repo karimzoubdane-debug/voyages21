@@ -973,6 +973,62 @@ window.VOYAGES = {
     cta: { title: "Envie d'une croisière premium ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+  "croisiere-turquie-egypte": {
+    mediaKey: "modal-croisiere-turquie-egypte", whatsapp: "212673280009",
+    eyebrow: "Croisière · Méditerranée 2026",
+    title: "Croisière Turquie & Égypte",
+    duration: "8 jours",
+    tag: "Croisières",
+    cadran: [
+      ["Départ", "Port Istanbul"],
+      ["Itinéraire", "Istanbul · Bodrum · Kas · Alexandrie"],
+      ["Durée", "8 jours / 7 nuits"],
+      ["Bateau", "Aroya"],
+      ["Compagnie", "Aroya Cruises"],
+      ["Pension", "Pension complète avec boissons soft"],
+      ["Vols", "Non inclus"]
+    ],
+    price: "15 500 DH",
+    intro: [
+      "Une croisière méditerranéenne au départ d'Istanbul, entre rivages turcs et escale égyptienne à Alexandrie.",
+      "À bord du bateau Aroya, vous profitez de sept nuits en cabine intérieure double, en pension complète avec boissons soft.",
+      "L'itinéraire passe par Istanbul, Bodrum, Kas, Alexandrie et des journées en mer pour vivre la Méditerranée autrement."
+    ],
+    highlights: [
+      "Croisière 7 nuits / 8 jours à bord du bateau Aroya",
+      "Itinéraire : Istanbul, en mer, Bodrum, Kas, Alexandrie, en mer, Istanbul",
+      "Pension complète avec boissons soft en cabine intérieure",
+      "Transferts aéroport — port Istanbul — aéroport inclus",
+      "Assistance Voyages 21"
+    ],
+    days: [
+      { num: "J1", title: "Embarquement à Istanbul", text: "Accueil et transfert vers le port d'Istanbul pour l'embarquement à bord du bateau Aroya.", meta: [["Nuit", "à bord"]] },
+      { num: "J2", title: "En mer", text: "Journée en mer pour profiter du bateau, des services à bord et de la pension complète.", meta: [["Repas", "pension complète"]] },
+      { num: "J3", title: "Bodrum", text: "Escale à Bodrum, station balnéaire turque réputée pour son port, ses plages et son ambiance méditerranéenne.", meta: [["Nuit", "à bord"]] },
+      { num: "J4", title: "Kas", text: "Escale à Kas, entre eaux turquoise, charme côtier et paysages du sud de la Turquie.", meta: [["Nuit", "à bord"]] },
+      { num: "J5", title: "Alexandrie", text: "Escale à Alexandrie, grande ville méditerranéenne d'Égypte au patrimoine historique remarquable.", meta: [["Nuit", "à bord"]] },
+      { num: "J6-J7", title: "En mer", text: "Journées de navigation vers Istanbul, avec pension complète et temps libre à bord.", meta: [["Repas", "pension complète"]] },
+      { num: "J8", title: "Débarquement à Istanbul", text: "Débarquement au port d'Istanbul puis transfert vers l'aéroport selon programme.", meta: [["Fin", "services"]] }
+    ],
+    inclus: [
+      "Transferts aéroport — port Istanbul — aéroport",
+      "Séjour 7 nuits / 8 jours en croisière en pension complète avec boissons soft",
+      "Cabine intérieure double",
+      "Assistance Voyages 21"
+    ],
+    exclus: [
+      "Billet d'avion",
+      "Excursions non mentionnées au programme",
+      "Extras et dépenses personnelles"
+    ],
+    hotels: ["Bateau Aroya — cabine intérieure double"],
+    priceTable: { head: ["Cabine", "Prix / pers."], rows: [["Cabine intérieure double", "15 500 DH"]] },
+    route: ["Istanbul", "En mer", "Bodrum", "Kas", "Alexandrie", "En mer", "Istanbul"],
+    datesList: ["03/07 au 10/07/2026", "17/07 au 24/07/2026", "31/07 au 07/08/2026", "14/08 au 22/08/2026", "28/08 au 04/09/2026"],
+    dates: { line: "Départs 2026 : 03/07, 17/07, 31/07, 14/08 et 28/08.", note: "Tarifs et disponibilités sous réserve de confirmation." },
+    cta: { title: "Envie de cette croisière Turquie Égypte ?", text: "Nous préparons votre cabine, vos transferts et l'assistance Voyages 21." }
+  },
+
   "asie-chine": {
     mediaKey: "modal-chine", whatsapp: "212673280009",
     eyebrow: "Chine · Grand circuit", title: "Circuit Chine — Pékin, Shanghai & Merveilles", duration: "14 jours", tag: "Chine",
