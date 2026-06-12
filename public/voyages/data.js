@@ -514,6 +514,80 @@ window.VOYAGES = {
     }
   },
 
+  "egypte-caire-hurghada": {
+    mediaKey: "modal-caire-hurghada",
+    whatsapp: "212673280009",
+    eyebrow: "Égypte · Combiné été 2026",
+    title: "Le Caire & Hurghada",
+    duration: "12 jours",
+    tag: "Égypte",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Le Caire et Hurghada"],
+      ["Durée", "12 jours / 11 nuits"],
+      ["Vols", "Inclus — Royal Air Maroc"],
+      ["Pension", "4 nuits B&B · 7 nuits tout compris"],
+      ["Date", "17 au 28 août 2026"],
+      ["Hôtels", "4★"]
+    ],
+    price: "15 600 DH",
+    intro: [
+      "Un voyage simple et équilibré entre les incontournables du Caire et le repos au bord de la mer Rouge.",
+      "Au Caire, vous découvrez les grandes pyramides de Gizeh, le Sphinx et l'ambiance du célèbre marché Khan El Khalili.",
+      "Puis Hurghada prend le relais avec sept nuits en formule tout compris au Blend Resort and Aqua Park, entre détente, marina et centre-ville."
+    ],
+    highlights: [
+      "Les pyramides de Gizeh, le Sphinx et Khan El Khalili",
+      "Sept nuits à Hurghada en formule tout compris",
+      "Visite de la marina de Hurghada et du centre-ville",
+      "Vols Casablanca — Le Caire — Casablanca inclus avec Royal Air Maroc",
+      "Transferts et transport privé Le Caire / Hurghada / Le Caire"
+    ],
+    days: [
+      { num: "J1", title: "Arrivée au Caire", text: "Arrivée à l'aéroport du Caire, accueil, assistance et transfert à l'hôtel.", meta: [["Nuit", "Le Caire"]] },
+      { num: "J2", title: "Le Caire — Pyramides & Khan El Khalili", text: "Visite des grandes pyramides de Gizeh et du Sphinx, puis continuation vers le célèbre marché de Khan El Khalili.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Le Caire"]] },
+      { num: "J3", title: "Le Caire — journée libre", text: "Journée libre pour découvertes personnelles ou activités optionnelles.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Le Caire"]] },
+      { num: "J4-J10", title: "Le Caire — Hurghada", text: "Départ vers Hurghada en autocar climatisé privé, installation à l'hôtel et séjour libre de 7 nuits en formule tout compris.", meta: [["Repas", "tout compris"], ["Nuits", "Hurghada"]] },
+      { num: "J11", title: "Hurghada — Le Caire", text: "Petit-déjeuner, départ vers Le Caire en autocar climatisé, arrivée et installation à l'hôtel.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Le Caire"]] },
+      { num: "J12", title: "Départ du Caire", text: "Petit-déjeuner, transfert à l'aéroport du Caire selon l'horaire du vol et assistance aux formalités de départ.", meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Billet d'avion Casablanca — Le Caire — Casablanca avec Royal Air Maroc",
+      "Bagage en soute 46 kg + bagage à main",
+      "4 nuits au Caire à l'hôtel Marwa Palace 4★ avec petit-déjeuner",
+      "7 nuits à Hurghada au Blend Resort and Aqua Park 4★ en formule tout compris",
+      "Tous les transferts mentionnés au programme",
+      "Transport Le Caire / Hurghada / Le Caire en autocar climatisé privé",
+      "Visite des pyramides de Gizeh, du Sphinx et de Khan El Khalili",
+      "Visite de la marina de Hurghada et du centre-ville",
+      "Assistance et accueil durant le séjour"
+    ],
+    exclus: [
+      "Dépenses personnelles",
+      "Pourboires : 20 USD par adulte et 5 USD par enfant collectés à l'arrivée",
+      "Frais de visa Égypte : 600 DH"
+    ],
+    hotels: ["Hôtel Marwa Palace 4★ Cairo", "Hôtel Blend Resorts 4★ Hurghada"],
+    priceTable: {
+      head: ["Chambre", "Prix / pers."],
+      rows: [
+        ["Triple", "15 600 DH"],
+        ["Double", "15 900 DH"],
+        ["Single", "20 100 DH"]
+      ]
+    },
+    children: "1er enfant moins de 11 ans : 8 600 DH · 2ème enfant moins de 11 ans : 11 900 DH",
+    route: ["Casablanca", "Le Caire", "Hurghada", "Le Caire", "Casablanca"],
+    dates: {
+      line: "Date fixe : du 17 au 28 août 2026.",
+      note: "Visa Égypte : 600 DH. Documents : 2 photos, copie CIN, relevés bancaires des 3 derniers mois et attestation de travail."
+    },
+    cta: {
+      title: "Envie de combiner Le Caire et Hurghada ?",
+      text: "Nous préparons votre séjour entre pyramides, mer Rouge et assistance Voyages 21."
+    }
+  },
+
   "egypte-caire-sharm": {
     mediaKey: "modal-caire-sharm",
     whatsapp: "212673280009",
