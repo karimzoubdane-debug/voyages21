@@ -937,6 +937,67 @@ window.VOYAGES = {
     cta: { title: "Envie de l'Angleterre et de l'Écosse ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+  "europe-albanie-riviera": {
+    mediaKey: "modal-albanie-riviera", whatsapp: "212673280009",
+    eyebrow: "Europe · Albanie 2026",
+    title: "Albanie — Mer & Galets, Côte Ionienne",
+    duration: "8 jours",
+    tag: "Europe",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destination", "Albanie"],
+      ["Durée", "8 jours / 7 nuits"],
+      ["Vols", "Inclus — via Istanbul"],
+      ["Pension", "Petits-déjeuners"],
+      ["Période", "Juin · Juillet · Août 2026"],
+      ["Circuit", "Tirana · Vlora · Dhërmi · Himara · Saranda"]
+    ],
+    price: "13 500 DH",
+    intro: [
+      "L'Albanie offre une Europe encore confidentielle, entre mer Ionienne, villages de pierre, montagnes et plages aux eaux cristallines.",
+      "Ce circuit de huit jours relie Tirana, Durrës, Vlora, Dhërmi, Himara, Saranda, Butrint, Porto Palermo et Apollonia.",
+      "Un voyage équilibré entre culture, route côtière, sites antiques, plages et atmosphère méditerranéenne."
+    ],
+    highlights: [
+      "Tirana, capitale albanaise, selon horaires d'arrivée",
+      "Durrës et son amphithéâtre, l'un des plus grands des Balkans",
+      "Vlora, point de départ de la Riviera albanaise",
+      "Dhërmi, Himara, Jale et les plages de la côte Ionienne",
+      "Butrint, site archéologique classé UNESCO",
+      "Porto Palermo, Llogara et Apollonia"
+    ],
+    days: [
+      { num: "J1", title: "Aéroport — Tirana", text: "Arrivée à l'aéroport Mère Teresa de Tirana, transfert et visite de Tirana selon horaire d'arrivée.", meta: [["Nuit", "Tirana"]] },
+      { num: "J2", title: "Tirana — Durrës — Vlora", text: "Route vers Durrës, découverte de son amphithéâtre et de son front de mer, puis continuation vers Vlora, ville historique et station balnéaire.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Vlora"]] },
+      { num: "J3", title: "Vlora — Dhërmi", text: "Départ vers Dhërmi, entre vieux village, maisons en pierre, monastère et plages aux eaux cristallines.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "côte Ionienne"]] },
+      { num: "J4", title: "Dhërmi — Vuno — Jale — Himara", text: "Journée libre pour découvrir Drymades, Vuno, Jale, Livadh et Himara, entre plages, panoramas et ruelles de pierre.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "côte Ionienne"]] },
+      { num: "J5", title: "Himara — Saranda — Butrint", text: "Route vers Saranda puis visite possible du parc national de Butrint, site archéologique classé UNESCO, lac et château d'Ali Pasha.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Saranda"]] },
+      { num: "J6", title: "Saranda — Qeparo — Porto Palermo — Dhërmi", text: "Remontée vers le nord avec arrêt à Qeparo puis visite de la forteresse vénitienne de Porto Palermo ou pause plage.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "côte Ionienne"]] },
+      { num: "J7", title: "Dhërmi — Llogara — Apollonia — Tirana", text: "Dernière baignade, passage par le parc national de Llogara, arrêt à Apollonia puis retour vers Tirana.", meta: [["Repas", "petit-déjeuner"], ["Nuit", "Tirana"]] },
+      { num: "J8", title: "Tirana — retour", text: "Petit-déjeuner, visite libre selon horaires de vol puis transfert à l'aéroport de Tirana.", meta: [["Repas", "petit-déjeuner"]] }
+    ],
+    inclus: [
+      "Billet d'avion aller-retour Casablanca — Istanbul — Tirana",
+      "Transferts arrivée et départ à Tirana",
+      "Transferts durant tout le circuit en transport touristique privé",
+      "Hébergement en hôtels avec petits-déjeuners du J2 au J8",
+      "Assistance Voyages 21 durant tout le circuit",
+      "Activités et entrées dans les monuments mentionnées dans le programme"
+    ],
+    exclus: [
+      "Repas non mentionnés",
+      "Activités et entrées non mentionnées dans le programme",
+      "Dépenses personnelles"
+    ],
+    hotels: ["Hôtels selon programme ou similaires"],
+    priceTable: { head: ["Forfait", "Prix / pers."], rows: [["Chambre double", "13 500 DH"], ["Chambre single", "16 900 DH"]] },
+    children: "Enfant 0 à 2 ans : 5 500 DH · Enfant selon programme : 10 900 DH",
+    route: ["Casablanca", "Istanbul", "Tirana", "Durrës", "Vlora", "Dhërmi", "Himara", "Saranda", "Butrint", "Tirana"],
+    datesList: ["14 au 21 juin 2026", "12 au 19 juillet 2026", "20 au 27 août 2026"],
+    dates: { line: "Départs : 14/06, 12/07 et 20/08/2026.", note: "Tarifs et disponibilités sous réserve de confirmation." },
+    cta: { title: "Envie de découvrir la Riviera albanaise ?", text: "Nous préparons votre circuit entre mer Ionienne, villages et sites antiques." }
+  },
+
   "croisiere-mediterranee-espagne-italie": {
     mediaKey: "modal-croisiere-1", whatsapp: "212673280009",
     eyebrow: "Croisière · Méditerranée", title: "Croisière Méditerranée — Espagne & Italie", duration: "10 jours", tag: "Croisière",
