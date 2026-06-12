@@ -31,7 +31,17 @@ Fichier central lu par Claude avant toute production de contenu.
    (darija) possible pour les réseaux sociaux marocains.
 
 ## À compléter (interview fondateur — réponses de Karim)
-- **Q1. Client idéal** : (familles marocaines ? MRE ? couples ? entreprises ?)
+- **Q1. Client idéal** ✅ (12/06/2026) — Deux activités distinctes :
+  - **Outgoing** (Marocains vers l'étranger, via www.voyages21.com) : tous
+    profils — familles marocaines, MRE, couples, retraités, entreprises,
+    pèlerins Omra.
+  - **Incoming** (étrangers vers le Maroc, via un 2e site en construction) :
+    ciblage par nationalité (Anglais, Russes, Allemands, etc.) — familles,
+    couples, associations, entreprises (voyages du personnel / budgets
+    sociaux). Tout profil souhaitant découvrir le Maroc.
+  - **Budget publicitaire** (Meta Ads + Google Ads) : à fixer ensemble après
+    recherches (audiences, mots-clés, CPC par marché). Accès aux comptes pub
+    par délégation officielle uniquement (jamais de partage de mot de passe).
 - **Q2. Plateformes prioritaires** : (Instagram ? TikTok ? Facebook ? WhatsApp ?)
 - **Q3. Objectif n°1 des 3 prochains mois** : (notoriété ? leads Omra ? été 2026 ?)
 - **Q4. Rythme de publication souhaité et temps de validation dispo/semaine** :
