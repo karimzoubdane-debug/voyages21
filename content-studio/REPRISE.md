@@ -61,7 +61,9 @@ court-circuiter et aller droit au but).
    Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.
    Nourrir la campagne avec les enseignements de la veille :
    Reels + carrousels d'offres chiffrées, darija, CTA « écris ÉGYPTE en
-   commentaire », angle « Omra + Le Caire/Louxor » (personne ne le fait).
+   commentaire ». ⚠️ Karim (12/06) : PAS de combo Omra + Le Caire/Louxor —
+   idée écartée ; les produits réels sont sur www.voyages21.com (source
+   unique des dates/villes/prix).
 2. Reconfirmer le handle @premices.voyages (scraping bloqué le 12/06) et
    surveiller les 5 comptes prioritaires de la liste agences.
 
