@@ -10,24 +10,47 @@
 **« V21 STUDIO »**  (ou « V21 STUDIO : » + une demande précise si Karim veut
 court-circuiter et aller droit au but).
 
-## 📍 Dernier point (mis à jour le 12/06/2026)
+## 🗣️ Vocabulaire de pilotage (règles de nommage)
+- **« tour de contrôle »** = déclenche le skill d'orchestration
+  `.claude/skills/tour-de-controle/` (planifier → déléguer à des sous-agents
+  Haiku/Sonnet → vérifier). À réserver aux grosses tâches multi-lots
+  (veille multi-comptes, production de séries de contenus). Installé le
+  12/06/2026 — À TESTER en nouvelle session.
+- **« point V21 »** (ou « où on en est ») = récap de situation : étapes
+  faites, état du PR, en attente côté Karim, prochaines étapes.
+
+## 📍 Dernier point (mis à jour le 12/06/2026 — soir)
 - Système installé : 4 connecteurs OK (Higgsfield, Drive, Notion, Apify).
 - Dossier Drive `VOYAGES21-CONTENT-STUDIO` créé + partagé par lien.
-- Page Notion « Voyages21 Content Studio » créée et connectée (à TESTER en
-  session neuve : Notion/Apify n'étaient pas encore actifs dans la session
-  d'installation).
-- Interview de marque : Q1, Q2, Q3 répondues (voir aboutme.md).
-  Restent **Q4 (rythme de publication + temps de validation)** et
-  **Q5 (3-5 comptes concurrents à surveiller)**.
+- ✅ TESTÉ en session neuve : Notion répond (page « Voyages21 Content
+  Studio » trouvée, id `37dd1486-4f86-800e-a94a-c6b6ad9e8fac`) et Apify
+  répond (Instagram Scraper officiel dispo pour la veille concurrents).
+- Noté : ancien espace Notion « Voyages 21 _Projet AUTOM RESEAUX SOCIAUX »
+  existe encore (à réutiliser ou archiver plus tard).
+- Mode de travail demandé par Karim : UNE étape à la fois, attendre son
+  « go » entre chaque.
+- ✅ Calendrier éditorial installé dans Notion : base « 📅 Calendrier
+  éditorial Voyages21 » (data source `0bd16790-40ac-470d-8e59-12eae406df2b`,
+  https://app.notion.com/p/b8d650921cbd47c5b8d00570e4d16785) + 3 idées
+  Égypte pré-remplies en 💡 Idée.
+- ✅ Interview de marque TERMINÉE : Q1→Q5 répondues (voir aboutme.md).
+  Q4 : 4 posts/sem (IG+FB+TikTok), validation 30 min le samedi.
+  Q5 : 4 comptes donnés (@yaallatour, @simplymorocco, @qafilat.tayba,
+  @vacancia.ma) + mission : liste Apify d'agences marocaines
+  outgoing/incoming. Règle : reposer Q1-Q5 régulièrement pour mise à jour.
 - Priorité business n°1 : OUTGOING via voyages21.com → **Égypte d'abord**
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
-1. Tester Notion + Apify (1 appel chacun) pour confirmer qu'ils répondent.
-2. Installer le calendrier éditorial dans la page Notion.
-3. Finir l'interview : poser Q4 et Q5.
-4. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
+0. ⚡ D'ABORD : tester le skill **tour-de-controle** (fraîchement installé,
+   chargé seulement en session neuve) en l'appliquant à la veille Apify
+   ci-dessous — Karim dira « tour de contrôle » sur cette tâche.
+1. Veille Apify : liste d'agences marocaines **outgoing + incoming** actives
+   sur les réseaux, et premier scan des 4 comptes concurrents donnés par
+   Karim (formats qui marchent, fréquence, accroches).
+2. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
    IG/FB) — demander à Karim les dates/villes/prix OU les lire sur le site.
+   Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).
