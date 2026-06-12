@@ -10,6 +10,11 @@ Médias sources : dossier Drive `VOYAGES21-CONTENT-STUDIO`
 « Voyages21 Content Studio ». Connecteurs : Higgsfield, Google Drive,
 Notion, Apify. Karim peut démarrer une session par « V21 STUDIO : … »
 suivi de son instruction — aucun contexte à répéter.
+**Reprise automatique** : dès que Karim écrit « V21 STUDIO » (même seul),
+lire `content-studio/REPRISE.md`, résumer en 3 lignes la dernière étape,
+proposer la prochaine action et attendre le « go ». Mettre à jour
+`REPRISE.md` après chaque avancée. Karim n'a JAMAIS à réexpliquer le contexte
+ni à préciser la destination : c'est Claude qui rappelle où on en était.
 
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
