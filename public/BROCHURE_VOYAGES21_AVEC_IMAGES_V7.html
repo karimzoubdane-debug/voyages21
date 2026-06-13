@@ -841,6 +841,7 @@ header p {
 <div class="mega-col" id="c-afrique">
 <a role="button" onclick="switchTab('egypte')">Égypte</a>
 <a role="button" onclick="switchTab('zanzibar')">Zanzibar</a>
+<a role="button" onclick="switchTab('tunisie')">Tunisie</a>
 </div>
 <div class="mega-col" id="c-ameriques">
 <a role="button" onclick="switchTab('usa')">USA &amp; Canada</a>
@@ -1354,6 +1355,25 @@ header p {
 <div class="prix-label">À partir de 33 900 DH</div>
 <button class="btn-details" onclick="openModal('modal-vietnam')">Voir détails</button>
 <button class="btn-video" onclick="openVideo('modal-vietnam')">▶ Voir la vidéo</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TAB TUNISIE -->
+<div class="tab-content" id="tunisie">
+<h2 class="section-title">Tunisie 2026</h2>
+<p class="section-subtitle">Tunis & Hammamet — Séjour 8 jours avec vols inclus</p>
+<div class="circuits-grid">
+<div class="circuit-card">
+<div class="img-slider" data-slider-id="sl-tunisie"><div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548018560-c7196548e84d?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><div class="slide" style="background-image: url('https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&amp;h=500&amp;fit=crop&amp;q=80')"></div><button class="slider-arrow slider-prev" onclick="prevSlide('sl-tunisie')">‹</button><button class="slider-arrow slider-next" onclick="nextSlide('sl-tunisie')">›</button><div class="slider-dots"><button class="slider-dot active" onclick="goSlide('sl-tunisie', 0)"></button><button class="slider-dot" onclick="goSlide('sl-tunisie', 1)"></button><button class="slider-dot" onclick="goSlide('sl-tunisie', 2)"></button></div></div>
+<div class="circuit-content">
+<h3 class="circuit-title">Combiné Tunis &amp; Hammamet</h3>
+<div class="circuit-meta"><span class="meta-item">8 jours</span><span class="meta-item">7 nuits</span></div>
+<p class="circuit-description">2 nuits à Tunis et 5 nuits à Hammamet avec petit déjeuner, vols Nouvelair, transferts privatifs et assistance Voyages 21.</p>
+<div class="prix-label">À partir de 10 400 DH</div>
+<button class="btn-details" onclick="openModal('modal-tunis-hammamet')">Voir détails</button>
+<button class="btn-video" onclick="openVideo('modal-tunis-hammamet')">▶ Voir la vidéo</button>
 </div>
 </div>
 </div>
@@ -2523,7 +2543,7 @@ header p {
         var tabName = (window.location.hash || '').replace('#', '');
         if (!tabName) return;
         var allowed = {
-            europe: true, turquie: true, egypte: true, zanzibar: true,
+            europe: true, turquie: true, egypte: true, tunisie: true, zanzibar: true,
             usa: true, cuba: true, perou: true, chine: true,
             malaisie: true, bangkok: true, vietnam: true,
             croisiere: true, omra: true, maroc: true
@@ -2579,7 +2599,8 @@ header p {
         'modal-bangkok': 'voyages/asie-thailande-bangkok.html',
         'modal-vietnam': 'voyages/asie-vietnam.html',
         'modal-azerbaidjan-turquie': 'voyages/asie-azerbaidjan-turquie.html',
-        'modal-zanzibar': 'voyages/zanzibar-detente.html'
+        'modal-zanzibar': 'voyages/zanzibar-detente.html',
+        'modal-tunis-hammamet': 'voyages/afrique-tunisie-tunis-hammamet.html'
     };
     function openModal(modalId) {
         if (DETAIL_PAGES[modalId]) { window.location.href = DETAIL_PAGES[modalId]; return; }

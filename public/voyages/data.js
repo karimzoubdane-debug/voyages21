@@ -1289,6 +1289,37 @@ window.VOYAGES = {
     cta: { title: "Envie de découvrir le Vietnam ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+
+  "afrique-tunisie-tunis-hammamet": {
+    mediaKey: "modal-tunis-hammamet", whatsapp: "212673280009",
+    eyebrow: "Tunisie · Été 2026",
+    title: "Combiné Tunis & Hammamet",
+    duration: "8 jours",
+    tag: "Tunisie",
+    cadran: [["Départ", "Casablanca"], ["Destination", "Tunis et Hammamet"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus — Nouvelair"], ["Pension", "Petit déjeuner"], ["Hôtels", "Samarons 5★ · Sol Azur Beach 4★"]],
+    price: "10 400 DH",
+    intro: [
+      "Un séjour tunisien entre la capitale Tunis et la douceur balnéaire d'Hammamet.",
+      "Le forfait comprend deux nuits à Tunis, cinq nuits à Hammamet, les vols Nouvelair, les transferts privatifs et l'assistance Voyages 21."
+    ],
+    highlights: ["2 nuits à Tunis au Samarons Hotels 5★", "5 nuits à Hammamet au Sol Azur Beach 4★", "Vols Casablanca — Tunis — Casablanca avec Nouvelair", "Bagage à main 8 kg et bagage en soute 25 kg", "Transferts privatifs arrivée et départ"],
+    days: [
+      { num: "J1", title: "Casablanca — Tunis", text: "Vol Nouvelair vers Tunis, accueil, transfert privatif et installation à l'hôtel.", meta: [["Nuit", "Tunis"]] },
+      { num: "J2", title: "Tunis", text: "Journée libre à Tunis pour découvrir la ville ou organiser une visite selon vos envies.", meta: [["Nuit", "Tunis"]] },
+      { num: "J3", title: "Tunis — Hammamet", text: "Transfert vers Hammamet et installation pour le séjour balnéaire.", meta: [["Nuit", "Hammamet"]] },
+      { num: "J4-J7", title: "Hammamet", text: "Séjour libre à Hammamet en petit déjeuner, entre plage, détente et découvertes personnelles.", meta: [["Nuits", "Hammamet"], ["Formule", "Petit déjeuner"]] },
+      { num: "J8", title: "Tunis — Casablanca", text: "Transfert privatif à l'aéroport de Tunis et vol retour vers Casablanca.", meta: [["Fin", "services"]] }
+    ],
+    inclus: ["Billet d'avion aller-retour Casablanca — Tunis — Casablanca avec Nouvelair", "8 kg de bagage à main et 25 kg de bagage en soute", "2 nuits à Tunis avec petit déjeuner", "5 nuits à Hammamet avec petit déjeuner", "Transferts privatifs arrivée et départ", "Taxes aéroportuaires et taxes de séjour aux hôtels", "Assistance Voyages 21"],
+    exclus: ["Extras aux hôtels", "Boissons", "Pourboires des guides et chauffeurs", "Dépenses personnelles"],
+    hotels: ["Tunis — Samarons Hotels 5★", "Hammamet — Hotel Sol Azur Beach 4★"],
+    priceTable: { head: ["Forfait", "Prix par personne"], rows: [["Adulte en chambre double", "10 400 DH"], ["Enfant 2 à 12 ans partageant la chambre des parents", "6 400 DH"]] },
+    route: ["Casablanca", "Tunis", "Hammamet", "Tunis", "Casablanca"],
+    datesList: ["20 au 27 août 2026"],
+    dates: { line: "Départ du 20 au 27 août 2026.", note: "Tarifs et disponibilités sous réserve de confirmation." },
+    cta: { title: "Envie de partir en Tunisie ?", text: "Nous préparons votre séjour Tunis et Hammamet avec vols, transferts et assistance Voyages 21." }
+  },
+
   "zanzibar-detente": {
     mediaKey: "modal-zanzibar", whatsapp: "212673280009",
     eyebrow: "Zanzibar · Séjour balnéaire", title: "Séjour à Zanzibar — Détente & Loisirs", duration: "8 jours", tag: "Zanzibar",
