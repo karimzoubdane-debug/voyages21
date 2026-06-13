@@ -317,7 +317,8 @@ window.V21_STUDIO = {
   questions: [
     { q: "Décision PRIX Caire & Sharm : tenir 19 600 (vendre le 5★ nommé), baisser ~17 900–18 500, ou ne pas afficher de prix ?", statut: "en attente" },
     { q: "Quels sont les HORAIRES DE VOL réels de l'offre Caire & Sharm (arrivée J1 tôt ou tard) ?", statut: "en attente" },
-    { q: "Autorises-tu l'exécution Apify + Higgsfield depuis l'app desktop, et veux-tu créditer le compte Apify ?", statut: "en attente" },
+    { q: "Apify est bloqué par le gate de permission de la session web (PAS un problème de crédit, solde ~4,42$ OK). Lances-tu le scrape Instagram Scraper sur la console Apify et me donnes-tu l'ID du run ? (recette fournie dans le chat)", statut: "en attente" },
+    { q: "Pour générer les visuels Higgsfield (crédits OK : 466), ouvres-tu la session depuis un client qui permet d'approuver l'action ?", statut: "en attente" },
     { q: "Identifiants YouTube/Snapchat/LinkedIn + conversion du Facebook en Page pro : où en est-on ?", statut: "en attente" }
   ]
 };
