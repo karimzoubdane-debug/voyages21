@@ -57,7 +57,7 @@ async function getLocalBlobUrl(id){const db=await openMediaDb();const blob=await
 async function resolveMediaUrl(item){if(item.url&&item.url.startsWith("localblob:"))return await getLocalBlobUrl(item.url.slice(10));return item.url||""}
 function offerFor(item){const key=[item?.name,item?.url].filter(Boolean).join(" ");return COVER_OFFERS.find(o=>o.match.test(key))||{title:"Evasion Ete 2026",price:"By Voyages 21",intro:true}}
 function renderOffer(item){const offer=offerFor(item);offerCard.classList.add("is-changing");setTimeout(()=>{offerCard.classList.toggle("is-intro",!!offer.intro);eyebrowEl.textContent=offer.intro?"":"A partir de";titleEl.textContent=offer.title;subtitleEl.textContent=offer.price||"";offerCard.classList.remove("is-changing")},120)}
-function renderText(c){magicButton.textContent=c.buttonText||DEFAULT_COVER.buttonText;magicButton.href="#brochure"}
+function renderText(c){magicButton.textContent=c.buttonText||DEFAULT_COVER.buttonText;magicButton.href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html"}
 function escapeCssUrl(value){return String(value||"").replace(/"/g,"%22")}
 function imageCoverScale(img){const vw=Math.max(1,window.innerWidth),vh=Math.max(1,window.innerHeight),iw=img.naturalWidth||vw,ih=img.naturalHeight||vh;const contain=Math.min(vw/iw,vh/ih),cover=Math.max(vw/iw,vh/ih);return Math.max(1.08,Math.min(2.35,cover/contain*1.025))}
 function loadImageElement(img){return new Promise(resolve=>{if(img.complete&&img.naturalWidth){resolve();return}img.onload=()=>resolve();img.onerror=()=>resolve()})}
@@ -71,9 +71,9 @@ function goBrochure(){loadBrochure();if(!audio.paused)toggleSound();document.bod
 function goCover(){document.body.classList.remove("show-brochure");window.scrollTo(0,0);history.replaceState(null,"","#cover")}
 async function toggleSound(){if(!audioReady)return;if(audio.paused){try{await audio.play();soundButton.textContent="ON";soundButton.classList.add("on");soundButton.setAttribute("aria-label","Couper le son");soundButton.title="Couper le son"}catch(e){}}else{audio.pause();soundButton.textContent="OFF";soundButton.classList.remove("on");soundButton.setAttribute("aria-label","Activer le son");soundButton.title="Activer le son"}}
 soundButton.addEventListener("click",toggleSound);
-magicButton.addEventListener("click",e=>{e.preventDefault();goBrochure()});
+magicButton.addEventListener("click",e=>{if(magicButton.getAttribute("href")==="#brochure"){e.preventDefault();goBrochure()}});
 backCover.addEventListener("click",e=>{e.preventDefault();goCover()});
-getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")setTimeout(goBrochure,250)});
+getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")location.replace("/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html")});
 </script>
 </body>
 </html>

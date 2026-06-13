@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  redirect('/cover-ete-2026-prix.html');
+  redirect('/cover-ete-2026.html');
 }
