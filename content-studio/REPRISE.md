@@ -86,10 +86,16 @@ court-circuiter et aller droit au but).
 6. (Optionnel) Engagement réel Apify depuis DESKTOP (gate web bloque le scrape).
 
 ## 🧱 BLOCAGE TECHNIQUE RÉCURRENT (à retenir)
-Les sessions Claude Code **sur le web** ne peuvent PAS approuver une action MCP
-**payante** (Apify `call-actor`, Higgsfield `generate_image` — même le préflight
-coût). settings.json à chaud ne lève pas le gate. → Toute génération/scrape se
-fait depuis l'app **DESKTOP**. Le travail web = recherche, analyse, brief, specs.
+Les sessions web ne peuvent PAS *lancer* une action MCP **payante** (Apify
+`call-actor`, Higgsfield `generate_image`) → erreur « MCP tool call requires
+approval ». MAIS :
+✅ **CONTOURNEMENT APIFY VALIDÉ (13/06)** : *lire* un dataset n'est PAS bloqué.
+Karim lance le scrape sur la **console Apify**, me donne l'URL du run
+(`console.apify.com/actors/.../runs/<RUN_ID>`), et je récupère TOUT via
+`get-actor-run` (runId → datasetId) puis `get-dataset-items`. Run traité :
+`SrzMu16Ph9KxYWV74` → dataset `emtJ0c7Zxn8WZb6Gk` (24 posts vacancia+qafilat).
+→ Pour Higgsfield (génération), pas de contournement lecture : nécessite un
+client qui autorise. Travail web = recherche, analyse, brief, specs.
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).
