@@ -11,7 +11,7 @@ window.V21_STUDIO = {
   // Sélecteur de produit (ascenseur). 'pret' = données complètes.
   produits: [
     { id: "egypte", label: "🇪🇬 Égypte (outgoing)", etat: "pret" },
-    { id: "turquie", label: "🇹🇷 Turquie (outgoing)", etat: "preparation" },
+    { id: "turquie", label: "🇹🇷 Turquie (outgoing)", etat: "pret" },
     { id: "omra", label: "🕋 Omra", etat: "preparation" }
   ],
 
@@ -188,6 +188,127 @@ window.V21_STUDIO = {
         { titre: "Carrousel + épingles « Itinéraire 10 jours »", detail: "Double usage Instagram (10 slides) + Pinterest (1 épingle/jour). Le format le plus sauvegardé, durée de vie 3-6 mois." },
         { titre: "Reel transition « 3 destinations, 1 voyage » (15-30s)", detail: "Pyramides→Nil→mer Rouge, transitions au beat. Ancrage « depuis Casablanca » pour la cible MA outgoing." },
         { titre: "Reel témoignage Karim expert (60-90s)", detail: "Talking head, 3 conseils d'insider, 25 ans d'expertise. Format anti-IA qui monte en 2026, construit la confiance d'achat premium." }
+      ]
+    }
+  },
+
+  turquie: {
+    offres: [
+      {
+        titre: "Séjour à Istanbul", badge: "Entrée de gamme", duree: "8 j / 7 nuits",
+        prix: "dès 9 700 DH/pers", prixDetail: "Triple 3★ 9 700 · Double 4★ 10 900–12 600 · Single 4★ 13 900",
+        hotels: "3★ Laleli / 4★ Fatih / Taksim Square 4★",
+        pension: "7 nuits logement + petit-déjeuner", vols: "Inclus — Turkish Airlines (Casablanca/Istanbul)",
+        volsHoraires: "Été 2026 (juil.–août), départs garantis",
+        inclus: ["Vols A/R Turkish Airlines", "7 nuits B&B", "Croisière sur le Bosphore incluse", "Transferts + taxes", "Guide arabophone (excursions)", "Assistance Voyages21"],
+        exclus: ["Excursions (hors Bosphore)", "Extras & boissons", "Pourboires"],
+        visites: "Mosquée Bleue, Hippodrome, Topkapı, Grand Bazar, Bosphore, Îles des Princesses (option)",
+        dates: "Été 2026 (juillet–août)"
+      },
+      {
+        titre: "Istanbul & Antalya", badge: "Combiné culture + mer", duree: "8 j / 7 nuits",
+        prix: "dès 16 300 DH/pers", prixDetail: "Triple 16 300 · Double 17 900 · Single 23 800",
+        hotels: "Istanbul 4★ + Antalya resort 5★ (Kemer/Belek)",
+        pension: "2 nuits Istanbul (petit-déj) + 5 nuits Antalya tout compris", vols: "Inclus — Turkish Airlines + AJet",
+        volsHoraires: "Été 2026", inclus: ["Vols A/R (bagages généreux)", "2 nuits Istanbul B&B", "5 nuits Antalya tout compris", "Tous les transferts", "Assistance Voyages21"],
+        exclus: ["Extras & boissons", "Pourboires"],
+        visites: "Escale Istanbul + balnéaire Antalya (Méditerranée)", dates: "Été 2026"
+      },
+      {
+        titre: "Istanbul & Bodrum", badge: "Combiné mer Égée", duree: "8 j / 7 nuits",
+        prix: "dès 16 900 DH/pers", prixDetail: "Triple 16 900 · Double 19 700 · Single 24 500",
+        hotels: "Istanbul 4★ + Bodrum resort 5★ (vue mer)",
+        pension: "2 nuits Istanbul (petit-déj) + 5 nuits Bodrum tout compris", vols: "Inclus — Turkish Airlines + AJet",
+        volsHoraires: "Été 2026", inclus: ["Vols A/R", "2 nuits Istanbul B&B", "5 nuits Bodrum tout compris vue mer", "Tous les transferts", "Assistance Voyages21"],
+        exclus: ["Extras & boissons", "Pourboires"],
+        visites: "Escale Istanbul + marina & criques de Bodrum", dates: "Été 2026"
+      },
+      {
+        titre: "Istanbul & Antalya (long séjour)", badge: "11 jours", duree: "11 j / 10 nuits",
+        prix: "dès 19 900 DH/pers", prixDetail: "Triple 19 900 · Double 21 000 · Single 29 500",
+        hotels: "Istanbul 3★/4★ + Antalya resort 5★",
+        pension: "3 nuits Istanbul (petit-déj) + 7 nuits Antalya tout compris", vols: "Inclus — Turkish Airlines",
+        volsHoraires: "Départs garantis : 23/07, 24/07, 30/07, 31/07, 06/08, 07/08, 13/08, 14/08, 20/08, 21/08",
+        inclus: ["Vols A/R Turkish Airlines", "3 nuits Istanbul B&B", "Croisière sur le Bosphore offerte", "7 nuits Antalya tout compris", "Transferts + taxes", "Assistance Voyages21"],
+        exclus: ["Extras & boissons", "Pourboires"],
+        visites: "Mosquée Bleue, Topkapı, Grand Bazar, Bazar égyptien, Bosphore + 7 nuits Méditerranée", dates: "Été 2026"
+      },
+      {
+        titre: "Istanbul, Marmaris & Bodrum", badge: "Grand combiné 11j", duree: "11 j / 10 nuits",
+        prix: "dès 23 500 DH/pers", prixDetail: "Triple 23 500 · Double 24 700 · Single 35 000",
+        hotels: "Istanbul 3★/4★ + Marmaris 5★ + Bodrum 5★ (vue mer)",
+        pension: "3 nuits Istanbul (petit-déj) + 3 nuits Marmaris + 4 nuits Bodrum (tout compris)", vols: "Inclus — Turkish Airlines",
+        volsHoraires: "Départs : 31/07, 03/08, 04/08, 09/08, 10/08, 16/08, 17/08, 21/08",
+        inclus: ["Vols A/R Turkish Airlines", "3 nuits Istanbul B&B", "Croisière sur le Bosphore incluse", "3 nuits Marmaris + 4 nuits Bodrum tout compris", "Transferts", "Assistance Voyages21"],
+        exclus: ["Excursions (hors Bosphore)", "Extras & boissons", "Pourboires"],
+        visites: "Istanbul (vieille ville, Bosphore) + Égée (Marmaris, Bodrum)", dates: "Été 2026"
+      }
+    ],
+    concurrents: {
+      comptes: [
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — Turquie phare", note: "Page Turquie dédiée, Istanbul/Antalya en volume" },
+        { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing", note: "Turquie + Omra+Istanbul combinés" },
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing", note: "Turquie active" },
+        { nom: "@yaallatour", abonnes: "47 K", type: "Outgoing", note: "Istanbul 8j affiché" }
+      ],
+      benchmarkPrix: [],
+      apifyStatut: "⏳ Benchmark prix Turquie + engagement réel À FAIRE (via Apify console — voir Égypte). La Turquie est la destination outgoing la PLUS vendue au Maroc → marché très concurrentiel, benchmark prioritaire."
+    },
+    cadran: {
+      forces: [
+        "Vols Turkish Airlines (qualité + franchise bagages généreuse) sur la plupart des offres",
+        "Combinés culture + balnéaire tout compris (Istanbul + Antalya/Bodrum/Marmaris)",
+        "Croisière sur le Bosphore incluse (offerte sur le 11j Antalya)",
+        "Large gamme de prix : 9 700 DH (séjour) → 23 500 DH (grand combiné)"
+      ],
+      faiblesses: [
+        "Destination la PLUS saturée du marché outgoing marocain → guerre des prix",
+        "Benchmark prix Turquie pas encore réalisé (à faire en priorité)",
+        "Guide arabophone seulement (pas de guide francophone affiché)",
+        "Horaires de vol non publiés sur les fiches"
+      ],
+      ameliorer: [
+        "Lancer le benchmark prix Turquie (Apify/recherche) — marché ultra-concurrentiel",
+        "Mettre en avant Turkish Airlines + croisière Bosphore incluse comme différenciateurs",
+        "Packager une offre premium/sur-mesure pour sortir de la guerre des prix",
+        "Clarifier la langue du guide et les horaires de vol"
+      ]
+    },
+    contenu: {
+      posts: [
+        {
+          visuel: "Istanbul — Mosquée Bleue & Bosphore au coucher du soleil",
+          accroche: "Istanbul, la ville aux deux continents. 🕌 Entre l'appel à la prière et la lumière dorée du Bosphore.",
+          legende: "Séjour à Istanbul — 8 jours, vols Turkish Airlines + croisière sur le Bosphore incluse. Dès 9 700 DH/pers. 📲 0661 24 70 49",
+          hashtags: "#Voyages21 #Turquie #Istanbul #Bosphore",
+          audio: "Cinématique ottoman doux (oud + cordes), montée sur les coupoles."
+        },
+        {
+          visuel: "Antalya / Bodrum — piscine à débordement face à la Méditerranée",
+          accroche: "Un peu de ville, beaucoup de mer. 🌊 5 nuits tout compris sur la Riviera turque.",
+          legende: "Istanbul & Antalya — 8 jours, hôtel 5★ tout compris, vols inclus. Dès 16 300 DH/pers. 📲 0661 24 70 49",
+          hashtags: "#Voyages21 #Turquie #Antalya #ToutCompris",
+          audio: "Pop électronique arabisante solaire, drop sur le plan piscine."
+        },
+        {
+          visuel: "Transition Istanbul (coupoles) → plage turquoise de Bodrum",
+          accroche: "Istanbul le matin, la mer Égée l'après-midi. ✈️ Le meilleur des deux mondes.",
+          legende: "Combinés Istanbul + plage dès 16 300 DH — vols Turkish Airlines inclus. Été 2026, places limitées. 📲 0661 24 70 49 · voyages21.com",
+          hashtags: "#Voyages21 #Turquie #Istanbul #Bodrum",
+          audio: "Transition au beat (whip), montage culture→mer."
+        }
+      ],
+      noteVisuels: "⚠️ Visuels Higgsfield à générer depuis l'app desktop (gate web). Réutiliser le préfixe de marque V21.",
+      planning: "Rythme 4 posts/sem (IG+FB+TikTok). Turquie = forte saisonnalité été → pousser dès maintenant."
+    },
+    viral: {
+      statut: "Même playbook que l'Égypte, adapté Turquie (détail : content-studio/veille-virale.md).",
+      pistes: [
+        "POV première personne — « POV : ton 1er matin sur le Bosphore »",
+        "Transition tenue/lieu — Istanbul historique → plage Bodrum/Antalya (format viral combiné)",
+        "Cost breakdown — « 8 jours Turquie tout compris depuis Casa, le vrai budget »",
+        "« 5 erreurs à éviter pour un combiné Istanbul + plage »",
+        "Hidden gems — Îles des Princesses, quartiers de Balat, Cappadoce en extension"
       ]
     }
   },
