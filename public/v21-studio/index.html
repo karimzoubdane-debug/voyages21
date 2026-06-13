@@ -156,7 +156,18 @@
 
     // 5) VIRAL
     const vi = d.viral;
-    h += '<section><h2>🔥 Inspiration virale</h2><p class="lead">'+esc(vi.statut)+'</p><ul class="pill-list">'+vi.pistes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></section>';
+    h += '<section><h2>🔥 Inspiration virale</h2><p class="lead">'+esc(vi.statut)+'</p>';
+    if(vi.formats){
+      h += '<h3 style="color:var(--green)">📱 Formats qui performent</h3><ul class="pill-list">'+vi.formats.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">🪝 Hooks scroll-stoppers (&lt; 3s)</h3><ul class="pill-list">'+vi.hooks.map(x=>'<li>« '+esc(x)+' »</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">📌 Pinterest — stratégie</h3><ul class="pill-list">'+vi.pinterest.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">🎵 Styles audio/musique</h3><ul class="pill-list">'+vi.audio.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">⭐ 5 posts clés en main</h3>';
+      vi.postsClesEnMain.forEach(p=>{ h += '<div class="post"><b>'+esc(p.titre)+'</b><div class="legende">'+esc(p.detail)+'</div></div>'; });
+    } else if(vi.pistes){
+      h += '<ul class="pill-list">'+vi.pistes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    h += '</section>';
 
     app.innerHTML = h;
   }

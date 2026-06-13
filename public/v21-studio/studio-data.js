@@ -137,13 +137,57 @@ window.V21_STUDIO = {
       planning: "Rythme 4 posts/sem (IG+FB+TikTok). Suggestion : mardi 18h30, jeudi 18h30, samedi 11h, dimanche 18h30. Validation Karim : libre, n'importe quand."
     },
 
-    // 5) INSPIRATION VIRALE (web global + France + Pinterest) — à compléter
+    // 5) INSPIRATION VIRALE (web global + France + Pinterest) — recherche 13/06/2026
     viral: {
-      statut: "🔜 Recherche virale approfondie à lancer (concurrents + web FR + Pinterest). Section v1 = à enrichir prochaine passe.",
-      pistes: [
-        "Reels « POV : tu te réveilles face aux pyramides » — format immersif première personne (très viral voyage).",
-        "Avant/après « ce que tu crois de l'Égypte vs la réalité » — carrousel.",
-        "Pinterest : épingles verticales « itinéraire 11 jours Égypte » + moodboards couleurs Nil/désert (fort en SEO visuel)."
+      statut: "✅ Recherche virale réalisée (sources : Later, Sprout Social, W3Era Pinterest, Soundverse… juin 2026). Détail complet : content-studio/veille-virale.md. Stats externes = indicatives.",
+      formats: [
+        "POV première personne — « POV : tu arrives en Égypte pour la 1re fois » (identification + complétion)",
+        "« X choses que personne ne te dit » — liste numérotée (sauvegarde max)",
+        "Transition tenue/lieu — désert→croisière→mer Rouge (viral sans barrière de langue)",
+        "Attentes vs réalité — clichés vs vraie Égypte (dahabeya privée, temples sans foule)",
+        "Day in my life cinématique — une journée à Louxor/Abou Simbel",
+        "Cost breakdown — « 10 jours tout compris depuis Casa, le vrai budget »",
+        "Hidden gems — Dahchour, Abydos, Désert Blanc, Siwa (anti-masse, premium)",
+        "B-roll cinématique + voix off Karim (image de marque)",
+        "Série épisodique — « Jour 3/10 en Égypte » (fidélise)",
+        "FAQ / réponse à une question — « L'Égypte c'est safe ? » (SEO social + confiance)"
+      ],
+      hooks: [
+        "Ce que personne ne te dit avant l'Égypte",
+        "L'Égypte en 2026, ce n'est plus ce que tu crois",
+        "Tu penses que l'Égypte c'est juste les pyramides ? Regarde ça",
+        "5 erreurs qui gâchent une croisière sur le Nil (et comment les éviter)",
+        "10 jours en Égypte : ce qu'on a fait jour par jour",
+        "Je n'étais pas prêt pour Abou Simbel au lever du soleil",
+        "L'Égypte depuis Casa → combien ça coûte vraiment, sans surprises",
+        "Wach 3arftou belli Misra men a7san safar f 2026 ? (darija)",
+        "POV : tu prends l'avion avec Voyages21 pour la croisière de tes rêves"
+      ],
+      pinterest: [
+        "Format vertical 2:3 — 1000×1500px, sans watermark ; le TEXTE sur image = le hook (autoplay muet)",
+        "Pinterest = moteur de recherche : boards keyword-first, descriptions ≤500 car., PAS de hashtags en 2026",
+        "Boards à créer : « Voyage en Égypte — Circuits & Croisières 2026 », « Croisière sur le Nil — Guide », « Pyramides & Le Caire », « Louxor Aswan Temples », « Sharm El Sheikh Mer Rouge », « Moodboard Égypte Luxe », « Égypte en Famille », « Préparer son Voyage »",
+        "Cadence 5-10 épingles/jour ; durée de vie 3-6 mois (trafic long terme)",
+        "Types gagnants : itinéraires > comparatifs > moodboards > infographies budget > tips",
+        "Saisonnalité : publier 45-90 j avant (haute saison oct.→avril → publier dès juillet)",
+        "Long-tail : « circuit Égypte 10 jours pas cher », « croisière Nil tout compris depuis Maroc », « Sharm ou Hurghada snorkeling »",
+        "Activer Pinterest Business + Rich Pins (vérifier le domaine voyages21)"
+      ],
+      audio: [
+        "Cinématique oriental fusion (cordes + tabla, builds) — B-rolls pyramides/Nil [dominant]",
+        "Ambient oriental doux (oud/nay) — day-in-life, croisière contemplative",
+        "Pop électronique arabisante (maqam + EDM) — transitions Sharm/mer Rouge",
+        "Orchestral épique — intro choc Gizeh/Karnak/Abou Simbel",
+        "Lo-fi travel / bossa douce — slow travel (petit-déj bateau, souk le soir)",
+        "Sound design / ASMR (muezzin, eau sur la coque) — pattern interrupt en ouverture",
+        "Afrobeat/afropop fusion — contenus festifs (snorkeling, beach Dahab)"
+      ],
+      postsClesEnMain: [
+        { titre: "Reel POV arrivée Caire (45-60s)", detail: "Révélation des pyramides au coucher de soleil. Audio cinématique oriental qui climaxe à l'apparition. CTA : programme Caire+Nil+Mer Rouge." },
+        { titre: "Reel « 5 erreurs croisière Nil » (60-90s)", detail: "Format liste expert (éviter août, dahabeya privée, Abou Simbel tôt, Kom Ombo/Edfou, guide FR). Fort taux de sauvegarde + positionnement référence." },
+        { titre: "Carrousel + épingles « Itinéraire 10 jours »", detail: "Double usage Instagram (10 slides) + Pinterest (1 épingle/jour). Le format le plus sauvegardé, durée de vie 3-6 mois." },
+        { titre: "Reel transition « 3 destinations, 1 voyage » (15-30s)", detail: "Pyramides→Nil→mer Rouge, transitions au beat. Ancrage « depuis Casablanca » pour la cible MA outgoing." },
+        { titre: "Reel témoignage Karim expert (60-90s)", detail: "Talking head, 3 conseils d'insider, 25 ans d'expertise. Format anti-IA qui monte en 2026, construit la confiance d'achat premium." }
       ]
     }
   },
