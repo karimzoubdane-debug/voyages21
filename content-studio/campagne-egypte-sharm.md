@@ -98,5 +98,36 @@ visuels. Validation Karim : créneau 30 min le samedi.
 
 ---
 
-## 💰 Benchmark prix concurrents
-_(en cours de production — section complétée par la recherche concurrents)_
+## 💰 Benchmark prix concurrents (Égypte, départ Maroc — vérifié 13/06/2026)
+
+| Agence | Circuit | Durée | Hôtels | Prix dès | Source |
+|---|---|---|---|---|---|
+| **Olé Voyages** | Caire + Assouan/Louxor + Hurghada | ~11j | nd | **15 500 DH** | FB été 2025 |
+| **AjiNsafro** ✅vérifié | Caire + Sharm | 10j/9n | **5★** (3n Caire + 6n Sharm AI) + dîner-Nil | **16 700 DH** | ajinsafro.ma |
+| **Al Hassania** | Grand Tour Caire+Hurghada+Sharm (croisière) | 14j/13n | 5★ partout | **16 900 DH** | alhassaniavoyages |
+| **Vacancia** | Caire + Hurghada | 10j/9n | 4★ AI | **17 500 DH** | vacancia.ma |
+| **ESF** | Caire + croisière Nil + Hurghada | nd | 5★ + croisière 5★ | **17 900 DH** (triple) | esf.ma |
+| **AjiNsafro** | Caire + croisière Nil + Hurghada | 12j/11n | 5★ + croisière | **18 700 DH** | ajinsafro.ma |
+| **AjiNsafro** | Caire + croisière + Hurghada + Sharm | 14j/13n | 5★ | **20 400 DH** | ajinsafro.ma |
+| MSM, Follow Me, Eden, Galaxy | Caire+Sharm / croisière | — | 4-5★ | prix non publié | — |
+
+### Positionnement réel de V21 (honnête)
+Marché Caire+Sharm/Hurghada **5★ vols inclus** : **~16 700 → 20 400 DH**.
+L'offre V21 **Caire & Sharm à 19 600 DH** (11j/10n, 7n Sharm AI, 5★) se situe
+**dans le HAUT du marché** — et **plus chère que le comparable direct** :
+AjiNsafro Caire+Sharm 5★ à 16 700 DH (10j/9n, 6n Sharm) → V21 = **+2 900 DH**.
+ESF (croisière Nil 5★) est aussi en dessous à 17 900 DH.
+
+➡️ **Conclusion sans filtre** : sur le prix brut, V21 n'est PAS le moins cher.
+Deux écarts factuels justifient une partie du premium : **+1 nuit balnéaire**
+(7n vs 6n) et **prix tout compris transparent** (plusieurs concurrents ajoutent
+visa/tips/excursions hors prix d'appel). Le reste du premium doit être porté par
+la **marque** (Voyages21, 25 ans) et le **service sur-mesure** — pas par le tarif.
+
+### Arguments de vente exploitables (honnêtes)
+1. **7 nuits balnéaires** en 5★ tout compris (vs 6 chez AjiNsafro au même rang).
+2. **Prix clair, tout compris** — réassurance face aux prix d'appel + extras cachés.
+3. **Confiance & accompagnement** — 25 ans, assistance Voyages21, sur-mesure.
+
+> ⚠️ Décision Karim requise : tenir le prix premium (19 600) et l'assumer dans
+> le discours, OU réviser le tarif pour se rapprocher d'AjiNsafro (16 700–17 900).
