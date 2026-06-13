@@ -1147,6 +1147,71 @@ window.VOYAGES = {
     cta: { title: "Envie de cette croisière Turquie Égypte ?", text: "Nous préparons votre cabine, vos transferts et l'assistance Voyages 21." }
   },
 
+  "asie-ouzbekistan": {
+    mediaKey: "modal-ouzbekistan", whatsapp: "212673280009",
+    eyebrow: "Asie · Ouzbékistan 2026",
+    title: "Ouzbékistan — Route de la Soie",
+    duration: "10 jours",
+    tag: "Asie",
+    cadran: [
+      ["Départ", "Selon vols"],
+      ["Destination", "Ouzbékistan"],
+      ["Durée", "10 jours / 9 nuits"],
+      ["Vols", "Non inclus"],
+      ["Pension", "Pension complète selon programme"],
+      ["Circuit", "Tachkent · Samarkand · Boukhara · Khiva"],
+      ["Guide", "Francophone"]
+    ],
+    price: "15 700 DH",
+    intro: [
+      "Un circuit au cœur de la Route de la Soie, entre cités bleues, déserts, médersas et artisanat traditionnel.",
+      "De Tachkent à Samarkand, puis vers le désert du Kyzylkoum, Boukhara et Khiva, ce voyage traverse les grands joyaux culturels de l'Ouzbékistan.",
+      "Le programme combine train rapide Afrosiyob, transport privé climatisé, guide francophone et visites des sites majeurs."
+    ],
+    highlights: [
+      "Tachkent : Khast Imam, bazar Chorsu, métro décoré et places centrales",
+      "Samarkand : Régistan, Bibi-Khanoum, Siab, Gour-Emir et Chakh-i-Zinda",
+      "Nuit en camp de yourtes dans le désert du Kyzylkoum",
+      "Boukhara : Poi-Kalyan, Liab-i Haouz, Ark et artisanat",
+      "Khiva : vieille ville Ichan Kala classée UNESCO",
+      "Guide local francophone et transport privé climatisé"
+    ],
+    days: [
+      { num: "J1", title: "Vol vers Tachkent", text: "Envol à destination de Tachkent selon horaires de vol. Dîner et nuit à bord ou selon arrivée.", meta: [["Vol", "non inclus"]] },
+      { num: "J2", title: "Tachkent", text: "Accueil par le guide francophone, transfert, vieille ville, Khast Imam, bazar Chorsu, métro décoré, musée des Arts appliqués et places centrales.", meta: [["Nuit", "Tachkent"]] },
+      { num: "J3", title: "Tachkent — Samarkand", text: "Train rapide Afrosiyob vers Samarkand, visite du Régistan, de Bibi-Khanoum et du bazar Siab.", meta: [["Transport", "train rapide"], ["Nuit", "Samarkand"]] },
+      { num: "J4", title: "Samarkand", text: "Mausolée Gour-Emir, nécropole Chakh-i-Zinda, musée d'Afrasiab et observatoire d'Ouloug Beg.", meta: [["Nuit", "Samarkand"]] },
+      { num: "J5", title: "Samarkand — Nourata — camp de yourtes", text: "Route vers le désert du Kyzylkoum, arrêt à Nourata et nuit en camp de yourtes avec dîner typique.", meta: [["Nuit", "yourtes"]] },
+      { num: "J6", title: "Lac Aydarkul — Guijdouvan — Boukhara", text: "Excursion au lac Aydarkul, atelier de poterie à Guijdouvan, arrivée à Boukhara.", meta: [["Nuit", "Boukhara"]] },
+      { num: "J7", title: "Boukhara", text: "Poi-Kalyan, mosquée Kalon, médersa Mir-i-Arab, coupoles marchandes et quartier Liab-i Haouz.", meta: [["Nuit", "Boukhara"]] },
+      { num: "J8", title: "Boukhara — traditions", text: "Mausolée Ismaïl Samani, citadelle Ark, mosquée Bolo-Khaouz et temps libre pour l'artisanat.", meta: [["Nuit", "Boukhara"]] },
+      { num: "J9", title: "Boukhara — Khiva", text: "Route à travers le Kyzylkoum vers Khiva, installation près de la vieille ville Ichan Kala.", meta: [["Route", "environ 450 km"], ["Nuit", "Khiva"]] },
+      { num: "J10", title: "Khiva", text: "Visite d'Ichan Kala : Kounia-Ark, mosquée Djouma, minaret Islam-Khodja, palais Tach-Khaouli et Kalta Minor.", meta: [["Nuit", "Khiva"]] },
+      { num: "J11", title: "Ourguentch — Tachkent — retour", text: "Transfert à l'aéroport d'Ourguentch, vol intérieur vers Tachkent puis correspondance internationale.", meta: [["Fin", "services"]] }
+    ],
+    inclus: [
+      "Hébergement dans les hôtels mentionnés ou similaires selon disponibilité",
+      "Transport privé climatisé pendant tout le circuit",
+      "Billet de train rapide Afrosiyob Tachkent — Samarkand",
+      "Droits d'entrée dans tous les sites mentionnés",
+      "Guide local francophone durant tout le voyage",
+      "Pension complète sauf repas libres mentionnés"
+    ],
+    exclus: [
+      "Vols internationaux",
+      "Vol domestique Ourguentch — Tachkent si choisi",
+      "Frais de e-visa environ 20 à 30 euros",
+      "Pourboires, boissons et dépenses personnelles",
+      "Assurance voyage"
+    ],
+    hotels: ["Hôtels 3★ : Arien Plaza / Uzbekistan Hotel, Zilol Baxt / Malika Prime, Malika Bukhara / Fatima Hotel", "Hôtels 4★ : Wyndham Garden / Ramada, Dilimah Premium / Emirkhan"],
+    priceTable: { head: ["Catégorie", "Chambre double", "Supplément single"], rows: [["Hôtels 3★", "15 700 DH", "3 500 DH"], ["Hôtels 4★", "17 400 DH", "3 850 DH"]] },
+    route: ["Tachkent", "Samarkand", "Nourata", "Kyzylkoum", "Aydarkul", "Boukhara", "Khiva", "Ourguentch"],
+    datesList: ["14/07 au 24/07/2026", "04/08 au 14/08/2026", "01/09 au 11/09/2026", "06/10 au 16/10/2026", "13/10 au 23/10/2026"],
+    dates: { line: "Départs restants 2026 : juillet, août, septembre et octobre.", note: "Vols non inclus. Tarifs et disponibilités sous réserve de confirmation." },
+    cta: { title: "Envie de découvrir l'Ouzbékistan ?", text: "Nous préparons votre circuit sur la Route de la Soie avec guide francophone et assistance Voyages 21." }
+  },
+
   "asie-chine": {
     mediaKey: "modal-chine", whatsapp: "212673280009",
     eyebrow: "Chine · Grand circuit", title: "Circuit Chine — Pékin, Shanghai & Merveilles", duration: "14 jours", tag: "Chine",
