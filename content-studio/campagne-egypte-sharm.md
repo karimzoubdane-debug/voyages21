@@ -129,5 +129,38 @@ la **marque** (Voyages21, 25 ans) et le **service sur-mesure** — pas par le ta
 2. **Prix clair, tout compris** — réassurance face aux prix d'appel + extras cachés.
 3. **Confiance & accompagnement** — 25 ans, assistance Voyages21, sur-mesure.
 
-> ⚠️ Décision Karim requise : tenir le prix premium (19 600) et l'assumer dans
-> le discours, OU réviser le tarif pour se rapprocher d'AjiNsafro (16 700–17 900).
+### 🔬 Décortication apples-to-apples (Caire & Sharm 5★)
+Comparaison du *comparable réel*, pas juste « 11j vs 10j ».
+
+| Critère | **V21** Caire&Sharm | **AjiNsafro** 16 700 DH | **Galaxy** (prix nd) |
+|---|---|---|---|
+| Durée | 11j/10n | 10j/9n | 11j/10n |
+| Nuits | 3 Caire + **7 Sharm** | 3 Caire + 6 Sharm | 3 Caire + 7 Sharm |
+| Hôtels | **5★ NOMMÉS** (Marriott, Aurora/Cleopatra/Mövenpick) | « au choix » **non nommés** (4-5★) | 5★ non nommés |
+| Visites Caire | Pyramides, Sphinx, Khan El Khalili, mosquées Al-Hussein/Al-Azhar, dîner-Nil | idem **+ Citadelle + Musée** (plus dense) | Pyramides, Sphinx, Musée, dîner-Nil |
+| Vols | « inclus », **horaires non publiés** | EgyptAir — *arrivée Caire 20h25, retour matin* (indicatif, à confirmer) | idem bloc EgyptAir |
+| Extras | visa 600 + tips 20$ | visa 500 + tips ~20$ | visa 500 + tips 20$ |
+
+**Journées réellement utiles** (le point de Karim) : avec le bloc EgyptAir commun,
+**J1 = arrivée ~20h25 (perdu)** et **dernier jour = vols du matin (perdu)** pour
+TOUT LE MONDE. Donc : AjiNsafro 10j ≈ **7 jours utiles** ; Galaxy 11j ≈ **8** ;
+V21 11j ≈ **8** (1 nuit balnéaire de plus qu'AjiNsafro). ⚠️ À confirmer : les
+horaires RÉELS des vols V21 (s'ils arrivent tôt au J1, V21 gagne une journée que
+les autres n'ont pas — argument fort).
+
+**Coût réel minimum** (chambre double, visa + tips inclus) :
+- AjiNsafro ≈ 16 700 + 500 + ~200 = **~17 400 DH**
+- V21 ≈ 19 800 + 600 + ~200 = **~20 600 DH** → écart réel **~3 200 DH (+18 %)**.
+
+**Verdict honnête** : programme **quasi identique de façade** ; AjiNsafro a même un
+Caire un peu plus dense (Citadelle/mosquées). Les SEULS avantages V21 défendables :
+(1) **hôtels 5★ nommés et garantis** (vs « au choix » non nommé = risque 4★ chez
+AjiNsafro), (2) **+1 nuit à Sharm**, (3) **marque/25 ans + service**. Ça justifie
+*une partie* du +18 %, pas tout.
+
+> ⚠️ **Décision Karim** (maintenant mieux informée) :
+> A) Tenir 19 600 et **vendre l'hôtel 5★ nommé garanti** comme différenciateur n°1
+>    (+ transparence prix + 25 ans). C'est l'angle premium cohérent.
+> B) Trimmer vers **~17 900–18 500** pour se caler entre AjiNsafro et ESF.
+> C) D'abord **me donner les horaires de vol réels V21** : si arrivée tôt au J1,
+>    on tient un argument « +1 journée de visite » qu'aucun concurrent n'a.
