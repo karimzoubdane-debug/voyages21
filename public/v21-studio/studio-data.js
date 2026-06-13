@@ -83,7 +83,7 @@ window.V21_STUDIO = {
         { agence: "AjiNsafro", offre: "Caire + croisière + Hurghada", duree: "12j/11n", hotels: "5★", prix: "18 700 DH", verifie: true },
         { agence: "Galaxy Voyage", offre: "Caire + Sharm (structure identique V21)", duree: "11j/10n", hotels: "5★", prix: "non publié", verifie: false }
       ],
-      apifyStatut: "⛔ Donnée d'engagement réelle (likes/commentaires/cadence) NON disponible — Apify bloqué en session web + compte Apify à créditer. À lancer depuis l'app desktop."
+      apifyStatut: "⚠️ Engagement réel PARTIEL : le run Apify lu (SrzMu16Ph9KxYWV74) couvrait @qafilat.tayba (Omra/Hajj — témoignages « shahadat » 1,5-6k vues, 15-135 likes ; combiné Omra+Istanbul 04-18 août 2026 affiché). Les posts ÉGYPTE de Vacancia ne sont pas dans cet échantillon (feed récent = Turquie). → Pour l'engagement Égypte de Vacancia : lire le run « 72 résultats » ou relancer un scrape ciblé Égypte (donne-moi l'ID du run)."
     },
 
     // 3) CADRAN forces / faiblesses / à améliorer (offre Caire & Sharm)
@@ -251,8 +251,26 @@ window.V21_STUDIO = {
         { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing", note: "Turquie active" },
         { nom: "@yaallatour", abonnes: "47 K", type: "Outgoing", note: "Istanbul 8j affiché" }
       ],
-      benchmarkPrix: [],
-      apifyStatut: "⏳ Benchmark prix Turquie + engagement réel À FAIRE (via Apify console — voir Égypte). La Turquie est la destination outgoing la PLUS vendue au Maroc → marché très concurrentiel, benchmark prioritaire."
+      benchmarkPrix: [
+        { agence: "Vacancia (vol direct Marrakech, Turkish Airlines)", offre: "Combo Istanbul + Antalya", duree: "—", hotels: "—", prix: "13 900 DH", verifie: true },
+        { agence: "Vacancia", offre: "Antalya (séjour)", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true },
+        { agence: "Vacancia", offre: "Circuit Antalya + Marmaris + Fethiye", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true }
+      ],
+      apifyStatut: "✅ Engagement réel récupéré via Apify (run SrzMu16Ph9KxYWV74, 13/06/2026). Prix Vacancia ci-dessus = réels (vol direct Marrakech). Pour benchmark hôtels/durée détaillé, relancer un scrape ciblé.",
+      engagementReel: [
+        { compte: "@vacancia.ma", format: "Reel Istanbul (audio original)", vues: "203 646", likes: "547", comm: "33" },
+        { compte: "@vacancia.ma", format: "Reel Istanbul + Bali", vues: "157 018", likes: "386", comm: "14" },
+        { compte: "@vacancia.ma", format: "Carrousel « Earlybooking dès 19 900 DH, 10× sans frais »", vues: "—", likes: "703", comm: "14" },
+        { compte: "@vacancia.ma", format: "Reel Antalya", vues: "25 078", likes: "114", comm: "18" },
+        { compte: "@maroua_merzouqui (influenceuse → Vacancia)", format: "UGC partenariat", vues: "41 070", likes: "1 291", comm: "13" }
+      ],
+      learnings: [
+        "Le format qui scale = Reel court « destination + numéro de résa » en audio original (jusqu'à 200k vues) — prod simple, pas léchée",
+        "Like-rate faible mais reach énorme : le volume vient des VUES, pas des likes",
+        "Carrousels « prix choc dès X DH + paiement 10× sans frais » = plus de likes (703)",
+        "Vacancia active des influenceuses (UGC) → @maroua 41k vues, 1 291 likes",
+        "Argument martelé : VOL DIRECT Marrakech (Turkish Airlines) — V21 peut en faire autant"
+      ]
     },
     cadran: {
       forces: [

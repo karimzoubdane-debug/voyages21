@@ -132,7 +132,16 @@
     v.benchmarkPrix.forEach(b=>{
       h += '<tr><td>'+esc(b.agence)+'</td><td>'+esc(b.offre)+'</td><td>'+esc(b.duree)+'</td><td>'+esc(b.hotels)+'</td><td><b>'+esc(b.prix)+'</b></td><td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
     });
-    h += '</table><div class="note bad">'+esc(v.apifyStatut)+'</div></section>';
+    h += '</table>';
+    if(v.engagementReel && v.engagementReel.length){
+      h += '<div class="sep"></div><h3 style="color:var(--green)">📊 Engagement réel (Apify)</h3>'+
+        '<table><tr><th>Compte</th><th>Format</th><th>Vues</th><th>❤️</th><th>💬</th></tr>'+
+        v.engagementReel.map(e=>'<tr><td>'+esc(e.compte)+'</td><td>'+esc(e.format)+'</td><td><b>'+esc(e.vues)+'</b></td><td>'+esc(e.likes)+'</td><td>'+esc(e.comm)+'</td></tr>').join('')+'</table>';
+    }
+    if(v.learnings && v.learnings.length){
+      h += '<h3 style="color:var(--green);margin-top:14px">💡 Apprentissages</h3><ul class="pill-list">'+v.learnings.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    h += '<div class="note">'+esc(v.apifyStatut)+'</div></section>';
 
     // 3) CADRAN
     const c = d.cadran;
