@@ -19,6 +19,15 @@ court-circuiter et aller droit au but).
 - **« point V21 »** (ou « où on en est ») = récap de situation : étapes
   faites, état du PR, en attente côté Karim, prochaines étapes.
 
+## 🖥️ PLATEFORME V21 STUDIO (point d'entrée équipes)
+- **URL partageable** : `https://voyages21.vercel.app/studio/` (après déploiement).
+- Fichiers : `public/studio/index.html` (contenant) + `public/studio/studio-data.js`
+  (contenu — Claude met à jour ce JSON à CHAQUE session V21 STUDIO, Vercel redéploie).
+- Sections : sélecteur produit · offres brochure (détails techniques) · veille
+  concurrents + benchmark prix · cadran forces/faiblesses/à améliorer ·
+  propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
+- Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
+
 ## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
   sous-agents sonnet, puis vérification adversariale). Fonctionne.
