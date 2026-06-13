@@ -58,15 +58,28 @@ court-circuiter et aller droit au but).
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
-1. ✅ FAIT — skill tour-de-contrôle testé + veille concurrents livrée
-   (`veille-concurrents.md`).
-2. ⭐ PROCHAIN LIVRABLE : campagne **Égypte** (3 visuels Higgsfield + 3 accroches
-   IG/FB) — positionnement décidé par la veille : **Égypte premium/sur-mesure**
-   (PAS promo-prix, pour se différencier de Vacancia & co). Demander à Karim les
-   dates/villes/prix OU les lire sur voyages21.com. Les 3 idées sont déjà dans le
-   calendrier Notion en 💡 Idée.
-3. (Optionnel) Compléter la veille avec l'engagement réel Apify depuis une
-   session DESKTOP, pour confirmer quels formats/accroches performent vraiment.
+1. ✅ FAIT — skill tour-de-contrôle testé + veille concurrents (`veille-concurrents.md`).
+2. ✅ FAIT — campagne **Égypte Caire & Sharm** : brief créatif (3 accroches + 3
+   prompts Higgsfield prêts) + benchmark prix vérifié + décortication
+   apples-to-apples → `content-studio/campagne-egypte-sharm.md`.
+3. ⏸️ EN PAUSE — **décision PRIX** (V21 19 600 = +18 % vs AjiNsafro 16 700 pour
+   un Caire+Sharm 5★ quasi identique). Karim a dit : « laisse ces questions de
+   cotes, on va y revenir ». NE PAS relancer le sujet prix tant qu'il ne le
+   rouvre pas. 3 options en attente : A) tenir 19 600 + vendre l'hôtel 5★ nommé,
+   B) baisser ~17 900–18 500, C) donner d'abord les horaires de vol réels V21.
+4. ⏸️ EN PAUSE — **génération des visuels** : bloquée 2× (gate MCP web pour
+   Higgsfield ET dépend de la décision prix). À lancer depuis l'app DESKTOP une
+   fois le prix tranché. Crédits Higgsfield OK (466, Pro).
+5. ⚠️ À FAIRE quand Karim redonne la main : récupérer les **horaires de vol
+   réels** de l'offre Caire & Sharm V21 (fiche site ne les publie pas) — si
+   arrivée tôt au J1 = argument « +1 journée » qu'aucun concurrent n'a.
+6. (Optionnel) Engagement réel Apify depuis DESKTOP (gate web bloque le scrape).
+
+## 🧱 BLOCAGE TECHNIQUE RÉCURRENT (à retenir)
+Les sessions Claude Code **sur le web** ne peuvent PAS approuver une action MCP
+**payante** (Apify `call-actor`, Higgsfield `generate_image` — même le préflight
+coût). settings.json à chaud ne lève pas le gate. → Toute génération/scrape se
+fait depuis l'app **DESKTOP**. Le travail web = recherche, analyse, brief, specs.
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).
