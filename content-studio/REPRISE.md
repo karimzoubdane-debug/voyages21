@@ -19,7 +19,23 @@ court-circuiter et aller droit au but).
 - **« point V21 »** (ou « où on en est ») = récap de situation : étapes
   faites, état du PR, en attente côté Karim, prochaines étapes.
 
-## 📍 Dernier point (mis à jour le 12/06/2026 — soir)
+## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
+- ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
+  sous-agents sonnet, puis vérification adversariale). Fonctionne.
+- ✅ **Veille concurrents livrée** → `content-studio/veille-concurrents.md` :
+  fiches des 4 comptes (@yaallatour, @simplymorocco [= INCOMING, pas un
+  concurrent Égypte], @qafilat.tayba [Omra], @vacancia.ma [concurrent Égypte
+  n°1, vérifié]) + 20 agences marocaines outgoing/incoming sourcées + lecture
+  stratégique Égypte (3 opportunités : Égypte premium sur-mesure, combiné
+  Omra+culturel, contenu éditorial différenciant).
+- ⚠️ **BLOCAGE Apify connu** : les sessions Claude Code **sur le web** ne peuvent
+  PAS approuver une action MCP payante (`call-actor`) à chaud → scrape engagement
+  réel impossible en web. Repli web-only utilisé (abonnés/positionnement/accroches
+  publiques OK, mais pas de likes/cadence exacts). Pour l'engagement réel :
+  relancer depuis l'app DESKTOP, ou lancer le run sur la console Apify + importer
+  le dataset. Liste des données manquantes en bas de veille-concurrents.md.
+
+## 📍 Point précédent (12/06/2026 — soir)
 - Système installé : 4 connecteurs OK (Higgsfield, Drive, Notion, Apify).
 - Dossier Drive `VOYAGES21-CONTENT-STUDIO` créé + partagé par lien.
 - ✅ TESTÉ en session neuve : Notion répond (page « Voyages21 Content
@@ -42,15 +58,15 @@ court-circuiter et aller droit au but).
   (stock de billets à écouler), puis Turquie, puis autres.
 
 ## ▶️ Prochaine étape à proposer à Karim
-0. ⚡ D'ABORD : tester le skill **tour-de-controle** (fraîchement installé,
-   chargé seulement en session neuve) en l'appliquant à la veille Apify
-   ci-dessous — Karim dira « tour de contrôle » sur cette tâche.
-1. Veille Apify : liste d'agences marocaines **outgoing + incoming** actives
-   sur les réseaux, et premier scan des 4 comptes concurrents donnés par
-   Karim (formats qui marchent, fréquence, accroches).
-2. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
-   IG/FB) — demander à Karim les dates/villes/prix OU les lire sur le site.
-   Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.
+1. ✅ FAIT — skill tour-de-contrôle testé + veille concurrents livrée
+   (`veille-concurrents.md`).
+2. ⭐ PROCHAIN LIVRABLE : campagne **Égypte** (3 visuels Higgsfield + 3 accroches
+   IG/FB) — positionnement décidé par la veille : **Égypte premium/sur-mesure**
+   (PAS promo-prix, pour se différencier de Vacancia & co). Demander à Karim les
+   dates/villes/prix OU les lire sur voyages21.com. Les 3 idées sont déjà dans le
+   calendrier Notion en 💡 Idée.
+3. (Optionnel) Compléter la veille avec l'engagement réel Apify depuis une
+   session DESKTOP, pour confirmer quels formats/accroches performent vraiment.
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).
