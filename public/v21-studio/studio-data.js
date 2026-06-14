@@ -1028,17 +1028,20 @@ window.V21_STUDIO = {
 
     // 5) INSPIRATION VIRALE
     viral: {
-      statut: "⚠️ Aucun reel Zanzibar marocain viral existant (niche) → les exemples ci-dessous sont des FORMATS réels prouvés à transposer sur Zanzibar. À toi de créer le 1er reel Zanzibar marocain qui perce.",
-      viralExamples: [
-        { cat: "ugc", origine: "🇹🇿 Zanzibar", titre: "★ Créatrice locale — « Zanzibar Tastemaker »", compte: "@sabah_adeem", lien: "https://www.instagram.com/p/DYUa_wZsIWN/", stat: "3 813 vues · 676 ❤️", pourquoi: "UGC d'une créatrice basée à Zanzibar : l'aspirationnel authentique « vie sur l'île ». Le ton exact à reproduire (réel > promo)." },
-        { cat: "ugc", origine: "🇹🇿 Tanzanie", titre: "UGC « Beautiful Tanzania »", compte: "@storynzuri", lien: "https://www.instagram.com/p/C5yvyy_LyRr/", stat: "1 762 vues · 1 233 ❤️", pourquoi: "Like-rate très élevé sur du contenu nature/plage → preuve que l'image « carte postale » crée l'envie. Modèle B-roll." },
-        { cat: "ugc", origine: "🇹🇿 Zanzibar", titre: "UGC voyageur — Ahmed de Zanzibar", compte: "@ahmed_dezan", lien: "https://www.instagram.com/p/DZhegKICGnw/", stat: "❤️ 11 (vues non captées)", pourquoi: "Guide/créateur local : le format « insider qui te montre l'île » à reproduire avec un partenaire sur place." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format combiné/transition « 2 décors en 1 »", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "À transposer : Stone Town → lagon Nungwi. (Pas de reel Zanzibar MA viral existant → format à importer.)" },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Squelette « destination + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Le plus efficace du marché MA → l'appliquer à Zanzibar (départs garantis juin-août, places limitées)." },
-        { cat: "reel", origine: "🇹🇿 Zanzibar", titre: "Hôtel/resort local — reel séjour", compte: "@thegarten.living", lien: "https://www.instagram.com/p/DZhFcKbgDEH/", stat: "❤️ 48 (vues non captées)", pourquoi: "Reel « resort/chambre vue océan » : le type de plan qui vend le rêve balnéaire. À filmer sur nos hôtels Nungwi/Kendwa." },
-        { cat: "intl", origine: "🇹🇿 Tanzanie", titre: "★ Créateur Tanzanie — « beach villa »", compte: "@rena_callist", lien: "https://www.instagram.com/p/DRSE98cjIAN/", stat: "10 690 vues · 2 832 ❤️", pourquoi: "Le contenu lifestyle/villa de plage scale (10k vues, fort like-rate). Modèle de viralité « art de vivre océan Indien »." },
-        { cat: "intl", origine: "🇹🇿 Zanzibar", titre: "Créateur local — design/lifestyle île", compte: "@dogoelishaofficial", lien: "https://www.instagram.com/p/DZjq9vNAk2B/", stat: "❤️ 46 (vues non captées)", pourquoi: "Créateur zanzibari : esthétique locale (couleurs, Stone Town). Source d'inspiration visuelle authentique." },
-        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageur étranger — Zanzibar", compte: "@dakotacrooks89", lien: "https://www.instagram.com/p/DZgUcZ5zFX4/", stat: "❤️ 12 (vues non captées)", pourquoi: "Touriste international qui documente son séjour → preuve de la demande internationale, et modèle d'UGC à solliciter auprès de nos clients." }
+      statut: "✅ Zanzibar = NICHE : 0 reel marocain (scrape 6 mois confirme) → la FORCE = les créateurs Tanzanie/Zanzibar (réels, triés par vues) + 2 formats MA à transposer. À toi de créer le 1er reel Zanzibar marocain.",
+      ugcGardeFou: "Garde-fou : aucun reel Zanzibar MA n'existe → on s'appuie sur de vrais créateurs locaux (Tanzanie/Zanzibar). Demande à CRÉER (contenu aspirationnel), pas à récolter. Section « Maroc » = formats à transposer (clairement étiquetés).",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "Format à ADAPTER — transition « 2 décors »", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DYo9YhegdXn/", pourquoi: "⚠️ Pas un post Zanzibar (aucun n'existe) : FORMAT à transposer Stone Town → lagon Nungwi.", message: "« 2 décors, 1 voyage »", hook: "Whip-cut", plans: "Transition ville→plage.", posture: "Importer ce format sur Zanzibar." },
+        { origine: "🇲🇦 Maroc", titre: "Format à ADAPTER — « destination + dates »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DX9xEMlMHjW/", pourquoi: "⚠️ Pas Zanzibar : FORMAT « destination + dates + places limitées » à appliquer (départs juin-août).", message: "« Zanzibar, places limitées »", hook: "Destination + dates", plans: "Plages + cartons.", posture: "Afficher dates + rareté." }
+      ],
+      viralReelsIntl: [
+        { origine: "🇹🇿 Tanzanie", titre: "★ Créateur Tanzanie — « beach villa »", compte: "@rena_callist", lien: "https://www.instagram.com/p/DRSE98cjIAN/", stat: "10 690 vues · 2 832 ❤️", son: "nd", pourquoi: "Le lifestyle/villa de plage scale (10k vues, fort like-rate). Modèle « art de vivre océan Indien »." },
+        { origine: "🇹🇿 Tanzanie", titre: "« Beautiful Tanzania » (like-rate énorme)", compte: "@storynzuri", lien: "https://www.instagram.com/p/C5yvyy_LyRr/", stat: "1 762 vues · 1 233 ❤️", son: "nd", pourquoi: "Like-rate exceptionnel sur du nature/plage → l'image « carte postale » crée l'envie. Modèle B-roll." }
+      ],
+      viralUgc: [
+        { origine: "🇹🇿 Zanzibar", titre: "★ Créatrice locale — « Zanzibar Tastemaker »", compte: "@sabah_adeem", lien: "https://www.instagram.com/p/DYUa_wZsIWN/", stat: "3 813 vues · 676 ❤️", son: "nd", pourquoi: "UGC d'une créatrice basée à Zanzibar : l'aspirationnel authentique « vie sur l'île ». Le ton exact (réel > promo)." },
+        { origine: "🇹🇿 Zanzibar", titre: "Hôtel/resort local — reel séjour", compte: "@thegarten.living", lien: "https://www.instagram.com/p/DZhFcKbgDEH/", stat: "❤️ 48 (vues non captées)", son: "nd", pourquoi: "Reel « chambre vue océan » : le plan qui vend le rêve balnéaire. À filmer sur nos hôtels Nungwi/Kendwa." },
+        { origine: "🌍 Intl", titre: "UGC voyageur étranger — Zanzibar", compte: "@dakotacrooks89", lien: "https://www.instagram.com/p/DZgUcZ5zFX4/", stat: "❤️ 12 (vues non captées)", son: "nd", pourquoi: "Touriste international qui documente son séjour → preuve de la demande, modèle d'UGC à solliciter chez nos clients." }
       ],
       pistes: [
         "Reel transition « Stone Town → lagon turquoise » (whip-cut, afro-house)",
@@ -1135,18 +1138,42 @@ window.V21_STUDIO = {
       noteVisuels: "Lieux réels = vraies images. Visuels IA = inspiration uniquement.",
       planning: "Cible CSP+. Pousser l'aspirationnel (Halong/Hoi An) + carrousel itinéraire + Pinterest."
     },
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "@terratour_voyages", plateforme: "Instagram (agence)", audience: "75 K · reels Vietnam 40-58k vues", sujet: "Circuits Asie premium (Vietnam, Japon) en reels « destination + dates ». Le concurrent MA le plus fort sur l'Asie.", lien: "https://www.instagram.com/terratour_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "@follow_me_travel_", plateforme: "Instagram (agence)", audience: "111 K", sujet: "Combinés Asie (KL+Bali, etc.). Reels rythmés.", lien: "https://www.instagram.com/follow_me_travel_/" },
+      { origine: "🇲🇦 Maroc", nom: "@vacancia.ma", plateforme: "Instagram (agence)", audience: "139 K", sujet: "Lointains/Asie en volume.", lien: "https://www.instagram.com/vacancia.ma/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Clients V21 Vietnam = vivier UGC à activer.", lien: "" },
+      { origine: "🇮🇳 Inde", nom: "@ruchira600 / créateurs IN", plateforme: "Instagram (UGC)", audience: "micro-moyen", sujet: "Marché émetteur indien massif vers le Vietnam → codes et audios universels.", lien: "https://www.instagram.com/ruchira600/" },
+      { origine: "🌍 Intl", nom: "@ir.raw.street", plateforme: "Instagram (photographe)", audience: "niche", sujet: "Direction artistique « scènes de rue » Vietnam — esthétique premium.", lien: "https://www.instagram.com/ir.raw.street/" },
+      { origine: "🌍 Intl", nom: "@diaenarys / @ems_home_", plateforme: "Instagram (UGC)", audience: "micro", sujet: "Carnets de voyage / slow travel Vietnam — authenticité.", lien: "https://www.instagram.com/diaenarys/" },
+      { origine: "🌍 Intl", nom: "⚠️ Influenceurs Vietnam (à scraper)", plateforme: "à identifier", audience: "—", sujet: "Pas de gros influenceur Vietnam capté → scrape ciblé recommandé pour 4 EU solides.", lien: "" }
+    ],
+    reseauxDestIntro: "Application du playbook au Vietnam (circuit culturel lointain, cible CSP+, très visuel : Halong/Hoi An).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reels « destination + dates » Halong/Hoi An (modèle terratour) + audio tendance. Carrousel itinéraire 14j pour les saves.", exemple: "Reproduire le reel terratour 58k + tester un son tendance (Dua Lipa) comme eux." },
+      { nom: "👍 Facebook", conseil: "Cible CSP+ : programme détaillé (5★, vols intérieurs, guide FR), réassurance.", exemple: "Post « Vietnam Hanoi→Saigon 14j, Qatar Airways, guide FR, dès 33 900 DH »." },
+      { nom: "🎵 TikTok", conseil: "Transition « du nord au sud », POV « 1er matin sur la baie d'Halong », audio TikTok.", exemple: "Cost-breakdown « Vietnam depuis Casa, le vrai budget »." },
+      { nom: "👻 Snapchat", conseil: "Phase ads : Snap Ads CSP+, offres « places limitées août ».", exemple: "Story « départ 8 août, 4 places » → WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « itinéraire 14 jours Vietnam », « baie d'Halong » → trafic long terme.", exemple: "Recycler le carrousel itinéraire en épingles." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « Vietnam : nord ou sud ? » + B-roll. Short SEO « Visa Vietnam ».", exemple: "Short « Combien coûte le Vietnam depuis le Maroc ? »." }
+    ],
+
     viral: {
-      statut: "✅ Reels MA réels + exemples internationaux. ⚠️ L'international Vietnam scrapé (hashtag) est RÉCENT et peu viral (likes faibles, vues non captées) — un scrape d'influenceurs ciblé enrichirait cette section.",
-      viralExamples: [
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "★ Concurrent — reel Vietnam qui marche", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DZKRrxNszhZ/", stat: "40 477 vues · 1 141 ❤️", pourquoi: "Preuve que le Vietnam se vend en reel MA. Schéma « destination + dates + places limitées ». À refaire mieux filmé." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format « circuit Asie premium »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle de reel circuit Asie (Japon) transposable au Vietnam." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel combiné Asie", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Reach correct sur l'Asie : montage rythmé multi-décors." },
-        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — Vietnam", compte: "@diaenarys", lien: "https://www.instagram.com/p/DZjzImHGiEM/", stat: "❤️ 7 (vues non captées)", pourquoi: "UGC voyageuse : le ton « carnet de voyage » à reproduire avec un client V21." },
-        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageuse indienne — Vietnam", compte: "@ruchira600", lien: "https://www.instagram.com/p/DZjzDl3tqSv/", stat: "❤️ 4 (vues non captées)", pourquoi: "L'Inde est un marché émetteur énorme vers le Vietnam → codes/audios universels à observer." },
-        { cat: "ugc", origine: "🌍 Intl", titre: "UGC — quotidien au Vietnam", compte: "@ems_home_", lien: "https://www.instagram.com/p/DZjyRi7GjZl/", stat: "❤️ 5 (vues non captées)", pourquoi: "Contenu « slow travel » du quotidien : authenticité à solliciter chez nos voyageurs." },
-        { cat: "intl", origine: "🌍 Intl", titre: "Street photography — Vietnam", compte: "@ir.raw.street", lien: "https://www.instagram.com/p/DZj0Co-sxrS/", stat: "❤️ 3 (vues non captées)", pourquoi: "Esthétique « scènes de rue » : direction artistique premium pour se différencier des promos." },
-        { cat: "intl", origine: "🌍 Intl", titre: "Créateur voyage — Vietnam", compte: "@h_jpegz", lien: "https://www.instagram.com/p/DZjxJPbiT7h/", stat: "❤️ 3 (vues non captées)", pourquoi: "Voyageur étranger documentant le pays : preuve de la désirabilité internationale." },
-        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageuse — Vietnam", compte: "@cthrnkhdv", lien: "https://www.instagram.com/p/DZjyYVYkyaV/", stat: "❤️ 4 (vues non captées)", pourquoi: "Format « POV découverte » réutilisable en darija/FR." }
+      statut: "✅ Reels VIETNAM réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ L'international Vietnam reste faible au scrape (likes à 1 chiffre) → scrape d'influenceurs Vietnam ciblé recommandé pour l'enrichir.",
+      ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Vietnam. ⚠️ L'UGC Vietnam vraiment viral n'est pas remonté (engagement faible des posts récents) ; ces exemples sont réels mais modestes. La FORCE ici = les reels MA terratour (40-58k vues).",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "★ Reel Vietnam n°1 MA", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DUAb8rVDHkZ/", stat: "58 119 vues · 475 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DUAb8rVDHkZ/", pourquoi: "Le reel Vietnam MA le plus vu (58k) : preuve que l'Asie lointaine se vend en reel propre et rythmé.", message: "« Vis le Vietnam avec nous »", hook: "Beau plan Halong/rizières", plans: "B-roll paysages forts + dates.", posture: "Prod soignée = premium perçu." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Vietnam « destination + dates »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DZKRrxNszhZ/", stat: "42 241 vues · 1 183 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DZKRrxNszhZ/", pourquoi: "Schéma « destination + dates + places limitées ». Fort like-rate. À refaire encore mieux filmé.", message: "« Vietnam, départs août »", hook: "Destination + dates en gros", plans: "Halong, Hoi An, dates.", posture: "Toujours afficher dates + rareté." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Vietnam (audio tendance Dua Lipa)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DS5NErXDN69/", stat: "26 703 vues · 292 ❤️", son: "« Houdini » — Dua Lipa", sonLien: "https://www.instagram.com/p/DS5NErXDN69/", pourquoi: "Preuve qu'un AUDIO TENDANCE (Dua Lipa) booste un reel destination → l'algo pousse le son.", message: "Vietnam en mode tendance", hook: "Drop musical sur un beau plan", plans: "Montage au beat.", posture: "Utiliser un son tendance, pas que de l'asiatique." }
+      ],
+      viralReelsIntl: [
+        { origine: "🌍 Intl", titre: "Street photography — Vietnam", compte: "@ir.raw.street", lien: "https://www.instagram.com/p/DZj0Co-sxrS/", stat: "❤️ 3 (vues non captées)", son: "nd", pourquoi: "Esthétique « scènes de rue » : direction artistique premium pour se différencier des promos." },
+        { origine: "🌍 Intl", titre: "Créateur voyage — Vietnam", compte: "@h_jpegz", lien: "https://www.instagram.com/p/DZjxJPbiT7h/", stat: "❤️ 3 (vues non captées)", son: "nd", pourquoi: "Voyageur étranger documentant le pays : preuve de la désirabilité internationale (marché émetteur multiple)." }
+      ],
+      viralUgc: [
+        { origine: "🌍 Intl", titre: "UGC voyageuse — Vietnam", compte: "@diaenarys", lien: "https://www.instagram.com/p/DZjzImHGiEM/", stat: "❤️ 7 (vues non captées)", son: "nd", pourquoi: "Ton « carnet de voyage » à reproduire avec un client V21 réel." },
+        { origine: "🇮🇳 Inde", titre: "UGC voyageuse indienne — Vietnam", compte: "@ruchira600", lien: "https://www.instagram.com/p/DZjzDl3tqSv/", stat: "❤️ 4 (vues non captées)", son: "nd", pourquoi: "L'Inde = marché émetteur énorme vers le Vietnam → codes/audios universels à observer." },
+        { origine: "🌍 Intl", titre: "UGC slow travel — quotidien Vietnam", compte: "@ems_home_", lien: "https://www.instagram.com/p/DZjyRi7GjZl/", stat: "❤️ 5 (vues non captées)", son: "nd", pourquoi: "Contenu « slow travel » authentique à solliciter chez nos voyageurs." }
       ],
       pistes: ["Reel « destination + dates » Halong/Hoi An (modèle terratour, mieux filmé)", "Transition « du nord au sud » Hanoi→Saigon", "Carrousel + Pinterest « itinéraire 14 jours Vietnam »"],
       audio: [
@@ -1211,17 +1238,21 @@ window.V21_STUDIO = {
       planning: "Aspirationnel temples+plages, transitions virales, Pinterest itinéraire."
     },
     viral: {
-      statut: "✅ Reels MA réels (format Asie) + exemples internationaux. ⚠️ International Thaïlande scrapé = RÉCENT, engagement modeste (vues non captées) — scrape d'influenceurs ciblé recommandé.",
-      viralExamples: [
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle de reel « circuit Asie » (Japon) directement transposable à la Thaïlande." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concurrent — combiné Asie (KL + Bali)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZSz6w3TtLR/", stat: "4 694 vues · 148 ❤️", pourquoi: "Le combiné « 2-3 décors » se vend → V21 a Bangkok + Krabi + Phuket à monter pareil." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors au beat, reach correct." },
-        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — Thaïlande", compte: "@sweetiefernandes783", lien: "https://www.instagram.com/p/DZVVHA4SuM1/", stat: "❤️ 150 (vues non captées)", pourquoi: "Le meilleur UGC Thaïlande de l'échantillon : carnet de voyage à reproduire." },
-        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageuse — Krabi/Phuket", compte: "@partolepaurnima", lien: "https://www.instagram.com/p/DZjsmCsimr1/", stat: "❤️ 63 (vues non captées)", pourquoi: "Marché émetteur indien massif → codes d'UGC plage à observer." },
-        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC — balade en Thaïlande", compte: "@walk_with_teesta", lien: "https://www.instagram.com/p/DZjt3FlCWAD/", stat: "❤️ 59 (vues non captées)", pourquoi: "Format « walk with me » immersif, réutilisable." },
-        { cat: "intl", origine: "🇮🇳 Inde", titre: "Créateur voyage — Thaïlande", compte: "@rakshatsingh__", lien: "https://www.instagram.com/p/DZjqfqcmb3I/", stat: "❤️ 77 (vues non captées)", pourquoi: "Voyageur d'un autre marché émetteur : preuve de l'universalité du contenu plage." },
-        { cat: "intl", origine: "🇮🇳 Inde", titre: "UGC — Thaïlande", compte: "@kash_khandelwal", lien: "https://www.instagram.com/p/DZjwaxsE711/", stat: "❤️ 32 (vues non captées)", pourquoi: "Format court « highlights du séjour » à transposer." },
-        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageur — Thaïlande", compte: "@doctorsagardc", lien: "https://www.instagram.com/p/DZjpXrGTHo5/", stat: "❤️ 28 (vues non captées)", pourquoi: "Preuve de contenu spontané abondant → solliciter nos voyageurs pour de l'UGC." }
+      statut: "✅ Reels THAÏLANDE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ Reels MA Thaïlande modestes (4-5k vues) ; l'international est récent/peu viral → scrape d'influenceurs Thaïlande ciblé recommandé.",
+      ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Thaïlande (Bangkok/Krabi/Phuket). Engagement modeste au scrape ; le levier le plus sûr ici = le reel transition « temples → plages » + audio tendance.",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "Concurrent — combiné Asie (KL + plages)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZSz6w3TtLR/", stat: "4 818 vues · 151 ❤️", son: "Audio original (follow_me)", sonLien: "https://www.instagram.com/p/DZSz6w3TtLR/", pourquoi: "Le combiné « 2-3 décors » se vend → V21 a Bangkok + Krabi + Phuket à monter pareil.", message: "« Plusieurs décors, 1 voyage »", hook: "Enchaînement rapide de décors", plans: "Whip-cuts villes→plages.", posture: "Monter Bangkok → Krabi → Phuket." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Thaïlande (Vacancia)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DV8UUg3gp1J/", stat: "2 930 vues · 86 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DV8UUg3gp1J/", pourquoi: "Format promo court : reach modeste mais régulier. La cadence construit l'audience.", message: "« Thaïlande, réserve »", hook: "Plan plage + prix", plans: "B-roll plages.", posture: "Cadence + audio tendance pour percer." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Thaïlande (2e)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DVqgZ0Cjx88/", stat: "1 882 vues · 31 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DVqgZ0Cjx88/", pourquoi: "Montre que sans audio tendance, le reach plafonne → l'audio fait la différence.", message: "« Évasion Thaïlande »", hook: "Plan mer", plans: "B-roll.", posture: "Choisir un son tendant, pas générique." }
+      ],
+      viralReelsIntl: [
+        { origine: "🇮🇳 Inde", titre: "Créateur voyage — Thaïlande", compte: "@rakshatsingh__", lien: "https://www.instagram.com/p/DZjqfqcmb3I/", stat: "❤️ 77 (vues non captées)", son: "nd", pourquoi: "Marché émetteur indien massif vers la Thaïlande : universalité du contenu plage." },
+        { origine: "🌍 Intl", titre: "UGC voyageur — Thaïlande", compte: "@doctorsagardc", lien: "https://www.instagram.com/p/DZjpXrGTHo5/", stat: "❤️ 28 (vues non captées)", son: "nd", pourquoi: "Contenu spontané abondant → solliciter nos voyageurs pour de l'UGC." }
+      ],
+      viralUgc: [
+        { origine: "🌍 Intl", titre: "★ Meilleur UGC Thaïlande de l'échantillon", compte: "@sweetiefernandes783", lien: "https://www.instagram.com/p/DZVVHA4SuM1/", stat: "❤️ 150 (vues non captées)", son: "nd", pourquoi: "Carnet de voyage soigné → le ton à reproduire avec un client V21." },
+        { origine: "🇮🇳 Inde", titre: "UGC plage — Krabi/Phuket", compte: "@partolepaurnima", lien: "https://www.instagram.com/p/DZjsmCsimr1/", stat: "❤️ 63 (vues non captées)", son: "nd", pourquoi: "Codes d'UGC plage à observer (audio, esthétique)." },
+        { origine: "🇮🇳 Inde", titre: "UGC « walk with me » — Thaïlande", compte: "@walk_with_teesta", lien: "https://www.instagram.com/p/DZjt3FlCWAD/", stat: "❤️ 59 (vues non captées)", son: "nd", pourquoi: "Format immersif « balade » réutilisable." }
       ],
       pistes: ["Reel transition « temples → plages turquoise »", "Cost breakdown « 14 jours Thaïlande depuis Casa »", "Carrousel + Pinterest itinéraire Bangkok-Krabi-Phuket"],
       audio: [
@@ -1286,17 +1317,21 @@ window.V21_STUDIO = {
       planning: "Jouer le contraste ville/plage en reel transition + carrousel itinéraire."
     },
     viral: {
-      statut: "✅ Reels MA réels (dont le concurrent direct follow_me) + exemples internationaux. ⚠️ International scrapé = RÉCENT, engagement modeste (vues non captées).",
-      viralExamples: [
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "★ Concurrent DIRECT — combiné KL + plages", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZSz6w3TtLR/", stat: "4 694 vues · 148 ❤️", pourquoi: "Exactement notre produit (KL + Bali/Singapore/Phuket). À surclasser sur la prod et l'offre." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé (reach)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Le format multi-décors au beat marche : à appliquer KL→Krabi→Phuket." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle « circuit Asie » bien filmé à viser." },
-        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — KL/Malaisie", compte: "@spoorthy_nayak", lien: "https://www.instagram.com/p/DZicTZUEx5L/", stat: "❤️ 117 (vues non captées)", pourquoi: "Meilleur UGC Malaisie de l'échantillon : carnet de voyage à reproduire." },
-        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageuse — Malaisie", compte: "@devanshi246", lien: "https://www.instagram.com/p/DZjVoIckvRU/", stat: "❤️ 43 (vues non captées)", pourquoi: "Marché émetteur indien → codes d'UGC à observer." },
-        { cat: "ugc", origine: "🇹🇭 Thaïlande", titre: "UGC local — lifestyle", compte: "@milk_lakchaya", lien: "https://www.instagram.com/p/DZjetFRCYIm/", stat: "❤️ 13 (vues non captées)", pourquoi: "Créateur local : esthétique authentique à intégrer." },
-        { cat: "intl", origine: "🇨🇳 Chine", titre: "UGC voyageuse — Malaisie", compte: "@rub_yyyyyyyyyy", lien: "https://www.instagram.com/p/DZjx4kkE7Ay/", stat: "❤️ 16 (vues non captées)", pourquoi: "Autre marché émetteur (Chine) : universalité du contenu." },
-        { cat: "intl", origine: "🌍 Intl", titre: "Moments & Miles — voyage", compte: "@momentsandmiles__", lien: "https://www.instagram.com/p/DZjmLWrEWuA/", stat: "❤️ 5 (vues non captées)", pourquoi: "Compte « travel diary » : format storytelling réutilisable." },
-        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageur — Malaisie", compte: "@andish27", lien: "https://www.instagram.com/p/DZjvij1l5eL/", stat: "❤️ 12 (vues non captées)", pourquoi: "Preuve de contenu spontané → solliciter nos voyageurs." }
+      statut: "✅ Reels MALAISIE+THAÏLANDE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ Reels MA modestes ; international récent/peu viral → scrape d'influenceurs ciblé recommandé.",
+      ugcGardeFou: "Garde-fou : UGC = vrais voyageurs (KL/Krabi/Phuket). Engagement modeste ; le levier ici = le reel transition « gratte-ciels → plages » + audio tendance.",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "★ Concurrent DIRECT — combiné KL + plages", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZSz6w3TtLR/", stat: "4 818 vues · 151 ❤️", son: "Audio original (follow_me)", sonLien: "https://www.instagram.com/p/DZSz6w3TtLR/", pourquoi: "Exactement notre produit (KL + plages). À surclasser sur la prod et l'offre.", message: "« KL + plages, en 1 voyage »", hook: "Petronas → plage en transition", plans: "Whip-cut ville→mer.", posture: "Monter Petronas → Krabi → Phuket, mieux filmé." },
+        { origine: "🇲🇦 Maroc", titre: "Reel combiné « Papaoutai » (audio tendance)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DV-74DcAkHN/", stat: "3 161 vues · 44 ❤️", son: "« Papaoutai (Afro Soul) » — remix", sonLien: "https://www.instagram.com/p/DV-74DcAkHN/", pourquoi: "Un audio afro/remix tendance porte le reel → privilégier les sons en hausse.", message: "Évasion Asie", hook: "Drop sur un beau plan", plans: "Montage au beat.", posture: "Son tendance > son neutre." },
+        { origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium (référence)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DY62Ijgsjlw/", pourquoi: "La qualité de prod « circuit Asie » à viser (perçu premium).", message: "« Circuit Asie d'exception »", hook: "Beau plan d'ouverture", plans: "B-roll soigné.", posture: "Investir dans la qualité d'image." }
+      ],
+      viralReelsIntl: [
+        { origine: "🇨🇳 Chine", titre: "UGC voyageuse — Malaisie", compte: "@rub_yyyyyyyyyy", lien: "https://www.instagram.com/p/DZjx4kkE7Ay/", stat: "❤️ 16 (vues non captées)", son: "nd", pourquoi: "Marché émetteur chinois : universalité du contenu KL/plages." },
+        { origine: "🌍 Intl", titre: "Travel diary — Moments & Miles", compte: "@momentsandmiles__", lien: "https://www.instagram.com/p/DZjmLWrEWuA/", stat: "❤️ 5 (vues non captées)", son: "nd", pourquoi: "Format storytelling « carnet » réutilisable." }
+      ],
+      viralUgc: [
+        { origine: "🌍 Intl", titre: "★ Meilleur UGC Malaisie de l'échantillon", compte: "@spoorthy_nayak", lien: "https://www.instagram.com/p/DZicTZUEx5L/", stat: "❤️ 117 (vues non captées)", son: "nd", pourquoi: "Carnet de voyage KL soigné → le ton à reproduire avec un client V21." },
+        { origine: "🇮🇳 Inde", titre: "UGC voyageuse — Malaisie", compte: "@devanshi246", lien: "https://www.instagram.com/p/DZjVoIckvRU/", stat: "❤️ 43 (vues non captées)", son: "nd", pourquoi: "Marché émetteur indien → codes d'UGC à observer." },
+        { origine: "🇹🇭 Thaïlande", titre: "UGC local — lifestyle", compte: "@milk_lakchaya", lien: "https://www.instagram.com/p/DZjetFRCYIm/", stat: "❤️ 13 (vues non captées)", son: "nd", pourquoi: "Esthétique locale authentique à intégrer." }
       ],
       pistes: ["Reel transition « Petronas → plages Krabi »", "« 14 jours, 2 pays : le vrai budget depuis Casa »", "Carrousel itinéraire Malaisie + Thaïlande"],
       audio: [
@@ -1361,17 +1396,21 @@ window.V21_STUDIO = {
       planning: "Aspirationnel « empire + modernité », contraste visuel fort en reel."
     },
     viral: {
-      statut: "✅ Reels MA réels (format circuit Asie) + exemples internationaux. ⚠️ International Chine scrapé = RÉCENT, engagement modeste (vues non captées) — scrape d'influenceurs ciblé recommandé.",
-      viralExamples: [
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium (Japon)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle « grand circuit Asie » bien filmé, directement transposable à la Chine." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Vietnam (preuve Asie qui scale)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DZKRrxNszhZ/", stat: "40 477 vues · 1 141 ❤️", pourquoi: "Preuve que l'Asie lointaine se vend en reel MA → appliquer à la Chine." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors au beat : Muraille → Shanghai." },
-        { cat: "ugc", origine: "🇨🇳 Chine", titre: "★ Créatrice locale — Chine", compte: "@veny_liew", lien: "https://www.instagram.com/p/DZjpfPOEXeQ/", stat: "❤️ 525 (vues non captées)", pourquoi: "Meilleur UGC Chine de l'échantillon : esthétique locale authentique à reproduire." },
-        { cat: "ugc", origine: "🇨🇳 Chine", titre: "UGC voyageur — Chine", compte: "@wenbo.qi", lien: "https://www.instagram.com/p/DZjrIVvCCim/", stat: "❤️ 13 (vues non captées)", pourquoi: "Regard local sur les villes : direction artistique premium." },
-        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — Chine", compte: "@cha_jense", lien: "https://www.instagram.com/p/DZjw9EDjczp/", stat: "❤️ 30 (vues non captées)", pourquoi: "Carnet de voyage étranger : format storytelling à transposer." },
-        { cat: "intl", origine: "🇮🇷 Iran", titre: "Créateur voyage — Chine", compte: "@alireza.akhlaghi.official", lien: "https://www.instagram.com/p/DZjtI6SjcGS/", stat: "❤️ 11 (vues non captées)", pourquoi: "Autre marché émetteur : universalité du contenu « grandes merveilles »." },
-        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageuse — Chine", compte: "@mrrgl8", lien: "https://www.instagram.com/p/DZjqPwVjfq0/", stat: "❤️ 14 (vues non captées)", pourquoi: "Format court « highlights » réutilisable." },
-        { cat: "intl", origine: "🌍 Intl", titre: "UGC — Chine", compte: "@b1nasoul", lien: "https://www.instagram.com/p/DZjzWVaksbo/", stat: "❤️ 9 (vues non captées)", pourquoi: "Preuve de contenu spontané → solliciter nos voyageurs CSP+." }
+      statut: "✅ Reels CHINE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ L'international Chine reste modeste au scrape → scrape d'influenceurs ciblé recommandé. FORCE = reels MA terratour (38-54k vues).",
+      ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Chine. Engagement modeste ; la force ici = les reels MA terratour (Muraille→Shanghai) avec audio tendance.",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "★ Reel circuit Chine/Asie (audio Dua Lipa)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DS2FKhxjG5a/", stat: "53 974 vues · 1 101 ❤️", son: "« Training Season » — Dua Lipa", sonLien: "https://www.instagram.com/p/DS2FKhxjG5a/", pourquoi: "Reel circuit Asie premium + AUDIO TENDANCE Dua Lipa = 54k vues. L'audio tendance porte le reach.", message: "« Grand circuit, grand voyage »", hook: "Drop musical sur monument", plans: "B-roll soigné au beat.", posture: "Audio tendance > son asiatique neutre." },
+        { origine: "🇲🇦 Maroc", titre: "Reel circuit Asie", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DW01tIbDBjD/", stat: "38 435 vues · 418 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DW01tIbDBjD/", pourquoi: "Confirme que le grand circuit Asie scale en reel MA → appliquer à la Chine (Muraille, Shanghai).", message: "« Circuit d'exception »", hook: "Plan monumental", plans: "Paysages + dates.", posture: "Contraste tradition/modernité." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé (référence)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", son: "Audio original", sonLien: "https://www.instagram.com/p/DZWC40AznlA/", pourquoi: "Montage multi-décors au beat : Muraille → skyline Shanghai.", message: "« L'empire ET la modernité »", hook: "Whip-cut tradition→futur", plans: "Transitions.", posture: "Jouer le contraste visuel fort." }
+      ],
+      viralReelsIntl: [
+        { origine: "🇮🇷 Iran", titre: "Créateur voyage — Chine", compte: "@alireza.akhlaghi.official", lien: "https://www.instagram.com/p/DZjtI6SjcGS/", stat: "❤️ 11 (vues non captées)", son: "nd", pourquoi: "Marché émetteur multiple : universalité du contenu « grandes merveilles »." },
+        { origine: "🌍 Intl", titre: "Carnet de voyage — Chine", compte: "@cha_jense", lien: "https://www.instagram.com/p/DZjw9EDjczp/", stat: "❤️ 30 (vues non captées)", son: "nd", pourquoi: "Format storytelling étranger à transposer." }
+      ],
+      viralUgc: [
+        { origine: "🇨🇳 Chine", titre: "★ Créatrice locale — Chine", compte: "@veny_liew", lien: "https://www.instagram.com/p/DZjpfPOEXeQ/", stat: "❤️ 525 (vues non captées)", son: "nd", pourquoi: "Meilleur UGC Chine de l'échantillon : esthétique locale authentique à reproduire." },
+        { origine: "🇨🇳 Chine", titre: "UGC voyageur — villes de Chine", compte: "@wenbo.qi", lien: "https://www.instagram.com/p/DZjrIVvCCim/", stat: "❤️ 13 (vues non captées)", son: "nd", pourquoi: "Regard local sur les villes : direction artistique premium." },
+        { origine: "🌍 Intl", titre: "UGC highlights — Chine", compte: "@mrrgl8", lien: "https://www.instagram.com/p/DZjqPwVjfq0/", stat: "❤️ 14 (vues non captées)", son: "nd", pourquoi: "Format court « highlights » réutilisable." }
       ],
       pistes: ["Reel contraste « Grande Muraille → skyline Shanghai »", "« Visa Chine : on s'occupe de tout » (explainer)", "Carrousel itinéraire 14 jours Pékin-Shanghai"],
       audio: [
@@ -1436,17 +1475,21 @@ window.V21_STUDIO = {
       planning: "Niche cultivée : Pinterest + carrousels histoire + reels « pépite méconnue »."
     },
     viral: {
-      statut: "✅ Reels MA réels (format circuit) + exemples internationaux. ⚠️ International Ouzbékistan scrapé = RÉCENT, engagement modeste (vues non captées) ; destination de niche → scrape d'influenceurs « Asie centrale » ciblé recommandé.",
-      viralExamples: [
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format « circuit + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Le squelette de reel le plus efficace du marché MA (Croatie) → l'appliquer à la Route de la Soie." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle « circuit culturel » bien filmé à viser pour l'Ouzbékistan." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé (reach)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors au beat : Tachkent → Samarkand → Khiva." },
-        { cat: "ugc", origine: "🇺🇿 Ouzbékistan", titre: "★ Créateur local — Ouzbékistan", compte: "@iamshakhjakhan", lien: "https://www.instagram.com/p/DZjKeWAglOe/", stat: "❤️ 96 (vues non captées)", pourquoi: "Créateur local : l'esthétique authentique des cités bleues à reproduire." },
-        { cat: "ugc", origine: "🌏 Indonésie", titre: "UGC expat — « Kehidupan Bule »", compte: "@jenny_fed", lien: "https://www.instagram.com/p/DZjkLWOiPIb/", stat: "❤️ 145 (vues non captées)", pourquoi: "Meilleur UGC de l'échantillon : format « expat découvre » très partageable." },
-        { cat: "ugc", origine: "🇫🇷 France", titre: "UGC — « les chemins de Marie »", compte: "@marie_le_chemin", lien: "https://www.instagram.com/p/DZjZlVlMYFr/", stat: "❤️ 18 (vues non captées)", pourquoi: "Créatrice FR « slow travel » : ton carnet de route à reproduire pour une cible cultivée." },
-        { cat: "intl", origine: "🇰🇷 Corée", titre: "Créateur voyage — Ouzbékistan", compte: "@chaeryeon85", lien: "https://www.instagram.com/p/BXj8LpPAyWO/", stat: "❤️ 60 (vues non captées)", pourquoi: "Marché émetteur asiatique : preuve de la désirabilité internationale de la destination." },
-        { cat: "intl", origine: "🇯🇵 Japon", titre: "UGC voyageur — Asie centrale", compte: "@hanpen_p", lien: "https://www.instagram.com/p/DZii7ulEzBY/", stat: "❤️ 28 (vues non captées)", pourquoi: "Voyageur japonais : esthétique soignée à observer." },
-        { cat: "intl", origine: "🌍 Intl", titre: "Urbex / esthétique — Ouzbékistan", compte: "@unforgiving.urban", lien: "https://www.instagram.com/p/DZjKfjztSRd/", stat: "❤️ 35 (vues non captées)", pourquoi: "Direction artistique forte (architecture) pour se différencier des promos." }
+      statut: "✅ Reels OUZBÉKISTAN réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. FORCE = reel MA terratour 98 295 vues (audio tendance). ⚠️ International niche → scrape d'influenceurs « Asie centrale » recommandé.",
+      ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Ouzbékistan (cités bleues, Samarkand). Niche → engagement modeste à l'étranger, mais le reel MA terratour 98k prouve l'appétit. ⚠️ Toujours préciser « hors vols » sur les posts prix.",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "★ Reel Ouzbékistan n°1 MA (audio The Weeknd)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DTISoiLjFKo/", stat: "98 295 vues · 1 667 ❤️", son: "« Blinding Lights » — The Weeknd", sonLien: "https://www.instagram.com/p/DTISoiLjFKo/", pourquoi: "98k vues sur une NICHE : preuve énorme que les cités bleues + AUDIO TENDANCE (The Weeknd) font rêver. La pépite scale.", message: "« La Route de la Soie te surprend »", hook: "Révélation du Régistan sur le drop", plans: "Cités bleues, mosaïques, drone.", posture: "Audio tendance + beauté brute des monuments." },
+        { origine: "🇲🇦 Maroc", titre: "Format « circuit + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DX9xEMlMHjW/", pourquoi: "Le squelette de reel le plus efficace du marché MA → l'appliquer à la Route de la Soie.", message: "« Circuit + dates + places limitées »", hook: "Destination + dates", plans: "Monuments + cartons dates.", posture: "Afficher dates + rareté." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Ouzbékistan (3e)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DUDukKejBYy/", stat: "13 411 vues · 223 ❤️", son: "Audio original (terratour)", sonLien: "https://www.instagram.com/p/DUDukKejBYy/", pourquoi: "Régularité : plusieurs reels Ouzbékistan → la constance bâtit l'audience sur une niche.", message: "« Pépite méconnue »", hook: "« Tu connais Samarkand ? »", plans: "Cités bleues.", posture: "Jouer la curiosité (« méconnue »)." }
+      ],
+      viralReelsIntl: [
+        { origine: "🇰🇷 Corée", titre: "Créateur voyage — Ouzbékistan", compte: "@chaeryeon85", lien: "https://www.instagram.com/p/BXj8LpPAyWO/", stat: "❤️ 60 (vues non captées)", son: "nd", pourquoi: "Marché émetteur asiatique : preuve de la désirabilité internationale de la destination." },
+        { origine: "🌍 Intl", titre: "Architecture/esthétique — Ouzbékistan", compte: "@unforgiving.urban", lien: "https://www.instagram.com/p/DZjKfjztSRd/", stat: "❤️ 35 (vues non captées)", son: "nd", pourquoi: "Direction artistique forte (architecture) pour se différencier des promos." }
+      ],
+      viralUgc: [
+        { origine: "🌏 Indonésie", titre: "★ UGC expat — « Kehidupan Bule »", compte: "@jenny_fed", lien: "https://www.instagram.com/p/DZjkLWOiPIb/", stat: "❤️ 145 (vues non captées)", son: "nd", pourquoi: "Meilleur UGC de l'échantillon : format « expat découvre » très partageable." },
+        { origine: "🇺🇿 Ouzbékistan", titre: "Créateur local — cités bleues", compte: "@iamshakhjakhan", lien: "https://www.instagram.com/p/DZjKeWAglOe/", stat: "❤️ 96 (vues non captées)", son: "nd", pourquoi: "Esthétique locale authentique à reproduire (Samarkand, Khiva)." },
+        { origine: "🇫🇷 France", titre: "UGC slow travel — « les chemins de Marie »", compte: "@marie_le_chemin", lien: "https://www.instagram.com/p/DZjZlVlMYFr/", stat: "❤️ 18 (vues non captées)", son: "nd", pourquoi: "Ton « carnet de route » FR à reproduire pour une cible cultivée." }
       ],
       pistes: ["Reel « pépite méconnue » Régistan/cités bleues", "Reel « nuit en yourte sous les étoiles »", "Carrousel + Pinterest « itinéraire Route de la Soie » (cible cultivée)"],
       audio: [
