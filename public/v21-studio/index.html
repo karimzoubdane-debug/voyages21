@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>V21 STUDIO — Pilotage contenu Voyages21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1B3A28; --green2:#152E1F; --gold:#C8A440; --cream:#F5F0E8;
+    --ink:#23241f; --muted:#6b6f66; --line:#e4ddcf; --ok:#2e7d52; --warn:#b5862a; --bad:#a8432f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--cream)}
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+  header{background:var(--green);color:var(--cream);padding:22px 20px;text-align:center}
+  header .logo{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;letter-spacing:.5px}
+  header .logo b{color:var(--gold);font-style:normal}
+  header .sub{font-size:13px;opacity:.85;margin-top:4px}
+  .bar{background:var(--green2);color:var(--cream);padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+  .bar label{font-size:13px;opacity:.85}
+  select{font-family:inherit;font-size:15px;padding:8px 12px;border-radius:8px;border:1px solid var(--gold);background:var(--cream);color:var(--green);font-weight:700}
+  .meta{margin-left:auto;font-size:12px;opacity:.8}
+  main{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+  section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:22px;box-shadow:0 2px 14px rgba(27,58,40,.04)}
+  section > h2{margin:0 0 4px;font-size:22px;color:var(--green);display:flex;align-items:center;gap:10px}
+  .lead{color:var(--muted);font-size:14px;margin:0 0 18px}
+  .sep{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:14px 0 18px;border-radius:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fffdf9}
+  .card h3{margin:0 0 6px;font-size:18px;color:var(--green)}
+  .badge{display:inline-block;background:var(--gold);color:#3a2c08;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+  .price{font-weight:700;color:var(--green);font-size:17px;margin:6px 0}
+  .row{font-size:13.5px;margin:5px 0;line-height:1.45}
+  .row b{color:var(--green2)}
+  .pill-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.5}
+  .pill-list.exclus{color:var(--bad)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+  th{color:var(--green2);font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+  tr.v td{background:#f4fbf6}
+  .chk{color:var(--ok);font-weight:700}
+  .swot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .quad{border-radius:12px;padding:15px}
+  .quad h4{margin:0 0 8px;font-size:15px}
+  .quad ul{margin:0;padding-left:18px;font-size:13px;line-height:1.55}
+  .q-force{background:#eef7f0;border:1px solid #cfe6d6}.q-force h4{color:var(--ok)}
+  .q-faible{background:#fcf0ec;border:1px solid #f0d6cd}.q-faible h4{color:var(--bad)}
+  .q-amel{background:#fbf6e8;border:1px solid #ecdfba}.q-amel h4{color:var(--warn)}
+  .note{background:#fff7e6;border:1px solid #ecdfba;border-radius:10px;padding:11px 14px;font-size:13px;color:#6b5618;margin-top:12px}
+  .note.bad{background:#fcf0ec;border-color:#f0d6cd;color:#7a2f1f}
+  .post{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fffdf9;margin-bottom:14px}
+  .post .accroche{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--green);margin:6px 0}
+  .post .legende{font-size:13.5px;margin:8px 0}
+  .post .hash{font-size:12.5px;color:var(--gold);font-weight:700}
+  .post .audio{font-size:12.5px;color:var(--muted);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+  .qbox{border-left:4px solid var(--gold);padding:10px 14px;background:#fffdf9;border-radius:0 10px 10px 0;margin-bottom:10px;font-size:14px}
+  .qbox .st{font-size:11px;font-weight:700;color:var(--warn);text-transform:uppercase}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+  .hidden{display:none}
+  .soon{text-align:center;color:var(--muted);padding:40px 20px;font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Voyages<b>21</b> · STUDIO</div>
+  <div class="sub">Plateforme de pilotage contenu — partageable avec les équipes</div>
+</header>
+
+<div class="bar">
+  <label for="sel">Produit :</label>
+  <select id="sel"></select>
+  <span class="meta" id="meta"></span>
+</div>
+
+<main id="app"></main>
+<footer id="foot"></footer>
+
+<script src="/v21-studio/studio-data.js"></script>
+<script>
+  const D = window.V21_STUDIO;
+  const sel = document.getElementById('sel');
+  const app = document.getElementById('app');
+  document.getElementById('meta').textContent = D.meta.version + " · maj " + D.meta.maj;
+  document.getElementById('foot').textContent = D.meta.note + " · Voyages21 — agence sur mesure depuis 2000";
+
+  D.produits.forEach(p=>{
+    const o=document.createElement('option');
+    o.value=p.id; o.textContent=p.label + (p.etat!=='pret'?' (en préparation)':'');
+    sel.appendChild(o);
+  });
+
+  const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  function render(id){
+    const p = D.produits.find(x=>x.id===id);
+    if(!p || p.etat!=='pret'){ app.innerHTML = '<section><div class="soon">🔧 Données en préparation pour ce produit. Reviens bientôt.</div></section>'; return; }
+    const d = D[id];
+    let h = '';
+
+    // 1) OFFRES
+    h += '<section><h2>🧳 Nos offres — détails techniques</h2><p class="lead">Données issues de la brochure / du site Voyages21.</p><div class="grid">';
+    d.offres.forEach(o=>{
+      h += '<div class="card"><span class="badge">'+esc(o.badge)+'</span><h3>'+esc(o.titre)+'</h3>'+
+        '<div class="price">'+esc(o.prix)+'</div>'+
+        '<div class="row"><b>Durée :</b> '+esc(o.duree)+'</div>'+
+        '<div class="row"><b>Prix :</b> '+esc(o.prixDetail)+'</div>'+
+        '<div class="row"><b>Hôtels :</b> '+esc(o.hotels)+'</div>'+
+        '<div class="row"><b>Pension :</b> '+esc(o.pension)+'</div>'+
+        '<div class="row"><b>Vols :</b> '+esc(o.vols)+'</div>'+
+        '<div class="row" style="color:var(--warn)">'+esc(o.volsHoraires)+'</div>'+
+        '<div class="row"><b>Visites :</b> '+esc(o.visites)+'</div>'+
+        '<div class="row"><b>Dates :</b> '+esc(o.dates)+'</div>'+
+        '<div class="row"><b>Inclus :</b></div><ul class="pill-list">'+o.inclus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+        '<div class="row"><b>Non inclus :</b></div><ul class="pill-list exclus">'+o.exclus.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+      '</div>';
+    });
+    h += '</div></section>';
+
+    // 2) VEILLE
+    const v = d.concurrents;
+    h += '<section><h2>🔭 Veille concurrents</h2><p class="lead">Comptes ciblés + benchmark prix vérifié.</p>';
+    h += '<div class="grid">';
+    v.comptes.forEach(c=>{
+      h += '<div class="card"><h3>'+esc(c.nom)+'</h3><div class="price">'+esc(c.abonnes)+' abonnés</div>'+
+        '<div class="row"><b>'+esc(c.type)+'</b></div><div class="row">'+esc(c.note)+'</div></div>';
+    });
+    h += '</div><div class="sep"></div><h3 style="color:var(--green)">Benchmark prix Égypte (départ Maroc, vols inclus)</h3>'+
+      '<table><tr><th>Agence</th><th>Offre</th><th>Durée</th><th>Hôtels</th><th>Prix dès</th><th>Vérifié</th></tr>';
+    v.benchmarkPrix.forEach(b=>{
+      h += '<tr><td>'+esc(b.agence)+'</td><td>'+esc(b.offre)+'</td><td>'+esc(b.duree)+'</td><td>'+esc(b.hotels)+'</td><td><b>'+esc(b.prix)+'</b></td><td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
+    });
+    h += '</table>';
+    if(v.engagementReel && v.engagementReel.length){
+      h += '<div class="sep"></div><h3 style="color:var(--green)">📊 Engagement réel (Apify)</h3>'+
+        '<table><tr><th>Compte</th><th>Format</th><th>Vues</th><th>❤️</th><th>💬</th></tr>'+
+        v.engagementReel.map(e=>'<tr><td>'+esc(e.compte)+'</td><td>'+esc(e.format)+'</td><td><b>'+esc(e.vues)+'</b></td><td>'+esc(e.likes)+'</td><td>'+esc(e.comm)+'</td></tr>').join('')+'</table>';
+    }
+    if(v.learnings && v.learnings.length){
+      h += '<h3 style="color:var(--green);margin-top:14px">💡 Apprentissages</h3><ul class="pill-list">'+v.learnings.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    h += '<div class="note">'+esc(v.apifyStatut)+'</div></section>';
+
+    // 3) CADRAN
+    const c = d.cadran;
+    h += '<section><h2>🎯 Cadran — forces / faiblesses / à améliorer</h2><div class="swot">';
+    h += '<div class="quad q-force"><h4>✅ Points forts</h4><ul>'+c.forces.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+    h += '<div class="quad q-faible"><h4>⚠️ Points faibles</h4><ul>'+c.faiblesses.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+    h += '<div class="quad q-amel"><h4>🛠️ À améliorer</h4><ul>'+c.ameliorer.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+    h += '</div></section>';
+
+    // 4) CONTENU
+    const ct = d.contenu;
+    h += '<section><h2>✍️ Propositions de contenu</h2><p class="lead">'+esc(ct.planning)+'</p>';
+    ct.posts.forEach((po,i)=>{
+      h += '<div class="post"><b>Post '+(i+1)+' — visuel :</b> '+esc(po.visuel)+
+        '<div class="accroche">« '+esc(po.accroche)+' »</div>'+
+        '<div class="legende">'+esc(po.legende)+'</div>'+
+        '<div class="hash">'+esc(po.hashtags)+'</div>'+
+        '<div class="audio">🎵 '+esc(po.audio)+'</div></div>';
+    });
+    h += '<div class="note">'+esc(ct.noteVisuels)+'</div></section>';
+
+    // 5) VIRAL
+    const vi = d.viral;
+    h += '<section><h2>🔥 Inspiration virale</h2><p class="lead">'+esc(vi.statut)+'</p>';
+    if(vi.formats){
+      h += '<h3 style="color:var(--green)">📱 Formats qui performent</h3><ul class="pill-list">'+vi.formats.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">🪝 Hooks scroll-stoppers (&lt; 3s)</h3><ul class="pill-list">'+vi.hooks.map(x=>'<li>« '+esc(x)+' »</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">📌 Pinterest — stratégie</h3><ul class="pill-list">'+vi.pinterest.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">🎵 Styles audio/musique</h3><ul class="pill-list">'+vi.audio.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+      h += '<div class="sep"></div><h3 style="color:var(--green)">⭐ 5 posts clés en main</h3>';
+      vi.postsClesEnMain.forEach(p=>{ h += '<div class="post"><b>'+esc(p.titre)+'</b><div class="legende">'+esc(p.detail)+'</div></div>'; });
+    } else if(vi.pistes){
+      h += '<ul class="pill-list">'+vi.pistes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    h += '</section>';
+
+    app.innerHTML = h;
+  }
+
+  // 6) QUESTIONS (toujours affichées en bas, communes au projet)
+  function renderQuestions(){
+    let h = '<section><h2>❓ Questions de Claude → réponses attendues de Karim</h2><p class="lead">Donne-moi ces éléments (ici dans le chat) pour le meilleur livrable.</p>';
+    D.questions.forEach(q=>{ h += '<div class="qbox"><span class="st">'+esc(q.statut)+'</span><br>'+esc(q.q)+'</div>'; });
+    h += '</section>';
+    return h;
+  }
+
+  function full(){ render(sel.value); app.innerHTML += renderQuestions(); }
+  sel.addEventListener('change', full);
+  full();
+</script>
+</body>
+</html>

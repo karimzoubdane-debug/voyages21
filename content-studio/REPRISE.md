@@ -19,7 +19,33 @@ court-circuiter et aller droit au but).
 - **« point V21 »** (ou « où on en est ») = récap de situation : étapes
   faites, état du PR, en attente côté Karim, prochaines étapes.
 
-## 📍 Dernier point (mis à jour le 12/06/2026 — soir)
+## 🖥️ PLATEFORME V21 STUDIO (point d'entrée équipes)
+- **URL partageable** : `https://voyages21.vercel.app/v21-studio/` (après merge sur main ;
+  sinon URL preview de la branche). ⚠️ NE PAS utiliser `/studio` = pris par Sanity Studio.
+- Fichiers : `public/v21-studio/index.html` (contenant) + `public/v21-studio/studio-data.js`
+  (contenu — Claude met à jour ce JSON à CHAQUE session V21 STUDIO, Vercel redéploie).
+- Sections : sélecteur produit · offres brochure (détails techniques) · veille
+  concurrents + benchmark prix · cadran forces/faiblesses/à améliorer ·
+  propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
+- Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
+
+## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
+- ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
+  sous-agents sonnet, puis vérification adversariale). Fonctionne.
+- ✅ **Veille concurrents livrée** → `content-studio/veille-concurrents.md` :
+  fiches des 4 comptes (@yaallatour, @simplymorocco [= INCOMING, pas un
+  concurrent Égypte], @qafilat.tayba [Omra], @vacancia.ma [concurrent Égypte
+  n°1, vérifié]) + 20 agences marocaines outgoing/incoming sourcées + lecture
+  stratégique Égypte (3 opportunités : Égypte premium sur-mesure, combiné
+  Omra+culturel, contenu éditorial différenciant).
+- ⚠️ **BLOCAGE Apify connu** : les sessions Claude Code **sur le web** ne peuvent
+  PAS approuver une action MCP payante (`call-actor`) à chaud → scrape engagement
+  réel impossible en web. Repli web-only utilisé (abonnés/positionnement/accroches
+  publiques OK, mais pas de likes/cadence exacts). Pour l'engagement réel :
+  relancer depuis l'app DESKTOP, ou lancer le run sur la console Apify + importer
+  le dataset. Liste des données manquantes en bas de veille-concurrents.md.
+
+## 📍 Point précédent (12/06/2026 — soir)
 - Système installé : 4 connecteurs OK (Higgsfield, Drive, Notion, Apify).
 - Dossier Drive `VOYAGES21-CONTENT-STUDIO` créé + partagé par lien.
 - ✅ TESTÉ en session neuve : Notion répond (page « Voyages21 Content
@@ -41,16 +67,71 @@ court-circuiter et aller droit au but).
 - Priorité business n°1 : OUTGOING via voyages21.com → **Égypte d'abord**
   (stock de billets à écouler), puis Turquie, puis autres.
 
+## 🧱 BLOCAGE TECHNIQUE — ✅ RÉSOLU EN PERMANENT (14/06/2026)
+**Solution Apify permanente CONFIGURÉE** sur l'environnement cloud « Zakaria » :
+- Accès réseau = **Personnalisé** + domaines autorisés `api.apify.com` et `*.apify.com`
+  (case « inclure liste par défaut » cochée → GitHub/npm/amazonaws conservés).
+- Variable d'environnement **`APIFY_TOKEN`** = token API Apify.
+- ⚠️ S'applique aux **NOUVELLES sessions uniquement** (pas aux sessions déjà ouvertes).
+
+➡️ **Dans une NOUVELLE session, faire ceci pour valider l'autonomie totale :**
+```
+curl -sS "https://api.apify.com/v2/users/me?token=$APIFY_TOKEN"
+```
+Si ça répond (JSON user) → je peux TOUT faire moi-même via l'API REST Apify + curl :
+- Lister les runs : `GET https://api.apify.com/v2/acts/shu8hvrXbJbY3Eb9W/runs?token=$APIFY_TOKEN&desc=1&limit=30`
+- Lire un dataset : `GET https://api.apify.com/v2/datasets/<DATASET_ID>/items?token=$APIFY_TOKEN&clean=true&fields=...`
+- **Lancer un scrape** : `POST https://api.apify.com/v2/acts/apify~instagram-scraper/runs?token=$APIFY_TOKEN` (body JSON input) — plus besoin du MCP bloqué.
+Actor Instagram Scraper : id `shu8hvrXbJbY3Eb9W` (apify/instagram-scraper).
+
+🔐 **SÉCURITÉ** : le token actuel a circulé dans le chat → **le régénérer** dans Apify
+(Settings → API tokens) et mettre le NOUVEAU dans la variable `APIFY_TOKEN` de l'env.
+
+(Rappel : le MCP Apify reste utilisable en LECTURE — `get-actor-run`, `get-dataset-items`
+— même sans token ; seul `call-actor` est bloqué par l'approval gate.)
+
+## 📋 CAHIER DES CHARGES V21 STUDIO (à exécuter — donné par Karim le 14/06)
+Périmètre : **Égypte + Turquie**. Tout va dans la plateforme `public/v21-studio/`.
+1. **Veille concurrentielle** : NE PAS se limiter aux 4 comptes de Karim — chercher
+   moi-même les concurrents les PLUS performants, sélectionner les meilleurs, et
+   **inclure Voyages21 (toi) dans le tableau de benchmark** pour qu'il se situe.
+   Concurrents sélectionnés (scrape Apify) : vacancia.ma, msm_voyages, olevoyages.ma,
+   follow_me_travel_, ajinsafro.ma, transatourmaroc, royaltravelofficiel, terratour_voyages.
+2. **Inspiration virale** : ajouter le **lien cliquable vers le post réel** pour chaque exemple.
+3. **Stratégie réseaux** : pas que Pinterest — ajouter **Instagram, Facebook, TikTok,
+   Snapchat** (+ Pinterest), chacun avec ses codes.
+4. **Style audio** : ajouter un **lien pour écouter** chaque piste (son IG/TikTok ou
+   banque libre type Pixabay/Uppbeat).
+5. **Posts clés en main** : ajouter un **post UGC (avec acteur)** + livrer pour la vidéo :
+   script, textes, **langues (FR/darija)**, direction visuelle, brief casting, plan de
+   tournage, CTA, **KPIs cibles** (vues/rétention/saves). Et pour CHAQUE post clé en main,
+   un **lien vers un post cible similaire** à reproduire avec la marque V21 (inspiration,
+   pas plagiat, respect des droits).
+Méthode : tour-de-contrôle (recherche déléguée en // → vérif → intégration plateforme).
+
 ## ▶️ Prochaine étape à proposer à Karim
-0. ⚡ D'ABORD : tester le skill **tour-de-controle** (fraîchement installé,
-   chargé seulement en session neuve) en l'appliquant à la veille Apify
-   ci-dessous — Karim dira « tour de contrôle » sur cette tâche.
-1. Veille Apify : liste d'agences marocaines **outgoing + incoming** actives
-   sur les réseaux, et premier scan des 4 comptes concurrents donnés par
-   Karim (formats qui marchent, fréquence, accroches).
-2. Premier livrable concret : campagne **Égypte** (3 visuels + 3 accroches
-   IG/FB) — demander à Karim les dates/villes/prix OU les lire sur le site.
-   Les 3 idées sont déjà dans le calendrier Notion en 💡 Idée.
+1. ✅ FAIT — skill tour-de-contrôle testé + veille concurrents (`veille-concurrents.md`).
+2. ✅ FAIT — campagne **Égypte Caire & Sharm** : brief créatif (3 accroches + 3
+   prompts Higgsfield prêts) + benchmark prix vérifié + décortication
+   apples-to-apples → `content-studio/campagne-egypte-sharm.md`.
+3. ⏸️ EN PAUSE — **décision PRIX** (V21 19 600 = +18 % vs AjiNsafro 16 700 pour
+   un Caire+Sharm 5★ quasi identique). Karim a dit : « laisse ces questions de
+   cotes, on va y revenir ». NE PAS relancer le sujet prix tant qu'il ne le
+   rouvre pas. 3 options en attente : A) tenir 19 600 + vendre l'hôtel 5★ nommé,
+   B) baisser ~17 900–18 500, C) donner d'abord les horaires de vol réels V21.
+4. ⏸️ EN PAUSE — **génération des visuels** : bloquée 2× (gate MCP web pour
+   Higgsfield ET dépend de la décision prix). À lancer depuis l'app DESKTOP une
+   fois le prix tranché. Crédits Higgsfield OK (466, Pro).
+5. ⚠️ À FAIRE quand Karim redonne la main : récupérer les **horaires de vol
+   réels** de l'offre Caire & Sharm V21 (fiche site ne les publie pas) — si
+   arrivée tôt au J1 = argument « +1 journée » qu'aucun concurrent n'a.
+6. (Optionnel) Engagement réel Apify depuis DESKTOP (gate web bloque le scrape).
+
+### Note Higgsfield (génération images/audio)
+Toujours bloqué en session web (approval gate), PAS de contournement lecture.
+Nécessite un client qui autorise (desktop/claude.ai). Crédits OK (~466).
+Run Apify déjà traité le 13/06 : `SrzMu16Ph9KxYWV74` → dataset
+`emtJ0c7Zxn8WZb6Gk` (24 posts vacancia+qafilat, engagement réel intégré).
 
 ## ⏳ En attente côté Karim (à lui redemander)
 - Identifiants YouTube, Snapchat, LinkedIn (quand créés).
