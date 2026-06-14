@@ -3,16 +3,17 @@
    Contenant = index.html · Contenu = ce fichier. */
 window.V21_STUDIO = {
   meta: {
-    version: "v2",
+    version: "v3",
     maj: "14/06/2026",
-    note: "Plateforme de pilotage contenu Voyages21 — partageable avec les équipes."
+    note: "Plateforme de pilotage contenu Voyages21 — Égypte · Turquie · Omra · Zanzibar."
   },
 
   // Sélecteur de produit (ascenseur). 'pret' = données complètes.
   produits: [
     { id: "egypte", label: "🇪🇬 Égypte (outgoing)", etat: "pret" },
     { id: "turquie", label: "🇹🇷 Turquie (outgoing)", etat: "pret" },
-    { id: "omra", label: "🕋 Omra", etat: "preparation" }
+    { id: "omra", label: "🕋 Omra (juil.–août 2026)", etat: "pret" },
+    { id: "zanzibar", label: "🏝️ Zanzibar (juin–août 2026)", etat: "pret" }
   ],
 
   egypte: {
@@ -328,6 +329,7 @@ window.V21_STUDIO = {
       }
     ],
     concurrents: {
+      benchmarkTitre: "Benchmark prix Turquie (départ Maroc, vols inclus)",
       comptes: [
         { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — Turquie phare", note: "Istanbul/Antalya en volume. Reels Istanbul 63k-95k vues. Argument martelé : VOL DIRECT Marrakech (Turkish Airlines)" },
         { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing — concurrent direct", note: "Turquie + Omra+Istanbul combinés. Carrousels-forts, reels rares" },
@@ -449,6 +451,355 @@ window.V21_STUDIO = {
           tournage: "Smartphone du voyageur + 3 B-roll. Droits à l'image signés. Karim valide.",
           cta: "« Ton tour ? DM “TURQUIE” · 0661 24 70 49 »",
           kpis: "Vues > 20 000 · DM/commentaires confiance · 1 UGC/mois. Réf. : @maroua→Vacancia 41k vues / 1 291 ❤️"
+        }
+      ]
+    }
+  },
+
+  omra: {
+    // 1) NOS OFFRES (fiches réelles du site voyages21.com, juil.–août 2026)
+    offres: [
+      {
+        titre: "« 2 Omras en 1 » — Etihad (Abu Dhabi)", badge: "Prix d'appel", duree: "19 nuits", prix: "dès 12 900 DH/pers",
+        prixDetail: "Quadruple 12 900 · Triple 14 500 · Double 15 500 (Rawabi Hijaz + Diyar Al Iman)",
+        hotels: "Mecque : Rawabi Hijaz / Palestine / Diyafat Al Raja — Médine : Diyar Al Iman",
+        pension: "9 nuits Mecque + 4 nuits Médine + 6 nuits Mecque (selon formule, sans repas → petit-déj)",
+        vols: "Etihad Airways via Abou Dhabi → Jeddah", volsHoraires: "Aller 27/07/2026 · retour 15/08 (arrivée Casa 16/08)",
+        inclus: ["Vols A/R Etihad via Abu Dhabi", "Hôtels mentionnés ou équivalents", "Transferts en Arabie Saoudite", "Encadrement & assistance des cadres de l'agence"],
+        exclus: ["Dépenses personnelles", "Services non mentionnés", "Hausse soudaine du prix des vols"],
+        visites: "Mecque (Haram, Tawaf, Saï) + Médine (Mosquée du Prophète, Rawda, mazarat)",
+        dates: "27/07 → 15/08/2026 (départ unique)"
+      },
+      {
+        titre: "Omra 01 Juillet — Économique", badge: "Éco · vol direct", duree: "12 nuits", prix: "dès 15 900 DH/pers",
+        prixDetail: "Quadruple 15 900 · Triple 16 700 · Double 17 900 (Palestine, sans repas)",
+        hotels: "Mecque : Palestine / Diyafat Al Raja — Médine : Al Mokhtara / Diyar Al Iman",
+        pension: "4 nuits Médine + 8 nuits Mecque", vols: "Royal Air Maroc — DIRECT vers Médine",
+        volsHoraires: "Départs 01 / 05 / 08 juillet 2026", inclus: ["Vols RAM A/R direct Médine", "Hôtels mentionnés + transferts", "Visite des mazarat de Médine", "Encadrement & assistance agence"],
+        exclus: ["Dépenses personnelles", "Hausse soudaine du prix des vols"],
+        visites: "Médine (Mosquée du Prophète, Rawda) + Mecque (Haram, Tawaf, Saï)",
+        dates: "01 / 05 / 08 juillet 2026"
+      },
+      {
+        titre: "Omra 08 Juillet", badge: "Vol direct Médine", duree: "10 nuits", prix: "dès 16 850 DH/pers",
+        prixDetail: "Quadruple 16 850 · Triple 17 300 · Double 18 200 (Emaar Diwan)",
+        hotels: "Mecque : Emaar (Diwan/Khalil/Manar/Bayt/Grand/Royal/Shuhada) — Médine : Emaar Taïba",
+        pension: "4 nuits Médine + 6 nuits Mecque", vols: "Royal Air Maroc — DIRECT vers Médine",
+        volsHoraires: "08 → 18 juillet 2026 · mouattir technique expérimenté", inclus: ["Vols RAM A/R direct Médine", "Bus moderne climatisé", "Mouattir technique expérimenté Omra/Hajj", "Mazarat Médine & Mecque"],
+        exclus: ["Dépenses personnelles"], visites: "Médine + Mecque (mazarat inclus)",
+        dates: "08 → 18 juillet 2026"
+      },
+      {
+        titre: "Omra Mouharram 1448", badge: "14 nuits · vol direct", duree: "14 nuits", prix: "dès 17 200 DH/pers",
+        prixDetail: "Quadruple 17 200 · Triple 17 800 · Double 18 900 → jusqu'à 25 800 (Emaar Royal/Shuhada)",
+        hotels: "Médine : Emaar Taïba — Mecque : Emaar (Diwan→Royal/Shuhada selon formule)",
+        pension: "4 nuits Médine + 10 nuits Mecque", vols: "Royal Air Maroc — DIRECT vers Médine",
+        volsHoraires: "Départs 29 juillet ou 05 août 2026", inclus: ["Vols RAM A/R direct Médine", "Bus moderne climatisé + mouattir technique", "Mazarat Médine & Mecque", "Réservation Rawda via l'appli Nusuk (individuelle)"],
+        exclus: ["Dépenses personnelles"], visites: "Médine (Rawda) + Mecque, 10 nuits près du Haram",
+        dates: "29/07 → 12/08 ou 05/08 → 19/08/2026"
+      },
+      {
+        titre: "Omra + Istanbul — Turkish Airlines", badge: "Combiné spirituel+culturel", duree: "14 nuits", prix: "dès 20 000 DH/pers",
+        prixDetail: "Quadruple 20 000 · Double 21 500 → jusqu'à 25 500 (Emaar Royal/Shuhada)",
+        hotels: "Istanbul : Ramada Sultanahmet — Mecque : Emaar (Khalil→Royal) — Médine : Emaar Taïba",
+        pension: "4 nuits Istanbul + 6 nuits Mecque + 4 nuits Médine", vols: "Turkish Airlines (arrivée via Jeddah)",
+        volsHoraires: "05 → 19 juillet 2026", inclus: ["Vols A/R Turkish Airlines", "4 nuits Istanbul (le pont entre deux continents)", "Bus moderne climatisé + mouattir technique", "Mazarat Médine & Mecque"],
+        exclus: ["Dépenses personnelles"], visites: "Istanbul (coupoles, mosquées ottomanes) + Mecque + Médine",
+        dates: "05 → 19 juillet 2026"
+      },
+      {
+        titre: "Omra 06 Juillet — Premium 5★ proche Haram", badge: "Premium", duree: "12 nuits", prix: "dès 21 500 DH/pers",
+        prixDetail: "Quadruple 21 500 · Triple 22 500 · Double 24 500 → jusqu'à 30 500 (Fairmont)",
+        hotels: "Médine : Shaza Regency — Mecque : Ajyad Makkah Makarem / Swiss / Al Haram / Fairmont (5★ près du Haram)",
+        pension: "4 nuits Médine + 8 nuits Mecque (avec petit-déj)", vols: "Royal Air Maroc — DIRECT vers Médine",
+        volsHoraires: "Départs 06 / 10 / 18 / 25 juillet 2026", inclus: ["Vols RAM A/R direct Médine", "Hôtels 5★ proches du Haram (chambres triple/quadruple avec lits d'appoint)", "Transferts en Arabie Saoudite", "Encadrement agence"],
+        exclus: ["Dépenses personnelles"], visites: "Médine (Mosquée du Prophète) + Mecque (Haram à quelques pas)",
+        dates: "06 / 10 / 18 / 25 juillet 2026"
+      }
+    ],
+
+    // 2) VEILLE CONCURRENTS Omra — engagement réel (scrape Apify 14/06/2026)
+    concurrents: {
+      benchmarkTitre: "Benchmark prix Omra été 2026 (départ Maroc, vols inclus)",
+      comptes: [
+        { nom: "@voyage.or", abonnes: "52 K", type: "Omra/Hajj exclusif — concurrent direct", note: "Le PLUS viral du créneau : concours « Omra hadiya » (gagne une Omra) = 22k vues / 4 283 ❤️ / 2 244 comm. Ton communautaire arabophone" },
+        { nom: "@qafilat.tayba", abonnes: "9,5 K", type: "Spécialiste Omra/Hajj (Marrakech)", note: "Contenu spirituel/témoignages (shahadat), audience fidèle. Médiane ~1k vues, sobre" },
+        { nom: "@sabilevoyages", abonnes: "—", type: "Omra 100% en ligne", note: "Angle commodité « réserver son Omra en ligne, simple et rapide ». Engagement modeste (~550 vues méd.)" },
+        { nom: "@transatourmaroc", abonnes: "28 K", type: "Outgoing + Omra (ISO 9001)", note: "Omra été dès 10 990 DH (vérifié) + concours « gagne une Omra » = 1 769 commentaires" },
+        { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing + Omra+Istanbul", note: "Combinés Omra+Istanbul, gros compte mais carrousels (peu de reels)" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte — point de départ", note: "~50-150 vues. Aucun concours lancé pour l'instant → levier viral inexploité sur ce créneau" }
+      ],
+      benchmarkPrix: [
+        { agence: "Transatour", offre: "Omra été (formule éco)", duree: "—", hotels: "nd", prix: "10 990 DH", verifie: true },
+        { agence: "Kabdani", offre: "Omra été 2026", duree: "—", hotels: "nd", prix: "15 900 DH", verifie: true },
+        { agence: "▶ Voyages21 (NOUS)", offre: "« 2 Omras en 1 » Etihad (Abu Dhabi)", duree: "19 nuits", hotels: "3★ proches", prix: "12 900 DH", verifie: true },
+        { agence: "▶ Voyages21 (NOUS)", offre: "Omra éco — vol DIRECT Médine (RAM)", duree: "12 nuits", hotels: "Palestine/Diyafat", prix: "15 900 DH", verifie: true },
+        { agence: "▶ Voyages21 (NOUS)", offre: "Omra premium 5★ proche Haram", duree: "12 nuits", hotels: "Ajyad Makarem/Fairmont", prix: "21 500 DH", verifie: true },
+        { agence: "voyage.or / qafilat.tayba / sabile", offre: "Omra (prix non affiché dans les posts)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      engagementReel: [
+        { compte: "@voyage.or", format: "Concours « gagne une Omra » (Omra hadiya)", vues: "22 014", likes: "4 283", comm: "2 244" },
+        { compte: "@transatourmaroc", format: "Concours « gagne une Omra »", vues: "3 163", likes: "629", comm: "1 769" },
+        { compte: "@qafilat.tayba", format: "Témoignage spirituel (shahada)", vues: "2 059", likes: "135", comm: "3" },
+        { compte: "@sabilevoyages", format: "« Réserver son Omra en ligne »", vues: "901", likes: "24", comm: "0" },
+        { compte: "@msm_voyages", format: "Carrousel programme premium", vues: "carrousel", likes: "400", comm: "3" },
+        { compte: "▶ @voyages21maroc (NOUS)", format: "Meilleur reel récent", vues: "149", likes: "6", comm: "1" }
+      ],
+      learnings: [
+        "🏆 Le CONCOURS « gagne une Omra » est l'arme virale n°1 du créneau (voyage.or : 22k vues / 4 283 ❤️ / 2 244 commentaires ; Transatour : 1 769 comm). À lancer pour amorcer notre communauté.",
+        "Le contenu spirituel/émotionnel (témoignages, Rawda, Haram de nuit) crée du lien et des saves — mais doit rester SOBRE et respectueux (jamais de mise en scène ni de faux témoignage).",
+        "Langue du créneau = darija + arabe (≠ français des offres Égypte/Turquie premium).",
+        "Sabile capitalise sur « réserver en ligne » : V21 a déjà WhatsApp Business → mettre en avant la réservation simple.",
+        "Différenciateur RÉEL V21 à marteler : VOL DIRECT RAM vers Médine (on commence par la ville du Prophète, sans escale) — peu de concurrents l'ont."
+      ],
+      apifyStatut: "✅ Scrape Apify autonome (14/06/2026, run PvZPK9iCG1iujK1U3 : voyage.or, qafilat.tayba, sabilevoyages — 36 posts) + Transatour/MSM des runs précédents. Prix concurrents affichés publiquement : Transatour 10 990 DH + Kabdani 15 900 DH (vérifiés en post) ; VoyageOr/Qafilat/Sabile ne publient pas de prix en post (à demander/scraper sur fiche)."
+    },
+
+    // 3) CADRAN
+    cadran: {
+      forces: [
+        "VOL DIRECT Royal Air Maroc vers Médine (commence par la ville du Prophète, sans escale) — confort fort et rare",
+        "Gamme complète : de 12 900 DH (« 2 omras en 1 » Etihad) au premium 5★ collé au Haram (Fairmont, Ajyad Makkah Makarem)",
+        "Encadrement technique expérimenté Omra/Hajj + réservation Rawda via l'appli Nusuk",
+        "Marque 25 ans, assistance, réservation simple (WhatsApp Business)"
+      ],
+      faiblesses: [
+        "Créneau Omra très concurrentiel et fidélisé (VoyageOr, Qafilat… communautés ancrées)",
+        "Aucune mécanique de concours viral pour l'instant → reach organique faible",
+        "Prix d'appel concurrent plus bas affiché (Transatour 10 990) que notre éco RAM direct 15 900 (mais notre Etihad 12 900 s'en rapproche)",
+        "Compte @voyages21maroc embryonnaire sur ce public arabophone"
+      ],
+      ameliorer: [
+        "Lancer un CONCOURS « Rib7 Omra » (gagne une Omra) pour amorcer la communauté — le format prouvé du créneau",
+        "Mettre en avant le VOL DIRECT Médine comme différenciateur n°1 dans chaque post",
+        "Produire des reels darija sobres : Rawda, Haram de nuit, départ groupe, témoignage réel volontaire",
+        "Afficher clairement le prix d'appel 12 900 DH (Etihad) pour rivaliser sur l'entrée de gamme"
+      ]
+    },
+
+    // 4) CONTENU
+    contenu: {
+      posts: [
+        {
+          visuel: "Le Haram de La Mecque de nuit, la Kaaba au centre, foule en prière (vraie image)",
+          accroche: "بيت الله الحرام ينتظرك هاد الصيف 🕋 — العمرة مع Voyages 21، طيران مباشر للمدينة المنورة.",
+          legende: "عمرة صيف 2026 · طيران مباشر RAM للمدينة · صيغ من 12 900 درهم. 📲 0661 24 70 49 — Voyages 21, منذ 2000.",
+          hashtags: "#عمرة #Omra #Voyages21 #المدينة_المنورة #مكة",
+          audio: "Nasheed vocal sobre (sans instruments) — respect de l'audience. PAS de musique instrumentale sur le contenu Omra."
+        },
+        {
+          visuel: "Mosquée du Prophète à Médine, dôme vert au coucher du soleil (vraie image)",
+          accroche: "نبداو من المدينة المنورة 🌙 — طيران مباشر، بلا تبديل، نيشان لمدينة الرسول ﷺ.",
+          legende: "العمرة مع طيران مباشر RAM للمدينة المنورة. 04 ليالٍ بالمدينة + الإقامة بمكة. من 15 900 درهم. 📲 0661 24 70 49",
+          hashtags: "#عمرة #المدينة_المنورة #طيران_مباشر #Voyages21",
+          audio: "Ambiance spirituelle sobre / nasheed vocal. Lecture posée, pas de drop musical."
+        },
+        {
+          visuel: "Groupe de pèlerins au départ aéroport Casablanca, sourire, ihram (avec accord des personnes)",
+          accroche: "رِبْح عمرة مع Voyages 21 🎁 — شارك، اعلّق « آمين » وكون أنت الرابح هاد العام.",
+          legende: "مسابقة العمرة : تابعنا + شارك المنشور + علّق. الفايز كيربح عمرة كاملة 🕋 (الشروط فالبيو). 📲 0661 24 70 49",
+          hashtags: "#ربح_عمرة #مسابقة #عمرة #Voyages21",
+          audio: "Nasheed sobre. (Mécanique concours = levier de portée n°1 du créneau, cf. VoyageOr.)"
+        }
+      ],
+      noteVisuels: "⚠️ Omra = vraies images uniquement (Haram, Mosquée du Prophète, groupes réels avec accord). PAS de visuel IA des Lieux Saints, PAS de musique instrumentale. Sobriété et respect avant tout.",
+      planning: "Rythme adapté au public Omra (darija/arabe). Pousser un CONCOURS de lancement, puis reels spirituels sobres + offres prix d'appel."
+    },
+
+    // 5) INSPIRATION VIRALE
+    viral: {
+      statut: "✅ Exemples RÉELS cliquables (scrape Apify 14/06). Créneau émotionnel + communautaire : le concours et le témoignage sobre dominent.",
+      viralExamples: [
+        { titre: "VoyageOr — Concours « gagne une Omra »", compte: "@voyage.or", lien: "https://www.instagram.com/p/DYKcyl7oogK/", stat: "22 014 vues · 4 283 ❤️ · 2 244 comm", pourquoi: "LE format roi du créneau. Un concours « Omra hadiya » fait exploser commentaires et portée. À reproduire pour lancer notre compte (conditions claires, tirage transparent)." },
+        { titre: "Transatour — Concours « gagne une Omra »", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DXq9aEZD7GQ/", stat: "1 769 commentaires", pourquoi: "Confirme la mécanique : « chaque 2 semaines, un gagnant ». Engagement communautaire massif." },
+        { titre: "Qafilat Tayba — Témoignage spirituel", compte: "@qafilat.tayba", lien: "https://www.instagram.com/p/DXXDQCHgpi1/", stat: "2 059 vues · 135 ❤️", pourquoi: "Le contenu émotionnel sobre (rihla, Rawda) crée du lien sur ce public. À faire avec de VRAIS pèlerins volontaires." }
+      ],
+      pistes: [
+        "Concours « Rib7 Omra » (gagne une Omra) — suivre + partager + commenter « آمين »",
+        "Reel Haram de nuit / Tawaf au ralenti + nasheed sobre (B-roll réel)",
+        "Témoignage pèlerin réel volontaire : « pourquoi commencer par Médine » (vol direct)",
+        "Explainer darija : « différence entre une Omra à escale et un vol direct Médine »",
+        "Carrousel « les formules Omra V21 expliquées » (du 12 900 Etihad au 5★ Haram)"
+      ],
+      audio: [
+        { style: "Nasheed vocal sobre (sans instruments)", usage: "TOUT contenu Omra — respect de l'audience. À privilégier", lien: "https://pixabay.com/music/search/nasheed/" },
+        { style: "Ambiance spirituelle / islamic ambient", usage: "B-roll Haram/Médine, lecture posée", lien: "https://pixabay.com/music/search/islamic/" },
+        { style: "🔥 Audio/nasheed tendance IG du créneau", usage: "Le son que les comptes Omra utilisent (à repérer dans l'app) — booste le reach", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        {
+          titre: "★ Concours « Rib7 Omra » — lancement de communauté (reel 30-45s)",
+          format: "Concours · reel + carton règles",
+          lienCible: "https://www.instagram.com/p/DYKcyl7oogK/",
+          langues: "Darija + arabe (sous-titres)",
+          script: "HOOK : « Rib7 omra kamla m3a Voyages21 🕋 ». Plans Haram/Médine sobres + carton règles : 1) Suivre @voyages21maroc, 2) Partager en story, 3) Commenter « آمين » + taguer 2 personnes. Tirage transparent en live. Carton final : date du tirage + offres dès 12 900 DH.",
+          visuel: "Vraies images Lieux Saints, nasheed sobre, cartons vert/or V21. Aucune musique instrumentale.",
+          casting: "Aucun acteur. Voix off darija posée.",
+          tournage: "B-roll réel (banque/UGC autorisé) + cartons animés. ⚠️ Règlement de jeu écrit (conditions, tirage, date) pour conformité.",
+          cta: "« Suis + partage + commente آمين · résultat le [date] »",
+          kpis: "Commentaires > 1 000 · abonnés gagnés (objectif n°1 du concours) · partages > 200"
+        },
+        {
+          titre: "★ Reel UGC témoignage PÈLERIN réel (60-90s)",
+          format: "UGC authentique · talking-head sobre",
+          lienCible: "https://www.instagram.com/p/DXXDQCHgpi1/",
+          langues: "Darija + sous-titres FR",
+          script: "Un pèlerin V21 réel et volontaire raconte : « Bdina men Médine, vol direct, bla ta3b… » → l'arrivée à la Rawda, l'organisation, l'encadrement → « Allah ybarek, kulchi kan mrtab ». B-roll de SON voyage (avec accord).",
+          visuel: "Brut, sobre, respectueux. Pas de musique sous le témoignage (ou nasheed très discret).",
+          casting: "BRIEF : pèlerin réel V21 (Omra récente) volontaire, accord écrit à l'image. ⚠️ JAMAIS de faux témoignage ni d'acteur jouant un pèlerin.",
+          tournage: "Smartphone du pèlerin + B-roll fournis. Karim valide. Respect total des Lieux Saints au montage.",
+          cta: "« Ton tour cet été ? DM “OMRA” · vol direct Médine dès 15 900 DH »",
+          kpis: "Vues > 10 000 · saves · DM qualifiés · confiance (sentiment commentaires)"
+        }
+      ]
+    }
+  },
+
+  zanzibar: {
+    // 1) NOS OFFRES (fiche réelle du site, départs garantis juin–août 2026)
+    offres: [
+      {
+        titre: "Séjour Zanzibar — Fun Beach 3★", badge: "Détente · prix d'appel", duree: "8 j / 7 nuits", prix: "dès 18 500 DH/pers",
+        prixDetail: "Triple 18 500 · Double 21 500 · Single 24 800 (petit-déj) — demi-pension dès 23 900",
+        hotels: "Fun Beach Hotel 3★ (Nungwi, petit-déj ou demi-pension)",
+        pension: "7 nuits petit-déjeuner (ou demi-pension)", vols: "Inclus — Turkish Airlines A/R",
+        volsHoraires: "Départs garantis juin → août 2026", inclus: ["Vol Turkish Airlines A/R", "Transferts privés", "Taxes de séjour", "Assurance obligatoire"],
+        exclus: ["Visa à l'aéroport (50 USD)", "Excursions optionnelles"],
+        visites: "Stone Town (UNESCO), plages de Nungwi & Kendwa, lagon turquoise de l'océan Indien",
+        dates: "Départs garantis juin → août 2026"
+      },
+      {
+        titre: "Séjour Zanzibar — Breeze's 4★", badge: "Confort 4★", duree: "8 j / 7 nuits", prix: "dès 22 500 DH/pers",
+        prixDetail: "Triple 22 500 · Double 24 300 · Single 27 500 → premium jusqu'à 38 900 (demi-pension)",
+        hotels: "Breeze's Beach Club & Spa 4★ (demi-pension / premium)",
+        pension: "7 nuits demi-pension", vols: "Inclus — Turkish Airlines A/R",
+        volsHoraires: "Départs garantis juin → août 2026", inclus: ["Vol Turkish Airlines A/R", "Transferts privés", "Taxes de séjour", "Assurance obligatoire"],
+        exclus: ["Visa à l'aéroport (50 USD)", "Excursions optionnelles"],
+        visites: "Stone Town (UNESCO), Nungwi & Kendwa, excursions possibles (dauphins, Safari Blue, île aux épices)",
+        dates: "Départs garantis juin → août 2026"
+      }
+    ],
+
+    // 2) VEILLE CONCURRENTS Zanzibar — créneau de NICHE (scrape Apify 14/06/2026)
+    concurrents: {
+      benchmarkTitre: "Benchmark Zanzibar (départ Maroc, vols inclus) — créneau de niche",
+      comptes: [
+        { nom: "@olevoyages.ma", abonnes: "93 K", type: "Outgoing — propose Zanzibar (catalogue web)", note: "A un circuit Zanzibar sur son site, mais ⚠️ peu mis en avant sur IG + compte non récupérable au scrape" },
+        { nom: "@ajinsafro.ma", abonnes: "70 K", type: "Outgoing — Zanzibar au catalogue", note: "Zanzibar existe dans l'offre web mais absent du feed IG récent (pas une priorité de com)" },
+        { nom: "@kabdani.ma", abonnes: "—", type: "Séjours balnéaires", note: "Pousse Saïdia / Marrakech / Espagne / Omra — PAS de Zanzibar dans le feed → confirme la niche" },
+        { nom: "@vacancia.ma / @terratour_voyages", abonnes: "139K / 75K", type: "Diversifiés (Bali, Vietnam…)", note: "Très actifs sur d'autres lointains, mais Zanzibar absent du feed récent" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte", note: "Aucun concurrent MA ne « possède » Zanzibar sur IG → place à prendre" }
+      ],
+      benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Zanzibar Fun Beach 3★ (petit-déj)", duree: "8j/7n", hotels: "3★ Nungwi", prix: "18 500 DH", verifie: true },
+        { agence: "▶ Voyages21 (NOUS)", offre: "Zanzibar Breeze's 4★ (demi-pension)", duree: "8j/7n", hotels: "4★", prix: "22 500 DH", verifie: true },
+        { agence: "Concurrents MA (olé, ajinsafro…)", offre: "Zanzibar (offre rare, prix non publié sur IG)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      apifyStatut: "✅ Scrape Apify autonome (14/06/2026, run Dm4cvv2QSdbLeXXh3 : kabdani.ma 20 posts + hashtag + tentative olevoyages). RÉSULTAT CLÉ : aucun reel Zanzibar marocain marquant trouvé → le créneau est quasi inoccupé sur l'IG MA. Pas de benchmark prix concurrent fiable (offre rare, prix non affichés). C'est un WHITE SPACE.",
+      learnings: [
+        "🎯 WHITE SPACE confirmé : sur ~42 posts scrapés, aucun reel Zanzibar marocain marquant → personne ne « possède » Zanzibar sur l'IG MA. V21 peut devenir LA référence Zanzibar depuis le Maroc.",
+        "Revers : peu de demande chaude → il faut CRÉER l'envie (contenu aspirationnel fort), pas récolter une demande existante comme pour l'Égypte.",
+        "Zanzibar coche toutes les cases « virales » : eau turquoise, dauphins, Stone Town & épices, plages de carte postale → matière à reels premium.",
+        "Le format qui scale ailleurs (reel transition plage + audio afro/tropical) se transpose parfaitement à Nungwi/Kendwa.",
+        "Argument V21 : vol Turkish Airlines + transferts privés inclus + 3★/4★ dès 18 500 DH → « l'évasion océan Indien, accessible et clé en main »."
+      ]
+    },
+
+    // 3) CADRAN
+    cadran: {
+      forces: [
+        "Vols Turkish Airlines + transferts privés inclus (confort, pas de logistique pour le client)",
+        "Double ambiance : Stone Town (UNESCO, épices, swahili) + plages Nungwi/Kendwa (lagon turquoise)",
+        "Gamme 3★ → 4★ premium (18 500 → 38 900 DH), s'adapte aux budgets",
+        "Créneau peu concurrencé au Maroc → first-mover possible"
+      ],
+      faiblesses: [
+        "Destination de niche : demande à CRÉER (notoriété Zanzibar faible chez la cible MA)",
+        "Visa 50 USD + excursions non inclus → à clarifier dans la com (transparence)",
+        "Aucune notoriété V21 sur la destination (on part de zéro)",
+        "Concurrence des TO français/internationaux pour la clientèle déjà informée"
+      ],
+      ameliorer: [
+        "Créer du contenu aspirationnel FORT (reels plage/dauphins/Stone Town) pour générer l'envie",
+        "Packager une excursion phare (dauphins Kizimkazi, Safari Blue, île aux épices) pour enrichir l'offre",
+        "Afficher le prix d'appel 18 500 DH + « vol Turkish Airlines inclus » dans chaque post",
+        "Capter en amont via Pinterest + Reels (recherche « Zanzibar depuis le Maroc », « voyage océan Indien »)"
+      ]
+    },
+
+    // 4) CONTENU
+    contenu: {
+      posts: [
+        {
+          visuel: "Plage de Nungwi, sable blanc, lagon turquoise, boutre (dhow) traditionnel (vraie image)",
+          accroche: "Zanzibar. 🏝️ Le lagon turquoise de l'océan Indien, à 7h de vol de Casa.",
+          legende: "Séjour Zanzibar 8 jours — vol Turkish Airlines inclus, plages de Nungwi & Kendwa. Dès 18 500 DH/pers. 📲 0661 24 70 49 · voyages21.com",
+          hashtags: "#Voyages21 #Zanzibar #Nungwi #OcéanIndien #VoyageDeRêve",
+          audio: "Afrobeat / amapiano doux & solaire — énergie plage, drop sur le plan lagon."
+        },
+        {
+          visuel: "Ruelles de Stone Town, portes sculptées, marché aux épices (vraie image)",
+          accroche: "Avant la plage, l'âme swahili. 🌿 Stone Town, classée UNESCO, parfum de girofle et d'histoire.",
+          legende: "Zanzibar, ce n'est pas que la plage : Stone Town, les épices, l'héritage swahili. 8 jours, vols inclus, dès 18 500 DH. 📲 0661 24 70 49",
+          hashtags: "#Voyages21 #Zanzibar #StoneTown #UNESCO #ÎleAuxÉpices",
+          audio: "World/swahili fusion douce (percussions, kora) — ambiance authentique."
+        },
+        {
+          visuel: "Transition : ruelle Stone Town → saut → lagon turquoise + dauphins (B-roll réel)",
+          accroche: "Culture le matin, dauphins l'après-midi. 🐬 Une semaine entre histoire et océan.",
+          legende: "Stone Town + Nungwi + Kendwa, en un seul séjour. Vol Turkish Airlines inclus, dès 18 500 DH. Places limitées été 2026. 📲 0661 24 70 49",
+          hashtags: "#Voyages21 #Zanzibar #Dauphins #Kendwa #SafariBlue",
+          audio: "Transition au beat, afro-house tropical. Whip-cut culture→océan."
+        }
+      ],
+      noteVisuels: "⚠️ Lieux réels (Stone Town, Nungwi, Kendwa) = vraies photos/vidéos (retravaillées IA si besoin). Visuels IA = ambiance/inspiration uniquement.",
+      planning: "Zanzibar = jouer l'ASPIRATIONNEL (créer l'envie). Pousser des reels « carte postale » + Pinterest pour capter la recherche en amont."
+    },
+
+    // 5) INSPIRATION VIRALE
+    viral: {
+      statut: "⚠️ Aucun reel Zanzibar marocain viral existant (niche) → les exemples ci-dessous sont des FORMATS réels prouvés à transposer sur Zanzibar. À toi de créer le 1er reel Zanzibar marocain qui perce.",
+      viralExamples: [
+        { titre: "Vacancia — Reel combiné/transition (format)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "Format combiné/transition « 2 décors en 1 reel » (95k/63k vues). À transposer : Stone Town → lagon Nungwi." },
+        { titre: "Terratour — Reel destination + dates (format)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Squelette « 1 destination + dates + places limitées + n° ». Le plus efficace du marché MA → l'appliquer à Zanzibar." }
+      ],
+      pistes: [
+        "Reel transition « Stone Town → lagon turquoise » (whip-cut, afro-house)",
+        "POV « POV : ton réveil face à l'océan Indien à Nungwi »",
+        "Cost breakdown « Zanzibar depuis Casa, le vrai budget 8 jours »",
+        "« 5 choses à faire à Zanzibar » (dauphins, Safari Blue, épices, Stone Town, Kendwa)",
+        "Carrousel + épingles Pinterest « Itinéraire 8 jours à Zanzibar »"
+      ],
+      audio: [
+        { style: "Afrobeat / Amapiano solaire", usage: "Plages, transitions, énergie océan Indien", lien: "https://pixabay.com/music/search/afrobeat/" },
+        { style: "Tropical / island chill", usage: "Day-in-life, lagon, slow travel", lien: "https://pixabay.com/music/search/tropical/" },
+        { style: "Travel cinématique (Uppbeat)", usage: "Stone Town, plans aériens, récap", lien: "https://uppbeat.io/browse/music/travel" },
+        { style: "🔥 Audio tendance IG/TikTok", usage: "Le levier de reach n°1 — son du moment dans l'app", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        {
+          titre: "Reel transition « Stone Town → lagon » (15-30s)",
+          format: "Reel transition · afro-house",
+          lienCible: "https://www.instagram.com/p/DYo9YhegdXn/",
+          langues: "FR + darija (texte court)",
+          script: "Temps 1 : ruelle Stone Town, porte sculptée (claquement). Temps 2 : whip → plage turquoise Nungwi, boutre. Temps 3 : dauphins / lagon. Texte « Zanzibar : l'histoire + l'océan, en 8 jours ». Carton « vol Turkish inclus · dès 18 500 DH ».",
+          visuel: "Match-cut culture→océan, afro-house, 9:16, 15-25s, couleurs chaudes.",
+          casting: "Aucun (B-roll réel).",
+          tournage: "3-6 plans réels (banque/UGC autorisé), CapCut. Le combiné = l'angle différenciant.",
+          cta: "« Places limitées été 2026 · lien en bio »",
+          kpis: "Vues > 15 000 (1er test niche) · saves > 100 · partages > 50"
+        },
+        {
+          titre: "★ Reel UGC voyageur Zanzibar (avec acteur) (60-90s)",
+          format: "UGC authentique · talking-head + B-roll",
+          lienCible: "https://www.instagram.com/p/DX9xEMlMHjW/",
+          langues: "Darija + sous-titres FR",
+          script: "Voyageur réel (ou créateur partenaire identifié) : « Ma kuntش 3aref belli Zanzibar qrib hakka… » → réveil à Nungwi, excursion dauphins, Stone Town → « b 18 500 DH, vol Turkish, kulchi organisé ». B-roll de son séjour.",
+          visuel: "Brut/vertical, lumière naturelle, crédibilité « story ».",
+          casting: "BRIEF : voyageur réel V21 Zanzibar OU micro-créateur MA 5-50k, défrayé, mention « partenariat ». ⚠️ Jamais de faux témoignage ni d'influenceur IA.",
+          tournage: "Smartphone du voyageur + 3 B-roll. Droits à l'image signés. Karim valide.",
+          cta: "« Tenté par l'océan Indien ? DM “ZANZIBAR” · 0661 24 70 49 »",
+          kpis: "Vues > 10 000 · DM qualifiés (création de demande) · saves"
         }
       ]
     }

@@ -55,8 +55,25 @@ court-circuiter et aller droit au but).
     UGC avec acteur** par destination + **lien-cible réel** sur chaque post.
   - `index.html` : rendu étendu (liens, audio cliquable, posts riches, réseaux),
     garde-fous `if` par bloc. Validé : parse OK + simulation rendu 3 produits sans erreur.
+- ✅ **OMRA + ZANZIBAR ajoutés** (même PR #49) — même étude complète :
+  - **Omra** (juil.–août 2026) : 6 offres réelles tirées de `public/voyages/data.js`
+    (éco 15 900 · « 2 omras en 1 » Etihad 12 900 · premium 5★ 21 500 · Mouharram ·
+    +Istanbul). Scrape concurrents (voyage.or, qafilat.tayba, sabilevoyages +
+    transatour/msm). **Constat clé** : le CONCOURS « gagne une Omra » est le levier
+    viral n°1 (voyage.or 22k vues / 4 283 ❤️ / 2 244 comm). Prix concurrents
+    vérifiés : Transatour 10 990 + Kabdani 15 900. Audio = nasheed sobre (jamais
+    d'instrumental). Différenciateur V21 : VOL DIRECT RAM Médine.
+  - **Zanzibar** (juin–août 2026) : 2 offres réelles (Fun Beach 3★ dès 18 500 /
+    Breeze's 4★ dès 22 500, vol Turkish). Scrape (kabdani + hashtag + olevoyages KO).
+    **Constat clé** : WHITE SPACE — aucun reel Zanzibar marocain viral → niche à
+    prendre, mais demande à CRÉER (contenu aspirationnel).
+  - `studio-data.js` v3 : 4 produits (egypte/turquie/omra/zanzibar) + `benchmarkTitre`
+    par produit. `index.html` : titre benchmark dynamique. Validé : 4 produits
+    rendus sans erreur.
 - ⏭️ Reste à faire ensuite : générer les VISUELS Higgsfield (desktop, gate web),
   décision prix Caire & Sharm (en pause à la demande de Karim), horaires vols réels.
+  Pour Omra : scraper les prix concurrents sur fiches (peu affichés en post).
+  Pour Zanzibar : confirmer si on lance le créneau (demande à créer).
 
 ## 📍 Point du 13/06/2026 — matin
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,

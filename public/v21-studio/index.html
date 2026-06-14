@@ -127,7 +127,7 @@
       h += '<div class="card"><h3>'+esc(c.nom)+'</h3><div class="price">'+esc(c.abonnes)+' abonnés</div>'+
         '<div class="row"><b>'+esc(c.type)+'</b></div><div class="row">'+esc(c.note)+'</div></div>';
     });
-    h += '</div><div class="sep"></div><h3 style="color:var(--green)">Benchmark prix Égypte (départ Maroc, vols inclus)</h3>'+
+    h += '</div><div class="sep"></div><h3 style="color:var(--green)">'+esc(v.benchmarkTitre || 'Benchmark prix Égypte (départ Maroc, vols inclus)')+'</h3>'+
       '<table><tr><th>Agence</th><th>Offre</th><th>Durée</th><th>Hôtels</th><th>Prix dès</th><th>Vérifié</th></tr>';
     v.benchmarkPrix.forEach(b=>{
       h += '<tr><td>'+esc(b.agence)+'</td><td>'+esc(b.offre)+'</td><td>'+esc(b.duree)+'</td><td>'+esc(b.hotels)+'</td><td><b>'+esc(b.prix)+'</b></td><td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
