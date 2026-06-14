@@ -202,6 +202,16 @@
             <div class="cover-preview-sub" id="homePreviewSub">L'avenir appartient a ceux qui reservent tot.</div>
         </div>
     </section>
+    <section class="cover-panel" id="heroProductsEditor">
+        <h2>Hero produits accueil</h2>
+        <div class="hint">Ces lignes pilotent le carrousel de la page d'accueil : video MP4, destination, nom, prix et lien. Rien n'est calcule automatiquement.</div>
+        <div id="heroProductRows"></div>
+        <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap">
+            <button class="mini" type="button" onclick="addHeroProduct()">Ajouter une ligne</button>
+            <button class="mini" type="button" onclick="saveHeroProducts()">Enregistrer le hero produits</button>
+        </div>
+    </section>
+
 
     <label class="picker-label" for="picker">Choisissez un voyage à renseigner :</label>
     <select class="picker" id="picker" onchange="selectProduct(this.value)">
