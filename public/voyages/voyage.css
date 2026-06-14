@@ -150,3 +150,22 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 @media(max-width:560px){
     .twocol{grid-template-columns:1fr;}
 }
+/* contacts rapides en barre verticale */
+.contact-bar{position:fixed;right:18px;bottom:20px;z-index:900;display:flex;flex-direction:column-reverse;align-items:center;gap:8px;}
+.contact-bar-main,.contact-bar-link{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:900;font-size:.68rem;letter-spacing:.02em;box-shadow:0 12px 28px rgba(16,35,26,.25);transition:opacity .18s ease,transform .2s ease,background .2s ease,color .2s ease;}
+.contact-bar-main{border:1px solid rgba(255,255,255,.5);background:#25d366;color:#082817;cursor:pointer;z-index:2;}
+.contact-bar-main:hover{filter:brightness(1.02);transform:translateY(-1px);}
+.contact-bar svg{width:22px;height:22px;display:block;}
+.contact-bar-link{opacity:0;pointer-events:none;transform:translateY(8px);background:rgba(255,255,255,.94);color:var(--forest2);border:1px solid rgba(16,35,26,.12);backdrop-filter:blur(10px);}
+.contact-bar.open .contact-bar-link{opacity:1;pointer-events:auto;transform:translateY(0);}
+.contact-bar.open .contact-bar-main{background:var(--forest);color:#fff;}
+.contact-bar-link.wing-wa{background:#25d366;color:#082817;}
+.contact-bar-link.wing-tel{background:#fff;color:var(--forest);}
+.contact-bar-link.wing-ig{background:#c13584;color:#fff;}
+.contact-bar-link.wing-fb{background:#1877f2;color:#fff;}
+.contact-bar-main:focus-visible,.contact-bar-link:focus-visible{outline:3px solid rgba(200,164,64,.42);outline-offset:3px;}
+
+@media(max-width:560px){
+    .contact-bar{right:12px;bottom:14px;gap:7px;}
+    .contact-bar-main,.contact-bar-link{width:44px;height:44px;font-size:.62rem;}
+}

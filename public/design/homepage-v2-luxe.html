@@ -53,22 +53,51 @@
 
     /* Logo */
     .nav-logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 76px;
-      min-width: 76px;
-      height: 54px;
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: var(--white);
       text-decoration: none;
+      letter-spacing: .02em;
       flex-shrink: 0;
     }
-    .nav-logo img {
-      display: block;
-      width: 68px;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 5px 12px rgba(0,0,0,.25));
+    .nav-logo sup {
+      font-size: .48em;
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      color: var(--gold);
+      vertical-align: super;
+      margin-left: 1px;
+      letter-spacing: .06em;
     }
+    .v21-logo-mark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 2px;
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      letter-spacing: .02em;
+      line-height: 1;
+      text-transform: none;
+    }
+    .v21-logo-mark sup {
+      font-family: 'Geist', sans-serif;
+      font-size: .46em;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: .02em;
+    }
+    .v21-logo-sub {
+      display: block;
+      margin-top: 4px;
+      font-family: 'Geist', sans-serif;
+      font-size: .48rem;
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(253,250,245,.56);
+    }
+
     /* Menu central */
     .nav-menu {
       display: flex;
@@ -235,9 +264,8 @@
     ═══════════════════════════════════════════ */
     .hero {
       position: relative;
-      height: 72svh;
-      min-height: 460px;
-      max-height: 640px;
+      height: 100svh;
+      min-height: 600px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -289,6 +317,21 @@
       padding: 0 32px;
       max-width: 820px;
     }
+    .hero-logo-signature {
+      position: absolute;
+      left: 48px;
+      bottom: 42px;
+      z-index: 3;
+      color: var(--white);
+      text-decoration: none;
+      text-shadow: 0 10px 28px rgba(0,0,0,.45);
+    }
+    .hero-logo-signature .v21-logo-mark {
+      font-size: 1.55rem;
+    }
+    .hero-logo-signature .v21-logo-sub {
+      color: rgba(253,250,245,.68);
+    }
 
     .hero-label {
       font-size: .66rem;
@@ -329,6 +372,52 @@
       line-height: 1.72;
       max-width: 460px;
       margin: 0 auto 40px;
+    }
+
+    .hero-product-badge {
+      position: relative;
+      display: inline-grid;
+      gap: 2px;
+      min-width: min(360px, 92vw);
+      margin: 0 auto 28px;
+      padding: 18px 30px 18px 34px;
+      color: var(--white);
+      text-align: left;
+      background: linear-gradient(135deg, rgba(12,12,12,.72), rgba(12,12,12,.34));
+      border: 1px solid rgba(255,255,255,.32);
+      border-left: 6px solid var(--gold);
+      border-radius: 26px 6px 26px 6px;
+      box-shadow: 0 22px 70px rgba(0,0,0,.28);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .hero-product-badge::after {
+      content: "";
+      position: absolute;
+      inset: 8px 10px auto auto;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,164,64,.45);
+      opacity: .5;
+    }
+    .hero-product-kicker {
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hero-product-badge strong {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1;
+      color: #fff;
+    }
+    .hero-product-badge span:last-child {
+      font-size: .92rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.86);
     }
 
     .hero-actions {
@@ -2263,8 +2352,8 @@
       .nav-mobile-panel .nav-menu a:active { color: var(--gold); }
       .nav-tel { display: none; }
       .nav-cta { display: none; }
-      .nav-logo { width: 62px; min-width: 62px; height: 52px; }
-      .nav-logo img { width: 56px; }
+      .nav-logo { font-size: 1.1rem; }
+      .nav-logo .v21-logo-sub { display: none; }
       .nav-burger {
         display: flex;
         flex-direction: column;
@@ -2296,8 +2385,15 @@
       .statsbar-item + .statsbar-item::before { display: none; }
 
       /* HERO */
-      .hero { height: 68svh; min-height: 420px; max-height: 620px; padding-top: 52px; }
+      .hero { padding-top: 52px; min-height: 100svh; }
       .hero-content { padding: 0 24px; }
+      .hero-logo-signature {
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+        text-align: center;
+      }
+      .hero-logo-signature .v21-logo-mark { font-size: 1.2rem; }
       .hero-title { letter-spacing: -.01em; margin-bottom: 16px; }
       .hero-sub { font-size: .86rem; max-width: 100%; margin-bottom: 0; }
       .hero-search { display: none; }
@@ -2518,14 +2614,17 @@
   ══════════════════════════════════════════ -->
   <nav id="nav">
 
-    <a href="/" class="nav-logo" aria-label="Voyages 21"><img src="/logo-voyages21.png" alt="Voyages 21"></a>
+    <a href="/" class="nav-logo" aria-label="Voyages 21 - Accueil">
+      <span class="v21-logo-mark">Voyages<sup>21</sup></span>
+      <span class="v21-logo-sub">Depuis 2000</span>
+    </a>
 
     <!-- Centre : boutons nav (desktop) -->
     <div class="nav-center" id="navCenter">
-      <button type="button" class="nav-title active" id="navDest" onclick="toggleDest(event, this)">Destinations Monde <span class="nav-caret">▾</span></button>
+      <button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
       <a href="/voyages/destinations/croisieres.html" class="nav-title">Croisières</a>
       <a href="/voyages/destinations/omra.html"       class="nav-title">Omra</a>
-      <a href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#maroc"       class="nav-title">Mon Maroc</a>
+      <a href="/voyages/destinations/maroc.html"       class="nav-title">Mon Maroc</a>
     </div>
 
     <!-- Mobile panel -->
@@ -2537,14 +2636,14 @@
         <li><a href="/voyages/destinations/chine.html"         onclick="closeMobileNav()">Asie</a></li>
         <li><a href="/voyages/destinations/croisieres.html"    onclick="closeMobileNav()">Croisières</a></li>
         <li><a href="/voyages/destinations/omra.html"          onclick="closeMobileNav()">Omra</a></li>
-        <li><a href="/BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html#maroc"           onclick="closeMobileNav()">Mon Maroc</a></li>
+        <li><a href="/voyages/destinations/maroc.html"           onclick="closeMobileNav()">Mon Maroc</a></li>
       </ul>
     </div>
 
     <div class="nav-right">
       <a href="tel:+212673280009" class="nav-tel">+212 6 73 28 00 09</a>
       <a href="#contact" class="nav-cta">Réserver</a>
-      <button type="button" class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav(event)">
+      <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -2555,11 +2654,10 @@
   <div class="mega-panel" id="destPanel">
     <div class="mega-inner">
       <div class="mega-continents">
-        <button type="button" class="mega-cont active" onclick="showContinent('c-europe', this, event)">Europe</button>
-        <button type="button" class="mega-cont" onclick="showContinent('c-afrique', this, event)">Afrique</button>
-        <button type="button" class="mega-cont" onclick="showContinent('c-ameriques', this, event)">Amériques</button>
-        <button type="button" class="mega-cont" onclick="showContinent('c-asie', this, event)">Asie</button>
-        <button type="button" class="mega-cont" onclick="showContinent('c-combines', this, event)">Combinés</button>
+        <button class="mega-cont active" onclick="showContinent('c-europe', this)">Europe</button>
+        <button class="mega-cont" onclick="showContinent('c-afrique', this)">Afrique</button>
+        <button class="mega-cont" onclick="showContinent('c-ameriques', this)">Amériques</button>
+        <button class="mega-cont" onclick="showContinent('c-asie', this)">Asie</button>
       </div>
       <div class="mega-countries">
         <div class="mega-col active" id="c-europe">
@@ -2569,7 +2667,6 @@
         <div class="mega-col" id="c-afrique">
           <a href="/voyages/destinations/egypte.html">Égypte</a>
           <a href="/voyages/destinations/zanzibar.html">Zanzibar</a>
-          <a href="/voyages/destinations/tunisie.html">Tunisie</a>
         </div>
         <div class="mega-col" id="c-ameriques">
           <a href="/voyages/destinations/usa-canada.html">USA &amp; Canada</a>
@@ -2578,13 +2675,9 @@
         </div>
         <div class="mega-col" id="c-asie">
           <a href="/voyages/destinations/chine.html">Chine</a>
-          <a href="/voyages/destinations/ouzbekistan.html">Ouzbékistan</a>
           <a href="/voyages/destinations/malaisie-thailande.html">Malaisie &amp; Thaïlande</a>
           <a href="/voyages/destinations/malaisie-thailande.html">Bangkok &amp; Thaïlande</a>
           <a href="/voyages/destinations/vietnam.html">Vietnam</a>
-        </div>
-        <div class="mega-col" id="c-combines">
-          <a href="/voyages/destinations/combines.html">Azerbaïdjan &amp; Turquie</a>
         </div>
       </div>
     </div>
@@ -2606,6 +2699,11 @@
     <!-- Voile sombre -->
     <div class="hero-overlay"></div>
 
+    <a href="/" class="hero-logo-signature" aria-label="Voyages 21">
+      <span class="v21-logo-mark">Voyages<sup>21</sup></span>
+      <span class="v21-logo-sub">Voyages organises depuis 2000</span>
+    </a>
+
     <!-- Texte -->
     <div class="hero-content">
 
@@ -2615,10 +2713,11 @@
         Ici commence<br>votre bonheur.
       </h1>
 
-      <p class="hero-sub" id="heroSubtitle">
-        L'avenir appartient à ceux qui réservent tôt :<br>
-        tarifs exclusifs, options garanties.
-      </p>
+      <div class="hero-product-badge" id="heroProductBadge" aria-live="polite">
+        <span class="hero-product-kicker">A partir de</span>
+        <strong id="heroProductPrice">9 700 DH</strong>
+        <span id="heroProductName">Sejour a Istanbul</span>
+      </div>
 
       <!-- Barre de recherche destination -->
       <div class="hero-search">
@@ -2665,8 +2764,7 @@
   <!-- ══════════════════════════════════════════
        ARGUMENTAIRE — 3 actes : problème → solutions → CTA
   ══════════════════════════════════════════ -->
-  <!-- section pourquoi nous choisir mise de cote : retirer hidden pour la remettre -->
-  <section class="args-section" id="argumentaire" hidden data-section-pourquoi-nous-choisir="mise-de-cote">
+  <section class="args-section" id="argumentaire">
 
     <!-- En-tête -->
     <div class="args-intro" data-args>
@@ -3025,8 +3123,7 @@
   <!-- ══════════════════════════════════════════
        SITUATION ROOM — bento grid imprévus
   ══════════════════════════════════════════ -->
-  <!-- section pourquoi nous choisir mise de cote : bloc Profitez de votre voyage, retirer hidden pour la remettre -->
-  <section class="sr-section" hidden data-section-pourquoi-nous-choisir="mise-de-cote">
+  <section class="sr-section">
 
     <div class="sr-header">
       <div class="sr-live"><span class="sr-dot"></span>En direct — Equipe mobilisée</div>
@@ -3989,33 +4086,30 @@
   </script>
 
 
-  <script>
+  <script src="/voyages/data.js"></script>
+<script>
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('elevated', window.scrollY > 10);
     }, { passive: true });
 
     // Hamburger menu mobile
-    function toggleDest(event, btn) {
-      if (event) event.stopPropagation();
-      const panel = document.getElementById('destPanel');
+    function toggleDest(btn) {
+      var panel = document.getElementById('destPanel');
       if (!panel || !btn) return;
-      const open = panel.classList.toggle('open');
+      var open = panel.classList.toggle('open');
       btn.classList.toggle('open', open);
-      btn.classList.toggle('active', open);
     }
-    function showContinent(colId, btn, event) {
-      if (event) event.stopPropagation();
-      document.querySelectorAll('.mega-col').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.mega-cont').forEach(b => b.classList.remove('active'));
-      const col = document.getElementById(colId);
+    function showContinent(colId, btn) {
+      document.querySelectorAll('.mega-col').forEach(function(c) { c.classList.remove('active'); });
+      document.querySelectorAll('.mega-cont').forEach(function(b) { b.classList.remove('active'); });
+      var col = document.getElementById(colId);
       if (col) col.classList.add('active');
       if (btn) btn.classList.add('active');
     }
-    function toggleMobileNav(event) {
-      if (event) event.stopPropagation();
+    function toggleMobileNav() {
       const burger = document.getElementById('navBurger');
-      const panel = document.getElementById('navMobilePanel');
+      const panel  = document.getElementById('navMobilePanel');
       if (!burger || !panel) return;
       burger.classList.toggle('open');
       panel.classList.toggle('open');
@@ -4030,7 +4124,7 @@
       // Ferme mobile nav
       const panel  = document.getElementById('navMobilePanel');
       const burger = document.getElementById('navBurger');
-      if (panel && panel.classList.contains('open') && !panel.contains(e.target) && !burger.contains(e.target)) {
+      if (panel && burger && panel.classList.contains('open') && !panel.contains(e.target) && !burger.contains(e.target)) {
         closeMobileNav();
       }
       // Ferme mega panel si clic hors nav/destPanel
@@ -4106,6 +4200,59 @@
         bc.onmessage = loadHomeCover;
       }
     })();
+
+    function initProductHero() {
+      const defaults = [
+        { destination: 'Zanzibar', name: 'Sejour a Zanzibar', price: '18 500 DH', videoUrl: '', link: '/voyages/zanzibar-detente.html' },
+        { destination: 'Turquie', name: 'Istanbul & Bodrum', price: '16 900 DH', videoUrl: '', link: '/voyages/turquie-istanbul-bodrum.html' },
+        { destination: 'Maroc', name: 'Merzouga', price: '1 200 DH', videoUrl: '', link: '/voyages/maroc-merzouga.html' }
+      ];
+      const video = document.getElementById('heroVideo') || document.querySelector('.hero-video');
+      const source = document.getElementById('heroVideoSource') || (video ? video.querySelector('source') : null);
+      const title = document.getElementById('heroTitle');
+      const label = document.getElementById('heroLabel');
+      const price = document.getElementById('heroProductPrice');
+      const name = document.getElementById('heroProductName');
+      const button = document.getElementById('heroButton');
+      let idx = 0;
+      const fallbackVideo = source ? source.getAttribute('src') : '';
+      function cleanSlides(list) {
+        return (Array.isArray(list) ? list : []).filter(s => s && (s.destination || s.name)).map(s => ({
+          destination: s.destination || s.name || 'Voyages 21',
+          name: s.name || s.destination || 'Voyage VOYAGES21',
+          price: s.price || 'Sur demande',
+          videoUrl: s.videoUrl || s.videoLink || '',
+          link: s.link || '#destinations'
+        }));
+      }
+      function applySlide(slides) {
+        const item = slides[idx % slides.length];
+        const videoUrl = item.videoUrl || fallbackVideo;
+        if (source && video && videoUrl && source.getAttribute('src') !== videoUrl) {
+          source.setAttribute('src', videoUrl);
+          video.load();
+          video.play().catch(() => {});
+        }
+        if (label) label.textContent = 'Selection hero';
+        if (title) title.innerHTML = item.destination + '<br><span>' + item.name + '</span>';
+        if (price) price.textContent = item.price;
+        if (name) name.textContent = item.name;
+        if (button) button.href = item.link;
+        idx = (idx + 1) % slides.length;
+      }
+      fetch('/api/media', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : {})
+        .then(map => {
+          const slides = cleanSlides(map.__heroProducts && map.__heroProducts.items);
+          const finalSlides = slides.length ? slides : defaults;
+          applySlide(finalSlides);
+          setInterval(() => applySlide(finalSlides), 6500);
+        })
+        .catch(() => { applySlide(defaults); setInterval(() => applySlide(defaults), 6500); });
+    }
+    initProductHero();
+
+
 
     (function () {
       const vid = document.querySelector('.hero-video');
@@ -4185,7 +4332,6 @@
       malaisie: 'https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=600&q=80',
       vietnam:  'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80',
       zanzibar: 'https://images.unsplash.com/photo-1516815231560-8f41ec531527?w=600&q=80',
-      tunisie: 'https://images.unsplash.com/photo-1548018560-c7196548e84d?w=600&q=80',
       croisiere:'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=600&q=80',
     };
 
@@ -4196,16 +4342,12 @@
       { img: IMG.turquie,   dest: 'Turquie',              titre: 'Istanbul, Marmaris & Bodrum',             duree: '11 jours', link: '/voyages/turquie-istanbul-marmaris-bodrum.html' },
       { img: IMG.turquie,   dest: 'Turquie',              titre: 'Istanbul & Antalya',                      duree: '11 jours', link: '/voyages/turquie-istanbul-antalya-11j.html' },
       { img: IMG.egypte,    dest: 'Égypte',               titre: 'Le Caire · Nil · Hurghada',              duree: '12 jours', link: '/voyages/egypte-caire-nil-hurghada.html' },
-      { img: IMG.egypte,    dest: 'Égypte',               titre: 'Le Caire & Hurghada',                    duree: '12 jours', link: '/voyages/egypte-caire-hurghada.html' },
-
       { img: IMG.egypte,    dest: 'Égypte',               titre: 'Le Caire & Sharm El Sheikh',             duree: '11 jours', link: '/voyages/egypte-caire-sharm.html' },
       { img: IMG.usa,       dest: 'USA & Canada',         titre: "L'Ouest Complet USA",                    duree: '13 jours', link: '/voyages/usa-ouest-complet.html' },
       { img: IMG.usa,       dest: 'USA & Canada',         titre: 'Les Joyaux du Canada & des USA',         duree: '11 jours', link: '/voyages/canada-usa-joyaux.html' },
       { img: IMG.usa,       dest: 'USA & Canada',         titre: "Les Rocheuses & l'Ouest Classique",      duree: '17 jours', link: '/voyages/usa-rocheuses.html' },
       { img: IMG.cuba,      dest: 'Cuba',                 titre: 'Cuba — La Havane & Varadero',            duree: '9 jours',  link: '/voyages/cuba-havane-varadero.html' },
       { img: IMG.perou,     dest: 'Pérou',                titre: 'Pérou — Les Merveilles Incas',           duree: '11 jours', link: '/voyages/perou-merveilles-incas.html' },
-      { img: IMG.europe,    dest: 'Europe',               titre: 'Albanie — Mer & Galets',                 duree: '8 jours',  link: '/voyages/europe-albanie-riviera.html' },
-
       { img: IMG.europe,    dest: 'Europe',               titre: 'Séjour à Las Palmas',                    duree: '8 jours',  link: '/voyages/europe-las-palmas.html' },
       { img: IMG.europe,    dest: 'Europe',               titre: 'Capitales Impériales — Vienne, Budapest, Prague', duree: '6 jours', link: '/voyages/europe-vienne-budapest-prague.html' },
       { img: IMG.espagne,   dest: 'Europe',               titre: 'Al-Andalus — Madrid, Grenade, Séville',  duree: '7 jours',  link: '/voyages/europe-andalousie.html' },
@@ -4216,35 +4358,26 @@
       { img: IMG.europe,    dest: 'Europe',               titre: 'France & Suisse',                        duree: '8 jours',  link: '/voyages/europe-france-suisse.html' },
       { img: IMG.angleterre,dest: 'Europe',               titre: 'Angleterre & Écosse',                    duree: '10 jours', link: '/voyages/europe-angleterre-ecosse.html' },
       { img: IMG.chine,     dest: 'Chine',                titre: 'Pékin, Shanghai & Merveilles',           duree: '14 jours', link: '/voyages/asie-chine.html' },
-      { img: IMG.chine,     dest: 'Ouzbékistan',          titre: 'Route de la Soie',                       duree: '10 jours', link: '/voyages/asie-ouzbekistan.html' },
-      { img: IMG.chine,     dest: 'Azerbaïdjan & Turquie', titre: 'Combiné Azerbaïdjan & Turquie',           duree: '12 jours', link: '/voyages/asie-azerbaidjan-turquie.html' },
       { img: IMG.malaisie,  dest: 'Malaisie & Thaïlande', titre: 'KL, Krabi & Phuket',                   duree: '14 jours', link: '/voyages/asie-malaisie-thailande.html' },
       { img: IMG.malaisie,  dest: 'Bangkok & Thaïlande',  titre: 'Bangkok, Krabi & Phuket',              duree: '14 jours', link: '/voyages/asie-thailande-bangkok.html' },
       { img: IMG.vietnam,   dest: 'Vietnam',              titre: 'Hanoi à Saigon',                         duree: '14 jours', link: '/voyages/asie-vietnam.html' },
       { img: IMG.zanzibar,  dest: 'Zanzibar',             titre: 'Zanzibar — Détente & Loisirs',           duree: '8 jours',  link: '/voyages/zanzibar-detente.html' },
-      { img: IMG.tunisie,   dest: 'Tunisie',              titre: 'Combiné Tunis & Hammamet',              duree: '8 jours',  link: '/voyages/afrique-tunisie-tunis-hammamet.html' },
       { img: IMG.croisiere, dest: 'Croisières',           titre: 'Méditerranée — Espagne & Italie',        duree: '10 jours', link: '/voyages/croisiere-mediterranee-espagne-italie.html' },
       { img: IMG.croisiere, dest: 'Croisières',           titre: 'Croisière Méditerranée Premium',         duree: '10 jours', link: '/voyages/croisiere-mediterranee-premium.html' },
-      { img: IMG.croisiere, dest: 'Croisières',           titre: 'Croisière Turquie & Grèce',              duree: '8 jours',  link: '/voyages/croisiere-turquie-grece.html' },
-
-      { img: IMG.croisiere, dest: 'Croisières',           titre: 'Croisière Turquie & Égypte',              duree: '8 jours',  link: '/voyages/croisiere-turquie-egypte.html' },
     ];
 
     const DESTINATIONS = [
       { img: IMG.turquie,    name: 'Turquie',              count: '5 circuits',    link: '/voyages/destinations/turquie.html' },
-      { img: IMG.egypte,     name: 'Égypte',               count: '3 circuits',    link: '/voyages/destinations/egypte.html' },
-      { img: IMG.espagne,    name: 'Europe',               count: '10 circuits',    link: '/voyages/destinations/europe.html' },
+      { img: IMG.egypte,     name: 'Égypte',               count: '2 circuits',    link: '/voyages/destinations/egypte.html' },
+      { img: IMG.espagne,    name: 'Europe',               count: '9 circuits',    link: '/voyages/destinations/europe.html' },
       { img: IMG.zanzibar,   name: 'Zanzibar',             count: '1 circuit',     link: '/voyages/destinations/zanzibar.html' },
-      { img: IMG.tunisie,    name: 'Tunisie',              count: '1 séjour',      link: '/voyages/destinations/tunisie.html' },
       { img: IMG.usa,        name: 'USA & Canada',         count: '3 circuits',    link: '/voyages/destinations/usa-canada.html' },
       { img: IMG.cuba,       name: 'Cuba',                 count: '1 circuit',     link: '/voyages/destinations/cuba.html' },
       { img: IMG.perou,      name: 'Pérou',                count: '1 circuit',     link: '/voyages/destinations/perou.html' },
       { img: IMG.chine,      name: 'Chine',                count: '1 circuit',     link: '/voyages/destinations/chine.html' },
-      { img: IMG.chine,      name: 'Ouzbékistan',          count: '1 circuit',     link: '/voyages/destinations/ouzbekistan.html' },
-      { img: IMG.chine,      name: 'Combinés',             count: '1 circuit',     link: '/voyages/destinations/combines.html' },
       { img: IMG.malaisie,   name: 'Malaisie & Thaïlande', count: '2 circuits',    link: '/voyages/destinations/malaisie-thailande.html' },
       { img: IMG.vietnam,    name: 'Vietnam',              count: '1 circuit',     link: '/voyages/destinations/vietnam.html' },
-      { img: IMG.croisiere,  name: 'Croisières',           count: '4 circuits',    link: '/voyages/destinations/croisieres.html' },
+      { img: IMG.croisiere,  name: 'Croisières',           count: '2 circuits',    link: '/voyages/destinations/croisieres.html' },
       { img: '',             name: 'Omra & Hajj',          count: '5 programmes',  link: '/voyages/destinations/omra.html', gradient: true },
     ];
 
@@ -4266,8 +4399,8 @@
       const q = input ? input.value.trim() : '';
       if (!q) return;
       filterDest(q);
-      const destSection = document.getElementById('destinations');
-      if (destSection) destSection.scrollIntoView({ behavior: 'smooth' });
+      const dest = document.getElementById('destinations');
+      if (dest) dest.scrollIntoView({ behavior: 'smooth' });
     }
 
     function filterDest(q) {
@@ -4281,23 +4414,30 @@
       document.querySelectorAll('.dest-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.dest-panel').forEach(p => p.classList.remove('active'));
       const voyagesTab = document.querySelector('[onclick*="voyages"]');
+      const voyagesPanel = document.getElementById('panel-voyages');
       if (voyagesTab) voyagesTab.classList.add('active');
-      const panelVoyages = document.getElementById('panel-voyages');
-      if (panelVoyages) panelVoyages.classList.add('active');
+      if (voyagesPanel) voyagesPanel.classList.add('active');
       const ctaCard = `<a href="#contact" class="dest-card-cta">
         <span class="dest-card-cta-label">Sur mesure</span>
         <p class="dest-card-cta-title">Votre voyage n'existe pas encore.<br>Créons-le ensemble.</p>
         <span class="dest-card-cta-btn">Nous contacter →</span>
       </a>`;
-      document.getElementById('grid-voyages').innerHTML =
+      const gridVoyages = document.getElementById('grid-voyages');
+      if (!gridVoyages) return;
+      gridVoyages.innerHTML =
         (filtered.length ? filtered.map(cardHTML).join('') : '<p style="color:var(--navy);padding:24px 0;grid-column:1/-1">Aucun résultat pour « ' + q + ' ».</p>') + ctaCard;
     }
 
-    const searchInput = document.getElementById('hero-search-input');
-    if (searchInput) {
-      searchInput.addEventListener('keydown', e => {
+    const heroSearchInput = document.getElementById('hero-search-input');
+
+    if (heroSearchInput) {
+
+      heroSearchInput.addEventListener('keydown', e => {
+
         if (e.key === 'Enter') goSearch();
+
       });
+
     }
 
     function renderCoups() {
@@ -4321,8 +4461,9 @@
         <p class="dest-card-cta-title">Votre voyage n'existe pas encore.<br>Créons-le ensemble.</p>
         <span class="dest-card-cta-btn">Nous contacter →</span>
       </a>`;
-      const voyagesGrid = document.getElementById('grid-voyages');
-      if (voyagesGrid) voyagesGrid.innerHTML = curated.map(cardHTML).join('') + ctaCard;
+      const gridVoyages = document.getElementById('grid-voyages');
+      if (!gridVoyages) return;
+      gridVoyages.innerHTML = curated.map(cardHTML).join('') + ctaCard;
     }
 
     function renderMonde() {
@@ -4334,10 +4475,12 @@
     }
 
     function switchDestTab(tab, btn) {
+      const panel = document.getElementById('panel-' + tab);
+      if (!panel || !btn) return;
       document.querySelectorAll('.dest-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.dest-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('panel-' + tab).classList.add('active');
+      panel.classList.add('active');
     }
 
     renderCoups();
@@ -4530,9 +4673,7 @@
         <h4 class="footer-col-title">Explorer</h4>
         <ul class="footer-list footer-nav">
           <li><a href="#hero">Accueil</a></li>
-          <!-- section pourquoi nous choisir mise de cote : lien footer masque
           <li><a href="#argumentaire">Pourquoi nous choisir</a></li>
-          -->
           <li><a href="#destinations">Nos destinations</a></li>
           <li><a href="#reserver-tot">Réserver tôt</a></li>
           <li><a href="#equipe">Notre équipe</a></li>
