@@ -68,6 +68,25 @@
   .vtag-reel{background:#dcefe2;color:#1f6b43}
   .vtag-intl{background:#dde6fb;color:#27408b}
   .vorig{font-size:12px;color:var(--muted);font-weight:600}
+  .scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px}
+  .scrollx table{min-width:920px;margin:0}
+  .scrollx td{vertical-align:top;font-size:12.5px}
+  .scrollx ul{margin:0;padding-left:15px}
+  .ok-li{color:var(--ok)}.bad-li{color:var(--bad)}
+  .viral2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+  @media(max-width:760px){.viral2{grid-template-columns:1fr}.scrollx table{min-width:880px}}
+  .vcol h3{margin:0 0 8px;font-size:16px}
+  .vitem{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fffdf9;margin-bottom:12px}
+  .vitem .vstat{color:var(--gold);font-weight:700;font-size:12.5px}
+  .vitem .vrow{font-size:12.5px;margin:4px 0;line-height:1.5}
+  .vitem .vrow b{color:var(--green2)}
+  .infcard{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fffdf9}
+  .infcard .flag{font-size:12px;font-weight:700}
+  .pbblock{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff;margin-bottom:14px;box-shadow:0 2px 10px rgba(27,58,40,.04)}
+  .pbblock h3{margin:0 0 8px;color:var(--green);font-size:18px}
+  .trend{border-left:4px solid var(--gold);padding:11px 15px;background:#fffdf9;border-radius:0 10px 10px 0;margin-bottom:11px}
+  .trend .rank{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);font-weight:700;margin-right:6px}
+  .newdest{background:#eef7f0;border:1px solid #cfe6d6;border-radius:10px;padding:5px 9px;font-size:11px;font-weight:700;color:var(--ok);display:inline-block;margin-top:6px}
   footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
   .hidden{display:none}
   .soon{text-align:center;color:var(--muted);padding:40px 20px;font-size:15px}
@@ -94,7 +113,7 @@
   const sel = document.getElementById('sel');
   const app = document.getElementById('app');
   document.getElementById('meta').textContent = D.meta.version + " · maj " + D.meta.maj;
-  document.getElementById('foot').textContent = D.meta.note + " · Voyages21 — agence sur mesure depuis 2000";
+  document.getElementById('foot').innerHTML = D.meta.note + " · Voyages21 — agence sur mesure depuis 2000<br><b>Plateforme développée par DA21 pour VOYAGES21</b>";
 
   D.produits.forEach(p=>{
     const o=document.createElement('option');
@@ -108,6 +127,8 @@
     const p = D.produits.find(x=>x.id===id);
     if(!p || p.etat!=='pret'){ app.innerHTML = '<section><div class="soon">🔧 Données en préparation pour ce produit. Reviens bientôt.</div></section>'; return; }
     const d = D[id];
+    if(d && d.type==='playbook'){ app.innerHTML = renderPlaybook(d); return; }
+    if(d && d.type==='tendances'){ app.innerHTML = renderTendances(d); return; }
     let h = '';
 
     // 1) OFFRES
@@ -137,16 +158,34 @@
       h += '<div class="card"><h3>'+esc(c.nom)+'</h3><div class="price">'+esc(c.abonnes)+' abonnés</div>'+
         '<div class="row"><b>'+esc(c.type)+'</b></div><div class="row">'+esc(c.note)+'</div></div>';
     });
-    h += '</div><div class="sep"></div><h3 style="color:var(--green)">'+esc(v.benchmarkTitre || 'Benchmark prix Égypte (départ Maroc, vols inclus)')+'</h3>'+
-      '<table><tr><th>Agence</th><th>Offre</th><th>Durée</th><th>Hôtels</th><th>Prix dès</th><th>Vérifié</th></tr>';
-    v.benchmarkPrix.forEach(b=>{
-      var isNous = b.nous || /Voyages21|\(NOUS\)/.test(b.agence);
-      var px = isNous ? '<span class="v-price">'+esc(b.prix)+'</span>' : '<b>'+esc(b.prix)+'</b>';
-      h += '<tr'+(isNous?' class="v"':'')+'><td>'+esc(b.agence)+'</td><td>'+esc(b.offre)+'</td><td>'+esc(b.duree)+'</td><td>'+esc(b.hotels)+'</td><td>'+px+'</td><td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
-    });
-    h += '</table>';
+    // Benchmark — table riche (réutilisable MA + International)
+    const alink = (url,label)=> url ? '<a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">'+esc(label)+'</a>' : '<span style="color:var(--muted)">nd</span>';
+    const liList = (arr,cls)=> (arr&&arr.length) ? '<ul>'+arr.map(x=>'<li class="'+cls+'">'+esc(x)+'</li>').join('')+'</ul>' : '<span style="color:var(--muted)">nd</span>';
+    function benchTable(rows){
+      let t = '<div class="scrollx"><table><tr><th>Agence</th><th>Offre</th><th>✅ Inclus</th><th>⛔ Non inclus</th><th>✈️ Compagnie</th><th>🕐 Horaires</th><th>📅 Dates</th><th>Durée</th><th>Hôtels</th><th>Prix dès</th><th>🌐 Site</th><th>📷 Insta</th><th>✓</th></tr>';
+      rows.forEach(b=>{
+        const isNous = b.nous || /Voyages21|\(NOUS\)/.test(b.agence);
+        const px = isNous ? '<span class="v-price">'+esc(b.prix)+'</span>' : '<b>'+esc(b.prix)+'</b>';
+        t += '<tr'+(isNous?' class="v"':'')+'><td><b>'+esc(b.agence)+'</b></td><td>'+esc(b.offre||'—')+'</td>'+
+          '<td>'+liList(b.inclus,'ok-li')+'</td><td>'+liList(b.exclus,'bad-li')+'</td>'+
+          '<td>'+esc(b.compagnie||'nd')+'</td><td>'+esc(b.horaires||'nd')+'</td><td>'+esc(b.dates||'nd')+'</td>'+
+          '<td>'+esc(b.duree||'—')+'</td><td>'+esc(b.hotels||'—')+'</td><td>'+px+'</td>'+
+          '<td>'+alink(b.site,'site ↗')+'</td><td>'+alink(b.instagram,'IG ↗')+'</td>'+
+          '<td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
+      });
+      return t+'</table></div>';
+    }
+    h += '</div><div class="sep"></div><h3 style="color:var(--green)">🇲🇦 '+esc(v.benchmarkTitre || 'Benchmark concurrents Maroc')+'</h3>'+
+      '<p class="lead">Colonnes alignées pour comparer à saison/dates équivalentes. Liens site + Instagram cliquables.</p>'+ benchTable(v.benchmarkPrix);
     if(v.benchmarkAnalyse && v.benchmarkAnalyse.length){
-      h += '<div class="analyse"><h4>📊 Où se situe Voyages21 — analyse basée UNIQUEMENT sur la data scrapée (14/06/2026)</h4><ul>'+v.benchmarkAnalyse.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+      h += '<div class="analyse"><h4>📊 Où se situe Voyages21 (Maroc) — fort / faible, d\'après la SEULE data scrapée</h4><ul>'+v.benchmarkAnalyse.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+    }
+    if(v.benchmarkIntl && v.benchmarkIntl.length){
+      h += '<div class="sep"></div><h3 style="color:var(--green)">🌍 '+esc(v.benchmarkIntlTitre || 'Benchmark international — agences France & Espagne')+'</h3>'+
+        '<p class="lead">5 agences outgoing FR/ES + Voyages21 (6e). ⚠️ Prix en € → convertir (~1 € ≈ 10,8 DH) ; vérifier ce qui est inclus (vols souvent depuis Europe).</p>'+ benchTable(v.benchmarkIntl);
+      if(v.benchmarkIntlAnalyse && v.benchmarkIntlAnalyse.length){
+        h += '<div class="analyse"><h4>📊 Ce qui distingue Voyages21 vs Europe — fort / faible (data scrapée)</h4><ul>'+v.benchmarkIntlAnalyse.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+      }
     }
     if(v.engagementReel && v.engagementReel.length){
       h += '<div class="sep"></div><h3 style="color:var(--green)">📊 Engagement réel (Apify)</h3>'+
@@ -182,6 +221,21 @@
     const vi = d.viral;
     const link = (url,label) => '<a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none">'+esc(label)+'</a>';
     h += '<section><h2>🔥 Inspiration virale</h2><p class="lead">'+esc(vi.statut)+'</p>';
+    if(vi.viralReels || vi.viralUgc){
+      const vcard = (e)=> '<div class="vitem">'+(e.origine?'<span class="vorig">'+esc(e.origine)+'</span> · ':'')+'<b>'+esc(e.titre)+'</b> · '+esc(e.compte)+'<div class="vstat">'+esc(e.stat)+'</div>'+
+        (e.pourquoi?'<div class="vrow"><b>Pourquoi viral :</b> '+esc(e.pourquoi)+'</div>':'')+
+        (e.message?'<div class="vrow"><b>Message clé :</b> '+esc(e.message)+'</div>':'')+
+        (e.hook?'<div class="vrow"><b>Hook (&lt;3s) :</b> « '+esc(e.hook)+' »</div>':'')+
+        (e.plans?'<div class="vrow"><b>Images · plans · scènes :</b> '+esc(e.plans)+'</div>':'')+
+        (e.posture?'<div class="vrow"><b>Posture à adopter :</b> '+esc(e.posture)+'</div>':'')+
+        link(e.lien,'▶ Voir le post réel')+'</div>';
+      h += '<div class="viral2"><div class="vcol"><h3 style="color:var(--green)">📹 Reels modèles ('+((vi.viralReels||[]).length)+')</h3>'+
+        (vi.viralReels||[]).map(vcard).join('')+'</div>'+
+        '<div class="vcol"><h3 style="color:var(--green)">🎬 UGC inspirants ('+((vi.viralUgc||[]).length)+')</h3>'+
+        (vi.viralUgc||[]).map(vcard).join('')+'</div></div>';
+      if(vi.ugcGardeFou){ h += '<div class="note">🛡️ <b>Garde-fou UGC :</b> '+esc(vi.ugcGardeFou)+'</div>'; }
+      h += '<div class="sep"></div>';
+    }
     if(vi.viralExamples){
       const catMeta = { ugc:['UGC','vtag-ugc'], reel:['Reel modèle','vtag-reel'], intl:['International','vtag-intl'] };
       const groups = [['ugc','🎬 UGC à reproduire (3)'],['reel','📹 Reels modèles (3)'],['intl','🌍 Viraux d\'autres pays — France & influenceurs (3)']];
@@ -246,23 +300,65 @@
     }
     h += '</section>';
 
+    // 6) INFLUENCEURS / BLOGUEURS / YOUTUBEURS (par destination)
+    if(d.influenceurs && d.influenceurs.length){
+      h += '<section><h2>🎙️ Blogueurs · YouTubeurs · Influenceurs — '+esc(p.label)+'</h2><p class="lead">Les plus influents sur cette destination (4 🇲🇦 + 4 🇪🇺). Ce qu\'ils offrent / de quoi ils parlent.</p><div class="grid">';
+      d.influenceurs.forEach(i=>{
+        h += '<div class="infcard"><div class="flag">'+esc(i.origine)+'</div><h3>'+esc(i.nom)+'</h3>'+
+          '<div class="row" style="color:var(--muted)">'+esc(i.plateforme)+' · '+esc(i.audience)+'</div>'+
+          '<div class="row"><b>De quoi il/elle parle :</b> '+esc(i.sujet)+'</div>'+
+          (i.lien?link(i.lien,'▶ Voir le compte'):'')+'</div>';
+      });
+      h += '</div></section>';
+    }
+
+    // 7) STRATÉGIE RÉSEAUX DÉCLINÉE À LA DESTINATION
+    if(d.reseauxDest && d.reseauxDest.length){
+      h += '<section><h2>📡 Stratégie réseaux — déclinée pour '+esc(p.label)+'</h2><p class="lead">'+esc(d.reseauxDestIntro||'Application concrète du playbook général à cette destination.')+'</p><div class="grid">';
+      d.reseauxDest.forEach(r=>{
+        h += '<div class="card"><h3>'+esc(r.nom)+'</h3>'+
+          '<div class="row"><b>Stratégie :</b> '+esc(r.conseil)+'</div>'+
+          (r.exemple?'<div class="row"><b>Exemple concret :</b> '+esc(r.exemple)+'</div>':'')+'</div>';
+      });
+      h += '</div><div class="note">Les règles de base par plateforme/web/vidéo sont dans la page « 📐 Règles & Playbook » du sélecteur.</div></section>';
+    }
+
     app.innerHTML = h;
   }
 
-  // STRATÉGIE RÉSEAUX (commune) — rendue une fois en bas
-  function renderReseaux(){
-    if(!D.reseaux) return '';
-    const r = D.reseaux;
-    let h = '<section><h2>📡 Stratégie réseaux — plateforme par plateforme</h2><p class="lead">'+esc(r.intro)+'</p><div class="grid">';
-    r.plateformes.forEach(p=>{
-      h += '<div class="card"><h3>'+esc(p.nom)+'</h3>'+
-        '<div class="row" style="color:var(--muted)">'+esc(p.compte)+'</div>'+
-        '<div class="row"><b>Rôle :</b> '+esc(p.role)+'</div>'+
-        '<div class="row"><b>Codes :</b></div><ul class="pill-list">'+p.codes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
-        '<div class="row"><b>Cadence :</b> '+esc(p.cadence)+'</div>'+
-        '<div class="row"><b>KPI :</b> '+esc(p.kpi)+'</div></div>';
+  // PAGE — RÈGLES & PLAYBOOK (règles d'or générales)
+  function renderPlaybook(d){
+    let h = '<section><h2>📐 '+esc(d.titre)+'</h2><p class="lead">'+esc(d.intro)+'</p></section>';
+    (d.blocs||[]).forEach(b=>{
+      h += '<section><div class="pbblock"><h3>'+esc(b.titre)+'</h3>'+
+        (b.regles?('<ul class="pill-list">'+b.regles.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'):'')+'</div></section>';
     });
-    h += '</div></section>';
+    return h;
+  }
+
+  // PAGE — TENDANCES & NICHES
+  function renderTendances(d){
+    const link = (url,label) => url ? '<a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">'+esc(label)+'</a>' : '';
+    let h = '<section><h2>🔥 '+esc(d.titre)+'</h2><p class="lead">'+esc(d.intro)+'</p></section>';
+    if(d.top10){
+      h += '<section><h2>🏆 Top 10 destinations tendances (influenceurs MA + Europe)</h2>';
+      d.top10.forEach((t,i)=>{
+        h += '<div class="trend"><span class="rank">'+(i+1)+'.</span><b>'+esc(t.dest)+'</b>'+(t.nouveau?' <span class="newdest">⚡ NON programmée chez V21</span>':'')+
+          '<div class="row"><b>Comment ils en parlent (appâts) :</b> '+esc(t.appat)+'</div>'+
+          '<div class="row"><b>Mon analyse :</b> '+esc(t.analyse)+'</div></div>';
+      });
+      h += '</section>';
+    }
+    if(d.croisieres){
+      h += '<section><h2>🚢 Croisières SANS visa Schengen (cible MA)</h2><p class="lead">'+esc(d.croisieresIntro||'')+'</p><div class="grid">';
+      d.croisieres.forEach(c=>{
+        h += '<div class="card"><h3>'+esc(c.nom)+'</h3><div class="row"><b>Visa :</b> '+esc(c.visa)+'</div><div class="row">'+esc(c.note)+'</div>'+(c.lien?link(c.lien,'▶ Exemple'):'')+'</div>';
+      });
+      h += '</div></section>';
+    }
+    if(d.reco){
+      h += '<section><div class="analyse"><h4>🎯 Sur quoi miser — ma recommandation (succès web/réseaux)</h4><ul>'+d.reco.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></section>';
+    }
     return h;
   }
 
@@ -274,7 +370,7 @@
     return h;
   }
 
-  function full(){ render(sel.value); app.innerHTML += renderReseaux() + renderQuestions(); }
+  function full(){ const id=sel.value; const d=D[id]; render(id); if(!(d&&d.type)){ app.innerHTML += renderQuestions(); } }
   sel.addEventListener('change', full);
   full();
 </script>

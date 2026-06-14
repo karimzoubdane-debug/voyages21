@@ -3,9 +3,9 @@
    Contenant = index.html · Contenu = ce fichier. */
 window.V21_STUDIO = {
   meta: {
-    version: "v4",
+    version: "v5",
     maj: "14/06/2026",
-    note: "Voyages21 — Égypte · Turquie · Omra · Zanzibar · Vietnam · Thaïlande · Malaisie+Thaïlande · Chine · Ouzbékistan."
+    note: "Voyages21 — 9 destinations + Règles & Playbook + Tendances. v5 (benchmark enrichi, viral 2 colonnes, influenceurs)."
   },
 
   // Sélecteur de produit (ascenseur). 'pret' = données complètes.
@@ -18,8 +18,86 @@ window.V21_STUDIO = {
     { id: "thailande", label: "🇹🇭 Thaïlande (été 2026)", etat: "pret" },
     { id: "malaisiethai", label: "🇲🇾 Malaisie & Thaïlande (été 2026)", etat: "pret" },
     { id: "chine", label: "🇨🇳 Chine (été 2026)", etat: "pret" },
-    { id: "ouzbekistan", label: "🇺🇿 Ouzbékistan (juil.–oct. 2026)", etat: "pret" }
+    { id: "ouzbekistan", label: "🇺🇿 Ouzbékistan (juil.–oct. 2026)", etat: "pret" },
+    { id: "playbook", label: "📐 Règles & Playbook (réseaux/web/vidéo)", etat: "pret" },
+    { id: "tendances", label: "🔥 Tendances & niches + croisières", etat: "pret" }
   ],
+
+  // PAGE — RÈGLES & PLAYBOOK (règles d'or générales, transversales)
+  playbook: {
+    type: "playbook",
+    titre: "Règles & Playbook — les règles d'or pour réussir et se distinguer",
+    intro: "Socle théorique transversal (réseaux · web · vidéo · marque). Les déclinaisons concrètes par destination sont dans chaque page « 📡 Stratégie réseaux déclinée ».",
+    blocs: [
+      { titre: "🎬 Vidéo / Reels — les règles d'or", regles: [
+        "Hook < 3 s : montrer le meilleur plan ou poser la promesse AVANT 3 secondes (l'algo juge la rétention dès le départ).",
+        "Format 9:16 plein écran, sous-titres brûlés (80 % regardent sans le son au début).",
+        "Audio TENDANCE du jour (onglet « audios en hausse »), pas une banque libre : le son porte le reach.",
+        "Couper au beat, 5-8 plans max, pas de temps mort. La 1re seconde décide de tout.",
+        "1 idée = 1 reel. CTA simple à la fin (DM, lien bio, WhatsApp).",
+        "Volume > perfection : la régularité (4/sem) bat le léché occasionnel."
+      ]},
+      { titre: "📱 Réseaux sociaux — codes par plateforme", regles: [
+        "Instagram : Reels = reach, Carrousels = saves (intention d'achat), Stories = conversion (lien WhatsApp).",
+        "Facebook : audience 40+/MRE, textes longs OK, Page pro obligatoire pour les ads.",
+        "TikTok : reel brut > léché, tendances propres (≠ IG), séries épisodiques fidélisent.",
+        "Snapchat : surtout ADS géolocalisées MA (16-30 ans), format flash/direct.",
+        "Pinterest : moteur de recherche (pas un réseau), épingles verticales keyword-first, trafic 3-6 mois.",
+        "YouTube Shorts : SEO durable, talking-head expert = autorité + confiance d'achat."
+      ]},
+      { titre: "🪝 Hooks & copywriting", regles: [
+        "Hooks qui marchent : « POV : … », « 5 erreurs… », « Ce que personne ne te dit… », « Le vrai budget… », « X choses à faire… ».",
+        "Concours = levier de portée n°1 (commentaires explosent → l'algo pousse). Règlement transparent.",
+        "Afficher DATES + rareté (« places limitées ») = déclencheur de DM.",
+        "Caption courte : l'audio et le visuel font le travail, pas le pavé de texte."
+      ]},
+      { titre: "🌐 Web / SEO / conversion", regles: [
+        "Une fiche = un prix clair + inclus/exclus + dates + CTA WhatsApp visible.",
+        "Transparence (compagnie, horaires, visa) = différenciant vs concurrents flous.",
+        "Pinterest + Shorts = SEO social long terme ; publier 45-90 j avant la saison.",
+        "WhatsApp Business = canal de conversion (catalogue + statuts + réponse rapide)."
+      ]},
+      { titre: "🏛️ Marque & confiance (règles non négociables)", regles: [
+        "Jamais de faux témoignage ni d'influenceur IA. UGC = vrais clients/créateurs identifiés.",
+        "Lieux réels = vraies images (retravaillées IA si besoin) ; IA = inspiration/ambiance.",
+        "Omra : sobriété, nasheed vocal (pas d'instrumental), respect des Lieux Saints.",
+        "Cohérence visuelle (vert/or/crème, Playfair/DM Sans) = premium reconnaissable."
+      ]}
+    ]
+  },
+
+  // PAGE — TENDANCES & NICHES (influenceurs MA + Europe) + croisières sans Schengen
+  tendances: {
+    type: "tendances",
+    titre: "Tendances & niches — ce dont parlent les influenceurs (MA + Europe)",
+    intro: "Veille des destinations qui montent chez les blogueurs/youtubeurs (focus France), comment ils les vendent, et mes recos pour V21. ⚠️ Synthèse recherche web juin 2026 (Skyscanner/TikTok, presse voyage FR) — à affiner par scrape ciblé d'influenceurs.",
+    top10: [
+      { dest: "Montagne en été (Alpes, Caucase, Atlas)", nouveau: false, appat: "« Fuir la foule et la chaleur » : 57 % des Français visent la montagne l'été 2026. Reels fraîcheur/rando/lacs.", analyse: "V21 a l'Atlas/Ouzbékistan (Caucase via combiné). Opportunité : packager « montagne fraîche » l'été." },
+      { dest: "Slow travel / immersion longue", nouveau: false, appat: "« Vivre comme un local », séjours longs, fermes rénovées. 40 % des voyageurs FR préfèrent l'immersion.", analyse: "Décliner une Égypte/Vietnam « slow » (petits groupes, sens) = marge + différenciation vs promo." },
+      { dest: "Ouzbékistan / Route de la Soie", nouveau: false, appat: "« Pépite méconnue », cités bleues, esthétique unique. Niche qui monte fort chez les créateurs.", analyse: "DÉJÀ programmée par V21 → pousser le contenu maintenant, peu de concurrence MA." },
+      { dest: "Arabie Saoudite (AlUla, Riyad)", nouveau: true, appat: "« La nouvelle destination », déserts/Nabatéens, ouverture touristique. Très poussée par les influenceurs.", analyse: "⚡ NON programmée. Synergie forte avec audience Omra. À étudier (combiné Omra + AlUla ?)." },
+      { dest: "Japon", nouveau: true, appat: "Yen faible, culture pop, cerisiers/automne. Contenu massivement viral (food, villes).", analyse: "⚡ NON programmée en propre. Cher mais désir énorme ; testable en haut de gamme." },
+      { dest: "Jordanie (Pétra, Wadi Rum)", nouveau: true, appat: "« Indiana Jones », désert rouge, bivouac étoilé. Très instagrammable, sans visa lourd.", analyse: "⚡ NON programmée. Proche culturellement, combinable avec l'Égypte (Caire+Pétra)." },
+      { dest: "Albanie / Balkans", nouveau: true, appat: "« Les Maldives de l'Europe à petit prix », plages turquoise. Hype budget 2025-2026.", analyse: "⚡ NON programmée. ⚠️ Schengen-adjacent (visa à vérifier pour MA)." },
+      { dest: "Oman", nouveau: true, appat: "Wadis, désert, authenticité « Golfe sans le clinquant ». Niche premium calme.", analyse: "⚡ NON programmée. Premium, sans visa compliqué, proche de l'offre Dubaï." },
+      { dest: "Égypte (regain culturel)", nouveau: false, appat: "Grand Musée égyptien (ouverture), Nil, montgolfière Louxor. Fort regain de contenu.", analyse: "DÉJÀ programmée. Surfer sur l'ouverture du Grand Musée comme accroche d'actualité." },
+      { dest: "Croisières (Méditerranée/Nil/Golfe)", nouveau: true, appat: "« Tout compris, plusieurs pays en un voyage », famille. Croît chez les familles MA.", analyse: "⚡ Croisières non programmées en propre → voir section dédiée ci-dessous." }
+    ],
+    croisieresIntro: "Croisières accessibles aux Marocains SANS visa Schengen (escales hors espace Schengen ou e-visa simple). À explorer comme nouveau produit famille.",
+    croisieres: [
+      { nom: "🚢 Croisière du Nil (Louxor-Assouan)", visa: "e-visa Égypte simple (pas de Schengen)", note: "Le « must » culturel, combinable Caire+mer Rouge. Forte demande, déjà dans l'univers Égypte V21." },
+      { nom: "🚢 Méditerranée orientale (Turquie/Grèce hors UE selon escales)", visa: "à vérifier escale par escale (éviter ports Schengen)", note: "⚠️ La Grèce = Schengen. Privilégier itinéraires Turquie + îles non-Schengen. Infrastructure mature." },
+      { nom: "🚢 Golfe Persique (Dubaï, Abou Dhabi, Qatar, Oman)", visa: "e-visa/visa on arrival selon pays, pas de Schengen", note: "Haut de gamme, hiver, sans Schengen → idéal cible MA premium. Synergie vols du Golfe." },
+      { nom: "🚢 Mer Rouge (Égypte/Jordanie/Arabie)", visa: "e-visa, pas de Schengen", note: "Plongée + désert, combinable avec un séjour balnéaire. Niche à fort potentiel visuel." }
+    ],
+    reco: [
+      "MISER MAINTENANT (déjà programmé, contenu à pousser) : Ouzbékistan (niche qui monte, peu de concurrence MA) + Égypte (surfer sur l'ouverture du Grand Musée).",
+      "À ÉTUDIER EN PRIORITÉ (non programmé, fort signal influenceurs + synergie V21) : Jordanie (combiné avec l'Égypte) et Arabie Saoudite/AlUla (synergie audience Omra).",
+      "PRODUIT NEUF à tester : une CROISIÈRE famille SANS visa Schengen (Nil ou Golfe) — répond à une demande qui monte et contourne le frein n°1 des Marocains (le visa).",
+      "⚠️ Prudence Schengen : Albanie/Balkans et Méditerranée à escales UE = friction visa pour la cible MA → ne pas mettre en avant sans vérifier.",
+      "MÉTHODE : ces signaux viennent de la recherche web (presse voyage FR). Pour une reco chiffrée par VOLUME de vues/engagement, lance-moi un scrape ciblé d'influenceurs FR/MA (je le fais si tu valides)."
+    ]
+  },
 
   egypte: {
     // 1) NOS OFFRES (fiches brochure, données techniques réelles du site)
@@ -84,21 +162,36 @@ window.V21_STUDIO = {
         { nom: "@transatourmaroc", abonnes: "28 K", type: "Outgoing — ISO 9001", note: "Istanbul dès 6 547 DH (Bosphore offert). Concours « gagne une Omra » = 1 769 commentaires (hack engagement)" },
         { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit compte · Meta Verified", type: "Notre compte — point de départ", note: "Posts récents ~25-150 vues, 0-6 likes. Le compte est à (re)lancer : régularité reels + audio tendance d'abord" }
       ],
-      // Benchmark prix Égypte (Caire+Sharm / Hurghada / croisière), départ Maroc, vols inclus — NOUS inclus
+      // Benchmark MAROC — colonnes alignées (inclus/non inclus/compagnie/horaires/dates/site/IG)
+      benchmarkTitre: "Benchmark concurrents Maroc — Le Caire & Sharm (départ Maroc)",
       benchmarkPrix: [
-        { agence: "▶ Voyages21 (NOUS)", offre: "Le Caire & Sharm (offre héros)", duree: "11j/10n", hotels: "5★ nommés (Marriott/Aurora/Mövenpick)", prix: "19 600 DH", verifie: true },
-        { agence: "AjiNsafro", offre: "Caire + Sharm (comparable direct)", duree: "10j/9n", hotels: "4★ et 5★", prix: "16 700 DH", verifie: true },
-        { agence: "Olé Voyages", offre: "Caire + croisière + Hurghada", duree: "~11j", hotels: "nd", prix: "15 500 DH", verifie: false },
-        { agence: "Al Hassania", offre: "Grand Tour Caire+Hurghada+Sharm", duree: "14j/13n", hotels: "5★", prix: "16 900 DH", verifie: false },
-        { agence: "Vacancia", offre: "Caire + Hurghada", duree: "10j/9n", hotels: "4★ AI", prix: "17 500 DH", verifie: false },
-        { agence: "ESF", offre: "Caire + croisière Nil + Hurghada", duree: "nd", hotels: "5★ + croisière 5★", prix: "17 900 DH", verifie: false },
-        { agence: "AjiNsafro", offre: "Caire + croisière + Hurghada", duree: "12j/11n", hotels: "5★", prix: "18 700 DH", verifie: true }
+        { agence: "▶ Voyages21 (NOUS)", offre: "Le Caire & Sharm", inclus: ["Vols A/R","10 nuits 5★","Visite Caire + déjeuner","Dîner-croisière Nil + spectacle","Transferts + guide pro"], exclus: ["Visa 600 DH","Pourboires 20$/ad","Boissons & perso"], compagnie: "nd (à confirmer)", horaires: "non publiés", dates: "16-26 juil · 23 juil-2 août · 6-16 · 10-20 · 13-23 · 20-30 août · 30 août-9 sept", duree: "11j/10n", hotels: "5★ nommés (Marriott/Aurora/Cleopatra/Mövenpick)", prix: "19 600 DH", site: "https://voyages21.com", instagram: "https://www.instagram.com/voyages21maroc/", verifie: true, nous: true },
+        { agence: "AjiNsafro", offre: "Caire + Sharm", inclus: ["Vol A/R","Hôtel 4★ et 5★","Transferts","Repas & visites du programme"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd (post : « été 2026 »)", duree: "10j/9n", hotels: "4★ et 5★", prix: "16 700 DH", site: "https://www.ajinsafro.ma", instagram: "https://www.instagram.com/ajinsafro.ma/", verifie: true },
+        { agence: "Vacancia", offre: "Caire + Hurghada", inclus: ["nd"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "10j/9n", hotels: "4★ tout compris", prix: "17 500 DH", site: "https://vacancia.ma", instagram: "https://www.instagram.com/vacancia.ma/", verifie: false },
+        { agence: "Olé Voyages", offre: "Caire + croisière + Hurghada", inclus: ["nd"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "~11j", hotels: "nd", prix: "15 500 DH", site: "https://www.olevoyages.ma", instagram: "https://www.instagram.com/olevoyages.ma/", verifie: false },
+        { agence: "ESF (Évasions Sans Frontières)", offre: "Caire + croisière Nil + Hurghada", inclus: ["nd"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "nd", hotels: "5★ + croisière 5★", prix: "17 900 DH", site: "nd", instagram: "https://www.instagram.com/evasions_sans_frontieres/", verifie: false },
+        { agence: "Al Hassania", offre: "Grand Tour Caire+Hurghada+Sharm", inclus: ["nd"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "14j/13n", hotels: "5★", prix: "16 900 DH", site: "nd", instagram: "nd", verifie: false }
       ],
       benchmarkAnalyse: [
-        "Position : sur l'offre Caire & Sharm, V21 (19 600 DH) est le PLUS cher des lignes scrapées.",
-        "Seul comparable direct VÉRIFIÉ = AjiNsafro Caire+Sharm 16 700 DH → écart +2 900 DH (+17 %).",
-        "Différences visibles dans la data du 14/06 entre ces 2 offres : durée V21 11j/10n vs AjiNsafro 10j/9n (V21 = +1 nuit) ; hôtels V21 « 5★ nommés » vs AjiNsafro « 4★ et 5★ ».",
-        "Conclusion (data seule) : l'écart de +17 % coïncide avec ces 2 différences scrapées (1 nuit de plus + catégorie 5★ garantie chez V21). Aucune autre cause affirmée — les autres lignes (Olé, ESF, Vacancia) ne sont pas vérifiées."
+        "OÙ JE SUIS : sur Caire & Sharm, V21 (19 600 DH) est le PLUS cher des lignes scrapées le 14/06.",
+        "MON FORT (visible data) : seul à garantir des 5★ NOMMÉS + 11j/10n (1 nuit de plus qu'AjiNsafro 10j/9n) + dîner-croisière Nil inclus. Comparable direct vérifié = AjiNsafro 16 700 → écart +17 %, qui COÏNCIDE avec ces 2 plus (data, sans autre interprétation).",
+        "MON FAIBLE (visible data) : je n'affiche NI compagnie aérienne NI horaires NI liste claire d'inclus/exclus dans la com — les concurrents non plus, mais c'est justement un terrain où me différencier (transparence).",
+        "⚠️ Limite : Olé/ESF/Vacancia/Al Hassania = prix non vérifiés et inclus « nd » → comparaison partielle. Pour trancher saison/saison, il faut leurs dates exactes (colonne Dates à compléter)."
+      ],
+      benchmarkIntlTitre: "Benchmark international — agences France & Espagne (Le Caire / Nil / Sharm)",
+      benchmarkIntl: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Caire & Sharm (départ Maroc)", inclus: ["Vols A/R Casa","10 nuits 5★","Caire + dîner-croisière Nil","Sharm 7 nuits AI"], exclus: ["Visa 600 DH","Pourboires"], compagnie: "nd", horaires: "non publiés", dates: "juil → sept 2026", duree: "11j/10n", hotels: "5★ nommés", prix: "19 600 DH (~1 815 €)", site: "https://voyages21.com", instagram: "https://www.instagram.com/voyages21maroc/", verifie: true, nous: true },
+        { agence: "Voyages Rive Gauche 🇫🇷", offre: "Croisière Nil + Le Caire 5★", inclus: ["Bateau + hôtel 5★","Pension complète","Visites"], exclus: ["Vol depuis Europe selon offre"], compagnie: "nd", horaires: "nd", dates: "03 sept 2026", duree: "8j", hotels: "5★ + bateau 5★", prix: "≈1 659 € (~17 900 DH)", site: "https://www.rive-gauche.fr", instagram: "nd", verifie: true },
+        { agence: "Havas Voyages 🇫🇷", offre: "Caire + croisière Nil + Grand Musée", inclus: ["Croisière Louxor-Assouan","Grand Musée égyptien"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "nd", hotels: "nd", prix: "dès 1 316 € (~14 200 DH)", site: "https://www.havas-voyages.fr", instagram: "nd", verifie: true },
+        { agence: "Jet tours 🇫🇷", offre: "Circuits/croisières Égypte (429 offres)", inclus: ["selon circuit"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026-2027", duree: "variable", hotels: "variable", prix: "dès 499 € (~5 400 DH, hors vol selon offre)", site: "https://www.jettours.com", instagram: "nd", verifie: true },
+        { agence: "TD Viajes 🇪🇸", offre: "Caire + croisière Nil", inclus: ["Vols depuis Espagne","Croisière + Caire"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "départs lundi & samedi (Madrid/Bilbao/BCN)", duree: "8j/7n", hotels: "nd", prix: "1 121 € (~12 100 DH)", site: "https://tdviajes.net", instagram: "nd", verifie: true },
+        { agence: "B travel 🇪🇸", offre: "Croisière Nil + montgolfière Louxor + Caire", inclus: ["Croisière","Montgolfière Louxor","Le Caire complet"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026", duree: "8j/7n", hotels: "nd", prix: "1 552 € (~16 800 DH)", site: "https://www.btravel.com", instagram: "nd", verifie: true }
+      ],
+      benchmarkIntlAnalyse: [
+        "⚠️ Comparaison à manier : les prix FR/ES partent d'EUROPE (vol différent) et sont majoritairement CROISIÈRE NIL, pas Caire+Sharm balnéaire comme notre offre héros → pas un strict apples-to-apples.",
+        "MON FORT : je pars du MAROC (pas de vol Europe à ajouter pour le client MA), je combine culture (Caire+Nil) ET balnéaire 5★ Sharm 7 nuits, en darija/FR. Les FR/ES vendent surtout la croisière Nil seule.",
+        "CE QUI ME DISTINGUE : ancrage marché marocain + Sharm inclus. Là où l'Europe est plus forte : croisière Nil packagée + extras (Grand Musée, montgolfière Louxor) que je pourrais ajouter pour monter en gamme.",
+        "MON FAIBLE : en € convertis, TD Viajes (~12 100 DH) et Havas (~14 200 DH) affichent moins cher SUR LA CROISIÈRE NIL — mais data incomplète (inclus/vol origine). À surveiller si je lance une offre croisière Nil pure."
       ],
       // Engagement réel — posts marquants scrapés + NOUS pour situer (run xX5xp5YSctnvvqkhE, 14/06/2026)
       engagementReel: [
@@ -172,20 +265,54 @@ window.V21_STUDIO = {
       planning: "Rythme 4 posts/sem (IG+FB+TikTok). Suggestion : mardi 18h30, jeudi 18h30, samedi 11h, dimanche 18h30. Validation Karim : libre, n'importe quand."
     },
 
+    // INFLUENCEURS / BLOGUEURS / YOUTUBEURS — Égypte (4 MA + 4 EU)
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "Maroua Merzouqui", plateforme: "Instagram (UGC voyage)", audience: "micro-influence, fort like-rate", sujet: "Voyages organisés vus de l'intérieur, ton sincère prix/valeur (partenariats agences MA).", lien: "https://www.instagram.com/maroua_merzouqui/" },
+      { origine: "🇲🇦 Maroc", nom: "Comptes outgoing MA (Vacancia/Olé/AjiNsafro)", plateforme: "Instagram (agences-créateurs)", audience: "70-139 K", sujet: "Promo Égypte (Caire/Nil/Hurghada), reels prix + réservation. Concurrents qui font office d'influence.", lien: "https://www.instagram.com/vacancia.ma/" },
+      { origine: "🇲🇦 Maroc", nom: "⚠️ Blogueur MA spécial Égypte", plateforme: "à identifier", audience: "—", sujet: "Pas de blogueur MA purement « Égypte » identifié au scrape → à confirmer via scrape ciblé (sinon compléter en EU).", lien: "" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA (UGC à recruter)", plateforme: "Instagram/TikTok", audience: "micro", sujet: "Clients V21 réels = futur vivier UGC Égypte (à activer systématiquement au retour de voyage).", lien: "" },
+      { origine: "🇫🇷 France", nom: "Bruno Maltor", plateforme: "Instagram/YouTube/TikTok", audience: "~2 M (multi-plateformes)", sujet: "Voyage grand public premium, storytelling lieux iconiques. Reels 300-450 k vues. Référence de prod.", lien: "https://www.instagram.com/brunomaltor/" },
+      { origine: "🇫🇷 France", nom: "Asgard Projet (Guillaume)", plateforme: "Instagram", audience: "niche", sujet: "« Voyages initiatiques » Égypte = angle spiritualité/transformation, premium expérientiel.", lien: "https://www.instagram.com/asgardprojet/" },
+      { origine: "🇪🇺 Intl", nom: "El Yakout Voyages 🇫🇷", plateforme: "Instagram (agence FR)", audience: "—", sujet: "Vend « Sharm El Sheikh & Le Caire » → vocabulaire et arguments FR à comparer/observer.", lien: "https://www.instagram.com/elyakoutvoyages/" },
+      { origine: "🇪🇺 Intl", nom: "Beyond Egypt Travel", plateforme: "Instagram (expert Égypte)", audience: "—", sujet: "Ton « insider/guide » sur l'Égypte (Louxor, montgolfière, conseils) → modèle éditorial expert.", lien: "https://www.instagram.com/beyondegypt_travel_/" }
+    ],
+    influenceursNote: "⚠️ Garde-fou : aucun blogueur marocain purement spécialisé Égypte n'a été identifié de façon fiable au scrape. 2 lignes MA sont donc « à activer » (UGC clients + partenariats). Pour 4 MA solides, un scrape ciblé d'influenceurs voyage MA est recommandé.",
+
+    // STRATÉGIE RÉSEAUX déclinée à l'Égypte
+    reseauxDestIntro: "Application du playbook général au contexte Égypte (culture + balnéaire, cible familles/couples MA, darija+FR).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reels révélation pyramides + transition Caire→Nil→Sharm, audio tendance. Carrousel « itinéraire 10 jours » pour les saves. Stories quotidiennes avec sticker WhatsApp.", exemple: "Reproduire le plan @athira.asok (face aux pyramides) avec chaque client + le format @vacancia (audio, 95k vues)." },
+      { nom: "👍 Facebook", conseil: "Cible MRE/40+ : posts détaillés prix+programme+dîner-croisière, cross-post des reels. Indispensable : convertir en Page pro pour les ads Égypte.", exemple: "Post « Caire & Sharm 5★ dès 19 600 DH » avec la liste inclus/exclus (transparence = différenciant vs concurrents flous)." },
+      { nom: "🎵 TikTok", conseil: "Reel brut « POV : 1re fois face aux pyramides » + série « Jour X/10 en Égypte ». Audio TikTok (≠ tendances IG).", exemple: "Décliner le POV @melianjulio en darija ; tester un cost-breakdown « Égypte depuis Casa, le vrai budget »." },
+      { nom: "👻 Snapchat", conseil: "Phase ads d'abord : Snap Ads géolocalisées (Casa/Rabat/Marrakech) sur l'offre Égypte, format vertical direct « dernières places ».", exemple: "Story flash « départ 6 août, 4 places » → swipe-up WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles verticales « Itinéraire Égypte 10 jours », « Croisière Nil guide », keyword-first → trafic long terme vers voyages21.com.", exemple: "Recycler chaque slide du carrousel itinéraire en épingle ; publier dès juillet pour la saison oct→avril." },
+      { nom: "🎬 Vidéo / YouTube", conseil: "Talking-head Karim « 5 erreurs croisière Nil » (autorité) + B-roll Égypte. YouTube Shorts = SEO durable.", exemple: "Un Short « L'Égypte, c'est safe ? » répond à LA question qui bloque l'achat." }
+    ],
+
     // 5) INSPIRATION VIRALE (web global + France + Pinterest) — recherche 13/06/2026
     viral: {
-      statut: "✅ Recherche virale + exemples RÉELS cliquables (scrape Apify 14/06 + recherche web). Détail : content-studio/veille-virale.md. Stats = réelles à la date du scrape.",
+      statut: "✅ Reels (8) + UGC (8) réels cliquables, analyse experte. Garde-fou UGC actif (voir note). Scrape Apify 14/06.",
       // Exemples viraux réels — liens cliquables (à reproduire avec la marque V21, pas plagier)
-      viralExamples: [
-        { cat: "ugc", origine: "🇲🇦 Maroc", titre: "UGC influenceuse — « la hausse des prix des voyages »", compte: "@maroua_merzouqui", lien: "https://www.instagram.com/p/DZFjqkaICpV/", stat: "13 433 vues · 1 292 ❤️", pourquoi: "Le meilleur format UGC marocain qui performe (partenariat agence). À activer pour l'Égypte : une voyageuse réelle raconte." },
-        { cat: "ugc", origine: "🌍 Intl", titre: "POV Pyramides de Gizeh — « l'Égypte change ta perception du temps »", compte: "@melianjulio", lien: "https://www.instagram.com/p/DZjBzseDfO0/", stat: "❤️ 91 (vues non captées)", pourquoi: "UGC voyageur face aux pyramides. Angle émotionnel à reproduire en darija + sous-titres FR." },
-        { cat: "ugc", origine: "🇪🇬 Égypte", titre: "UGC séjour mer Rouge — « Merci Hurghada »", compte: "@derwalux", lien: "https://www.instagram.com/p/DZjqne6jU-y/", stat: "❤️ 64 (vues non captées)", pourquoi: "UGC plage/détente Hurghada — la partie balnéaire de notre offre, vue par un vrai voyageur." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concurrent direct — offre Caire & Sharm", compte: "@ajinsafro.ma", lien: "https://www.instagram.com/p/DZXvWc2mkKD/", stat: "121 vues · 2 ❤️", pourquoi: "Offre quasi identique à la nôtre mais visuel pauvre → à REFAIRE en mieux (vrai film 5★ + hôtels nommés)." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Le format qui scale — reel + audio tendance", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Reel court + audio tendance + caption minimale. À transposer sur l'Égypte (pyramides/Nil/mer Rouge)." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Squelette « destination + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Le squelette de reel le plus efficace du marché MA. À appliquer tel quel à l'Égypte." },
-        { cat: "intl", origine: "🇫🇷 France", titre: "Agence FR — « Sharm El Sheikh & Le Caire été 2026 »", compte: "@elyakoutvoyages", lien: "https://www.instagram.com/p/DZeyzv5AF6D/", stat: "❤️ 7 (vues non captées)", pourquoi: "Un opérateur français vend la MÊME offre Caire+Sharm → vocabulaire et arguments à comparer." },
-        { cat: "intl", origine: "🇫🇷 France", titre: "Créateur niche — « Voyage initiatique en Égypte »", compte: "@asgardprojet", lien: "https://www.instagram.com/p/DZaidkJDRlf/", stat: "❤️ 23 (vues non captées)", pourquoi: "Angle « voyage de transformation » : positionnement premium/expérientiel inexploité côté MA." },
-        { cat: "intl", origine: "🌍 Intl", titre: "TO spécialiste Égypte (anglophone)", compte: "@beyondegypt_travel_", lien: "https://www.instagram.com/p/DZjx2lnDYKn/", stat: "❤️ 5 (vues non captées)", pourquoi: "Référence d'expert Égypte — utile pour le ton « guide/insider » que V21 peut adopter." }
+      ugcGardeFou: "Garde-fou appliqué : ne sont retenus QUE des comptes réels montrant l'Égypte (pyramides, Hurghada, désert, Louxor). ⚠️ Honnête : l'UGC Égypte vraiment VIRAL (vues à 5-6 chiffres) n'est pas remonté au scrape hashtag (engagement faible des posts récents). Ces UGC sont réels mais modestes. Pour de l'UGC vraiment viral → scrape ciblé de créateurs Égypte précis (à lancer si tu valides).",
+      viralReels: [
+        { origine: "🇲🇦 Maroc", titre: "Concurrent direct — Caire & Sharm", compte: "@ajinsafro.ma", lien: "https://www.instagram.com/p/DZXvWc2mkKD/", stat: "121 vues · 2 ❤️", pourquoi: "Même offre que nous mais visuel pauvre (photos figées) → la demande existe, le contenu manque. À REFAIRE en mieux.", message: "« Caire + Sharm, pyramides + plages »", hook: "Offre spéciale Caire & Sharm 🌴", plans: "Photos statiques pyramides/plage + texte prix. À remplacer par un vrai film 5★.", posture: "Montrer l'hôtel 5★ NOMMÉ et le dîner-croisière (preuves concrètes vs promesse vague)." },
+        { origine: "🇲🇦 Maroc", titre: "Le format qui scale — reel + audio", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Audio tendance + montage court + caption quasi vide = l'algo pousse au reach, pas le texte. Le copywriting ne fait pas le reach, le SON et le RYTHME oui.", message: "« Réserve, tu peux partir »", hook: "Plan d'ouverture spectaculaire (skyline/monument) sur le drop", plans: "5-7 plans serrés au beat, transitions sur temps fort de l'audio.", posture: "Choisir un audio TENDANCE du jour, pas une banque libre. Couper au beat." },
+        { origine: "🇲🇦 Maroc", titre: "Squelette « destination + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Structure ultra-claire qui convertit : 1 destination + dates précises + rareté (« places limitées ») + n° de tél. Crée l'urgence.", message: "« Pars en [destination], du [date] au [date], places limitées »", hook: "Beau plan destination + date en gros à l'écran", plans: "B-roll destination + cartons dates + CTA téléphone.", posture: "Toujours afficher DATES + rareté : c'est ce qui déclenche le DM." },
+        { origine: "🇲🇦 Maroc", titre: "Reel circuit Asie premium (transposable)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DZKRrxNszhZ/", stat: "40 477 vues · 1 141 ❤️", pourquoi: "Prouve qu'un circuit « lointain culturel » se vend en reel propre et rythmé. Modèle pour un reel Caire+Nil premium.", message: "« Vis le [pays] avec nous »", hook: "Verbe d'action + pays + emoji drapeau", plans: "Montage paysages forts + 2-3 dates.", posture: "Qualité de prod = perçue comme qualité de l'agence (premium)." },
+        { origine: "🇲🇦 Maroc", titre: "Reel combiné Asie (reach)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors rapide = effet « waouh » qui retient → fort taux de complétion.", message: "« 2-3 destinations en un voyage »", hook: "Enchaînement rapide de 3 décors dès la 1re seconde", plans: "Whip-cuts entre décors, tempo soutenu.", posture: "Transposer Caire → Nil → mer Rouge en 3 temps." },
+        { origine: "🇲🇦 Maroc", titre: "★ Concours « gagne une Omra » (mécanique de portée)", compte: "@voyage.or", lien: "https://www.instagram.com/p/DYKcyl7oogK/", stat: "22 014 vues · 4 283 ❤️ · 2 244 comm", pourquoi: "Le concours fait EXPLOSER les commentaires (2 244) → l'algo interprète = contenu chaud → reach démultiplié. Levier n°1 pour lancer un compte.", message: "« Suis + partage + commente, tu peux gagner »", hook: "« GAGNE [récompense] 🎁 »", plans: "Visuel récompense + règles claires en carton.", posture: "Adapter en concours Égypte (« gagne ton voyage / une nuit 5★ »), règlement transparent." },
+        { origine: "🇲🇦 Maroc", titre: "Concours communautaire (confirmation)", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DXq9aEZD7GQ/", stat: "3 163 vues · 629 ❤️ · 1 769 comm", pourquoi: "Confirme la mécanique : « chaque 2 semaines un gagnant » → engagement récurrent qui fidélise et nourrit le reach dans la durée.", message: "« Un gagnant toutes les 2 semaines »", hook: "Récompense forte + récurrence", plans: "Carton récompense + tag d'amis demandé.", posture: "Demander de TAGUER des amis = portée organique gratuite." },
+        { origine: "🇲🇦 Maroc", titre: "Carrousel « prix choc » (sauvegardes)", compte: "@msm_voyages", lien: "https://www.instagram.com/p/DYCoCVeCEiV/", stat: "carrousel · 400 ❤️", pourquoi: "Le carrousel « offre détaillée + prix » génère des SAVES (intention d'achat) même sans reach reel. Complément du reel.", message: "« Programme premium, prix net »", hook: "Prix barré / « à partir de » en slide 1", plans: "Slides : prix → programme → inclus → CTA.", posture: "Carrousel = closing (détails), reel = reach. Faire les DEUX." }
+      ],
+      viralUgc: [
+        { origine: "🇲🇦 Maroc", titre: "UGC influenceuse — prix/valeur du voyage", compte: "@maroua_merzouqui", lien: "https://www.instagram.com/p/DZFjqkaICpV/", stat: "13 433 vues · 1 292 ❤️", pourquoi: "Vraie voyageuse, ton sincère « parlons argent » → crée la confiance (le public se méfie des promos d'agence). Fort like-rate.", message: "« Le voyage, ça vaut le coup »", hook: "« On parle beaucoup de la hausse des prix… »", plans: "Face caméra naturel + B-roll de SES voyages.", posture: "Activer une voyageuse réelle V21 (partenariat affiché), pas un acteur." },
+        { origine: "🌍 Intl", titre: "UGC désert — « plus vieux que 4 000 ans »", compte: "@alishasakpal", lien: "https://www.instagram.com/p/DZfzFEEN4yi/", stat: "1 155 vues · 161 ❤️", pourquoi: "Punchline temporelle (« older than 4,000 years ») + esthétique désert = scroll-stopper. L'Histoire comme accroche.", message: "« Marcher dans 4 000 ans d'Histoire »", hook: "« Serving looks older than 4,000 years »", plans: "Plan large désert/temple + tenue soignée.", posture: "Jouer la fierté patrimoniale + soin de l'image." },
+        { origine: "🌍 Intl", titre: "UGC Pyramides de Gizeh", compte: "@athira.asok", lien: "https://www.instagram.com/p/DZe6BnWCKaM/", stat: "❤️ 261", pourquoi: "Le plan « moi face aux pyramides » reste un aimant universel à likes. Preuve sociale + rêve.", message: "« J'y suis, face aux pyramides »", hook: "Révélation des pyramides plein cadre", plans: "Contre-plongée pyramides + silhouette voyageur.", posture: "Le plan signature à recréer avec chaque client (UGC systématique)." },
+        { origine: "🌍 Intl", titre: "POV Gizeh — « l'Égypte change ta perception du temps »", compte: "@melianjulio", lien: "https://www.instagram.com/p/DZjBzseDfO0/", stat: "❤️ 91 (vues non captées)", pourquoi: "Angle réflexif/émotionnel (le temps, l'éternité) → différencie de la promo. Touche une corde sensible.", message: "« Face aux pyramides, le temps s'arrête »", hook: "« L'Égypte change ta perception du temps »", plans: "Plan contemplatif + voix off posée.", posture: "Reproduire en darija/FR avec voix off de Karim (autorité + émotion)." },
+        { origine: "🇪🇬 Égypte", titre: "UGC mer Rouge — « Merci Hurghada »", compte: "@derwalux", lien: "https://www.instagram.com/p/DZjqne6jU-y/", stat: "❤️ 64 (vues non captées)", pourquoi: "La partie balnéaire (Hurghada/Sharm) vue par un vrai voyageur → preuve que l'Égypte n'est pas QUE culturelle.", message: "« L'Égypte, c'est aussi la mer Rouge »", hook: "Eau turquoise + remerciement spontané", plans: "Plan plage/snorkeling + sourire.", posture: "Mettre en avant le balnéaire 5★ Sharm de notre offre (différenciant)." },
+        { origine: "🌍 Intl", titre: "UGC « lifestyle vacances »", compte: "@not_another_beauty_queen", lien: "https://www.instagram.com/p/DZfkvaCMimT/", stat: "291 vues · 58 ❤️", pourquoi: "Positionne le voyage comme un LIFESTYLE (pas un événement) → aspirationnel, fidélise une cible jeune CSP+.", message: "« Pour moi, ce n'est pas des vacances, c'est un mode de vie »", hook: "« For some people vacation. For me a lifestyle »", plans: "Mood plage/soleil, montage soigné.", posture: "Cibler l'aspirationnel jeune (audio tendance, esthétique léchée)." },
+        { origine: "🇫🇷 France", titre: "Créateur niche — « Voyage initiatique en Égypte »", compte: "@asgardprojet", lien: "https://www.instagram.com/p/DZaidkJDRlf/", stat: "❤️ 23 (vues non captées)", pourquoi: "Positionnement « voyage de transformation/spiritualité » : créneau premium-expérientiel quasi inexploité côté MA.", message: "« Sentir la puissance de la vie en Égypte »", hook: "Promesse de transformation personnelle", plans: "Plans lents, temples, lumière dorée.", posture: "Tester une offre Égypte « premium-expérience » (petits groupes, sens)." },
+        { origine: "🌍 Intl", titre: "UGC montgolfière au-dessus de Louxor", compte: "@beyondegypt_travel_", lien: "https://www.instagram.com/p/DZjSuPAqoYC/", stat: "38 vues · 10 ❤️", pourquoi: "L'expérience « montgolfière Louxor » est un visuel rare et fort → idée d'EXTRA premium à ajouter à l'offre (comme B travel 🇪🇸 le fait).", message: "« Survoler les merveilles de Louxor »", hook: "Lever de soleil en montgolfière", plans: "Plan aérien temples + ballon.", posture: "Proposer la montgolfière Louxor en option premium = montée en gamme." }
       ],
       formats: [
         "POV première personne — « POV : tu arrives en Égypte pour la 1re fois » (identification + complétion)",
