@@ -504,25 +504,42 @@ window.V21_STUDIO = {
         { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit compte · Meta Verified", type: "Notre compte — point de départ", note: "~25-150 vues/post. Turquie = notre 2e priorité : pousser des reels été dès maintenant" }
       ],
       benchmarkPrix: [
-        { agence: "▶ Voyages21 (NOUS)", offre: "Séjour Istanbul 8j (entrée de gamme)", duree: "8j/7n", hotels: "3★/4★ + Bosphore inclus", prix: "9 700 DH", verifie: true },
-        { agence: "Transatour", offre: "Istanbul 8j (Bosphore offert)", duree: "8j/7n", hotels: "nd", prix: "6 547 DH", verifie: true },
-        { agence: "Vacancia (vol direct Marrakech, Turkish Airlines)", offre: "Combo Istanbul + Antalya", duree: "—", hotels: "—", prix: "13 900 DH", verifie: true },
-        { agence: "Vacancia", offre: "Antalya (séjour)", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true },
-        { agence: "Vacancia", offre: "Circuit Antalya + Marmaris + Fethiye", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true }
+        { agence: "▶ Voyages21 (NOUS)", offre: "Séjour Istanbul 8j", inclus: ["Vols Turkish A/R","7 nuits B&B","Croisière Bosphore incluse","Transferts + taxes","Guide arabophone"], exclus: ["Excursions hors Bosphore","Extras & boissons","Pourboires"], compagnie: "Turkish Airlines", horaires: "non publiés", dates: "Été 2026 (juillet · août)", duree: "8j/7n", hotels: "3★/4★", prix: "9 700 DH", site: "https://voyages21.com", instagram: "https://www.instagram.com/voyages21maroc/", verifie: true, nous: true },
+        { agence: "Transatour", offre: "Istanbul 8j (Bosphore offert)", inclus: ["Vols A/R","Hébergement","Transferts","Croisière Bosphore offerte"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "8j/7n", hotels: "nd", prix: "6 547 DH", site: "https://www.transatour.ma", instagram: "https://www.instagram.com/transatourmaroc/", verifie: true },
+        { agence: "Vacancia", offre: "Combo Istanbul + Antalya", inclus: ["Vol DIRECT Marrakech (Turkish)"], exclus: ["nd"], compagnie: "Turkish Airlines (direct Marrakech)", horaires: "nd", dates: "nd", duree: "—", hotels: "nd", prix: "13 900 DH", site: "https://vacancia.ma", instagram: "https://www.instagram.com/vacancia.ma/", verifie: true },
+        { agence: "Vacancia", offre: "Antalya (séjour)", inclus: ["nd"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "—", hotels: "nd", prix: "15 900 DH", site: "https://vacancia.ma", instagram: "https://www.instagram.com/vacancia.ma/", verifie: true },
+        { agence: "Vacancia", offre: "Circuit Antalya + Marmaris + Fethiye", inclus: ["nd"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "nd", duree: "—", hotels: "nd", prix: "15 900 DH", site: "https://vacancia.ma", instagram: "https://www.instagram.com/vacancia.ma/", verifie: true }
       ],
       benchmarkAnalyse: [
-        "Position : sur l'entrée de gamme Istanbul même durée (8j/7n), V21 (9 700 DH) est au-dessus de Transatour (6 547 DH, vérifié) → écart +3 153 DH (+48 %).",
-        "⚠️ Limite data : la data scrapée le 14/06 ne montre PAS la catégorie d'hôtel de Transatour (« nd ») ni le détail vol (direct/escale) ; côté V21 on sait 3★/4★ + croisière Bosphore incluse.",
-        "Conclusion (data seule) : l'écart de +48 % existe, mais son origine n'est PAS déterminable à partir de la seule data (caractéristiques de l'offre Transatour absentes du post). À clarifier : catégorie hôtel + type de vol côté concurrent.",
-        "Vs Vacancia (combo Istanbul+Antalya 13 900, vérifié) : offres non comparables (séjour simple vs combiné) → pas de conclusion prix."
+        "OÙ JE SUIS : sur l'entrée de gamme Istanbul même durée (8j/7n), V21 (9 700 DH) est AU-DESSUS de Transatour (6 547 DH, vérifié) → écart +3 153 DH (+48 %).",
+        "MON FORT (data) : je précise compagnie (Turkish), inclus (croisière Bosphore + guide + transferts) et exclus ; Transatour laisse hôtel/vol en « nd ».",
+        "MON FAIBLE (data) : prix d'appel plus haut, et je ne publie pas mes horaires de vol (colonne vide). Transatour casse le prix avec le MÊME hook « Bosphore offert ».",
+        "⚠️ Origine de l'écart NON déterminable sur la seule data : la catégorie d'hôtel et le type de vol de Transatour sont absents → à clarifier avant de conclure."
       ],
-      apifyStatut: "✅ Scrape Apify autonome via API REST (14/06/2026, run xX5xp5YSctnvvqkhE). Engagement Turquie réel ci-dessous. ⚠️ Transatour 6 547 DH = prix d'appel Istanbul plus bas que notre entrée 9 700 DH → à analyser (qualité hôtel ? vol direct ou escale ?).",
+      benchmarkIntlTitre: "Benchmark international — agences France & Espagne (Turquie)",
+      benchmarkIntl: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Séjour Istanbul (départ Maroc)", inclus: ["Vols Turkish depuis Casa","Croisière Bosphore","Guide"], exclus: ["Excursions hors Bosphore"], compagnie: "Turkish Airlines", horaires: "nd", dates: "Été 2026", duree: "8j/7n", hotels: "3★/4★", prix: "9 700 DH (~900 €)", site: "https://voyages21.com", instagram: "https://www.instagram.com/voyages21maroc/", verifie: true, nous: true },
+        { agence: "Fram 🇫🇷", offre: "Circuit Antalya → Cappadoce", inclus: ["Vols depuis France","Circuit guidé"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026", duree: "8j/7n", hotels: "4★", prix: "dès 699 € (~7 550 DH)", site: "https://www.fram.fr", instagram: "nd", verifie: true },
+        { agence: "Logitravel 🇫🇷🇪🇸", offre: "Istanbul + Cappadoce + Pamukkale + Antalya", inclus: ["Vols Europe","Circuit + plage"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026", duree: "11j", hotels: "nd", prix: "dès 939 € (~10 140 DH)", site: "https://www.logitravel.fr", instagram: "nd", verifie: true },
+        { agence: "Voyage Privé 🇫🇷", offre: "Istanbul + Cappadoce + Antalya 4★", inclus: ["Vols","Circuit 4★"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026", duree: "8j/7n", hotels: "4★", prix: "promo (jusqu'à -70 %)", site: "https://www.voyage-prive.com", instagram: "nd", verifie: true },
+        { agence: "Leclerc Voyages 🇫🇷", offre: "D'Antalya à la Cappadoce", inclus: ["Vols","Circuit"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026", duree: "nd", hotels: "4★", prix: "dès 699 € (~7 550 DH)", site: "https://www.leclercvoyages.com", instagram: "nd", verifie: true },
+        { agence: "Fram « Regard sur la Turquie » 🇫🇷", offre: "Grand circuit Turquie", inclus: ["Vols","Circuit complet"], exclus: ["nd"], compagnie: "nd", horaires: "nd", dates: "2026", duree: "9j/8n", hotels: "nd", prix: "dès 901 € (~9 730 DH)", site: "https://www.fram.fr", instagram: "nd", verifie: true }
+      ],
+      benchmarkIntlAnalyse: [
+        "⚠️ Pas un apples-to-apples : les offres FR/ES sont des CIRCUITS (Istanbul + Cappadoce + Pamukkale + Antalya), pas un séjour Istanbul+Bosphore comme notre entrée de gamme.",
+        "MON FORT : départ MAROC (pas de vol Europe à ajouter), Turkish Airlines, croisière Bosphore incluse, guide arabophone, ton darija/FR.",
+        "CE QUI ME DISTINGUE / MON FAIBLE : les FR/ES incluent la CAPPADOCE (montgolfières) que je n'ai PAS dans cette offre → manque à combler si je veux monter en gamme. En € convertis, leurs circuits (699-939 €) paraissent compétitifs MAIS partent d'Europe et durent plus longtemps.",
+        "Conclusion (data) : sur un MÊME format « séjour Istanbul », je n'ai pas de comparable FR/ES strict ; sur le CIRCUIT, l'Europe est plus complète → opportunité d'ajouter une option Cappadoce."
+      ],
+      apifyStatut: "✅ Scrape Apify 6 mois (déc. 2025→juin 2026). Engagement Turquie réel ci-dessous (posts TURQUIE uniquement, triés par vues). Prix concurrents MA : Transatour 6 547 (vérifié) ; Vacancia 13 900-15 900 (vérifié).",
+      engagementReelNote: "À LIRE : vraies vues/likes de POSTS sur la TURQUIE (filtrés 6 mois), pas une moyenne de compte.",
       engagementReel: [
-        { compte: "@vacancia.ma", format: "Reel Istanbul « Réservation + n° » + audio", vues: "95 482", likes: "571", comm: "34" },
-        { compte: "@vacancia.ma", format: "Reel Istanbul + Bali", vues: "63 611", likes: "410", comm: "16" },
-        { compte: "@vacancia.ma", format: "Reel Turkey + Antalya", vues: "13 006", likes: "114", comm: "15" },
-        { compte: "@transatourmaroc", format: "Post Istanbul 8j dès 6 547 DH (Bosphore offert)", vues: "3 279", likes: "104", comm: "18" },
-        { compte: "▶ @voyages21maroc (NOUS)", format: "Meilleur reel récent", vues: "149", likes: "6", comm: "1" }
+        { compte: "@istanbul (officiel)", format: "Reel Istanbul vue du ciel", vues: "1 059 353", likes: "236 823", comm: "—" },
+        { compte: "@maroua_merzouqui (UGC 🇲🇦)", format: "Reel « mon escale de 25h à Istanbul »", vues: "525 890", likes: "5 015", comm: "—" },
+        { compte: "@vacancia.ma (agence MA)", format: "Reel Istanbul « Réservation + n° »", vues: "99 167", likes: "595", comm: "—" },
+        { compte: "@vacancia.ma (agence MA)", format: "Reel Antalya", vues: "93 012", likes: "863", comm: "—" },
+        { compte: "@transatourmaroc (agence MA)", format: "Post Istanbul dès 6 547 DH (Bosphore offert)", vues: "3 279", likes: "104", comm: "18" },
+        { compte: "▶ @voyages21maroc (NOUS)", format: "Meilleur reel récent (toutes dest.)", vues: "149", likes: "6", comm: "1" }
       ],
       learnings: [
         "Le format qui scale = Reel court « destination + numéro de résa » en audio tendance (Vacancia : 63k-95k vues) — prod simple, pas léchée",
@@ -579,18 +596,46 @@ window.V21_STUDIO = {
       noteVisuels: "⚠️ Visuels Higgsfield à générer depuis l'app desktop (gate web). Réutiliser le préfixe de marque V21.",
       planning: "Rythme 4 posts/sem (IG+FB+TikTok). Turquie = forte saisonnalité été → pousser dès maintenant."
     },
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "Maroua Merzouqui", plateforme: "Instagram (UGC voyage)", audience: "reel Istanbul 525 890 vues", sujet: "Récits de voyage vécus (escale Istanbul, prix/valeur). Le meilleur UGC MA sur la Turquie.", lien: "https://www.instagram.com/maroua_merzouqui/" },
+      { origine: "🇲🇦 Maroc", nom: "@vacancia.ma", plateforme: "Instagram (agence-créateur)", audience: "139 K · reels 90k-99k vues", sujet: "Promo Istanbul/Antalya en reels audio + numéro. Concurrent qui fait office d'influence.", lien: "https://www.instagram.com/vacancia.ma/" },
+      { origine: "🇲🇦 Maroc", nom: "@msm_voyages / @follow_me_travel_", plateforme: "Instagram (agences)", audience: "121 K / 111 K", sujet: "Combinés Turquie + Omra+Istanbul, séjours. Volume.", lien: "https://www.instagram.com/msm_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Clients V21 Istanbul/Antalya = vivier UGC à activer au retour.", lien: "" },
+      { origine: "🇹🇷 Turquie", nom: "Czn Burak", plateforme: "Instagram (créateur food/lifestyle)", audience: "reels 0,5-26 M vues", sujet: "Gastronomie/expérience Istanbul, démesure. Modèle mondial de storytelling local.", lien: "https://www.instagram.com/cznburak/" },
+      { origine: "🇹🇷 Turquie", nom: "@istanbul (officiel ville)", plateforme: "Instagram", audience: "reels jusqu'à 1 M+ vues", sujet: "Beauté de la ville, plans drone, sons turcs. Banque d'inspiration n°1.", lien: "https://www.instagram.com/istanbul/" },
+      { origine: "🇹🇷 Turquie", nom: "GoTürkiye (office tourisme)", plateforme: "Instagram", audience: "reels 500k+ vues", sujet: "Storytelling narratif (récits, couples), promotion nationale léchée.", lien: "https://www.instagram.com/goturkiye/" },
+      { origine: "🌍 Intl", nom: "@maazsafder", plateforme: "Instagram (créateur)", audience: "reel 1,9 M vues", sujet: "Humour + rencontres à Istanbul. Preuve que l'humour/UGC scale le plus.", lien: "https://www.instagram.com/maazsafder/" }
+    ],
+    reseauxDestIntro: "Application du playbook au contexte Turquie (marché saturé, culture Istanbul + balnéaire Antalya/Bodrum, cible familles/couples MA).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reels Istanbul (plan drone/Bosphore) + transition ville→plage Antalya, audio TENDANCE ou son turc. Carrousel « combiné 8 jours » pour les saves.", exemple: "Reproduire le plan aérien @istanbul (1M vues) + le format reel @vacancia (99k) ; tester un son turc émotionnel (Buray)." },
+      { nom: "👍 Facebook", conseil: "Cible MRE/familles : offres combinées détaillées (Istanbul + Antalya), cross-post reels. Page pro pour ads Turquie.", exemple: "Post « Istanbul + Antalya 8j, Turkish Airlines, croisière Bosphore incluse, dès 16 300 DH »." },
+      { nom: "🎵 TikTok", conseil: "Reel brut « POV 1er matin sur le Bosphore » + « 5 erreurs combiné Istanbul + plage ». Audio TikTok.", exemple: "Décliner le récit @maroua (escale Istanbul) en astuces ; cost-breakdown « 8j Turquie depuis Casa »." },
+      { nom: "👻 Snapchat", conseil: "Snap Ads géolocalisées MA, offres flash été (« dernières places Antalya »), format vertical direct.", exemple: "Story flash « départ 10 août, 3 places Bodrum » → swipe WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « Itinéraire Istanbul 8 jours », « Cappadoce montgolfière », keyword-first → trafic long terme.", exemple: "Recycler le carrousel combiné en épingles ; viser « Turquie depuis le Maroc »." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « Istanbul ou Antalya : que choisir ? » + B-roll. Short SEO « Visa Turquie pour Marocains ».", exemple: "Un Short « Faut-il un visa pour la Turquie ? » répond au frein n°1." }
+    ],
+
     viral: {
-      statut: "✅ Playbook Turquie + exemples RÉELS cliquables (scrape Apify 14/06). Marché saturé → différencier par le contenu, pas le prix.",
-      viralExamples: [
-        { cat: "ugc", origine: "🇲🇦 Maroc", titre: "UGC influenceuse — « la hausse des prix des voyages »", compte: "@maroua_merzouqui", lien: "https://www.instagram.com/p/DZFjqkaICpV/", stat: "13 433 vues · 1 292 ❤️", pourquoi: "UGC MA qui performe (partenariat agence). Le modèle « voyageuse réelle qui parle prix/valeur » à reproduire pour Istanbul." },
-        { cat: "ugc", origine: "🇬🇧 UK", titre: "UGC food & travel Istanbul", compte: "@fulhamjo_gin_gourmet", lien: "https://www.instagram.com/p/DZjpdFXIayQ/", stat: "❤️ 4 (vues non captées)", pourquoi: "UGC étranger « gastronomie + ville » — Istanbul se vend aussi par la street-food (angle peu exploité par les agences MA)." },
-        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageur Istanbul", compte: "@jithindaskr", lien: "https://www.instagram.com/p/DZjtcKdOFET/", stat: "❤️ 3 (vues non captées)", pourquoi: "UGC voyageur individuel — preuve que la destination génère du contenu spontané à fédérer/reposter." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Le reel qui scale — Istanbul + audio", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Reel + audio + caption minimale = la machine à reach du marché. À copier sur la FORME." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Combiné « 2 décors en 1 reel » — Istanbul + Bali", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "Les combinés font rêver. V21 a Istanbul + Antalya/Bodrum à monter pareil." },
-        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concurrent — Istanbul dès 6 547 DH (Bosphore offert)", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DTSu2h2iNrk/", stat: "3 279 vues", pourquoi: "Prix d'appel bas + même hook « Bosphore offert ». On oppose Turkish Airlines + hôtels nommés." },
-        { cat: "intl", origine: "🇹🇷 Turquie", titre: "★ VIRALITÉ MASSIVE — Czn Burak à Istanbul", compte: "@cznburak", lien: "https://www.instagram.com/p/DMDoWXwI2XJ/", stat: "26 500 240 vues · 10,3 M ❤️", pourquoi: "Le créateur Istanbul n°1 (gastronomie + démesure). Modèle de storytelling local qui fait rêver d'Istanbul à l'échelle mondiale." },
-        { cat: "intl", origine: "🇹🇷 Turquie", titre: "Czn Burak — reel Istanbul (2e)", compte: "@cznburak", lien: "https://www.instagram.com/p/DZSBPU-Ihii/", stat: "5 221 256 vues · 91 786 ❤️", pourquoi: "Confirme que le contenu « expérience + lieu iconique » scale. À transposer : V21 filme une vraie expérience Istanbul, pas une promo." },
-        { cat: "intl", origine: "🇮🇳 Inde", titre: "UGC voyageur — Istanbul (autre marché émetteur)", compte: "@jithindaskr", lien: "https://www.instagram.com/p/DZjtcKdOFET/", stat: "❤️ 3 (vues non captées)", pourquoi: "Istanbul attire tous les marchés émetteurs → preuve de l'universalité du contenu (sans barrière de langue)." }
+      statut: "✅ Reels TURQUIE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. Sons réels indiqués.",
+      ugcGardeFou: "Garde-fou : UGC = vrais voyageurs/créateurs sur la TURQUIE, triés par vues réelles (6 mois). Istanbul génère un contenu massif (jusqu'à 1,9 M de vues) → vivier idéal pour s'inspirer et reposter (avec accord).",
+      viralReelsMa: [
+        { origine: "🇲🇦 Maroc", titre: "Reel Istanbul « Réservation + n° » + audio", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "99 167 vues · 595 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DZFivwkN-x-/", pourquoi: "Le reel MA Turquie le plus vu : audio + montage court + caption quasi vide = reach maximal. Le texte ne fait pas le reach.", message: "« Réserve, tu pars »", hook: "Plan iconique Istanbul sur le 1er temps de l'audio", plans: "5-7 plans serrés (Bosphore, mosquées), coupés au beat.", posture: "Audio tendance du jour + 1er plan fort. Caption minimale assumée." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Antalya (Riviera turque)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DXTrWu4ALhZ/", stat: "93 012 vues · 863 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DXTrWu4ALhZ/", pourquoi: "Le balnéaire Antalya scale autant qu'Istanbul → la mer fait rêver la cible MA. À exploiter (V21 a Antalya/Bodrum).", message: "« La Riviera turque t'attend »", hook: "Eau turquoise / piscine à débordement", plans: "Plans plage/resort lumineux.", posture: "Mettre le balnéaire en avant, pas que la culture." },
+        { origine: "🇲🇦 Maroc", titre: "Reel Antalya (2e)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DXKB0q7Ap2C/", stat: "91 439 vues · 216 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DXKB0q7Ap2C/", pourquoi: "Confirme la régularité : poster souvent le même format = plusieurs reels à 90k+. La constance paie.", message: "« Antalya, tout compris »", hook: "Plan resort + emoji plage", plans: "B-roll resort/mer.", posture: "Cadence > perfection : publier régulièrement." },
+        { origine: "🇲🇦 Maroc", titre: "Combiné « 2 décors » — Istanbul + Bali", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "65 954 vues · 419 ❤️", son: "Audio original (vacancia)", sonLien: "https://www.instagram.com/p/DYo9YhegdXn/", pourquoi: "Les combinés multi-décors font rêver → V21 a Istanbul + Antalya/Bodrum à monter pareil.", message: "« 2 destinations, 1 voyage »", hook: "Whip-cut entre 2 décors dès la 1re seconde", plans: "Transitions ville→mer.", posture: "Monter Istanbul → Bodrum en transition." },
+        { origine: "🇲🇦 Maroc", titre: "Concurrent — Istanbul dès 6 547 DH (Bosphore offert)", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DTSu2h2iNrk/", stat: "3 279 vues · 104 ❤️", son: "Audio original", sonLien: "https://www.instagram.com/p/DTSu2h2iNrk/", pourquoi: "Prix d'appel bas + même hook « Bosphore offert » → on ne s'aligne pas, on oppose Turkish + hôtels nommés.", message: "« Istanbul dès 6 547 DH »", hook: "Prix choc en slide 1", plans: "Carrousel/photos + prix.", posture: "Répondre par la valeur (compagnie, croisière incluse), pas le prix." }
+      ],
+      viralReelsIntl: [
+        { origine: "🇹🇷 Turquie", titre: "★ Officiel — Istanbul vue du ciel", compte: "@istanbul", lien: "https://www.instagram.com/p/C0EYt6eNXYw/", stat: "1 059 353 vues · 236 823 ❤️", son: "Audio original", sonLien: "https://www.instagram.com/p/C0EYt6eNXYw/", pourquoi: "Like-rate colossal : le plan aérien « beautiful even from above » + question en caption = engagement énorme. La beauté brute suffit.", message: "« Istanbul est belle, même vue d'en haut »", hook: "Plan drone spectaculaire", plans: "Aérien + skyline + Bosphore.", posture: "Investir 1-2 plans drone signature d'Istanbul." },
+        { origine: "🇹🇷 Turquie", titre: "Officiel — « Istanbul is inspiring »", compte: "@istanbul", lien: "https://www.instagram.com/p/Cq2gA3qAN_c/", stat: "937 194 vues · 142 371 ❤️", son: "« Seni Sevmiyorum Artık » — Buray", sonLien: "https://www.instagram.com/p/Cq2gA3qAN_c/", pourquoi: "Son turc émotionnel + storytelling « code esthétique de la ville » → identité forte. Le son local ancre la destination.", message: "« Istanbul a son propre code esthétique »", hook: "Texte poétique sur la ville", plans: "Ruelles, lumière, détails.", posture: "Utiliser un son turc tendance pour l'authenticité." },
+        { origine: "🇹🇷 Turquie", titre: "Czn Burak — expérience Istanbul", compte: "@cznburak", lien: "https://www.instagram.com/p/DYurTpwoHKU/", stat: "581 815 vues · 24 825 ❤️", son: "Audio original (cznburak)", sonLien: "https://www.instagram.com/p/DYurTpwoHKU/", pourquoi: "Le créateur Istanbul n°1 (gastronomie/démesure). « Expérience + lieu iconique » = la recette. Filmer une VRAIE expérience, pas une promo.", message: "Expérience spectaculaire à Istanbul", hook: "Mise en scène généreuse/food", plans: "Plans food + lieu emblématique.", posture: "Filmer une expérience client réelle à Istanbul." },
+        { origine: "🇹🇷 Turquie", titre: "Officiel GoTürkiye — « An Istanbul Story »", compte: "@goturkiye", lien: "https://www.instagram.com/p/DXoOHvwDWXK/", stat: "524 730 vues · 19 320 ❤️", son: "Audio original (goturkiye)", sonLien: "https://www.instagram.com/p/DXoOHvwDWXK/", pourquoi: "Mini-récit romantique (Duru & Selim) → le STORYTELLING narratif fonctionne mieux que la fiche produit.", message: "« Une histoire d'amour à Istanbul »", hook: "Personnages + intrigue", plans: "Récit en plans cinématiques.", posture: "Raconter une histoire (couple/famille) plutôt que lister." }
+      ],
+      viralUgc: [
+        { origine: "🌍 Intl", titre: "★ UGC viral — prank Czn Burak (Istanbul)", compte: "@maazsafder", lien: "https://www.instagram.com/p/DYhqyAPoFrT/", stat: "1 927 576 vues · 138 216 ❤️", son: "Audio original", sonLien: "https://www.instagram.com/p/DYhqyAPoFrT/", pourquoi: "Le créateur étranger qui rencontre une célébrité locale (Czn Burak) = 1,9 M de vues. L'HUMOUR + la rencontre = viralité maximale.", message: "Humour / rencontre célébrité", hook: "Situation comique avec une star", plans: "Caméra spontanée, punchline.", posture: "Collaborer avec un créateur sur place pour un moment authentique/drôle." },
+        { origine: "🇲🇦 Maroc", titre: "UGC « mon escale de 25h à Istanbul »", compte: "@maroua_merzouqui", lien: "https://www.instagram.com/p/DW1zCvvDphv/", stat: "525 890 vues · 5 015 ❤️", son: "Audio original (maroua)", sonLien: "https://www.instagram.com/p/DW1zCvvDphv/", pourquoi: "UGC MA n°1 sur la Turquie : une histoire vécue (« je pensais 1h, c'était 25 ») → narration + utile = 525k vues. Le récit personnel scale.", message: "« Que faire d'une longue escale à Istanbul »", hook: "« Je pensais avoir 1h d'escale. C'était 25. »", plans: "Vlog perso, lieux d'Istanbul.", posture: "Activer une voyageuse MA réelle qui RACONTE (pas une promo)." },
+        { origine: "🌍 Intl", titre: "UGC émotionnel — « Dear Istanbul »", compte: "@pey.pey.33", lien: "https://www.instagram.com/p/DY-jlbtp_gg/", stat: "483 395 vues · 69 376 ❤️", son: "Audio original (3li.zara)", sonLien: "https://www.instagram.com/p/DY-jlbtp_gg/", pourquoi: "Lettre d'amour à la ville (« ce n'est pas ton skyline qui... ») : l'émotion pure + like-rate très élevé. Le sentiment vend la destination.", message: "« Istanbul, ce n'est pas que ton skyline »", hook: "« Dear Istanbul… »", plans: "Plans esthétiques + texte intime.", posture: "Écrire une déclaration sincère à la ville, pas un argumentaire." }
       ],
       pistes: [
         "POV première personne — « POV : ton 1er matin sur le Bosphore »",
@@ -599,11 +644,12 @@ window.V21_STUDIO = {
         "« 5 erreurs à éviter pour un combiné Istanbul + plage »",
         "Hidden gems — Îles des Princesses, quartiers de Balat, Cappadoce en extension"
       ],
+      audioNote: "🔥 Sons qui cartonnent réellement sur la Turquie (relevés sur les reels les plus vus). Le lien ouvre le reel où le son joue. Le son LOCAL turc ancre l'authenticité.",
       audio: [
-        { style: "Cinématique ottoman (cordes + oud)", usage: "Istanbul historique, coupoles, Bosphore", lien: "https://uppbeat.io/browse/collection/middle-eastern-groove" },
-        { style: "Pop électronique solaire / deep-house douce", usage: "Antalya/Bodrum, piscine, plage", lien: "https://pixabay.com/music/search/summer%20background%20music/" },
-        { style: "Travel cinématique (Pixabay)", usage: "Transitions ville→mer, récap voyage", lien: "https://pixabay.com/music/search/travel/" },
-        { style: "🔥 Audio TENDANCE IG/TikTok", usage: "Le levier n°1 du reach (cf. Vacancia 95k) — à prendre dans l'app", lien: "https://www.instagram.com/reels/audio/" }
+        { style: "🔥 « Seni Sevmiyorum Artık » — Buray (son turc émotionnel)", usage: "Istanbul storytelling — utilisé par le compte officiel @istanbul (937k vues). Authenticité locale.", lien: "https://www.instagram.com/p/Cq2gA3qAN_c/" },
+        { style: "🔥 Audios en TENDANCE du jour (IG/TikTok)", usage: "Le levier n°1 du reach (cf. vacancia 99k, istanbul 1M). Onglet « audios en hausse ».", lien: "https://www.instagram.com/reels/audio/" },
+        { style: "Cinématique ottoman / Middle Eastern (libre — ADS)", usage: "Pour les pubs payantes (son tendance interdit en ads).", lien: "https://uppbeat.io/browse/collection/middle-eastern-groove" },
+        { style: "Deep-house solaire (libre — ADS)", usage: "Antalya/Bodrum, plage, en publicité.", lien: "https://pixabay.com/music/search/summer%20background%20music/" }
       ],
       postsClesEnMain: [
         {
