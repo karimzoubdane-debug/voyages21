@@ -3,9 +3,9 @@
    Contenant = index.html · Contenu = ce fichier. */
 window.V21_STUDIO = {
   meta: {
-    version: "v3",
+    version: "v4",
     maj: "14/06/2026",
-    note: "Plateforme de pilotage contenu Voyages21 — Égypte · Turquie · Omra · Zanzibar."
+    note: "Voyages21 — Égypte · Turquie · Omra · Zanzibar · Vietnam · Thaïlande · Malaisie+Thaïlande · Chine · Ouzbékistan."
   },
 
   // Sélecteur de produit (ascenseur). 'pret' = données complètes.
@@ -13,7 +13,12 @@ window.V21_STUDIO = {
     { id: "egypte", label: "🇪🇬 Égypte (outgoing)", etat: "pret" },
     { id: "turquie", label: "🇹🇷 Turquie (outgoing)", etat: "pret" },
     { id: "omra", label: "🕋 Omra (juil.–août 2026)", etat: "pret" },
-    { id: "zanzibar", label: "🏝️ Zanzibar (juin–août 2026)", etat: "pret" }
+    { id: "zanzibar", label: "🏝️ Zanzibar (juin–août 2026)", etat: "pret" },
+    { id: "vietnam", label: "🇻🇳 Vietnam (été 2026)", etat: "pret" },
+    { id: "thailande", label: "🇹🇭 Thaïlande (été 2026)", etat: "pret" },
+    { id: "malaisiethai", label: "🇲🇾 Malaisie & Thaïlande (été 2026)", etat: "pret" },
+    { id: "chine", label: "🇨🇳 Chine (été 2026)", etat: "pret" },
+    { id: "ouzbekistan", label: "🇺🇿 Ouzbékistan (juil.–oct. 2026)", etat: "pret" }
   ],
 
   egypte: {
@@ -849,6 +854,385 @@ window.V21_STUDIO = {
           cta: "« Tenté par l'océan Indien ? DM “ZANZIBAR” · 0661 24 70 49 »",
           kpis: "Vues > 10 000 · DM qualifiés (création de demande) · saves"
         }
+      ]
+    }
+  },
+
+  vietnam: {
+    offres: [
+      {
+        titre: "Découverte du Vietnam — Hanoi à Saigon", badge: "Grand circuit 5★", duree: "14 j / 11 nuits", prix: "dès 33 900 DH/pers",
+        prixDetail: "À partir de 33 900 DH/pers", hotels: "5★", pension: "Repas mentionnés au programme",
+        vols: "Inclus — Qatar Airways + vols intérieurs", volsHoraires: "Départs 02-15 août · 08-21 août 2026 · guide francophone",
+        inclus: ["Vols Qatar Airways Casablanca–Hanoi / Saigon–Casablanca", "Hôtels 5★", "Vols intérieurs", "Croisière baie d'Halong (UNESCO)", "Guide francophone"],
+        exclus: ["Visa (800 DH)", "Pourboires", "Dépenses personnelles"],
+        visites: "Hanoi, baie d'Halong (UNESCO), Hué & Hoi An (UNESCO), Da Nang, Hô Chi Minh-Ville",
+        dates: "02-15 août · 08-21 août 2026"
+      }
+    ],
+    concurrents: {
+      benchmarkTitre: "Benchmark Vietnam (départ Maroc, vols inclus)",
+      comptes: [
+        { nom: "@terratour_voyages", abonnes: "75 K", type: "Outgoing — vend le Vietnam", note: "Reel Vietnam (40 477 vues / 1 141 ❤️) : « destination + dates + places limitées ». Concurrent MA actif sur l'Asie lointaine" },
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing — combinés Asie", note: "Très actif sur l'Asie (KL+Bali, etc.). Reels combinés performants" },
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — lointains", note: "Pousse Bali/Asie en volume. Vietnam non vu dans le feed récent" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte", note: "Aucun contenu Vietnam pour l'instant" }
+      ],
+      benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Vietnam Hanoi→Saigon 5★", duree: "14j/11n", hotels: "5★ + vols intérieurs", prix: "33 900 DH", verifie: true },
+        { agence: "Concurrents MA (terratour, etc.)", offre: "Vietnam (prix non affiché en post)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      benchmarkAnalyse: [
+        "Position : INDÉTERMINABLE sur la seule data — aucun prix concurrent Vietnam n'a été capté (terratour vend le Vietnam mais n'affiche PAS le prix dans le reel scrapé du 14/06).",
+        "Seule donnée chiffrée = V21 33 900 DH (14j/11n, 5★, Qatar + vols intérieurs).",
+        "Conclusion (data seule) : situer V21 nécessite d'obtenir le prix terratour/concurrents. Tant qu'il manque, pas de comparaison honnête."
+      ],
+      engagementReel: [
+        { compte: "@terratour_voyages", format: "Reel Vietnam « destination + dates »", vues: "40 477", likes: "1 141", comm: "6" },
+        { compte: "▶ @voyages21maroc (NOUS)", format: "Meilleur reel récent (toutes dest.)", vues: "149", likes: "6", comm: "1" }
+      ],
+      learnings: [
+        "Terratour prouve que le Vietnam SE VEND en reel MA (40k vues) avec le schéma « destination + dates + places limitées + n° ».",
+        "Le Vietnam est très visuel (Halong, Hoi An lanternes, rizières) → matière à reels premium que V21 peut surpasser.",
+        "Marché émetteur international massif (Inde, Europe) → audios et formats universels disponibles."
+      ],
+      apifyStatut: "✅ Scrape Apify (14/06/2026, run hashtag #vietnam + reels MA). ⚠️ Le hashtag international ramène du contenu RÉCENT à faible engagement (vues non captées) → pour des exemples internationaux vraiment viraux, un scrape d'influenceurs Vietnam ciblé (depuis desktop) est recommandé."
+    },
+    cadran: {
+      forces: ["Circuit 5★ complet Hanoi→Saigon avec vols intérieurs inclus", "Croisière baie d'Halong (UNESCO) + Hué/Hoi An", "Vols Qatar Airways + guide francophone", "Destination « bucket-list » très désirable"],
+      faiblesses: ["Prix élevé (33 900) → cible CSP+ uniquement", "Aucune notoriété V21 sur le Vietnam", "Concurrence MA active (terratour) + TO internationaux", "Pas de prix concurrent connu pour se positionner"],
+      ameliorer: ["Produire un reel « destination + dates » à la terratour, mais mieux filmé (Halong/Hoi An)", "Obtenir le prix concurrent pour ajuster le positionnement", "Mettre en avant guide FR + vols intérieurs inclus (réassurance)", "Carrousel/Pinterest « itinéraire 14 jours Vietnam »"]
+    },
+    contenu: {
+      posts: [
+        { visuel: "Baie d'Halong au lever du soleil, jonque traditionnelle (vraie image)", accroche: "La baie d'Halong, classée par l'UNESCO. ⛰️ 14 jours du nord au sud du Vietnam, en 5★.", legende: "Hanoi, Halong, Hué, Hoi An, Saigon — vols Qatar Airways + vols intérieurs inclus. Dès 33 900 DH/pers. 📲 0661 24 70 49", hashtags: "#Voyages21 #Vietnam #Halong #HoiAn", audio: "Cinématique asiatique douce (cordes + flûte), montée sur la baie." },
+        { visuel: "Hoi An la nuit, lanternes colorées sur la rivière", accroche: "Hoi An, la ville aux mille lanternes. 🏮", legende: "Le Vietnam authentique, en circuit 5★ guidé en français. Dès 33 900 DH. 📲 0661 24 70 49 · voyages21.com", hashtags: "#Voyages21 #Vietnam #HoiAn #Lanternes", audio: "Lo-fi travel asiatique, ambiance contemplative." }
+      ],
+      noteVisuels: "Lieux réels = vraies images. Visuels IA = inspiration uniquement.",
+      planning: "Cible CSP+. Pousser l'aspirationnel (Halong/Hoi An) + carrousel itinéraire + Pinterest."
+    },
+    viral: {
+      statut: "✅ Reels MA réels + exemples internationaux. ⚠️ L'international Vietnam scrapé (hashtag) est RÉCENT et peu viral (likes faibles, vues non captées) — un scrape d'influenceurs ciblé enrichirait cette section.",
+      viralExamples: [
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "★ Concurrent — reel Vietnam qui marche", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DZKRrxNszhZ/", stat: "40 477 vues · 1 141 ❤️", pourquoi: "Preuve que le Vietnam se vend en reel MA. Schéma « destination + dates + places limitées ». À refaire mieux filmé." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format « circuit Asie premium »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle de reel circuit Asie (Japon) transposable au Vietnam." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel combiné Asie", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Reach correct sur l'Asie : montage rythmé multi-décors." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — Vietnam", compte: "@diaenarys", lien: "https://www.instagram.com/p/DZjzImHGiEM/", stat: "❤️ 7 (vues non captées)", pourquoi: "UGC voyageuse : le ton « carnet de voyage » à reproduire avec un client V21." },
+        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageuse indienne — Vietnam", compte: "@ruchira600", lien: "https://www.instagram.com/p/DZjzDl3tqSv/", stat: "❤️ 4 (vues non captées)", pourquoi: "L'Inde est un marché émetteur énorme vers le Vietnam → codes/audios universels à observer." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "UGC — quotidien au Vietnam", compte: "@ems_home_", lien: "https://www.instagram.com/p/DZjyRi7GjZl/", stat: "❤️ 5 (vues non captées)", pourquoi: "Contenu « slow travel » du quotidien : authenticité à solliciter chez nos voyageurs." },
+        { cat: "intl", origine: "🌍 Intl", titre: "Street photography — Vietnam", compte: "@ir.raw.street", lien: "https://www.instagram.com/p/DZj0Co-sxrS/", stat: "❤️ 3 (vues non captées)", pourquoi: "Esthétique « scènes de rue » : direction artistique premium pour se différencier des promos." },
+        { cat: "intl", origine: "🌍 Intl", titre: "Créateur voyage — Vietnam", compte: "@h_jpegz", lien: "https://www.instagram.com/p/DZjxJPbiT7h/", stat: "❤️ 3 (vues non captées)", pourquoi: "Voyageur étranger documentant le pays : preuve de la désirabilité internationale." },
+        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageuse — Vietnam", compte: "@cthrnkhdv", lien: "https://www.instagram.com/p/DZjyYVYkyaV/", stat: "❤️ 4 (vues non captées)", pourquoi: "Format « POV découverte » réutilisable en darija/FR." }
+      ],
+      pistes: ["Reel « destination + dates » Halong/Hoi An (modèle terratour, mieux filmé)", "Transition « du nord au sud » Hanoi→Saigon", "Carrousel + Pinterest « itinéraire 14 jours Vietnam »"],
+      audio: [
+        { style: "Cinématique asiatique (cordes + flûte)", usage: "Halong, temples, rizières", lien: "https://pixabay.com/music/search/asian/" },
+        { style: "Lo-fi travel", usage: "Hoi An, slow travel", lien: "https://pixabay.com/music/search/travel/" },
+        { style: "🔥 Audio tendance IG", usage: "Le levier de reach n°1", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        { titre: "Reel transition « du nord au sud du Vietnam » (15-30s)", format: "Reel transition", lienCible: "https://www.instagram.com/p/DZKRrxNszhZ/", langues: "FR + darija", script: "Halong (claquement) → Hoi An lanternes → Saigon trépidante. Texte « 14 jours, du nord au sud ». Carton « 5★ · vols inclus · dès 33 900 DH ».", visuel: "Match-cut 3 ambiances, audio asiatique, 9:16.", casting: "Aucun (B-roll).", tournage: "3-6 plans réels, CapCut.", cta: "« Lien en bio · départs août 2026 »", kpis: "Vues > 15 000 · saves > 100" },
+        { titre: "★ Reel UGC voyageur Vietnam (avec acteur) (60-90s)", format: "UGC authentique", lienCible: "https://www.instagram.com/p/DZjzImHGiEM/", langues: "Darija + sous-titres FR", script: "Voyageur réel V21 : « 14 jours au Vietnam… » → Halong, Hoi An, street-food → « guide FR, tout organisé ». B-roll de son voyage.", visuel: "Brut, vertical, lumière naturelle.", casting: "BRIEF : client réel V21 OU micro-créateur, défrayé, mention « partenariat ». Jamais de faux témoignage.", tournage: "Smartphone du voyageur + B-roll. Droits signés.", cta: "« Tenté ? DM “VIETNAM” »", kpis: "Vues > 10 000 · DM qualifiés" }
+      ]
+    }
+  },
+
+  thailande: {
+    offres: [
+      {
+        titre: "Exotic Thailand — Bangkok, Krabi & Phuket", badge: "Circuit temples + plages", duree: "14 j / 11 nuits", prix: "dès 26 900 DH/pers",
+        prixDetail: "À partir de 26 900 DH/pers", hotels: "Bangkok 4★ Deluxe + Krabi/Phuket 5★", pension: "Repas mentionnés au programme",
+        vols: "Inclus — Qatar Airways + vol intérieur Bangkok–Krabi", volsHoraires: "Départs 01-14 · 07-20 · 11-24 août 2026 · guide francophone",
+        inclus: ["Vols Qatar Airways", "Hôtels (Bangkok 4★ Dlx, Krabi/Phuket 5★)", "Vol intérieur Bangkok–Krabi", "Croisière sur la Chao Phraya", "Guide francophone"],
+        exclus: ["Visa selon nationalité", "Pourboires", "Dépenses personnelles"],
+        visites: "Bangkok (marchés flottants, temples, croisière), plages de Krabi & Phuket",
+        dates: "01-14 · 07-20 · 11-24 août 2026"
+      }
+    ],
+    concurrents: {
+      benchmarkTitre: "Benchmark Thaïlande (départ Maroc, vols inclus)",
+      comptes: [
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing — combinés Asie", note: "Pousse les combinés Asie (KL+Bali, etc.). Reels actifs (max 17k vues)" },
+        { nom: "@terratour_voyages", abonnes: "75 K", type: "Outgoing — circuits Asie", note: "Vend Japon/Vietnam en reel (33-40k vues). Même logique applicable à la Thaïlande" },
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — lointains", note: "Bali/Asie en volume" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte", note: "Aucun contenu Thaïlande" }
+      ],
+      benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Bangkok + Krabi + Phuket", duree: "14j/11n", hotels: "4★ Dlx + 5★", prix: "26 900 DH", verifie: true },
+        { agence: "Concurrents MA", offre: "Thaïlande (prix non affiché en post)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      benchmarkAnalyse: [
+        "Position : INDÉTERMINABLE sur la seule data — aucun prix concurrent Thaïlande capté au scrape du 14/06.",
+        "Seule donnée chiffrée = V21 26 900 DH (14j/11n, 4★ Dlx + 5★, Qatar + vol intérieur).",
+        "Conclusion (data seule) : comparaison impossible tant qu'aucun prix concurrent n'est obtenu."
+      ],
+      learnings: [
+        "La Thaïlande génère énormément de contenu international (marchés émetteurs Inde/Europe) → audios et formats universels disponibles.",
+        "Le combiné « temples + plages » (Bangkok puis Krabi/Phuket) est une transition idéale pour le format reel viral.",
+        "Aucun concurrent MA ne domine la Thaïlande en reel → fenêtre de contenu ouverte."
+      ],
+      apifyStatut: "✅ Scrape Apify (14/06/2026, hashtag #thailandtravel/#krabi). ⚠️ Contenu international RÉCENT à engagement modeste (vues non captées). Pour des références vraiment virales, scrape d'influenceurs Thaïlande ciblé (desktop) recommandé."
+    },
+    cadran: {
+      forces: ["Combiné temples (Bangkok) + plages (Krabi/Phuket)", "Vol intérieur + croisière Chao Phraya inclus", "Qatar Airways + guide francophone", "Destination accessible et très désirable"],
+      faiblesses: ["Pas de notoriété V21 sur la destination", "Prix concurrent inconnu", "Visa variable selon nationalité (à clarifier)", "Marché très concurrentiel à l'international"],
+      ameliorer: ["Reel transition « temples → plages turquoise »", "Obtenir des prix concurrents", "Mettre en avant guide FR + croisière incluse", "Carrousel/Pinterest itinéraire 14 jours"]
+    },
+    contenu: {
+      posts: [
+        { visuel: "Krabi, longtail boat sur eau turquoise et falaises calcaires (vraie image)", accroche: "Bangkok le matin, les îles de Krabi l'après-midi. 🏝️", legende: "Exotic Thailand 14 jours — temples, croisière Chao Phraya, plages de Krabi & Phuket. Vols Qatar inclus, dès 26 900 DH. 📲 0661 24 70 49", hashtags: "#Voyages21 #Thailande #Krabi #Phuket", audio: "Tropical / afro-house douce, drop sur le plan plage." },
+        { visuel: "Temple doré de Bangkok au coucher du soleil", accroche: "La Thaïlande des temples dorés. 🛕", legende: "Bangkok, ses marchés flottants et ses temples — puis le sud et ses eaux turquoise. Guide FR, dès 26 900 DH. 📲 0661 24 70 49", hashtags: "#Voyages21 #Thailande #Bangkok", audio: "Cinématique asiatique douce." }
+      ],
+      noteVisuels: "Lieux réels = vraies images. IA = inspiration.",
+      planning: "Aspirationnel temples+plages, transitions virales, Pinterest itinéraire."
+    },
+    viral: {
+      statut: "✅ Reels MA réels (format Asie) + exemples internationaux. ⚠️ International Thaïlande scrapé = RÉCENT, engagement modeste (vues non captées) — scrape d'influenceurs ciblé recommandé.",
+      viralExamples: [
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle de reel « circuit Asie » (Japon) directement transposable à la Thaïlande." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concurrent — combiné Asie (KL + Bali)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZSz6w3TtLR/", stat: "4 694 vues · 148 ❤️", pourquoi: "Le combiné « 2-3 décors » se vend → V21 a Bangkok + Krabi + Phuket à monter pareil." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors au beat, reach correct." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — Thaïlande", compte: "@sweetiefernandes783", lien: "https://www.instagram.com/p/DZVVHA4SuM1/", stat: "❤️ 150 (vues non captées)", pourquoi: "Le meilleur UGC Thaïlande de l'échantillon : carnet de voyage à reproduire." },
+        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageuse — Krabi/Phuket", compte: "@partolepaurnima", lien: "https://www.instagram.com/p/DZjsmCsimr1/", stat: "❤️ 63 (vues non captées)", pourquoi: "Marché émetteur indien massif → codes d'UGC plage à observer." },
+        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC — balade en Thaïlande", compte: "@walk_with_teesta", lien: "https://www.instagram.com/p/DZjt3FlCWAD/", stat: "❤️ 59 (vues non captées)", pourquoi: "Format « walk with me » immersif, réutilisable." },
+        { cat: "intl", origine: "🇮🇳 Inde", titre: "Créateur voyage — Thaïlande", compte: "@rakshatsingh__", lien: "https://www.instagram.com/p/DZjqfqcmb3I/", stat: "❤️ 77 (vues non captées)", pourquoi: "Voyageur d'un autre marché émetteur : preuve de l'universalité du contenu plage." },
+        { cat: "intl", origine: "🇮🇳 Inde", titre: "UGC — Thaïlande", compte: "@kash_khandelwal", lien: "https://www.instagram.com/p/DZjwaxsE711/", stat: "❤️ 32 (vues non captées)", pourquoi: "Format court « highlights du séjour » à transposer." },
+        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageur — Thaïlande", compte: "@doctorsagardc", lien: "https://www.instagram.com/p/DZjpXrGTHo5/", stat: "❤️ 28 (vues non captées)", pourquoi: "Preuve de contenu spontané abondant → solliciter nos voyageurs pour de l'UGC." }
+      ],
+      pistes: ["Reel transition « temples → plages turquoise »", "Cost breakdown « 14 jours Thaïlande depuis Casa »", "Carrousel + Pinterest itinéraire Bangkok-Krabi-Phuket"],
+      audio: [
+        { style: "Tropical / afro-house", usage: "Plages Krabi/Phuket, transitions", lien: "https://pixabay.com/music/search/tropical/" },
+        { style: "Cinématique asiatique", usage: "Temples Bangkok", lien: "https://pixabay.com/music/search/asian/" },
+        { style: "🔥 Audio tendance IG", usage: "Levier de reach n°1", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        { titre: "Reel transition « temples → plages » (15-30s)", format: "Reel transition", lienCible: "https://www.instagram.com/p/DZSz6w3TtLR/", langues: "FR + darija", script: "Temple Bangkok (claquement) → whip → longtail boat Krabi. Texte « Bangkok + les îles, en 14 jours ». Carton « vols Qatar inclus · dès 26 900 DH ».", visuel: "Match-cut culture→plage, tropical, 9:16.", casting: "Aucun (B-roll).", tournage: "3-6 plans réels, CapCut.", cta: "« Lien en bio · départs août »", kpis: "Vues > 15 000 · saves > 100" },
+        { titre: "★ Reel UGC voyageur Thaïlande (avec acteur) (60-90s)", format: "UGC authentique", lienCible: "https://www.instagram.com/p/DZVVHA4SuM1/", langues: "Darija + sous-titres FR", script: "Voyageur réel : Bangkok, marchés flottants, snorkeling Krabi → « guide FR, tout organisé ». B-roll de son séjour.", visuel: "Brut, vertical.", casting: "BRIEF : client réel V21 OU micro-créateur défrayé (mention partenariat). Jamais de faux témoignage.", tournage: "Smartphone + B-roll, droits signés.", cta: "« DM “THAILANDE” »", kpis: "Vues > 10 000 · DM qualifiés" }
+      ]
+    }
+  },
+
+  malaisiethai: {
+    offres: [
+      {
+        titre: "Malaisie & Thaïlande — KL, Krabi & Phuket", badge: "Combiné 2 pays 5★", duree: "14 j / 11 nuits", prix: "dès 28 500 DH/pers",
+        prixDetail: "À partir de 28 500 DH/pers", hotels: "5★", pension: "Repas mentionnés au programme",
+        vols: "Inclus — Qatar Airways + vol intérieur KL–Krabi", volsHoraires: "Départs 31 juil-13 août · 05-18 août 2026",
+        inclus: ["Vols Qatar Airways Casablanca–Kuala Lumpur", "Hôtels 5★", "Vol intérieur KL–Krabi", "Tours Petronas & Genting Highlands", "Guide"],
+        exclus: ["Visa selon nationalité", "Pourboires", "Dépenses personnelles"],
+        visites: "Kuala Lumpur (Petronas, Genting Highlands), plages de Krabi & Phuket",
+        dates: "31 juil-13 août · 05-18 août 2026"
+      }
+    ],
+    concurrents: {
+      benchmarkTitre: "Benchmark Malaisie & Thaïlande (départ Maroc, vols inclus)",
+      comptes: [
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing — CONCURRENT DIRECT", note: "Vend exactement le combiné « Kuala Lumpur + Bali / Singapore / Phuket » en reel → concurrent frontal sur ce produit" },
+        { nom: "@terratour_voyages", abonnes: "75 K", type: "Outgoing — circuits Asie", note: "Format reel circuit Asie performant (33-40k vues)" },
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — lointains", note: "Bali/Asie en volume" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte", note: "Aucun contenu sur ce combiné" }
+      ],
+      benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "KL + Krabi + Phuket 5★", duree: "14j/11n", hotels: "5★", prix: "28 500 DH", verifie: true },
+        { agence: "Concurrents MA (follow_me…)", offre: "Combiné Asie (prix non affiché en post)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      benchmarkAnalyse: [
+        "Position : INDÉTERMINABLE sur la seule data — follow_me_travel vend le MÊME type de combiné « KL + … » mais n'affiche PAS de prix dans les reels scrapés (14/06).",
+        "Seule donnée chiffrée = V21 28 500 DH (14j/11n, 5★, Qatar + vol intérieur).",
+        "Conclusion (data seule) : le concurrent direct est identifié (follow_me) mais son prix manque → pas de comparaison chiffrée possible."
+      ],
+      learnings: [
+        "follow_me_travel est le concurrent DIRECT (même combiné KL+plages) → étudier ses reels de près.",
+        "Le combiné « ville moderne (Petronas) + plages (Krabi/Phuket) » est un fort contraste visuel pour le reel transition.",
+        "Aucun prix concurrent affiché → V21 peut tester l'affichage transparent du prix comme différenciateur."
+      ],
+      apifyStatut: "✅ Scrape Apify (14/06/2026, hashtag #malaysiatravel/#kualalumpur + reels follow_me). ⚠️ International RÉCENT à faible engagement (vues non captées). Scrape d'influenceurs ciblé recommandé pour des références virales."
+    },
+    cadran: {
+      forces: ["Combiné 2 pays (Malaisie + Thaïlande) en un seul voyage", "Tours Petronas + Genting + plages Krabi/Phuket", "5★ + vol intérieur inclus", "Fort contraste visuel ville/plage (idéal reel)"],
+      faiblesses: ["Concurrent direct identifié (follow_me) déjà actif", "Pas de notoriété V21", "Prix concurrent inconnu", "Produit complexe à expliquer (2 pays)"],
+      ameliorer: ["Reel transition « gratte-ciels KL → plages Krabi »", "Surclasser follow_me sur la qualité de prod", "Afficher le prix (transparence) comme test", "Carrousel itinéraire 2 pays"]
+    },
+    contenu: {
+      posts: [
+        { visuel: "Tours Petronas illuminées la nuit (vraie image)", accroche: "Kuala Lumpur la futuriste, puis les îles de la Thaïlande. 🌃🏝️", legende: "Malaisie & Thaïlande — KL, Krabi & Phuket, 14 jours 5★, vols Qatar inclus. Dès 28 500 DH/pers. 📲 0661 24 70 49", hashtags: "#Voyages21 #Malaisie #Thailande #KualaLumpur", audio: "Électro solaire / afro-house, drop sur Petronas." },
+        { visuel: "Plage de Phuket, eau turquoise et longtail boats", accroche: "Deux pays, une seule envie : l'évasion. ✈️", legende: "Petronas, Genting, puis Krabi & Phuket. 5★, vol intérieur inclus. Dès 28 500 DH. 📲 0661 24 70 49", hashtags: "#Voyages21 #Phuket #Krabi", audio: "Tropical chill, transition ville→plage." }
+      ],
+      noteVisuels: "Lieux réels = vraies images. IA = inspiration.",
+      planning: "Jouer le contraste ville/plage en reel transition + carrousel itinéraire."
+    },
+    viral: {
+      statut: "✅ Reels MA réels (dont le concurrent direct follow_me) + exemples internationaux. ⚠️ International scrapé = RÉCENT, engagement modeste (vues non captées).",
+      viralExamples: [
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "★ Concurrent DIRECT — combiné KL + plages", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZSz6w3TtLR/", stat: "4 694 vues · 148 ❤️", pourquoi: "Exactement notre produit (KL + Bali/Singapore/Phuket). À surclasser sur la prod et l'offre." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé (reach)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Le format multi-décors au beat marche : à appliquer KL→Krabi→Phuket." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle « circuit Asie » bien filmé à viser." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — KL/Malaisie", compte: "@spoorthy_nayak", lien: "https://www.instagram.com/p/DZicTZUEx5L/", stat: "❤️ 117 (vues non captées)", pourquoi: "Meilleur UGC Malaisie de l'échantillon : carnet de voyage à reproduire." },
+        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageuse — Malaisie", compte: "@devanshi246", lien: "https://www.instagram.com/p/DZjVoIckvRU/", stat: "❤️ 43 (vues non captées)", pourquoi: "Marché émetteur indien → codes d'UGC à observer." },
+        { cat: "ugc", origine: "🇹🇭 Thaïlande", titre: "UGC local — lifestyle", compte: "@milk_lakchaya", lien: "https://www.instagram.com/p/DZjetFRCYIm/", stat: "❤️ 13 (vues non captées)", pourquoi: "Créateur local : esthétique authentique à intégrer." },
+        { cat: "intl", origine: "🇨🇳 Chine", titre: "UGC voyageuse — Malaisie", compte: "@rub_yyyyyyyyyy", lien: "https://www.instagram.com/p/DZjx4kkE7Ay/", stat: "❤️ 16 (vues non captées)", pourquoi: "Autre marché émetteur (Chine) : universalité du contenu." },
+        { cat: "intl", origine: "🌍 Intl", titre: "Moments & Miles — voyage", compte: "@momentsandmiles__", lien: "https://www.instagram.com/p/DZjmLWrEWuA/", stat: "❤️ 5 (vues non captées)", pourquoi: "Compte « travel diary » : format storytelling réutilisable." },
+        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageur — Malaisie", compte: "@andish27", lien: "https://www.instagram.com/p/DZjvij1l5eL/", stat: "❤️ 12 (vues non captées)", pourquoi: "Preuve de contenu spontané → solliciter nos voyageurs." }
+      ],
+      pistes: ["Reel transition « Petronas → plages Krabi »", "« 14 jours, 2 pays : le vrai budget depuis Casa »", "Carrousel itinéraire Malaisie + Thaïlande"],
+      audio: [
+        { style: "Électro solaire / afro-house", usage: "KL moderne, transitions", lien: "https://pixabay.com/music/search/afrobeat/" },
+        { style: "Tropical chill", usage: "Plages Krabi/Phuket", lien: "https://pixabay.com/music/search/tropical/" },
+        { style: "🔥 Audio tendance IG", usage: "Levier de reach n°1", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        { titre: "Reel transition « ville futuriste → plages » (15-30s)", format: "Reel transition", lienCible: "https://www.instagram.com/p/DZSz6w3TtLR/", langues: "FR + darija", script: "Petronas de nuit (claquement) → whip → plage Phuket. Texte « Malaisie + Thaïlande, 2 pays en 14 jours ». Carton « 5★ · vols inclus · dès 28 500 DH ».", visuel: "Match-cut ville→plage, 9:16.", casting: "Aucun (B-roll).", tournage: "3-6 plans réels, CapCut.", cta: "« Lien en bio · départs août »", kpis: "Vues > 15 000 · saves > 100" },
+        { titre: "★ Reel UGC voyageur (avec acteur) (60-90s)", format: "UGC authentique", lienCible: "https://www.instagram.com/p/DZicTZUEx5L/", langues: "Darija + sous-titres FR", script: "Voyageur réel : Petronas, Genting, snorkeling Krabi → « 2 pays, tout organisé ». B-roll de son séjour.", visuel: "Brut, vertical.", casting: "BRIEF : client réel V21 OU micro-créateur défrayé (mention partenariat). Jamais de faux témoignage.", tournage: "Smartphone + B-roll, droits signés.", cta: "« DM “ASIE” »", kpis: "Vues > 10 000 · DM qualifiés" }
+      ]
+    }
+  },
+
+  chine: {
+    offres: [
+      {
+        titre: "Circuit Chine — Pékin, Shanghai & Merveilles", badge: "Grand circuit 5★", duree: "14 j / 11 nuits", prix: "dès 29 900 DH/pers",
+        prixDetail: "À partir de 29 900 DH/pers", hotels: "5★", pension: "Repas mentionnés au programme",
+        vols: "Inclus — Qatar Airways", volsHoraires: "Départs 05-18 août · 12-25 août 2026 · guide francophone",
+        inclus: ["Vols Qatar Airways Casablanca–Pékin / Shanghai–Casablanca", "Hôtels 5★", "Visites au programme", "Guide francophone"],
+        exclus: ["Visa chinois (600 DH)", "Pourboires (≈ 40 $)", "Dépenses personnelles"],
+        visites: "Pékin (Cité interdite, Grande Muraille, Temple du Ciel), Nanjing, Suzhou, Hangzhou (Lac de l'Ouest), Shanghai, Shenzhen",
+        dates: "05-18 août · 12-25 août 2026"
+      }
+    ],
+    concurrents: {
+      benchmarkTitre: "Benchmark Chine (départ Maroc, vols inclus)",
+      comptes: [
+        { nom: "@terratour_voyages", abonnes: "75 K", type: "Outgoing — circuits Asie premium", note: "Vend Japon/Vietnam en reel (33-40k vues). Même logique « grand circuit » applicable à la Chine" },
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing — Asie", note: "Combinés Asie actifs" },
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — lointains", note: "Asie en volume" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte", note: "Aucun contenu Chine" }
+      ],
+      benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Pékin + Shanghai + merveilles 5★", duree: "14j/11n", hotels: "5★", prix: "29 900 DH", verifie: true },
+        { agence: "Concurrents MA", offre: "Chine (prix non affiché en post)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      benchmarkAnalyse: [
+        "Position : INDÉTERMINABLE sur la seule data — aucun prix concurrent Chine capté au scrape du 14/06.",
+        "Seule donnée chiffrée = V21 29 900 DH (14j/11n, 5★, Qatar, guide FR).",
+        "Conclusion (data seule) : comparaison impossible sans prix concurrent."
+      ],
+      learnings: [
+        "La Chine est un circuit « bucket-list » (Grande Muraille) → fort potentiel aspirationnel mais cible CSP+ étroite.",
+        "Peu de concurrents MA communiquent la Chine en reel → fenêtre de contenu ouverte.",
+        "Les créateurs chinois/asiatiques produisent une esthétique forte (villes futuristes, traditions) à observer."
+      ],
+      apifyStatut: "✅ Scrape Apify (14/06/2026, hashtag #chinatravel/#beijing). ⚠️ International RÉCENT à engagement modeste (vues non captées). Scrape d'influenceurs ciblé recommandé."
+    },
+    cadran: {
+      forces: ["Grand circuit complet Pékin→Shanghai (Grande Muraille, Cité interdite)", "Hôtels 5★ + guide francophone", "Vols Qatar Airways", "Destination « bucket-list » iconique"],
+      faiblesses: ["Prix élevé (29 900) → cible CSP+ étroite", "Visa chinois requis (à anticiper)", "Aucune notoriété V21", "Prix concurrent inconnu"],
+      ameliorer: ["Reel « contraste » Grande Muraille → skyline Shanghai", "Communiquer la prise en charge visa", "Mettre en avant le guide FR (rassure sur la barrière de langue)", "Carrousel itinéraire 14 jours"]
+    },
+    contenu: {
+      posts: [
+        { visuel: "La Grande Muraille de Chine serpentant sur les crêtes (vraie image)", accroche: "Marcher sur la Grande Muraille. 🧱 Puis dîner face au skyline de Shanghai.", legende: "Circuit Chine 14 jours 5★ — Pékin, Cité interdite, Grande Muraille, Shanghai. Vols Qatar + guide FR. Dès 29 900 DH. 📲 0661 24 70 49", hashtags: "#Voyages21 #Chine #GrandeMuraille #Shanghai", audio: "Orchestral épique sur la Muraille, puis électro sur Shanghai." },
+        { visuel: "Skyline de Shanghai (Pudong) illuminé la nuit", accroche: "L'empire millénaire ET la Chine de demain. 🌆", legende: "De la Cité interdite aux gratte-ciels de Shanghai, en 14 jours 5★. Guide FR. Dès 29 900 DH. 📲 0661 24 70 49", hashtags: "#Voyages21 #Chine #Shanghai #Pekin", audio: "Cinématique asiatique → drop électro futuriste." }
+      ],
+      noteVisuels: "Lieux réels = vraies images. IA = inspiration.",
+      planning: "Aspirationnel « empire + modernité », contraste visuel fort en reel."
+    },
+    viral: {
+      statut: "✅ Reels MA réels (format circuit Asie) + exemples internationaux. ⚠️ International Chine scrapé = RÉCENT, engagement modeste (vues non captées) — scrape d'influenceurs ciblé recommandé.",
+      viralExamples: [
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium (Japon)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle « grand circuit Asie » bien filmé, directement transposable à la Chine." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Vietnam (preuve Asie qui scale)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DZKRrxNszhZ/", stat: "40 477 vues · 1 141 ❤️", pourquoi: "Preuve que l'Asie lointaine se vend en reel MA → appliquer à la Chine." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors au beat : Muraille → Shanghai." },
+        { cat: "ugc", origine: "🇨🇳 Chine", titre: "★ Créatrice locale — Chine", compte: "@veny_liew", lien: "https://www.instagram.com/p/DZjpfPOEXeQ/", stat: "❤️ 525 (vues non captées)", pourquoi: "Meilleur UGC Chine de l'échantillon : esthétique locale authentique à reproduire." },
+        { cat: "ugc", origine: "🇨🇳 Chine", titre: "UGC voyageur — Chine", compte: "@wenbo.qi", lien: "https://www.instagram.com/p/DZjrIVvCCim/", stat: "❤️ 13 (vues non captées)", pourquoi: "Regard local sur les villes : direction artistique premium." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "UGC voyageuse — Chine", compte: "@cha_jense", lien: "https://www.instagram.com/p/DZjw9EDjczp/", stat: "❤️ 30 (vues non captées)", pourquoi: "Carnet de voyage étranger : format storytelling à transposer." },
+        { cat: "intl", origine: "🇮🇷 Iran", titre: "Créateur voyage — Chine", compte: "@alireza.akhlaghi.official", lien: "https://www.instagram.com/p/DZjtI6SjcGS/", stat: "❤️ 11 (vues non captées)", pourquoi: "Autre marché émetteur : universalité du contenu « grandes merveilles »." },
+        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageuse — Chine", compte: "@mrrgl8", lien: "https://www.instagram.com/p/DZjqPwVjfq0/", stat: "❤️ 14 (vues non captées)", pourquoi: "Format court « highlights » réutilisable." },
+        { cat: "intl", origine: "🌍 Intl", titre: "UGC — Chine", compte: "@b1nasoul", lien: "https://www.instagram.com/p/DZjzWVaksbo/", stat: "❤️ 9 (vues non captées)", pourquoi: "Preuve de contenu spontané → solliciter nos voyageurs CSP+." }
+      ],
+      pistes: ["Reel contraste « Grande Muraille → skyline Shanghai »", "« Visa Chine : on s'occupe de tout » (explainer)", "Carrousel itinéraire 14 jours Pékin-Shanghai"],
+      audio: [
+        { style: "Orchestral épique", usage: "Grande Muraille, monuments", lien: "https://pixabay.com/music/search/cinematic/" },
+        { style: "Cinématique asiatique / électro futuriste", usage: "Shanghai moderne", lien: "https://pixabay.com/music/search/asian/" },
+        { style: "🔥 Audio tendance IG", usage: "Levier de reach n°1", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        { titre: "Reel contraste « empire → modernité » (15-30s)", format: "Reel transition", lienCible: "https://www.instagram.com/p/DY62Ijgsjlw/", langues: "FR + darija", script: "Grande Muraille (orchestral, claquement) → whip → skyline Shanghai (électro). Texte « la Chine d'hier ET de demain ». Carton « 5★ · guide FR · dès 29 900 DH ».", visuel: "Match-cut tradition→futur, 9:16.", casting: "Aucun (B-roll).", tournage: "3-6 plans réels, CapCut.", cta: "« Lien en bio · départs août »", kpis: "Vues > 12 000 · saves > 80" },
+        { titre: "★ Reel UGC voyageur Chine (avec acteur) (60-90s)", format: "UGC authentique", lienCible: "https://www.instagram.com/p/DZjpfPOEXeQ/", langues: "Darija + sous-titres FR", script: "Voyageur réel : Muraille, Cité interdite, Shanghai → « guide FR, visa géré, tout organisé ». B-roll de son voyage.", visuel: "Brut, vertical.", casting: "BRIEF : client réel V21 OU micro-créateur défrayé (mention partenariat). Jamais de faux témoignage.", tournage: "Smartphone + B-roll, droits signés.", cta: "« DM “CHINE” »", kpis: "Vues > 8 000 · DM qualifiés CSP+" }
+      ]
+    }
+  },
+
+  ouzbekistan: {
+    offres: [
+      {
+        titre: "Ouzbékistan — Route de la Soie", badge: "Circuit culturel · guide FR", duree: "10 j / 9 nuits", prix: "dès 15 700 DH/pers",
+        prixDetail: "Double 3★ 15 700 (suppl. single 3 500) · Double 4★ 17 400 (suppl. single 3 850)", hotels: "3★ ou 4★ selon formule",
+        pension: "Pension complète sauf repas libres", vols: "⚠️ NON INCLUS (à ajouter)", volsHoraires: "Départs 14/07 · 04/08 · 01/09 · 06/10 · 13/10/2026 · guide francophone",
+        inclus: ["Hôtels mentionnés", "Transport privé climatisé", "Train rapide Afrosiyob Tachkent–Samarkand", "Droits d'entrée des sites", "Guide local francophone", "Pension complète (sauf repas libres)"],
+        exclus: ["Vols internationaux", "Vol domestique Ourguentch–Tachkent", "e-visa (≈ 20-30 €)", "Pourboires, boissons, assurance"],
+        visites: "Tachkent, Samarkand (Régistan), désert du Kyzylkoum (yourtes), Boukhara, Khiva (Ichan Kala UNESCO)",
+        dates: "14/07 · 04/08 · 01/09 · 06/10 · 13/10/2026"
+      }
+    ],
+    concurrents: {
+      benchmarkTitre: "Benchmark Ouzbékistan (départ Maroc — ⚠️ vols NON inclus)",
+      comptes: [
+        { nom: "@terratour_voyages", abonnes: "75 K", type: "Outgoing — circuits culturels", note: "Format reel « circuit + dates » performant (Croatie 71k, Vietnam 40k). Logique transposable à la Route de la Soie" },
+        { nom: "@vacancia.ma / @follow_me_travel_", abonnes: "139K / 111K", type: "Outgoing — lointains", note: "Ouzbékistan non vu dans les feeds récents → destination de niche" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit · Meta Verified", type: "Notre compte", note: "Aucun contenu Ouzbékistan" }
+      ],
+      benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Route de la Soie 3★ (hors vols)", duree: "10j/9n", hotels: "3★", prix: "15 700 DH", verifie: true },
+        { agence: "▶ Voyages21 (NOUS)", offre: "Route de la Soie 4★ (hors vols)", duree: "10j/9n", hotels: "4★", prix: "17 400 DH", verifie: true },
+        { agence: "Concurrents MA", offre: "Ouzbékistan (offre rare, prix non publié)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
+      ],
+      benchmarkAnalyse: [
+        "Position : INDÉTERMINABLE sur la seule data — aucun prix concurrent Ouzbékistan capté (destination de niche, absente des feeds MA scrapés le 14/06).",
+        "⚠️ Point clé visible dans la data : le prix V21 (15 700/17 400) est HORS VOLS — toute comparaison devra réintégrer le coût du vol pour être honnête.",
+        "Conclusion (data seule) : pas de comparaison possible ; en plus, l'absence de vol dans le prix interdit toute lecture brute du tarif vs des offres « vols inclus »."
+      ],
+      learnings: [
+        "Ouzbékistan = niche culturelle (Route de la Soie) → demande à créer, cible voyageurs cultivés.",
+        "Atout visuel énorme : Régistan, cités bleues, yourtes, Khiva → matière à reels « pépite méconnue ».",
+        "⚠️ Prix hors vols : à communiquer clairement pour éviter toute déception (transparence)."
+      ],
+      apifyStatut: "✅ Scrape Apify (14/06/2026, hashtag #uzbekistan/#samarkand). ⚠️ International RÉCENT à engagement modeste (vues non captées) ; aucun concurrent MA capté. Scrape d'influenceurs « Asie centrale » ciblé recommandé."
+    },
+    cadran: {
+      forces: ["Circuit Route de la Soie complet avec guide francophone", "Train rapide Afrosiyob + nuit en yourtes (expérience)", "4 cités majeures (Samarkand, Boukhara, Khiva UNESCO)", "Esthétique unique (cités bleues) très « instagrammable »"],
+      faiblesses: ["⚠️ VOLS NON INCLUS → prix d'appel trompeur si mal communiqué", "Destination de niche, notoriété faible", "Demande à créer (peu de recherche spontanée)", "Aucun repère prix concurrent"],
+      ameliorer: ["Communiquer CLAIREMENT « hors vols » + proposer un package vol", "Reels « pépite méconnue » (Régistan, cités bleues)", "Cibler une audience cultivée (Pinterest, carrousels histoire)", "Mettre en avant guide FR + expérience yourtes"]
+    },
+    contenu: {
+      posts: [
+        { visuel: "Le Régistan de Samarkand, médersas aux mosaïques bleues (vraie image)", accroche: "Samarkand, la perle de la Route de la Soie. 🕌 Des mosaïques bleues à couper le souffle.", legende: "Ouzbékistan 10 jours, guide francophone — Samarkand, Boukhara, Khiva. À partir de 15 700 DH/pers (hors vols). 📲 0661 24 70 49", hashtags: "#Voyages21 #Ouzbekistan #Samarkand #RouteDeLaSoie", audio: "Musique d'Asie centrale (cordes + percussions), ambiance épique douce." },
+        { visuel: "Nuit en camp de yourtes dans le désert du Kyzylkoum, ciel étoilé", accroche: "Une nuit sous les étoiles, en yourte. ✨ L'Ouzbékistan hors des sentiers.", legende: "Cités bleues, désert, artisanat — la Route de la Soie en 10 jours, guide FR. Dès 15 700 DH (hors vols). 📲 0661 24 70 49", hashtags: "#Voyages21 #Ouzbekistan #Yourte #Kyzylkoum", audio: "Ambiance contemplative, instruments traditionnels." }
+      ],
+      noteVisuels: "Lieux réels = vraies images. IA = inspiration. ⚠️ Toujours préciser « hors vols » dans les posts prix.",
+      planning: "Niche cultivée : Pinterest + carrousels histoire + reels « pépite méconnue »."
+    },
+    viral: {
+      statut: "✅ Reels MA réels (format circuit) + exemples internationaux. ⚠️ International Ouzbékistan scrapé = RÉCENT, engagement modeste (vues non captées) ; destination de niche → scrape d'influenceurs « Asie centrale » ciblé recommandé.",
+      viralExamples: [
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format « circuit + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Le squelette de reel le plus efficace du marché MA (Croatie) → l'appliquer à la Route de la Soie." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format circuit Asie premium", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DY62Ijgsjlw/", stat: "33 196 vues · 865 ❤️", pourquoi: "Modèle « circuit culturel » bien filmé à viser pour l'Ouzbékistan." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Reel Asie rythmé (reach)", compte: "@follow_me_travel_", lien: "https://www.instagram.com/p/DZWC40AznlA/", stat: "16 953 vues · 454 ❤️", pourquoi: "Montage multi-décors au beat : Tachkent → Samarkand → Khiva." },
+        { cat: "ugc", origine: "🇺🇿 Ouzbékistan", titre: "★ Créateur local — Ouzbékistan", compte: "@iamshakhjakhan", lien: "https://www.instagram.com/p/DZjKeWAglOe/", stat: "❤️ 96 (vues non captées)", pourquoi: "Créateur local : l'esthétique authentique des cités bleues à reproduire." },
+        { cat: "ugc", origine: "🌏 Indonésie", titre: "UGC expat — « Kehidupan Bule »", compte: "@jenny_fed", lien: "https://www.instagram.com/p/DZjkLWOiPIb/", stat: "❤️ 145 (vues non captées)", pourquoi: "Meilleur UGC de l'échantillon : format « expat découvre » très partageable." },
+        { cat: "ugc", origine: "🇫🇷 France", titre: "UGC — « les chemins de Marie »", compte: "@marie_le_chemin", lien: "https://www.instagram.com/p/DZjZlVlMYFr/", stat: "❤️ 18 (vues non captées)", pourquoi: "Créatrice FR « slow travel » : ton carnet de route à reproduire pour une cible cultivée." },
+        { cat: "intl", origine: "🇰🇷 Corée", titre: "Créateur voyage — Ouzbékistan", compte: "@chaeryeon85", lien: "https://www.instagram.com/p/BXj8LpPAyWO/", stat: "❤️ 60 (vues non captées)", pourquoi: "Marché émetteur asiatique : preuve de la désirabilité internationale de la destination." },
+        { cat: "intl", origine: "🇯🇵 Japon", titre: "UGC voyageur — Asie centrale", compte: "@hanpen_p", lien: "https://www.instagram.com/p/DZii7ulEzBY/", stat: "❤️ 28 (vues non captées)", pourquoi: "Voyageur japonais : esthétique soignée à observer." },
+        { cat: "intl", origine: "🌍 Intl", titre: "Urbex / esthétique — Ouzbékistan", compte: "@unforgiving.urban", lien: "https://www.instagram.com/p/DZjKfjztSRd/", stat: "❤️ 35 (vues non captées)", pourquoi: "Direction artistique forte (architecture) pour se différencier des promos." }
+      ],
+      pistes: ["Reel « pépite méconnue » Régistan/cités bleues", "Reel « nuit en yourte sous les étoiles »", "Carrousel + Pinterest « itinéraire Route de la Soie » (cible cultivée)"],
+      audio: [
+        { style: "Musique d'Asie centrale / ethnique", usage: "Samarkand, Khiva, désert", lien: "https://pixabay.com/music/search/ethnic/" },
+        { style: "Cinématique contemplative", usage: "Yourtes, paysages", lien: "https://pixabay.com/music/search/cinematic/" },
+        { style: "🔥 Audio tendance IG", usage: "Levier de reach n°1", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        { titre: "Reel « pépite méconnue » Samarkand (15-30s)", format: "Reel découverte", lienCible: "https://www.instagram.com/p/DX9xEMlMHjW/", langues: "FR + darija", script: "HOOK « Tu connais Samarkand ? » → travelling sur les mosaïques bleues du Régistan → yourtes étoilées. Carton « Route de la Soie · guide FR · dès 15 700 DH (hors vols) ».", visuel: "Plans amples cités bleues, musique Asie centrale, 9:16.", casting: "Aucun (B-roll).", tournage: "3-6 plans réels, CapCut. ⚠️ Préciser « hors vols ».", cta: "« Lien en bio · départs juil→oct »", kpis: "Vues > 12 000 · saves > 120 (fort potentiel save sur la niche)" },
+        { titre: "★ Reel UGC voyageur Ouzbékistan (avec acteur) (60-90s)", format: "UGC authentique", lienCible: "https://www.instagram.com/p/DZjkLWOiPIb/", langues: "Darija + sous-titres FR", script: "Voyageur réel : Régistan, train Afrosiyob, nuit en yourte → « guide FR, pépite méconnue ». B-roll de son voyage.", visuel: "Brut, vertical.", casting: "BRIEF : client réel V21 OU micro-créateur défrayé (mention partenariat). Jamais de faux témoignage.", tournage: "Smartphone + B-roll, droits signés.", cta: "« DM “OUZBEKISTAN” »", kpis: "Vues > 8 000 · saves · DM qualifiés" }
       ]
     }
   },

@@ -29,7 +29,23 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
-## 📍 Dernier point (mis à jour le 14/06/2026 — nuit)
+## 📍 Dernier point (mis à jour le 14/06/2026 — matin, lot ASIE + viral 6+3)
+- ✅ **Viral 6+3 par voyage** : 9 exemples (3 UGC + 3 reels + 3 internationaux),
+  tags couleur + drapeau origine. Scrapes intl réels (cznburak 26,5 M, omradusavoir,
+  sabah_adeem/rena_callist Zanzibar, etc.).
+- ✅ **Benchmark** : ligne V21 en couleur + **cadran d'analyse « data-only »**
+  (où se situe V21, écart, origine probable d'après la SEULE data scrapée).
+- ✅ **ASIE pays par pays AJOUTÉE** (data.js réel) : Vietnam (33 900), Thaïlande
+  (26 900), Malaisie+Thaïlande (28 500), Chine (29 900), Ouzbékistan (15 700 ⚠️
+  hors vols). studio-data.js **v4 = 9 produits**.
+- ⚠️ **Limite honnête** : le hashtag scraper ramène du contenu RÉCENT peu viral
+  (vues souvent non captées). Les exemples internationaux Asie sont donc réels mais
+  modestes → un **scrape d'influenceurs ciblé (desktop)** enrichirait fortement.
+  Fort : reels MA (terratour Vietnam 40k, Croatie 71k) + cznburak (Turquie 26,5 M).
+- ⚠️ **Prix concurrents** : peu d'agences MA affichent leurs prix en post (Asie,
+  Omra spécialistes, Zanzibar) → benchmarks souvent « à demander » (honnête).
+
+## 📍 Point du 14/06/2026 — nuit
 - ✅ **Apify 100 % autonome confirmé** en session web (API REST + `APIFY_TOKEN`,
   curl) — plus de gate à approuver. Test `users/me` OK.
 - ✅ **CHANTIER 1 du cahier des charges LIVRÉ — Veille élargie + engagement réel** :
