@@ -1027,6 +1027,26 @@ window.V21_STUDIO = {
     },
 
     // 5) INSPIRATION VIRALE
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "⚠️ Aucune agence MA ne « possède » Zanzibar", plateforme: "—", audience: "—", sujet: "Niche : olevoyages/ajinsafro l'ont au catalogue mais pas en contenu → fenêtre ouverte pour V21.", lien: "" },
+      { origine: "🇲🇦 Maroc", nom: "@terratour_voyages / @vacancia.ma", plateforme: "Instagram (agences)", audience: "75K / 139K", sujet: "Formats à transposer (transition, destination+dates) — pas de Zanzibar chez eux.", lien: "https://www.instagram.com/terratour_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Premiers clients V21 Zanzibar = UGC fondateur à activer.", lien: "" },
+      { origine: "🇲🇦 Maroc", nom: "Micro-créateurs MA lifestyle", plateforme: "IG/TikTok", audience: "micro", sujet: "Partenariats à monter pour créer la demande (aspirationnel).", lien: "" },
+      { origine: "🇹🇿 Zanzibar", nom: "@sabah_adeem (Zanzibar Tastemaker)", plateforme: "Instagram", audience: "reels ~3-4k vues", sujet: "« Vie sur l'île » authentique — le ton aspirationnel à reproduire.", lien: "https://www.instagram.com/sabah_adeem/" },
+      { origine: "🇹🇿 Tanzanie", nom: "@rena_callist", plateforme: "Instagram (lifestyle)", audience: "reel 10,7k vues / 2,8k ❤️", sujet: "« Art de vivre océan Indien » (villa de plage) — modèle de viralité.", lien: "https://www.instagram.com/rena_callist/" },
+      { origine: "🇹🇿 Tanzanie", nom: "@storynzuri (Travel World Wide)", plateforme: "Instagram", audience: "like-rate très élevé", sujet: "« Beautiful Tanzania » — B-roll carte postale.", lien: "https://www.instagram.com/storynzuri/" },
+      { origine: "🇹🇿 Zanzibar", nom: "@thegarten.living / @ahmed_dezan", plateforme: "Instagram (hôtel/guide)", audience: "niche", sujet: "Resort vue océan + guide local « insider » — partenaires de contenu sur place.", lien: "https://www.instagram.com/thegarten.living/" }
+    ],
+    reseauxDestIntro: "Application du playbook à Zanzibar (NICHE à créer : demande à susciter par l'aspirationnel, pas à récolter).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reel transition « Stone Town → lagon Nungwi » + audio afro/tropical. Reproduire le ton @sabah_adeem (authentique).", exemple: "Importer le format vacancia (transition) + l'esthétique rena_callist (villa de plage)." },
+      { nom: "👍 Facebook", conseil: "Aspirationnel + rassurer (vol Turkish, transferts privés inclus). Cible couples/familles.", exemple: "Post « Zanzibar 8j, vol Turkish inclus, dès 18 500 DH »." },
+      { nom: "🎵 TikTok", conseil: "POV « réveil face à l'océan Indien », « Zanzibar, c'est plus près que tu crois ». Audio tendance.", exemple: "Cost-breakdown « Zanzibar depuis Casa »." },
+      { nom: "👻 Snapchat", conseil: "Snap Ads MA pour créer la notoriété (destination méconnue).", exemple: "Story « évasion océan Indien » → WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « Zanzibar depuis le Maroc », « Nungwi/Kendwa » → capter la recherche en amont.", exemple: "Carrousel itinéraire 8j → épingles." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « Pourquoi Zanzibar ? » + B-roll. Short « Visa Zanzibar (50 USD à l'arrivée) ».", exemple: "Short « Zanzibar, le paradis accessible »." }
+    ],
+
     viral: {
       statut: "✅ Zanzibar = NICHE : 0 reel marocain (scrape 6 mois confirme) → la FORCE = les créateurs Tanzanie/Zanzibar (réels, triés par vues) + 2 formats MA à transposer. À toi de créer le 1er reel Zanzibar marocain.",
       ugcGardeFou: "Garde-fou : aucun reel Zanzibar MA n'existe → on s'appuie sur de vrais créateurs locaux (Tanzanie/Zanzibar). Demande à CRÉER (contenu aspirationnel), pas à récolter. Section « Maroc » = formats à transposer (clairement étiquetés).",
@@ -1237,6 +1257,26 @@ window.V21_STUDIO = {
       noteVisuels: "Lieux réels = vraies images. IA = inspiration.",
       planning: "Aspirationnel temples+plages, transitions virales, Pinterest itinéraire."
     },
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "@follow_me_travel_", plateforme: "Instagram (agence)", audience: "111 K", sujet: "Combinés Asie (Thaïlande, KL+Bali). Concurrent direct sur le combiné plages.", lien: "https://www.instagram.com/follow_me_travel_/" },
+      { origine: "🇲🇦 Maroc", nom: "@vacancia.ma", plateforme: "Instagram (agence)", audience: "139 K", sujet: "Thaïlande/Asie en volume, reels promo courts.", lien: "https://www.instagram.com/vacancia.ma/" },
+      { origine: "🇲🇦 Maroc", nom: "@terratour_voyages", plateforme: "Instagram (agence)", audience: "75 K", sujet: "Circuits Asie premium (qualité de prod à viser).", lien: "https://www.instagram.com/terratour_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Clients V21 Thaïlande = vivier UGC.", lien: "" },
+      { origine: "🌍 Intl", nom: "@sweetiefernandes783", plateforme: "Instagram (UGC)", audience: "❤️ 150", sujet: "Carnet de voyage Thaïlande soigné — meilleur UGC de l'échantillon.", lien: "https://www.instagram.com/sweetiefernandes783/" },
+      { origine: "🇮🇳 Inde", nom: "@rakshatsingh__ / @walk_with_teesta", plateforme: "Instagram (UGC)", audience: "micro-moyen", sujet: "Marché émetteur indien massif vers la Thaïlande → codes plage universels.", lien: "https://www.instagram.com/rakshatsingh__/" },
+      { origine: "🇹🇭 Thaïlande", nom: "@milk_lakchaya", plateforme: "Instagram (créateur local)", audience: "niche", sujet: "Lifestyle local — esthétique authentique.", lien: "https://www.instagram.com/milk_lakchaya/" },
+      { origine: "🌍 Intl", nom: "⚠️ Influenceurs Thaïlande (à scraper)", plateforme: "à identifier", audience: "—", sujet: "Pas de gros influenceur capté → scrape ciblé recommandé pour 4 EU solides.", lien: "" }
+    ],
+    reseauxDestIntro: "Application du playbook à la Thaïlande (combiné temples + plages, cible familles/couples MA, très visuel).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reel transition « temples Bangkok → plages Krabi » + audio tendance. Carrousel itinéraire 14j.", exemple: "Surclasser le reel follow_me (combiné) avec une meilleure prod + son tendance." },
+      { nom: "👍 Facebook", conseil: "Programme détaillé (Qatar, vol intérieur, croisière Chao Phraya, guide FR), cible familles.", exemple: "Post « Bangkok + Krabi + Phuket 14j dès 26 900 DH »." },
+      { nom: "🎵 TikTok", conseil: "POV « réveil face à la mer à Krabi », « 5 erreurs combiné Thaïlande ». Audio TikTok.", exemple: "Cost-breakdown « Thaïlande depuis Casa »." },
+      { nom: "👻 Snapchat", conseil: "Snap Ads MA, offres flash « places limitées août ».", exemple: "Story « départ 7 août, 4 places » → WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « itinéraire Thaïlande », « plus belles plages Krabi » → trafic long terme.", exemple: "Recycler le carrousel en épingles." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « Bangkok puis les îles » + B-roll. Short SEO « Visa Thaïlande Marocains ».", exemple: "Short « Faut-il un visa pour la Thaïlande ? »." }
+    ],
+
     viral: {
       statut: "✅ Reels THAÏLANDE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ Reels MA Thaïlande modestes (4-5k vues) ; l'international est récent/peu viral → scrape d'influenceurs Thaïlande ciblé recommandé.",
       ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Thaïlande (Bangkok/Krabi/Phuket). Engagement modeste au scrape ; le levier le plus sûr ici = le reel transition « temples → plages » + audio tendance.",
@@ -1316,6 +1356,26 @@ window.V21_STUDIO = {
       noteVisuels: "Lieux réels = vraies images. IA = inspiration.",
       planning: "Jouer le contraste ville/plage en reel transition + carrousel itinéraire."
     },
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "@follow_me_travel_", plateforme: "Instagram (agence)", audience: "111 K", sujet: "CONCURRENT DIRECT : vend exactement le combiné KL + plages.", lien: "https://www.instagram.com/follow_me_travel_/" },
+      { origine: "🇲🇦 Maroc", nom: "@vacancia.ma", plateforme: "Instagram (agence)", audience: "139 K", sujet: "Asie/Bali en volume, reels avec audios tendance (Papaoutai…).", lien: "https://www.instagram.com/vacancia.ma/" },
+      { origine: "🇲🇦 Maroc", nom: "@terratour_voyages", plateforme: "Instagram (agence)", audience: "75 K", sujet: "Circuits Asie premium (référence de prod).", lien: "https://www.instagram.com/terratour_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Clients V21 = vivier UGC.", lien: "" },
+      { origine: "🌍 Intl", nom: "@spoorthy_nayak", plateforme: "Instagram (UGC)", audience: "❤️ 117", sujet: "Meilleur UGC Malaisie de l'échantillon (carnet KL).", lien: "https://www.instagram.com/spoorthy_nayak/" },
+      { origine: "🇮🇳 Inde", nom: "@devanshi246", plateforme: "Instagram (UGC)", audience: "micro", sujet: "Marché émetteur indien → codes UGC.", lien: "https://www.instagram.com/devanshi246/" },
+      { origine: "🇹🇭 Thaïlande", nom: "@milk_lakchaya", plateforme: "Instagram (local)", audience: "niche", sujet: "Lifestyle local Thaïlande (partie plage du combiné).", lien: "https://www.instagram.com/milk_lakchaya/" },
+      { origine: "🌍 Intl", nom: "⚠️ Influenceurs à scraper", plateforme: "à identifier", audience: "—", sujet: "Pas de gros influenceur capté → scrape ciblé pour 4 EU.", lien: "" }
+    ],
+    reseauxDestIntro: "Application du playbook au combiné Malaisie + Thaïlande (contraste ville futuriste / plages, cible familles MA).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reel transition « Petronas → plages Krabi » + audio tendance. Carrousel itinéraire 2 pays.", exemple: "Surclasser follow_me (notre concurrent direct) sur la prod." },
+      { nom: "👍 Facebook", conseil: "Programme 2 pays détaillé (5★, vol intérieur, Petronas/Genting).", exemple: "Post « Malaisie + Thaïlande 14j dès 28 500 DH »." },
+      { nom: "🎵 TikTok", conseil: "« 14 jours, 2 pays : le vrai budget », transition ville→plage. Audio TikTok.", exemple: "Cost-breakdown depuis Casa." },
+      { nom: "👻 Snapchat", conseil: "Snap Ads MA, offres flash.", exemple: "Story « dernières places » → WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « itinéraire Malaisie + Thaïlande » → trafic long terme.", exemple: "Recycler le carrousel." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « 2 pays en 1 voyage » + B-roll.", exemple: "Short « Visa Malaisie/Thaïlande ? »." }
+    ],
+
     viral: {
       statut: "✅ Reels MALAISIE+THAÏLANDE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ Reels MA modestes ; international récent/peu viral → scrape d'influenceurs ciblé recommandé.",
       ugcGardeFou: "Garde-fou : UGC = vrais voyageurs (KL/Krabi/Phuket). Engagement modeste ; le levier ici = le reel transition « gratte-ciels → plages » + audio tendance.",
@@ -1395,6 +1455,26 @@ window.V21_STUDIO = {
       noteVisuels: "Lieux réels = vraies images. IA = inspiration.",
       planning: "Aspirationnel « empire + modernité », contraste visuel fort en reel."
     },
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "@terratour_voyages", plateforme: "Instagram (agence)", audience: "75 K · reels Chine/Asie 38-54k vues", sujet: "Grands circuits Asie premium avec audios tendance (Dua Lipa). Le plus fort sur l'Asie lointaine.", lien: "https://www.instagram.com/terratour_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "@follow_me_travel_", plateforme: "Instagram (agence)", audience: "111 K", sujet: "Reels Asie rythmés multi-décors.", lien: "https://www.instagram.com/follow_me_travel_/" },
+      { origine: "🇲🇦 Maroc", nom: "@vacancia.ma", plateforme: "Instagram (agence)", audience: "139 K", sujet: "Lointains en volume.", lien: "https://www.instagram.com/vacancia.ma/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA CSP+ (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Clients V21 Chine = UGC premium à activer.", lien: "" },
+      { origine: "🇨🇳 Chine", nom: "@veny_liew", plateforme: "Instagram (créatrice locale)", audience: "❤️ 525", sujet: "Meilleur UGC Chine de l'échantillon — esthétique locale.", lien: "https://www.instagram.com/veny_liew/" },
+      { origine: "🇨🇳 Chine", nom: "@wenbo.qi", plateforme: "Instagram (créateur)", audience: "niche", sujet: "Regard local sur les villes — DA premium.", lien: "https://www.instagram.com/wenbo.qi/" },
+      { origine: "🇮🇷 Iran", nom: "@alireza.akhlaghi.official", plateforme: "Instagram (voyage)", audience: "moyen", sujet: "Contenu « grandes merveilles » (autre marché émetteur).", lien: "https://www.instagram.com/alireza.akhlaghi.official/" },
+      { origine: "🌍 Intl", nom: "⚠️ Influenceurs Chine (à scraper)", plateforme: "à identifier", audience: "—", sujet: "Pas de gros influenceur capté → scrape ciblé pour 4 EU.", lien: "" }
+    ],
+    reseauxDestIntro: "Application du playbook à la Chine (circuit bucket-list, cible CSP+ étroite, contraste empire/modernité).",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reel contraste « Grande Muraille → skyline Shanghai » + audio tendance (cf. terratour/Dua Lipa).", exemple: "Reproduire le reel terratour 54k avec un son tendance." },
+      { nom: "👍 Facebook", conseil: "Programme 5★ détaillé + prise en charge VISA (frein n°1), guide FR.", exemple: "Post « Pékin + Shanghai 14j 5★, visa géré, dès 29 900 DH »." },
+      { nom: "🎵 TikTok", conseil: "« Visa Chine : on s'occupe de tout », contraste tradition/futur. Audio TikTok.", exemple: "Explainer visa en darija." },
+      { nom: "👻 Snapchat", conseil: "Snap Ads CSP+, départs garantis.", exemple: "Story « départ 12 août » → WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « itinéraire Chine 14j », « Grande Muraille » → SEO durable.", exemple: "Recycler le carrousel." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « Chine : ce qu'il faut savoir » + B-roll. Short « Visa Chine ».", exemple: "Short « Combien coûte la Chine depuis le Maroc ? »." }
+    ],
+
     viral: {
       statut: "✅ Reels CHINE réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. ⚠️ L'international Chine reste modeste au scrape → scrape d'influenceurs ciblé recommandé. FORCE = reels MA terratour (38-54k vues).",
       ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Chine. Engagement modeste ; la force ici = les reels MA terratour (Muraille→Shanghai) avec audio tendance.",
@@ -1474,6 +1554,26 @@ window.V21_STUDIO = {
       noteVisuels: "Lieux réels = vraies images. IA = inspiration. ⚠️ Toujours préciser « hors vols » dans les posts prix.",
       planning: "Niche cultivée : Pinterest + carrousels histoire + reels « pépite méconnue »."
     },
+    influenceurs: [
+      { origine: "🇲🇦 Maroc", nom: "@terratour_voyages", plateforme: "Instagram (agence)", audience: "75 K · reel Ouzbékistan 98k vues", sujet: "Route de la Soie en reels « pépite + audio tendance » (The Weeknd). Le seul fort MA sur la destination.", lien: "https://www.instagram.com/terratour_voyages/" },
+      { origine: "🇲🇦 Maroc", nom: "@follow_me_travel_", plateforme: "Instagram (agence)", audience: "111 K", sujet: "Reels Asie rythmés (format transposable).", lien: "https://www.instagram.com/follow_me_travel_/" },
+      { origine: "🇲🇦 Maroc", nom: "Voyageurs MA cultivés (UGC à recruter)", plateforme: "IG/TikTok", audience: "micro", sujet: "Clients V21 Ouzbékistan = UGC à activer (cible cultivée).", lien: "" },
+      { origine: "🇲🇦 Maroc", nom: "⚠️ Concurrent MA Ouzbékistan", plateforme: "à confirmer", audience: "—", sujet: "Destination de niche : peu de concurrents MA → fenêtre ouverte.", lien: "" },
+      { origine: "🇺🇿 Ouzbékistan", nom: "@iamshakhjakhan", plateforme: "Instagram (créateur local)", audience: "❤️ 96", sujet: "Esthétique locale (cités bleues, Samarkand).", lien: "https://www.instagram.com/iamshakhjakhan/" },
+      { origine: "🌏 Indonésie", nom: "@jenny_fed (Kehidupan Bule)", plateforme: "Instagram (expat)", audience: "❤️ 145", sujet: "« Expat découvre » — format très partageable.", lien: "https://www.instagram.com/jenny_fed/" },
+      { origine: "🇫🇷 France", nom: "@marie_le_chemin", plateforme: "Instagram (slow travel)", audience: "niche", sujet: "Carnet de route FR pour cible cultivée.", lien: "https://www.instagram.com/marie_le_chemin/" },
+      { origine: "🇰🇷 Corée", nom: "@chaeryeon85", plateforme: "Instagram (voyage)", audience: "moyen", sujet: "Désirabilité internationale de la destination.", lien: "https://www.instagram.com/chaeryeon85/" }
+    ],
+    reseauxDestIntro: "Application du playbook à l'Ouzbékistan (niche culturelle « pépite méconnue », cible cultivée). ⚠️ Toujours préciser « hors vols ».",
+    reseauxDest: [
+      { nom: "📸 Instagram", conseil: "Reel « pépite méconnue » Régistan/cités bleues + audio tendance (cf. terratour 98k). Carrousel histoire.", exemple: "Reproduire le reel terratour (The Weeknd) + hook « Tu connais Samarkand ? »." },
+      { nom: "👍 Facebook", conseil: "Programme détaillé + mention CLAIRE « hors vols » + option package vol, guide FR.", exemple: "Post « Route de la Soie 10j, guide FR, dès 15 700 DH (hors vols) »." },
+      { nom: "🎵 TikTok", conseil: "« Nuit en yourte sous les étoiles », « la pépite que personne ne connaît ». Audio TikTok.", exemple: "POV « réveil à Samarkand »." },
+      { nom: "👻 Snapchat", conseil: "Snap Ads cible cultivée, départs juil→oct.", exemple: "Story « départ 1er sept » → WhatsApp." },
+      { nom: "📌 Pinterest", conseil: "Épingles « itinéraire Route de la Soie », « cités bleues » → SEO durable (cible cultivée).", exemple: "Recycler carrousel histoire." },
+      { nom: "🎬 YouTube/Vidéo", conseil: "Talking-head « Ouzbékistan, la pépite » + B-roll. Short « e-visa Ouzbékistan ».", exemple: "Short « Pourquoi visiter Samarkand ? »." }
+    ],
+
     viral: {
       statut: "✅ Reels OUZBÉKISTAN réels, triés par VUES (scrape 6 mois). Maroc séparé des étrangers. FORCE = reel MA terratour 98 295 vues (audio tendance). ⚠️ International niche → scrape d'influenceurs « Asie centrale » recommandé.",
       ugcGardeFou: "Garde-fou : UGC = vrais voyageurs Ouzbékistan (cités bleues, Samarkand). Niche → engagement modeste à l'étranger, mais le reel MA terratour 98k prouve l'appétit. ⚠️ Toujours préciser « hors vols » sur les posts prix.",
