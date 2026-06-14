@@ -161,7 +161,14 @@ window.V21_STUDIO = {
 
     // 5) INSPIRATION VIRALE (web global + France + Pinterest) — recherche 13/06/2026
     viral: {
-      statut: "✅ Recherche virale réalisée (sources : Later, Sprout Social, W3Era Pinterest, Soundverse… juin 2026). Détail complet : content-studio/veille-virale.md. Stats externes = indicatives.",
+      statut: "✅ Recherche virale + exemples RÉELS cliquables (scrape Apify 14/06 + recherche web). Détail : content-studio/veille-virale.md. Stats = réelles à la date du scrape.",
+      // Exemples viraux réels — liens cliquables (à reproduire avec la marque V21, pas plagier)
+      viralExamples: [
+        { titre: "AjiNsafro — offre Caire & Sharm", compte: "@ajinsafro.ma", lien: "https://www.instagram.com/p/DZXvWc2mkKD/", stat: "121 vues · 2 ❤️", pourquoi: "Offre quasi identique à la nôtre mais visuel pauvre → à REFAIRE en mieux (vrai film 5★ + hôtels nommés). La demande existe, le contenu manque." },
+        { titre: "Vacancia — Reel Istanbul (format audio)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Le format qui scale : reel court + audio tendance + caption « Réservation + n° ». À transposer sur l'Égypte." },
+        { titre: "Terratour — Reel destination + dates", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "1 destination + dates précises + « places limitées » + n°. Le squelette de reel le plus efficace du marché MA." },
+        { titre: "Transatour — Concours « gagne une Omra »", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DXq9aEZD7GQ/", stat: "1 769 commentaires", pourquoi: "Hack de portée : un concours fait exploser les commentaires → idéal pour lancer un compte neuf comme le nôtre." }
+      ],
       formats: [
         "POV première personne — « POV : tu arrives en Égypte pour la 1re fois » (identification + complétion)",
         "« X choses que personne ne te dit » — liste numérotée (sauvegarde max)",
@@ -196,20 +203,74 @@ window.V21_STUDIO = {
         "Activer Pinterest Business + Rich Pins (vérifier le domaine voyages21)"
       ],
       audio: [
-        "Cinématique oriental fusion (cordes + tabla, builds) — B-rolls pyramides/Nil [dominant]",
-        "Ambient oriental doux (oud/nay) — day-in-life, croisière contemplative",
-        "Pop électronique arabisante (maqam + EDM) — transitions Sharm/mer Rouge",
-        "Orchestral épique — intro choc Gizeh/Karnak/Abou Simbel",
-        "Lo-fi travel / bossa douce — slow travel (petit-déj bateau, souk le soir)",
-        "Sound design / ASMR (muezzin, eau sur la coque) — pattern interrupt en ouverture",
-        "Afrobeat/afropop fusion — contenus festifs (snorkeling, beach Dahab)"
+        { style: "Cinématique oriental fusion (cordes + tabla) [dominant]", usage: "B-rolls pyramides/Nil, montée épique à la révélation", lien: "https://pixabay.com/music/world-egypt-ethnic-arabic-cinematic-background-music-136331/" },
+        { style: "Ambient oriental doux (oud / ney)", usage: "Day-in-life, croisière contemplative, voix off", lien: "https://pixabay.com/music/world-fading-light-of-the-faiyum-ancient-egyptian-arabic-ney-flute-176523/" },
+        { style: "Cinématique arabe (banque Uppbeat)", usage: "Intro choc Gizeh/Karnak — son « propre droits » pour les ads", lien: "https://uppbeat.io/music/category/egyptian" },
+        { style: "Middle Eastern Groove (Uppbeat)", usage: "Transitions Sharm / mer Rouge, énergie solaire", lien: "https://uppbeat.io/browse/collection/middle-eastern-groove" },
+        { style: "Travel cinématique (Pixabay)", usage: "Récap voyage, slow travel, généraliste safe", lien: "https://pixabay.com/music/search/travel/" },
+        { style: "🔥 Audio TENDANCE Instagram/TikTok du moment", usage: "Le LEVIER n°1 du reach (cf. Vacancia). À piocher dans l'onglet « audios en tendance » de l'app, PAS en banque libre — le trending son fait le reach", lien: "https://www.instagram.com/reels/audio/" }
       ],
       postsClesEnMain: [
-        { titre: "Reel POV arrivée Caire (45-60s)", detail: "Révélation des pyramides au coucher de soleil. Audio cinématique oriental qui climaxe à l'apparition. CTA : programme Caire+Nil+Mer Rouge." },
-        { titre: "Reel « 5 erreurs croisière Nil » (60-90s)", detail: "Format liste expert (éviter août, dahabeya privée, Abou Simbel tôt, Kom Ombo/Edfou, guide FR). Fort taux de sauvegarde + positionnement référence." },
-        { titre: "Carrousel + épingles « Itinéraire 10 jours »", detail: "Double usage Instagram (10 slides) + Pinterest (1 épingle/jour). Le format le plus sauvegardé, durée de vie 3-6 mois." },
-        { titre: "Reel transition « 3 destinations, 1 voyage » (15-30s)", detail: "Pyramides→Nil→mer Rouge, transitions au beat. Ancrage « depuis Casablanca » pour la cible MA outgoing." },
-        { titre: "Reel témoignage Karim expert (60-90s)", detail: "Talking head, 3 conseils d'insider, 25 ans d'expertise. Format anti-IA qui monte en 2026, construit la confiance d'achat premium." }
+        {
+          titre: "Reel POV arrivée au Caire (45-60s)",
+          format: "Reel cinématique · audio tendance",
+          lienCible: "https://www.instagram.com/p/DZFivwkN-x-/",
+          langues: "FR (légende) + darija (voix off) — 2 versions",
+          script: "Plan 1 (0-2s, HOOK) : noir → texte « POV : tu vois les pyramides pour la 1re fois ». Plan 2-4 : taxi, fenêtre, première silhouette de Gizeh. Plan 5 (climax) : pyramide plein cadre au coucher de soleil, drop musical. Plan final : carton « Le Caire & Sharm · 11j · 5★ · dès 19 600 DH » + logo V21.",
+          visuel: "Lumière dorée fin de journée, ton chaud, transitions au beat. Format 9:16, sous-titres FR brûlés.",
+          casting: "Pas d'acteur requis (POV caméra subjective). Si voix : Karim ou voix off darija chaleureuse.",
+          tournage: "Vraies images Égypte (banque/UGC client autorisé) ou B-roll retravaillé. JAMAIS de faux client. Montage CapCut, 6-8 plans max.",
+          cta: "« Programme complet en bio · WhatsApp 0661 24 70 49 »",
+          kpis: "Vues > 10 000 · rétention 3s > 60 % · saves > 100 · 1er reel = test d'audience"
+        },
+        {
+          titre: "Reel « 5 erreurs sur la croisière du Nil » (60-90s)",
+          format: "Reel expert · liste numérotée",
+          lienCible: "https://www.instagram.com/p/DX9xEMlMHjW/",
+          langues: "FR principal · variante darija",
+          script: "HOOK (0-3s) : « 5 erreurs qui gâchent une croisière sur le Nil ❌ ». Puis 1→5 en plans rapides : 1. partir en plein août, 2. bateau surpeuplé (vs dahabeya), 3. rater Abou Simbel au lever, 4. sauter Kom Ombo/Edfou, 5. guide non francophone. Carton final : « Chez Voyages21, tout est déjà réglé ✅ ».",
+          visuel: "Texte plein écran par erreur, B-roll temples/Nil, rythme soutenu. Couleurs V21 (vert/or) sur les cartons.",
+          casting: "Optionnel : Karim en talking-head sur l'intro/outro (autorité).",
+          tournage: "B-roll + cartons animés. 90s max. Sauvegardable = on garde l'info dense.",
+          cta: "« Enregistre ce reel pour ton prochain voyage · DM pour le programme »",
+          kpis: "Saves > 200 (objectif n°1) · partages > 50 · commentaires « infos ? »"
+        },
+        {
+          titre: "Carrousel + épingles « Itinéraire 10 jours en Égypte »",
+          format: "Carrousel IG 10 slides + Pinterest",
+          lienCible: "https://www.instagram.com/p/DYCoCVeCEiV/",
+          langues: "FR (Pinterest = audience FR/SEO) + version IG darija possible",
+          script: "Slide 1 : titre « 10 jours en Égypte depuis Casa · l'itinéraire ». Slides 2-9 : J1 Caire… J10 retour, 1 jour/slide avec visuel + 1 ligne. Slide 10 : récap prix + CTA. Réutiliser chaque slide en épingle Pinterest.",
+          visuel: "Template carré 1080² (IG) + vertical 1000×1500 (Pinterest), titres Playfair, fond crème/vert.",
+          casting: "Aucun.",
+          tournage: "Design only (Canva). Double usage = 1 production, 2 plateformes, durée de vie 3-6 mois sur Pinterest.",
+          cta: "« Itinéraire complet + prix → lien en bio »",
+          kpis: "Saves > 300 · trafic Pinterest vers voyages21.com · épingles vues > 5 000 / mois"
+        },
+        {
+          titre: "Reel transition « 3 destinations, 1 voyage » (15-30s)",
+          format: "Reel transition · au beat",
+          lienCible: "https://www.instagram.com/p/DZFivwkN-x-/",
+          langues: "FR + darija (texte court)",
+          script: "3 temps au beat : Pyramides (claquement) → Nil/croisière (claquement) → mer Rouge Sharm. Texte « Culture. Croisière. Mer Rouge. » Carton final prix + « depuis Casablanca ».",
+          visuel: "Transitions whip/match-cut, audio tendance, 9:16, montage serré 15-25s.",
+          casting: "Aucun (B-roll).",
+          tournage: "3-6 plans, CapCut. Le format le plus partageable (pas de barrière de langue).",
+          cta: "« Lien en bio · places limitées été 2026 »",
+          kpis: "Vues > 15 000 · partages > 80 · taux de complétion > 80 %"
+        },
+        {
+          titre: "★ Reel UGC témoignage VOYAGEUR (avec acteur) (60-90s)",
+          format: "UGC authentique · talking-head + B-roll",
+          lienCible: "https://www.instagram.com/p/DXq9aEZD7GQ/",
+          langues: "Darija dominante (authenticité MA) + sous-titres FR",
+          script: "Un VRAI voyageur (client réel volontaire OU créateur partenaire identifié comme tel) raconte face caméra : « K`nt khayf men l'organisation… » (j'avais peur de l'organisation) → 3 moments forts (accueil aéroport, hôtel 5★ nommé, dîner-croisière) → « Voyages21 dar liya kulchi » (a tout géré). Incrustation B-roll de SON voyage.",
+          visuel: "Brut, vertical, lumière naturelle, look « story » non léché = crédibilité. Logo discret.",
+          casting: "BRIEF CASTING : client réel V21 (Égypte récente) OU micro-créateur MA 5-50k abonnés, voyage offert/défrayé, mention « partenariat » obligatoire. ⚠️ Règle marque : JAMAIS de faux témoignage ni d'influenceur IA.",
+          tournage: "Tourné par le voyageur (smartphone) + 3 B-roll fournis par lui. Karim valide le montage. Droits à l'image signés.",
+          cta: "« Ton tour ? DM “ÉGYPTE” · WhatsApp 0661 24 70 49 »",
+          kpis: "Vues > 20 000 · taux de confiance (DM/commentaires positifs) · 1 UGC/mois en routine. Réf. : UGC @maroua→Vacancia = 41k vues / 1 291 ❤️"
+        }
       ]
     }
   },
@@ -345,15 +406,64 @@ window.V21_STUDIO = {
       planning: "Rythme 4 posts/sem (IG+FB+TikTok). Turquie = forte saisonnalité été → pousser dès maintenant."
     },
     viral: {
-      statut: "Même playbook que l'Égypte, adapté Turquie (détail : content-studio/veille-virale.md).",
+      statut: "✅ Playbook Turquie + exemples RÉELS cliquables (scrape Apify 14/06). Marché saturé → différencier par le contenu, pas le prix.",
+      viralExamples: [
+        { titre: "Vacancia — Reel Istanbul (audio)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Le reel Istanbul + audio + caption minimale = la machine à reach du marché. À copier sur la FORME." },
+        { titre: "Vacancia — Reel Istanbul + Bali", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "Les combinés font rêver (2 décors en 1 reel). V21 a Istanbul + Antalya/Bodrum à mettre en avant pareil." },
+        { titre: "Transatour — Istanbul dès 6 547 DH", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DTSu2h2iNrk/", stat: "3 279 vues", pourquoi: "Prix d'appel bas + « Bosphore offert ». On ne s'aligne PAS sur le prix : on oppose Turkish Airlines + hôtels nommés + croisière incluse." }
+      ],
       pistes: [
         "POV première personne — « POV : ton 1er matin sur le Bosphore »",
         "Transition tenue/lieu — Istanbul historique → plage Bodrum/Antalya (format viral combiné)",
         "Cost breakdown — « 8 jours Turquie tout compris depuis Casa, le vrai budget »",
         "« 5 erreurs à éviter pour un combiné Istanbul + plage »",
         "Hidden gems — Îles des Princesses, quartiers de Balat, Cappadoce en extension"
+      ],
+      audio: [
+        { style: "Cinématique ottoman (cordes + oud)", usage: "Istanbul historique, coupoles, Bosphore", lien: "https://uppbeat.io/browse/collection/middle-eastern-groove" },
+        { style: "Pop électronique solaire / deep-house douce", usage: "Antalya/Bodrum, piscine, plage", lien: "https://pixabay.com/music/search/summer%20background%20music/" },
+        { style: "Travel cinématique (Pixabay)", usage: "Transitions ville→mer, récap voyage", lien: "https://pixabay.com/music/search/travel/" },
+        { style: "🔥 Audio TENDANCE IG/TikTok", usage: "Le levier n°1 du reach (cf. Vacancia 95k) — à prendre dans l'app", lien: "https://www.instagram.com/reels/audio/" }
+      ],
+      postsClesEnMain: [
+        {
+          titre: "Reel transition « Istanbul le matin, la mer l'après-midi » (15-30s)",
+          format: "Reel transition · au beat",
+          lienCible: "https://www.instagram.com/p/DYo9YhegdXn/",
+          langues: "FR + darija (texte court)",
+          script: "Temps 1 : coupoles/Bosphore au lever (claquement). Temps 2 : whip → plage turquoise Bodrum/Antalya. Texte « Istanbul + la mer Égée, un seul voyage ✈️ ». Carton prix « dès 16 300 DH · vols Turkish Airlines inclus ».",
+          visuel: "Match-cut culture→mer, audio tendance, 9:16, 15-25s.",
+          casting: "Aucun (B-roll).",
+          tournage: "3-6 plans, CapCut. Le combiné = l'angle différenciant vs séjour simple.",
+          cta: "« Places limitées été 2026 · lien en bio »",
+          kpis: "Vues > 15 000 · partages > 80 · complétion > 80 %"
+        },
+        {
+          titre: "★ Reel UGC voyageur Turquie (avec acteur) (60-90s)",
+          format: "UGC authentique · talking-head + B-roll",
+          lienCible: "https://www.instagram.com/p/DZFivwkN-x-/",
+          langues: "Darija dominante + sous-titres FR",
+          script: "Vrai voyageur (ou créateur partenaire identifié) : « Sift 8 ayam f Turkiya m3a Voyages21… » → 3 moments (croisière Bosphore offerte, hôtel 5★ Antalya nommé, vol direct Turkish Airlines) → « kulchi kan organisé ». B-roll de son séjour.",
+          visuel: "Brut/vertical, lumière naturelle, crédibilité « story ».",
+          casting: "BRIEF : client réel V21 Turquie OU micro-créateur MA 5-50k, défrayé, mention « partenariat ». ⚠️ Jamais de faux témoignage ni d'influenceur IA.",
+          tournage: "Smartphone du voyageur + 3 B-roll. Droits à l'image signés. Karim valide.",
+          cta: "« Ton tour ? DM “TURQUIE” · 0661 24 70 49 »",
+          kpis: "Vues > 20 000 · DM/commentaires confiance · 1 UGC/mois. Réf. : @maroua→Vacancia 41k vues / 1 291 ❤️"
+        }
       ]
     }
+  },
+
+  // STRATÉGIE RÉSEAUX (commune aux produits) — même contenu, codes par plateforme
+  reseaux: {
+    intro: "Règle d'or : on produit le contenu UNE fois (reel/carrousel), puis on le DÉCLINE selon les codes de chaque réseau. 4 publications/semaine pour démarrer (mardi 18h30, jeudi 18h30, samedi 11h, dimanche 18h30, heure Maroc).",
+    plateformes: [
+      { nom: "📸 Instagram", compte: "@voyages21maroc (Meta Verified)", role: "Vitrine n°1 — Reels pour le reach, carrousels pour le save, stories pour la conversion (lien WhatsApp).", codes: ["Reel 9:16, hook < 3s, audio TENDANCE (pas banque libre)", "Carrousels itinéraires/prix = sauvegardes", "Stories quotidiennes + stickers lien WhatsApp + sondages", "Highlights par destination (Égypte, Turquie, Omra)", "3-5 hashtags max, géolocalisation Maroc"], cadence: "4 reels + stories quotidiennes", kpi: "Vues, saves, DM" },
+      { nom: "👍 Facebook", compte: "« Voyages Maroc » → ⚠️ convertir en PAGE PRO (requis ads)", role: "Audience plus âgée/MRE, fort pour les offres détaillées et le partage familial. Canal n°1 pour les ads Meta.", codes: ["Mêmes reels qu'IG (cross-post) + posts liens vers fiches voyages", "Texte plus long OK (audience lit les détails prix/programme)", "Groupes/communautés voyage Maroc", "Posts partageables (familles taguent)", "Indispensable : Page pro pour le Gestionnaire de pub"], cadence: "4 posts/sem + reels cross-postés", kpi: "Portée, clics site, messages" },
+      { nom: "🎵 TikTok", compte: "@voyages.maroc (73 abonnés — à rebrander)", role: "Reach froid maximal, audience jeune. Le reel brut performe mieux que le léché.", codes: ["Vertical brut, audio tendance TikTok (≠ tendances IG)", "Hook parlé dès la 1re seconde, sous-titres", "Tester 1 même reel sur IG ET TikTok (tendances différentes)", "Séries « Jour X/10 en Égypte » (fidélise)", "Pas de watermark IG (pénalisé)"], cadence: "3-4 vidéos/sem", kpi: "Vues, taux de complétion, abonnés" },
+      { nom: "👻 Snapchat", compte: "à créer (phase 3 / si budget ads)", role: "Très fort au Maroc chez les 16-30 ans. Pertinent surtout en ADS géolocalisées (Casa, Rabat, Marrakech) plus qu'en organique.", codes: ["Format vertical plein écran, très direct", "Snap Ads géolocalisées Maroc = le vrai usage", "Ton spontané, offres flash / « dernières places »", "Public Profile + Spotlight pour l'organique"], cadence: "Phase ads d'abord (organique léger)", kpi: "Swipe-up, coût/lead" },
+      { nom: "📌 Pinterest", compte: "à activer (Business + Rich Pins)", role: "Moteur de recherche, pas un réseau social. Trafic LONG terme vers voyages21.com (durée de vie 3-6 mois/épingle).", codes: ["Vertical 1000×1500, le TEXTE sur image = le hook", "Boards keyword-first (« Circuit Égypte 10 jours », « Croisière Nil »)", "Descriptions ≤ 500 car., PAS de hashtags en 2026", "5-10 épingles/jour, publier 45-90j avant la saison", "Rich Pins + domaine voyages21 vérifié"], cadence: "5-10 épingles/jour (recyclage carrousels)", kpi: "Vues d'épingles, clics site, SEO" }
+    ]
   },
 
   // 6) ESPACE QUESTIONS DE CLAUDE → réponses de Karim attendues

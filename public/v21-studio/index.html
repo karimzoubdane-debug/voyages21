@@ -165,20 +165,73 @@
 
     // 5) VIRAL
     const vi = d.viral;
+    const link = (url,label) => '<a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none">'+esc(label)+'</a>';
     h += '<section><h2>🔥 Inspiration virale</h2><p class="lead">'+esc(vi.statut)+'</p>';
+    if(vi.viralExamples){
+      h += '<h3 style="color:var(--green)">🔗 Exemples réels à reproduire <span style="font-weight:400;font-size:13px;color:var(--muted)">(inspiration, pas plagiat)</span></h3>';
+      vi.viralExamples.forEach(e=>{
+        h += '<div class="post"><b>'+esc(e.titre)+'</b> · '+esc(e.compte)+' — <span style="color:var(--gold);font-weight:700">'+esc(e.stat)+'</span>'+
+          '<div class="legende">'+esc(e.pourquoi)+'</div>'+link(e.lien,'▶ Voir le post réel')+'</div>';
+      });
+      h += '<div class="sep"></div>';
+    }
     if(vi.formats){
       h += '<h3 style="color:var(--green)">📱 Formats qui performent</h3><ul class="pill-list">'+vi.formats.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    if(vi.hooks){
       h += '<div class="sep"></div><h3 style="color:var(--green)">🪝 Hooks scroll-stoppers (&lt; 3s)</h3><ul class="pill-list">'+vi.hooks.map(x=>'<li>« '+esc(x)+' »</li>').join('')+'</ul>';
+    }
+    if(vi.pistes){
+      h += '<div class="sep"></div><h3 style="color:var(--green)">📱 Pistes de formats</h3><ul class="pill-list">'+vi.pistes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    if(vi.pinterest){
       h += '<div class="sep"></div><h3 style="color:var(--green)">📌 Pinterest — stratégie</h3><ul class="pill-list">'+vi.pinterest.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
-      h += '<div class="sep"></div><h3 style="color:var(--green)">🎵 Styles audio/musique</h3><ul class="pill-list">'+vi.audio.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
-      h += '<div class="sep"></div><h3 style="color:var(--green)">⭐ 5 posts clés en main</h3>';
-      vi.postsClesEnMain.forEach(p=>{ h += '<div class="post"><b>'+esc(p.titre)+'</b><div class="legende">'+esc(p.detail)+'</div></div>'; });
-    } else if(vi.pistes){
-      h += '<ul class="pill-list">'+vi.pistes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    }
+    if(vi.audio){
+      h += '<div class="sep"></div><h3 style="color:var(--green)">🎵 Styles audio — liens d\'écoute</h3><ul class="pill-list">'+vi.audio.map(a=>{
+        if(typeof a==='string') return '<li>'+esc(a)+'</li>';
+        return '<li><b>'+esc(a.style)+'</b> — '+esc(a.usage)+' · '+link(a.lien,'▶ écouter')+'</li>';
+      }).join('')+'</ul>';
+    }
+    if(vi.postsClesEnMain){
+      h += '<div class="sep"></div><h3 style="color:var(--green)">⭐ Posts clés en main</h3>';
+      vi.postsClesEnMain.forEach(p=>{
+        if(p.script){
+          h += '<div class="post">'+(p.format?'<span class="badge">'+esc(p.format)+'</span>':'')+'<b>'+esc(p.titre)+'</b>'+
+            '<div class="row"><b>Langues :</b> '+esc(p.langues)+'</div>'+
+            '<div class="row"><b>Script :</b> '+esc(p.script)+'</div>'+
+            '<div class="row"><b>Direction visuelle :</b> '+esc(p.visuel)+'</div>'+
+            '<div class="row"><b>Casting :</b> '+esc(p.casting)+'</div>'+
+            '<div class="row"><b>Plan de tournage :</b> '+esc(p.tournage)+'</div>'+
+            '<div class="row"><b>CTA :</b> '+esc(p.cta)+'</div>'+
+            '<div class="row"><b>🎯 KPIs cibles :</b> '+esc(p.kpis)+'</div>'+
+            (p.lienCible?'<div class="audio">'+link(p.lienCible,'▶ Post-cible à reproduire')+'</div>':'')+
+          '</div>';
+        } else {
+          h += '<div class="post"><b>'+esc(p.titre)+'</b><div class="legende">'+esc(p.detail||'')+'</div></div>';
+        }
+      });
     }
     h += '</section>';
 
     app.innerHTML = h;
+  }
+
+  // STRATÉGIE RÉSEAUX (commune) — rendue une fois en bas
+  function renderReseaux(){
+    if(!D.reseaux) return '';
+    const r = D.reseaux;
+    let h = '<section><h2>📡 Stratégie réseaux — plateforme par plateforme</h2><p class="lead">'+esc(r.intro)+'</p><div class="grid">';
+    r.plateformes.forEach(p=>{
+      h += '<div class="card"><h3>'+esc(p.nom)+'</h3>'+
+        '<div class="row" style="color:var(--muted)">'+esc(p.compte)+'</div>'+
+        '<div class="row"><b>Rôle :</b> '+esc(p.role)+'</div>'+
+        '<div class="row"><b>Codes :</b></div><ul class="pill-list">'+p.codes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+        '<div class="row"><b>Cadence :</b> '+esc(p.cadence)+'</div>'+
+        '<div class="row"><b>KPI :</b> '+esc(p.kpi)+'</div></div>';
+    });
+    h += '</div></section>';
+    return h;
   }
 
   // 6) QUESTIONS (toujours affichées en bas, communes au projet)
@@ -189,7 +242,7 @@
     return h;
   }
 
-  function full(){ render(sel.value); app.innerHTML += renderQuestions(); }
+  function full(){ render(sel.value); app.innerHTML += renderReseaux() + renderQuestions(); }
   sel.addEventListener('change', full);
   full();
 </script>

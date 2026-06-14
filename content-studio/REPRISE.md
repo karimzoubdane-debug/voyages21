@@ -42,9 +42,21 @@ court-circuiter et aller droit au but).
   Terratour = meilleur engagement (modèle à copier) ; AjiNsafro vend le MÊME
   Caire & Sharm mais plafonne à ~120 vues → **fenêtre contenu Égypte ouverte** ;
   Transatour casse le prix Istanbul (6 547 DH) ; **V21 part de ~50-150 vues**.
-- ⏭️ Reste du cahier (chantiers 2→5) à faire : inspiration virale (liens réels),
-  stratégie réseaux multi-plateformes, style audio (liens d'écoute), posts clés
-  en main + UGC + brief vidéo. À enchaîner au prochain « go ».
+- ✅ **CHANTIERS 2→5 LIVRÉS** (même PR #49) dans `studio-data.js` + `index.html` :
+  - **2. Inspiration virale** : bloc `viralExamples` avec **liens cliquables réels**
+    (posts concurrents scrapés) pour Égypte ET Turquie.
+  - **3. Stratégie réseaux** : objet `reseaux` partagé = **5 plateformes**
+    (Instagram, Facebook, TikTok, Snapchat, Pinterest), chacune avec rôle/codes/
+    cadence/KPI. Rendu en section dédiée.
+  - **4. Style audio** : `audio` passé en objets avec **liens d'écoute réels**
+    (Pixabay tracks + Uppbeat collections + onglet audios tendance IG).
+  - **5. Posts clés en main** : enrichis (script, langues FR/darija, direction
+    visuelle, brief casting, plan de tournage, CTA, **KPIs cibles**) + **1 post
+    UGC avec acteur** par destination + **lien-cible réel** sur chaque post.
+  - `index.html` : rendu étendu (liens, audio cliquable, posts riches, réseaux),
+    garde-fous `if` par bloc. Validé : parse OK + simulation rendu 3 produits sans erreur.
+- ⏭️ Reste à faire ensuite : générer les VISUELS Higgsfield (desktop, gate web),
+  décision prix Caire & Sharm (en pause à la demande de Karim), horaires vols réels.
 
 ## 📍 Point du 13/06/2026 — matin
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
