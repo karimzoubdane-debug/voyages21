@@ -58,6 +58,16 @@
   .post .audio{font-size:12.5px;color:var(--muted);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
   .qbox{border-left:4px solid var(--gold);padding:10px 14px;background:#fffdf9;border-radius:0 10px 10px 0;margin-bottom:10px;font-size:14px}
   .qbox .st{font-size:11px;font-weight:700;color:var(--warn);text-transform:uppercase}
+  tr.v td{background:#eaf6ee}
+  .v-price{color:#1B3A28;font-weight:800}
+  .analyse{background:#eef2ff;border:1px solid #c7d2fe;border-left:5px solid #4f46e5;border-radius:10px;padding:14px 16px;font-size:13.5px;color:#312e81;margin-top:14px}
+  .analyse h4{margin:0 0 8px;color:#4338ca;font-size:15px;font-family:'Playfair Display',serif}
+  .analyse ul{margin:6px 0 0;padding-left:18px;line-height:1.6}
+  .vtag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px;margin-right:6px}
+  .vtag-ugc{background:#fbe9c7;color:#7a5a12}
+  .vtag-reel{background:#dcefe2;color:#1f6b43}
+  .vtag-intl{background:#dde6fb;color:#27408b}
+  .vorig{font-size:12px;color:var(--muted);font-weight:600}
   footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
   .hidden{display:none}
   .soon{text-align:center;color:var(--muted);padding:40px 20px;font-size:15px}
@@ -130,9 +140,14 @@
     h += '</div><div class="sep"></div><h3 style="color:var(--green)">'+esc(v.benchmarkTitre || 'Benchmark prix Égypte (départ Maroc, vols inclus)')+'</h3>'+
       '<table><tr><th>Agence</th><th>Offre</th><th>Durée</th><th>Hôtels</th><th>Prix dès</th><th>Vérifié</th></tr>';
     v.benchmarkPrix.forEach(b=>{
-      h += '<tr><td>'+esc(b.agence)+'</td><td>'+esc(b.offre)+'</td><td>'+esc(b.duree)+'</td><td>'+esc(b.hotels)+'</td><td><b>'+esc(b.prix)+'</b></td><td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
+      var isNous = b.nous || /Voyages21|\(NOUS\)/.test(b.agence);
+      var px = isNous ? '<span class="v-price">'+esc(b.prix)+'</span>' : '<b>'+esc(b.prix)+'</b>';
+      h += '<tr'+(isNous?' class="v"':'')+'><td>'+esc(b.agence)+'</td><td>'+esc(b.offre)+'</td><td>'+esc(b.duree)+'</td><td>'+esc(b.hotels)+'</td><td>'+px+'</td><td>'+(b.verifie?'<span class="chk">✓</span>':'—')+'</td></tr>';
     });
     h += '</table>';
+    if(v.benchmarkAnalyse && v.benchmarkAnalyse.length){
+      h += '<div class="analyse"><h4>📊 Où se situe Voyages21 — analyse basée UNIQUEMENT sur la data scrapée (14/06/2026)</h4><ul>'+v.benchmarkAnalyse.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+    }
     if(v.engagementReel && v.engagementReel.length){
       h += '<div class="sep"></div><h3 style="color:var(--green)">📊 Engagement réel (Apify)</h3>'+
         '<table><tr><th>Compte</th><th>Format</th><th>Vues</th><th>❤️</th><th>💬</th></tr>'+
@@ -168,11 +183,28 @@
     const link = (url,label) => '<a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none">'+esc(label)+'</a>';
     h += '<section><h2>🔥 Inspiration virale</h2><p class="lead">'+esc(vi.statut)+'</p>';
     if(vi.viralExamples){
-      h += '<h3 style="color:var(--green)">🔗 Exemples réels à reproduire <span style="font-weight:400;font-size:13px;color:var(--muted)">(inspiration, pas plagiat)</span></h3>';
-      vi.viralExamples.forEach(e=>{
-        h += '<div class="post"><b>'+esc(e.titre)+'</b> · '+esc(e.compte)+' — <span style="color:var(--gold);font-weight:700">'+esc(e.stat)+'</span>'+
-          '<div class="legende">'+esc(e.pourquoi)+'</div>'+link(e.lien,'▶ Voir le post réel')+'</div>';
-      });
+      const catMeta = { ugc:['UGC','vtag-ugc'], reel:['Reel modèle','vtag-reel'], intl:['International','vtag-intl'] };
+      const groups = [['ugc','🎬 UGC à reproduire (3)'],['reel','📹 Reels modèles (3)'],['intl','🌍 Viraux d\'autres pays — France & influenceurs (3)']];
+      h += '<h3 style="color:var(--green)">🔗 Reels & posts à prendre comme modèles <span style="font-weight:400;font-size:13px;color:var(--muted)">(inspiration, pas plagiat)</span></h3>';
+      const hasCat = vi.viralExamples.some(e=>e.cat);
+      if(hasCat){
+        groups.forEach(([cat,label])=>{
+          const items = vi.viralExamples.filter(e=>e.cat===cat);
+          if(!items.length) return;
+          h += '<h4 style="color:var(--green2);margin:12px 0 6px">'+label+'</h4>';
+          items.forEach(e=>{
+            const m = catMeta[e.cat] || ['',''];
+            h += '<div class="post"><span class="vtag '+m[1]+'">'+m[0]+'</span>'+(e.origine?'<span class="vorig">'+esc(e.origine)+'</span> · ':'')+'<b>'+esc(e.titre)+'</b> · '+esc(e.compte)+
+              ' — <span style="color:var(--gold);font-weight:700">'+esc(e.stat)+'</span>'+
+              '<div class="legende">'+esc(e.pourquoi)+'</div>'+link(e.lien,'▶ Voir le post réel')+'</div>';
+          });
+        });
+      } else {
+        vi.viralExamples.forEach(e=>{
+          h += '<div class="post"><b>'+esc(e.titre)+'</b> · '+esc(e.compte)+' — <span style="color:var(--gold);font-weight:700">'+esc(e.stat)+'</span>'+
+            '<div class="legende">'+esc(e.pourquoi)+'</div>'+link(e.lien,'▶ Voir le post réel')+'</div>';
+        });
+      }
       h += '<div class="sep"></div>';
     }
     if(vi.formats){

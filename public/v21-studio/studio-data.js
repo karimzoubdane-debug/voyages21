@@ -68,6 +68,7 @@ window.V21_STUDIO = {
 
     // 2) VEILLE CONCURRENTS — veille ÉLARGIE + engagement réel (scrape Apify 14/06/2026)
     concurrents: {
+      benchmarkTitre: "Benchmark prix Égypte (départ Maroc, vols inclus)",
       comptes: [
         { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — concurrent Égypte n°1", note: "Discount/volume, croisière Nil confirmée, ton darija. Reels « Réservation + numéro » + audio = jusqu'à 95k vues" },
         { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing — concurrent direct", note: "Égypte + Turquie + Omra+Istanbul. Forts carrousels (likes méd. 137), peu de reels → reach plafonné" },
@@ -87,6 +88,12 @@ window.V21_STUDIO = {
         { agence: "Vacancia", offre: "Caire + Hurghada", duree: "10j/9n", hotels: "4★ AI", prix: "17 500 DH", verifie: false },
         { agence: "ESF", offre: "Caire + croisière Nil + Hurghada", duree: "nd", hotels: "5★ + croisière 5★", prix: "17 900 DH", verifie: false },
         { agence: "AjiNsafro", offre: "Caire + croisière + Hurghada", duree: "12j/11n", hotels: "5★", prix: "18 700 DH", verifie: true }
+      ],
+      benchmarkAnalyse: [
+        "Position : sur l'offre Caire & Sharm, V21 (19 600 DH) est le PLUS cher des lignes scrapées.",
+        "Seul comparable direct VÉRIFIÉ = AjiNsafro Caire+Sharm 16 700 DH → écart +2 900 DH (+17 %).",
+        "Différences visibles dans la data du 14/06 entre ces 2 offres : durée V21 11j/10n vs AjiNsafro 10j/9n (V21 = +1 nuit) ; hôtels V21 « 5★ nommés » vs AjiNsafro « 4★ et 5★ ».",
+        "Conclusion (data seule) : l'écart de +17 % coïncide avec ces 2 différences scrapées (1 nuit de plus + catégorie 5★ garantie chez V21). Aucune autre cause affirmée — les autres lignes (Olé, ESF, Vacancia) ne sont pas vérifiées."
       ],
       // Engagement réel — posts marquants scrapés + NOUS pour situer (run xX5xp5YSctnvvqkhE, 14/06/2026)
       engagementReel: [
@@ -165,10 +172,15 @@ window.V21_STUDIO = {
       statut: "✅ Recherche virale + exemples RÉELS cliquables (scrape Apify 14/06 + recherche web). Détail : content-studio/veille-virale.md. Stats = réelles à la date du scrape.",
       // Exemples viraux réels — liens cliquables (à reproduire avec la marque V21, pas plagier)
       viralExamples: [
-        { titre: "AjiNsafro — offre Caire & Sharm", compte: "@ajinsafro.ma", lien: "https://www.instagram.com/p/DZXvWc2mkKD/", stat: "121 vues · 2 ❤️", pourquoi: "Offre quasi identique à la nôtre mais visuel pauvre → à REFAIRE en mieux (vrai film 5★ + hôtels nommés). La demande existe, le contenu manque." },
-        { titre: "Vacancia — Reel Istanbul (format audio)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Le format qui scale : reel court + audio tendance + caption « Réservation + n° ». À transposer sur l'Égypte." },
-        { titre: "Terratour — Reel destination + dates", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "1 destination + dates précises + « places limitées » + n°. Le squelette de reel le plus efficace du marché MA." },
-        { titre: "Transatour — Concours « gagne une Omra »", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DXq9aEZD7GQ/", stat: "1 769 commentaires", pourquoi: "Hack de portée : un concours fait exploser les commentaires → idéal pour lancer un compte neuf comme le nôtre." }
+        { cat: "ugc", origine: "🇲🇦 Maroc", titre: "UGC influenceuse — « la hausse des prix des voyages »", compte: "@maroua_merzouqui", lien: "https://www.instagram.com/p/DZFjqkaICpV/", stat: "13 433 vues · 1 292 ❤️", pourquoi: "Le meilleur format UGC marocain qui performe (partenariat agence). À activer pour l'Égypte : une voyageuse réelle raconte." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "POV Pyramides de Gizeh — « l'Égypte change ta perception du temps »", compte: "@melianjulio", lien: "https://www.instagram.com/p/DZjBzseDfO0/", stat: "❤️ 91 (vues non captées)", pourquoi: "UGC voyageur face aux pyramides. Angle émotionnel à reproduire en darija + sous-titres FR." },
+        { cat: "ugc", origine: "🇪🇬 Égypte", titre: "UGC séjour mer Rouge — « Merci Hurghada »", compte: "@derwalux", lien: "https://www.instagram.com/p/DZjqne6jU-y/", stat: "❤️ 64 (vues non captées)", pourquoi: "UGC plage/détente Hurghada — la partie balnéaire de notre offre, vue par un vrai voyageur." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concurrent direct — offre Caire & Sharm", compte: "@ajinsafro.ma", lien: "https://www.instagram.com/p/DZXvWc2mkKD/", stat: "121 vues · 2 ❤️", pourquoi: "Offre quasi identique à la nôtre mais visuel pauvre → à REFAIRE en mieux (vrai film 5★ + hôtels nommés)." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Le format qui scale — reel + audio tendance", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Reel court + audio tendance + caption minimale. À transposer sur l'Égypte (pyramides/Nil/mer Rouge)." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Squelette « destination + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Le squelette de reel le plus efficace du marché MA. À appliquer tel quel à l'Égypte." },
+        { cat: "intl", origine: "🇫🇷 France", titre: "Agence FR — « Sharm El Sheikh & Le Caire été 2026 »", compte: "@elyakoutvoyages", lien: "https://www.instagram.com/p/DZeyzv5AF6D/", stat: "❤️ 7 (vues non captées)", pourquoi: "Un opérateur français vend la MÊME offre Caire+Sharm → vocabulaire et arguments à comparer." },
+        { cat: "intl", origine: "🇫🇷 France", titre: "Créateur niche — « Voyage initiatique en Égypte »", compte: "@asgardprojet", lien: "https://www.instagram.com/p/DZaidkJDRlf/", stat: "❤️ 23 (vues non captées)", pourquoi: "Angle « voyage de transformation » : positionnement premium/expérientiel inexploité côté MA." },
+        { cat: "intl", origine: "🌍 Intl", titre: "TO spécialiste Égypte (anglophone)", compte: "@beyondegypt_travel_", lien: "https://www.instagram.com/p/DZjx2lnDYKn/", stat: "❤️ 5 (vues non captées)", pourquoi: "Référence d'expert Égypte — utile pour le ton « guide/insider » que V21 peut adopter." }
       ],
       formats: [
         "POV première personne — « POV : tu arrives en Égypte pour la 1re fois » (identification + complétion)",
@@ -344,6 +356,12 @@ window.V21_STUDIO = {
         { agence: "Vacancia", offre: "Antalya (séjour)", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true },
         { agence: "Vacancia", offre: "Circuit Antalya + Marmaris + Fethiye", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true }
       ],
+      benchmarkAnalyse: [
+        "Position : sur l'entrée de gamme Istanbul même durée (8j/7n), V21 (9 700 DH) est au-dessus de Transatour (6 547 DH, vérifié) → écart +3 153 DH (+48 %).",
+        "⚠️ Limite data : la data scrapée le 14/06 ne montre PAS la catégorie d'hôtel de Transatour (« nd ») ni le détail vol (direct/escale) ; côté V21 on sait 3★/4★ + croisière Bosphore incluse.",
+        "Conclusion (data seule) : l'écart de +48 % existe, mais son origine n'est PAS déterminable à partir de la seule data (caractéristiques de l'offre Transatour absentes du post). À clarifier : catégorie hôtel + type de vol côté concurrent.",
+        "Vs Vacancia (combo Istanbul+Antalya 13 900, vérifié) : offres non comparables (séjour simple vs combiné) → pas de conclusion prix."
+      ],
       apifyStatut: "✅ Scrape Apify autonome via API REST (14/06/2026, run xX5xp5YSctnvvqkhE). Engagement Turquie réel ci-dessous. ⚠️ Transatour 6 547 DH = prix d'appel Istanbul plus bas que notre entrée 9 700 DH → à analyser (qualité hôtel ? vol direct ou escale ?).",
       engagementReel: [
         { compte: "@vacancia.ma", format: "Reel Istanbul « Réservation + n° » + audio", vues: "95 482", likes: "571", comm: "34" },
@@ -410,9 +428,15 @@ window.V21_STUDIO = {
     viral: {
       statut: "✅ Playbook Turquie + exemples RÉELS cliquables (scrape Apify 14/06). Marché saturé → différencier par le contenu, pas le prix.",
       viralExamples: [
-        { titre: "Vacancia — Reel Istanbul (audio)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Le reel Istanbul + audio + caption minimale = la machine à reach du marché. À copier sur la FORME." },
-        { titre: "Vacancia — Reel Istanbul + Bali", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "Les combinés font rêver (2 décors en 1 reel). V21 a Istanbul + Antalya/Bodrum à mettre en avant pareil." },
-        { titre: "Transatour — Istanbul dès 6 547 DH", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DTSu2h2iNrk/", stat: "3 279 vues", pourquoi: "Prix d'appel bas + « Bosphore offert ». On ne s'aligne PAS sur le prix : on oppose Turkish Airlines + hôtels nommés + croisière incluse." }
+        { cat: "ugc", origine: "🇲🇦 Maroc", titre: "UGC influenceuse — « la hausse des prix des voyages »", compte: "@maroua_merzouqui", lien: "https://www.instagram.com/p/DZFjqkaICpV/", stat: "13 433 vues · 1 292 ❤️", pourquoi: "UGC MA qui performe (partenariat agence). Le modèle « voyageuse réelle qui parle prix/valeur » à reproduire pour Istanbul." },
+        { cat: "ugc", origine: "🇬🇧 UK", titre: "UGC food & travel Istanbul", compte: "@fulhamjo_gin_gourmet", lien: "https://www.instagram.com/p/DZjpdFXIayQ/", stat: "❤️ 4 (vues non captées)", pourquoi: "UGC étranger « gastronomie + ville » — Istanbul se vend aussi par la street-food (angle peu exploité par les agences MA)." },
+        { cat: "ugc", origine: "🇮🇳 Inde", titre: "UGC voyageur Istanbul", compte: "@jithindaskr", lien: "https://www.instagram.com/p/DZjtcKdOFET/", stat: "❤️ 3 (vues non captées)", pourquoi: "UGC voyageur individuel — preuve que la destination génère du contenu spontané à fédérer/reposter." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Le reel qui scale — Istanbul + audio", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DZFivwkN-x-/", stat: "95 482 vues · 571 ❤️", pourquoi: "Reel + audio + caption minimale = la machine à reach du marché. À copier sur la FORME." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Combiné « 2 décors en 1 reel » — Istanbul + Bali", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "Les combinés font rêver. V21 a Istanbul + Antalya/Bodrum à monter pareil." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concurrent — Istanbul dès 6 547 DH (Bosphore offert)", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DTSu2h2iNrk/", stat: "3 279 vues", pourquoi: "Prix d'appel bas + même hook « Bosphore offert ». On oppose Turkish Airlines + hôtels nommés." },
+        { cat: "intl", origine: "🇹🇷 Turquie", titre: "★ VIRALITÉ MASSIVE — Czn Burak à Istanbul", compte: "@cznburak", lien: "https://www.instagram.com/p/DMDoWXwI2XJ/", stat: "26 500 240 vues · 10,3 M ❤️", pourquoi: "Le créateur Istanbul n°1 (gastronomie + démesure). Modèle de storytelling local qui fait rêver d'Istanbul à l'échelle mondiale." },
+        { cat: "intl", origine: "🇹🇷 Turquie", titre: "Czn Burak — reel Istanbul (2e)", compte: "@cznburak", lien: "https://www.instagram.com/p/DZSBPU-Ihii/", stat: "5 221 256 vues · 91 786 ❤️", pourquoi: "Confirme que le contenu « expérience + lieu iconique » scale. À transposer : V21 filme une vraie expérience Istanbul, pas une promo." },
+        { cat: "intl", origine: "🇮🇳 Inde", titre: "UGC voyageur — Istanbul (autre marché émetteur)", compte: "@jithindaskr", lien: "https://www.instagram.com/p/DZjtcKdOFET/", stat: "❤️ 3 (vues non captées)", pourquoi: "Istanbul attire tous les marchés émetteurs → preuve de l'universalité du contenu (sans barrière de langue)." }
       ],
       pistes: [
         "POV première personne — « POV : ton 1er matin sur le Bosphore »",
@@ -537,6 +561,12 @@ window.V21_STUDIO = {
         { agence: "▶ Voyages21 (NOUS)", offre: "Omra premium 5★ proche Haram", duree: "12 nuits", hotels: "Ajyad Makarem/Fairmont", prix: "21 500 DH", verifie: true },
         { agence: "voyage.or / qafilat.tayba / sabile", offre: "Omra (prix non affiché dans les posts)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
       ],
+      benchmarkAnalyse: [
+        "Position : le prix d'appel V21 « 2 omras en 1 » (12 900 DH, Etihad, 19 nuits) se situe ENTRE Transatour (10 990) et Kabdani (15 900).",
+        "Sur l'éco vol DIRECT (RAM, 12 nuits), V21 (15 900 DH) = même prix affiché que Kabdani (15 900).",
+        "Vs le moins cher scrapé (Transatour 10 990) : écart +1 910 DH. ⚠️ Limite data : le post Transatour ne précise NI durée NI hôtels NI compagnie → l'écart n'est pas explicable par la seule data (on ignore ce que couvre le 10 990).",
+        "Conclusion (data seule) : V21 n'est pas le moins cher affiché, mais c'est le seul à préciser durée + vol direct Médine. Les spécialistes (voyage.or/qafilat/sabile) n'affichent aucun prix en post → comparaison impossible sur ces 3."
+      ],
       engagementReel: [
         { compte: "@voyage.or", format: "Concours « gagne une Omra » (Omra hadiya)", vues: "22 014", likes: "4 283", comm: "2 244" },
         { compte: "@transatourmaroc", format: "Concours « gagne une Omra »", vues: "3 163", likes: "629", comm: "1 769" },
@@ -610,9 +640,15 @@ window.V21_STUDIO = {
     viral: {
       statut: "✅ Exemples RÉELS cliquables (scrape Apify 14/06). Créneau émotionnel + communautaire : le concours et le témoignage sobre dominent.",
       viralExamples: [
-        { titre: "VoyageOr — Concours « gagne une Omra »", compte: "@voyage.or", lien: "https://www.instagram.com/p/DYKcyl7oogK/", stat: "22 014 vues · 4 283 ❤️ · 2 244 comm", pourquoi: "LE format roi du créneau. Un concours « Omra hadiya » fait exploser commentaires et portée. À reproduire pour lancer notre compte (conditions claires, tirage transparent)." },
-        { titre: "Transatour — Concours « gagne une Omra »", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DXq9aEZD7GQ/", stat: "1 769 commentaires", pourquoi: "Confirme la mécanique : « chaque 2 semaines, un gagnant ». Engagement communautaire massif." },
-        { titre: "Qafilat Tayba — Témoignage spirituel", compte: "@qafilat.tayba", lien: "https://www.instagram.com/p/DXXDQCHgpi1/", stat: "2 059 vues · 135 ❤️", pourquoi: "Le contenu émotionnel sobre (rihla, Rawda) crée du lien sur ce public. À faire avec de VRAIS pèlerins volontaires." }
+        { cat: "ugc", origine: "🇫🇷 France", titre: "UGC pèlerine — récit Omra", compte: "@can_dela_16", lien: "https://www.instagram.com/p/DZh676GooCF/", stat: "❤️ 24 (vues non captées)", pourquoi: "UGC d'une pèlerine francophone : le récit personnel sobre crée la confiance. À reproduire avec un vrai client V21 volontaire." },
+        { cat: "ugc", origine: "🇫🇷 France", titre: "UGC associatif — départ groupe Omra", compte: "@les_e.i.l", lien: "https://www.instagram.com/p/DZiPRRejJTo/", stat: "❤️ 25 (vues non captées)", pourquoi: "Contenu de groupe/communauté (départ, encadrement) : exactement l'esprit du voyage encadré V21." },
+        { cat: "ugc", origine: "🌍 Intl", titre: "UGC quotidien — ambiance Omra", compte: "@gateaux_aiicha", lien: "https://www.instagram.com/p/DZfydBgiJEn/", stat: "❤️ 21 (vues non captées)", pourquoi: "Compte « lifestyle » qui partage son Omra → preuve que le contenu spontané existe et fédère (à reposter avec accord)." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "★ Concours « gagne une Omra » (le format roi)", compte: "@voyage.or", lien: "https://www.instagram.com/p/DYKcyl7oogK/", stat: "22 014 vues · 4 283 ❤️ · 2 244 comm", pourquoi: "Le format n°1 du créneau. À reproduire pour lancer notre compte (conditions claires, tirage transparent)." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Concours « gagne une Omra » (confirmation)", compte: "@transatourmaroc", lien: "https://www.instagram.com/p/DXq9aEZD7GQ/", stat: "1 769 commentaires", pourquoi: "Confirme la mécanique « chaque 2 semaines, un gagnant ». Engagement communautaire massif." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Témoignage spirituel sobre", compte: "@qafilat.tayba", lien: "https://www.instagram.com/p/DXXDQCHgpi1/", stat: "2 059 vues · 135 ❤️", pourquoi: "Contenu émotionnel sobre (rihla, Rawda). À faire avec de VRAIS pèlerins volontaires." },
+        { cat: "intl", origine: "🇫🇷 France", titre: "★ Agence/institut FR — contenu spirituel Omra", compte: "@omradusavoir", lien: "https://www.instagram.com/p/DYwLcvXsodX/", stat: "❤️ 2 800 (vues non captées)", pourquoi: "Le compte FR « par des diplômés de Médine » performe avec un contenu pédagogique sobre. Le meilleur modèle de ton (savoir + émotion)." },
+        { cat: "intl", origine: "🇫🇷 France", titre: "Média FR Arabie — actualité/émotion", compte: "@saudinewsfrench", lien: "https://www.instagram.com/p/DZiI5Ghq6Gf/", stat: "3 371 vues · 492 ❤️", pourquoi: "Un média francophone d'Arabie qui scale par l'émotion/l'actualité des Lieux Saints. Idées de sujets « autour de » l'Omra." },
+        { cat: "intl", origine: "🇫🇷 France", titre: "Agence Omra & Hajj FR", compte: "@pelerinhajj", lien: "https://www.instagram.com/p/DZf_476iJom/", stat: "❤️ 18 (vues non captées)", pourquoi: "Concurrent étranger sur le même produit → comparer offres, ton et arguments (vol direct, encadrement)." }
       ],
       pistes: [
         "Concours « Rib7 Omra » (gagne une Omra) — suivre + partager + commenter « آمين »",
@@ -695,6 +731,11 @@ window.V21_STUDIO = {
         { agence: "▶ Voyages21 (NOUS)", offre: "Zanzibar Breeze's 4★ (demi-pension)", duree: "8j/7n", hotels: "4★", prix: "22 500 DH", verifie: true },
         { agence: "Concurrents MA (olé, ajinsafro…)", offre: "Zanzibar (offre rare, prix non publié sur IG)", duree: "—", hotels: "—", prix: "à demander", verifie: false }
       ],
+      benchmarkAnalyse: [
+        "Position : INDÉTERMINABLE sur la seule data — aucun prix concurrent marocain Zanzibar n'a été capté au scrape du 14/06 (offre rare, prix non publiés sur IG).",
+        "On ne dispose que des 2 prix V21 (Fun Beach 3★ 18 500 / Breeze's 4★ 22 500) → impossible de dire si V21 est cher ou bon marché vs concurrents MA.",
+        "Conclusion (data seule) : situer V21 nécessite d'obtenir d'abord des prix concurrents (fiche olevoyages/ajinsafro). Tant qu'ils manquent, pas de comparaison honnête possible."
+      ],
       apifyStatut: "✅ Scrape Apify autonome (14/06/2026, run Dm4cvv2QSdbLeXXh3 : kabdani.ma 20 posts + hashtag + tentative olevoyages). RÉSULTAT CLÉ : aucun reel Zanzibar marocain marquant trouvé → le créneau est quasi inoccupé sur l'IG MA. Pas de benchmark prix concurrent fiable (offre rare, prix non affichés). C'est un WHITE SPACE.",
       learnings: [
         "🎯 WHITE SPACE confirmé : sur ~42 posts scrapés, aucun reel Zanzibar marocain marquant → personne ne « possède » Zanzibar sur l'IG MA. V21 peut devenir LA référence Zanzibar depuis le Maroc.",
@@ -760,8 +801,15 @@ window.V21_STUDIO = {
     viral: {
       statut: "⚠️ Aucun reel Zanzibar marocain viral existant (niche) → les exemples ci-dessous sont des FORMATS réels prouvés à transposer sur Zanzibar. À toi de créer le 1er reel Zanzibar marocain qui perce.",
       viralExamples: [
-        { titre: "Vacancia — Reel combiné/transition (format)", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "Format combiné/transition « 2 décors en 1 reel » (95k/63k vues). À transposer : Stone Town → lagon Nungwi." },
-        { titre: "Terratour — Reel destination + dates (format)", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Squelette « 1 destination + dates + places limitées + n° ». Le plus efficace du marché MA → l'appliquer à Zanzibar." }
+        { cat: "ugc", origine: "🇹🇿 Zanzibar", titre: "★ Créatrice locale — « Zanzibar Tastemaker »", compte: "@sabah_adeem", lien: "https://www.instagram.com/p/DYUa_wZsIWN/", stat: "3 813 vues · 676 ❤️", pourquoi: "UGC d'une créatrice basée à Zanzibar : l'aspirationnel authentique « vie sur l'île ». Le ton exact à reproduire (réel > promo)." },
+        { cat: "ugc", origine: "🇹🇿 Tanzanie", titre: "UGC « Beautiful Tanzania »", compte: "@storynzuri", lien: "https://www.instagram.com/p/C5yvyy_LyRr/", stat: "1 762 vues · 1 233 ❤️", pourquoi: "Like-rate très élevé sur du contenu nature/plage → preuve que l'image « carte postale » crée l'envie. Modèle B-roll." },
+        { cat: "ugc", origine: "🇹🇿 Zanzibar", titre: "UGC voyageur — Ahmed de Zanzibar", compte: "@ahmed_dezan", lien: "https://www.instagram.com/p/DZhegKICGnw/", stat: "❤️ 11 (vues non captées)", pourquoi: "Guide/créateur local : le format « insider qui te montre l'île » à reproduire avec un partenaire sur place." },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Format combiné/transition « 2 décors en 1 »", compte: "@vacancia.ma", lien: "https://www.instagram.com/p/DYo9YhegdXn/", stat: "63 611 vues · 410 ❤️", pourquoi: "À transposer : Stone Town → lagon Nungwi. (Pas de reel Zanzibar MA viral existant → format à importer.)" },
+        { cat: "reel", origine: "🇲🇦 Maroc", titre: "Squelette « destination + dates + places limitées »", compte: "@terratour_voyages", lien: "https://www.instagram.com/p/DX9xEMlMHjW/", stat: "71 551 vues · 1 888 ❤️", pourquoi: "Le plus efficace du marché MA → l'appliquer à Zanzibar (départs garantis juin-août, places limitées)." },
+        { cat: "reel", origine: "🇹🇿 Zanzibar", titre: "Hôtel/resort local — reel séjour", compte: "@thegarten.living", lien: "https://www.instagram.com/p/DZhFcKbgDEH/", stat: "❤️ 48 (vues non captées)", pourquoi: "Reel « resort/chambre vue océan » : le type de plan qui vend le rêve balnéaire. À filmer sur nos hôtels Nungwi/Kendwa." },
+        { cat: "intl", origine: "🇹🇿 Tanzanie", titre: "★ Créateur Tanzanie — « beach villa »", compte: "@rena_callist", lien: "https://www.instagram.com/p/DRSE98cjIAN/", stat: "10 690 vues · 2 832 ❤️", pourquoi: "Le contenu lifestyle/villa de plage scale (10k vues, fort like-rate). Modèle de viralité « art de vivre océan Indien »." },
+        { cat: "intl", origine: "🇹🇿 Zanzibar", titre: "Créateur local — design/lifestyle île", compte: "@dogoelishaofficial", lien: "https://www.instagram.com/p/DZjq9vNAk2B/", stat: "❤️ 46 (vues non captées)", pourquoi: "Créateur zanzibari : esthétique locale (couleurs, Stone Town). Source d'inspiration visuelle authentique." },
+        { cat: "intl", origine: "🌍 Intl", titre: "UGC voyageur étranger — Zanzibar", compte: "@dakotacrooks89", lien: "https://www.instagram.com/p/DZgUcZ5zFX4/", stat: "❤️ 12 (vues non captées)", pourquoi: "Touriste international qui documente son séjour → preuve de la demande internationale, et modèle d'UGC à solliciter auprès de nos clients." }
       ],
       pistes: [
         "Reel transition « Stone Town → lagon turquoise » (whip-cut, afro-house)",
