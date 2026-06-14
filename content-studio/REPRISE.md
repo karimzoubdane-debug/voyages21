@@ -29,7 +29,24 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
-## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
+## 📍 Dernier point (mis à jour le 14/06/2026 — nuit)
+- ✅ **Apify 100 % autonome confirmé** en session web (API REST + `APIFY_TOKEN`,
+  curl) — plus de gate à approuver. Test `users/me` OK.
+- ✅ **CHANTIER 1 du cahier des charges LIVRÉ — Veille élargie + engagement réel** :
+  scrape Apify de 8 concurrents (run `xX5xp5YSctnvvqkhE`, 85 posts) + scrape
+  @voyages21maroc (run `jH5WMU4rjZ66G8evx`, 12 posts). Intégré dans
+  `public/v21-studio/studio-data.js` (Égypte + Turquie : comptes, benchmark prix
+  AVEC V21, table engagement réel AVEC V21, learnings) + `veille-concurrents.md` §5
+  (tableau engagement + posts marquants avec liens cliquables).
+- 🔑 **Constats clés** : Vacancia scale via reels+audio (95k vues, caption vide) ;
+  Terratour = meilleur engagement (modèle à copier) ; AjiNsafro vend le MÊME
+  Caire & Sharm mais plafonne à ~120 vues → **fenêtre contenu Égypte ouverte** ;
+  Transatour casse le prix Istanbul (6 547 DH) ; **V21 part de ~50-150 vues**.
+- ⏭️ Reste du cahier (chantiers 2→5) à faire : inspiration virale (liens réels),
+  stratégie réseaux multi-plateformes, style audio (liens d'écoute), posts clés
+  en main + UGC + brief vidéo. À enchaîner au prochain « go ».
+
+## 📍 Point du 13/06/2026 — matin
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
   sous-agents sonnet, puis vérification adversariale). Fonctionne.
 - ✅ **Veille concurrents livrée** → `content-studio/veille-concurrents.md` :

@@ -3,8 +3,8 @@
    Contenant = index.html · Contenu = ce fichier. */
 window.V21_STUDIO = {
   meta: {
-    version: "v1",
-    maj: "13/06/2026",
+    version: "v2",
+    maj: "14/06/2026",
     note: "Plateforme de pilotage contenu Voyages21 — partageable avec les équipes."
   },
 
@@ -65,25 +65,47 @@ window.V21_STUDIO = {
       }
     ],
 
-    // 2) VEILLE CONCURRENTS — comptes ciblés (données vérifiées 13/06/2026)
+    // 2) VEILLE CONCURRENTS — veille ÉLARGIE + engagement réel (scrape Apify 14/06/2026)
     concurrents: {
       comptes: [
-        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — concurrent Égypte n°1", note: "Discount/volume, croisière Nil confirmée, ton darija" },
-        { nom: "@yaallatour", abonnes: "47 K", type: "Outgoing", note: "Le Caire 12j affiché, ton familial" },
-        { nom: "@simplymorocco", abonnes: "478 K", type: "INCOMING (Maroc only)", note: "Benchmark de contenu, PAS concurrent commercial" },
-        { nom: "@qafilat.tayba", abonnes: "9,5 K", type: "Outgoing Omra/Hajj", note: "Audience religieuse, pas d'Égypte loisirs" }
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — concurrent Égypte n°1", note: "Discount/volume, croisière Nil confirmée, ton darija. Reels « Réservation + numéro » + audio = jusqu'à 95k vues" },
+        { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing — concurrent direct", note: "Égypte + Turquie + Omra+Istanbul. Forts carrousels (likes méd. 137), peu de reels → reach plafonné" },
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing — concurrent direct", note: "Égypte, Turquie, combinés Asie. Reels actifs (méd. ~4,7k vues, max 17k)" },
+        { nom: "@olevoyages.ma", abonnes: "93 K", type: "Outgoing — concurrent direct", note: "Égypte/Turquie/Hajj. ⚠️ non récupéré au scrape (compte restreint) — à re-scraper" },
+        { nom: "@ajinsafro.ma", abonnes: "70 K", type: "Outgoing — concurrent FRONTAL Égypte", note: "Offre Caire & Sharm quasi identique à la nôtre, MAIS contenu en sous-performance (121 vues / 2 likes) → fenêtre ouverte" },
+        { nom: "@terratour_voyages", abonnes: "75 K", type: "Outgoing — top performeur contenu", note: "Le PLUS fort en engagement (méd. ~15,7k vues, max 71k, 1888 likes). Reels « destination + dates + places limitées »" },
+        { nom: "@transatourmaroc", abonnes: "28 K", type: "Outgoing — ISO 9001", note: "Istanbul dès 6 547 DH (Bosphore offert). Concours « gagne une Omra » = 1 769 commentaires (hack engagement)" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit compte · Meta Verified", type: "Notre compte — point de départ", note: "Posts récents ~25-150 vues, 0-6 likes. Le compte est à (re)lancer : régularité reels + audio tendance d'abord" }
       ],
-      // Benchmark prix Égypte (Caire+Sharm / Hurghada / croisière), départ Maroc, vols inclus
+      // Benchmark prix Égypte (Caire+Sharm / Hurghada / croisière), départ Maroc, vols inclus — NOUS inclus
       benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Le Caire & Sharm (offre héros)", duree: "11j/10n", hotels: "5★ nommés (Marriott/Aurora/Mövenpick)", prix: "19 600 DH", verifie: true },
+        { agence: "AjiNsafro", offre: "Caire + Sharm (comparable direct)", duree: "10j/9n", hotels: "4★ et 5★", prix: "16 700 DH", verifie: true },
         { agence: "Olé Voyages", offre: "Caire + croisière + Hurghada", duree: "~11j", hotels: "nd", prix: "15 500 DH", verifie: false },
-        { agence: "AjiNsafro", offre: "Caire + Sharm (comparable direct)", duree: "10j/9n", hotels: "5★ (3n+6n AI)", prix: "16 700 DH", verifie: true },
         { agence: "Al Hassania", offre: "Grand Tour Caire+Hurghada+Sharm", duree: "14j/13n", hotels: "5★", prix: "16 900 DH", verifie: false },
         { agence: "Vacancia", offre: "Caire + Hurghada", duree: "10j/9n", hotels: "4★ AI", prix: "17 500 DH", verifie: false },
         { agence: "ESF", offre: "Caire + croisière Nil + Hurghada", duree: "nd", hotels: "5★ + croisière 5★", prix: "17 900 DH", verifie: false },
-        { agence: "AjiNsafro", offre: "Caire + croisière + Hurghada", duree: "12j/11n", hotels: "5★", prix: "18 700 DH", verifie: true },
-        { agence: "Galaxy Voyage", offre: "Caire + Sharm (structure identique V21)", duree: "11j/10n", hotels: "5★", prix: "non publié", verifie: false }
+        { agence: "AjiNsafro", offre: "Caire + croisière + Hurghada", duree: "12j/11n", hotels: "5★", prix: "18 700 DH", verifie: true }
       ],
-      apifyStatut: "⚠️ Engagement réel PARTIEL : le run Apify lu (SrzMu16Ph9KxYWV74) couvrait @qafilat.tayba (Omra/Hajj — témoignages « shahadat » 1,5-6k vues, 15-135 likes ; combiné Omra+Istanbul 04-18 août 2026 affiché). Les posts ÉGYPTE de Vacancia ne sont pas dans cet échantillon (feed récent = Turquie). → Pour l'engagement Égypte de Vacancia : lire le run « 72 résultats » ou relancer un scrape ciblé Égypte (donne-moi l'ID du run)."
+      // Engagement réel — posts marquants scrapés + NOUS pour situer (run xX5xp5YSctnvvqkhE, 14/06/2026)
+      engagementReel: [
+        { compte: "@vacancia.ma", format: "Reel Istanbul « Réservation + n° » + audio", vues: "95 482", likes: "571", comm: "34" },
+        { compte: "@terratour_voyages", format: "Reel Croatie « places limitées »", vues: "71 551", likes: "1 888", comm: "2" },
+        { compte: "@follow_me_travel_", format: "Reel combiné Asie", vues: "16 953", likes: "454", comm: "34" },
+        { compte: "@transatourmaroc", format: "Concours « gagne une Omra »", vues: "3 163", likes: "629", comm: "1 769" },
+        { compte: "@ajinsafro.ma", format: "Post Caire & Sharm (concurrent direct)", vues: "121", likes: "2", comm: "0" },
+        { compte: "@msm_voyages", format: "Carrousel « Premium 1140 DH »", vues: "carrousel", likes: "400", comm: "3" },
+        { compte: "▶ @voyages21maroc (NOUS)", format: "Meilleur reel récent", vues: "149", likes: "6", comm: "1" }
+      ],
+      learnings: [
+        "Le format qui scale chez les leaders = REEL court + audio tendance, caption quasi vide (« Réservation + numéro ») → l'audio et le format font le reach, pas le texte (Vacancia : jusqu'à 95k vues)",
+        "Terratour est le meilleur en engagement (méd. ~15,7k vues) avec un schéma simple : 1 destination + dates précises + « places limitées » + n° de tél",
+        "OPPORTUNITÉ : AjiNsafro vend un Caire & Sharm quasi identique au nôtre mais son contenu plafonne à ~120 vues / 2 likes malgré 70k abonnés → le terrain contenu Égypte est OUVERT",
+        "Hack d'engagement : un concours « gagne une Omra » (Transatour) génère 1 769 commentaires — utile pour gonfler la portée d'un lancement",
+        "MSM mise sur les carrousels (likes corrects) mais sans reels → reach plafonné : les reels sont le levier manquant que V21 peut prendre",
+        "Réalité V21 : on démarre à ~50-150 vues. Priorité = régularité (4 reels/sem) + audio tendance, AVANT le léché. Le volume précède le perfectionnisme"
+      ],
+      apifyStatut: "✅ Scrape Apify AUTONOME via API REST (14/06/2026, run xX5xp5YSctnvvqkhE = 85 posts / 8 comptes, + run V21 jH5WMU4rjZ66G8evx = 12 posts). Médianes sur 12 posts récents/compte. ⚠️ @olevoyages.ma non récupéré (compte restreint au scrape) — à relancer. Données likes/vues = réelles à la date du scrape."
     },
 
     // 3) CADRAN forces / faiblesses / à améliorer (offre Caire & Sharm)
@@ -246,30 +268,33 @@ window.V21_STUDIO = {
     ],
     concurrents: {
       comptes: [
-        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — Turquie phare", note: "Page Turquie dédiée, Istanbul/Antalya en volume" },
-        { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing", note: "Turquie + Omra+Istanbul combinés" },
-        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing", note: "Turquie active" },
-        { nom: "@yaallatour", abonnes: "47 K", type: "Outgoing", note: "Istanbul 8j affiché" }
+        { nom: "@vacancia.ma", abonnes: "139 K", type: "Outgoing — Turquie phare", note: "Istanbul/Antalya en volume. Reels Istanbul 63k-95k vues. Argument martelé : VOL DIRECT Marrakech (Turkish Airlines)" },
+        { nom: "@msm_voyages", abonnes: "121 K", type: "Outgoing — concurrent direct", note: "Turquie + Omra+Istanbul combinés. Carrousels-forts, reels rares" },
+        { nom: "@follow_me_travel_", abonnes: "111 K", type: "Outgoing — concurrent direct", note: "Turquie + combinés Asie. Reels actifs (max 17k vues)" },
+        { nom: "@transatourmaroc", abonnes: "28 K", type: "Outgoing — ISO 9001", note: "Istanbul 8j dès 6 547 DH, croisière Bosphore OFFERTE (même hook que nous, prix d'appel plus bas)" },
+        { nom: "▶ @voyages21maroc (NOUS)", abonnes: "petit compte · Meta Verified", type: "Notre compte — point de départ", note: "~25-150 vues/post. Turquie = notre 2e priorité : pousser des reels été dès maintenant" }
       ],
       benchmarkPrix: [
+        { agence: "▶ Voyages21 (NOUS)", offre: "Séjour Istanbul 8j (entrée de gamme)", duree: "8j/7n", hotels: "3★/4★ + Bosphore inclus", prix: "9 700 DH", verifie: true },
+        { agence: "Transatour", offre: "Istanbul 8j (Bosphore offert)", duree: "8j/7n", hotels: "nd", prix: "6 547 DH", verifie: true },
         { agence: "Vacancia (vol direct Marrakech, Turkish Airlines)", offre: "Combo Istanbul + Antalya", duree: "—", hotels: "—", prix: "13 900 DH", verifie: true },
         { agence: "Vacancia", offre: "Antalya (séjour)", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true },
         { agence: "Vacancia", offre: "Circuit Antalya + Marmaris + Fethiye", duree: "—", hotels: "—", prix: "15 900 DH", verifie: true }
       ],
-      apifyStatut: "✅ Engagement réel récupéré via Apify (run SrzMu16Ph9KxYWV74, 13/06/2026). Prix Vacancia ci-dessus = réels (vol direct Marrakech). Pour benchmark hôtels/durée détaillé, relancer un scrape ciblé.",
+      apifyStatut: "✅ Scrape Apify autonome via API REST (14/06/2026, run xX5xp5YSctnvvqkhE). Engagement Turquie réel ci-dessous. ⚠️ Transatour 6 547 DH = prix d'appel Istanbul plus bas que notre entrée 9 700 DH → à analyser (qualité hôtel ? vol direct ou escale ?).",
       engagementReel: [
-        { compte: "@vacancia.ma", format: "Reel Istanbul (audio original)", vues: "203 646", likes: "547", comm: "33" },
-        { compte: "@vacancia.ma", format: "Reel Istanbul + Bali", vues: "157 018", likes: "386", comm: "14" },
-        { compte: "@vacancia.ma", format: "Carrousel « Earlybooking dès 19 900 DH, 10× sans frais »", vues: "—", likes: "703", comm: "14" },
-        { compte: "@vacancia.ma", format: "Reel Antalya", vues: "25 078", likes: "114", comm: "18" },
-        { compte: "@maroua_merzouqui (influenceuse → Vacancia)", format: "UGC partenariat", vues: "41 070", likes: "1 291", comm: "13" }
+        { compte: "@vacancia.ma", format: "Reel Istanbul « Réservation + n° » + audio", vues: "95 482", likes: "571", comm: "34" },
+        { compte: "@vacancia.ma", format: "Reel Istanbul + Bali", vues: "63 611", likes: "410", comm: "16" },
+        { compte: "@vacancia.ma", format: "Reel Turkey + Antalya", vues: "13 006", likes: "114", comm: "15" },
+        { compte: "@transatourmaroc", format: "Post Istanbul 8j dès 6 547 DH (Bosphore offert)", vues: "3 279", likes: "104", comm: "18" },
+        { compte: "▶ @voyages21maroc (NOUS)", format: "Meilleur reel récent", vues: "149", likes: "6", comm: "1" }
       ],
       learnings: [
-        "Le format qui scale = Reel court « destination + numéro de résa » en audio original (jusqu'à 200k vues) — prod simple, pas léchée",
+        "Le format qui scale = Reel court « destination + numéro de résa » en audio tendance (Vacancia : 63k-95k vues) — prod simple, pas léchée",
         "Like-rate faible mais reach énorme : le volume vient des VUES, pas des likes",
-        "Carrousels « prix choc dès X DH + paiement 10× sans frais » = plus de likes (703)",
-        "Vacancia active des influenceuses (UGC) → @maroua 41k vues, 1 291 likes",
-        "Argument martelé : VOL DIRECT Marrakech (Turkish Airlines) — V21 peut en faire autant"
+        "Transatour casse les prix Istanbul (6 547 DH < notre 9 700) avec le MÊME hook « Bosphore offert » → on doit différencier (Turkish Airlines, croisière incluse, qualité hôtel nommée) plutôt que s'aligner",
+        "Argument martelé par Vacancia : VOL DIRECT Marrakech (Turkish Airlines) — V21 peut en faire autant et le dire",
+        "Turquie = marché le plus saturé : sortir de la guerre des prix par le sur-mesure premium et le contenu, pas par le -10 DH"
       ]
     },
     cadran: {
@@ -335,7 +360,7 @@ window.V21_STUDIO = {
   questions: [
     { q: "Décision PRIX Caire & Sharm : tenir 19 600 (vendre le 5★ nommé), baisser ~17 900–18 500, ou ne pas afficher de prix ?", statut: "en attente" },
     { q: "Quels sont les HORAIRES DE VOL réels de l'offre Caire & Sharm (arrivée J1 tôt ou tard) ?", statut: "en attente" },
-    { q: "Apify est bloqué par le gate de permission de la session web (PAS un problème de crédit, solde ~4,42$ OK). Lances-tu le scrape Instagram Scraper sur la console Apify et me donnes-tu l'ID du run ? (recette fournie dans le chat)", statut: "en attente" },
+    { q: "Apify : ✅ RÉSOLU — scrape désormais AUTONOME via l'API REST (token APIFY_TOKEN dans l'env). Plus besoin d'approuver à la main. Veille élargie 8 comptes + engagement réel intégrés le 14/06.", statut: "résolu" },
     { q: "Pour générer les visuels Higgsfield (crédits OK : 466), ouvres-tu la session depuis un client qui permet d'approuver l'action ?", statut: "en attente" },
     { q: "Identifiants YouTube/Snapchat/LinkedIn + conversion du Facebook en Page pro : où en est-on ?", statut: "en attente" }
   ]
