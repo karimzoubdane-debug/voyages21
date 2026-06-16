@@ -433,8 +433,18 @@
   .hf-meta b{color:var(--green2)}
   .hf-prompt{font-family:monospace;font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin:7px 0;line-height:1.5;color:var(--ink);white-space:pre-wrap;word-break:break-word}
   .hf-notes{font-size:12px;color:var(--green);margin-top:5px;line-height:1.4}
-  .hf-copy-btn{display:block;width:100%;margin-top:9px;background:var(--gold);color:#3a2c08;border:none;border-radius:9px;padding:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center}
+  .hf-copy-btn{display:block;width:100%;margin-top:7px;background:#fff;color:var(--green);border:1px solid var(--gold);border-radius:9px;padding:7px;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;text-align:center}
   .hf-copy-btn:active{opacity:.75}
+  .hf-gen-btn{display:block;width:100%;margin-top:9px;background:var(--green);color:var(--cream);border:1px solid var(--gold);border-radius:9px;padding:10px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;text-align:center}
+  .hf-gen-btn:hover{background:var(--green2)}
+  .hf-gen-btn:disabled{opacity:.55;cursor:default}
+  .hf-result{margin-top:10px}
+  .hf-progress{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--green);background:#fff;border:1px dashed var(--gold);border-radius:9px;padding:10px}
+  .hf-spinner{width:16px;height:16px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:hfspin .8s linear infinite;flex:0 0 auto}
+  @keyframes hfspin{to{transform:rotate(360deg)}}
+  .hf-result video,.hf-result img{max-width:100%;border-radius:9px;display:block;margin-bottom:7px}
+  .hf-result .dl-btn{display:inline-block;background:var(--green);color:var(--cream);padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:700;text-decoration:none;margin-right:6px}
+  .hf-err{font-size:12.5px;color:var(--bad);background:#fcf0ec;border:1px solid #f0d6cd;border-radius:9px;padding:9px}
   /* Cartes vidéo/image (génération live future) */
   .media-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px;margin:9px 0}
   .media-card video,.media-card img{max-width:100%;border-radius:8px;display:block}
@@ -564,12 +574,16 @@
     if(vt==='HFPROMPT'){
       var isVideo=(d.type==='hf_video_prompt');
       var promptB64=b64enc(d.prompt||'');
+      var ratio=d.aspect_ratio||'9:16';
+      var genId='hfgen-'+Math.random().toString(36).slice(2,9);
       return '<div class="hf-card">'
         +'<div class="hf-badge">'+(isVideo?'🎥 Vidéo':'🖼 Image')+' · Higgsfield</div>'
-        +'<div class="hf-meta"><b>Modèle&nbsp;:</b> '+escHtml(d.model||'')+' &nbsp;·&nbsp; <b>Format&nbsp;:</b> '+escHtml(d.aspect_ratio||'')+(isVideo?' · '+(d.duration||5)+'s':'')+' </div>'
+        +'<div class="hf-meta"><b>Modèle&nbsp;:</b> '+escHtml(d.model||'')+' &nbsp;·&nbsp; <b>Format&nbsp;:</b> '+escHtml(ratio)+(isVideo?' · '+(d.duration||5)+'s':'')+' </div>'
         +'<div class="hf-prompt">'+escHtml(d.prompt||'')+'</div>'
         +(d.notes?'<div class="hf-notes">💡 '+escHtml(d.notes)+'</div>':'')
+        +'<button class="hf-gen-btn" data-genprompt="'+promptB64+'" data-genratio="'+escHtml(ratio)+'" data-gentarget="'+genId+'">🎬 Générer la vidéo sur la plateforme</button>'
         +'<button class="hf-copy-btn" data-cb64="'+promptB64+'">✂ Copier le prompt</button>'
+        +'<div class="hf-result" id="'+genId+'"></div>'
         +'</div>';
     }
 
@@ -619,16 +633,70 @@
   }
   paint();
 
-  // ── Delegation clic boutons copy ────────────────────────────────────────
+  // ── Delegation clics : copier + générer vidéo ───────────────────────────
   msgs.addEventListener('click',function(e){
-    var btn=e.target.closest('[data-cb64]');
-    if(!btn) return;
-    var text=b64dec(btn.dataset.cb64);
-    copyText(text);
-    var orig=btn.textContent;
-    btn.textContent='✓ Copié !';
-    setTimeout(function(){ btn.textContent=orig; },2000);
+    var copyBtn=e.target.closest('[data-cb64]');
+    if(copyBtn){
+      copyText(b64dec(copyBtn.dataset.cb64));
+      var orig=copyBtn.textContent;
+      copyBtn.textContent='✓ Copié !';
+      setTimeout(function(){ copyBtn.textContent=orig; },2000);
+      return;
+    }
+    var genBtn=e.target.closest('[data-genprompt]');
+    if(genBtn){ generateVideo(genBtn); return; }
   });
+
+  // ── Génération vidéo Higgsfield (sur la plateforme) ─────────────────────
+  async function generateVideo(btn){
+    if(btn.disabled) return;
+    var prompt=b64dec(btn.dataset.genprompt||'');
+    var ratio=btn.dataset.genratio||'9:16';
+    var target=document.getElementById(btn.dataset.gentarget);
+    if(!prompt||!target) return;
+
+    btn.disabled=true;
+    var steps=['🎨 Étape 1/2 — création de l\'image…','🎬 Étape 2/2 — animation en vidéo…','⏳ Rendu final… (1 à 3 min, ne ferme pas)'];
+    var si=0;
+    target.innerHTML='<div class="hf-progress"><div class="hf-spinner"></div><span>'+steps[0]+'</span></div>';
+    var span=target.querySelector('span');
+    var ticker=setInterval(function(){ si=Math.min(si+1,steps.length-1); if(span) span.textContent=steps[si]; },18000);
+
+    try{
+      var res=await fetch('/api/studio-video',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({prompt:prompt, aspect_ratio:ratio})
+      });
+      clearInterval(ticker);
+      var j=await res.json().catch(function(){return{};});
+
+      if(!res.ok){
+        target.innerHTML='<div class="hf-err">⚠️ '+escHtml(j.error||('Erreur '+res.status))+'</div>';
+        btn.disabled=false; btn.textContent='🔁 Réessayer';
+        return;
+      }
+
+      var html='';
+      if(j.videoUrl){
+        html+='<video controls playsinline src="'+escHtml(j.videoUrl)+'"></video>';
+        html+='<a class="dl-btn" href="'+escHtml(j.videoUrl)+'" download>⬇ Télécharger la vidéo</a>';
+      }
+      if(j.imageUrl){
+        html+='<a class="dl-btn" href="'+escHtml(j.imageUrl)+'" download style="background:#fff;color:var(--green);border:1px solid var(--gold)">⬇ Image</a>';
+      }
+      if(j.error){ html+='<div class="hf-err" style="margin-top:7px">⚠️ '+escHtml(j.error)+'</div>'; }
+      if(!html){ html='<div class="hf-err">Aucun média renvoyé.</div>'; }
+      target.innerHTML=html;
+      btn.textContent='✓ Vidéo générée';
+      msgs.scrollTop=msgs.scrollHeight;
+
+    }catch(err){
+      clearInterval(ticker);
+      target.innerHTML='<div class="hf-err">⚠️ Connexion interrompue : '+escHtml(String(err&&err.message||err))+'. La génération a pu être trop longue — réessaie.</div>';
+      btn.disabled=false; btn.textContent='🔁 Réessayer';
+    }
+  }
 
   // ── Ouverture / fermeture ────────────────────────────────────────────────
   function openChat(){ box.classList.add('open'); fab.style.display='none'; inp.focus(); }

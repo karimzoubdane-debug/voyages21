@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
+    "@higgsfield/client": "^0.2.1",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.21.0",
     "@vercel/blob": "^2.4.0",
