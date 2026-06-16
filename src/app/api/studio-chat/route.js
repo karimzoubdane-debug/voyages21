@@ -1,15 +1,15 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { BRAND_CONTEXT } from './brand-context';
+import { TOOLS, executeTool } from './tools';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// Modèle du chat. Opus 4.8 = meilleure qualité. Pour réduire le coût,
-// remplacer par 'claude-sonnet-4-6' (~40% moins cher) ou 'claude-haiku-4-5'
-// (~80% moins cher) — un seul mot à changer.
-const MODEL = 'claude-opus-4-8';
-const MAX_TOKENS = 2048;
-const MAX_HISTORY = 24; // garde les derniers échanges, borne le coût par message
+// Sonnet 4.6 = meilleur rapport qualité/prix. Opus 4.8 = max. Haiku 4.5 = économique.
+const MODEL = 'claude-sonnet-4-6';
+const MAX_TOKENS = 4096;
+const MAX_HISTORY = 24;
+const MAX_TOOL_ROUNDS = 3;
 
 const noStore = { 'Cache-Control': 'no-store' };
 
@@ -32,7 +32,6 @@ export async function POST(request) {
   }
 
   const history = Array.isArray(body?.messages) ? body.messages : [];
-  // Ne garder que les messages valides user/assistant avec du texte.
   const messages = history
     .filter(
       (m) =>
@@ -51,8 +50,6 @@ export async function POST(request) {
     );
   }
 
-  // Contexte courant (produit sélectionné dans le tableau de bord) : bloc système
-  // séparé pour ne pas casser le cache du contexte de marque.
   const system = [
     { type: 'text', text: BRAND_CONTEXT, cache_control: { type: 'ephemeral' } },
   ];
@@ -64,29 +61,66 @@ export async function POST(request) {
   }
 
   const client = new Anthropic();
-
   const encoder = new TextEncoder();
+
   const stream = new ReadableStream({
     async start(controller) {
+      const send = (text) => controller.enqueue(encoder.encode(text));
+
       try {
-        const run = client.messages.stream({
-          model: MODEL,
-          max_tokens: MAX_TOKENS,
-          system,
-          messages,
-        });
-        for await (const event of run) {
-          if (
-            event.type === 'content_block_delta' &&
-            event.delta?.type === 'text_delta'
-          ) {
-            controller.enqueue(encoder.encode(event.delta.text));
+        let currentMessages = [...messages];
+
+        for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
+          // Stream la réponse Claude (texte livré en temps réel au navigateur)
+          const run = client.messages.stream({
+            model: MODEL,
+            max_tokens: MAX_TOKENS,
+            system,
+            messages: currentMessages,
+            tools: TOOLS,
+          });
+
+          for await (const event of run) {
+            if (
+              event.type === 'content_block_delta' &&
+              event.delta?.type === 'text_delta'
+            ) {
+              send(event.delta.text);
+            }
           }
+
+          // Message complet accumulé par le SDK
+          const finalMsg = await run.finalMessage();
+
+          if (finalMsg.stop_reason !== 'tool_use') break;
+
+          // Exécuter les outils demandés par Claude
+          const toolUseBlocks = finalMsg.content.filter((b) => b.type === 'tool_use');
+          const toolResults = [];
+
+          for (const toolBlock of toolUseBlocks) {
+            const result = await executeTool(toolBlock.name, toolBlock.input);
+
+            // Injecter le marqueur média dans le stream AVANT de passer le résultat à Claude
+            if (result.mediaMarker) {
+              send(result.mediaMarker);
+            }
+
+            toolResults.push({
+              type: 'tool_result',
+              tool_use_id: toolBlock.id,
+              content: result.text,
+            });
+          }
+
+          currentMessages = [
+            ...currentMessages,
+            { role: 'assistant', content: finalMsg.content },
+            { role: 'user', content: toolResults },
+          ];
         }
       } catch (e) {
-        controller.enqueue(
-          encoder.encode('\n\n⚠️ Erreur : ' + String((e && e.message) || e)),
-        );
+        send('\n\n⚠️ Erreur : ' + String(e?.message || e));
       } finally {
         controller.close();
       }
