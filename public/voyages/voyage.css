@@ -152,7 +152,7 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 }
 /* contacts rapides en barre verticale */
 .contact-bar{position:fixed;right:18px;bottom:20px;z-index:900;display:flex;flex-direction:column-reverse;align-items:center;gap:8px;}
-.contact-bar-main,.contact-bar-link{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:900;font-size:.68rem;letter-spacing:.02em;box-shadow:0 12px 28px rgba(16,35,26,.25);transition:opacity .18s ease,transform .2s ease,background .2s ease,color .2s ease;}
+.contact-bar-main,.contact-bar-link{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:900;font-size:0;line-height:0;letter-spacing:0;box-shadow:0 12px 28px rgba(16,35,26,.25);transition:opacity .18s ease,transform .2s ease,background .2s ease,color .2s ease;}
 .contact-bar-main{border:1px solid rgba(255,255,255,.5);background:#25d366;color:#082817;cursor:pointer;z-index:2;}
 .contact-bar-main:hover{filter:brightness(1.02);transform:translateY(-1px);}
 .contact-bar svg{width:22px;height:22px;display:block;}
@@ -167,5 +167,5 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 
 @media(max-width:560px){
     .contact-bar{right:12px;bottom:14px;gap:7px;}
-    .contact-bar-main,.contact-bar-link{width:44px;height:44px;font-size:.62rem;}
+    .contact-bar-main,.contact-bar-link{width:44px;height:44px;font-size:0;}
 }

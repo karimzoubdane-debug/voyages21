@@ -116,6 +116,35 @@ h1, h2, h3 {
   gap: 1.1rem;
 }
 
+.dest-tabs {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0 0 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.dest-tab {
+  appearance: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--forest2);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: .85rem .95rem .75rem;
+}
+
+.dest-tab.active {
+  color: #008fce;
+  border-bottom-color: #008fce;
+}
+
+[data-dest-panel][hidden] {
+  display: none;
+}
+
 .card {
   background: #fff;
   border: 1px solid var(--line);

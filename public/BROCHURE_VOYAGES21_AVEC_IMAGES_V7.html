@@ -2680,6 +2680,7 @@ header p {
 
     function openVideo(key) {
         var frame = document.getElementById('videoFrame');
+        key = mediaKeyAlias(key);
         var rec = V21_MEDIA[key] || {};
         var html = '';
         if (rec.videoLink) {
@@ -2705,11 +2706,27 @@ header p {
         if (!it) return '';
         return it.url || '';
     }
+    function mediaKeyAlias(key) {
+        var aliases = {
+            'modal-merzouga': 'modal-maroc-merzouga',
+            'modal-binouidane': 'modal-maroc-bin-el-ouidane',
+            'modal-dakhla': 'modal-maroc-dakhla'
+        };
+        return aliases[key] || key;
+    }
+    function sliderIdForMediaKey(key) {
+        var aliases = {
+            'modal-maroc-merzouga': 'sl-merzouga',
+            'modal-maroc-bin-el-ouidane': 'sl-binouidane',
+            'modal-maroc-dakhla': 'sl-dakhla'
+        };
+        return aliases[key] || key.replace(/^modal-/, 'sl-');
+    }
     function applyMediaOverrides() {
         try {
             Object.keys(V21_MEDIA).forEach(function (key) {
                 var rec = V21_MEDIA[key] || {};
-                var sliderId = key.replace(/^modal-/, 'sl-');
+                var sliderId = sliderIdForMediaKey(key);
                 var slider = document.querySelector('[data-slider-id="' + sliderId + '"]');
                 if (!slider) return;
 

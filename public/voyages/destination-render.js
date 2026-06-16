@@ -25,6 +25,33 @@
     return img || '';
   }
 
+  function isMarocSejour(slug) {
+    return /^maroc-(merzouga|bin-el-ouidane|dakhla)$/.test(slug || '');
+  }
+
+  function renderGrid(items) {
+    var cards = items.map(card).filter(Boolean).join('');
+    return cards ? '<section class="grid">' + cards + '</section>' : '<p class="empty">Aucun voyage publié pour cette destination.</p>';
+  }
+
+  function wireTabs() {
+    var tabs = app.querySelectorAll('[data-dest-tab]');
+    if (!tabs.length) return;
+    Array.prototype.forEach.call(tabs, function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-dest-tab');
+        Array.prototype.forEach.call(tabs, function (item) {
+          var active = item === tab;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        Array.prototype.forEach.call(app.querySelectorAll('[data-dest-panel]'), function (panel) {
+          panel.hidden = panel.getAttribute('data-dest-panel') !== target;
+        });
+      });
+    });
+  }
+
   function card(slug) {
     var v = all[slug];
     if (!v) return '';
@@ -45,7 +72,18 @@
   }
 
   function render() {
-    var cards = slugs.map(card).filter(Boolean).join('');
+    var isMaroc = (cfg.title || '').toLowerCase().indexOf('maroc') !== -1;
+    var sejours = slugs.filter(isMarocSejour);
+    var circuits = slugs.filter(function (slug) { return !isMarocSejour(slug); });
+    var content = renderGrid(slugs);
+    if (isMaroc && sejours.length && circuits.length) {
+      content = '<nav class="dest-tabs" aria-label="Catégories Maroc">'
+        + '<button class="dest-tab active" type="button" data-dest-tab="sejours" aria-selected="true">Séjours</button>'
+        + '<button class="dest-tab" type="button" data-dest-tab="circuits" aria-selected="false">Circuits</button>'
+        + '</nav>'
+        + '<section data-dest-panel="sejours">' + renderGrid(sejours) + '</section>'
+        + '<section data-dest-panel="circuits" hidden>' + renderGrid(circuits) + '</section>';
+    }
     app.innerHTML = '<div class="topbar"><div class="topbar-inner">'
       + '<a href="../../acceuil-v21-maroc.html">‹ Retour à l’accueil</a>'
       + '<a href="../../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">Brochure complète</a>'
@@ -58,8 +96,9 @@
       + '<p>' + esc(cfg.description || 'Découvrez les voyages disponibles pour cette destination, puis ouvrez la fiche détaillée du programme qui vous intéresse.') + '</p></div>'
       + '<aside class="summary"><b>' + slugs.length + '</b><span>' + esc(cfg.countLabel || 'programmes disponibles') + '</span></aside>'
       + '</section>'
-      + (cards ? '<section class="grid">' + cards + '</section>' : '<p class="empty">Aucun voyage publié pour cette destination.</p>')
+      + content
       + '</main>';
+    wireTabs();
   }
 
   fetch('/api/media', { cache: 'no-store' })
