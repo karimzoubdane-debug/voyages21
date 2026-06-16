@@ -301,9 +301,14 @@
     };
     var MANIFEST = {};
     var ONLINE = true;
+    var API_BASE = location.protocol === 'file:' ? 'https://www.voyages21.com' : '';
+
+    function apiUrl(path) {
+        return API_BASE + path;
+    }
 
     function apiGet() {
-        return fetch('/api/media', { cache: 'no-store' })
+        return fetch(apiUrl('/api/media'), { cache: 'no-store' })
             .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
     }
     function readJsonOrThrow(r) {
@@ -313,14 +318,14 @@
         });
     }
     function apiPutProduct(key, rec) {
-        return fetch('/api/media', {
+        return fetch(apiUrl('/api/media'), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ key: key, rec: rec })
         }).then(readJsonOrThrow);
     }
     function apiPutAll(data) {
-        return fetch('/api/media', {
+        return fetch(apiUrl('/api/media'), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -332,7 +337,7 @@
         }
         return window.v21upload(file.name, file, {
             access: 'public',
-            handleUploadUrl: '/api/media/upload',
+            handleUploadUrl: apiUrl('/api/media/upload'),
             contentType: file.type || undefined
         }).then(function (res) { return res.url; });
     }

@@ -16,6 +16,16 @@ const ALLOWED = [
   'video/webm',
   'video/quicktime',
 ];
+const corsHeaders = {
+  'Cache-Control': 'no-store',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: corsHeaders });
+}
 
 export async function POST(request) {
   const body = await request.json();
@@ -29,11 +39,11 @@ export async function POST(request) {
       }),
       onUploadCompleted: async () => {},
     });
-    return Response.json(json);
+    return Response.json(json, { headers: corsHeaders });
   } catch (e) {
     return Response.json(
       { error: String((e && e.message) || e) },
-      { status: 400 },
+      { status: 400, headers: corsHeaders },
     );
   }
 }

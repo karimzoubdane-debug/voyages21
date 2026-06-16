@@ -24,6 +24,16 @@ async function writeManifest(data) {
 }
 
 const noStore = { 'Cache-Control': 'no-store' };
+const corsHeaders = {
+  ...noStore,
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: corsHeaders });
+}
 
 export async function GET(request) {
   // Mode diagnostic : /api/media?debug=1 indique si la fonction voit le token.
@@ -39,14 +49,14 @@ export async function GET(request) {
       out.list = 'error';
       out.error = String((e && e.message) || e);
     }
-    return Response.json(out, { headers: noStore });
+    return Response.json(out, { headers: corsHeaders });
   }
   try {
     const data = await readManifest();
-    return Response.json(data, { headers: noStore });
+    return Response.json(data, { headers: corsHeaders });
   } catch {
     // Pas de store Blob configuré (ou indisponible) : la brochure garde l'original.
-    return Response.json({}, { headers: noStore });
+    return Response.json({}, { headers: corsHeaders });
   }
 }
 
@@ -64,11 +74,11 @@ export async function PUT(request) {
       data = body && typeof body === 'object' ? body : {};
     }
     await writeManifest(data);
-    return Response.json({ ok: true }, { headers: noStore });
+    return Response.json({ ok: true }, { headers: corsHeaders });
   } catch (e) {
     return Response.json(
       { ok: false, error: String((e && e.message) || e) },
-      { status: 500, headers: noStore },
+      { status: 500, headers: corsHeaders },
     );
   }
 }
