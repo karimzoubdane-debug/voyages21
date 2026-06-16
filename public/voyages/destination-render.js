@@ -6,6 +6,12 @@
   var slugs = cfg.slugs || [];
   var all = window.VOYAGES || {};
   var media = {};
+  var MEDIA_KEY_ALIASES = {
+    'modal-omra': 'modal-omra-mouharram',
+    'modal-omra-06': 'modal-omra-06-juillet',
+    'modal-omra-08': 'modal-omra-08-juillet',
+    'modal-omra-01': 'modal-omra-01-juillet'
+  };
 
   document.title = (cfg.title || 'Destination') + ' — Voyages21';
 
@@ -20,7 +26,7 @@
   }
 
   function firstImage(v) {
-    var rec = media[v.mediaKey] || {};
+    var rec = media[v.mediaKey] || media[MEDIA_KEY_ALIASES[v.mediaKey]] || {};
     var img = rec.images && rec.images[0] && rec.images[0].url;
     return img || '';
   }

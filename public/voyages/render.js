@@ -9,6 +9,12 @@
     if (!v) { app.innerHTML = '<p style="padding:2rem;text-align:center">Voyage introuvable.</p>'; return; }
 
     var WHATSAPP = v.whatsapp || "212673280009";
+    var MEDIA_KEY_ALIASES = {
+        "modal-omra": "modal-omra-mouharram",
+        "modal-omra-06": "modal-omra-06-juillet",
+        "modal-omra-08": "modal-omra-08-juillet",
+        "modal-omra-01": "modal-omra-01-juillet"
+    };
     var TITLE = v.title;
     document.title = TITLE + " — Voyages21";
 
@@ -191,9 +197,13 @@
         }
         buildThumbs(rec.images);
     }
+    function mediaRecord(map, key) {
+        map = map || {};
+        return map[key] || map[MEDIA_KEY_ALIASES[key]] || null;
+    }
     fetch("/api/media", { cache: "no-store" })
         .then(function (r) { return r.ok ? r.json() : {}; })
-        .then(function (m) { applyMedia(m && m[v.mediaKey]); })
+        .then(function (m) { applyMedia(mediaRecord(m, v.mediaKey)); })
         .catch(function () { applyMedia(null); });
 
     window.toggleSound = function () {
