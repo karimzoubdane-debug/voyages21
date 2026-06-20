@@ -2315,41 +2315,90 @@
         display: none;
         position: fixed;
         top: 52px; left: 0; right: 0;
-        background: rgba(13,26,20,.98);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        background: #0D1A14;
         flex-direction: column;
-        border-bottom: 1px solid rgba(76,175,113,.25);
+        border-bottom: 2px solid var(--gold);
         z-index: 299;
         width: 100%;
+        max-height: calc(100svh - 52px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
       }
       .nav-mobile-panel.open { display: flex; }
-      /* Items du menu dans le panel */
-      .nav-mobile-panel .nav-menu {
+      .nav-mobile-menu { width: 100%; padding: 10px; }
+      .mobile-main-title,
+      .mobile-main-link {
         display: flex;
-        flex-direction: column;
-        list-style: none;
-        padding: 8px 0 0;
-        margin: 0;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
-      }
-      .nav-mobile-panel .nav-menu li { width: 100%; }
-      .nav-mobile-panel .nav-menu a {
-        display: block;
-        width: 100%;
-        height: auto;
-        line-height: 1;
-        padding: 16px 24px;
-        font-size: .9rem;
-        font-weight: 500;
-        letter-spacing: .08em;
-        color: rgba(255,255,255,.85);
+        min-height: 48px;
+        margin-bottom: 8px;
+        padding: 14px 16px;
+        border: 0;
+        border-radius: 4px;
+        background: var(--gold);
+        color: #fff;
+        font-family: 'Geist', sans-serif;
+        font-size: .86rem;
+        font-weight: 700;
+        letter-spacing: .09em;
+        line-height: 1.2;
         text-decoration: none;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(255,255,255,.06);
-        box-sizing: border-box;
+        cursor: pointer;
+        list-style: none;
       }
-      .nav-mobile-panel .nav-menu a:active { color: var(--gold); }
+      .mobile-main-title::-webkit-details-marker,
+      .mobile-subtitle::-webkit-details-marker { display: none; }
+      .mobile-main-title::after,
+      .mobile-subtitle::after {
+        content: '▾';
+        font-size: .7rem;
+        transition: transform .2s ease;
+      }
+      .mobile-nav-group[open] > .mobile-main-title::after,
+      .mobile-dest-group[open] > .mobile-subtitle::after { transform: rotate(180deg); }
+      .mobile-destinations { padding: 0 0 8px; }
+      .mobile-dest-group { margin-bottom: 7px; }
+      .mobile-subtitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 42px;
+        padding: 12px 16px;
+        border-radius: 4px;
+        background: #8B6A26;
+        color: #fff;
+        font-size: .8rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        list-style: none;
+      }
+      .mobile-dest-links {
+        display: flex;
+        flex-direction: column;
+        padding: 5px 8px 7px;
+        background: #16251D;
+      }
+      .mobile-dest-links a {
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        color: rgba(255,255,255,.92);
+        font-size: .88rem;
+        line-height: 1.25;
+        text-decoration: none;
+      }
+      .mobile-dest-links a:last-child { border-bottom: 0; }
+      .mobile-main-title:focus-visible,
+      .mobile-main-link:focus-visible,
+      .mobile-subtitle:focus-visible,
+      .mobile-dest-links a:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+      }
       .nav-tel { display: none; }
       .nav-cta { display: none; }
       .nav-logo { font-size: 1.1rem; }
@@ -2629,16 +2678,55 @@
 
     <!-- Mobile panel -->
     <div class="nav-mobile-panel" id="navMobilePanel">
-      <ul class="nav-menu">
-        <li><a href="/voyages/destinations/europe.html"        onclick="closeMobileNav()">Europe</a></li>
-        <li><a href="/voyages/destinations/egypte.html"        onclick="closeMobileNav()">Afrique</a></li>
-        <li><a href="/voyages/destinations/usa-canada.html"    onclick="closeMobileNav()">Amériques</a></li>
-        <li><a href="/voyages/destinations/chine.html"         onclick="closeMobileNav()">Asie</a></li>
-        <li><a href="/voyages/destinations/combines.html"      onclick="closeMobileNav()">Combinés</a></li>
-        <li><a href="/voyages/destinations/croisieres.html"    onclick="closeMobileNav()">Croisières</a></li>
-        <li><a href="/voyages/destinations/omra.html"          onclick="closeMobileNav()">Omra</a></li>
-        <li><a href="/voyages/destinations/maroc.html"           onclick="closeMobileNav()">Mon Maroc</a></li>
-      </ul>
+      <div class="nav-mobile-menu">
+        <details class="mobile-nav-group" open>
+          <summary class="mobile-main-title">Destinations Monde</summary>
+          <div class="mobile-destinations">
+            <details class="mobile-dest-group">
+              <summary class="mobile-subtitle">Europe</summary>
+              <div class="mobile-dest-links">
+                <a href="/voyages/destinations/europe.html" onclick="closeMobileNav()">Circuits Europe</a>
+                <a href="/voyages/destinations/turquie.html" onclick="closeMobileNav()">Turquie</a>
+              </div>
+            </details>
+            <details class="mobile-dest-group">
+              <summary class="mobile-subtitle">Afrique</summary>
+              <div class="mobile-dest-links">
+                <a href="/voyages/destinations/egypte.html" onclick="closeMobileNav()">Égypte</a>
+                <a href="/voyages/destinations/zanzibar.html" onclick="closeMobileNav()">Zanzibar</a>
+                <a href="/voyages/destinations/tunisie.html" onclick="closeMobileNav()">Tunisie</a>
+              </div>
+            </details>
+            <details class="mobile-dest-group">
+              <summary class="mobile-subtitle">Amériques</summary>
+              <div class="mobile-dest-links">
+                <a href="/voyages/destinations/usa-canada.html" onclick="closeMobileNav()">USA &amp; Canada</a>
+                <a href="/voyages/destinations/cuba.html" onclick="closeMobileNav()">Cuba</a>
+                <a href="/voyages/destinations/perou.html" onclick="closeMobileNav()">Pérou</a>
+              </div>
+            </details>
+            <details class="mobile-dest-group">
+              <summary class="mobile-subtitle">Asie</summary>
+              <div class="mobile-dest-links">
+                <a href="/voyages/destinations/chine.html" onclick="closeMobileNav()">Chine</a>
+                <a href="/voyages/destinations/ouzbekistan.html" onclick="closeMobileNav()">Ouzbékistan</a>
+                <a href="/voyages/destinations/malaisie-thailande.html" onclick="closeMobileNav()">Malaisie &amp; Thaïlande</a>
+                <a href="/voyages/destinations/malaisie-thailande.html" onclick="closeMobileNav()">Bangkok &amp; Thaïlande</a>
+                <a href="/voyages/destinations/vietnam.html" onclick="closeMobileNav()">Vietnam</a>
+              </div>
+            </details>
+            <details class="mobile-dest-group">
+              <summary class="mobile-subtitle">Combinés</summary>
+              <div class="mobile-dest-links">
+                <a href="/voyages/destinations/combines.html" onclick="closeMobileNav()">Azerbaïdjan &amp; Turquie</a>
+              </div>
+            </details>
+          </div>
+        </details>
+        <a href="/voyages/destinations/croisieres.html" class="mobile-main-link" onclick="closeMobileNav()">Croisières</a>
+        <a href="/voyages/destinations/omra.html" class="mobile-main-link" onclick="closeMobileNav()">Omra</a>
+        <a href="/voyages/destinations/maroc.html" class="mobile-main-link" onclick="closeMobileNav()">Mon Maroc</a>
+      </div>
     </div>
 
     <div class="nav-right">
