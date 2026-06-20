@@ -658,7 +658,7 @@ window.VOYAGES = {
         ["Option B", "19 600 DH", "19 800 DH", "+ 5 900 DH"]
       ]
     },
-    children: "Option A : 2–5 ans 8 900 DH · 1ᵉʳ enfant 6–11 ans 12 000 DH · 2ᵉ enfant 4–11 ans 13 500 DH. Option B : 2–5 ans 8 900 DH · 1ᵉʳ enfant 6–11 ans 11 900 DH · 2ᵉ enfant 4–11 ans 14 900 DH",
+    children: "Option A : 2–5,99 ans 8 900 DH · 1ᵉʳ enfant 6–11,99 ans 12 000 DH · 2ᵉ enfant 4–11,99 ans 13 500 DH. Option B : 2–5,99 ans 8 900 DH · 1ᵉʳ enfant 6–11,99 ans 11 900 DH · 2ᵉ enfant 4–11,99 ans 14 900 DH",
     datesList: ["16→26 juil.", "23 juil.→2 août", "6→16 août", "10→20 août", "13→23 août", "20→30 août", "30 août→9 sept."],
     route: ["Casablanca", "Le Caire", "Sharm El Sheikh", "Le Caire", "Casablanca"],
     dates: {
