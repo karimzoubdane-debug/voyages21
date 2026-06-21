@@ -2315,9 +2315,9 @@
         display: none;
         position: fixed;
         top: 52px; left: 0; right: 0;
-        background: #fff;
+        background: #0D1A14;
         flex-direction: column;
-        border-bottom: 3px solid #C8860A;
+        border-bottom: 2px solid var(--gold);
         z-index: 299;
         width: 100%;
         max-height: calc(100svh - 52px);
@@ -2325,52 +2325,53 @@
         overscroll-behavior: contain;
       }
       .nav-mobile-panel.open { display: flex; }
-      .nav-mobile-menu { width: 100%; padding: 0; background: #fff; }
+      .nav-mobile-menu { width: 100%; padding: 10px; background: #0D1A14; }
       .mobile-brochure-nav {
         display: grid;
-        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, .8fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
         width: 100%;
-        background: #fff;
-        border-bottom: 3px solid #C8860A;
+        background: transparent;
       }
       .mobile-brochure-title {
-        min-height: 70px;
-        padding: 12px 8px;
+        min-height: 48px;
+        padding: 14px 12px;
         border: 0;
-        border-radius: 0;
-        background: transparent;
-        color: #1B2D4F;
-        font-family: 'Fraunces', serif;
-        font-size: clamp(1.35rem, 6vw, 2.15rem);
+        border-radius: 4px;
+        background: var(--gold);
+        color: #fff;
+        font-family: 'Geist', sans-serif;
+        font-size: .82rem;
         font-weight: 700;
-        letter-spacing: 0;
+        letter-spacing: .08em;
         line-height: 1.2;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
         text-decoration: none;
-        text-transform: none;
+        text-transform: uppercase;
         cursor: pointer;
         text-align: center;
       }
       .mobile-brochure-title.active {
-        background: #E0F7FF;
-        color: #0099CC;
-        border-bottom: 5px solid #0099CC;
-        margin-bottom: -3px;
+        background: #8B6A26;
+        color: #fff;
       }
-      .mobile-brochure-title[href*="maroc"] {
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: min(100%, 280px);
-        min-height: 66px;
+      .mobile-brochure-nav.dest-open .mobile-brochure-title:not(#mobileNavDest) {
+        display: none;
+      }
+      .mobile-brochure-nav.dest-open #mobileNavDest {
+        grid-column: auto;
+        width: 100%;
       }
       .mobile-brochure-title.open .nav-caret { transform: rotate(180deg); }
       .mobile-brochure-panel {
         display: none;
-        border-bottom: 3px solid #C8860A;
-        background: #fff;
+        margin-top: 8px;
+        border: 1px solid rgba(196,154,60,.35);
+        border-bottom: 2px solid var(--gold);
+        background: #111C16;
       }
       .mobile-brochure-panel.open { display: block; }
       .mobile-brochure-inner { display: flex; min-height: 190px; }
@@ -2379,8 +2380,8 @@
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
-        background: #F5F0E8;
-        border-right: 1px solid rgba(27,45,79,.12);
+        background: rgba(255,255,255,.04);
+        border-right: 1px solid rgba(196,154,60,.2);
         padding: 8px 0;
       }
       .mobile-brochure-cont {
@@ -2389,7 +2390,7 @@
         border: 0;
         border-left: 3px solid transparent;
         background: transparent;
-        color: #1B2D4F;
+        color: rgba(253,250,245,.72);
         font-family: 'Geist', sans-serif;
         font-size: .72rem;
         font-weight: 700;
@@ -2399,9 +2400,9 @@
         cursor: pointer;
       }
       .mobile-brochure-cont.active {
-        background: #fff;
-        border-left-color: #C8860A;
-        color: #8C2020;
+        background: rgba(196,154,60,.1);
+        border-left-color: var(--gold);
+        color: var(--gold);
       }
       .mobile-brochure-countries {
         flex: 1;
@@ -2411,10 +2412,9 @@
       .mobile-brochure-col.active { display: flex; }
       .mobile-brochure-col a {
         padding: 10px 8px;
-        border-bottom: 1px solid rgba(27,45,79,.1);
-        color: #1B2D4F;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        color: rgba(253,250,245,.9);
         font-size: .86rem;
-        font-weight: 500;
         line-height: 1.25;
         text-decoration: none;
       }
@@ -2422,7 +2422,7 @@
       .mobile-brochure-title:focus-visible,
       .mobile-brochure-cont:focus-visible,
       .mobile-brochure-col a:focus-visible {
-        outline: 2px solid #0099CC;
+        outline: 2px solid #fff;
         outline-offset: 2px;
       }
       @media (max-width: 390px) {
@@ -2729,13 +2729,13 @@
     <!-- Mobile panel -->
     <div class="nav-mobile-panel" id="navMobilePanel">
       <div class="nav-mobile-menu">
-        <div class="mobile-brochure-nav" aria-label="Menu mobile brochure">
-          <button class="mobile-brochure-title active open" id="mobileNavDest" onclick="toggleMobileDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
+        <div class="mobile-brochure-nav" id="mobileBrochureNav" aria-label="Menu mobile brochure">
+          <button class="mobile-brochure-title" id="mobileNavDest" onclick="toggleMobileDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
           <a href="/voyages/destinations/croisieres.html" class="mobile-brochure-title" onclick="closeMobileNav()">Croisières</a>
           <a href="/voyages/destinations/omra.html" class="mobile-brochure-title" onclick="closeMobileNav()">Omra</a>
           <a href="/voyages/destinations/maroc.html" class="mobile-brochure-title" onclick="closeMobileNav()">Mon Maroc</a>
         </div>
-        <div class="mobile-brochure-panel open" id="mobileDestPanel">
+        <div class="mobile-brochure-panel" id="mobileDestPanel">
           <div class="mobile-brochure-inner">
             <div class="mobile-brochure-continents">
               <button class="mobile-brochure-cont active" onclick="showMobileContinent('m-europe', this)">Europe</button>
@@ -4250,10 +4250,12 @@
     }
     function toggleMobileDest(btn) {
       var panel = document.getElementById('mobileDestPanel');
+      var nav = document.getElementById('mobileBrochureNav');
       if (!panel || !btn) return;
       var open = panel.classList.toggle('open');
       btn.classList.toggle('open', open);
       btn.classList.toggle('active', open);
+      if (nav) nav.classList.toggle('dest-open', open);
     }
     function showMobileContinent(colId, btn) {
       document.querySelectorAll('.mobile-brochure-col').forEach(function(c) { c.classList.remove('active'); });
@@ -4272,8 +4274,14 @@
     function closeMobileNav() {
       const burger = document.getElementById('navBurger');
       const panel = document.getElementById('navMobilePanel');
+      const mobileDestPanel = document.getElementById('mobileDestPanel');
+      const mobileNavDest = document.getElementById('mobileNavDest');
+      const mobileBrochureNav = document.getElementById('mobileBrochureNav');
       if (burger) burger.classList.remove('open');
       if (panel) panel.classList.remove('open');
+      if (mobileDestPanel) mobileDestPanel.classList.remove('open');
+      if (mobileNavDest) mobileNavDest.classList.remove('open', 'active');
+      if (mobileBrochureNav) mobileBrochureNav.classList.remove('dest-open');
     }
     document.addEventListener('click', e => {
       // Ferme mobile nav
