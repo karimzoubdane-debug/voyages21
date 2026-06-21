@@ -264,8 +264,8 @@
     ═══════════════════════════════════════════ */
     .hero {
       position: relative;
-      height: min(60svh, 650px);
-      min-height: 480px;
+      height: min(55svh, 620px);
+      min-height: 440px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -509,6 +509,15 @@
     }
     @keyframes breathe {
       0%,100% { opacity: .2; } 50% { opacity: 1; }
+    }
+
+    @media (max-height: 820px) and (min-width: 769px) {
+      .hero-label { margin-bottom: 12px; }
+      .hero-title { font-size: clamp(2.2rem, 4.4vw, 4rem); margin-bottom: 14px; }
+      .hero-product-badge { padding: 12px 24px; margin-bottom: 16px; }
+      .hero-product-badge strong { font-size: clamp(1.7rem, 3vw, 2.5rem); }
+      .hero-search { margin-bottom: 16px; }
+      .intro-return { top: 78px; }
     }
 
     /* ═══════════════════════════════════════════
@@ -2512,9 +2521,9 @@
 
       /* HERO */
       .hero {
-        height: 60svh;
-        min-height: 420px;
-        max-height: 560px;
+        height: 55svh;
+        min-height: 390px;
+        max-height: 520px;
         padding-top: 52px;
       }
       .intro-return {
