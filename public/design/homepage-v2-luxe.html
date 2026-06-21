@@ -2325,79 +2325,129 @@
         overscroll-behavior: contain;
       }
       .nav-mobile-panel.open { display: flex; }
-      .nav-mobile-menu { width: 100%; padding: 10px; }
-      .mobile-main-title,
-      .mobile-main-link {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      .nav-mobile-menu { width: 100%; padding: 10px; background: #0D1A14; }
+      .mobile-brochure-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
         width: 100%;
+        background: transparent;
+      }
+      .mobile-brochure-title {
         min-height: 48px;
-        margin-bottom: 8px;
-        padding: 14px 16px;
+        padding: 14px 12px;
         border: 0;
         border-radius: 4px;
         background: var(--gold);
         color: #fff;
         font-family: 'Geist', sans-serif;
-        font-size: .86rem;
+        font-size: .82rem;
         font-weight: 700;
-        letter-spacing: .09em;
+        letter-spacing: .08em;
         line-height: 1.2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
         text-decoration: none;
         text-transform: uppercase;
         cursor: pointer;
-        list-style: none;
+        text-align: center;
       }
-      .mobile-main-title::-webkit-details-marker,
-      .mobile-subtitle::-webkit-details-marker { display: none; }
-      .mobile-main-title::after,
-      .mobile-subtitle::after {
-        content: '▾';
-        font-size: .7rem;
-        transition: transform .2s ease;
-      }
-      .mobile-nav-group[open] > .mobile-main-title::after,
-      .mobile-dest-group[open] > .mobile-subtitle::after { transform: rotate(180deg); }
-      .mobile-destinations { padding: 0 0 8px; }
-      .mobile-dest-group { margin-bottom: 7px; }
-      .mobile-subtitle {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 42px;
-        padding: 12px 16px;
-        border-radius: 4px;
+      .mobile-brochure-title.active {
         background: #8B6A26;
         color: #fff;
-        font-size: .8rem;
-        font-weight: 700;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        cursor: pointer;
-        list-style: none;
       }
-      .mobile-dest-links {
+      .mobile-brochure-nav.dest-open .mobile-brochure-title:not(#mobileNavDest) {
+        display: none;
+      }
+      .mobile-brochure-nav.dest-open #mobileNavDest {
+        grid-column: auto;
+        width: 100%;
+      }
+      .mobile-brochure-title.open .nav-caret { transform: rotate(180deg); }
+      .mobile-brochure-panel {
+        display: none;
+        margin-top: 8px;
+        border: 1px solid rgba(196,154,60,.35);
+        border-bottom: 2px solid var(--gold);
+        background: #111C16;
+      }
+      .mobile-brochure-panel.open { display: block; }
+      .mobile-brochure-inner { display: flex; min-height: 190px; }
+      .mobile-brochure-continents {
+        width: 132px;
+        flex-shrink: 0;
         display: flex;
         flex-direction: column;
-        padding: 5px 8px 7px;
-        background: #16251D;
+        background: rgba(255,255,255,.04);
+        border-right: 1px solid rgba(196,154,60,.2);
+        padding: 8px 0;
       }
-      .mobile-dest-links a {
-        padding: 12px 10px;
+      .mobile-brochure-cont {
+        min-height: 38px;
+        padding: 9px 10px;
+        border: 0;
+        border-left: 3px solid transparent;
+        background: transparent;
+        color: rgba(253,250,245,.72);
+        font-family: 'Geist', sans-serif;
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-align: left;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .mobile-brochure-cont.active {
+        background: rgba(196,154,60,.1);
+        border-left-color: var(--gold);
+        color: var(--gold);
+      }
+      .mobile-brochure-countries {
+        flex: 1;
+        padding: 8px;
+      }
+      .mobile-brochure-col { display: none; flex-direction: column; }
+      .mobile-brochure-col.active { display: flex; }
+      .mobile-brochure-col a {
+        padding: 10px 8px;
         border-bottom: 1px solid rgba(255,255,255,.08);
-        color: rgba(255,255,255,.92);
-        font-size: .88rem;
+        color: rgba(253,250,245,.9);
+        font-size: .86rem;
         line-height: 1.25;
         text-decoration: none;
       }
-      .mobile-dest-links a:last-child { border-bottom: 0; }
-      .mobile-main-title:focus-visible,
-      .mobile-main-link:focus-visible,
-      .mobile-subtitle:focus-visible,
-      .mobile-dest-links a:focus-visible {
+      .mobile-brochure-col a:last-child { border-bottom: 0; }
+      .mobile-brochure-title:focus-visible,
+      .mobile-brochure-cont:focus-visible,
+      .mobile-brochure-col a:focus-visible {
         outline: 2px solid #fff;
         outline-offset: 2px;
+      }
+      @media (max-width: 390px) {
+        .mobile-brochure-inner { flex-direction: column; }
+        .mobile-brochure-continents {
+          width: 100%;
+          flex-direction: row;
+          overflow-x: auto;
+          border-right: 0;
+          border-bottom: 1px solid rgba(196,154,60,.2);
+        }
+        .mobile-brochure-cont {
+          flex: 0 0 auto;
+          border-left: 0;
+          border-bottom: 3px solid transparent;
+        }
+        .mobile-brochure-cont.active { border-left-color: transparent; border-bottom-color: var(--gold); }
+      }
+      .mobile-main-title,
+      .mobile-main-link,
+      .mobile-subtitle,
+      .mobile-destinations,
+      .mobile-dest-group,
+      .mobile-dest-links {
+        display: none !important;
       }
       .nav-tel { display: none; }
       .nav-cta { display: none; }
@@ -2679,53 +2729,49 @@
     <!-- Mobile panel -->
     <div class="nav-mobile-panel" id="navMobilePanel">
       <div class="nav-mobile-menu">
-        <details class="mobile-nav-group" open>
-          <summary class="mobile-main-title">Destinations Monde</summary>
-          <div class="mobile-destinations">
-            <details class="mobile-dest-group">
-              <summary class="mobile-subtitle">Europe</summary>
-              <div class="mobile-dest-links">
+        <div class="mobile-brochure-nav" id="mobileBrochureNav" aria-label="Menu mobile brochure">
+          <button class="mobile-brochure-title" id="mobileNavDest" onclick="toggleMobileDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
+          <a href="/voyages/destinations/croisieres.html" class="mobile-brochure-title" onclick="closeMobileNav()">Croisières</a>
+          <a href="/voyages/destinations/omra.html" class="mobile-brochure-title" onclick="closeMobileNav()">Omra</a>
+          <a href="/voyages/destinations/maroc.html" class="mobile-brochure-title" onclick="closeMobileNav()">Mon Maroc</a>
+        </div>
+        <div class="mobile-brochure-panel" id="mobileDestPanel">
+          <div class="mobile-brochure-inner">
+            <div class="mobile-brochure-continents">
+              <button class="mobile-brochure-cont active" onclick="showMobileContinent('m-europe', this)">Europe</button>
+              <button class="mobile-brochure-cont" onclick="showMobileContinent('m-afrique', this)">Afrique</button>
+              <button class="mobile-brochure-cont" onclick="showMobileContinent('m-ameriques', this)">Amériques</button>
+              <button class="mobile-brochure-cont" onclick="showMobileContinent('m-asie', this)">Asie</button>
+              <button class="mobile-brochure-cont" onclick="showMobileContinent('m-combines', this)">Combinés</button>
+            </div>
+            <div class="mobile-brochure-countries">
+              <div class="mobile-brochure-col active" id="m-europe">
                 <a href="/voyages/destinations/europe.html" onclick="closeMobileNav()">Circuits Europe</a>
                 <a href="/voyages/destinations/turquie.html" onclick="closeMobileNav()">Turquie</a>
               </div>
-            </details>
-            <details class="mobile-dest-group">
-              <summary class="mobile-subtitle">Afrique</summary>
-              <div class="mobile-dest-links">
+              <div class="mobile-brochure-col" id="m-afrique">
                 <a href="/voyages/destinations/egypte.html" onclick="closeMobileNav()">Égypte</a>
                 <a href="/voyages/destinations/zanzibar.html" onclick="closeMobileNav()">Zanzibar</a>
                 <a href="/voyages/destinations/tunisie.html" onclick="closeMobileNav()">Tunisie</a>
               </div>
-            </details>
-            <details class="mobile-dest-group">
-              <summary class="mobile-subtitle">Amériques</summary>
-              <div class="mobile-dest-links">
+              <div class="mobile-brochure-col" id="m-ameriques">
                 <a href="/voyages/destinations/usa-canada.html" onclick="closeMobileNav()">USA &amp; Canada</a>
                 <a href="/voyages/destinations/cuba.html" onclick="closeMobileNav()">Cuba</a>
                 <a href="/voyages/destinations/perou.html" onclick="closeMobileNav()">Pérou</a>
               </div>
-            </details>
-            <details class="mobile-dest-group">
-              <summary class="mobile-subtitle">Asie</summary>
-              <div class="mobile-dest-links">
+              <div class="mobile-brochure-col" id="m-asie">
                 <a href="/voyages/destinations/chine.html" onclick="closeMobileNav()">Chine</a>
                 <a href="/voyages/destinations/ouzbekistan.html" onclick="closeMobileNav()">Ouzbékistan</a>
                 <a href="/voyages/destinations/malaisie-thailande.html" onclick="closeMobileNav()">Malaisie &amp; Thaïlande</a>
                 <a href="/voyages/destinations/malaisie-thailande.html" onclick="closeMobileNav()">Bangkok &amp; Thaïlande</a>
                 <a href="/voyages/destinations/vietnam.html" onclick="closeMobileNav()">Vietnam</a>
               </div>
-            </details>
-            <details class="mobile-dest-group">
-              <summary class="mobile-subtitle">Combinés</summary>
-              <div class="mobile-dest-links">
+              <div class="mobile-brochure-col" id="m-combines">
                 <a href="/voyages/destinations/combines.html" onclick="closeMobileNav()">Azerbaïdjan &amp; Turquie</a>
               </div>
-            </details>
+            </div>
           </div>
-        </details>
-        <a href="/voyages/destinations/croisieres.html" class="mobile-main-link" onclick="closeMobileNav()">Croisières</a>
-        <a href="/voyages/destinations/omra.html" class="mobile-main-link" onclick="closeMobileNav()">Omra</a>
-        <a href="/voyages/destinations/maroc.html" class="mobile-main-link" onclick="closeMobileNav()">Mon Maroc</a>
+        </div>
       </div>
     </div>
 
@@ -4202,6 +4248,22 @@
       if (col) col.classList.add('active');
       if (btn) btn.classList.add('active');
     }
+    function toggleMobileDest(btn) {
+      var panel = document.getElementById('mobileDestPanel');
+      var nav = document.getElementById('mobileBrochureNav');
+      if (!panel || !btn) return;
+      var open = panel.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.classList.toggle('active', open);
+      if (nav) nav.classList.toggle('dest-open', open);
+    }
+    function showMobileContinent(colId, btn) {
+      document.querySelectorAll('.mobile-brochure-col').forEach(function(c) { c.classList.remove('active'); });
+      document.querySelectorAll('.mobile-brochure-cont').forEach(function(b) { b.classList.remove('active'); });
+      var col = document.getElementById(colId);
+      if (col) col.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
     function toggleMobileNav() {
       const burger = document.getElementById('navBurger');
       const panel  = document.getElementById('navMobilePanel');
@@ -4212,8 +4274,14 @@
     function closeMobileNav() {
       const burger = document.getElementById('navBurger');
       const panel = document.getElementById('navMobilePanel');
+      const mobileDestPanel = document.getElementById('mobileDestPanel');
+      const mobileNavDest = document.getElementById('mobileNavDest');
+      const mobileBrochureNav = document.getElementById('mobileBrochureNav');
       if (burger) burger.classList.remove('open');
       if (panel) panel.classList.remove('open');
+      if (mobileDestPanel) mobileDestPanel.classList.remove('open');
+      if (mobileNavDest) mobileNavDest.classList.remove('open', 'active');
+      if (mobileBrochureNav) mobileBrochureNav.classList.remove('dest-open');
     }
     document.addEventListener('click', e => {
       // Ferme mobile nav
