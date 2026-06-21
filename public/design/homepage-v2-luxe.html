@@ -582,12 +582,16 @@
     .travel-result {
       display: grid;
       gap: 3px;
+      width: 100%;
       padding: 12px;
       border-radius: 14px;
       background: #f8f4ec;
       color: #102033;
       text-decoration: none;
       border: 1px solid rgba(16,32,51,.08);
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
     }
     .travel-result strong {
       font-size: .86rem;
@@ -5078,6 +5082,9 @@
 
     function filteredSiteVoyages() {
       const f = currentSearchFilters();
+      const waitingWorldContinent = f.category === 'world' && !f.continent;
+      const waitingWorldCountry = f.category === 'world' && f.continent && !f.country;
+      if (waitingWorldContinent || waitingWorldCountry) return [];
       return SITE_VOYAGES.filter(v => {
         const okCategory = !f.category || v.category === f.category;
         const okContinent = !f.continent || v.continent === f.continent;
@@ -5110,13 +5117,18 @@
       continentWrap?.classList.toggle('is-hidden', f.category !== 'world');
       if (f.category !== 'world' && continentSelect) continentSelect.value = '';
       const continentBase = f.category === 'world' ? base : [];
-      setSelectOptions(continentSelect, [...new Set(continentBase.map(v => v.continent))].filter(Boolean).sort(), 'Tous les continents');
-      const countryBase = base.filter(v => !f.continent || v.continent === f.continent);
-      setSelectOptions(countrySelect, [...new Set(countryBase.map(v => v.country))].filter(Boolean).sort(), 'Tous les pays');
-      const monthBase = countryBase.filter(v => !f.country || v.country === f.country);
+      setSelectOptions(continentSelect, [...new Set(continentBase.map(v => v.continent))].filter(Boolean).sort(), 'Choisir un continent');
+      const countryBase = f.category === 'world'
+        ? base.filter(v => f.continent && v.continent === f.continent)
+        : base;
+      setSelectOptions(countrySelect, [...new Set(countryBase.map(v => v.country))].filter(Boolean).sort(), f.category === 'world' && !f.continent ? 'Choisir d’abord un continent' : 'Choisir un pays');
+      if (countrySelect) countrySelect.disabled = f.category === 'world' && !f.continent;
+      const monthBase = countryBase.filter(v => f.category !== 'world' || !f.country || v.country === f.country);
       setSelectOptions(monthSelect, MONTHS, 'Tous les mois');
-      const voyageBase = monthBase.filter(v => !f.month || (v.months || []).includes(f.month));
-      setSelectOptions(voyageSelect, voyageBase.map(v => [v.slug, v.titre]), 'Choisir un voyage');
+      const voyageStage = f.category !== 'world' || !!f.country;
+      const voyageBase = voyageStage ? monthBase.filter(v => !f.month || (v.months || []).includes(f.month)) : [];
+      setSelectOptions(voyageSelect, voyageBase.map(v => [v.slug, v.titre]), voyageStage ? 'Choisir un voyage' : 'Choisir après le pays');
+      if (voyageSelect) voyageSelect.disabled = !voyageStage;
     }
 
     function searchResultHTML(v) {
@@ -5132,6 +5144,31 @@
       const count = document.getElementById('travelSearchCount');
       const stats = document.getElementById('travelSearchStats');
       if (!resultsBox) return;
+      const f = currentSearchFilters();
+      const categoryBase = SITE_VOYAGES.filter(v => v.category === f.category);
+      if (f.category === 'world' && !f.continent) {
+        const continents = [...new Set(categoryBase.map(v => v.continent).filter(Boolean))].sort();
+        if (count) count.textContent = continents.length + ' continent' + (continents.length > 1 ? 's' : '') + ' disponible' + (continents.length > 1 ? 's' : '');
+        if (stats) stats.textContent = 'Choisissez un continent pour voir ses pays';
+        resultsBox.innerHTML = continents.map(continent => `<button class="travel-result" type="button" data-travel-continent="${escapeHTML(continent)}">
+          <strong>${escapeHTML(continent)}</strong>
+          <span>${categoryBase.filter(v => v.continent === continent).length} voyages possibles</span>
+        </button>`).join('');
+        resultsBox.classList.toggle('is-open', !!open);
+        return;
+      }
+      if (f.category === 'world' && f.continent && !f.country) {
+        const continentBase = categoryBase.filter(v => v.continent === f.continent);
+        const countries = [...new Set(continentBase.map(v => v.country).filter(Boolean))].sort();
+        if (count) count.textContent = countries.length + ' pays disponible' + (countries.length > 1 ? 's' : '');
+        if (stats) stats.textContent = 'Choisissez un pays pour voir ses voyages';
+        resultsBox.innerHTML = countries.map(country => `<button class="travel-result" type="button" data-travel-country="${escapeHTML(country)}">
+          <strong>${escapeHTML(country)}</strong>
+          <span>${continentBase.filter(v => v.country === country).length} voyages possibles</span>
+        </button>`).join('');
+        resultsBox.classList.toggle('is-open', !!open);
+        return;
+      }
       const filtered = filteredSiteVoyages();
       if (count) count.textContent = filtered.length + ' voyage' + (filtered.length > 1 ? 's' : '') + ' possible' + (filtered.length > 1 ? 's' : '');
       if (stats) {
@@ -5166,6 +5203,11 @@
     }
 
     function goSearch() {
+      const f = currentSearchFilters();
+      if (f.category === 'world' && (!f.continent || !f.country)) {
+        updateSearchSuggestions(true);
+        return;
+      }
       const selectedSlug = document.getElementById('travelSearchVoyage')?.value;
       const selected = SITE_VOYAGES.find(v => v.slug === selectedSlug);
       if (selected) {
@@ -5187,6 +5229,7 @@
           if (el.id === 'travelSearchCategory') {
             document.getElementById('travelSearchContinent').value = '';
             document.getElementById('travelSearchCountry').value = '';
+            document.getElementById('travelSearchMonth').value = '';
             document.getElementById('travelSearchVoyage').value = '';
           }
           if (el.id === 'travelSearchContinent') {
@@ -5205,6 +5248,23 @@
         goSearch();
       });
       document.addEventListener('click', e => {
+        const continentButton = e.target.closest('[data-travel-continent]');
+        const countryButton = e.target.closest('[data-travel-country]');
+        if (continentButton && form.contains(continentButton)) {
+          document.getElementById('travelSearchContinent').value = continentButton.dataset.travelContinent || '';
+          document.getElementById('travelSearchCountry').value = '';
+          document.getElementById('travelSearchVoyage').value = '';
+          syncTravelSearchOptions();
+          updateSearchSuggestions(true);
+          return;
+        }
+        if (countryButton && form.contains(countryButton)) {
+          document.getElementById('travelSearchCountry').value = countryButton.dataset.travelCountry || '';
+          document.getElementById('travelSearchVoyage').value = '';
+          syncTravelSearchOptions();
+          updateSearchSuggestions(true);
+          return;
+        }
         if (!form.contains(e.target)) updateSearchSuggestions(false);
       });
       updateSearchSuggestions(false);
