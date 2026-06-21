@@ -5232,14 +5232,17 @@
         updateSearchSuggestions(true);
         return;
       }
+      // Le bouton "Voir" mene toujours vers une fiche voyage :
+      // le voyage explicitement choisi, sinon le 1er resultat correspondant aux filtres.
       const selectedSlug = document.getElementById('travelSearchVoyage')?.value;
-      const selected = SITE_VOYAGES.find(v => v.slug === selectedSlug);
-      if (selected) {
-        window.location.href = selected.link;
+      const matches = filteredSiteVoyages();
+      const target = SITE_VOYAGES.find(v => v.slug === selectedSlug) || matches[0];
+      if (target) {
+        window.location.href = target.link;
         return;
       }
-      filterDest();
-      document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
+      // Aucun voyage ne correspond aux filtres : on affiche le message d'aide au lieu de naviguer.
+      updateSearchSuggestions(true);
     }
 
     function initTravelSearchV2() {
