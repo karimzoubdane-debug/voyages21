@@ -270,7 +270,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      overflow: visible;
       /* décalage pour la nav fixe */
       padding-top: 64px;
     }
@@ -482,6 +482,129 @@
     }
     .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
+    .travel-search-dock {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      z-index: 5;
+      width: min(1120px, calc(100% - 48px));
+      transform: translate(-50%, 50%);
+      color: #102033;
+    }
+    .travel-search-panel {
+      display: grid;
+      grid-template-columns: minmax(230px, 1.45fr) minmax(150px, .78fr) minmax(140px, .72fr) minmax(130px, .68fr) auto;
+      gap: 10px;
+      align-items: end;
+      padding: 16px;
+      border: 1px solid rgba(18,31,48,.12);
+      border-radius: 24px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 26px 80px rgba(8,18,32,.24);
+      backdrop-filter: blur(18px);
+    }
+    .travel-search-field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+    .travel-search-field label {
+      color: rgba(16,32,51,.62);
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .travel-search-field input,
+    .travel-search-field select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid rgba(16,32,51,.14);
+      border-radius: 14px;
+      background: #f8f4ec;
+      color: #102033;
+      font-family: 'Geist', sans-serif;
+      font-size: .9rem;
+      font-weight: 650;
+      outline: none;
+      padding: 0 14px;
+    }
+    .travel-search-field input:focus,
+    .travel-search-field select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,164,64,.18);
+      background: #fff;
+    }
+    .travel-search-submit {
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--gold);
+      color: #0C0C0C;
+      padding: 0 24px;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .2s, opacity .2s;
+    }
+    .travel-search-submit:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+    .travel-search-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 18px 0;
+      color: rgba(255,255,255,.86);
+      font-size: .76rem;
+      text-shadow: 0 8px 22px rgba(0,0,0,.3);
+    }
+    .travel-search-results {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 26px 80px rgba(8,18,32,.2);
+    }
+    .travel-search-results.is-open { display: grid; }
+    .travel-result {
+      display: grid;
+      gap: 3px;
+      padding: 12px;
+      border-radius: 14px;
+      background: #f8f4ec;
+      color: #102033;
+      text-decoration: none;
+      border: 1px solid rgba(16,32,51,.08);
+    }
+    .travel-result strong {
+      font-size: .86rem;
+      line-height: 1.25;
+    }
+    .travel-result span {
+      font-size: .72rem;
+      color: rgba(16,32,51,.66);
+    }
+    .travel-result:hover {
+      border-color: var(--gold);
+      background: #fff;
+    }
+    .travel-result-empty {
+      grid-column: 1 / -1;
+      padding: 14px;
+      color: rgba(16,32,51,.72);
+      text-align: center;
+    }
+
     /* Indicateur de scroll */
     .hero-scroll {
       position: absolute;
@@ -518,6 +641,10 @@
       .hero-product-badge strong { font-size: clamp(1.7rem, 3vw, 2.5rem); }
       .hero-search { margin-bottom: 16px; }
       .intro-return { top: 78px; }
+      .travel-search-panel { padding: 12px; gap: 8px; }
+      .travel-search-field input,
+      .travel-search-field select,
+      .travel-search-submit { height: 42px; }
     }
 
     /* ═══════════════════════════════════════════
@@ -2545,6 +2672,41 @@
       .hero-search { display: none; }
       .hero-actions { display: none; }
       .hero-scroll { display: none; }
+      .travel-search-dock {
+        width: calc(100% - 28px);
+        transform: translate(-50%, 50%);
+      }
+      .travel-search-panel {
+        grid-template-columns: 1fr 1fr;
+        border-radius: 20px;
+      }
+      .travel-search-field:first-child,
+      .travel-search-submit {
+        grid-column: 1 / -1;
+      }
+      .travel-search-field label { font-size: .55rem; }
+      .travel-search-field input,
+      .travel-search-field select {
+        height: 42px;
+        border-radius: 12px;
+        font-size: .78rem;
+        padding: 0 10px;
+      }
+      .travel-search-submit {
+        height: 42px;
+        border-radius: 12px;
+      }
+      .travel-search-meta {
+        color: rgba(16,32,51,.72);
+        text-shadow: none;
+        padding: 8px 6px 0;
+        font-size: .68rem;
+      }
+      .travel-search-results {
+        grid-template-columns: 1fr;
+        max-height: 320px;
+        overflow: auto;
+      }
 
       /* WHY */
       .why { padding: 48px 20px; }
@@ -2897,11 +3059,6 @@
     <!-- Voile sombre -->
     <div class="hero-overlay"></div>
 
-    <a href="/" class="hero-logo-signature" aria-label="Voyages 21">
-      <span class="v21-logo-mark">Voyages<sup>21</sup></span>
-      <span class="v21-logo-sub">Voyages organises depuis 2000</span>
-    </a>
-
     <!-- Texte -->
     <div class="hero-content">
 
@@ -2917,25 +3074,44 @@
         <span id="heroProductName">Sejour a Istanbul</span>
       </div>
 
-      <!-- Barre de recherche destination -->
-      <div class="hero-search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hero-search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" class="hero-search-input" placeholder="Rechercher une destination… Istanbul, Cuba, Zanzibar" id="hero-search-input" oninput="filterDest(this.value)" />
-        <button class="hero-search-btn" onclick="goSearch()">Rechercher</button>
-      </div>
-
-      <div class="hero-actions">
-        <a href="#destinations" class="btn-primary" id="heroButton">Voir les programmes</a>
-        <a href="#contact"      class="btn-ghost">Nous contacter</a>
-      </div>
-
     </div>
 
-    <!-- Scroll hint -->
-    <div class="hero-scroll">
-      <div class="hero-scroll-bar"></div>
-      <span>Défiler</span>
-    </div>
+    <form class="travel-search-dock" id="travelSearchForm" autocomplete="off">
+      <div class="travel-search-panel">
+        <div class="travel-search-field">
+          <label for="travelSearchDestination">Destination</label>
+          <input id="travelSearchDestination" type="search" placeholder="Istanbul, Omra, Cuba, Chine…">
+        </div>
+        <div class="travel-search-field">
+          <label for="travelSearchDate">Date</label>
+          <select id="travelSearchDate">
+            <option value="">Toutes les dates</option>
+          </select>
+        </div>
+        <div class="travel-search-field">
+          <label for="travelSearchDuration">Durée</label>
+          <select id="travelSearchDuration">
+            <option value="">Toutes</option>
+            <option value="short">1 semaine</option>
+            <option value="medium">8 à 10 jours</option>
+            <option value="long">11 à 15 jours</option>
+            <option value="extra">Plus de 15 jours</option>
+          </select>
+        </div>
+        <div class="travel-search-field">
+          <label for="travelSearchType">Type</label>
+          <select id="travelSearchType">
+            <option value="">Tous</option>
+          </select>
+        </div>
+        <button class="travel-search-submit" type="submit">Rechercher</button>
+      </div>
+      <div class="travel-search-meta">
+        <span id="travelSearchCount">Voyages disponibles</span>
+        <span>Résultats liés aux données du site</span>
+      </div>
+      <div class="travel-search-results" id="travelSearchResults" aria-live="polite"></div>
+    </form>
 
   </section>
 
@@ -2943,22 +3119,6 @@
   <!-- ══════════════════════════════════════════
        BANDE STATS
   ══════════════════════════════════════════ -->
-  <div class="statsbar">
-    <div class="statsbar-item">
-      <a href="#destinations">Maroc · Croisières · Omra &amp; Hajj</a>
-      <span>· Voyages sur mesure</span>
-    </div>
-    <div class="statsbar-item">
-      <span class="statsbar-star">★★★★★</span>
-      <span class="statsbar-bold">Agence de confiance</span>
-      <span>depuis 2000</span>
-    </div>
-    <div class="statsbar-item">
-      Accompagnement personnalisé &amp; tarifs garantis
-    </div>
-  </div>
-
-
   <!-- ══════════════════════════════════════════
        ARGUMENTAIRE — 3 actes : problème → solutions → CTA
   ══════════════════════════════════════════ -->
@@ -3032,7 +3192,7 @@
     /* ── SECTION ARGUMENTAIRE ──────────────────────────────── */
     .args-section {
       background: var(--cream);
-      padding: 96px 80px 104px;
+      padding: 132px 80px 104px;
       overflow: hidden;
     }
     .args-intro {
@@ -3305,12 +3465,12 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      .args-section { padding: 72px 32px 80px; }
+      .args-section { padding: 148px 32px 80px; }
       .args-problem { grid-template-columns: 1fr; gap: 28px; padding: 32px 28px; }
       .args-solutions { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
-      .args-section { padding: 56px 20px 64px; }
+      .args-section { padding: 168px 20px 64px; }
       .args-sol-card { padding: 28px 24px; }
       .args-problem { padding: 24px 20px; }
       .args-conclusion { padding: 36px 20px; }
@@ -4601,6 +4761,77 @@
       { img: '',             name: 'Omra & Hajj',          count: '5 programmes',  link: '/voyages/destinations/omra.html', gradient: true },
     ];
 
+    function normalizeSearchText(value) {
+      return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function escapeHTML(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function durationDays(value) {
+      const match = String(value || '').match(/\d+/);
+      return match ? Number(match[0]) : 0;
+    }
+
+    function durationBucket(value) {
+      const days = durationDays(value);
+      if (!days) return '';
+      if (days <= 7) return 'short';
+      if (days <= 10) return 'medium';
+      if (days <= 15) return 'long';
+      return 'extra';
+    }
+
+    function typeForVoyage(slug, v) {
+      const text = normalizeSearchText([slug, v.tag, v.eyebrow, v.title].join(' '));
+      if (text.includes('omra') || text.includes('عمرة')) return 'Omra';
+      if (text.includes('croisiere')) return 'Croisières';
+      if (text.includes('combine')) return 'Combinés';
+      if (text.includes('maroc')) return 'Maroc';
+      return 'Monde';
+    }
+
+    function imageForVoyage(item) {
+      const text = normalizeSearchText([item.dest, item.titre, item.type].join(' '));
+      if (text.includes('turquie') || text.includes('istanbul')) return IMG.turquie;
+      if (text.includes('egypte') || text.includes('caire')) return IMG.egypte;
+      if (text.includes('usa') || text.includes('canada')) return IMG.usa;
+      if (text.includes('cuba')) return IMG.cuba;
+      if (text.includes('perou')) return IMG.perou;
+      if (text.includes('chine')) return IMG.chine;
+      if (text.includes('malaisie') || text.includes('thailande') || text.includes('indonesie') || text.includes('singapour')) return IMG.malaisie;
+      if (text.includes('vietnam')) return IMG.vietnam;
+      if (text.includes('zanzibar')) return IMG.zanzibar;
+      if (text.includes('croisiere')) return IMG.croisiere;
+      return IMG.europe;
+    }
+
+    function buildSiteVoyages() {
+      const data = window.VOYAGES || {};
+      return Object.keys(data).map(slug => {
+        const v = data[slug] || {};
+        const dates = Array.isArray(v.datesList) ? v.datesList.filter(Boolean) : [];
+        const dest = v.tag || (Array.isArray(v.route) && v.route[1]) || (v.cadran && v.cadran[1] && v.cadran[1][1]) || 'Voyages 21';
+        const item = {
+          slug,
+          dest,
+          titre: v.title || slug,
+          duree: v.duration || '',
+          dates,
+          price: v.price || '',
+          type: typeForVoyage(slug, v),
+          link: '/voyages/' + slug + '.html',
+          searchText: normalizeSearchText([slug, dest, v.title, v.tag, v.eyebrow, v.price, dates.join(' '), Array.isArray(v.route) ? v.route.join(' ') : ''].join(' ')),
+          durationBucket: durationBucket(v.duration)
+        };
+        item.img = imageForVoyage(item);
+        return item;
+      });
+    }
+
+    const SITE_VOYAGES = buildSiteVoyages();
+
     function cardHTML(v) {
       const tag = v.link ? `a href="${v.link}"` : 'div';
       const endTag = v.link ? 'a' : 'div';
@@ -4659,6 +4890,113 @@
       });
 
     }
+
+    function currentSearchFilters(qOverride) {
+      const qInput = document.getElementById('travelSearchDestination');
+      const dateInput = document.getElementById('travelSearchDate');
+      const durationInput = document.getElementById('travelSearchDuration');
+      const typeInput = document.getElementById('travelSearchType');
+      return {
+        q: normalizeSearchText(qOverride !== undefined ? qOverride : (qInput ? qInput.value : '')),
+        date: dateInput ? dateInput.value : '',
+        duration: durationInput ? durationInput.value : '',
+        type: typeInput ? typeInput.value : ''
+      };
+    }
+
+    function filteredSiteVoyages(qOverride) {
+      const f = currentSearchFilters(qOverride);
+      return SITE_VOYAGES.filter(v => {
+        const okText = !f.q || v.searchText.includes(f.q);
+        const okDate = !f.date || v.dates.includes(f.date);
+        const okDuration = !f.duration || v.durationBucket === f.duration;
+        const okType = !f.type || v.type === f.type;
+        return okText && okDate && okDuration && okType;
+      });
+    }
+
+    function searchResultHTML(v) {
+      const date = v.dates && v.dates[0] ? ' · ' + v.dates[0] : '';
+      return `<a class="travel-result" href="${v.link}">
+        <strong>${escapeHTML(v.titre)}</strong>
+        <span>${escapeHTML(v.dest)} · ${escapeHTML(v.duree)}${escapeHTML(date)}</span>
+      </a>`;
+    }
+
+    function updateSearchSuggestions(open) {
+      const resultsBox = document.getElementById('travelSearchResults');
+      const count = document.getElementById('travelSearchCount');
+      if (!resultsBox) return;
+      const filtered = filteredSiteVoyages();
+      if (count) count.textContent = filtered.length + ' voyage' + (filtered.length > 1 ? 's' : '') + ' disponible' + (filtered.length > 1 ? 's' : '');
+      resultsBox.innerHTML = filtered.length
+        ? filtered.slice(0, 6).map(searchResultHTML).join('')
+        : '<div class="travel-result-empty">Aucun voyage ne correspond à ces filtres.</div>';
+      resultsBox.classList.toggle('is-open', !!open);
+    }
+
+    function goSearch() {
+      filterDest();
+      const dest = document.getElementById('destinations');
+      if (dest) dest.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterDest(q) {
+      const filtered = filteredSiteVoyages(q);
+      document.querySelectorAll('.dest-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.dest-panel').forEach(p => p.classList.remove('active'));
+      const voyagesTab = document.querySelector('[onclick*="voyages"]');
+      const voyagesPanel = document.getElementById('panel-voyages');
+      if (voyagesTab) voyagesTab.classList.add('active');
+      if (voyagesPanel) voyagesPanel.classList.add('active');
+      const ctaCard = `<a href="#contact" class="dest-card-cta">
+        <span class="dest-card-cta-label">Sur mesure</span>
+        <p class="dest-card-cta-title">Votre voyage n'existe pas encore.<br>Créons-le ensemble.</p>
+        <span class="dest-card-cta-btn">Nous contacter →</span>
+      </a>`;
+      const gridVoyages = document.getElementById('grid-voyages');
+      if (!gridVoyages) return;
+      gridVoyages.innerHTML =
+        (filtered.length ? filtered.map(cardHTML).join('') : '<p style="color:var(--navy);padding:24px 0;grid-column:1/-1">Aucun voyage ne correspond à ces filtres.</p>') + ctaCard;
+      updateSearchSuggestions(false);
+    }
+
+    function initTravelSearch() {
+      const form = document.getElementById('travelSearchForm');
+      if (!form) return;
+      const dateInput = document.getElementById('travelSearchDate');
+      const typeInput = document.getElementById('travelSearchType');
+      const destinationInput = document.getElementById('travelSearchDestination');
+      const dates = [...new Set(SITE_VOYAGES.flatMap(v => v.dates || []))].filter(Boolean);
+      dates.forEach(date => {
+        const option = document.createElement('option');
+        option.value = date;
+        option.textContent = date;
+        dateInput.appendChild(option);
+      });
+      [...new Set(SITE_VOYAGES.map(v => v.type))].filter(Boolean).sort().forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        typeInput.appendChild(option);
+      });
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        goSearch();
+      });
+      [destinationInput, dateInput, document.getElementById('travelSearchDuration'), typeInput].forEach(el => {
+        if (!el) return;
+        el.addEventListener('input', () => updateSearchSuggestions(true));
+        el.addEventListener('change', () => updateSearchSuggestions(true));
+        el.addEventListener('focus', () => updateSearchSuggestions(true));
+      });
+      document.addEventListener('click', e => {
+        if (!form.contains(e.target)) updateSearchSuggestions(false);
+      });
+      updateSearchSuggestions(false);
+    }
+
+    initTravelSearch();
 
     function renderCoups() {
       const shuffled = [...VOYAGES].sort(() => Math.random() - 0.5);
