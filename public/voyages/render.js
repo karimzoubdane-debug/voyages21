@@ -141,6 +141,9 @@
         + '<a class="contact-bar-link wing-tel" href="' + telHref + '" aria-label="T?l?phone">' + ICONS.tel + '</a>'
         + '<a class="contact-bar-link wing-ig" href="https://www.instagram.com/voyages21maroc" target="_blank" rel="noopener" aria-label="Instagram">' + ICONS.ig + '</a>'
         + '<a class="contact-bar-link wing-fb" href="https://www.facebook.com/Voyages21" target="_blank" rel="noopener" aria-label="Facebook">' + ICONS.fb + '</a>'
+        + '<span class="contact-bar-link wing-tiktok" role="img" aria-label="TikTok bientôt disponible" aria-disabled="true" title="TikTok bientôt disponible"><img src="/social-icons/tiktok.svg" alt=""></span>'
+        + '<span class="contact-bar-link wing-snapchat" role="img" aria-label="Snapchat bientôt disponible" aria-disabled="true" title="Snapchat bientôt disponible"><img src="/social-icons/snapchat.svg" alt=""></span>'
+        + '<span class="contact-bar-link wing-youtube" role="img" aria-label="YouTube bientôt disponible" aria-disabled="true" title="YouTube bientôt disponible"><img src="/social-icons/youtube.svg" alt=""></span>'
         + '</div>';
 
     // ===== Médias en ligne + comportements =====
