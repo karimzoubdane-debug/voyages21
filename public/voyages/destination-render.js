@@ -58,6 +58,14 @@
     });
   }
 
+  function loadSocialContactBar() {
+    if (document.querySelector('script[src="/social-contact-bar.js"]')) return;
+    var script = document.createElement('script');
+    script.src = '/social-contact-bar.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+
   function card(slug) {
     var v = all[slug];
     if (!v) return '';
@@ -105,6 +113,7 @@
       + content
       + '</main>';
     wireTabs();
+    loadSocialContactBar();
   }
 
   fetch('/api/media', { cache: 'no-store' })

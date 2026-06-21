@@ -75,5 +75,6 @@ magicButton.addEventListener("click",e=>{if(magicButton.getAttribute("href")==="
 backCover.addEventListener("click",e=>{e.preventDefault();goCover()});
 getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")location.replace(DEFAULT_COVER.buttonUrl)});
 </script>
+<script src="/social-contact-bar.js" defer></script>
 </body>
 </html>
