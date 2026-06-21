@@ -20,7 +20,7 @@
 
     var LABELS = {
         fr: {
-            back: "‹ Retour à la brochure", soundOn: "Activer le son", soundOff: "Couper le son",
+            back: "‹ Retour à l'accueil", soundOn: "Activer le son", soundOff: "Couper le son",
             from: "À partir de", quote: "Demander un devis", quoteWa: "Demander un devis sur WhatsApp",
             seeVideo: "Voir la vidéo", trust: "Sur mesure · Voyages 21, depuis 2000",
             why: "Pourquoi vous allez adorer ce voyage", itinDays: "Itinéraire jour par jour", itin: "Itinéraire",
@@ -108,7 +108,7 @@
         : ((v.programme && v.programme.length) ? '<ol class="steps">' + v.programme.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" : "");
 
     app.innerHTML =
-        '<div class="topbar"><div class="topbar-inner"><a href="../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">' + L.back + '</a><span class="brand">VOYAGES 21</span></div></div>'
+        '<div class="topbar"><div class="topbar-inner"><a href="/design/homepage-v2-luxe.html">' + L.back + '</a><span class="brand">VOYAGES 21</span></div></div>'
         + '<div class="page">'
         + (v.eyebrow ? '<div class="eyebrow">' + v.eyebrow + "</div>" : "")
         + '<h1 class="voyage-title">' + v.title + (v.duration ? ' <span class="dur-badge">' + v.duration + "</span>" : "") + "</h1>"
