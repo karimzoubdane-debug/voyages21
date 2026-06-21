@@ -99,7 +99,7 @@
         + '<section data-dest-panel="circuits" hidden>' + renderGrid(circuits) + '</section>';
     }
     app.innerHTML = '<div class="topbar"><div class="topbar-inner">'
-      + '<a href="../../acceuil-v21-maroc.html">‹ Retour à l’accueil</a>'
+      + '<a href="/design/homepage-v2-luxe.html">‹ Retour à l’accueil</a>'
       + '<a href="../../BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html">Brochure complète</a>'
       + '<span class="brand">VOYAGES 21</span>'
       + '</div></div>'
