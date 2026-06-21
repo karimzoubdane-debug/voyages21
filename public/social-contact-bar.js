@@ -20,6 +20,7 @@
     '.v21-contact-main{border:1px solid rgba(255,255,255,.5);background:#25d366;color:#082817;cursor:pointer;z-index:2}',
     '.v21-contact-main:hover{filter:brightness(1.02);transform:translateY(-1px)}',
     '.v21-contact-bar svg{width:22px;height:22px;display:block}',
+    '.v21-contact-bar img{width:22px;height:22px;display:block}',
     '.v21-contact-link{opacity:0;pointer-events:none;transform:translateY(8px);background:rgba(255,255,255,.94);color:#152e1f;border:1px solid rgba(16,35,26,.12);backdrop-filter:blur(10px)}',
     '.v21-contact-bar.open .v21-contact-link{opacity:1;pointer-events:auto;transform:translateY(0)}',
     '.v21-contact-bar.open .v21-contact-main{background:#1b3a28;color:#fff}',
@@ -27,9 +28,15 @@
     '.v21-contact-link.v21-tel{background:#fff;color:#1b3a28}',
     '.v21-contact-link.v21-ig{background:#c13584;color:#fff}',
     '.v21-contact-link.v21-fb{background:#1877f2;color:#fff}',
+    '.v21-contact-link.v21-tiktok{background:#000}',
+    '.v21-contact-link.v21-snapchat{background:#fffc00}',
+    '.v21-contact-link.v21-youtube{background:#f00}',
+    '.v21-contact-link.v21-tiktok img,.v21-contact-link.v21-youtube img{filter:invert(1)}',
+    '.v21-contact-link[aria-disabled="true"]{cursor:not-allowed}',
     '.v21-contact-main:focus-visible,.v21-contact-link:focus-visible{outline:3px solid rgba(200,164,64,.42);outline-offset:3px}',
     '.show-brochure>.v21-contact-bar{display:none}',
-    '@media(max-width:560px){.v21-contact-bar{right:12px;bottom:14px;gap:7px}.v21-contact-main,.v21-contact-link{width:44px;height:44px}}'
+    '@media(max-width:560px){.v21-contact-bar{right:12px;bottom:14px;gap:7px}.v21-contact-main,.v21-contact-link{width:44px;height:44px}}',
+    '@media(max-height:450px){.v21-contact-bar{gap:4px}.v21-contact-main,.v21-contact-link{width:38px;height:38px}.v21-contact-bar svg,.v21-contact-bar img{width:19px;height:19px}}'
   ].join('');
   document.head.appendChild(style);
 
@@ -41,7 +48,10 @@
     + '<a class="v21-contact-link v21-wa" href="https://wa.me/' + WHATSAPP + '?text=' + MESSAGE + '" target="_blank" rel="noopener" aria-label="WhatsApp">' + ICONS.wa + '</a>'
     + '<a class="v21-contact-link v21-tel" href="tel:' + PHONE + '" aria-label="Téléphone">' + ICONS.tel + '</a>'
     + '<a class="v21-contact-link v21-ig" href="https://www.instagram.com/voyages21maroc" target="_blank" rel="noopener" aria-label="Instagram">' + ICONS.ig + '</a>'
-    + '<a class="v21-contact-link v21-fb" href="https://www.facebook.com/Voyages21" target="_blank" rel="noopener" aria-label="Facebook">' + ICONS.fb + '</a>';
+    + '<a class="v21-contact-link v21-fb" href="https://www.facebook.com/Voyages21" target="_blank" rel="noopener" aria-label="Facebook">' + ICONS.fb + '</a>'
+    + '<span class="v21-contact-link v21-tiktok" role="img" aria-label="TikTok bientôt disponible" aria-disabled="true" title="TikTok bientôt disponible"><img src="/social-icons/tiktok.svg" alt=""></span>'
+    + '<span class="v21-contact-link v21-snapchat" role="img" aria-label="Snapchat bientôt disponible" aria-disabled="true" title="Snapchat bientôt disponible"><img src="/social-icons/snapchat.svg" alt=""></span>'
+    + '<span class="v21-contact-link v21-youtube" role="img" aria-label="YouTube bientôt disponible" aria-disabled="true" title="YouTube bientôt disponible"><img src="/social-icons/youtube.svg" alt=""></span>';
   document.body.appendChild(bar);
   document.body.classList.add('v21-social-ready');
 
