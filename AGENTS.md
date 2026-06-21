@@ -1,5 +1,9 @@
 # Instructions permanentes pour Codex
 
+> 🤝 **À LIRE EN PREMIER : [`COLLAB-IA.md`](./COLLAB-IA.md)** — règles communes à
+> toutes les IA (source de vérité du site, jamais de push sur `main`, branche + PR +
+> preview, une seule IA par branche). Ces règles s'appliquent en plus de celles ci-dessous.
+
 ## Mode économie de quota Codex
 
 Tu dois travailler par défaut de manière économique, ciblée et minimale.

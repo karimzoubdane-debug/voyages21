@@ -1,5 +1,11 @@
 # Voyages21 — Fiche projet
 
+> 🤝 **À LIRE EN PREMIER : `COLLAB-IA.md`** (racine du dépôt) — règles communes à
+> toutes les IA (Codex, Claude, autres) : source de vérité du site (vrai site
+> `src/app` + `public/voyages` vs maquettes `public/design`), jamais de push direct
+> sur `main`, toujours branche + PR + preview, une seule IA par branche à la fois.
+> Le site officiel est **https://www.voyages21.com** (`voyages21.vercel.app` = adresse technique).
+
 ## ⚡ Content Studio (système de création de contenu IA)
 Pour TOUTE tâche de contenu/marketing (visuels, vidéos, posts, calendrier,
 ads, veille concurrents), lire d'abord le dossier `content-studio/` :
