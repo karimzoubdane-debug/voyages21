@@ -264,8 +264,8 @@
     ═══════════════════════════════════════════ */
     .hero {
       position: relative;
-      height: 100svh;
-      min-height: 600px;
+      height: min(82svh, 780px);
+      min-height: 620px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -273,6 +273,33 @@
       overflow: hidden;
       /* décalage pour la nav fixe */
       padding-top: 64px;
+    }
+
+    .intro-return {
+      position: absolute;
+      top: 88px;
+      right: 32px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid rgba(255,255,255,.42);
+      border-radius: 999px;
+      background: rgba(12,12,12,.46);
+      color: var(--white);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: border-color .2s, background .2s, color .2s;
+    }
+    .intro-return:hover {
+      border-color: var(--gold);
+      background: rgba(12,12,12,.7);
+      color: var(--gold);
     }
 
     .hero-video {
@@ -2484,7 +2511,18 @@
       .statsbar-item + .statsbar-item::before { display: none; }
 
       /* HERO */
-      .hero { padding-top: 52px; min-height: 100svh; }
+      .hero {
+        height: 82svh;
+        min-height: 540px;
+        max-height: 680px;
+        padding-top: 52px;
+      }
+      .intro-return {
+        top: 68px;
+        right: 16px;
+        padding: 9px 13px;
+        font-size: .62rem;
+      }
       .hero-content { padding: 0 24px; }
       .hero-logo-signature {
         left: 24px;
@@ -2836,6 +2874,8 @@
        HERO — vidéo de fond plein écran
   ══════════════════════════════════════════ -->
   <section class="hero">
+
+    <a href="/cover-ete-2026.html" class="intro-return" aria-label="Revoir la page d'introduction vidéo">← Revoir l'introduction</a>
 
     <!-- Fallback gradient pendant le chargement -->
     <div class="hero-fallback"></div>
