@@ -1231,6 +1231,81 @@ window.VOYAGES = {
     cta: { title: "Envie de découvrir la Chine ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+  "asie-chine-pekin-xian-guilin-shanghai": {
+    mediaKey: "modal-chine-pekin-xian-guilin-shanghai", whatsapp: "212673280009",
+    eyebrow: "Chine · Départ 10 août 2026",
+    title: "Chine impériale & paysages du Sud — Pékin, Xi'an, Guilin & Shanghai",
+    duration: "15 jours",
+    tag: "Chine",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destination", "Chine"],
+      ["Durée", "15 jours / 12 nuits"],
+      ["Vols", "Inclus — Royal Air Maroc"],
+      ["Hôtels", "5☆"],
+      ["Visa", "600 DH"],
+      ["Date", "10 au 24 août 2026"]
+    ],
+    price: "39 000 DH",
+    intro: [
+      "Un grand circuit Chine de Pékin à Shanghai, avec Xi'an, Guilin, Yangshuo, Suzhou et les villages d'eau.",
+      "Le programme réunit les grands symboles impériaux, la Grande Muraille, l'armée de terre cuite, la rivière Li, les jardins de Suzhou et l'énergie de Shanghai.",
+      "Un itinéraire complet avec vols Royal Air Maroc, trains rapides, vols intérieurs, hôtels 5☆ et guides locaux francophones."
+    ],
+    highlights: [
+      "Pékin : place Tian An Men, Cité Interdite, Temple du Ciel, Grande Muraille et Palais d'Été",
+      "Xi'an : Grande Mosquée, Grande Pagode de l'Oie Sauvage et armée de terre cuite",
+      "Guilin et Yangshuo : rivière Li, Xingping, champs de thé et paysages karstiques",
+      "Shanghai : Bund, Pudong, vieux Shanghai, jardin Yu et concession française",
+      "Suzhou et Tongli : jardins, canaux, soierie et quartier Shantanjie"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — Pékin", text: "Rendez-vous à l'aéroport Mohammed V et envol à destination de Pékin.", meta: [["Date", "10 août 2026"]] },
+      { num: "J2", title: "Arrivée à Pékin", text: "Accueil, transfert en ville, installation à l'hôtel et dîner inclus.", meta: [["Nuit", "Pékin"]] },
+      { num: "J3", title: "Pékin historique", text: "Place Tian An Men, Cité Interdite, déjeuner local et visite du Temple du Ciel.", meta: [["Repas", "petit déjeuner, déjeuner"]] },
+      { num: "J4", title: "Grande Muraille et Palais d'Été", text: "Excursion à la Grande Muraille de Juyongguan, déjeuner puis découverte du Palais d'Été.", meta: [["Nuit", "Pékin"]] },
+      { num: "J5", title: "Pékin", text: "Parc olympique, initiation au Taiji, déjeuner chez l'habitant dans les Hutong, cours de raviolis chinois et Temple des Lamas.", meta: [["Nuit", "Pékin"]] },
+      { num: "J6", title: "Pékin — Xi'an", text: "Transfert à la gare, train rapide vers Xi'an, promenade dans les vieux quartiers et visite de la Grande Mosquée.", meta: [["Train", "5h"], ["Nuit", "Xi'an"]] },
+      { num: "J7", title: "Xi'an", text: "Grande Pagode de l'Oie Sauvage, Tang Dynasty Ever Bright City, cours de calligraphie, fabrique de jade et armée de terre cuite.", meta: [["Nuit", "Xi'an"]] },
+      { num: "J8", title: "Xi'an — Guilin — Yangshuo", text: "Vol vers Guilin, route vers Yangdi, croisière en radeau sur la rivière Li jusqu'à Xingping puis route vers Yangshuo.", meta: [["Nuit", "Yangshuo"]] },
+      { num: "J9", title: "Yangshuo", text: "Journée libre et temps libre dans le marché Ouest.", meta: [["Nuit", "Yangshuo"]] },
+      { num: "J10", title: "Yangshuo — Guilin — Shanghai", text: "Route vers Guilin, champs de thé avec dégustation, tour de ville, déjeuner puis vol vers Shanghai.", meta: [["Nuit", "Shanghai"]] },
+      { num: "J11", title: "Shanghai", text: "Bund, traversée de la rivière Huangpu, Pudong, vieux Shanghai, jardin Yu et ancienne concession française.", meta: [["Nuit", "Shanghai"]] },
+      { num: "J12", title: "Shanghai — Suzhou — Shanghai", text: "Tongli, mini-croisière sur les canaux, Suzhou, jardin du maître des filets, quartier Shantanjie et visite d'une soierie.", meta: [["Nuit", "Shanghai"]] },
+      { num: "J13", title: "Shanghai — Pékin", text: "Journée libre, puis transfert à la gare et TGV vers Pékin.", meta: [["Train", "TGV"], ["Nuit", "Pékin"]] },
+      { num: "J14", title: "Pékin — retour", text: "Petit déjeuner, transfert à l'aéroport et vol retour.", meta: [["Date", "23 août 2026"]] },
+      { num: "J15", title: "Casablanca", text: "Arrivée à Casablanca et fin de nos services.", meta: [["Date", "24 août 2026"]] }
+    ],
+    inclus: [
+      "Vol direct en classe économique avec Royal Air Maroc",
+      "Transferts aéroport / hôtel / aéroport",
+      "Logement 12 nuits en hôtels avec petits déjeuners",
+      "Repas mentionnés au programme",
+      "Services des guides locaux francophones",
+      "2 TGV / trains rapides Pékin / Xi'an et Shanghai / Pékin en 2ème classe",
+      "Vols Xi'an / Guilin et Guilin / Shanghai TTC",
+      "Frais d'entrée des visites mentionnées au programme",
+      "Guide national accompagnant le groupe"
+    ],
+    exclus: [
+      "Repas et boissons non mentionnés au programme",
+      "Pourboires chauffeurs et guides : 5 USD par personne et par jour",
+      "Dépenses personnelles",
+      "Frais visa : 600 DH",
+      "Assurance voyage"
+    ],
+    hotels: [
+      "Pékin — New Yunnan Crown Plaza 5☆, 5 nuits",
+      "Xi'an — Grand Mercure 5☆, 2 nuits",
+      "Yangshuo — Greenlotus Hotel 5☆, 2 nuits",
+      "Shanghai — The Yangtse Boutique Hotel 5☆, 3 nuits"
+    ],
+    priceTable: { head: ["Occupation", "Prix / pers."], rows: [["Chambre triple", "39 000 DH"], ["Chambre double", "39 500 DH"], ["Supplément single", "7 800 DH"], ["Visa", "600 DH"]] },
+    route: ["Casablanca", "Pékin", "Xi'an", "Guilin", "Yangdi", "Yangshuo", "Shanghai", "Suzhou", "Pékin", "Casablanca"],
+    datesList: ["10/08 au 24/08/2026"],
+    dates: { line: "Départ unique : du 10 au 24 août 2026.", note: "Passeport valide 6 mois minimum, dossier visa touristique et relevé bancaire requis selon conditions du programme." },
+    cta: { title: "Envie de cette grande Chine ?", text: "Nous préparons votre circuit Chine impériale et paysages du Sud avec vols, hôtels 5☆, trains rapides et assistance Voyages 21." }
+  },
   "asie-malaisie-thailande": {
     mediaKey: "modal-malaisie", whatsapp: "212673280009",
     eyebrow: "Malaisie & Thaïlande · Circuit", title: "Malaisie & Thaïlande — KL, Krabi & Phuket", duration: "14 jours", tag: "Asie",
@@ -1250,6 +1325,213 @@ window.VOYAGES = {
     cta: { title: "Envie de la Malaisie et de la Thaïlande ?", text: "Nous composons chaque voyage sur mesure, selon vos dates et vos envies — comme nous le faisons depuis 2000." }
   },
 
+  "asie-malaisie-singapour": {
+    mediaKey: "modal-malaisie-singapour", whatsapp: "212673280009",
+    eyebrow: "Combiné Asie · Malaisie & Singapour",
+    title: "Malaisie & Singapour — Kuala Lumpur, Penang & Singapour",
+    duration: "14 jours",
+    tag: "Combiné",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Kuala Lumpur, Penang, Singapour"],
+      ["Durée", "14 jours / 11 nuits"],
+      ["Vols", "Inclus — Qatar Airways"],
+      ["Hôtels", "5☆ et 4☆ sup."],
+      ["Visa", "Singapour : 400 DH"],
+      ["Dates", "01 au 13 août · 06 au 19 août"]
+    ],
+    price: "27 500 DH",
+    intro: [
+      "Un combiné entre Malaisie et Singapour, de Kuala Lumpur à Penang puis vers la cité-État la plus futuriste d'Asie.",
+      "Le programme associe plage à Batu Ferringhi, visites de Georgetown, tours Petronas, Genting Highlands, Malacca, Johor Bahru et découverte guidée de Singapour.",
+      "Un voyage pensé pour alterner culture, modernité, détente balnéaire et shopping."
+    ],
+    highlights: [
+      "Penang : Georgetown, Batu Ferringhi et marché de nuit",
+      "Kuala Lumpur : tours Petronas, Palais Royal, Mosquée Nationale et déjeuner à la tour KL",
+      "Genting Highlands : parc d'attractions, casino, shopping et loisirs",
+      "Malacca et Johor Bahru avant l'entrée à Singapour",
+      "Singapour : Chinatown, Little India, jardin botanique et temps libre shopping"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — Kuala Lumpur", text: "Rendez-vous à l'aéroport de Casablanca et envol avec Qatar Airways vers Kuala Lumpur. Repas et nuit à bord.", meta: [["Vols", "Qatar Airways"]] },
+      { num: "J2", title: "Kuala Lumpur", text: "Arrivée à Kuala Lumpur, accueil et transfert vers un hôtel 5☆ au cœur du Triangle d'Or.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J3", title: "Kuala Lumpur — Butterworth — Penang", text: "Départ en train rapide vers Butterworth, face à Penang, puis installation à Batu Ferringhi.", meta: [["Nuit", "Penang"]] },
+      { num: "J4", title: "Penang", text: "Visite de l'île de Penang et de Georgetown, puis retour à l'hôtel en fin d'après-midi.", meta: [["Nuit", "Penang"]] },
+      { num: "J5", title: "Penang", text: "Journée libre pour la détente en bord de mer.", meta: [["Nuit", "Penang"]] },
+      { num: "J6", title: "Penang — Kuala Lumpur", text: "Route vers Kuala Lumpur et installation dans un hôtel 5☆ situé au cœur du Triangle d'Or.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J7", title: "Kuala Lumpur", text: "Visite du Palais Royal, de la Mosquée Nationale, du Monument National, des tours Petronas et déjeuner à la tour KL.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J8", title: "Genting Highlands", text: "Excursion à Genting Highlands avec temps libre dans le complexe de loisirs.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J9", title: "Kuala Lumpur", text: "Journée libre pour détente ou shopping dans les grands centres commerciaux de la ville.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J10", title: "Kuala Lumpur — Malacca — Johor Bahru", text: "Départ vers Malacca, visite de la ville historique, puis continuation vers Johor Bahru.", meta: [["Nuit", "Johor Bahru"]] },
+      { num: "J11", title: "Singapour", text: "Entrée à Singapour, installation en hôtel 4☆ supérieur puis visite guidée : Chinatown, Little India, jardin botanique et quartiers emblématiques.", meta: [["Nuit", "Singapour"]] },
+      { num: "J12", title: "Singapour", text: "Journée libre pour profiter du shopping, de la gastronomie et des centres commerciaux de Singapour.", meta: [["Nuit", "Singapour"]] },
+      { num: "J13", title: "Singapour — aéroport", text: "Libération des chambres à midi, temps libre puis transfert à l'aéroport de Singapour pour le vol retour.", meta: [["Retour", "via Doha"]] },
+      { num: "J14", title: "Casablanca", text: "Arrivée à Casablanca et fin de nos services.", meta: [["Fin", "services"]] }
+    ],
+    inclus: [
+      "Billet d'avion Casablanca / Doha / Kuala Lumpur / Singapour / Doha / Casablanca avec Qatar Airways",
+      "Hébergement en hôtels 5☆ et 4☆ supérieur",
+      "Repas mentionnés au programme",
+      "Visites mentionnées au programme",
+      "Transport en autocar climatisé",
+      "Assistance d'un guide arabophone ou francophone durant le circuit"
+    ],
+    exclus: [
+      "Frais de visa Singapour : 400 DH",
+      "Repas non mentionnés au programme",
+      "Dépenses personnelles",
+      "Excursions non prévues au programme",
+      "Pourboires chauffeur et guide, à prévoir environ 20 USD"
+    ],
+    hotels: [
+      "Penang / Batu Ferringhi — Shangri-La 5☆ ou similaire",
+      "Kuala Lumpur — hôtel 5☆ au Triangle d'Or",
+      "Singapour — hôtel 4☆ supérieur en centre-ville"
+    ],
+    priceTable: { head: ["Occupation", "Prix / pers."], rows: [["Enfant -12 ans", "27 500 DH"], ["3ème personne", "31 900 DH"], ["Chambre double", "32 900 DH"], ["Supplément single", "11 500 DH"], ["Visa Singapour", "400 DH"]] },
+    route: ["Casablanca", "Kuala Lumpur", "Butterworth", "Penang", "Genting Highlands", "Malacca", "Johor Bahru", "Singapour", "Casablanca"],
+    datesList: ["01/08 au 13/08", "06/08 au 19/08"],
+    dates: { line: "Départs : du 01 au 13 août et du 06 au 19 août.", note: "Formulaire MDAC Malaisie à remplir au minimum 3 jours avant le départ. Visa Singapour selon dossier. Tarif à confirmer selon disponibilités." },
+    cta: { title: "Envie du combiné Malaisie & Singapour ?", text: "Nous préparons votre circuit entre Kuala Lumpur, Penang et Singapour avec vols, hôtels et assistance Voyages 21." }
+  },
+  "asie-malaisie-indonesie": {
+    mediaKey: "modal-malaisie-indonesie", whatsapp: "212673280009",
+    eyebrow: "Combiné Asie · Malaisie & Indonésie",
+    title: "Malaisie & Indonésie — Kuala Lumpur, Bali & Jakarta",
+    duration: "15 jours",
+    tag: "Combiné",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Kuala Lumpur, Bali, Jakarta"],
+      ["Durée", "15 jours / 12 nuits"],
+      ["Vols", "Inclus — Qatar Airways"],
+      ["Hôtels", "5☆"],
+      ["Guide", "Arabophone en Malaisie et francophone durant le circuit"],
+      ["Dates", "03 au 17 août · 09 au 23 août"]
+    ],
+    price: "27 800 DH",
+    intro: [
+      "Un combiné entre Malaisie et Indonésie, avec Kuala Lumpur, les plages de Bali et la découverte de Jakarta.",
+      "Le voyage mêle ville moderne, shopping, excursion à Genting Highlands, séjour balnéaire à Nusa Dua et visite de la capitale indonésienne.",
+      "Une formule confortable en hôtels 5☆, avec vols internationaux et vols Kuala Lumpur / Bali / Jakarta inclus."
+    ],
+    highlights: [
+      "Kuala Lumpur : tours Petronas, Mosquée Nationale, Palais Royal et déjeuner à la tour KL",
+      "Genting Highlands : complexe de loisirs, centre commercial et parc d'attractions",
+      "Bali : Nusa Dua, Ubud, Kintamani, volcan du lac Batur et croisière en mer",
+      "Jakarta : centre historique de Batavia et port traditionnel de Sunda Kelapa",
+      "Vols Qatar Airways et vols Kuala Lumpur / Bali / Jakarta avec 20 kg de bagages en soute"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — Kuala Lumpur", text: "Enregistrement à Casablanca et envol avec Qatar Airways vers Kuala Lumpur. Repas et nuit à bord.", meta: [["Vols", "Qatar Airways"]] },
+      { num: "J2", title: "Kuala Lumpur", text: "Arrivée à Kuala Lumpur, accueil, transfert et installation dans un hôtel 5☆ au cœur du Triangle d'Or.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J3", title: "Kuala Lumpur", text: "Visite du Palais Royal, de la Mosquée Nationale, du Monument National et des tours Petronas, avec déjeuner dans le restaurant tournant de la tour KL.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J4", title: "Genting Highlands", text: "Excursion au complexe de loisirs de Genting Highlands, avec temps libre pour le parc, le shopping et les animations.", meta: [["Nuit", "Kuala Lumpur"]] },
+      { num: "J5-J6", title: "Kuala Lumpur", text: "Journées libres pour détente ou shopping dans les grands centres commerciaux de la ville.", meta: [["Nuits", "Kuala Lumpur"]] },
+      { num: "J7", title: "Kuala Lumpur — Bali", text: "Vol vers Bali, accueil et transfert à Nusa Dua, installation à l'hôtel Grand Mirage 5☆.", meta: [["Vol", "3h"], ["Nuit", "Bali"]] },
+      { num: "J8", title: "Bali — Ubud et tour de l'île", text: "Visite d'Ubud, continuation vers Kintamani, volcan du lac Batur, déjeuner en cours d'excursion et retour à l'hôtel.", meta: [["Nuit", "Bali"]] },
+      { num: "J9", title: "Bali — croisière en mer", text: "Croisière au large de Bali avec escale à Nusa Penida, balade découverte, activités nautiques à disposition et déjeuner buffet.", meta: [["Nuit", "Bali"]] },
+      { num: "J10-J11", title: "Nusa Dua", text: "Journées libres pour profiter de la plage, de l'hôtel, de Kuta ou du centre Bali Collection.", meta: [["Nuits", "Bali"]] },
+      { num: "J12", title: "Bali — Jakarta", text: "Vol vers Jakarta, accueil et transfert à l'hôtel Borobudur 5☆.", meta: [["Vol", "1h30"], ["Nuit", "Jakarta"]] },
+      { num: "J13", title: "Jakarta", text: "Découverte du centre historique de Jakarta, anciennement Batavia, et du port traditionnel de Sunda Kelapa.", meta: [["Nuit", "Jakarta"]] },
+      { num: "J14", title: "Jakarta — aéroport", text: "Temps libre selon l'horaire de vol puis transfert à l'aéroport pour le retour.", meta: [["Retour", "via Doha"]] },
+      { num: "J15", title: "Casablanca", text: "Arrivée à Casablanca et fin de nos services.", meta: [["Fin", "services"]] }
+    ],
+    inclus: [
+      "Billet d'avion Casablanca / Doha / Kuala Lumpur / Jakarta / Doha / Casablanca avec Qatar Airways",
+      "Hébergement en hôtels 5☆",
+      "Repas mentionnés au programme",
+      "Visites mentionnées au programme",
+      "Vols Kuala Lumpur / Bali / Jakarta avec 20 kg de bagages en soute",
+      "Transport en autocar climatisé",
+      "Assistance d'un guide arabophone en Malaisie et francophone durant le circuit"
+    ],
+    exclus: [
+      "Repas non mentionnés au programme",
+      "Dépenses personnelles",
+      "Excursions non prévues au programme",
+      "Pourboires chauffeur et guide, à prévoir environ 20 USD"
+    ],
+    hotels: [
+      "Kuala Lumpur — hôtel 5☆ au Triangle d'Or",
+      "Bali / Nusa Dua — Grand Mirage 5☆",
+      "Jakarta — Hotel Borobudur 5☆"
+    ],
+    priceTable: { head: ["Occupation", "Prix / pers."], rows: [["Enfant -12 ans", "27 800 DH"], ["3ème personne", "32 900 DH"], ["Chambre double", "33 900 DH"], ["Supplément single", "10 900 DH"]] },
+    route: ["Casablanca", "Kuala Lumpur", "Genting Highlands", "Bali", "Nusa Penida", "Jakarta", "Doha", "Casablanca"],
+    datesList: ["03/08 au 17/08", "09/08 au 23/08"],
+    dates: { line: "Départs : du 03 au 17 août et du 09 au 23 août.", note: "Formulaire MDAC Malaisie à remplir au minimum 3 jours avant le départ. Tarif à confirmer selon disponibilités." },
+    cta: { title: "Envie du combiné Malaisie & Indonésie ?", text: "Nous préparons votre voyage entre Kuala Lumpur, Bali et Jakarta avec vols, hôtels 5☆ et assistance Voyages 21." }
+  },
+  "asie-indonesie-thailande": {
+    mediaKey: "modal-indonesie-thailande", whatsapp: "212673280009",
+    eyebrow: "Combiné Asie · Indonésie & Thaïlande",
+    title: "Indonésie & Thaïlande — Jakarta, Bali & Phuket",
+    duration: "14 jours",
+    tag: "Combiné",
+    cadran: [
+      ["Départ", "Casablanca"],
+      ["Destinations", "Jakarta, Bali, Phuket"],
+      ["Durée", "14 jours / 11 nuits"],
+      ["Vols", "Inclus — Qatar Airways"],
+      ["Hôtels", "5☆"],
+      ["Guide", "Arabophone ou francophone"],
+      ["Date", "02 au 15 août"]
+    ],
+    price: "31 500 DH",
+    intro: [
+      "Un combiné exclusif entre Indonésie et Thaïlande, pensé pour relier Jakarta, Bali et Phuket dans un même voyage.",
+      "Le programme associe découverte culturelle, hôtels 5☆, croisière à Bali, temps balnéaire à Nusa Dua et extension à Phuket avec excursion à Koh Phi Phi.",
+      "Une traversée d'Asie entre capitale, îles mythiques et plages de l'océan Indien."
+    ],
+    highlights: [
+      "Jakarta : centre historique, port traditionnel de Sunda Kelapa et séjour à l'hôtel Borobudur 5☆",
+      "Bali : Nusa Dua, Ubud, Kintamani, volcan du lac Batur et croisière vers Nusa Penida",
+      "Phuket : séjour au Dusit Laguna Phuket 5☆ en bord de mer",
+      "Excursion à Koh Phi Phi avec bateau, droits d'entrée et déjeuner inclus",
+      "Vols Qatar Airways et vols Jakarta / Bali / Phuket avec 20 kg de bagages en soute"
+    ],
+    days: [
+      { num: "J1", title: "Casablanca — Jakarta", text: "Rendez-vous à l'aéroport de Casablanca et envol avec Qatar Airways à destination de Jakarta. Repas et nuit à bord.", meta: [["Vols", "Qatar Airways"]] },
+      { num: "J2", title: "Jakarta", text: "Arrivée à Jakarta, accueil, transfert et installation à l'hôtel Borobudur 5☆. Dîner et nuit.", meta: [["Nuit", "Jakarta"]] },
+      { num: "J3", title: "Jakarta", text: "Journée de découverte de la capitale : centre historique de Batavia, port traditionnel de Sunda Kelapa et déjeuner local en cours de visite.", meta: [["Nuit", "Jakarta"]] },
+      { num: "J4", title: "Jakarta — Bali", text: "Vol vers Bali, accueil et transfert vers Nusa Dua. Installation à l'hôtel Grand Mirage 5☆ avec accès direct à la plage.", meta: [["Vol", "1h40"], ["Nuit", "Bali"]] },
+      { num: "J5", title: "Bali — Ubud et tour de l'île", text: "Visite du village d'Ubud, continuation vers Kintamani et le volcan du lac Batur, déjeuner en cours de visite puis retour à l'hôtel.", meta: [["Nuit", "Bali"]] },
+      { num: "J6", title: "Bali — croisière", text: "Croisière au large de Bali vers Nusa Penida, balade découverte, activités nautiques à disposition et déjeuner buffet.", meta: [["Nuit", "Bali"]] },
+      { num: "J7-J8", title: "Nusa Dua", text: "Journées libres pour profiter de la plage, des installations de l'hôtel, de Kuta ou du centre commercial Bali Collection.", meta: [["Nuits", "Bali"]] },
+      { num: "J9", title: "Bali — Phuket", text: "Transfert à l'aéroport de Bali et vol vers Phuket. Accueil puis installation à l'hôtel Dusit Laguna Phuket 5☆.", meta: [["Vol", "3h30"], ["Nuit", "Phuket"]] },
+      { num: "J10", title: "Koh Phi Phi", text: "Excursion à Koh Phi Phi avec transferts en bateau, droits d'entrée et déjeuner inclus.", meta: [["Excursion", "incluse"]] },
+      { num: "J11-J12", title: "Phuket", text: "Journées libres avec petit déjeuner pour profiter de l'hôtel, de la plage et des excursions disponibles sur place.", meta: [["Nuits", "Phuket"]] },
+      { num: "J13", title: "Phuket — Doha — Casablanca", text: "Temps libre selon l'horaire de vol, transfert à l'aéroport de Phuket et envol vers Doha.", meta: [["Retour", "via Doha"]] },
+      { num: "J14", title: "Casablanca", text: "Arrivée à Casablanca et fin de nos services.", meta: [["Fin", "services"]] }
+    ],
+    inclus: [
+      "Billet d'avion Casablanca / Doha / Jakarta / Phuket / Doha / Casablanca avec Qatar Airways",
+      "Hébergement en hôtels 5☆",
+      "Repas mentionnés au programme",
+      "Visites mentionnées au programme",
+      "Vols Jakarta / Bali / Phuket avec 20 kg de bagages en soute",
+      "Transport en autocar climatisé",
+      "Assistance d'un guide arabophone ou francophone durant le circuit"
+    ],
+    exclus: [
+      "Repas non mentionnés au programme",
+      "Dépenses personnelles",
+      "Excursions non prévues au programme",
+      "Pourboires chauffeur et guide, à prévoir environ 20 USD"
+    ],
+    hotels: [
+      "Jakarta — Hotel Borobudur 5☆",
+      "Bali / Nusa Dua — Grand Mirage 5☆",
+      "Phuket — Dusit Laguna Phuket 5☆"
+    ],
+    priceTable: { head: ["Occupation", "Prix / pers."], rows: [["Enfant -12 ans", "31 500 DH"], ["3ème personne", "34 500 DH"], ["Chambre double", "35 900 DH"], ["Supplément single", "11 500 DH"]] },
+    route: ["Casablanca", "Jakarta", "Bali", "Nusa Penida", "Phuket", "Koh Phi Phi", "Doha", "Casablanca"],
+    datesList: ["02/08 au 15/08"],
+    dates: { line: "Départ : du 02 au 15 août.", note: "Formulaire TDAC Thaïlande à remplir au minimum 3 jours avant le départ. Tarif à confirmer selon disponibilités." },
+    cta: { title: "Envie du combiné Indonésie & Thaïlande ?", text: "Nous préparons votre voyage entre Jakarta, Bali et Phuket avec vols, hôtels 5☆ et assistance Voyages 21." }
+  },
   "asie-thailande-bangkok": {
     mediaKey: "modal-bangkok", whatsapp: "212673280009",
     eyebrow: "Thaïlande · Circuit", title: "Exotic Thailand — Bangkok, Krabi & Phuket", duration: "14 jours", tag: "Thaïlande",
