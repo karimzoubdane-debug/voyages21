@@ -2315,9 +2315,9 @@
         display: none;
         position: fixed;
         top: 52px; left: 0; right: 0;
-        background: #0D1A14;
+        background: #fff;
         flex-direction: column;
-        border-bottom: 2px solid var(--gold);
+        border-bottom: 3px solid #C8860A;
         z-index: 299;
         width: 100%;
         max-height: calc(100svh - 52px);
@@ -2325,45 +2325,52 @@
         overscroll-behavior: contain;
       }
       .nav-mobile-panel.open { display: flex; }
-      .nav-mobile-menu { width: 100%; padding: 10px; }
+      .nav-mobile-menu { width: 100%; padding: 0; background: #fff; }
       .mobile-brochure-nav {
-        display: flex;
-        gap: 6px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, .8fr);
         width: 100%;
-        overflow-x: auto;
-        padding-bottom: 8px;
-        scrollbar-width: none;
+        background: #fff;
+        border-bottom: 3px solid #C8860A;
       }
-      .mobile-brochure-nav::-webkit-scrollbar { display: none; }
       .mobile-brochure-title {
-        flex: 0 0 auto;
-        min-height: 42px;
-        padding: 0 14px;
+        min-height: 70px;
+        padding: 12px 8px;
         border: 0;
-        border-radius: 4px;
-        background: var(--gold);
-        color: #fff;
-        font-family: 'Geist', sans-serif;
-        font-size: .76rem;
+        border-radius: 0;
+        background: transparent;
+        color: #1B2D4F;
+        font-family: 'Fraunces', serif;
+        font-size: clamp(1.35rem, 6vw, 2.15rem);
         font-weight: 700;
-        letter-spacing: .08em;
+        letter-spacing: 0;
         line-height: 1.2;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 6px;
         text-decoration: none;
-        text-transform: uppercase;
-        white-space: nowrap;
+        text-transform: none;
         cursor: pointer;
+        text-align: center;
       }
-      .mobile-brochure-title.active { background: #fff; color: var(--navy); }
+      .mobile-brochure-title.active {
+        background: #E0F7FF;
+        color: #0099CC;
+        border-bottom: 5px solid #0099CC;
+        margin-bottom: -3px;
+      }
+      .mobile-brochure-title[href*="maroc"] {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: min(100%, 280px);
+        min-height: 66px;
+      }
       .mobile-brochure-title.open .nav-caret { transform: rotate(180deg); }
       .mobile-brochure-panel {
         display: none;
-        margin-top: 2px;
-        border: 1px solid rgba(196,154,60,.35);
-        border-bottom: 2px solid var(--gold);
-        background: #111C16;
+        border-bottom: 3px solid #C8860A;
+        background: #fff;
       }
       .mobile-brochure-panel.open { display: block; }
       .mobile-brochure-inner { display: flex; min-height: 190px; }
@@ -2372,8 +2379,8 @@
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
-        background: rgba(255,255,255,.04);
-        border-right: 1px solid rgba(196,154,60,.2);
+        background: #F5F0E8;
+        border-right: 1px solid rgba(27,45,79,.12);
         padding: 8px 0;
       }
       .mobile-brochure-cont {
@@ -2382,7 +2389,7 @@
         border: 0;
         border-left: 3px solid transparent;
         background: transparent;
-        color: rgba(253,250,245,.72);
+        color: #1B2D4F;
         font-family: 'Geist', sans-serif;
         font-size: .72rem;
         font-weight: 700;
@@ -2392,9 +2399,9 @@
         cursor: pointer;
       }
       .mobile-brochure-cont.active {
-        background: rgba(196,154,60,.1);
-        border-left-color: var(--gold);
-        color: var(--gold);
+        background: #fff;
+        border-left-color: #C8860A;
+        color: #8C2020;
       }
       .mobile-brochure-countries {
         flex: 1;
@@ -2404,9 +2411,10 @@
       .mobile-brochure-col.active { display: flex; }
       .mobile-brochure-col a {
         padding: 10px 8px;
-        border-bottom: 1px solid rgba(255,255,255,.08);
-        color: rgba(253,250,245,.9);
+        border-bottom: 1px solid rgba(27,45,79,.1);
+        color: #1B2D4F;
         font-size: .86rem;
+        font-weight: 500;
         line-height: 1.25;
         text-decoration: none;
       }
@@ -2414,7 +2422,7 @@
       .mobile-brochure-title:focus-visible,
       .mobile-brochure-cont:focus-visible,
       .mobile-brochure-col a:focus-visible {
-        outline: 2px solid #fff;
+        outline: 2px solid #0099CC;
         outline-offset: 2px;
       }
       @media (max-width: 390px) {
