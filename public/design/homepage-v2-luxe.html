@@ -2447,6 +2447,29 @@
       display: block;
       margin-top: 3px;
     }
+    /* Croisieres : 2 sous-titres visa sous le titre, "sans visa" en rouge vif anime */
+    .dest-monde-visa {
+      display: block;
+      margin-top: 5px;
+      font-family: 'Geist', sans-serif;
+      font-style: normal;
+      font-size: .58rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      line-height: 1.55;
+    }
+    .dest-monde-visa .visa-yes { display: block; color: var(--gold); }
+    .dest-monde-visa .visa-no {
+      display: block;
+      color: #FF1E1E;
+      text-shadow: 0 2px 10px rgba(255,30,30,.5);
+      transform-origin: left center;
+      animation: countPulse 1.2s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .dest-monde-visa .visa-no { animation: none; }
+    }
 
     /* ── Barre de recherche hero ──────────────── */
     .hero-search {
@@ -4635,7 +4658,7 @@
       { img: IMG.chine,      name: 'Chine',                count: '1 circuit',     link: '/voyages/destinations/chine.html' },
       { img: IMG.malaisie,   name: 'Malaisie & Thaïlande', count: '2 circuits',    link: '/voyages/destinations/malaisie-thailande.html' },
       { img: IMG.vietnam,    name: 'Vietnam',              count: '1 circuit',     link: '/voyages/destinations/vietnam.html' },
-      { img: IMG.croisiere,  name: 'Croisières',           count: '2 circuits',    link: '/voyages/destinations/croisieres.html' },
+      { img: IMG.croisiere,  name: 'Croisières',           count: '2 circuits',    link: '/voyages/destinations/croisieres.html', cruiseVisa: true },
       { img: '',             name: 'Omra & Hajj',          count: '5 programmes',  link: '/voyages/destinations/omra.html', gradient: true },
     ];
 
@@ -5175,7 +5198,9 @@
     function renderMonde() {
       document.getElementById('grid-monde').innerHTML = DESTINATIONS.map(d => `
         <a href="${d.link}" class="dest-monde-tile" style="${d.gradient ? 'background:linear-gradient(160deg,#1B6B4A 0%,#0d2c1a 100%)' : `background-image:url('${d.img}')`}">
-          <div class="dest-monde-name">${d.name}<span class="dest-monde-count">${d.count}</span></div>
+          <div class="dest-monde-name">${d.name}${d.cruiseVisa
+            ? `<span class="dest-monde-visa"><span class="visa-yes">Avec visa Schengen</span><span class="visa-no">Sans visa Schengen</span></span>`
+            : `<span class="dest-monde-count">${d.count}</span>`}</div>
         </a>
       `).join('');
     }

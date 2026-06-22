@@ -179,6 +179,23 @@ h1, h2, h3 {
   border-bottom-color: #008fce;
 }
 
+/* Onglet "sans visa Schengen" mis en evidence : rouge vif + clignotement */
+.dest-tab.is-alert {
+  color: #FF1E1E;
+  animation: destTabAlert 1.2s ease-in-out infinite;
+}
+.dest-tab.is-alert.active {
+  color: #FF1E1E;
+  border-bottom-color: #FF1E1E;
+}
+@keyframes destTabAlert {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .55; transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dest-tab.is-alert { animation: none; }
+}
+
 [data-dest-panel][hidden] {
   display: none;
 }
