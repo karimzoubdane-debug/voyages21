@@ -117,7 +117,7 @@
       + '<div><div class="eyebrow">Destination</div>'
       + '<h1>' + esc(cfg.title) + '</h1>'
       + '<p>' + esc(cfg.description || 'Découvrez les voyages disponibles pour cette destination, puis ouvrez la fiche détaillée du programme qui vous intéresse.') + '</p></div>'
-      + '<aside class="summary"><b>' + slugs.length + '</b><span>' + esc(cfg.countLabel || 'programmes disponibles') + '</span></aside>'
+      + '<aside class="summary"><b>' + slugs.length + '</b><span>' + esc(String(cfg.countLabel || 'programmes disponibles').replace(/^\s*\d+\s*/, '')) + '</span></aside>'
       + '</section>'
       + content
       + '</main>';
