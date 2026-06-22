@@ -75,3 +75,15 @@ src/
 - Bandeau signature agrandi : "De l'aventure intime aux projets d'envergure, Voyages 21 signe le voyage."
 - Page About avec sections #expertise et #engagements
 - Mega menus clic uniquement (pas de survol intempestif sur les autres pages)
+
+## 💾 Sauvegarde du site (règle permanente)
+- **Automatique** : le workflow `.github/workflows/sauvegarde.yml` génère à chaque
+  fusion sur `main` (et chaque lundi) une **Release** contenant le zip du site,
+  le bundle git (historique complet) et le manifeste des médias.
+- **Gros fichiers à déposer à la main** : ces fichiers (zip + bundle, ~11 Mo chacun)
+  doivent être déposés par Karim dans le Drive **« VOYAGES21 — SAUVEGARDES »**
+  (id `1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI`).
+- **RAPPEL À FAIRE** : à partir du 2026-06-23, **à la fin de chaque session**,
+  rappeler à Karim de télécharger la dernière Release et de déposer les gros
+  fichiers dans son Drive. **Continuer ce rappel jusqu'à ce que Karim confirme**
+  (« c'est sauvegardé » / « j'ai fait le nécessaire ») — ensuite arrêter les rappels.

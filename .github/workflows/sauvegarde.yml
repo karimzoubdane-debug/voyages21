@@ -1,0 +1,69 @@
+name: Sauvegarde Voyages21
+
+# Genere une sauvegarde complete du site :
+#  - voyages21-site-<date>.zip          : tous les fichiers du site (etat de main)
+#  - voyages21-SAUVEGARDE-<date>.bundle : depot git complet (tout l'historique)
+#  - medias-manifest-<date>.json        : liste/liens des medias (photos/videos) du site en ligne
+# Les fichiers sont publies en Release (telechargement permanent) + en artefact (90 jours).
+
+on:
+  push:
+    branches: [ main ]          # a chaque PR fusionnee sur main
+  schedule:
+    - cron: '0 3 * * 1'         # filet de securite : tous les lundis a 03:00 UTC
+  workflow_dispatch: {}          # bouton "Run workflow" manuel
+
+permissions:
+  contents: write                # necessaire pour creer la Release
+
+concurrency:
+  group: sauvegarde-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  sauvegarde:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le depot (historique complet)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Date du jour
+        id: d
+        run: echo "date=$(date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Generer les fichiers de sauvegarde
+        run: |
+          set -e
+          mkdir -p backup
+          DATE="${{ steps.d.outputs.date }}"
+          # 1) Depot git complet (toutes branches + historique)
+          git bundle create "backup/voyages21-SAUVEGARDE-$DATE.bundle" --all
+          # 2) Tous les fichiers du site (etat actuel)
+          git archive --format=zip -o "backup/voyages21-site-$DATE.zip" HEAD
+          # 3) Manifeste des medias depuis le site en ligne (best effort)
+          curl -fsSL https://www.voyages21.com/api/media -o "backup/medias-manifest-$DATE.json" \
+            || echo '{"info":"manifest indisponible au moment de la sauvegarde"}' > "backup/medias-manifest-$DATE.json"
+          ls -lh backup/
+
+      - name: Publier en artefact (telechargeable 90 jours)
+        uses: actions/upload-artifact@v4
+        with:
+          name: voyages21-sauvegarde-${{ steps.d.outputs.date }}
+          path: backup/
+          retention-days: 90
+
+      - name: Publier une Release (telechargement permanent)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: sauvegarde-${{ steps.d.outputs.date }}-${{ github.run_number }}
+          name: Sauvegarde ${{ steps.d.outputs.date }}
+          body: |
+            Sauvegarde automatique du site Voyages21 (${{ steps.d.outputs.date }}).
+            - voyages21-site-*.zip : tous les fichiers du site, prets a redeployer.
+            - voyages21-SAUVEGARDE-*.bundle : depot git complet + historique (git clone le .bundle).
+            - medias-manifest-*.json : liste/liens des medias.
+            A telecharger et a deposer dans le Drive "VOYAGES21 — SAUVEGARDES".
+          make_latest: true
+          files: backup/*
