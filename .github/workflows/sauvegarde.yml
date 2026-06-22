@@ -23,6 +23,9 @@ concurrency:
 jobs:
   sauvegarde:
     runs-on: ubuntu-latest
+    env:
+      # Active le depot automatique dans Google Drive si le secret est configure
+      HAS_GDRIVE: ${{ secrets.GDRIVE_SA_JSON != '' }}
     steps:
       - name: Recuperer le depot (historique complet)
         uses: actions/checkout@v4
@@ -67,3 +70,26 @@ jobs:
             A telecharger et a deposer dans le Drive "VOYAGES21 — SAUVEGARDES".
           make_latest: true
           files: backup/*
+
+      # Depot AUTOMATIQUE dans Google Drive (sans aucune manip), si le secret
+      # GDRIVE_SA_JSON (cle d'un compte de service Google) est configure.
+      # Le dossier Drive est synchronise sur la derniere sauvegarde (toujours a jour).
+      - name: Deposer dans Google Drive
+        if: ${{ env.HAS_GDRIVE == 'true' }}
+        env:
+          GDRIVE_SA_JSON: ${{ secrets.GDRIVE_SA_JSON }}
+          GDRIVE_FOLDER_ID: ${{ vars.GDRIVE_FOLDER_ID || '1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI' }}
+        run: |
+          set -e
+          curl -fsSL https://rclone.org/install.sh | sudo bash
+          printf '%s' "$GDRIVE_SA_JSON" > /tmp/sa.json
+          mkdir -p "$HOME/.config/rclone"
+          cat > "$HOME/.config/rclone/rclone.conf" <<EOF
+          [gdrive]
+          type = drive
+          service_account_file = /tmp/sa.json
+          root_folder_id = $GDRIVE_FOLDER_ID
+          EOF
+          # sync = le dossier Drive reflete la derniere sauvegarde (l'historique reste dans les Releases)
+          rclone sync backup/ gdrive: --drive-use-trash=false -v
+          rm -f /tmp/sa.json

@@ -80,10 +80,11 @@ src/
 - **Automatique** : le workflow `.github/workflows/sauvegarde.yml` génère à chaque
   fusion sur `main` (et chaque lundi) une **Release** contenant le zip du site,
   le bundle git (historique complet) et le manifeste des médias.
-- **Gros fichiers à déposer à la main** : ces fichiers (zip + bundle, ~11 Mo chacun)
-  doivent être déposés par Karim dans le Drive **« VOYAGES21 — SAUVEGARDES »**
-  (id `1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI`).
-- **RAPPEL À FAIRE** : à partir du 2026-06-23, **à la fin de chaque session**,
-  rappeler à Karim de télécharger la dernière Release et de déposer les gros
-  fichiers dans son Drive. **Continuer ce rappel jusqu'à ce que Karim confirme**
-  (« c'est sauvegardé » / « j'ai fait le nécessaire ») — ensuite arrêter les rappels.
+- **Dépôt Drive automatique** : si le secret GitHub `GDRIVE_SA_JSON` (clé d'un
+  compte de service Google) est configuré, le workflow **dépose tout seul** la
+  sauvegarde dans le Drive **« VOYAGES21 — SAUVEGARDES »**
+  (id `1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI`) — aucune manip, aucun rappel.
+- **RAPPELS** : tant que `GDRIVE_SA_JSON` n'est PAS configuré, rappeler à Karim
+  en fin de session de déposer les gros fichiers dans son Drive (jusqu'à
+  confirmation). **Dès que le dépôt Drive automatique fonctionne → NE PLUS faire
+  de rappels.**
