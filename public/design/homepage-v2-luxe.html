@@ -2736,6 +2736,8 @@
       }
       .nav-tel { display: none; }
       .nav-cta { display: none; }
+      /* Le bouton "Voir l'introduction" reste visible (compact) dans la barre du haut sur mobile */
+      .nav-cta.nav-intro { display: inline-flex; padding: 8px 12px; font-size: .6rem; margin-right: 8px; }
       .nav-logo { font-size: 1.1rem; }
       .nav-logo .v21-logo-sub { display: none; }
       .nav-burger {
@@ -3118,8 +3120,8 @@
     </div>
 
     <div class="nav-right">
-      <a href="tel:+212673280009" class="nav-tel">+212 6 73 28 00 09</a>
-      <a href="#contact" class="nav-cta">Réserver</a>
+      <a href="/cover-ete-2026.html" class="nav-cta nav-intro">▶ Voir l’introduction</a>
+      <a href="tel:+212614152686" class="nav-tel">+212 6 14 15 26 86</a>
       <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
       </button>
@@ -3174,8 +3176,6 @@
        HERO — vidéo de fond plein écran
   ══════════════════════════════════════════ -->
   <section class="hero">
-
-    <a href="/cover-ete-2026.html" class="intro-return" aria-label="Revoir la page d'introduction vidéo">← Revoir l'introduction</a>
 
     <!-- Fallback gradient pendant le chargement -->
     <div class="hero-fallback"></div>
@@ -5438,7 +5438,7 @@
           </li>
           <li>
             <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 .06h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            <span><a href="tel:+212673280009">+212 6 73 28 00 09</a><br>
+            <span><a href="tel:+212614152686">+212 6 14 15 26 86</a><br>
             <span style="font-size:.82rem;opacity:.7">Fax : 0524 33 10 07 / 0524 30 51 52</span></span>
           </li>
           <li>
