@@ -670,6 +670,31 @@
       .travel-search-submit { height: 42px; }
     }
 
+    /* Bande intermediaire (tablette paysage / petit laptop) :
+       la grille 6 colonnes est trop serree -> reflow en colonnes aerees
+       (auto-fit), centrees sur la largeur de la page, sans chevauchement des labels. */
+    @media (min-width: 769px) and (max-width: 1060px) {
+      .travel-search-panel {
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 14px;
+        padding: 18px;
+        align-items: end;
+      }
+      .travel-search-submit {
+        grid-column: 1 / -1;
+        height: 50px;
+      }
+      .travel-search-field input,
+      .travel-search-field select {
+        height: 48px;
+        font-size: .92rem;
+      }
+      .travel-search-field label {
+        font-size: .62rem;
+        letter-spacing: .08em;
+      }
+    }
+
     /* ═══════════════════════════════════════════
        BANDE STATS
     ═══════════════════════════════════════════ */
