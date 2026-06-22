@@ -535,14 +535,14 @@
       left: 50%;
       bottom: 0;
       z-index: 5;
-      width: min(1120px, calc(100% - 48px));
+      width: min(1240px, calc(100% - 48px));
       transform: translate(-50%, 50%);
       color: #102033;
     }
     .travel-search-panel {
       display: grid;
-      grid-template-columns: minmax(180px, 1fr) minmax(150px, .85fr) minmax(150px, .9fr) minmax(120px, .7fr) minmax(190px, 1.2fr) auto;
-      gap: 10px;
+      grid-template-columns: minmax(180px, 1.1fr) minmax(160px, 1fr) minmax(160px, 1fr) minmax(130px, .8fr) minmax(180px, 1.1fr) auto;
+      gap: 16px;
       align-items: end;
       padding: 16px;
       border: 1px solid rgba(18,31,48,.12);
@@ -575,7 +575,10 @@
       font-size: .9rem;
       font-weight: 650;
       outline: none;
-      padding: 0 14px;
+      padding: 0 40px 0 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .travel-search-field input:focus,
     .travel-search-field select:focus {
@@ -5064,18 +5067,18 @@
       continentWrap?.classList.toggle('is-hidden', f.category !== 'world');
       if (f.category !== 'world' && continentSelect) continentSelect.value = '';
       const continentBase = f.category === 'world' ? base : [];
-      setSelectOptions(continentSelect, [...new Set(continentBase.map(v => v.continent))].filter(Boolean).sort(), 'Choisir un continent');
+      setSelectOptions(continentSelect, [...new Set(continentBase.map(v => v.continent))].filter(Boolean).sort(), 'Continent');
       const countryBase = f.category === 'world'
         ? base.filter(v => f.continent && v.continent === f.continent)
         : base;
-      setSelectOptions(countrySelect, [...new Set(countryBase.map(v => v.country))].filter(Boolean).sort(), f.category === 'world' && !f.continent ? 'Choisir d’abord un continent' : 'Choisir un pays');
+      setSelectOptions(countrySelect, [...new Set(countryBase.map(v => v.country))].filter(Boolean).sort(), f.category === 'world' && !f.continent ? 'Continent d’abord' : 'Pays');
       if (countrySelect) countrySelect.disabled = f.category === 'world' && !f.continent;
       const monthBase = countryBase.filter(v => f.category !== 'world' || !f.country || v.country === f.country);
       const availableMonths = [...new Set(monthBase.flatMap(v => v.months || []))];
       setSelectOptions(monthSelect, MONTHS.filter(([num]) => availableMonths.includes(num)), 'Tous les mois');
       const voyageStage = f.category !== 'world' || !!f.country;
       const voyageBase = voyageStage ? monthBase.filter(v => !f.month || (v.months || []).includes(f.month)) : [];
-      setSelectOptions(voyageSelect, voyageBase.map(v => [v.slug, v.titre]), voyageStage ? 'Choisir un voyage' : 'Choisir après le pays');
+      setSelectOptions(voyageSelect, voyageBase.map(v => [v.slug, v.titre]), voyageStage ? 'Voyage' : 'Pays d’abord');
       if (voyageSelect) voyageSelect.disabled = !voyageStage;
     }
 
