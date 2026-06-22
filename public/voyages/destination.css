@@ -91,23 +91,48 @@ h1, h2, h3 {
 
 .summary {
   background: #fff;
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold);
   border-radius: 16px;
   padding: 1.2rem 1.35rem;
+  text-align: center;
   box-shadow: 0 8px 26px rgba(21,46,31,.06);
+  animation: summaryPulse 1.3s ease-in-out infinite;
+}
+
+/* Clignotement doux doré pour attirer l'oeil sur le nombre de voyages */
+@keyframes summaryPulse {
+  0%, 100% {
+    transform: scale(1);
+    border-color: var(--gold);
+    box-shadow: 0 8px 26px rgba(21,46,31,.06), 0 0 0 0 rgba(200,164,64,0);
+  }
+  50% {
+    transform: scale(1.04);
+    border-color: #b8902f;
+    box-shadow: 0 10px 30px rgba(21,46,31,.10), 0 0 0 6px rgba(200,164,64,.20);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summary { animation: none; }
 }
 
 .summary b {
   display: block;
-  color: var(--forest);
+  color: var(--gold);
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.6rem;
+  font-weight: 800;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .summary span {
-  color: var(--muted);
-  font-size: .85rem;
+  display: block;
+  margin-top: .25rem;
+  color: var(--forest);
+  font-weight: 700;
+  font-size: .9rem;
+  letter-spacing: .02em;
 }
 
 .grid {
