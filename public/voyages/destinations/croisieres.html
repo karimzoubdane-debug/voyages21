@@ -15,9 +15,21 @@
   <script>
     window.DESTINATION_PAGE = {
       title: 'Croisières',
-      description: 'Croisières Méditerranée, Espagne, Italie, France et Malte.',
-      countLabel: '2 croisières',
-      slugs: ['croisiere-mediterranee-espagne-italie', 'croisiere-mediterranee-premium', 'croisiere-turquie-grece', 'croisiere-turquie-egypte']
+      description: 'Croisières Méditerranée, Espagne, Italie, Turquie, Grèce et Égypte.',
+      countLabel: 'croisières',
+      slugs: ['croisiere-mediterranee-espagne-italie', 'croisiere-mediterranee-premium', 'croisiere-turquie-grece', 'croisiere-turquie-egypte'],
+      groups: [
+        {
+          id: 'schengen',
+          label: 'Croisières avec visa Schengen',
+          slugs: ['croisiere-mediterranee-espagne-italie', 'croisiere-mediterranee-premium']
+        },
+        {
+          id: 'sans-schengen',
+          label: 'Croisières sans visa Schengen',
+          slugs: ['croisiere-turquie-grece', 'croisiere-turquie-egypte']
+        }
+      ]
     };
   </script>
   <script src="../destination-render.js?v=media-admin-v2"></script>

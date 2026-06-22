@@ -95,18 +95,37 @@
     return arr.slice().sort(function (a, b) { return priceValue(a) - priceValue(b); });
   }
 
+  // Onglets generiques definis par la page (ex. croisieres avec/sans visa Schengen)
+  function renderGroups(groups) {
+    var nav = '<nav class="dest-tabs" aria-label="Catégories">';
+    var panels = '';
+    groups.forEach(function (g, i) {
+      var active = i === 0;
+      nav += '<button class="dest-tab' + (active ? ' active' : '') + '" type="button" data-dest-tab="'
+        + esc(g.id) + '" aria-selected="' + (active ? 'true' : 'false') + '">' + esc(g.label) + '</button>';
+      panels += '<section data-dest-panel="' + esc(g.id) + '"' + (active ? '' : ' hidden') + '>'
+        + renderGrid(sortByPrice(g.slugs || [])) + '</section>';
+    });
+    return nav + '</nav>' + panels;
+  }
+
   function render() {
-    var isMaroc = (cfg.title || '').toLowerCase().indexOf('maroc') !== -1;
-    var sejours = sortByPrice(slugs.filter(isMarocSejour));
-    var circuits = sortByPrice(slugs.filter(function (slug) { return !isMarocSejour(slug); }));
-    var content = renderGrid(sortByPrice(slugs));
-    if (isMaroc && sejours.length && circuits.length) {
-      content = '<nav class="dest-tabs" aria-label="Catégories Maroc">'
-        + '<button class="dest-tab active" type="button" data-dest-tab="sejours" aria-selected="true">Séjours</button>'
-        + '<button class="dest-tab" type="button" data-dest-tab="circuits" aria-selected="false">Circuits</button>'
-        + '</nav>'
-        + '<section data-dest-panel="sejours">' + renderGrid(sejours) + '</section>'
-        + '<section data-dest-panel="circuits" hidden>' + renderGrid(circuits) + '</section>';
+    var content;
+    if (cfg.groups && cfg.groups.length) {
+      content = renderGroups(cfg.groups);
+    } else {
+      var isMaroc = (cfg.title || '').toLowerCase().indexOf('maroc') !== -1;
+      var sejours = sortByPrice(slugs.filter(isMarocSejour));
+      var circuits = sortByPrice(slugs.filter(function (slug) { return !isMarocSejour(slug); }));
+      content = renderGrid(sortByPrice(slugs));
+      if (isMaroc && sejours.length && circuits.length) {
+        content = '<nav class="dest-tabs" aria-label="Catégories Maroc">'
+          + '<button class="dest-tab active" type="button" data-dest-tab="sejours" aria-selected="true">Séjours</button>'
+          + '<button class="dest-tab" type="button" data-dest-tab="circuits" aria-selected="false">Circuits</button>'
+          + '</nav>'
+          + '<section data-dest-panel="sejours">' + renderGrid(sejours) + '</section>'
+          + '<section data-dest-panel="circuits" hidden>' + renderGrid(circuits) + '</section>';
+      }
     }
     app.innerHTML = '<div class="topbar"><div class="topbar-inner">'
       + '<a href="/design/homepage-v2-luxe.html">‹ Retour à l’accueil</a>'
