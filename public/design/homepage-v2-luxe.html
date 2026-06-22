@@ -2695,9 +2695,9 @@
       .hero-search { display: none; }
       .hero-actions { display: none; }
       .hero-scroll { display: none; }
+      /* Barre de recherche masquee en mobile (conservee sur PC) */
       .travel-search-dock {
-        width: calc(100% - 28px);
-        transform: translate(-50%, 50%);
+        display: none;
       }
       .travel-search-panel {
         grid-template-columns: 1fr 1fr;
@@ -3506,6 +3506,11 @@
       .args-problem { padding: 24px 20px; }
       .args-conclusion { padding: 36px 20px; }
       .args-conclusion-eq { gap: 10px; }
+    }
+
+    /* Barre de recherche masquee en mobile : on supprime l'espace reserve en haut de la section suivante */
+    @media (max-width: 768px) {
+      .args-section { padding-top: 56px; }
     }
   </style>
 
