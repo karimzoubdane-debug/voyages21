@@ -85,11 +85,21 @@
       + '</article>';
   }
 
+  function priceValue(slug) {
+    var v = all[slug] || {};
+    // Tous les prix sont en DH : on ne garde que les chiffres pour comparer.
+    var n = parseInt(String(v.price || '').replace(/[^0-9]/g, ''), 10);
+    return isNaN(n) ? Infinity : n; // voyages sans prix affiche : classes en dernier
+  }
+  function sortByPrice(arr) {
+    return arr.slice().sort(function (a, b) { return priceValue(a) - priceValue(b); });
+  }
+
   function render() {
     var isMaroc = (cfg.title || '').toLowerCase().indexOf('maroc') !== -1;
-    var sejours = slugs.filter(isMarocSejour);
-    var circuits = slugs.filter(function (slug) { return !isMarocSejour(slug); });
-    var content = renderGrid(slugs);
+    var sejours = sortByPrice(slugs.filter(isMarocSejour));
+    var circuits = sortByPrice(slugs.filter(function (slug) { return !isMarocSejour(slug); }));
+    var content = renderGrid(sortByPrice(slugs));
     if (isMaroc && sejours.length && circuits.length) {
       content = '<nav class="dest-tabs" aria-label="Catégories Maroc">'
         + '<button class="dest-tab active" type="button" data-dest-tab="sejours" aria-selected="true">Séjours</button>'
