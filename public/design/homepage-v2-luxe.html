@@ -4509,11 +4509,8 @@
         const title = document.getElementById('heroTitle');
         const sub = document.getElementById('heroSubtitle');
         const button = document.getElementById('heroButton');
-        if (cfg.videoUrl && video && source && source.src !== cfg.videoUrl) {
-          source.src = cfg.videoUrl;
-          video.load();
-          video.play().catch(() => {});
-        }
+        // La video du hero est geree uniquement par initProductHero (pour rester
+        // synchronisee avec le prix affiche) : on ne la modifie pas ici.
         if (label) label.textContent = cfg.label || DEFAULTS.label;
         if (title) {
           const css = fontCss(cfg.fontStyle);
@@ -4547,10 +4544,9 @@
       ];
       const video = document.getElementById('heroVideo') || document.querySelector('.hero-video');
       const source = document.getElementById('heroVideoSource') || (video ? video.querySelector('source') : null);
-      const title = document.getElementById('heroTitle');
-      const label = document.getElementById('heroLabel');
       const price = document.getElementById('heroProductPrice');
       const name = document.getElementById('heroProductName');
+      const badge = document.getElementById('heroProductBadge');
       const button = document.getElementById('heroButton');
       let idx = 0;
       const fallbackVideo = source ? source.getAttribute('src') : '';
@@ -4558,21 +4554,23 @@
         return (Array.isArray(list) ? list : []).filter(s => s && (s.destination || s.name)).map(s => ({
           destination: s.destination || s.name || 'Voyages 21',
           name: s.name || s.destination || 'Voyage VOYAGES21',
-          price: s.price || 'Sur demande',
+          price: s.price || '',
           videoUrl: s.videoUrl || s.videoLink || '',
           link: s.link || '#destinations'
         }));
       }
-      function applySlide(slides) {
-        const item = slides[idx % slides.length];
-        const videoUrl = item.videoUrl || fallbackVideo;
-        if (source && video && videoUrl && source.getAttribute('src') !== videoUrl) {
-          source.setAttribute('src', videoUrl);
+      function setVideo(url) {
+        if (source && video && url && source.getAttribute('src') !== url) {
+          source.setAttribute('src', url);
           video.load();
           video.play().catch(() => {});
         }
-        if (label) label.textContent = 'Selection hero';
-        if (title) title.innerHTML = item.destination + '<br><span>' + item.name + '</span>';
+      }
+      // Le prix affiche correspond TOUJOURS a la video du meme produit (pas de decalage).
+      // On ne touche plus au titre/label editorial du hero.
+      function applySlide(slides) {
+        const item = slides[idx % slides.length];
+        setVideo(item.videoUrl);
         if (price) price.textContent = item.price;
         if (name) name.textContent = item.name;
         if (button) button.href = item.link;
@@ -4581,12 +4579,24 @@
       fetch('/api/media', { cache: 'no-store' })
         .then(r => r.ok ? r.json() : {})
         .then(map => {
-          const slides = cleanSlides(map.__heroProducts && map.__heroProducts.items);
-          const finalSlides = slides.length ? slides : defaults;
-          applySlide(finalSlides);
-          setInterval(() => applySlide(finalSlides), 6500);
+          const coverVideo = (map && map.__homepageCover && map.__homepageCover.videoUrl) || fallbackVideo;
+          const all = cleanSlides(map && map.__heroProducts && map.__heroProducts.items);
+          const list = all.length ? all : cleanSlides(defaults);
+          // On n'affiche/anime que les produits ayant LEUR PROPRE video + un prix :
+          // ainsi le prix et la video collent toujours.
+          const videoSlides = list.filter(s => s.videoUrl && s.price);
+          if (videoSlides.length) {
+            if (badge) badge.style.display = '';
+            applySlide(videoSlides);
+            if (videoSlides.length > 1) setInterval(() => applySlide(videoSlides), 6500);
+          } else {
+            // Aucun produit n'a sa propre video : on garde la video de cover et on masque
+            // le prix (jamais de prix sans la video correspondante).
+            if (badge) badge.style.display = 'none';
+            setVideo(coverVideo);
+          }
         })
-        .catch(() => { applySlide(defaults); setInterval(() => applySlide(defaults), 6500); });
+        .catch(() => {});
     }
     initProductHero();
 
