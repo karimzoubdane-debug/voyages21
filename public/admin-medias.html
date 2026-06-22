@@ -128,7 +128,7 @@
     <h1>Voyages21 — Gestion des médias</h1>
     <div class="sub">Sans mot de passe · choisissez un voyage, ajoutez photos &amp; vidéo</div>
     <div class="toolbar">
-        <button class="btn ghost" onclick="window.open('BROCHURE_VOYAGES21_AVEC_IMAGES_V7.html','_blank')">Ouvrir la brochure</button>
+        <button class="btn ghost" onclick="window.open('/design/homepage-v2-luxe.html','_blank')">Ouvrir le site officiel</button>
         <button class="btn ghost" onclick="exportData()">Exporter (sauvegarde)</button>
         <button class="btn ghost" onclick="document.getElementById('importFile').click()">Importer</button>
         <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(this)">
@@ -140,7 +140,7 @@
     <div class="notice">
         <strong>Comment ça marche :</strong> choisissez un voyage dans la liste, ajoutez une vidéo
         (lien YouTube/Vimeo <em>ou</em> fichier) et des photos (liens <em>ou</em> fichiers), puis
-        <strong>rechargez la brochure</strong> pour voir le résultat. Tout est enregistré automatiquement.<br>
+        <strong>rechargez le site officiel</strong> pour voir le résultat. Tout est enregistré automatiquement.<br>
         <strong>Stockage en ligne partagé :</strong> ce que vous ajoutez ici est <strong>visible par toute
         l'équipe et par les visiteurs du site</strong> (après rechargement). Aucune limite de nombre de photos.
         Cliquez <em>« Exporter »</em> pour garder une sauvegarde du contenu.
@@ -148,8 +148,8 @@
     <div class="warn" id="connBox" style="display:none"></div>
 
     <section class="cover-panel" id="coverEditor">
-        <h2>Accueil brochure</h2>
-        <div class="hint">Modifiez ici la cover de la page d'accueil de la brochure : video, titre, bouton et calligraphie.</div>
+        <h2>Accueil du site officiel</h2>
+        <div class="hint">Modifiez ici la cover de la page d'accueil officielle : video, titre, bouton et calligraphie.</div>
         <div class="cover-grid">
             <div class="wide">
                 <div class="section-label">Video de cover</div>
@@ -536,11 +536,11 @@
             setOnline(true);
             renderHomePreview();
             updateHomeVideoStatus(rec);
-            toast('Accueil brochure enregistre');
+            toast('Accueil site officiel enregistre');
             notify();
         }).catch(function (e) {
             setOnline(false);
-            alert("Impossible d'enregistrer l'accueil brochure : " + ((e && e.message) || e));
+            alert("Impossible d'enregistrer l'accueil du site officiel : " + ((e && e.message) || e));
         });
     }
     function uploadHomeVideo(input) {
@@ -564,7 +564,7 @@
         saveHomeCover();
     }
     function resetHomeCover() {
-        if (!confirm("Remettre l'accueil brochure par defaut ?")) return;
+        if (!confirm("Remettre l'accueil du site officiel par defaut ?")) return;
         delete MANIFEST[HOME_COVER_KEY];
         setHomeFields(DEFAULT_HOME_COVER);
         apiPutAll(MANIFEST).then(function () {
