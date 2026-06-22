@@ -89,50 +89,63 @@ h1, h2, h3 {
   font-size: 1.05rem;
 }
 
+/* Compteur de voyages facon "jackpot" : contour rouge qui pulse + nombre en or brillant */
 .summary {
   background: #fff;
-  border: 1px solid var(--gold);
+  border: 2px solid #d7263d;
   border-radius: 16px;
-  padding: 1.2rem 1.35rem;
+  padding: 1.1rem 1.35rem;
   text-align: center;
   box-shadow: 0 8px 26px rgba(21,46,31,.06);
-  animation: summaryPulse 1.3s ease-in-out infinite;
+  animation: summaryJackpot 1.2s ease-in-out infinite;
 }
 
-/* Clignotement doux doré pour attirer l'oeil sur le nombre de voyages */
-@keyframes summaryPulse {
+@keyframes summaryJackpot {
   0%, 100% {
     transform: scale(1);
-    border-color: var(--gold);
-    box-shadow: 0 8px 26px rgba(21,46,31,.06), 0 0 0 0 rgba(200,164,64,0);
+    border-color: #d7263d;
+    box-shadow: 0 8px 26px rgba(21,46,31,.06), 0 0 0 0 rgba(215,38,61,0);
   }
   50% {
-    transform: scale(1.04);
-    border-color: #b8902f;
-    box-shadow: 0 10px 30px rgba(21,46,31,.10), 0 0 0 6px rgba(200,164,64,.20);
+    transform: scale(1.05);
+    border-color: #b8001f;
+    box-shadow: 0 12px 32px rgba(21,46,31,.12), 0 0 20px 5px rgba(200,164,64,.55);
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .summary { animation: none; }
 }
 
 .summary b {
   display: block;
-  color: var(--gold);
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 2.3rem;
   line-height: 1;
+  /* Or "loto" : degrade dore brillant qui defile (effet paillette) */
+  color: #b8860b; /* fallback si background-clip non supporte */
+  background: linear-gradient(95deg, #a8741a 0%, #f6d365 22%, #fff6c9 48%, #f6d365 74%, #a8741a 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShine 2.2s linear infinite;
+}
+
+@keyframes goldShine {
+  to { background-position: 220% center; }
 }
 
 .summary span {
   display: block;
-  margin-top: .25rem;
+  margin-top: .3rem;
   color: var(--forest);
-  font-weight: 700;
-  font-size: .9rem;
-  letter-spacing: .02em;
+  font-weight: 800;
+  font-size: .92rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summary, .summary b { animation: none; }
+  .summary b { background-position: 50% center; }
 }
 
 .grid {
