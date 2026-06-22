@@ -58,6 +58,15 @@
     });
   }
 
+  function activateHashTab() {
+    // Permet d'arriver directement sur le bon onglet via l'ancre d'URL
+    // (ex. croisieres.html#schengen / #sans-schengen depuis le menu).
+    var id = (location.hash || '').replace(/^#/, '').replace(/[^a-z0-9_-]/gi, '');
+    if (!id) return;
+    var tab = app.querySelector('[data-dest-tab="' + id + '"]');
+    if (tab) tab.click();
+  }
+
   function loadSocialContactBar() {
     if (document.querySelector('script[src="/social-contact-bar.js"]')) return;
     var script = document.createElement('script');
@@ -142,6 +151,7 @@
       + content
       + '</main>';
     wireTabs();
+    activateHashTab();
     loadSocialContactBar();
   }
 

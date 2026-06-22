@@ -198,6 +198,54 @@
     .nav-caret { font-size: .55rem; transition: transform .25s; }
     .nav-title.open .nav-caret { transform: rotate(180deg); }
 
+    /* Croisieres : sous-menu deroulant (avec / sans visa Schengen) */
+    .nav-item { position: relative; display: flex; align-items: stretch; }
+    .nav-item:hover .nav-caret,
+    .nav-item:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-submenu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 250px;
+      padding: 6px;
+      background: #0D1A14;
+      border: 1px solid rgba(196,154,60,.28);
+      border-radius: 12px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      z-index: 200;
+    }
+    .nav-item:hover .nav-submenu,
+    .nav-item:focus-within .nav-submenu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-submenu a {
+      display: block;
+      padding: 11px 14px;
+      border-radius: 8px;
+      font-family: 'Geist', sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(253,250,245,.82);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s, color .15s;
+    }
+    .nav-submenu a:hover { background: rgba(196,154,60,.16); color: var(--gold); }
+    .nav-submenu a.is-alert { color: #FF5A5A; }
+    .nav-submenu a.is-alert:hover { background: rgba(255,45,45,.16); color: #FF2D2D; }
+
     /* ── Mega panel (séparé sous la nav) ── */
     .mega-panel {
       display: none;
@@ -3002,7 +3050,13 @@
     <!-- Centre : boutons nav (desktop) -->
     <div class="nav-center" id="navCenter">
       <button class="nav-title active" id="navDest" onclick="toggleDest(this)">Destinations Monde <span class="nav-caret">▾</span></button>
-      <a href="/voyages/destinations/croisieres.html" class="nav-title">Croisières</a>
+      <div class="nav-item">
+        <a href="/voyages/destinations/croisieres.html" class="nav-title">Croisières <span class="nav-caret">▾</span></a>
+        <div class="nav-submenu" role="menu" aria-label="Croisières">
+          <a href="/voyages/destinations/croisieres.html#schengen" role="menuitem">Croisières avec visa Schengen</a>
+          <a href="/voyages/destinations/croisieres.html#sans-schengen" class="is-alert" role="menuitem">Croisières sans visa Schengen</a>
+        </div>
+      </div>
       <a href="/voyages/destinations/omra.html"       class="nav-title">Omra</a>
       <a href="/voyages/destinations/maroc.html"       class="nav-title">Mon Maroc</a>
     </div>
