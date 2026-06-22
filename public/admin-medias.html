@@ -139,7 +139,7 @@
     <div class="notice">
         <strong>Comment ça marche :</strong> choisissez un voyage dans la liste, ajoutez une vidéo
         (lien YouTube/Vimeo <em>ou</em> fichier) et des photos (liens <em>ou</em> fichiers), puis
-        <strong>rechargez la brochure</strong> pour voir le résultat. Tout est enregistré automatiquement.<br>
+        <strong>rechargez le site officiel</strong> pour voir le résultat. Tout est enregistré automatiquement.<br>
         <strong>Stockage en ligne partagé :</strong> ce que vous ajoutez ici est <strong>visible par toute
         l'équipe et par les visiteurs du site</strong> (après rechargement). Aucune limite de nombre de photos.
         Cliquez <em>« Exporter »</em> pour garder une sauvegarde du contenu.
@@ -147,8 +147,8 @@
     <div class="warn" id="connBox" style="display:none"></div>
 
     <section class="cover-panel" id="coverEditor">
-        <h2>Accueil brochure</h2>
-        <div class="hint">Modifiez ici la cover de la page d'accueil de la brochure : video, titre, bouton et calligraphie.</div>
+        <h2>Accueil du site officiel</h2>
+        <div class="hint">Modifiez ici la cover de la page d'accueil officielle : video, titre, bouton et calligraphie.</div>
         <div class="cover-grid">
             <div class="wide">
                 <div class="section-label">Video de cover</div>
@@ -287,6 +287,77 @@
     ];
     var TITLES = {};
     PRODUCTS.forEach(function (p) { TITLES[p.k] = p.t; });
+    // ── Organisation du sélecteur par univers (affichage uniquement ; les clés médias ne changent JAMAIS) ──
+    var PICKER_GROUPS = [
+        { key: 'world-europe', label: 'Destinations du monde — Europe' },
+        { key: 'world-africa', label: 'Destinations du monde — Afrique' },
+        { key: 'world-americas', label: 'Destinations du monde — Amériques' },
+        { key: 'world-asia', label: 'Destinations du monde — Asie' },
+        { key: 'world-combined', label: 'Destinations du monde — Combinés' },
+        { key: 'cruises', label: 'Croisières' },
+        { key: 'omra', label: 'Omra & Hajj' },
+        { key: 'morocco', label: 'Mon Maroc' }
+    ];
+    var PICKER_META = {
+        'modal-istanbul': { g: 'world-europe', c: 'Turquie' },
+        'modal-istanbul-antalya': { g: 'world-europe', c: 'Turquie' },
+        'modal-istanbul-bodrum': { g: 'world-europe', c: 'Turquie' },
+        'modal-marmaris-bodrum': { g: 'world-europe', c: 'Turquie' },
+        'modal-istanbul-antalya-11j': { g: 'world-europe', c: 'Turquie' },
+        'modal-caire-nil-hurghada': { g: 'world-africa', c: 'Égypte' },
+        'modal-caire-hurghada': { g: 'world-africa', c: 'Égypte' },
+        'modal-caire-sharm': { g: 'world-africa', c: 'Égypte' },
+        'modal-ouest-usa': { g: 'world-americas', c: 'États-Unis' },
+        'modal-joyaux-canada': { g: 'world-americas', c: 'Canada & USA' },
+        'modal-rocheuses': { g: 'world-americas', c: 'États-Unis' },
+        'modal-cuba': { g: 'world-americas', c: 'Cuba' },
+        'modal-perou': { g: 'world-americas', c: 'Pérou' },
+        'modal-europe-1': { g: 'world-europe', c: 'Espagne' },
+        'modal-europe-2': { g: 'world-europe', c: 'Autriche, Hongrie & Tchéquie' },
+        'modal-europe-3': { g: 'world-europe', c: 'Espagne' },
+        'modal-europe-4': { g: 'world-europe', c: 'Grèce' },
+        'modal-europe-5': { g: 'world-europe', c: 'Grèce' },
+        'modal-europe-6': { g: 'world-europe', c: 'Espagne & Portugal' },
+        'modal-europe-7': { g: 'world-europe', c: 'Italie' },
+        'modal-europe-8': { g: 'world-europe', c: 'France & Suisse' },
+        'modal-europe-9': { g: 'world-europe', c: 'Angleterre & Écosse' },
+        'modal-albanie-riviera': { g: 'world-europe', c: 'Albanie' },
+        'modal-croisiere-1': { g: 'cruises', c: 'Méditerranée' },
+        'modal-croisiere-2': { g: 'cruises', c: 'Méditerranée' },
+        'modal-croisiere-turquie-grece': { g: 'cruises', c: 'Turquie & Grèce' },
+        'modal-croisiere-turquie-egypte': { g: 'cruises', c: 'Turquie & Égypte' },
+        'modal-ouzbekistan': { g: 'world-asia', c: 'Ouzbékistan' },
+        'modal-chine': { g: 'world-asia', c: 'Chine' },
+        'modal-chine-pekin-xian-guilin-shanghai': { g: 'world-asia', c: 'Chine' },
+        'modal-malaisie': { g: 'world-asia', c: 'Malaisie & Thaïlande' },
+        'modal-malaisie-singapour': { g: 'world-asia', c: 'Malaisie & Singapour' },
+        'modal-malaisie-indonesie': { g: 'world-asia', c: 'Malaisie & Indonésie' },
+        'modal-indonesie-thailande': { g: 'world-asia', c: 'Indonésie & Thaïlande' },
+        'modal-bangkok': { g: 'world-asia', c: 'Thaïlande' },
+        'modal-vietnam': { g: 'world-asia', c: 'Vietnam' },
+        'modal-tunis-hammamet': { g: 'world-africa', c: 'Tunisie' },
+        'modal-zanzibar': { g: 'world-africa', c: 'Zanzibar' },
+        'modal-azerbaidjan-turquie': { g: 'world-combined', c: 'Azerbaïdjan & Turquie' },
+        'modal-omra-mouharram': { g: 'omra', c: 'Arabie Saoudite' },
+        'modal-omra-06-juillet': { g: 'omra', c: 'Arabie Saoudite' },
+        'modal-omra-08-juillet': { g: 'omra', c: 'Arabie Saoudite' },
+        'modal-omra-istanbul': { g: 'omra', c: 'Istanbul + Omra' },
+        'modal-omra-27-juillet-etihad': { g: 'omra', c: 'Arabie Saoudite' },
+        'modal-omra-01-juillet': { g: 'omra', c: 'Arabie Saoudite' },
+        'modal-maroc-merzouga': { g: 'morocco', c: 'Merzouga' },
+        'modal-maroc-bin-el-ouidane': { g: 'morocco', c: 'Bin El Ouidane' },
+        'modal-maroc-dakhla': { g: 'morocco', c: 'Dakhla' },
+        'modal-circuit-imperial-south': { g: 'morocco', c: 'Circuit Maroc' },
+        'modal-circuit-imperial-cities': { g: 'morocco', c: 'Circuit Maroc' },
+        'modal-circuit-best-morocco': { g: 'morocco', c: 'Circuit Maroc' },
+        'modal-circuit-discover-kingdom': { g: 'morocco', c: 'Circuit Maroc' },
+        'modal-circuit-grand-discovery': { g: 'morocco', c: 'Circuit Maroc' }
+    };
+    var PICKER_LABELS = {};
+    PRODUCTS.forEach(function (p) {
+        var meta = PICKER_META[p.k] || {};
+        PICKER_LABELS[p.k] = meta.c ? meta.c + ' — ' + p.t : p.t;
+    });
 
     // ── Stockage en ligne (Vercel Blob via /api/media) ──
     // MANIFEST = source de vérité partagée par toute l'équipe et les visiteurs.
@@ -465,11 +536,11 @@
             setOnline(true);
             renderHomePreview();
             updateHomeVideoStatus(rec);
-            toast('Accueil brochure enregistre');
+            toast('Accueil site officiel enregistre');
             notify();
         }).catch(function (e) {
             setOnline(false);
-            alert("Impossible d'enregistrer l'accueil brochure : " + ((e && e.message) || e));
+            alert("Impossible d'enregistrer l'accueil du site officiel : " + ((e && e.message) || e));
         });
     }
     function uploadHomeVideo(input) {
@@ -493,7 +564,7 @@
         saveHomeCover();
     }
     function resetHomeCover() {
-        if (!confirm("Remettre l'accueil brochure par defaut ?")) return;
+        if (!confirm("Remettre l'accueil du site officiel par defaut ?")) return;
         delete MANIFEST[HOME_COVER_KEY];
         setHomeFields(DEFAULT_HOME_COVER);
         apiPutAll(MANIFEST).then(function () {
@@ -533,9 +604,24 @@
     // ── Picker ──
     function buildPicker() {
         var sel = document.getElementById('picker');
-        PRODUCTS.forEach(function (p) {
+        PICKER_GROUPS.forEach(function (group) {
+            var items = PRODUCTS.filter(function (p) {
+                return (PICKER_META[p.k] && PICKER_META[p.k].g) === group.key;
+            });
+            if (!items.length) return;
+            var optgroup = document.createElement('optgroup');
+            optgroup.label = group.label;
+            items.forEach(function (p) {
+                var o = document.createElement('option');
+                o.value = p.k; o.textContent = PICKER_LABELS[p.k] || p.t;
+                optgroup.appendChild(o);
+            });
+            sel.appendChild(optgroup);
+        });
+        // Securite : tout produit non rattache a un univers reste visible (jamais perdu).
+        PRODUCTS.filter(function (p) { return !PICKER_META[p.k]; }).forEach(function (p) {
             var o = document.createElement('option');
-            o.value = p.k; o.textContent = p.t;
+            o.value = p.k; o.textContent = PICKER_LABELS[p.k] || p.t;
             sel.appendChild(o);
         });
         refreshPickerMarks();
@@ -546,7 +632,7 @@
         var sel = document.getElementById('picker');
         Array.prototype.forEach.call(sel.options, function (o) {
             if (!o.value) return;
-            var base = TITLES[o.value] || o.value;
+            var base = PICKER_LABELS[o.value] || TITLES[o.value] || o.value;
             o.textContent = (done[o.value] ? '✓ ' : '') + base;
         });
     }
