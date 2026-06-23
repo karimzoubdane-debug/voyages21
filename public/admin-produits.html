@@ -123,6 +123,8 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
   <div class="toolbar">
     <button class="ghost mini" type="button" onclick="reload()">↺ Recharger</button>
     <button type="button" onclick="openNewForm()">+ Nouveau voyage</button>
+    <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="readImportFile(this)">
+    <button class="ok mini" type="button" onclick="document.getElementById('importFileInput').click()">⬆ Importer une fiche</button>
     <button class="ghost mini" type="button" onclick="location.href='/admin-medias.html'">Médias</button>
     <button class="ghost mini" type="button" onclick="location.href='/admin-cover.html'">Cover</button>
   </div>
@@ -852,6 +854,51 @@ function toast(msg) {
   el.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3200);
+}
+
+// ─────────────────────────────────────────
+// Import fiche JSON (depuis formulaire-voyage)
+// ─────────────────────────────────────────
+function readImportFile(input) {
+  var file = input.files[0];
+  if (!file) return;
+  input.value = '';
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      importFiche(data);
+    } catch(err) {
+      toast('Fichier JSON invalide');
+      log('Erreur : ' + err.message);
+    }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+async function importFiche(data) {
+  if (!data || !data.title) { toast('Titre manquant dans la fiche'); return; }
+  var slug = slugify(data.title);
+  log('Import de "' + data.title + '"…');
+  try {
+    var r = await fetch('/api/produits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: slug, product: data })
+    });
+    var result = await r.json();
+    if (result.ok) {
+      manifest.custom[result.slug || slug] = data;
+      toast('Fiche importée ! "' + data.title + '" ajoutée au catalogue.');
+      reload();
+    } else {
+      log('Erreur import : ' + (result.error || 'inconnue'));
+      toast('Erreur lors de l\'import');
+    }
+  } catch(err) {
+    log('Erreur réseau : ' + err.message);
+    toast('Erreur réseau');
+  }
 }
 
 // ─────────────────────────────────────────
