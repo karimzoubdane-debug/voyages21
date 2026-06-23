@@ -744,6 +744,7 @@ function renderProdRow(slug, v, source) {
     + '</div>'
     + '<div class="prod-actions">'
     + '<button class="mini" type="button" onclick="toggleDrawer(\'' + esc(slug) + '\')">Statut</button>'
+    + '<a class="btn mini" href="' + (source === 'custom' ? '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug) : '/voyages/' + esc(slug) + '.html') + '" target="_blank" rel="noopener" title="Voir la fiche sur le site">👁 Voir</a>'
     + renderPdfBtn(slug, v, source)
     + (source === 'custom' ? '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>' : '')
     + (source === 'custom' ? '<button class="mini danger" type="button" onclick="confirmDelete(\'' + esc(slug) + '\')">Supprimer</button>' : '<button class="mini ghost" type="button" onclick="confirmHide(\'' + esc(slug) + '\',\'' + esc(v.title||'') + '\')">' + (manifest.status[slug] && manifest.status[slug].hidden ? 'Afficher' : 'Masquer') + '</button>')
