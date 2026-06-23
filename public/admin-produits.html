@@ -139,9 +139,13 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .csub.active,.csub:hover{background:var(--blue);color:#fff}
 .csub.alert{border-color:var(--danger);color:var(--danger)}
 .csub.alert.active,.csub.alert:hover{background:var(--danger);color:#fff}
-/* Couleurs groupes continents supplémentaires */
-.gnav[data-group="moyen-orient"].active{background:#d97706;border-color:#d97706;color:#fff}
-.gnav[data-group="oceanie"].active{background:#0891b2;border-color:#0891b2;color:#fff}
+/* Destinations sub-nav */
+.dest-sub{display:none;gap:.38rem;margin-bottom:.7rem;flex-wrap:wrap}
+.dest-sub.visible{display:flex}
+.dsub{background:#fff;border:1.5px solid #4a90d9;color:#4a90d9;border-radius:999px;padding:.35rem .85rem;font:700 .76rem/1 "DM Sans",sans-serif;cursor:pointer;transition:all .12s}
+.dsub.active,.dsub:hover{background:#4a90d9;color:#fff}
+/* Couleurs groupes */
+.gnav[data-group="destinations"].active{background:#4a90d9;border-color:#4a90d9;color:#fff}
 .gnav[data-group="iles"].active{background:#0e9480;border-color:#0e9480;color:#fff}
 
 @media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}.prod-row{grid-template-columns:72px minmax(0,1fr)}.prod-actions{border-left:0;border-top:1px solid var(--line);padding:.45rem .7rem}}
@@ -178,17 +182,22 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
     <!-- Navigation par groupe (comme le menu du site) -->
     <div class="group-nav" id="groupNav">
       <button class="gnav active" type="button" data-group="all" onclick="selectGroup('all',this)">Tous</button>
-      <button class="gnav" type="button" data-group="europe" onclick="selectGroup('europe',this)">Europe</button>
-      <button class="gnav" type="button" data-group="afrique" onclick="selectGroup('afrique',this)">Afrique</button>
-      <button class="gnav" type="button" data-group="moyen-orient" onclick="selectGroup('moyen-orient',this)">Moyen-Orient</button>
-      <button class="gnav" type="button" data-group="ameriques" onclick="selectGroup('ameriques',this)">Amériques</button>
-      <button class="gnav" type="button" data-group="asie" onclick="selectGroup('asie',this)">Asie</button>
-      <button class="gnav" type="button" data-group="oceanie" onclick="selectGroup('oceanie',this)">Océanie</button>
+      <button class="gnav" type="button" data-group="destinations" onclick="selectGroup('destinations',this)">Destinations ▾</button>
+      <button class="gnav" type="button" data-group="croisieres" onclick="selectGroup('croisieres',this)">Croisières</button>
+      <button class="gnav" type="button" data-group="omra" onclick="selectGroup('omra',this)">Omra &#x0639;&#x0645;&#x0631;&#x0629;</button>
       <button class="gnav" type="button" data-group="iles" onclick="selectGroup('iles',this)">Îles paradisiaques</button>
       <button class="gnav" type="button" data-group="combines" onclick="selectGroup('combines',this)">Combinés</button>
-      <button class="gnav" type="button" data-group="omra" onclick="selectGroup('omra',this)">Omra &#x0639;&#x0645;&#x0631;&#x0629;</button>
-      <button class="gnav" type="button" data-group="croisieres" onclick="selectGroup('croisieres',this)">Croisières</button>
       <button class="gnav" type="button" data-group="maroc" onclick="selectGroup('maroc',this)">Maroc</button>
+    </div>
+    <!-- Sous-groupe Destinations : continents -->
+    <div class="dest-sub" id="destSub">
+      <button class="dsub active" type="button" data-dsub="destinations" onclick="selectDestSub('destinations',this)">Tous</button>
+      <button class="dsub" type="button" data-dsub="europe" onclick="selectDestSub('europe',this)">Europe</button>
+      <button class="dsub" type="button" data-dsub="afrique" onclick="selectDestSub('afrique',this)">Afrique</button>
+      <button class="dsub" type="button" data-dsub="moyen-orient" onclick="selectDestSub('moyen-orient',this)">Moyen-Orient</button>
+      <button class="dsub" type="button" data-dsub="ameriques" onclick="selectDestSub('ameriques',this)">Amériques</button>
+      <button class="dsub" type="button" data-dsub="asie" onclick="selectDestSub('asie',this)">Asie</button>
+      <button class="dsub" type="button" data-dsub="oceanie" onclick="selectDestSub('oceanie',this)">Océanie</button>
     </div>
     <!-- Sous-groupe Maroc : Séjours / Circuits -->
     <div class="maroc-sub" id="marocSub">
@@ -461,6 +470,7 @@ var _pdfUploadTargetSlug = null; // pour l'upload inline depuis une ligne produi
 var activeGroup = 'all';
 var activeMarocSub = 'all';
 var activeCroisieresSub = 'all';
+var activeDestSub = 'destinations';
 
 // Groupes de destinations (correspond au menu du site + tous les continents)
 var DEST_GROUPS = {
@@ -492,6 +502,10 @@ var DEST_GROUPS = {
   croisieres:     ['Croisière', 'Croisières'],
   maroc:          ['Maroc']
 };
+DEST_GROUPS.destinations = [].concat(
+  DEST_GROUPS.europe, DEST_GROUPS.afrique, DEST_GROUPS['moyen-orient'],
+  DEST_GROUPS.ameriques, DEST_GROUPS.asie, DEST_GROUPS.oceanie
+);
 
 // Slugs Maroc séjours (balnéaires/détente)
 var MAROC_SEJOUR_RE = /^maroc-(merzouga|bin-el-ouidane|dakhla)/;
@@ -552,20 +566,35 @@ function selectGroup(group, btn) {
   activeGroup = group;
   activeMarocSub = 'all';
   activeCroisieresSub = 'all';
+  activeDestSub = 'destinations';
   document.querySelectorAll('.gnav').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
-  // Afficher/masquer le sous-groupe Maroc
+  // Sous-groupe Maroc
   var marocSub = document.getElementById('marocSub');
   if (marocSub) {
     marocSub.classList.toggle('visible', group === 'maroc');
     marocSub.querySelectorAll('.msub').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-msub') === 'all'); });
   }
-  // Afficher/masquer le sous-groupe Croisières
+  // Sous-groupe Croisières
   var croisieresSub = document.getElementById('croisieresSub');
   if (croisieresSub) {
     croisieresSub.classList.toggle('visible', group === 'croisieres');
     croisieresSub.querySelectorAll('.csub').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-csub') === 'all'); });
   }
+  // Sous-groupe Destinations
+  var destSub = document.getElementById('destSub');
+  if (destSub) {
+    destSub.classList.toggle('visible', group === 'destinations');
+    destSub.querySelectorAll('.dsub').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-dsub') === 'destinations'); });
+  }
+  renderCatalogue();
+}
+
+function selectDestSub(sub, btn) {
+  activeDestSub = sub;
+  activeGroup = sub;
+  document.querySelectorAll('.dsub').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
   renderCatalogue();
 }
 
@@ -742,7 +771,7 @@ function applyStatus(slug, badge, color) {
   .then(function(data) {
     if (data.ok) {
       manifest.status[slug] = st;
-      toast(badge ? 'Badge "' + badge + '" appliqué' : 'Statut retiré');
+      toast(badge ? '✅ Badge "' + badge + '" appliqué — visible sur le site' : '✅ Statut retiré du site');
       renderCatalogue();
     } else {
       log('Erreur : ' + (data.error || 'inconnue'));
@@ -764,7 +793,7 @@ function confirmHide(slug, title) {
     // Réafficher
     applyStatus(slug, st.badge || '', st.badgeColor || '');
     manifest.status[slug] = { ...(manifest.status[slug]||{}), hidden: false };
-    toast('Voyage réaffiché');
+    toast('✅ Voyage réaffiché — visible sur le site');
     renderCatalogue();
     return;
   }
@@ -778,7 +807,7 @@ function confirmHide(slug, title) {
     })
     .then(function(r){ return r.json(); })
     .then(function(data){
-      if (data.ok) { manifest.status[slug] = newSt; toast('Voyage masqué'); renderCatalogue(); }
+      if (data.ok) { manifest.status[slug] = newSt; toast('✅ Voyage masqué sur le site'); renderCatalogue(); }
     });
   });
 }
@@ -792,7 +821,7 @@ function confirmDelete(slug) {
       .then(function(data){
         if (data.ok) {
           delete manifest.custom[slug];
-          toast('Voyage supprimé');
+          toast('✅ Voyage supprimé du site');
           renderCatalogue();
         }
       });
@@ -982,7 +1011,7 @@ async function submitForm(e) {
           body: JSON.stringify({ type: 'status', slug: finalSlug, status: { badge: badge, badgeColor: badgeColor, hidden: hidden } })
         });
       }
-      toast(currentEditSlug ? 'Voyage modifié !' : 'Voyage ajouté au catalogue !');
+      toast('✅ ' + (currentEditSlug ? 'Voyage modifié' : 'Voyage ajouté') + ' — visible sur le site !');
       reload();
       cancelForm();
     } else {
@@ -1117,7 +1146,7 @@ function toast(msg) {
   el.textContent = msg;
   el.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3200);
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 4500);
 }
 
 // ─────────────────────────────────────────
