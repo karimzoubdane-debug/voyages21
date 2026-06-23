@@ -4,7 +4,7 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-06-22_
+_Dernière mise à jour : 2026-06-23_
 
 ## Méthode de travail (règles fixes)
 - Site officiel : **https://www.voyages21.com** (page d'accueil = `public/design/homepage-v2-luxe.html`, servie par Vercel).
@@ -13,28 +13,58 @@ _Dernière mise à jour : 2026-06-22_
 - Sauvegarde automatique active (voir plus bas) — règle dans `CLAUDE.md`.
 
 ## Repères utiles
-- **Admin médias** (public, sans mot de passe) : https://www.voyages21.com/admin-medias.html — liste classée par univers.
-  - Le site lie médias ↔ programmes par `mediaKey` (dans `public/voyages/data.js`, lus via `/api/media`). **Ne JAMAIS modifier ces clés.**
-- **Sauvegarde** : workflow `.github/workflows/sauvegarde.yml` → Release à chaque PR fusionnée + chaque lundi.
-  - Dossier Drive : **« VOYAGES21 — SAUVEGARDES »** (id `1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI`).
-  - Dépôt Drive automatique : nécessite le secret GitHub `GDRIVE_SA_JSON` (clé compte de service Google).
+- **Admin produits** : https://voyages21-git-claude-voyages21-website-3x5q1x-voyages21.vercel.app/admin-produits.html (preview) / https://www.voyages21.com/admin-produits.html (prod après merge)
+- **Admin médias** : https://www.voyages21.com/admin-medias.html
+- **Formulaire équipe** : https://voyages21-git-claude-voyages21-website-3x5q1x-voyages21.vercel.app/formulaire-voyage.html (l'équipe remplit + clique "⬇ Télécharger la fiche" → envoie le .json à Karim)
+- **Vercel Blob partagé** : les données admin (manifest produits, médias) sont partagées entre preview et prod — toute action dans l'admin preview est immédiatement visible sur www.voyages21.com
+- **Sauvegarde** : workflow `.github/workflows/sauvegarde.yml` → Release à chaque PR fusionnée + chaque lundi. Dossier Drive : **« VOYAGES21 — SAUVEGARDES »** (id `1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI`).
 
 ## ✅ Déjà livré (fusionné sur main)
 - Tri des voyages par prix croissant sur les pages destination.
-- Croisières : sous-titres « avec / sans visa Schengen » (sans = rouge animé) + sous-menu nav + onglets sur la page cartes.
-- Compteur de voyages animé (or + contour rouge) sur les pages destination.
-- Barre de recherche accueil : aérée, sans chevauchement de texte.
-- Admin médias : sélecteur classé par univers (clés intactes).
+- Croisières : sous-titres « avec / sans visa Schengen » + sous-menu nav + onglets.
+- Compteur de voyages animé sur les pages destination.
+- Barre de recherche accueil.
+- Admin médias : sélecteur classé par univers.
 - Sauvegarde automatique du site (Releases).
 
-## ⏳ En cours / à décider (au 2026-06-22)
-- **PR #75** — Accueil : numéro `0614-152686` (tél+WhatsApp) + bouton « Voir l'introduction » dans la barre du haut (à la place de « Réserver », retiré de la vidéo) + hero sans décalage prix/vidéo. → **attend « go #75 ».**
-  - Note hero : un prix ne s'affiche QUE si le produit a sa propre vidéo dans l'admin (« Hero produits accueil »).
-- **PR #77** — Dépôt automatique de la sauvegarde dans Google Drive (clé secrète). → **attend « go #77 »** + réglage unique de la clé `GDRIVE_SA_JSON` côté Karim.
-- **PR #73** (faite par Codex) — obsolète/conflictuelle (basée sur un ancien main). Le bon apport (admin médias par univers) a déjà été repris proprement. À fermer ou faire rebaser par Codex.
-- **Test de redéploiement** : paquet Netlify prêt (preuve que le site est récupérable hors Vercel). Caveat : `/api/media` est une fonction Vercel → médias dynamiques absents sur un autre hébergeur.
+## ⏳ PR #79 — EN COURS (branche `claude/voyages21-website-3x5q1x`)
+**Ce que contient PR #79 (à valider point par point avant merge) :**
 
-## ▶️ Prochaines étapes proposées
-1. Fusionner #75 (accueil) et #77 (dépôt Drive auto) quand Karim valide.
-2. Régler la clé Google `GDRIVE_SA_JSON` pour activer le dépôt Drive automatique.
-3. (Optionnel) Test de redéploiement Netlify.
+### ✅ Points validés
+- (à confirmer par Karim au fur et à mesure)
+
+### 🔄 Point 4 — Admin produits + PDF équipe (EN TEST)
+**Ce qui est fait :**
+- `⚡ Ajout rapide` dans l'onglet "+ Nouveau voyage" : destination + PDF → crée une fiche minimale instantanément
+- `⬆ Importer une fiche` : importe un fichier `.json` exporté par le formulaire équipe → crée une fiche **complète** (titre, prix, durée, cadran, programme, inclus/exclus, hôtels, points forts…)
+- `/api/pdf/upload` : endpoint dédié PDF (server-side `put` Vercel Blob)
+- Bouton **👁 Voir** sur chaque fiche du catalogue admin → ouvre la fiche sur le site
+- Bouton **📎 Télécharger la brochure** sur les fiches publiques (si pdfUrl présent)
+- Les produits admin apparaissent automatiquement parmi les cartes sur les pages destination (ex: turquie.html)
+
+**Flux de travail équipe → Karim :**
+1. L'équipe remplit `formulaire-voyage.html` → clique "⬇ Télécharger la fiche" → envoie le `.json` à Karim
+2. Karim dans l'admin → "⬆ Importer une fiche" → sélectionne le `.json` → fiche complète créée, visible sur le site
+3. (Optionnel) L'équipe peut aussi envoyer le PDF pour le bouton "Télécharger la brochure"
+
+**Point en suspens :**
+- Karim doit tester l'import d'un vrai `.json` complet (pas le test "sdv" vide) pour valider que la fiche s'affiche bien avec tous les champs remplis
+
+### 🔄 Point 5 — Panel "Îles paradisiaques" dans la NavBar
+- Déjà implémenté dans PR #79
+- **À valider par Karim** : vérifier que le panel s'affiche correctement dans la navigation
+
+### ❓ Nouvelle destination (décision en suspens)
+- Karim a demandé si on peut ajouter une destination qui n'existe pas encore
+- Réponse : la fiche est créable via admin (sync immédiate), mais la page destination + le menu de navigation nécessitent une PR séparée
+- **À décider** : quelle nouvelle destination Karim veut ajouter ?
+
+## ▶️ Prochaines étapes
+1. Karim teste l'import d'un `.json` complet depuis le formulaire équipe → valide Point 4
+2. Karim valide le panel Îles paradisiaques (Point 5)
+3. Dire **"go #79"** → merge PR #79 → visible sur www.voyages21.com
+4. PR #75 (accueil tél+WhatsApp) et PR #77 (Drive auto) → toujours en attente de "go"
+5. Éventuelle nouvelle PR pour nouvelle destination si Karim confirme laquelle
+
+## 💾 Rappel sauvegarde (règle depuis 2026-06-23)
+Après chaque session, rappeler à Karim de télécharger la dernière Release GitHub et de déposer les fichiers dans le Drive **« VOYAGES21 — SAUVEGARDES »**.
