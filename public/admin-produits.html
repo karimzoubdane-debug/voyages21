@@ -102,6 +102,17 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .form-actions{display:flex;gap:.7rem;flex-wrap:wrap;padding-top:.8rem;border-top:1px solid var(--line)}
 .submit-btn{background:var(--forest);color:#fff;font-size:.9rem;min-height:44px;padding:.6rem 1.4rem}
 
+/* Mode rapide */
+.quick-add{background:linear-gradient(135deg,#e8f4ed,#f0ede4);border:2px solid var(--forest);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.4rem}
+.quick-add h3{margin:0 0 .75rem;color:var(--forest2);font-size:.95rem;display:flex;align-items:center;gap:.5rem}
+.quick-add-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;align-items:end}
+.quick-add select,.quick-add input[type=text]{border:1px solid #cfc5b3;border-radius:6px;padding:.6rem .75rem;font:.9rem/1 "DM Sans",sans-serif;background:#fff;width:100%}
+.quick-pdf-zone{border:2px dashed var(--forest);border-radius:8px;padding:.75rem 1rem;background:#fff;cursor:pointer;text-align:center;font:.85rem/1.3 "DM Sans",sans-serif;color:var(--forest);font-weight:700;transition:background .12s}
+.quick-pdf-zone:hover{background:#f0ede4}
+.quick-pdf-zone.has-file{border-color:var(--ok);color:var(--ok)}
+.quick-add label.qlabel{display:flex;flex-direction:column;gap:.3rem;font:.72rem/1 "DM Sans",sans-serif;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#536154}
+@media(max-width:600px){.quick-add-grid{grid-template-columns:1fr}}
+
 /* Empty / loading */
 .empty{text-align:center;color:#8a8279;padding:2rem;font-style:italic}
 
@@ -237,7 +248,43 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 
   <!-- ── Onglet Formulaire ── -->
   <div id="tab-form" hidden>
-    <div class="form-panel">
+
+    <!-- ⚡ MODE RAPIDE : PDF uniquement -->
+    <div class="quick-add" id="quickAddBox">
+      <h3>⚡ Ajout rapide — PDF reçu de l'équipe</h3>
+      <div class="quick-add-grid">
+        <label class="qlabel">1 — Destination *
+          <select id="qTag">
+            <option value="">— choisir —</option>
+            <optgroup label="Europe"><option>Turquie</option><option>Espagne</option><option>Grèce</option><option>Italie</option><option>Portugal</option><option>France &amp; Suisse</option><option>Royaume-Uni</option><option>Azerbaïdjan</option><option>Ouzbékistan</option><option>Géorgie</option><option>Arménie</option><option>Croatie</option><option>Europe</option></optgroup>
+            <optgroup label="Afrique"><option>Égypte</option><option>Tunisie</option><option>Kenya</option><option>Tanzanie</option><option>Afrique du Sud</option><option>Sénégal</option><option>Éthiopie</option><option>Madagascar</option><option>Namibie</option><option>Rwanda</option></optgroup>
+            <optgroup label="Moyen-Orient"><option>Arabie Saoudite</option><option>Jordanie</option><option>Émirats</option><option>Oman</option><option>Qatar</option><option>Bahreïn</option><option>Koweït</option><option>Liban</option></optgroup>
+            <optgroup label="Amériques"><option>États-Unis</option><option>Canada &amp; USA</option><option>Cuba</option><option>Pérou</option><option>Mexique</option><option>Brésil</option><option>Argentine</option><option>Colombie</option><option>Costa Rica</option></optgroup>
+            <optgroup label="Asie"><option>Vietnam</option><option>Chine</option><option>Thaïlande</option><option>Malaisie-Thaïlande</option><option>Japon</option><option>Corée du Sud</option><option>Cambodge</option><option>Inde</option><option>Népal</option><option>Sri Lanka</option><option>Philippines</option><option>Bali</option><option>Asie</option></optgroup>
+            <optgroup label="Océanie"><option>Australie</option><option>Nouvelle-Zélande</option><option>Fidji</option><option>Polynésie</option><option>Tahiti</option><option>Nouvelle-Calédonie</option></optgroup>
+            <optgroup label="Îles paradisiaques"><option>Zanzibar</option><option>Maldives</option><option>Seychelles</option><option>Maurice</option><option>Cap-Vert</option><option>Canaries</option><option>Madère</option><option>Djerba</option><option>Açores</option><option>Réunion</option><option>Corse</option><option>Mykonos</option><option>Santorin</option><option>Crète</option><option>Chypre</option><option>Malte</option></optgroup>
+            <optgroup label="Catégories spéciales"><option>Maroc</option><option>Combinés</option><option>عمرة</option><option>Croisières</option></optgroup>
+          </select>
+        </label>
+        <label class="qlabel">2 — PDF de l'équipe *
+          <div class="quick-pdf-zone" id="qPdfZone" onclick="document.getElementById('qPdfInput').click()">
+            <input type="file" id="qPdfInput" accept=".pdf" style="display:none" onchange="onQuickPdf(this)">
+            <span id="qPdfLabel">📎 Cliquez pour sélectionner le PDF</span>
+          </div>
+        </label>
+        <label class="qlabel">3 — Titre (auto depuis le nom du fichier, modifiable)
+          <input type="text" id="qTitle" placeholder="Auto depuis le nom du PDF">
+        </label>
+        <div style="display:flex;align-items:flex-end">
+          <button type="button" class="ok" style="width:100%;min-height:44px;font-size:.92rem" onclick="quickSubmit()">⚡ Créer ce voyage</button>
+        </div>
+      </div>
+      <div id="qLog" style="margin-top:.55rem;font:.8rem/1.3 'DM Sans',sans-serif;color:var(--ok);font-weight:700;min-height:1rem"></div>
+    </div>
+
+    <details style="margin-bottom:1.2rem">
+      <summary style="cursor:pointer;font:.82rem/1 'DM Sans',sans-serif;font-weight:800;color:var(--forest2);letter-spacing:.05em;text-transform:uppercase;padding:.4rem 0">▸ Compléter la fiche manuellement (optionnel)</summary>
+    <div class="form-panel" style="margin-top:.8rem">
       <form id="productForm" onsubmit="submitForm(event)">
         <input type="hidden" id="editSlug">
 
@@ -314,7 +361,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 
           <div class="grid3">
             <label class="field">Prix *
-              <input name="price" required placeholder="Ex : 9 700 DH">
+              <input name="price" placeholder="Ex : 9 700 DH">
             </label>
             <label class="field">Durée
               <input name="duration" placeholder="Ex : 8 jours / 7 nuits">
@@ -336,7 +383,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         <div class="form-section">
           <h3>Description</h3>
           <label class="field">Introduction *
-            <textarea name="intro" required placeholder="Décrivez le voyage… (séparés par une ligne vide = paragraphes distincts)" rows="7"></textarea>
+            <textarea name="intro" placeholder="Décrivez le voyage… (séparés par une ligne vide = paragraphes distincts)" rows="7"></textarea>
             <span class="hint">Chaque ligne vide crée un nouveau paragraphe</span>
           </label>
           <label class="field" style="margin-top:.8rem">Points forts (un par ligne)
@@ -439,6 +486,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         </div>
       </form>
     </div>
+    </details>
   </div>
 </main>
 
@@ -829,6 +877,77 @@ function confirmDelete(slug) {
 }
 
 // ─────────────────────────────────────────
+// Mode rapide PDF
+// ─────────────────────────────────────────
+var quickPdfFile = null;
+
+function onQuickPdf(input) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+  quickPdfFile = file;
+  var zone = document.getElementById('qPdfZone');
+  var label = document.getElementById('qPdfLabel');
+  zone.classList.add('has-file');
+  label.textContent = '✅ ' + file.name;
+  // Auto-remplir le titre depuis le nom de fichier
+  var titleInput = document.getElementById('qTitle');
+  if (!titleInput.value) {
+    titleInput.value = file.name.replace(/\.pdf$/i,'').replace(/[-_]+/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+  }
+}
+
+async function quickSubmit() {
+  var tag = document.getElementById('qTag').value;
+  var title = document.getElementById('qTitle').value.trim();
+  var qlog = document.getElementById('qLog');
+
+  if (!tag) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Sélectionnez une destination.'; return; }
+  if (!title) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Entrez un titre (ou sélectionnez un PDF pour qu\'il s\'auto-remplisse).'; return; }
+  if (!quickPdfFile) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Sélectionnez le PDF envoyé par l\'équipe.'; return; }
+
+  qlog.style.color='var(--ok)';
+  qlog.textContent = 'Upload du PDF…';
+
+  var pdfUrl = '';
+  try {
+    var r = await uploadFile(quickPdfFile);
+    pdfUrl = r.url;
+  } catch(err) {
+    qlog.style.color='var(--danger)';
+    qlog.textContent = '❌ Erreur upload PDF : ' + err.message;
+    return;
+  }
+
+  qlog.textContent = 'Création du voyage…';
+
+  var product = { title: title, tag: tag, price: 'Sur devis', pdfUrl: pdfUrl, intro: [], highlights: [], whatsapp: '212673280009' };
+  try {
+    var res = await fetch('/api/produits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: title, product: product })
+    });
+    var data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Erreur serveur');
+    await loadManifest();
+    qlog.style.color='var(--ok)';
+    qlog.textContent = '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
+    toast('✅ Voyage « ' + title + ' » ajouté dans ' + tag + ' — visible sur le site !');
+    // Reset
+    quickPdfFile = null;
+    document.getElementById('qTag').value = '';
+    document.getElementById('qTitle').value = '';
+    document.getElementById('qPdfInput').value = '';
+    document.getElementById('qPdfZone').classList.remove('has-file');
+    document.getElementById('qPdfLabel').textContent = '📎 Cliquez pour sélectionner le PDF';
+    switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));
+  } catch(err) {
+    qlog.style.color='var(--danger)';
+    qlog.textContent = '❌ ' + err.message;
+  }
+}
+
+// ─────────────────────────────────────────
 // Formulaire
 // ─────────────────────────────────────────
 function openNewForm() {
@@ -843,6 +962,7 @@ function openNewForm() {
   selectBadge('none');
   document.getElementById('hiddenCheck').checked = false;
   document.getElementById('submitBtn').textContent = 'Enregistrer le voyage';
+  var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = '';
   switchTab('form', document.getElementById('tabFormBtn'));
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -852,6 +972,7 @@ function editProduct(slug) {
   if (!v) { toast('Produit introuvable'); return; }
   currentEditSlug = slug;
   document.getElementById('editSlug').value = slug;
+  var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = 'none';
 
   var f = document.getElementById('productForm');
   f.title.value = v.title || '';
