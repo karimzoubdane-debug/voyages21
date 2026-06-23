@@ -48,6 +48,15 @@ const EXPLORER_ITEMS = [
   { label: 'Que voir au Maroc',     href: '/que-voir-au-maroc',     img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=240&q=75' },
 ]
 
+const ILES_ITEMS = [
+  { label: 'Zanzibar',   href: '/voyages/zanzibar',   img: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=480&q=80' },
+  { label: 'Maldives',   href: '/voyages/maldives',   img: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=480&q=80' },
+  { label: 'Seychelles', href: '/voyages/seychelles', img: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=480&q=80' },
+  { label: 'Maurice',    href: '/voyages/maurice',    img: 'https://images.unsplash.com/photo-1540202404-1b927e27fa8b?w=480&q=80' },
+  { label: 'Cap-Vert',   href: '/voyages/cap-vert',   img: 'https://images.unsplash.com/photo-1566732562932-45c4b2b8b5f0?w=480&q=80' },
+  { label: 'Bali',       href: '/voyages/bali',       img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=480&q=80' },
+]
+
 // ── Icônes ────────────────────────────────────────────────────────────────────
 
 function PhoneIcon() {
@@ -460,6 +469,10 @@ export default function NavBar() {
             <button style={triggerStyle(openMenu === 'explorer')} onClick={() => toggleMenu('explorer')}>
               Explorer <Chevron active={openMenu === 'explorer'} />
             </button>
+
+            <button style={triggerStyle(openMenu === 'iles')} onClick={() => toggleMenu('iles')}>
+              Îles paradisiaques <Chevron active={openMenu === 'iles'} />
+            </button>
           </div>
 
           {/* Droite : téléphone + Contact + burger */}
@@ -605,6 +618,52 @@ export default function NavBar() {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════
+          MEGA MENU — ÎLES PARADISIAQUES
+      ══════════════════════════════════════════════════════════════════════ */}
+      {openMenu === 'iles' && (
+        <div className="mega-panel">
+          <div style={{
+            maxWidth: '1200px', margin: '0 auto',
+            display: 'flex', alignItems: 'stretch', gap: 0,
+          }}>
+            {/* Grille des îles — 3 colonnes */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
+              <span style={SEC}>Îles paradisiaques</span>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.6rem' }}>
+                {ILES_ITEMS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
+              </div>
+            </div>
+
+            <ColSep />
+
+            {/* Cadran droit */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 0 0 1.2rem', flexShrink: 0 }}>
+              <span style={{ ...SEC, marginBottom: '0.9rem' }}>Voir nos îles</span>
+              <RightCadran onClose={closeNow} />
+            </div>
+          </div>
+
+          <div style={{
+            maxWidth: '1200px', margin: '0.75rem auto 0',
+            paddingTop: '0.65rem',
+            borderTop: '1px solid rgba(200,164,64,0.18)',
+            textAlign: 'center',
+          }}>
+            <Link href="/contact" onClick={closeNow} style={{
+              color: '#C8A440', fontSize: '0.78rem', fontWeight: 600,
+              textDecoration: 'none', letterSpacing: '0.05em',
+              fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+            }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.75'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
+              Contactez-nous pour votre séjour dans les îles →
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════════════
           MENU MOBILE
       ══════════════════════════════════════════════════════════════════════ */}
       {mobileOpen && (
@@ -642,6 +701,13 @@ export default function NavBar() {
               { label: 'Explorer',                 href: '#',                               section: true },
               { label: 'Comment voir le Maroc',    href: '/comment-voir-le-maroc',          indent: true },
               { label: 'Que voir au Maroc',        href: '/que-voir-au-maroc',             indent: true },
+              { label: 'Îles paradisiaques',       href: '#',                               section: true },
+              { label: 'Zanzibar',                 href: '/voyages/zanzibar',               indent: true },
+              { label: 'Maldives',                 href: '/voyages/maldives',               indent: true },
+              { label: 'Seychelles',               href: '/voyages/seychelles',             indent: true },
+              { label: 'Maurice',                  href: '/voyages/maurice',                indent: true },
+              { label: 'Cap-Vert',                 href: '/voyages/cap-vert',               indent: true },
+              { label: 'Bali',                     href: '/voyages/bali',                   indent: true },
               { label: 'À propos',                 href: '#',                               section: true },
               { label: 'Notre expertise',          href: '/about#expertise',               indent: true },
               { label: 'Nos engagements',          href: '/about#engagements',             indent: true },

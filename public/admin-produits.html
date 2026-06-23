@@ -125,6 +125,17 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .maroc-sub.visible{display:flex}
 .msub{background:#fff;border:1.5px solid #d7263d;color:#d7263d;border-radius:999px;padding:.35rem .8rem;font:700 .76rem/1 "DM Sans",sans-serif;cursor:pointer;transition:all .12s}
 .msub.active,.msub:hover{background:#d7263d;color:#fff}
+/* Sous-groupe Croisières */
+.croisiere-sub{display:none;gap:.38rem;margin-bottom:.7rem}
+.croisiere-sub.visible{display:flex}
+.csub{background:#fff;border:1.5px solid var(--blue);color:var(--blue);border-radius:999px;padding:.35rem .8rem;font:700 .76rem/1 "DM Sans",sans-serif;cursor:pointer;transition:all .12s}
+.csub.active,.csub:hover{background:var(--blue);color:#fff}
+.csub.alert{border-color:var(--danger);color:var(--danger)}
+.csub.alert.active,.csub.alert:hover{background:var(--danger);color:#fff}
+/* Couleurs groupes continents supplémentaires */
+.gnav[data-group="moyen-orient"].active{background:#d97706;border-color:#d97706;color:#fff}
+.gnav[data-group="oceanie"].active{background:#0891b2;border-color:#0891b2;color:#fff}
+.gnav[data-group="iles"].active{background:#0e9480;border-color:#0e9480;color:#fff}
 
 @media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}.prod-row{grid-template-columns:72px minmax(0,1fr)}.prod-actions{border-left:0;border-top:1px solid var(--line);padding:.45rem .7rem}}
 </style>
@@ -160,8 +171,11 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
       <button class="gnav active" type="button" data-group="all" onclick="selectGroup('all',this)">Tous</button>
       <button class="gnav" type="button" data-group="europe" onclick="selectGroup('europe',this)">Europe</button>
       <button class="gnav" type="button" data-group="afrique" onclick="selectGroup('afrique',this)">Afrique</button>
+      <button class="gnav" type="button" data-group="moyen-orient" onclick="selectGroup('moyen-orient',this)">Moyen-Orient</button>
       <button class="gnav" type="button" data-group="ameriques" onclick="selectGroup('ameriques',this)">Amériques</button>
       <button class="gnav" type="button" data-group="asie" onclick="selectGroup('asie',this)">Asie</button>
+      <button class="gnav" type="button" data-group="oceanie" onclick="selectGroup('oceanie',this)">Océanie</button>
+      <button class="gnav" type="button" data-group="iles" onclick="selectGroup('iles',this)">Îles paradisiaques</button>
       <button class="gnav" type="button" data-group="combines" onclick="selectGroup('combines',this)">Combinés</button>
       <button class="gnav" type="button" data-group="omra" onclick="selectGroup('omra',this)">Omra &#x0639;&#x0645;&#x0631;&#x0629;</button>
       <button class="gnav" type="button" data-group="croisieres" onclick="selectGroup('croisieres',this)">Croisières</button>
@@ -172,6 +186,12 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
       <button class="msub active" type="button" data-msub="all" onclick="selectMarocSub('all',this)">Tous</button>
       <button class="msub" type="button" data-msub="sejours" onclick="selectMarocSub('sejours',this)">Séjours</button>
       <button class="msub" type="button" data-msub="circuits" onclick="selectMarocSub('circuits',this)">Circuits</button>
+    </div>
+    <!-- Sous-groupe Croisières : avec / sans visa Schengen -->
+    <div class="croisiere-sub" id="croisieresSub">
+      <button class="csub active" type="button" data-csub="all" onclick="selectCroisieresSub('all',this)">Toutes les croisières</button>
+      <button class="csub" type="button" data-csub="avec" onclick="selectCroisieresSub('avec',this)">Avec visa Schengen</button>
+      <button class="csub alert" type="button" data-csub="sans" onclick="selectCroisieresSub('sans',this)">Sans visa Schengen</button>
     </div>
     <!-- Filtres rapides -->
     <div class="filters">
@@ -211,17 +231,69 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
               <input name="title" required placeholder="Ex : Séjour à Istanbul">
             </label>
             <label class="field">Tag / Destination *
-              <select name="tag" required>
+              <select name="tag" required onchange="onTagChange(this.value)">
                 <option value="">— choisir —</option>
-                <option>Turquie</option><option>Égypte</option><option>Maroc</option>
-                <option>Europe</option><option>Croisières</option><option>Omra</option>
-                <option>USA / Canada</option><option>Vietnam</option><option>Chine</option>
-                <option>Malaisie-Thaïlande</option><option>Zanzibar</option>
-                <option>Pérou</option><option>Cuba</option><option>Combinés</option>
-                <option>Azerbaïdjan</option><option>Ouzbékistan</option><option>Tunisie</option>
+                <optgroup label="Europe">
+                  <option>Turquie</option><option>Espagne</option><option>Grèce</option>
+                  <option>Italie</option><option>Portugal</option><option>France & Suisse</option>
+                  <option>Royaume-Uni</option><option>Azerbaïdjan</option><option>Ouzbékistan</option>
+                  <option>Géorgie</option><option>Arménie</option><option>Croatie</option><option>Europe</option>
+                </optgroup>
+                <optgroup label="Afrique">
+                  <option>Égypte</option><option>Tunisie</option><option>Kenya</option>
+                  <option>Tanzanie</option><option>Afrique du Sud</option><option>Sénégal</option>
+                  <option>Éthiopie</option><option>Madagascar</option><option>Namibie</option>
+                  <option>Rwanda</option>
+                </optgroup>
+                <optgroup label="Moyen-Orient">
+                  <option>Arabie Saoudite</option><option>Jordanie</option><option>Émirats</option>
+                  <option>Oman</option><option>Qatar</option><option>Bahreïn</option>
+                  <option>Koweït</option><option>Liban</option>
+                </optgroup>
+                <optgroup label="Amériques">
+                  <option>États-Unis</option><option>Canada & USA</option><option>Cuba</option>
+                  <option>Pérou</option><option>Mexique</option><option>Brésil</option>
+                  <option>Argentine</option><option>Colombie</option><option>Costa Rica</option>
+                </optgroup>
+                <optgroup label="Asie">
+                  <option>Vietnam</option><option>Chine</option><option>Thaïlande</option>
+                  <option>Malaisie-Thaïlande</option><option>Japon</option><option>Corée du Sud</option>
+                  <option>Cambodge</option><option>Inde</option><option>Népal</option>
+                  <option>Sri Lanka</option><option>Philippines</option><option>Bali</option>
+                  <option>Asie</option>
+                </optgroup>
+                <optgroup label="Océanie">
+                  <option>Australie</option><option>Nouvelle-Zélande</option><option>Fidji</option>
+                  <option>Polynésie</option><option>Tahiti</option><option>Nouvelle-Calédonie</option>
+                </optgroup>
+                <optgroup label="Îles paradisiaques">
+                  <option>Zanzibar</option><option>Maldives</option><option>Seychelles</option>
+                  <option>Maurice</option><option>Cap-Vert</option><option>Canaries</option>
+                  <option>Madère</option><option>Djerba</option><option>Açores</option>
+                  <option>Réunion</option><option>Corse</option><option>Mykonos</option>
+                  <option>Santorin</option><option>Crète</option><option>Chypre</option><option>Malte</option>
+                </optgroup>
+                <optgroup label="Catégories spéciales">
+                  <option>Maroc</option>
+                  <option>Combinés</option>
+                  <option>عمرة</option>
+                  <option>Croisières</option>
+                </optgroup>
               </select>
             </label>
           </div>
+          <!-- Champ Schengen — affiché uniquement pour les Croisières -->
+          <div id="schengenGroup" style="display:none;margin-top:.7rem">
+            <label class="field">Visa Schengen pour cette croisière
+              <select name="schengen">
+                <option value="">— non précisé —</option>
+                <option value="true">Avec visa Schengen requis</option>
+                <option value="false">Sans visa Schengen</option>
+              </select>
+              <span class="hint">Détermine dans quel groupe la croisière apparaît sur les pages destination du site</span>
+            </label>
+          </div>
+
           <div class="grid3">
             <label class="field">Prix *
               <input name="price" required placeholder="Ex : 9 700 DH">
@@ -359,19 +431,37 @@ var activeBadgeBtn = 'none';
 var currentEditSlug = null;
 var activeGroup = 'all';
 var activeMarocSub = 'all';
+var activeCroisieresSub = 'all';
 
-// Groupes de destinations (correspond au menu du site)
+// Groupes de destinations (correspond au menu du site + tous les continents)
 var DEST_GROUPS = {
-  all:       null,
-  europe:    ['Turquie', 'Europe', 'Espagne', 'Grèce', 'Italie', 'France & Suisse',
-              'Royaume-Uni', 'Espagne & Portugal', 'Azerbaïdjan', 'Ouzbékistan'],
-  afrique:   ['Égypte', 'Tunisie', 'Zanzibar'],
-  ameriques: ['États-Unis', 'Canada & USA', 'Cuba', 'Pérou'],
-  asie:      ['Asie', 'Vietnam', 'Chine', 'Thaïlande', 'Malaisie-Thaïlande'],
-  combines:  ['Combiné', 'Combinés'],
-  omra:      ['عمرة', 'Omra'],
-  croisieres:['Croisière', 'Croisières'],
-  maroc:     ['Maroc']
+  all:            null,
+  europe:         ['Turquie', 'Europe', 'Espagne', 'Grèce', 'Italie', 'France & Suisse',
+                   'Royaume-Uni', 'Espagne & Portugal', 'Azerbaïdjan', 'Ouzbékistan',
+                   'Allemagne', 'Portugal', 'Autriche', 'Croatie', 'Pologne', 'Hongrie',
+                   'République tchèque', 'Pays-Bas', 'Belgique', 'Suisse', 'Irlande',
+                   'Albanie', 'Monténégro', 'Serbie', 'Slovénie', 'Roumanie', 'Bulgarie',
+                   'Géorgie', 'Arménie'],
+  afrique:        ['Égypte', 'Tunisie', 'Kenya', 'Tanzanie', 'Afrique du Sud', 'Marrakech',
+                   'Madagascar', 'Éthiopie', 'Ghana', 'Sénégal', 'Côte d\'Ivoire',
+                   'Afrique', 'Namibie', 'Botswana', 'Rwanda', 'Ouganda'],
+  'moyen-orient': ['Arabie Saoudite', 'Jordanie', 'Émirats', 'Oman', 'Qatar', 'Bahreïn',
+                   'Koweït', 'Israël', 'Liban', 'Moyen-Orient', 'Dubai'],
+  ameriques:      ['États-Unis', 'Canada & USA', 'Cuba', 'Pérou', 'Mexique', 'Brésil',
+                   'Argentine', 'Colombie', 'Chili', 'Costa Rica', 'Canada', 'Amériques'],
+  asie:           ['Asie', 'Vietnam', 'Chine', 'Thaïlande', 'Malaisie-Thaïlande', 'Japon',
+                   'Corée du Sud', 'Cambodge', 'Laos', 'Myanmar', 'Philippines', 'Sri Lanka',
+                   'Népal', 'Inde', 'Malaisie', 'Singapour', 'Taiwan'],
+  oceanie:        ['Australie', 'Nouvelle-Zélande', 'Fidji', 'Polynésie', 'Tahiti',
+                   'Papouasie', 'Samoa', 'Vanuatu', 'Nouvelle-Calédonie', 'Océanie'],
+  iles:           ['Zanzibar', 'Maldives', 'Bali', 'Seychelles', 'Maurice', 'Canaries',
+                   'Djerba', 'Cap-Vert', 'Açores', 'Madère', 'Réunion', 'Corse', 'Sicile',
+                   'Sardaigne', 'Mykonos', 'Santorin', 'Rhodes', 'Crète', 'Chypre',
+                   'Malte', 'Jamaïque', 'Bora Bora', 'Hawaii', 'Îles paradisiaques'],
+  combines:       ['Combiné', 'Combinés'],
+  omra:           ['عمرة', 'Omra'],
+  croisieres:     ['Croisière', 'Croisières'],
+  maroc:          ['Maroc']
 };
 
 // Slugs Maroc séjours (balnéaires/détente)
@@ -432,6 +522,7 @@ function applyFilters() {
 function selectGroup(group, btn) {
   activeGroup = group;
   activeMarocSub = 'all';
+  activeCroisieresSub = 'all';
   document.querySelectorAll('.gnav').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
   // Afficher/masquer le sous-groupe Maroc
@@ -440,6 +531,19 @@ function selectGroup(group, btn) {
     marocSub.classList.toggle('visible', group === 'maroc');
     marocSub.querySelectorAll('.msub').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-msub') === 'all'); });
   }
+  // Afficher/masquer le sous-groupe Croisières
+  var croisieresSub = document.getElementById('croisieresSub');
+  if (croisieresSub) {
+    croisieresSub.classList.toggle('visible', group === 'croisieres');
+    croisieresSub.querySelectorAll('.csub').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-csub') === 'all'); });
+  }
+  renderCatalogue();
+}
+
+function selectCroisieresSub(sub, btn) {
+  activeCroisieresSub = sub;
+  document.querySelectorAll('.csub').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
   renderCatalogue();
 }
 
@@ -461,6 +565,12 @@ function matchesGroup(item) {
     var isSejour = MAROC_SEJOUR_RE.test(item.slug);
     if (activeMarocSub === 'sejours' && !isSejour) return false;
     if (activeMarocSub === 'circuits' && isSejour) return false;
+  }
+  // Sous-groupe Croisières — filtre par visa Schengen (champ schengen: true/false sur produit)
+  if (activeGroup === 'croisieres' && activeCroisieresSub !== 'all') {
+    var schengen = item.v && item.v.schengen;
+    if (activeCroisieresSub === 'avec' && schengen !== true) return false;
+    if (activeCroisieresSub === 'sans' && schengen !== false) return false;
   }
   return true;
 }
@@ -676,6 +786,8 @@ function editProduct(slug) {
   var f = document.getElementById('productForm');
   f.title.value = v.title || '';
   f.tag.value = v.tag || '';
+  onTagChange(v.tag || '');
+  if (f.schengen && v.schengen !== undefined) f.schengen.value = v.schengen === true ? 'true' : v.schengen === false ? 'false' : '';
   f.price.value = v.price || '';
   f.duration.value = v.duration || '';
   f.pricePrefix.value = v.pricePrefix || '';
@@ -770,6 +882,10 @@ async function submitForm(e) {
     },
     images: allImageUrls
   };
+  // Champ Schengen (Croisières uniquement)
+  if (f.schengen && f.schengen.value !== '') {
+    product.schengen = f.schengen.value === 'true';
+  }
 
   var slug = currentEditSlug || slugify(product.title);
   var method = currentEditSlug ? 'PUT' : 'POST';
@@ -932,6 +1048,15 @@ function toast(msg) {
   el.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3200);
+}
+
+// ─────────────────────────────────────────
+// Champ Schengen (Croisières)
+// ─────────────────────────────────────────
+function onTagChange(val) {
+  var isCroisiere = val === 'Croisières' || val === 'Croisière';
+  var el = document.getElementById('schengenGroup');
+  if (el) el.style.display = isCroisiere ? 'block' : 'none';
 }
 
 // ─────────────────────────────────────────
