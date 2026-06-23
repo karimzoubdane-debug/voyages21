@@ -929,7 +929,7 @@ async function quickSubmit() {
     });
     var data = await res.json();
     if (!data.ok) throw new Error(data.error || 'Erreur serveur');
-    await loadManifest();
+    reload();
     qlog.style.color='var(--ok)';
     qlog.textContent = '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
     toast('✅ Voyage « ' + title + ' » ajouté dans ' + tag + ' — visible sur le site !');
