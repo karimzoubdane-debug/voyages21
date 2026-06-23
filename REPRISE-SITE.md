@@ -59,12 +59,12 @@ _Dernière mise à jour : 2026-06-23_
 - Réponse : la fiche est créable via admin (sync immédiate), mais la page destination + le menu de navigation nécessitent une PR séparée
 - **À décider** : quelle nouvelle destination Karim veut ajouter ?
 
-## ▶️ Prochaines étapes
-1. Karim teste l'import d'un `.json` complet depuis le formulaire équipe → valide Point 4
-2. Karim valide le panel Îles paradisiaques (Point 5)
-3. Dire **"go #79"** → merge PR #79 → visible sur www.voyages21.com
-4. PR #75 (accueil tél+WhatsApp) et PR #77 (Drive auto) → toujours en attente de "go"
-5. Éventuelle nouvelle PR pour nouvelle destination si Karim confirme laquelle
+## ▶️ Prochaines étapes (feux verts attendus)
+
+- **"go #79"** → valider import JSON équipe + panel Îles paradisiaques, puis merger PR #79 → visible sur www.voyages21.com
+- **"go #75"** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage)
+- **"go #77"** → activer le dépôt auto de la sauvegarde sur Drive (nécessite secret `GDRIVE_SA_JSON`)
+- Éventuelle nouvelle PR pour nouvelle destination si Karim confirme laquelle
 
 ## 💾 Rappel sauvegarde (règle depuis 2026-06-23)
 Après chaque session, rappeler à Karim de télécharger la dernière Release GitHub et de déposer les fichiers dans le Drive **« VOYAGES21 — SAUVEGARDES »**.
