@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Voyages21 - Admin Produits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1B3A28;--forest2:#152E1F;--gold:#C8A440;--cream:#F5F0E8;--ink:#26231d;--line:#e2d8c7;--danger:#b23a2e;--warn:#b87514;--ok:#237346;--blue:#008fce}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.45}
+header{position:sticky;top:0;z-index:30;background:var(--forest);color:#fff;padding:1rem 1.2rem;box-shadow:0 2px 16px rgba(0,0,0,.22)}
+h1{margin:0;font-size:1.2rem;letter-spacing:.03em}header p{margin:.2rem 0 0;color:rgba(255,255,255,.7);font-size:.82rem}
+.toolbar{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem;align-items:center}
+button,.btn{border:0;border-radius:6px;background:var(--gold);color:var(--forest2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:.5rem .9rem;font:700 .83rem/1 "DM Sans",sans-serif;text-decoration:none;transition:filter .12s,transform .1s;white-space:nowrap}
+button:active,.btn:active{transform:translateY(1px);filter:brightness(.9)}
+.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.36)}
+.danger{background:var(--danger);color:#fff}
+.ok{background:var(--ok);color:#fff}
+.blue{background:var(--blue);color:#fff}
+.mini{min-height:32px;padding:.38rem .65rem;font-size:.76rem}
+.action-log{margin-top:.55rem;color:rgba(255,255,255,.8);font-size:.8rem;font-weight:700;min-height:1.1rem}
+
+main{max-width:1140px;margin:1.4rem auto 4rem;padding:0 1rem}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--line);margin-bottom:1.4rem}
+.tab-btn{border:0;background:transparent;border-bottom:3px solid transparent;margin-bottom:-2px;padding:.75rem 1.1rem;font:700 .9rem/1 "DM Sans",sans-serif;color:#6b7065;cursor:pointer;transition:color .14s}
+.tab-btn.active{color:var(--forest);border-bottom-color:var(--forest)}
+
+/* Filters */
+.filters{display:flex;gap:.55rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filters select,.filters input{border:1px solid #cfc5b3;border-radius:6px;padding:.48rem .65rem;font:.85rem/1.3 "DM Sans",sans-serif;background:#fff;color:var(--ink)}
+.filters label{font:.78rem/1 "DM Sans",sans-serif;font-weight:800;color:#6b7065;text-transform:uppercase;letter-spacing:.07em}
+
+/* Product list */
+#productList{display:flex;flex-direction:column;gap:.7rem}
+.prod-row{background:#fff;border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:80px minmax(0,1fr) auto;gap:0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.prod-thumb{width:80px;min-height:70px;background:linear-gradient(135deg,var(--forest),var(--forest2)) center/cover no-repeat}
+.prod-info{padding:.7rem .9rem;display:flex;flex-direction:column;gap:.2rem}
+.prod-title{font:700 .98rem/1.2 "Playfair Display",serif;color:var(--forest)}
+.prod-meta{font-size:.78rem;color:#6b7065;display:flex;gap:.6rem;flex-wrap:wrap}
+.prod-price{font-weight:800;color:var(--forest)}
+.prod-tag{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.prod-source{font-size:.7rem;color:#999;font-style:italic}
+.prod-actions{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;padding:.5rem .7rem;border-left:1px solid var(--line)}
+.badge-pill{display:inline-block;border-radius:999px;padding:.18rem .55rem;font:700 .68rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.badge-pill.sold{background:#d7263d;color:#fff}
+.badge-pill.gold{background:var(--gold);color:var(--forest2)}
+.badge-pill.green{background:var(--ok);color:#fff}
+.badge-pill.hidden{background:#ccc;color:#555}
+
+/* Status drawer */
+.status-drawer{display:none;border-top:1px solid var(--line);padding:1rem 1.1rem;background:#fdfaf5;flex-direction:column;gap:.75rem}
+.status-drawer.open{display:flex}
+.badge-grid{display:flex;flex-wrap:wrap;gap:.45rem}
+.badge-opt{border:2px solid var(--line);border-radius:8px;padding:.4rem .8rem;font:700 .78rem/1 "DM Sans",sans-serif;cursor:pointer;background:#fff;transition:border-color .12s,background .12s}
+.badge-opt:hover{border-color:var(--forest)}
+.badge-opt.sel{border-color:var(--forest);background:var(--forest);color:#fff}
+.badge-opt.sel-danger{border-color:var(--danger);background:var(--danger);color:#fff}
+.badge-opt.sel-gold{border-color:var(--gold);background:var(--gold);color:var(--forest2)}
+
+/* Form */
+.form-panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.4rem 1.5rem;box-shadow:0 1px 5px rgba(0,0,0,.05)}
+.form-section{margin-bottom:1.6rem}
+.form-section h3{font:700 .85rem/1 "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.1em;color:var(--forest2);margin:0 0 .9rem;padding-bottom:.45rem;border-bottom:1px solid var(--line)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}
+label.field{display:flex;flex-direction:column;gap:.3rem;font:.75rem/1 "DM Sans",sans-serif;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#536154}
+label.field input,label.field textarea,label.field select{border:1px solid #cfc5b3;border-radius:6px;padding:.62rem .72rem;font:.92rem/1.4 "DM Sans",sans-serif;color:var(--ink);background:#fff;width:100%}
+label.field textarea{resize:vertical;min-height:100px}
+label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a8279;text-transform:none;letter-spacing:0;margin-top:.15rem}
+
+/* Photos upload */
+.photos-area{border:2px dashed #cfc5b3;border-radius:10px;padding:1.2rem;text-align:center;background:#fdfaf5;cursor:pointer;transition:border-color .14s}
+.photos-area:hover{border-color:var(--forest)}
+.photos-area input[type=file]{display:none}
+.photos-preview{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.75rem}
+.photos-preview img{width:90px;height:65px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.photos-preview .rm-photo{position:relative;display:inline-block}
+.photos-preview .rm-photo button{position:absolute;top:2px;right:2px;border:0;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:.7rem;width:18px;height:18px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* Badge selector in form */
+.badge-selector{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.badge-selector input[type=text]{flex:1;min-width:160px;border:1px solid #cfc5b3;border-radius:6px;padding:.5rem .65rem;font:.88rem/1 "DM Sans",sans-serif}
+.badge-selector .bopt{border:1.5px solid var(--line);border-radius:6px;padding:.35rem .7rem;font:700 .75rem/1 "DM Sans",sans-serif;cursor:pointer;background:#fff;transition:all .12s}
+.badge-selector .bopt.active-danger{background:var(--danger);border-color:var(--danger);color:#fff}
+.badge-selector .bopt.active-gold{background:var(--gold);border-color:var(--gold);color:var(--forest2)}
+.badge-selector .bopt.active-green{background:var(--ok);border-color:var(--ok);color:#fff}
+.badge-selector .bopt.active-none{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* Confirm / submit */
+.form-actions{display:flex;gap:.7rem;flex-wrap:wrap;padding-top:.8rem;border-top:1px solid var(--line)}
+.submit-btn{background:var(--forest);color:#fff;font-size:.9rem;min-height:44px;padding:.6rem 1.4rem}
+
+/* Empty / loading */
+.empty{text-align:center;color:#8a8279;padding:2rem;font-style:italic}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;z-index:200;transform:translateX(-50%) translateY(80px);transition:transform .28s;background:var(--forest);color:#fff;border-radius:999px;padding:.75rem 1.3rem;font-weight:800;font-size:.88rem;box-shadow:0 8px 26px rgba(0,0,0,.24);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Confirm overlay */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center}
+.overlay[hidden]{display:none}
+.dialog{background:#fff;border-radius:12px;padding:1.6rem;max-width:400px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,.28)}
+.dialog h3{margin:0 0 .7rem;font-family:"Playfair Display",serif;color:var(--forest)}
+.dialog p{margin:0 0 1.2rem;color:#536154;font-size:.93rem}
+.dialog .dbtn{display:flex;gap:.6rem}
+
+@media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}.prod-row{grid-template-columns:72px minmax(0,1fr)}.prod-actions{border-left:0;border-top:1px solid var(--line);padding:.45rem .7rem}}
+</style>
+</head>
+<body>
+<!-- ───── Data source : voyages existants ───── -->
+<script src="/voyages/data.js?v=admin-produits-v1"></script>
+
+<header>
+  <h1>VOYAGES21 — Admin Produits</h1>
+  <p>Ajoutez, modifiez ou retirez des voyages sans passer par Claude.</p>
+  <div class="toolbar">
+    <button class="ghost mini" type="button" onclick="reload()">↺ Recharger</button>
+    <button type="button" onclick="openNewForm()">+ Nouveau voyage</button>
+    <button class="ghost mini" type="button" onclick="location.href='/admin-medias.html'">Médias</button>
+    <button class="ghost mini" type="button" onclick="location.href='/admin-cover.html'">Cover</button>
+  </div>
+  <div class="action-log" id="actionLog">Prêt.</div>
+</header>
+
+<main>
+  <nav class="tabs">
+    <button class="tab-btn active" type="button" data-tab="catalogue" onclick="switchTab('catalogue',this)">Catalogue</button>
+    <button class="tab-btn" type="button" data-tab="form" onclick="switchTab('form',this)" id="tabFormBtn">+ Nouveau voyage</button>
+  </nav>
+
+  <!-- ── Onglet Catalogue ── -->
+  <div id="tab-catalogue">
+    <div class="filters">
+      <label>Destination
+        <select id="filterDest" onchange="applyFilters()">
+          <option value="">Toutes destinations</option>
+          <option>Turquie</option><option>Égypte</option><option>Maroc</option>
+          <option>Europe</option><option>Croisières</option><option>Omra</option>
+          <option>USA / Canada</option><option>Vietnam</option><option>Chine</option>
+          <option>Malaisie-Thaïlande</option><option>Zanzibar</option>
+          <option>Pérou</option><option>Cuba</option><option>Combinés</option>
+          <option>Azerbaïdjan</option><option>Ouzbékistan</option><option>Tunisie</option>
+        </select>
+      </label>
+      <label>Statut
+        <select id="filterStatus" onchange="applyFilters()">
+          <option value="">Tous statuts</option>
+          <option value="active">Actifs</option>
+          <option value="sold">Soldés / Complet</option>
+          <option value="hidden">Masqués</option>
+        </select>
+      </label>
+      <label>Source
+        <select id="filterSource" onchange="applyFilters()">
+          <option value="">Tous</option>
+          <option value="static">Catalogue de base</option>
+          <option value="custom">Ajoutés via admin</option>
+        </select>
+      </label>
+      <label style="font-weight:400;text-transform:none;letter-spacing:0">
+        <input type="search" placeholder="Rechercher…" id="filterSearch" oninput="applyFilters()" style="min-width:180px">
+      </label>
+    </div>
+    <div id="productList"><p class="empty">Chargement…</p></div>
+  </div>
+
+  <!-- ── Onglet Formulaire ── -->
+  <div id="tab-form" hidden>
+    <div class="form-panel">
+      <form id="productForm" onsubmit="submitForm(event)">
+        <input type="hidden" id="editSlug">
+
+        <!-- Informations essentielles -->
+        <div class="form-section">
+          <h3>Informations essentielles</h3>
+          <div class="grid2">
+            <label class="field">Titre du voyage *
+              <input name="title" required placeholder="Ex : Séjour à Istanbul">
+            </label>
+            <label class="field">Tag / Destination *
+              <select name="tag" required>
+                <option value="">— choisir —</option>
+                <option>Turquie</option><option>Égypte</option><option>Maroc</option>
+                <option>Europe</option><option>Croisières</option><option>Omra</option>
+                <option>USA / Canada</option><option>Vietnam</option><option>Chine</option>
+                <option>Malaisie-Thaïlande</option><option>Zanzibar</option>
+                <option>Pérou</option><option>Cuba</option><option>Combinés</option>
+                <option>Azerbaïdjan</option><option>Ouzbékistan</option><option>Tunisie</option>
+              </select>
+            </label>
+          </div>
+          <div class="grid3">
+            <label class="field">Prix *
+              <input name="price" required placeholder="Ex : 9 700 DH">
+            </label>
+            <label class="field">Durée
+              <input name="duration" placeholder="Ex : 8 jours / 7 nuits">
+            </label>
+            <label class="field">Préfixe prix
+              <input name="pricePrefix" placeholder="Ex : À partir de">
+            </label>
+          </div>
+          <label class="field" style="margin-top:.7rem">Tagline (eyebrow)
+            <input name="eyebrow" placeholder="Ex : Turquie · Spécial été 2026">
+            <span class="hint">Courte ligne affichée au-dessus du titre dans la fiche</span>
+          </label>
+          <label class="field" style="margin-top:.7rem">Numéro WhatsApp
+            <input name="whatsapp" value="212673280009">
+          </label>
+        </div>
+
+        <!-- Description -->
+        <div class="form-section">
+          <h3>Description</h3>
+          <label class="field">Introduction *
+            <textarea name="intro" required placeholder="Décrivez le voyage… (séparés par une ligne vide = paragraphes distincts)" rows="7"></textarea>
+            <span class="hint">Chaque ligne vide crée un nouveau paragraphe</span>
+          </label>
+          <label class="field" style="margin-top:.8rem">Points forts (un par ligne)
+            <textarea name="highlights" placeholder="Mosquée Bleue et Topkapı&#10;Croisière sur le Bosphore incluse&#10;Vols Turkish Airlines inclus" rows="5"></textarea>
+          </label>
+        </div>
+
+        <!-- Photos -->
+        <div class="form-section">
+          <h3>Photos</h3>
+          <div class="photos-area" onclick="document.getElementById('photoInput').click()">
+            <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotos(this.files)">
+            <div>📷 Cliquez pour ajouter des photos (JPG, WebP, PNG)</div>
+            <div style="font-size:.8rem;color:#8a8279;margin-top:.35rem">Glissez aussi vos fichiers ici</div>
+          </div>
+          <div class="photos-preview" id="photosPreview"></div>
+          <div id="photoUploadStatus" style="font-size:.8rem;color:var(--ok);margin-top:.4rem"></div>
+        </div>
+
+        <!-- Inclus / Exclus -->
+        <div class="form-section">
+          <h3>Inclus / Exclus</h3>
+          <div class="grid2">
+            <label class="field">Ce qui est inclus (un par ligne)
+              <textarea name="inclus" placeholder="Le billet d'avion A/R&#10;7 nuits hôtel petit-déjeuner&#10;Transferts aéroport" rows="6"></textarea>
+            </label>
+            <label class="field">Ce qui n'est pas inclus (un par ligne)
+              <textarea name="exclus" placeholder="Les excursions optionnelles&#10;Les repas non mentionnés&#10;Les pourboires" rows="6"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="form-section">
+          <h3>Dates de départ</h3>
+          <div class="grid2">
+            <label class="field">Dates (séparées par des virgules)
+              <input name="datesList" placeholder="31/07, 03/08, 17/08">
+            </label>
+            <label class="field">Description / garantie
+              <input name="datesLine" placeholder="Départs garantis · Été 2026">
+            </label>
+          </div>
+          <label class="field" style="margin-top:.7rem">Note complémentaire dates
+            <input name="datesNote" placeholder="Ex : Visa non requis pour passeport marocain">
+          </label>
+        </div>
+
+        <!-- Hébergement -->
+        <div class="form-section">
+          <h3>Hébergement</h3>
+          <label class="field">Hôtels proposés (un par ligne)
+            <textarea name="hotels" placeholder="Hôtel Atlas 4★ — Centre-ville&#10;Hôtel Barcelo 5★ — Bord de mer" rows="4"></textarea>
+          </label>
+        </div>
+
+        <!-- Statut -->
+        <div class="form-section">
+          <h3>Statut et badge</h3>
+          <div style="margin-bottom:.7rem;font:.75rem/1 'DM Sans',sans-serif;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#536154">Badge affiché sur la carte</div>
+          <div class="badge-selector">
+            <button type="button" class="bopt active-none" data-badge-btn="none" onclick="selectBadge('none')">Aucun</button>
+            <button type="button" class="bopt" data-badge-btn="sold" onclick="selectBadge('sold')">🔴 SOLDÉ</button>
+            <button type="button" class="bopt" data-badge-btn="places" onclick="selectBadge('places')">⚠️ Dernières places</button>
+            <button type="button" class="bopt" data-badge-btn="new" onclick="selectBadge('new')">✨ Nouveau</button>
+            <button type="button" class="bopt" data-badge-btn="promo" onclick="selectBadge('promo')">💰 Promo</button>
+          </div>
+          <input type="text" id="customBadgeInput" placeholder="Badge personnalisé…" oninput="selectBadge('custom')"
+            style="margin-top:.6rem;border:1px solid #cfc5b3;border-radius:6px;padding:.5rem .65rem;font:.88rem/1 'DM Sans',sans-serif;width:220px">
+          <input type="hidden" id="badgeValue" value="">
+          <input type="hidden" id="badgeColor" value="">
+
+          <div style="margin-top:.9rem;display:flex;align-items:center;gap:.5rem">
+            <input type="checkbox" id="hiddenCheck" style="width:auto">
+            <label for="hiddenCheck" style="font:.85rem/1 'DM Sans',sans-serif;cursor:pointer">Masquer du catalogue (sans supprimer)</label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn submit-btn" id="submitBtn">Enregistrer le voyage</button>
+          <button type="button" class="btn ghost" onclick="cancelForm()" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- Confirm overlay -->
+<div class="overlay" id="confirmOverlay" hidden>
+  <div class="dialog">
+    <h3 id="confirmTitle">Confirmer l'action</h3>
+    <p id="confirmMsg"></p>
+    <div class="dbtn">
+      <button type="button" class="btn danger" id="confirmOk">Confirmer</button>
+      <button type="button" class="btn ghost" style="background:transparent;color:var(--ink);border:1px solid var(--line)" onclick="closeConfirm()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/voyages/data.js?v=admin-produits-v2"></script>
+<script>
+// ─────────────────────────────────────────
+// État global
+// ─────────────────────────────────────────
+var manifest = { custom: {}, status: {} };
+var uploadedPhotos = []; // { url, file }
+var activeBadgeBtn = 'none';
+var currentEditSlug = null;
+
+// ─────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────
+function init() {
+  reload();
+  setupPhotoDrop();
+}
+
+function reload() {
+  log('Chargement…');
+  fetch('/api/produits', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : {}; })
+    .then(function(data) {
+      manifest.custom = data.custom || {};
+      manifest.status = data.status || {};
+      renderCatalogue();
+      log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
+    })
+    .catch(function(e){ log('Erreur : ' + e.message); });
+}
+
+// ─────────────────────────────────────────
+// Onglets
+// ─────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('tab-catalogue').hidden = id !== 'catalogue';
+  document.getElementById('tab-form').hidden = id !== 'form';
+}
+
+// ─────────────────────────────────────────
+// Catalogue
+// ─────────────────────────────────────────
+function allProducts() {
+  var list = [];
+  // Voyages statiques (data.js)
+  var staticVoyages = window.VOYAGES || {};
+  Object.keys(staticVoyages).forEach(function(slug) {
+    list.push({ slug: slug, v: staticVoyages[slug], source: 'static' });
+  });
+  // Voyages admin
+  Object.keys(manifest.custom).forEach(function(slug) {
+    list.push({ slug: slug, v: manifest.custom[slug], source: 'custom' });
+  });
+  return list;
+}
+
+function applyFilters() {
+  renderCatalogue();
+}
+
+function renderCatalogue() {
+  var dest = document.getElementById('filterDest').value.toLowerCase();
+  var status = document.getElementById('filterStatus').value;
+  var source = document.getElementById('filterSource').value;
+  var search = (document.getElementById('filterSearch').value || '').toLowerCase();
+
+  var items = allProducts().filter(function(item) {
+    var v = item.v || {};
+    var st = manifest.status[item.slug] || {};
+    var tag = (v.tag || '').toLowerCase();
+    var title = (v.title || '').toLowerCase();
+
+    if (dest && tag !== dest && tag.indexOf(dest) === -1) return false;
+    if (source && item.source !== source) return false;
+    if (search && title.indexOf(search) === -1 && tag.indexOf(search) === -1) return false;
+    if (status === 'active' && (st.hidden || st.badge === 'SOLDÉ' || st.badge === 'Complet')) return false;
+    if (status === 'sold' && (!st.badge || (st.badge !== 'SOLDÉ' && st.badge !== 'Complet'))) return false;
+    if (status === 'hidden' && !st.hidden) return false;
+    return true;
+  });
+
+  var container = document.getElementById('productList');
+  if (!items.length) {
+    container.innerHTML = '<p class="empty">Aucun produit trouvé.</p>';
+    return;
+  }
+
+  container.innerHTML = items.map(function(item) {
+    return renderProdRow(item.slug, item.v, item.source);
+  }).join('');
+}
+
+function getThumb(slug, v) {
+  // Produit admin avec images directes
+  if (v.images && v.images.length) return v.images[0];
+  // On n'a pas le media manifest ici, on laisse vide
+  return '';
+}
+
+function renderProdRow(slug, v, source) {
+  var st = manifest.status[slug] || {};
+  var thumb = getThumb(slug, v);
+  var thumbStyle = thumb ? 'background-image:url(' + JSON.stringify(thumb) + ')' : '';
+  var badgeHtml = renderBadgePill(st, source);
+  var drawerId = 'drawer-' + slug.replace(/[^a-z0-9]/g,'_');
+
+  return '<div class="prod-row" id="row-' + esc(slug) + '">'
+    + '<div class="prod-thumb" style="' + esc(thumbStyle) + '"></div>'
+    + '<div style="display:flex;flex-direction:column;min-width:0">'
+    + '<div class="prod-info">'
+    + '<div class="prod-tag">' + esc(v.tag || '—') + (source === 'custom' ? ' <span class="prod-source">· admin</span>' : '') + '</div>'
+    + '<div class="prod-title">' + esc(v.title || '—') + '</div>'
+    + '<div class="prod-meta">'
+    + (v.price ? '<span class="prod-price">' + esc(v.price) + '</span>' : '')
+    + (v.duration ? '<span>' + esc(v.duration) + '</span>' : '')
+    + badgeHtml
+    + '</div>'
+    + '</div>'
+    + '<div class="status-drawer" id="' + drawerId + '">'
+    + renderStatusDrawer(slug, st)
+    + '</div>'
+    + '</div>'
+    + '<div class="prod-actions">'
+    + '<button class="mini" type="button" onclick="toggleDrawer(\'' + esc(slug) + '\')">Statut</button>'
+    + (source === 'custom' ? '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>' : '')
+    + (source === 'custom' ? '<button class="mini danger" type="button" onclick="confirmDelete(\'' + esc(slug) + '\')">Supprimer</button>' : '<button class="mini ghost" type="button" onclick="confirmHide(\'' + esc(slug) + '\',\'' + esc(v.title||'') + '\')">' + (manifest.status[slug] && manifest.status[slug].hidden ? 'Afficher' : 'Masquer') + '</button>')
+    + '</div>'
+    + '</div>';
+}
+
+function renderBadgePill(st, source) {
+  if (!st) return '';
+  var cls = '';
+  if (st.hidden) cls = 'hidden';
+  else if (st.badgeColor === 'danger' || st.badge === 'SOLDÉ' || st.badge === 'Complet') cls = 'sold';
+  else if (st.badgeColor === 'gold') cls = 'gold';
+  else if (st.badgeColor === 'green') cls = 'green';
+  else if (st.badge) cls = 'gold';
+
+  if (st.hidden) return '<span class="badge-pill hidden">Masqué</span>';
+  if (st.badge) return '<span class="badge-pill ' + cls + '">' + esc(st.badge) + '</span>';
+  return '';
+}
+
+function renderStatusDrawer(slug, st) {
+  return '<div><strong style="font-size:.82rem">Appliquer un statut :</strong></div>'
+    + '<div class="badge-grid">'
+    + drawerBtn(slug, '', '', 'Aucun (actif)')
+    + drawerBtn(slug, 'SOLDÉ', 'danger', 'SOLDÉ / Complet')
+    + drawerBtn(slug, 'Dernières places', 'danger', '⚠ Dernières places')
+    + drawerBtn(slug, '5 places', 'danger', '5 places restantes')
+    + drawerBtn(slug, '3 places', 'danger', '3 places restantes')
+    + drawerBtn(slug, 'Nouveau', 'gold', '✨ Nouveau')
+    + drawerBtn(slug, 'Promo', 'gold', '💰 Promo')
+    + '</div>'
+    + '<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">'
+    + '<input type="text" id="customBadge-' + esc(slug) + '" placeholder="Badge libre…" value="' + esc(st.badge && !['SOLDÉ','Dernières places','5 places','3 places','Nouveau','Promo'].includes(st.badge) ? st.badge : '') + '" style="border:1px solid #cfc5b3;border-radius:6px;padding:.42rem .6rem;font:.83rem/1 \'DM Sans\',sans-serif;flex:1;min-width:130px">'
+    + '<button class="mini ok" type="button" onclick="applyCustomBadge(\'' + esc(slug) + '\')">Appliquer</button>'
+    + '</div>';
+}
+
+function drawerBtn(slug, badge, color, label) {
+  var st = manifest.status[slug] || {};
+  var sel = (st.badge === badge && !st.hidden) || (!badge && !st.badge && !st.hidden);
+  var selCls = sel ? (color === 'danger' ? 'sel-danger' : color === 'gold' ? 'sel-gold' : 'sel') : '';
+  return '<button class="badge-opt ' + selCls + '" type="button" onclick="applyStatus(\'' + esc(slug) + '\',\'' + esc(badge) + '\',\'' + esc(color) + '\')">' + esc(label) + '</button>';
+}
+
+function toggleDrawer(slug) {
+  var id = 'drawer-' + slug.replace(/[^a-z0-9]/g,'_');
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────
+// Actions statut
+// ─────────────────────────────────────────
+function applyStatus(slug, badge, color) {
+  log('Enregistrement…');
+  var st = { badge: badge, badgeColor: color, hidden: false };
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'status', slug: slug, status: st })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      manifest.status[slug] = st;
+      toast(badge ? 'Badge "' + badge + '" appliqué' : 'Statut retiré');
+      renderCatalogue();
+    } else {
+      log('Erreur : ' + (data.error || 'inconnue'));
+    }
+  })
+  .catch(function(e){ log('Erreur : ' + e.message); });
+}
+
+function applyCustomBadge(slug) {
+  var input = document.getElementById('customBadge-' + slug);
+  if (!input) return;
+  var badge = input.value.trim();
+  applyStatus(slug, badge, badge ? 'danger' : '');
+}
+
+function confirmHide(slug, title) {
+  var st = manifest.status[slug] || {};
+  if (st.hidden) {
+    // Réafficher
+    applyStatus(slug, st.badge || '', st.badgeColor || '');
+    manifest.status[slug] = { ...(manifest.status[slug]||{}), hidden: false };
+    toast('Voyage réaffiché');
+    renderCatalogue();
+    return;
+  }
+  confirm2('Masquer ce voyage ?', '"' + title + '" ne sera plus visible dans le catalogue (sans suppression).', function() {
+    log('Masquage…');
+    var newSt = { ...(manifest.status[slug]||{}), hidden: true };
+    fetch('/api/produits', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'status', slug: slug, status: newSt })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok) { manifest.status[slug] = newSt; toast('Voyage masqué'); renderCatalogue(); }
+    });
+  });
+}
+
+function confirmDelete(slug) {
+  var v = manifest.custom[slug] || {};
+  confirm2('Supprimer définitivement ?', '"' + (v.title||slug) + '" sera supprimé du catalogue admin. Cette action est irréversible.', function() {
+    log('Suppression…');
+    fetch('/api/produits?slug=' + encodeURIComponent(slug) + '&type=delete', { method: 'DELETE' })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.ok) {
+          delete manifest.custom[slug];
+          toast('Voyage supprimé');
+          renderCatalogue();
+        }
+      });
+  });
+}
+
+// ─────────────────────────────────────────
+// Formulaire
+// ─────────────────────────────────────────
+function openNewForm() {
+  currentEditSlug = null;
+  document.getElementById('editSlug').value = '';
+  document.getElementById('productForm').reset();
+  uploadedPhotos = [];
+  document.getElementById('photosPreview').innerHTML = '';
+  document.getElementById('photoUploadStatus').textContent = '';
+  selectBadge('none');
+  document.getElementById('hiddenCheck').checked = false;
+  document.getElementById('submitBtn').textContent = 'Enregistrer le voyage';
+  switchTab('form', document.getElementById('tabFormBtn'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function editProduct(slug) {
+  var v = manifest.custom[slug];
+  if (!v) { toast('Produit introuvable'); return; }
+  currentEditSlug = slug;
+  document.getElementById('editSlug').value = slug;
+
+  var f = document.getElementById('productForm');
+  f.title.value = v.title || '';
+  f.tag.value = v.tag || '';
+  f.price.value = v.price || '';
+  f.duration.value = v.duration || '';
+  f.pricePrefix.value = v.pricePrefix || '';
+  f.eyebrow.value = v.eyebrow || '';
+  f.whatsapp.value = v.whatsapp || '212673280009';
+  f.intro.value = Array.isArray(v.intro) ? v.intro.join('\n\n') : (v.intro || '');
+  f.highlights.value = Array.isArray(v.highlights) ? v.highlights.join('\n') : (v.highlights || '');
+  f.inclus.value = Array.isArray(v.inclus) ? v.inclus.join('\n') : (v.inclus || '');
+  f.exclus.value = Array.isArray(v.exclus) ? v.exclus.join('\n') : (v.exclus || '');
+  f.datesList.value = Array.isArray(v.datesList) ? v.datesList.join(', ') : (v.datesList || '');
+  f.datesLine.value = (v.dates && v.dates.line) || '';
+  f.datesNote.value = (v.dates && v.dates.note) || '';
+  f.hotels.value = Array.isArray(v.hotels) ? v.hotels.join('\n') : (v.hotels || '');
+
+  // Photos déjà uploadées
+  uploadedPhotos = (v.images || []).map(function(url){ return { url: url, existing: true }; });
+  renderPhotoPreviews();
+
+  // Badge
+  var st = manifest.status[slug] || {};
+  var badge = v.badge || st.badge || '';
+  var color = v.badgeColor || st.badgeColor || '';
+  document.getElementById('badgeValue').value = badge;
+  document.getElementById('badgeColor').value = color;
+  if (!badge) selectBadge('none');
+  else if (badge === 'SOLDÉ') selectBadge('sold');
+  else if (badge === 'Nouveau') selectBadge('new');
+  else if (badge === 'Promo') selectBadge('promo');
+  else { selectBadge('custom'); document.getElementById('customBadgeInput').value = badge; }
+
+  document.getElementById('hiddenCheck').checked = !!(st.hidden);
+  document.getElementById('submitBtn').textContent = 'Enregistrer les modifications';
+
+  switchTab('form', document.getElementById('tabFormBtn'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelForm() {
+  currentEditSlug = null;
+  uploadedPhotos = [];
+  document.getElementById('productForm').reset();
+  document.getElementById('photosPreview').innerHTML = '';
+  selectBadge('none');
+  switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));
+}
+
+async function submitForm(e) {
+  e.preventDefault();
+  var f = document.getElementById('productForm');
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enregistrement…';
+  log('Enregistrement…');
+
+  // Upload des nouvelles photos
+  var newPhotos = uploadedPhotos.filter(function(p){ return !p.existing && p.file; });
+  if (newPhotos.length) {
+    log('Upload ' + newPhotos.length + ' photo(s)…');
+    for (var i = 0; i < newPhotos.length; i++) {
+      try {
+        var uploaded = await uploadFile(newPhotos[i].file);
+        newPhotos[i].url = uploaded.url;
+        newPhotos[i].existing = true;
+      } catch(err) {
+        log('Erreur upload : ' + err.message);
+      }
+    }
+  }
+
+  var allImageUrls = uploadedPhotos.filter(function(p){ return p.url; }).map(function(p){ return p.url; });
+
+  var badge = document.getElementById('badgeValue').value;
+  var badgeColor = document.getElementById('badgeColor').value;
+
+  var product = {
+    title: f.title.value.trim(),
+    tag: f.tag.value,
+    price: f.price.value.trim(),
+    duration: f.duration.value.trim(),
+    pricePrefix: f.pricePrefix.value.trim(),
+    eyebrow: f.eyebrow.value.trim(),
+    whatsapp: f.whatsapp.value.trim() || '212673280009',
+    intro: f.intro.value.trim().split(/\n\n+/).filter(Boolean),
+    highlights: f.highlights.value.trim().split(/\n/).filter(Boolean),
+    inclus: f.inclus.value.trim().split(/\n/).filter(Boolean),
+    exclus: f.exclus.value.trim().split(/\n/).filter(Boolean),
+    hotels: f.hotels.value.trim().split(/\n/).filter(Boolean),
+    datesList: f.datesList.value.trim().split(/[\n,]+/).map(function(d){ return d.trim(); }).filter(Boolean),
+    dates: {
+      line: f.datesLine.value.trim(),
+      note: f.datesNote.value.trim()
+    },
+    images: allImageUrls
+  };
+
+  var slug = currentEditSlug || slugify(product.title);
+  var method = currentEditSlug ? 'PUT' : 'POST';
+  var body = currentEditSlug
+    ? JSON.stringify({ slug: slug, product: product })
+    : JSON.stringify({ slug: slug, product: product });
+
+  try {
+    var r = await fetch('/api/produits', {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body
+    });
+    var data = await r.json();
+
+    if (data.ok) {
+      var finalSlug = data.slug || slug;
+      // Enregistrer le statut/badge si défini
+      var hidden = document.getElementById('hiddenCheck').checked;
+      if (badge || hidden) {
+        await fetch('/api/produits', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'status', slug: finalSlug, status: { badge: badge, badgeColor: badgeColor, hidden: hidden } })
+        });
+      }
+      toast(currentEditSlug ? 'Voyage modifié !' : 'Voyage ajouté au catalogue !');
+      reload();
+      cancelForm();
+    } else {
+      log('Erreur : ' + (data.error || 'inconnue'));
+      toast('Erreur enregistrement');
+    }
+  } catch(err) {
+    log('Erreur : ' + err.message);
+    toast('Erreur réseau');
+  }
+
+  btn.disabled = false;
+  btn.textContent = currentEditSlug ? 'Enregistrer les modifications' : 'Enregistrer le voyage';
+}
+
+// ─────────────────────────────────────────
+// Photos
+// ─────────────────────────────────────────
+function handlePhotos(files) {
+  Array.prototype.forEach.call(files, function(file) {
+    if (!file.type.startsWith('image/')) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      uploadedPhotos.push({ url: e.target.result, file: file, existing: false, preview: e.target.result });
+      renderPhotoPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPhotoPreviews() {
+  var container = document.getElementById('photosPreview');
+  container.innerHTML = uploadedPhotos.map(function(p, i) {
+    var src = p.preview || p.url;
+    return '<div class="rm-photo">'
+      + '<img src="' + esc(src) + '" alt="">'
+      + '<button type="button" onclick="removePhoto(' + i + ')">✕</button>'
+      + '</div>';
+  }).join('');
+}
+
+function removePhoto(i) {
+  uploadedPhotos.splice(i, 1);
+  renderPhotoPreviews();
+}
+
+async function uploadFile(file) {
+  var r = await fetch('/api/media/upload?filename=' + encodeURIComponent(file.name), {
+    method: 'POST',
+    body: file
+  });
+  if (!r.ok) throw new Error('Upload échoué (' + r.status + ')');
+  return r.json();
+}
+
+function setupPhotoDrop() {
+  var area = document.querySelector('.photos-area');
+  if (!area) return;
+  area.addEventListener('dragover', function(e){ e.preventDefault(); area.style.borderColor='var(--forest)'; });
+  area.addEventListener('dragleave', function(){ area.style.borderColor=''; });
+  area.addEventListener('drop', function(e){
+    e.preventDefault();
+    area.style.borderColor='';
+    handlePhotos(e.dataTransfer.files);
+  });
+}
+
+// ─────────────────────────────────────────
+// Badge selector (form)
+// ─────────────────────────────────────────
+function selectBadge(type) {
+  activeBadgeBtn = type;
+  document.querySelectorAll('[data-badge-btn]').forEach(function(b){
+    b.classList.remove('active-none','active-danger','active-gold','active-green');
+  });
+  var map = { none: { cls: 'active-none', val: '', color: '' },
+    sold:  { cls: 'active-danger', val: 'SOLDÉ', color: 'danger' },
+    places:{ cls: 'active-danger', val: 'Dernières places', color: 'danger' },
+    new:   { cls: 'active-gold',   val: 'Nouveau', color: 'gold' },
+    promo: { cls: 'active-gold',   val: 'Promo', color: 'gold' } };
+  if (type === 'custom') {
+    var cv = document.getElementById('customBadgeInput').value.trim();
+    document.getElementById('badgeValue').value = cv;
+    document.getElementById('badgeColor').value = cv ? 'danger' : '';
+    return;
+  }
+  var info = map[type] || { cls: 'active-none', val: '', color: '' };
+  var btn = document.querySelector('[data-badge-btn="' + type + '"]');
+  if (btn) btn.classList.add(info.cls);
+  document.getElementById('badgeValue').value = info.val;
+  document.getElementById('badgeColor').value = info.color;
+  document.getElementById('customBadgeInput').value = '';
+}
+
+// ─────────────────────────────────────────
+// Confirm dialog
+// ─────────────────────────────────────────
+var confirmCb = null;
+function confirm2(title, msg, cb) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMsg').textContent = msg;
+  confirmCb = cb;
+  document.getElementById('confirmOk').onclick = function() { closeConfirm(); if(confirmCb) confirmCb(); };
+  document.getElementById('confirmOverlay').hidden = false;
+}
+function closeConfirm() { document.getElementById('confirmOverlay').hidden = true; confirmCb = null; }
+
+// ─────────────────────────────────────────
+// Utilitaires
+// ─────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function slugify(s) {
+  return String(s||'').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')
+    || ('voyage-' + Date.now());
+}
+
+function log(msg) {
+  var el = document.getElementById('actionLog');
+  if (el) el.textContent = msg;
+}
+
+var toastTimer = null;
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3200);
+}
+
+// ─────────────────────────────────────────
+// Démarrage
+// ─────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

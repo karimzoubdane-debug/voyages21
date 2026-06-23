@@ -226,6 +226,23 @@ h1, h2, h3 {
   background: linear-gradient(to top, rgba(21,46,31,.45), transparent 60%);
 }
 
+.card-badge {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  z-index: 2;
+  border-radius: 999px;
+  padding: .28rem .72rem;
+  font: 800 .72rem/1 'DM Sans', sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.card-badge--danger  { background: #d7263d; color: #fff; }
+.card-badge--gold    { background: var(--gold); color: #152E1F; }
+.card-badge--green   { background: var(--forest); color: #fff; }
+.card-badge--blue    { background: #008fce; color: #fff; }
+
 .body {
   padding: 1.1rem 1.15rem 1.2rem;
   display: flex;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Voyage — Voyages21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="voyage.css?v=admin-produits-v1">
+<style>
+  .adm-loading { padding: 4rem 2rem; text-align: center; color: #6b7065; font-size: 1.05rem; }
+  .adm-error { padding: 4rem 2rem; text-align: center; color: #b23a2e; }
+</style>
+</head>
+<body>
+<div id="app"><div class="adm-loading">Chargement du voyage…</div></div>
+
+<script>
+(function() {
+  var slug = new URLSearchParams(location.search).get('slug');
+  var app = document.getElementById('app');
+
+  if (!slug) {
+    app.innerHTML = '<div class="adm-error">Slug manquant dans l\'URL (?slug=xxx)</div>';
+    return;
+  }
+
+  fetch('/api/produits?slug=' + encodeURIComponent(slug), { cache: 'no-store' })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data || !data.product) {
+        app.innerHTML = '<div class="adm-error">Voyage introuvable.</div>';
+        return;
+      }
+      window.VOYAGES = {};
+      window.VOYAGES[slug] = data.product;
+      document.body.setAttribute('data-voyage', slug);
+      document.title = (data.product.title || 'Voyage') + ' — Voyages21';
+
+      var s = document.createElement('script');
+      s.src = 'render.js?v=admin-produits-v1';
+      document.body.appendChild(s);
+    })
+    .catch(function() {
+      app.innerHTML = '<div class="adm-error">Erreur de chargement du voyage.</div>';
+    });
+})();
+</script>
+</body>
+</html>
