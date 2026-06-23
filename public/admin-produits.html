@@ -1180,7 +1180,10 @@ function removePhoto(i) {
 }
 
 async function uploadFile(file) {
-  var r = await fetch('/api/media/upload?filename=' + encodeURIComponent(file.name), {
+  var endpoint = file.type === 'application/pdf'
+    ? '/api/pdf/upload?filename=' + encodeURIComponent(file.name)
+    : '/api/media/upload?filename=' + encodeURIComponent(file.name);
+  var r = await fetch(endpoint, {
     method: 'POST',
     body: file
   });
