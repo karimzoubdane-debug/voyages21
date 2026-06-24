@@ -4,7 +4,7 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-06-23_
+_Dernière mise à jour : 2026-06-24_
 
 ## Méthode de travail (règles fixes)
 - Site officiel : **https://www.voyages21.com** (page d'accueil = `public/design/homepage-v2-luxe.html`, servie par Vercel).
@@ -26,45 +26,40 @@ _Dernière mise à jour : 2026-06-23_
 - Barre de recherche accueil.
 - Admin médias : sélecteur classé par univers.
 - Sauvegarde automatique du site (Releases).
+- **Admin Produits (#79, fusionné le 2026-06-24)** : back-office autonome pour
+  ajouter/modifier/retirer des voyages (`/admin-produits.html`), formulaire
+  équipe (`/formulaire-voyage.html`), API `/api/produits`, badges de statut,
+  + corrections (bouton Confirmer, suppression immédiate, anti-cache Blob).
 
-## ⏳ PR #79 — EN COURS (branche `claude/voyages21-website-3x5q1x`)
-**Ce que contient PR #79 (à valider point par point avant merge) :**
+## ⏳ EN TEST — Espace admin unifié (accès équipe protégé)
+Nouvelle PR (branche `claude/stoic-volta-u3hvla`). Objectif : **un seul lien**
+`/admin` pour toute l'administration, avec **séparation des rôles**.
 
-### ✅ Points validés
-- (à confirmer par Karim au fur et à mesure)
-
-### 🔄 Point 4 — Admin produits + PDF équipe (EN TEST)
-**Ce qui est fait :**
-- `⚡ Ajout rapide` dans l'onglet "+ Nouveau voyage" : destination + PDF → crée une fiche minimale instantanément
-- `⬆ Importer une fiche` : importe un fichier `.json` exporté par le formulaire équipe → crée une fiche **complète** (titre, prix, durée, cadran, programme, inclus/exclus, hôtels, points forts…)
-- `/api/pdf/upload` : endpoint dédié PDF (server-side `put` Vercel Blob)
-- Bouton **👁 Voir** sur chaque fiche du catalogue admin → ouvre la fiche sur le site
-- Bouton **📎 Télécharger la brochure** sur les fiches publiques (si pdfUrl présent)
-- Les produits admin apparaissent automatiquement parmi les cartes sur les pages destination (ex: turquie.html)
-
-**Flux de travail équipe → Karim :**
-1. L'équipe remplit `formulaire-voyage.html` → clique "⬇ Télécharger la fiche" → envoie le `.json` à Karim
-2. Karim dans l'admin → "⬆ Importer une fiche" → sélectionne le `.json` → fiche complète créée, visible sur le site
-3. (Optionnel) L'équipe peut aussi envoyer le PDF pour le bouton "Télécharger la brochure"
-
-**Point en suspens :**
-- Karim doit tester l'import d'un vrai `.json` complet (pas le test "sdv" vide) pour valider que la fiche s'affiche bien avec tous les champs remplis
-
-### 🔄 Point 5 — Panel "Îles paradisiaques" dans la NavBar
-- Déjà implémenté dans PR #79
-- **À valider par Karim** : vérifier que le panel s'affiche correctement dans la navigation
-
-### ❓ Nouvelle destination (décision en suspens)
-- Karim a demandé si on peut ajouter une destination qui n'existe pas encore
-- Réponse : la fiche est créable via admin (sync immédiate), mais la page destination + le menu de navigation nécessitent une PR séparée
-- **À décider** : quelle nouvelle destination Karim veut ajouter ?
+- **`/admin`** : page de connexion + portail. Selon le mot de passe :
+  - **Propriétaire (Karim)** : accès aux 4 outils (Produits, Cover, Fiche
+    Voyages, Médias) + réglages.
+  - **Équipe** : accès **uniquement** à Fiche Voyages + Médias.
+- **Verrouillage serveur** (middleware) : les pages `/admin-produits.html` et
+  `/admin-cover.html` redirigent vers `/admin` si on n'est pas propriétaire ;
+  `/admin-medias.html` et `/formulaire-voyage.html` exigent équipe ou
+  propriétaire. Les **écritures API** sont protégées de la même façon (la
+  lecture publique du site reste ouverte).
+- **Réglages propriétaire** (dans son espace) : définir/changer le **mot de
+  passe équipe** + **interrupteur ouvert/fermé** de l'accès équipe (instantané).
+- **Récupération** : mot de passe propriétaire = variable Vercel
+  `V21_OWNER_PASSWORD` (réinitialisable, jamais bloqué) ; mot de passe équipe =
+  redéfini par Karim depuis son espace.
+- **À régler par Karim côté Vercel (1 fois)** : `V21_OWNER_PASSWORD` et
+  `V21_AUTH_SECRET`. Tant qu'ils ne sont pas posés → bannière « mode démo »
+  (mot de passe de repli `admin21`). **Ne pas fusionner avant qu'ils soient mis.**
 
 ## ▶️ Prochaines étapes (feux verts attendus)
-
-- **"go #79"** → valider import JSON équipe + panel Îles paradisiaques, puis merger PR #79 → visible sur www.voyages21.com
-- **"go #75"** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage)
-- **"go #77"** → activer le dépôt auto de la sauvegarde sur Drive (nécessite secret `GDRIVE_SA_JSON`)
-- Éventuelle nouvelle PR pour nouvelle destination si Karim confirme laquelle
+- **Espace admin unifié** (cette PR) : Karim teste sur la preview, pose
+  `V21_OWNER_PASSWORD` + `V21_AUTH_SECRET` côté Vercel, puis « go » → merge.
+- **« go #75 »** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage).
+- **« go #77 »** → activer le dépôt auto de la sauvegarde sur Drive (nécessite
+  le secret `GDRIVE_SA_JSON`).
+- **#73** (Codex, obsolète/conflictuelle) → **à fermer** (rien à fusionner).
 
 ## 💾 Rappel sauvegarde (règle depuis 2026-06-23)
 Après chaque session, rappeler à Karim de télécharger la dernière Release GitHub et de déposer les fichiers dans le Drive **« VOYAGES21 — SAUVEGARDES »**.

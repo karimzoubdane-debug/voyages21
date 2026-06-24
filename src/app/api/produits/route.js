@@ -1,9 +1,16 @@
 import { list, put } from '@vercel/blob';
+import { getRole } from '../../../lib/auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const MANIFEST = 'voyages21/produits-manifest.json';
+
+// Le catalogue n'est modifiable que par le propriétaire (l'équipe n'y touche pas).
+async function denyIfNotOwner(request, headers) {
+  if ((await getRole(request)) === 'owner') return null;
+  return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers });
+}
 
 async function readManifest() {
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
@@ -61,6 +68,8 @@ export async function GET(request) {
 
 // POST /api/produits  { slug, product }  → créer un nouveau produit
 export async function POST(request) {
+  const denied = await denyIfNotOwner(request, corsHeaders);
+  if (denied) return denied;
   try {
     const body = await request.json();
     if (!body.slug || !body.product) {
@@ -92,6 +101,8 @@ export async function POST(request) {
 //   { type: 'status', slug, status: { badge, badgeColor, hidden } }  → statut
 //   { slug, product }                                                  → modifier produit custom
 export async function PUT(request) {
+  const denied = await denyIfNotOwner(request, corsHeaders);
+  if (denied) return denied;
   try {
     const body = await request.json();
     const data = await readManifest();
@@ -129,6 +140,8 @@ export async function PUT(request) {
 //   hide   → marque hidden:true dans status (défaut)
 //   delete → supprime le produit custom du manifeste
 export async function DELETE(request) {
+  const denied = await denyIfNotOwner(request, corsHeaders);
+  if (denied) return denied;
   try {
     const url = new URL(request.url);
     const slug = url.searchParams.get('slug');

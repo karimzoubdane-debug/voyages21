@@ -1,4 +1,5 @@
 import { handleUpload } from '@vercel/blob/client';
+import { getRole } from '../../../../lib/auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -23,11 +24,14 @@ export async function POST(request) {
     const json = await handleUpload({
       body,
       request,
-      onBeforeGenerateToken: async () => ({
-        allowedContentTypes: ALLOWED,
-        addRandomSuffix: true,
-        tokenPayload: JSON.stringify({ area: 'voyages21-cover' }),
-      }),
+      onBeforeGenerateToken: async () => {
+        if ((await getRole(request)) !== 'owner') throw new Error('non autorisé');
+        return {
+          allowedContentTypes: ALLOWED,
+          addRandomSuffix: true,
+          tokenPayload: JSON.stringify({ area: 'voyages21-cover' }),
+        };
+      },
       onUploadCompleted: async () => {},
     });
     return Response.json(json);
