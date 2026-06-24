@@ -7,7 +7,7 @@ import { list, put } from '@vercel/blob';
 
 const CONFIG_PATH = 'voyages21/admin-config.json';
 
-const DEFAULT = { teamPasswordHash: '', teamOpen: false };
+const DEFAULT = { teamPasswordHash: '', teamOpen: false, ownerPasswordHash: '' };
 
 export async function readAdminConfig() {
   try {

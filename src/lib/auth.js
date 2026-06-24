@@ -15,6 +15,10 @@ export const OWNER_PASSWORD = process.env.V21_OWNER_PASSWORD || 'admin21';
 const AUTH_SECRET = process.env.V21_AUTH_SECRET || 'dev-secret-voyages21-change-me';
 export const IS_CONFIGURED = !!(process.env.V21_OWNER_PASSWORD && process.env.V21_AUTH_SECRET);
 
+// Code de secours pour réinitialiser le mot de passe propriétaire en cas d'oubli.
+// Vide = fonction désactivée (il faut définir V21_RECOVERY_CODE dans Vercel).
+export const RECOVERY_CODE = process.env.V21_RECOVERY_CODE || '';
+
 const encoder = new TextEncoder();
 
 function base64urlFromBytes(buffer) {

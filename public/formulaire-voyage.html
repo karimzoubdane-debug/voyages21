@@ -115,7 +115,7 @@ main{max-width:860px;margin:1.8rem auto 5rem;padding:0 1rem}
     <button class="btn btn-ghost btn-sm no-print" type="button" onclick="location.href='/admin'">← Espace admin</button>
     <button class="btn btn-ghost btn-sm no-print" type="button" onclick="window.print()">🖨 Imprimer / PDF</button>
     <button class="btn btn-ghost btn-sm no-print" type="button" onclick="telecharger()">⬇ Télécharger (.json)</button>
-    <button class="btn btn-gold no-print" type="button" onclick="soumettre(this)">📤 Envoyer à Karim</button>
+    <button class="btn btn-gold no-print" type="button" onclick="soumettre(this)">📤 Envoyer à D21</button>
   </div>
 </header>
 
@@ -124,7 +124,7 @@ main{max-width:860px;margin:1.8rem auto 5rem;padding:0 1rem}
 
   <div class="notice no-print">
     <strong>Instructions :</strong> Remplissez tous les champs disponibles, puis cliquez sur
-    <strong>"Télécharger la fiche"</strong> — un fichier sera généré à envoyer à Karim.
+    <strong>"Télécharger la fiche"</strong> — un fichier sera généré à envoyer à D21.
     Pour un PDF à envoyer par WhatsApp/email, utilisez <strong>"Imprimer / PDF"</strong>.
   </div>
 
@@ -631,11 +631,11 @@ function telecharger() {
   document.body.appendChild(a);
   a.click();
   setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1000);
-  toast('Fiche téléchargée — envoyez le fichier .json à Karim');
+  toast('Fiche téléchargée — envoyez le fichier .json à D21');
   document.getElementById('printTitle').textContent = data.title;
 }
 
-// Envoi direct : le voyage tombe dans la plateforme de Karim, en attente de validation.
+// Envoi direct : le voyage tombe dans la plateforme de D21, en attente de validation.
 function soumettre(btn) {
   var data = collectData();
   if (!data) return;
@@ -648,14 +648,14 @@ function soumettre(btn) {
     .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
     .then(function (res) {
       if (res.ok && res.d && res.d.ok) {
-        toast('✅ Voyage envoyé à Karim — en attente de validation');
+        toast('✅ Voyage envoyé à D21 — en attente de validation');
         document.getElementById('printTitle').textContent = data.title;
       } else {
         toast('❌ Échec de l\'envoi : ' + ((res.d && res.d.error) || 'erreur'));
       }
     })
     .catch(function (e) { toast('❌ Erreur réseau : ' + e.message); })
-    .finally(function () { if (btn) { btn.disabled = false; btn.textContent = '📤 Envoyer à Karim'; } });
+    .finally(function () { if (btn) { btn.disabled = false; btn.textContent = '📤 Envoyer à D21'; } });
 }
 
 // ─── Utilitaires ───

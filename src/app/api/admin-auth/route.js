@@ -8,12 +8,13 @@ import {
   COOKIE_NAME,
   SESSION_MAX_AGE,
   OWNER_PASSWORD,
+  RECOVERY_CODE,
   IS_CONFIGURED,
   createToken,
   getRole,
   hashPassword,
 } from '../../../lib/auth.js';
-import { readAdminConfig } from '../../../lib/adminConfig.js';
+import { readAdminConfig, writeAdminConfig } from '../../../lib/adminConfig.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -39,20 +40,45 @@ export async function POST(request) {
   } catch {
     body = {};
   }
+
+  // ── Réinitialisation du mot de passe propriétaire par code de secours ──
+  if (body.reset) {
+    if (!RECOVERY_CODE) {
+      return NextResponse.json(
+        { ok: false, error: 'Réinitialisation non configurée (définir V21_RECOVERY_CODE dans Vercel).' },
+        { status: 400, headers: noStore },
+      );
+    }
+    const code = String(body.recoveryCode || '');
+    const newPassword = String(body.newPassword || '');
+    if (!code || !newPassword) {
+      return NextResponse.json({ ok: false, error: 'Code de secours et nouveau mot de passe requis.' }, { status: 400, headers: noStore });
+    }
+    if (code !== RECOVERY_CODE) {
+      return NextResponse.json({ ok: false, error: 'Code de secours incorrect.' }, { status: 401, headers: noStore });
+    }
+    const cfg = await readAdminConfig();
+    cfg.ownerPasswordHash = await hashPassword(newPassword);
+    await writeAdminConfig(cfg);
+    return NextResponse.json({ ok: true }, { headers: noStore });
+  }
+
   const password = String(body.password || '');
   if (!password) {
     return NextResponse.json({ ok: false, error: 'Mot de passe requis' }, { status: 400, headers: noStore });
   }
 
+  const cfg = await readAdminConfig();
   let role = null;
-  if (password === OWNER_PASSWORD) {
+  // Propriétaire : mot de passe réinitialisé (stocké) prioritaire, sinon le mot de passe initial (Vercel).
+  if (cfg.ownerPasswordHash) {
+    if ((await hashPassword(password)) === cfg.ownerPasswordHash) role = 'owner';
+  } else if (password === OWNER_PASSWORD) {
     role = 'owner';
-  } else {
-    const cfg = await readAdminConfig();
-    if (cfg.teamOpen && cfg.teamPasswordHash) {
-      const candidate = await hashPassword(password);
-      if (candidate === cfg.teamPasswordHash) role = 'team';
-    }
+  }
+  // Équipe : si l'accès est ouvert et le mot de passe correspond.
+  if (!role && cfg.teamOpen && cfg.teamPasswordHash) {
+    if ((await hashPassword(password)) === cfg.teamPasswordHash) role = 'team';
   }
 
   if (!role) {
