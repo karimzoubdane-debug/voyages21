@@ -871,7 +871,10 @@ function confirmDelete(slug) {
         if (res.httpOk && res.data && res.data.ok) {
           delete manifest.custom[slug];
           toast('✅ Voyage supprimé du site');
-          reload(); // resynchronise depuis le serveur (source de vérité)
+          // Retrait local immédiat : on NE recharge PAS depuis le serveur tout
+          // de suite (la propagation du Blob prend quelques secondes et
+          // renverrait l'ancienne liste, faisant « réapparaître » le voyage).
+          renderCatalogue();
         } else {
           var err = (res.data && res.data.error) || 'erreur inconnue';
           toast('❌ Suppression refusée : ' + err);
