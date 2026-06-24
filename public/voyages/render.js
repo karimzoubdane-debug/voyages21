@@ -28,6 +28,7 @@
             accommodation: "Hébergement", mapTitle: "L'itinéraire en un coup d'œil", datesPrices: "Dates & prix",
             childPrices: "Tarifs enfants :", photos: "photos", videoSoon: "Vidéo bientôt disponible", openLink: "Ouvrir le lien",
             tabWhy: "Le voyage", tabItin: "Itinéraire", tabIncl: "Inclus", tabHotel: "Hébergement", tabMap: "Carte", tabDates: "Dates & prix",
+            pdf: "📎 Télécharger la brochure",
             askText: function (t, l) { return "Bonjour, je suis intéressé(e) par le voyage « " + t + " »" + (l ? " (" + l + ")" : "") + ". Pouvez-vous me faire une proposition ?"; }
         },
         ar: {
@@ -39,6 +40,7 @@
             accommodation: "الإقامة", mapTitle: "مسار الرحلة", datesPrices: "التواريخ والأسعار",
             childPrices: "أسعار الأطفال:", photos: "صور", videoSoon: "الفيديو متوفّر قريباً", openLink: "افتح الرابط",
             tabWhy: "الرحلة", tabItin: "البرنامج", tabIncl: "المشمول", tabHotel: "الإقامة", tabMap: "الخريطة", tabDates: "التواريخ",
+            pdf: "📎 تحميل الكتيّب",
             askText: function (t, l) { return "السلام عليكم، أنا مهتمّ برحلة « " + t + " »" + (l ? " (" + l + ")" : "") + ". هل يمكنكم تقديم عرض؟"; }
         }
     };
@@ -121,6 +123,7 @@
         + '<aside class="cadran">' + cadran
         + '<div class="cadran-price">' + L.from + ' <b>' + bidiNum(v.price || "—") + "</b></div>"
         + '<button class="btn btn-gold full" onclick="ask(\'\')">' + L.quote + '</button>'
+        + '<div id="pdf-slot"></div>'
         + '<button class="btn btn-gold full" id="voirVideo" style="display:none;background:transparent;color:var(--forest);border:1px solid var(--gold);margin-top:.5rem">' + L.seeVideo + '</button>'
         + '<div class="cadran-note">' + L.trust + '</div>'
         + "</aside></div>"
@@ -208,6 +211,19 @@
         .then(function (r) { return r.ok ? r.json() : {}; })
         .then(function (m) { applyMedia(mediaRecord(m, v.mediaKey)); })
         .catch(function () { applyMedia(null); });
+
+    fetch("/api/produits", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .then(function (manifest) {
+            var statusEntry = (manifest.status || {})[slug] || {};
+            var customEntry = (manifest.custom || {})[slug] || {};
+            var pdfUrl = statusEntry.pdfUrl || customEntry.pdfUrl;
+            if (!pdfUrl) return;
+            var slot = document.getElementById("pdf-slot");
+            if (!slot) return;
+            slot.innerHTML = '<a href="' + pdfUrl + '" target="_blank" rel="noopener" class="btn btn-gold full" style="margin-top:.5rem;background:transparent;color:var(--forest);border:1px solid var(--gold);text-decoration:none;display:flex;justify-content:center;align-items:center">' + L.pdf + '</a>';
+        })
+        .catch(function () {});
 
     window.toggleSound = function () {
         if (!hero) return;

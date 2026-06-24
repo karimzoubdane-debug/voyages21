@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Voyage — Voyages21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1B3A28;--forest2:#152E1F;--gold:#C8A440;--cream:#F5F0E8;--ink:#26231d;--line:#e2d8c7;--danger:#b23a2e;--ok:#237346}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.5}
+
+header{background:var(--forest);color:#fff;padding:1.4rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.brand{font-family:"Playfair Display",serif;font-size:1.35rem;letter-spacing:.04em;color:var(--gold)}
+header p{margin:.25rem 0 0;color:rgba(255,255,255,.72);font-size:.83rem}
+.header-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+
+button,.btn{border:0;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font:700 .85rem/1 "DM Sans",sans-serif;padding:.6rem 1.1rem;min-height:40px;transition:filter .12s,transform .1s;white-space:nowrap}
+button:active{transform:translateY(1px);filter:brightness(.9)}
+.btn-gold{background:var(--gold);color:var(--forest2)}
+.btn-green{background:var(--forest);color:#fff}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-outline{background:#fff;color:var(--forest);border:1.5px solid var(--line)}
+.btn-sm{min-height:34px;padding:.42rem .8rem;font-size:.78rem}
+
+main{max-width:860px;margin:1.8rem auto 5rem;padding:0 1rem}
+
+.notice{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1.6rem;font-size:.88rem;color:#536154}
+.notice strong{color:var(--forest)}
+
+/* Sections */
+.section{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:1.2rem;overflow:hidden}
+.section-head{background:var(--forest2);color:#fff;padding:.75rem 1.2rem;display:flex;align-items:center;gap:.6rem}
+.section-head h2{margin:0;font:700 .88rem/1 "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.1em}
+.section-head .num{background:var(--gold);color:var(--forest2);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0}
+.section-body{padding:1.2rem 1.3rem}
+
+/* Fields */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}
+.field{display:flex;flex-direction:column;gap:.3rem}
+.field label{font:.72rem/1 "DM Sans",sans-serif;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#536154}
+.field input,.field textarea,.field select{border:1px solid #cfc5b3;border-radius:6px;padding:.62rem .75rem;font:.92rem/1.4 "DM Sans",sans-serif;color:var(--ink);background:#fff;width:100%}
+.field textarea{resize:vertical;min-height:90px}
+.field .hint{font:.72rem/1.3 "DM Sans",sans-serif;color:#8a8279;margin-top:.15rem}
+.mt{margin-top:.85rem}
+
+/* Destination tags */
+.dest-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
+.dest-tag{display:inline-flex;align-items:center;gap:.3rem;background:var(--forest);color:#fff;border-radius:999px;padding:.28rem .72rem;font:700 .75rem/1 "DM Sans",sans-serif}
+.dest-tag button{background:transparent;border:0;color:rgba(255,255,255,.8);cursor:pointer;font-size:.8rem;padding:0;line-height:1}
+
+/* Cadran */
+.cadran-row{display:grid;grid-template-columns:1fr 2fr auto;gap:.5rem;align-items:center;padding:.45rem 0;border-bottom:1px solid #f0e8da}
+.cadran-row:last-child{border-bottom:0}
+.cadran-row input{border:1px solid #cfc5b3;border-radius:5px;padding:.45rem .6rem;font:.88rem/1 "DM Sans",sans-serif;width:100%}
+
+/* Itinéraire */
+.day-card{border:1px solid var(--line);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.day-head{background:#f5f0e8;display:flex;align-items:center;gap:.6rem;padding:.6rem .9rem}
+.day-num{background:var(--forest);color:#fff;border-radius:5px;padding:.2rem .55rem;font:700 .78rem/1 "DM Sans",sans-serif}
+.day-head input{flex:1;border:1px solid #cfc5b3;border-radius:5px;padding:.38rem .6rem;font:.88rem/1 "DM Sans",sans-serif}
+.day-body{padding:.8rem .9rem;display:flex;flex-direction:column;gap:.6rem}
+.day-body textarea{border:1px solid #cfc5b3;border-radius:6px;padding:.55rem .7rem;font:.88rem/1.4 "DM Sans",sans-serif;resize:vertical;min-height:75px;width:100%}
+.day-meta{display:flex;flex-wrap:wrap;gap:.5rem}
+.day-meta input{border:1px solid #cfc5b3;border-radius:5px;padding:.42rem .6rem;font:.85rem/1 "DM Sans",sans-serif;min-width:130px;flex:1}
+.repas-checks{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.repas-checks label{display:flex;align-items:center;gap:.3rem;font:.82rem/1 "DM Sans",sans-serif;cursor:pointer}
+.repas-checks input[type=checkbox]{width:auto;margin:0}
+
+/* Tableau des prix */
+.price-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.price-table th{background:var(--forest2);color:#fff;padding:.5rem .75rem;text-align:left;font-weight:800;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em}
+.price-table td{border-bottom:1px solid var(--line);padding:.35rem .4rem}
+.price-table td input{border:1px solid #cfc5b3;border-radius:5px;padding:.38rem .55rem;font:.85rem/1 "DM Sans",sans-serif;width:100%}
+.price-table tr:last-child td{border-bottom:0}
+.price-table .rm-btn{background:transparent;border:0;color:#ccc;cursor:pointer;font-size:1rem;padding:.2rem}
+.price-table .rm-btn:hover{color:var(--danger)}
+
+/* Liste items (inclus/exclus/hotels) */
+.list-items{display:flex;flex-direction:column;gap:.4rem}
+.list-item{display:flex;gap:.4rem;align-items:center}
+.list-item input{flex:1;border:1px solid #cfc5b3;border-radius:6px;padding:.5rem .65rem;font:.88rem/1.4 "DM Sans",sans-serif}
+.list-item .rm-btn{background:transparent;border:0;color:#ccc;cursor:pointer;font-size:1.1rem;flex-shrink:0}
+.list-item .rm-btn:hover{color:var(--danger)}
+
+/* Impression */
+@media print{
+  header .header-actions,.notice,.no-print{display:none!important}
+  body{background:#fff}
+  main{margin:0;max-width:100%;padding:0 1.5cm}
+  .section{border:1px solid #ccc;break-inside:avoid}
+  button{display:none}
+  .print-title{display:block!important}
+}
+.print-title{display:none;font-family:"Playfair Display",serif;font-size:1.6rem;color:var(--forest);margin-bottom:1rem}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);transition:transform .28s;background:var(--forest);color:#fff;border-radius:999px;padding:.75rem 1.3rem;font-weight:800;font-size:.88rem;box-shadow:0 8px 26px rgba(0,0,0,.24);z-index:99;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}.cadran-row{grid-template-columns:1fr 1fr auto}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">VOYAGES 21</div>
+    <p>Fiche de saisie voyage — à remplir par l'équipe</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost btn-sm no-print" type="button" onclick="window.print()">🖨 Imprimer / PDF</button>
+    <button class="btn btn-gold" type="button" onclick="telecharger()">⬇ Télécharger la fiche</button>
+  </div>
+</header>
+
+<main>
+  <div class="print-title" id="printTitle">Fiche voyage</div>
+
+  <div class="notice no-print">
+    <strong>Instructions :</strong> Remplissez tous les champs disponibles, puis cliquez sur
+    <strong>"Télécharger la fiche"</strong> — un fichier sera généré à envoyer à Karim.
+    Pour un PDF à envoyer par WhatsApp/email, utilisez <strong>"Imprimer / PDF"</strong>.
+  </div>
+
+  <form id="ficheForm">
+
+    <!-- ① Identification du voyage -->
+    <div class="section">
+      <div class="section-head"><span class="num">1</span><h2>Identification du voyage</h2></div>
+      <div class="section-body">
+        <div class="grid2">
+          <div class="field">
+            <label>Titre du voyage *</label>
+            <input id="f-title" placeholder="Ex : Séjour à Istanbul" required>
+          </div>
+          <div class="field">
+            <label>Tagline (eyebrow)</label>
+            <input id="f-eyebrow" placeholder="Ex : Turquie · Spécial été 2026">
+          </div>
+        </div>
+
+        <div class="grid3 mt">
+          <div class="field">
+            <label>Type de voyage *</label>
+            <select id="f-type" onchange="updateType()">
+              <option value="sejour">Séjour</option>
+              <option value="circuit">Circuit</option>
+              <option value="croisiere">Croisière</option>
+              <option value="omra">Omra</option>
+              <option value="combine">Combiné</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Durée *</label>
+            <input id="f-duration" placeholder="Ex : 8 jours / 7 nuits">
+          </div>
+          <div class="field">
+            <label>Langue fiche</label>
+            <select id="f-lang">
+              <option value="fr">Français</option>
+              <option value="ar">Arabe</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Destinations -->
+        <div class="field mt">
+          <label>Destination(s) *</label>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <select id="destSelect" style="flex:1;min-width:180px;border:1px solid #cfc5b3;border-radius:6px;padding:.55rem .7rem;font:.9rem/1 'DM Sans',sans-serif">
+              <option value="">— choisir un pays —</option>
+              <option>Turquie</option><option>Égypte</option><option>Maroc</option>
+              <option>Europe</option><option>Croisières</option><option>Omra</option>
+              <option>USA / Canada</option><option>Vietnam</option><option>Chine</option>
+              <option>Malaisie-Thaïlande</option><option>Zanzibar</option>
+              <option>Pérou</option><option>Cuba</option><option>Combinés</option>
+              <option>Azerbaïdjan</option><option>Ouzbékistan</option><option>Tunisie</option>
+              <option value="__new__">+ Nouveau pays…</option>
+            </select>
+            <button type="button" class="btn btn-outline btn-sm" onclick="addDest()">Ajouter</button>
+          </div>
+          <input id="newDestInput" placeholder="Nom du nouveau pays" style="display:none;margin-top:.5rem;border:1px solid var(--gold);border-radius:6px;padding:.55rem .75rem;font:.9rem/1 'DM Sans',sans-serif;width:100%">
+          <div class="dest-tags" id="destTags"></div>
+          <span class="hint" id="combineHint" style="display:none">Plusieurs destinations = voyage Combiné — il apparaîtra dans la rubrique Combinés du site.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② Cadran d'infos clés -->
+    <div class="section">
+      <div class="section-head"><span class="num">2</span><h2>Cadran d'informations clés</h2></div>
+      <div class="section-body">
+        <p style="font-size:.82rem;color:#8a8279;margin:0 0 .8rem">Ces infos apparaissent dans la grille de résumé en haut de la fiche voyage.</p>
+        <div id="cadranRows">
+          <!-- Lignes par défaut -->
+        </div>
+        <button type="button" class="btn btn-outline btn-sm no-print" onclick="addCadranRow()" style="margin-top:.6rem">+ Ajouter une ligne</button>
+      </div>
+    </div>
+
+    <!-- ③ Description -->
+    <div class="section">
+      <div class="section-head"><span class="num">3</span><h2>Description du voyage</h2></div>
+      <div class="section-body">
+        <div class="field">
+          <label>Introduction *</label>
+          <textarea id="f-intro" rows="7" placeholder="Décrivez le voyage en 2 ou 3 paragraphes. Séparez chaque paragraphe par une ligne vide."></textarea>
+          <span class="hint">Chaque ligne vide = nouveau paragraphe sur le site</span>
+        </div>
+        <div class="field mt">
+          <label>Points forts (un par ligne)</label>
+          <textarea id="f-highlights" rows="5" placeholder="Mosquée Bleue et palais de Topkapı&#10;Croisière sur le Bosphore incluse&#10;Vols Turkish Airlines inclus&#10;Guide arabophone pendant les excursions"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ Itinéraire -->
+    <div class="section">
+      <div class="section-head"><span class="num">4</span><h2>Itinéraire jour par jour</h2></div>
+      <div class="section-body">
+        <div id="daysContainer"></div>
+        <button type="button" class="btn btn-outline btn-sm no-print" onclick="addDay()">+ Ajouter un jour</button>
+      </div>
+    </div>
+
+    <!-- ⑤ Inclus / Exclus -->
+    <div class="section">
+      <div class="section-head"><span class="num">5</span><h2>Inclus / Exclus</h2></div>
+      <div class="section-body">
+        <div class="grid2">
+          <div>
+            <div style="font:.75rem/1 'DM Sans',sans-serif;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#536154;margin-bottom:.55rem">✅ Ce qui est inclus</div>
+            <div class="list-items" id="inclusList"></div>
+            <button type="button" class="btn btn-outline btn-sm no-print" onclick="addItem('inclusList','inclus')" style="margin-top:.5rem">+ Ajouter</button>
+          </div>
+          <div>
+            <div style="font:.75rem/1 'DM Sans',sans-serif;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#536154;margin-bottom:.55rem">❌ Ce qui n'est pas inclus</div>
+            <div class="list-items" id="exclusList"></div>
+            <button type="button" class="btn btn-outline btn-sm no-print" onclick="addItem('exclusList','exclus')" style="margin-top:.5rem">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑥ Hébergement -->
+    <div class="section">
+      <div class="section-head"><span class="num">6</span><h2>Hébergement</h2></div>
+      <div class="section-body">
+        <div class="list-items" id="hotelsList"></div>
+        <button type="button" class="btn btn-outline btn-sm no-print" onclick="addItem('hotelsList','hotels')" style="margin-top:.5rem">+ Ajouter un hôtel</button>
+      </div>
+    </div>
+
+    <!-- ⑦ Prix -->
+    <div class="section">
+      <div class="section-head"><span class="num">7</span><h2>Tarifs</h2></div>
+      <div class="section-body">
+        <div class="grid3">
+          <div class="field">
+            <label>Prix d'appel *</label>
+            <input id="f-price" placeholder="Ex : 9 700 DH">
+          </div>
+          <div class="field">
+            <label>Préfixe prix</label>
+            <input id="f-pricePrefix" placeholder="À partir de">
+          </div>
+          <div class="field">
+            <label>Supplément single</label>
+            <input id="f-single" placeholder="Ex : 2 500 DH">
+          </div>
+        </div>
+
+        <div style="margin-top:1.1rem">
+          <div style="font:.78rem/1 'DM Sans',sans-serif;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#536154;margin-bottom:.6rem">Tableau des prix détaillé</div>
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>Catégorie / Type chambre</th>
+                <th>Date / Saison</th>
+                <th>Prix / pers.</th>
+                <th class="no-print"></th>
+              </tr>
+            </thead>
+            <tbody id="priceRows"></tbody>
+          </table>
+          <button type="button" class="btn btn-outline btn-sm no-print" onclick="addPriceRow()" style="margin-top:.55rem">+ Ajouter une ligne de prix</button>
+        </div>
+
+        <div class="grid2 mt">
+          <div class="field">
+            <label>Tarifs enfants</label>
+            <input id="f-children" placeholder="Ex : 0–2 ans : gratuit · 2–6 ans : 6 900 DH">
+          </div>
+          <div class="field">
+            <label>Note prix</label>
+            <input id="f-priceNote" placeholder="Ex : Tarifs non contractuels, sous réserve de disponibilité">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑧ Dates de départ -->
+    <div class="section">
+      <div class="section-head"><span class="num">8</span><h2>Dates de départ</h2></div>
+      <div class="section-body">
+        <div class="field">
+          <label>Dates (séparées par des virgules)</label>
+          <input id="f-datesList" placeholder="Ex : 31/07, 03/08, 17/08, 24/08">
+        </div>
+        <div class="grid2 mt">
+          <div class="field">
+            <label>Description / garantie</label>
+            <input id="f-datesLine" placeholder="Ex : Départs garantis · Été 2026">
+          </div>
+          <div class="field">
+            <label>Note complémentaire</label>
+            <input id="f-datesNote" placeholder="Ex : Visa non requis pour passeport marocain">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑨ Contact -->
+    <div class="section">
+      <div class="section-head"><span class="num">9</span><h2>Contact & réservation</h2></div>
+      <div class="section-body">
+        <div class="grid2">
+          <div class="field">
+            <label>Numéro WhatsApp</label>
+            <input id="f-whatsapp" value="212673280009">
+          </div>
+          <div class="field">
+            <label>Titre call-to-action</label>
+            <input id="f-ctaTitle" placeholder="Ex : Réservez votre place dès maintenant">
+          </div>
+        </div>
+        <div class="field mt">
+          <label>Texte de conclusion</label>
+          <textarea id="f-ctaText" rows="3" placeholder="Ex : Notre équipe vous accompagne pour une expérience personnalisée..."></textarea>
+        </div>
+      </div>
+    </div>
+
+  </form><!-- /ficheForm -->
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── État ───
+var destinations = [];
+var cadranRows = [];
+var days = [];
+var inclus = [];
+var exclus = [];
+var hotels = [];
+var priceRows = [];
+
+// ─── Init ───
+window.addEventListener('DOMContentLoaded', function() {
+  // Cadran par défaut
+  var defaultCadran = [
+    ['Départ', ''],
+    ['Destination', ''],
+    ['Durée', ''],
+    ['Vols', ''],
+    ['Pension', ''],
+    ['Période', ''],
+    ['Guide', '']
+  ];
+  defaultCadran.forEach(function(row) { addCadranRow(row[0], row[1]); });
+
+  // Jour 1 par défaut
+  addDay();
+
+  // Inclus/Exclus par défaut
+  addItem('inclusList','inclus', '');
+  addItem('exclusList','exclus', '');
+  addItem('hotelsList','hotels', '');
+
+  // Ligne de prix par défaut
+  addPriceRow();
+});
+
+// ─── Destinations ───
+function addDest() {
+  var sel = document.getElementById('destSelect');
+  var val = sel.value;
+  if (!val) return;
+
+  if (val === '__new__') {
+    document.getElementById('newDestInput').style.display = 'block';
+    document.getElementById('newDestInput').focus();
+    document.getElementById('newDestInput').onkeydown = function(e) {
+      if (e.key === 'Enter') { addNewDest(); }
+    };
+    return;
+  }
+  if (destinations.indexOf(val) === -1) {
+    destinations.push(val);
+    renderDestTags();
+  }
+  sel.value = '';
+}
+
+function addNewDest() {
+  var input = document.getElementById('newDestInput');
+  var val = input.value.trim();
+  if (val && destinations.indexOf(val) === -1) {
+    destinations.push(val);
+    renderDestTags();
+  }
+  input.value = '';
+  input.style.display = 'none';
+  document.getElementById('destSelect').value = '';
+}
+
+function removeDest(d) {
+  destinations = destinations.filter(function(x){ return x !== d; });
+  renderDestTags();
+}
+
+function renderDestTags() {
+  var container = document.getElementById('destTags');
+  container.innerHTML = destinations.map(function(d) {
+    return '<span class="dest-tag">' + esc(d)
+      + '<button type="button" onclick="removeDest(\'' + esc(d) + '\')">✕</button></span>';
+  }).join('');
+  var hint = document.getElementById('combineHint');
+  if (hint) hint.style.display = destinations.length > 1 ? 'block' : 'none';
+  // Update print title
+  var t = document.getElementById('f-title');
+  if (t) document.getElementById('printTitle').textContent = t.value || 'Fiche voyage';
+}
+
+function updateType() {
+  var type = document.getElementById('f-type').value;
+  if (type === 'combine' && destinations.length < 2) {
+    toast('Combiné : ajoutez plusieurs destinations ci-dessous');
+  }
+}
+
+// ─── Cadran ───
+var cadranCount = 0;
+function addCadranRow(label, value) {
+  var id = 'cadran-' + (cadranCount++);
+  var container = document.getElementById('cadranRows');
+  var div = document.createElement('div');
+  div.className = 'cadran-row';
+  div.id = id;
+  div.innerHTML = '<input class="cadran-label" placeholder="Label (ex : Départ)" value="' + esc(label||'') + '">'
+    + '<input class="cadran-value" placeholder="Valeur (ex : Casablanca)" value="' + esc(value||'') + '">'
+    + '<button type="button" class="rm-btn no-print" onclick="document.getElementById(\'' + id + '\').remove()">✕</button>';
+  container.appendChild(div);
+}
+
+function getCadranData() {
+  var rows = document.querySelectorAll('#cadranRows .cadran-row');
+  var result = [];
+  rows.forEach(function(row) {
+    var l = row.querySelector('.cadran-label').value.trim();
+    var v = row.querySelector('.cadran-value').value.trim();
+    if (l || v) result.push([l, v]);
+  });
+  return result;
+}
+
+// ─── Itinéraire ───
+var dayCount = 0;
+function addDay() {
+  var idx = dayCount++;
+  var container = document.getElementById('daysContainer');
+  var div = document.createElement('div');
+  div.className = 'day-card';
+  div.id = 'day-' + idx;
+  var nextNum = 'J' + (idx + 1);
+  div.innerHTML = '<div class="day-head">'
+    + '<span class="day-num">' + nextNum + '</span>'
+    + '<input class="day-num-input" placeholder="J' + (idx+1) + '" value="' + nextNum + '" style="width:70px;flex:0 0 auto">'
+    + '<input class="day-title" placeholder="Titre du jour (ex : Casablanca – Istanbul)" style="flex:1">'
+    + '<button type="button" class="btn btn-outline btn-sm no-print" onclick="document.getElementById(\'day-' + idx + '\').remove()" style="border-color:#ccc;color:#999">✕</button>'
+    + '</div>'
+    + '<div class="day-body">'
+    + '<textarea class="day-text" placeholder="Description de la journée…" rows="4"></textarea>'
+    + '<div style="display:flex;gap:.6rem;flex-wrap:wrap">'
+    + '<input class="day-nuit" placeholder="Nuit à (ville)" style="border:1px solid #cfc5b3;border-radius:5px;padding:.42rem .6rem;font:.85rem/1 \'DM Sans\',sans-serif;flex:1;min-width:140px">'
+    + '<input class="day-opt" placeholder="Note optionnelle (ex : Visite en option)" style="border:1px solid #cfc5b3;border-radius:5px;padding:.42rem .6rem;font:.85rem/1 \'DM Sans\',sans-serif;flex:1;min-width:140px">'
+    + '</div>'
+    + '<div class="repas-checks"><span style="font:.75rem/1 \'DM Sans\',sans-serif;font-weight:800;color:#536154;text-transform:uppercase;letter-spacing:.07em">Repas&nbsp;:</span>'
+    + '<label><input type="checkbox" class="repas-cb" value="petit-déjeuner"> Petit-déjeuner</label>'
+    + '<label><input type="checkbox" class="repas-cb" value="déjeuner"> Déjeuner</label>'
+    + '<label><input type="checkbox" class="repas-cb" value="dîner"> Dîner</label>'
+    + '</div>'
+    + '</div>';
+  container.appendChild(div);
+}
+
+function getDaysData() {
+  var cards = document.querySelectorAll('#daysContainer .day-card');
+  var result = [];
+  cards.forEach(function(card) {
+    var repas = [];
+    card.querySelectorAll('.repas-cb:checked').forEach(function(cb) { repas.push(cb.value); });
+    var meta = [];
+    var nuit = card.querySelector('.day-nuit').value.trim();
+    if (nuit) meta.push(['Nuit', nuit]);
+    if (repas.length) meta.push(['Repas', repas.join(', ')]);
+    result.push({
+      num: card.querySelector('.day-num-input').value.trim(),
+      title: card.querySelector('.day-title').value.trim(),
+      text: card.querySelector('.day-text').value.trim(),
+      meta: meta,
+      opt: card.querySelector('.day-opt').value.trim()
+    });
+  });
+  return result;
+}
+
+// ─── Listes (inclus/exclus/hôtels) ───
+function addItem(containerId, type, value) {
+  var container = document.getElementById(containerId);
+  var idx = Date.now() + Math.random();
+  var div = document.createElement('div');
+  div.className = 'list-item';
+  div.setAttribute('data-type', type);
+  div.innerHTML = '<input placeholder="' + (type === 'hotels' ? 'Ex : Hôtel Atlas 4★ — Centre-ville' : (type==='inclus' ? 'Ex : Vol inclus A/R' : 'Ex : Les excursions optionnelles')) + '" value="' + esc(value||'') + '">'
+    + '<button type="button" class="rm-btn no-print" onclick="this.parentNode.remove()">✕</button>';
+  container.appendChild(div);
+}
+
+function getListData(containerId) {
+  var items = document.querySelectorAll('#' + containerId + ' .list-item input');
+  var result = [];
+  items.forEach(function(i){ var v = i.value.trim(); if(v) result.push(v); });
+  return result;
+}
+
+// ─── Tableau des prix ───
+function addPriceRow() {
+  var tbody = document.getElementById('priceRows');
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><input placeholder="Ex : Double 4★" class="pr-cat"></td>'
+    + '<td><input placeholder="Ex : 31/07 – 07/08 · Haute saison" class="pr-date"></td>'
+    + '<td><input placeholder="Ex : 12 600 DH" class="pr-prix"></td>'
+    + '<td class="no-print"><button type="button" class="rm-btn" onclick="this.closest(\'tr\').remove()">✕</button></td>';
+  tbody.appendChild(tr);
+}
+
+function getPriceTableData() {
+  var rows = document.querySelectorAll('#priceRows tr');
+  var result = [];
+  rows.forEach(function(tr) {
+    var cat = tr.querySelector('.pr-cat').value.trim();
+    var date = tr.querySelector('.pr-date').value.trim();
+    var prix = tr.querySelector('.pr-prix').value.trim();
+    if (cat || date || prix) result.push([cat, date, prix]);
+  });
+  return result;
+}
+
+// ─── Génération du fichier ───
+function collectData() {
+  var title = document.getElementById('f-title').value.trim();
+  if (!title) { toast('Le titre est obligatoire'); return null; }
+  if (!destinations.length) { toast('Ajoutez au moins une destination'); return null; }
+
+  var type = document.getElementById('f-type').value;
+  var isCombo = destinations.length > 1 || type === 'combine';
+  var tag = isCombo ? 'Combinés' : (destinations[0] || '');
+
+  var priceRows = getPriceTableData();
+  var priceTable = priceRows.length ? {
+    head: ['Catégorie / Type chambre', 'Date / Saison', 'Prix / pers.'],
+    rows: priceRows,
+    note: document.getElementById('f-priceNote').value.trim() || undefined
+  } : undefined;
+
+  var single = document.getElementById('f-single').value.trim();
+  if (single && priceTable) priceTable.single = single;
+
+  var ctaTitle = document.getElementById('f-ctaTitle').value.trim();
+  var ctaText = document.getElementById('f-ctaText').value.trim();
+
+  return {
+    title: title,
+    eyebrow: document.getElementById('f-eyebrow').value.trim(),
+    tag: tag,
+    destinations: destinations.slice(),
+    type: type,
+    duration: document.getElementById('f-duration').value.trim(),
+    lang: document.getElementById('f-lang').value,
+    price: document.getElementById('f-price').value.trim(),
+    pricePrefix: document.getElementById('f-pricePrefix').value.trim(),
+    whatsapp: document.getElementById('f-whatsapp').value.trim() || '212673280009',
+    cadran: getCadranData(),
+    intro: document.getElementById('f-intro').value.trim().split(/\n\n+/).filter(Boolean),
+    highlights: document.getElementById('f-highlights').value.trim().split(/\n/).filter(Boolean),
+    days: getDaysData(),
+    inclus: getListData('inclusList'),
+    exclus: getListData('exclusList'),
+    hotels: getListData('hotelsList'),
+    priceTable: priceTable,
+    children: document.getElementById('f-children').value.trim(),
+    datesList: document.getElementById('f-datesList').value.trim().split(/[\n,]+/).map(function(d){return d.trim();}).filter(Boolean),
+    dates: {
+      line: document.getElementById('f-datesLine').value.trim(),
+      note: document.getElementById('f-datesNote').value.trim()
+    },
+    cta: (ctaTitle || ctaText) ? { title: ctaTitle, text: ctaText } : undefined,
+    _source: 'formulaire-voyage-v1',
+    _createdAt: new Date().toISOString()
+  };
+}
+
+function telecharger() {
+  var data = collectData();
+  if (!data) return;
+  var slug = slugify(data.title);
+  var json = JSON.stringify(data, null, 2);
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'fiche-voyage-' + slug + '.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1000);
+  toast('Fiche téléchargée — envoyez le fichier .json à Karim');
+  document.getElementById('printTitle').textContent = data.title;
+}
+
+// ─── Utilitaires ───
+function esc(s){ return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function slugify(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'voyage'; }
+
+var toastT;
+function toast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('show');},3500);
+}
+
+// Update print title quand on tape le titre
+document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'f-title') {
+    document.getElementById('printTitle').textContent = e.target.value || 'Fiche voyage';
+  }
+});
+</script>
+</body>
+</html>
