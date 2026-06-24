@@ -5,7 +5,7 @@ window.VOYAGES = {
 
   "turquie-sejour-istanbul": {
     mediaKey: "modal-istanbul",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Turquie · Spécial été 2026",
     title: "Séjour à Istanbul",
     duration: "8 jours",
@@ -93,7 +93,7 @@ window.VOYAGES = {
 
   "turquie-istanbul-antalya": {
     mediaKey: "modal-istanbul-antalya",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Turquie · Combiné été 2026",
     title: "Istanbul & Antalya",
     duration: "8 jours",
@@ -171,7 +171,7 @@ window.VOYAGES = {
 
   "turquie-istanbul-bodrum": {
     mediaKey: "modal-istanbul-bodrum",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Turquie · Combiné été 2026",
     title: "Istanbul & Bodrum",
     duration: "8 jours",
@@ -248,7 +248,7 @@ window.VOYAGES = {
 
   "turquie-istanbul-marmaris-bodrum": {
     mediaKey: "modal-marmaris-bodrum",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Turquie · Combiné été 2026",
     title: "Istanbul, Marmaris & Bodrum",
     duration: "11 jours",
@@ -339,7 +339,7 @@ window.VOYAGES = {
 
   "turquie-istanbul-antalya-11j": {
     mediaKey: "modal-istanbul-antalya-11j",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Turquie · Combiné été 2026",
     title: "Istanbul & Antalya",
     duration: "11 jours",
@@ -422,7 +422,7 @@ window.VOYAGES = {
 
   "egypte-caire-nil-hurghada": {
     mediaKey: "modal-caire-nil-hurghada",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Égypte · Circuit & croisière été 2026",
     title: "Le Caire, Croisière du Nil & Hurghada",
     duration: "12 jours",
@@ -516,7 +516,7 @@ window.VOYAGES = {
 
   "egypte-caire-hurghada": {
     mediaKey: "modal-caire-hurghada",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Égypte · Combiné été 2026",
     title: "Le Caire & Hurghada",
     duration: "12 jours",
@@ -590,7 +590,7 @@ window.VOYAGES = {
 
   "egypte-caire-sharm": {
     mediaKey: "modal-caire-sharm",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Égypte · Combiné été 2026",
     title: "Le Caire & Sharm El Sheikh",
     duration: "11 jours",
@@ -672,7 +672,7 @@ window.VOYAGES = {
   },
 
   "usa-ouest-complet": {
-    mediaKey: "modal-ouest-usa", whatsapp: "212673280009",
+    mediaKey: "modal-ouest-usa", whatsapp: "212614152686",
     eyebrow: "États-Unis · Circuit accompagné", title: "L'Ouest Complet — USA", duration: "13 jours", tag: "États-Unis",
     cadran: [["Destinations", "Ouest américain"], ["Durée", "13 jours / 12 nuits"], ["Vols", "Non inclus"], ["Pension", "Petit-déjeuner + 10 repas"], ["Guide", "Accompagnateur francophone"], ["Type", "Départs garantis"]],
     price: "21 250 DH",
@@ -691,7 +691,7 @@ window.VOYAGES = {
   },
 
   "canada-usa-joyaux": {
-    mediaKey: "modal-joyaux-canada", whatsapp: "212673280009",
+    mediaKey: "modal-joyaux-canada", whatsapp: "212614152686",
     eyebrow: "Canada & USA · Circuit accompagné", title: "Les joyaux du Canada et des USA", duration: "11 jours", tag: "Canada & USA",
     cadran: [["Destinations", "Est canadien et américain"], ["Durée", "11 jours / 10 nuits"], ["Vols", "Non inclus"], ["Pension", "Petit-déjeuner + 9 repas"], ["Guide", "Accompagnateur francophone"], ["Type", "Départs garantis"]],
     price: "20 550 DH",
@@ -710,7 +710,7 @@ window.VOYAGES = {
   },
 
   "usa-rocheuses": {
-    mediaKey: "modal-rocheuses", whatsapp: "212673280009",
+    mediaKey: "modal-rocheuses", whatsapp: "212614152686",
     eyebrow: "États-Unis · Grand circuit", title: "Les Rocheuses et l'Ouest classique — USA", duration: "17 jours", tag: "États-Unis",
     cadran: [["Destinations", "Ouest américain et Rocheuses"], ["Durée", "17 jours / 16 nuits"], ["Vols", "Non inclus"], ["Pension", "Petit-déjeuner + 15 repas"], ["Guide", "Accompagnateur francophone"], ["Type", "Départs garantis"]],
     price: "32 000 DH",
@@ -729,7 +729,7 @@ window.VOYAGES = {
   },
 
   "cuba-havane-varadero": {
-    mediaKey: "modal-cuba", whatsapp: "212673280009",
+    mediaKey: "modal-cuba", whatsapp: "212614152686",
     eyebrow: "Cuba · Circuit & plages", title: "Cuba — La Havane & Varadero", duration: "9 jours", tag: "Cuba",
     cadran: [["Destinations", "La Havane, Viñales, Trinidad, Varadero"], ["Durée", "9 jours / 8 nuits"], ["Vols", "Non inclus"], ["Pension", "Repas selon programme, boissons incluses"], ["Guide", "Local francophone"], ["Minimum", "4 personnes"]],
     price: "17 000 DH",
@@ -748,7 +748,7 @@ window.VOYAGES = {
   },
 
   "perou-merveilles-incas": {
-    mediaKey: "modal-perou", whatsapp: "212673280009",
+    mediaKey: "modal-perou", whatsapp: "212614152686",
     eyebrow: "Pérou · Circuit accompagné", title: "Pérou — Les merveilles Incas", duration: "11 jours", tag: "Pérou",
     cadran: [["Destinations", "Lima, Arequipa, Titicaca, Cusco, Machu Picchu"], ["Durée", "11 jours / 9 nuits"], ["Vols", "Non inclus"], ["Pension", "Pension complète (J2 au J10)"], ["Guide", "Guides locaux francophones"], ["Train", "Machu Picchu (classe Expedition)"]],
     price: "18 700 DH",
@@ -767,7 +767,7 @@ window.VOYAGES = {
   },
 
   "europe-las-palmas": {
-    mediaKey: "modal-europe-1", whatsapp: "212673280009",
+    mediaKey: "modal-europe-1", whatsapp: "212614152686",
     eyebrow: "Canaries · Séjour balnéaire", title: "Séjour à Las Palmas", duration: "8 jours", tag: "Espagne",
     cadran: [["Destination", "Las Palmas de Gran Canaria"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus — Ryanair"], ["Hôtel", "3★"], ["Plage", "Las Canteras"]],
     price: "6 900 DH",
@@ -786,7 +786,7 @@ window.VOYAGES = {
   },
 
   "europe-vienne-budapest-prague": {
-    mediaKey: "modal-europe-2", whatsapp: "212673280009",
+    mediaKey: "modal-europe-2", whatsapp: "212614152686",
     eyebrow: "Europe centrale · Circuit", title: "Capitales impériales — Vienne, Budapest, Prague", duration: "6 jours", tag: "Europe",
     cadran: [["Destinations", "Vienne, Budapest, Prague"], ["Durée", "6 jours / 5 nuits"], ["Vols", "Inclus"], ["Transport", "Bus avec guide"], ["Inclus", "Croisière sur le Danube"]],
     price: "13 600 DH",
@@ -805,7 +805,7 @@ window.VOYAGES = {
   },
 
   "europe-andalousie": {
-    mediaKey: "modal-europe-3", whatsapp: "212673280009",
+    mediaKey: "modal-europe-3", whatsapp: "212614152686",
     eyebrow: "Espagne · Circuit", title: "Al-Andalus — Madrid, Grenade, Séville", duration: "7 jours", tag: "Espagne",
     cadran: [["Destinations", "Madrid, Grenade, Séville"], ["Durée", "7 jours / 6 nuits"], ["Vols", "Inclus"], ["Inclus", "Alhambra · bateau Guadalquivir"], ["Repas", "Repas inclus"]],
     price: "14 900 DH",
@@ -824,7 +824,7 @@ window.VOYAGES = {
   },
 
   "europe-grece-iles": {
-    mediaKey: "modal-europe-4", whatsapp: "212673280009",
+    mediaKey: "modal-europe-4", whatsapp: "212614152686",
     eyebrow: "Grèce · Îles", title: "Athènes, Rhodes & Kos", duration: "8 jours", tag: "Grèce",
     cadran: [["Destinations", "Athènes, Rhodes, Kos"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus"], ["Inclus", "Acropole · ferry Rhodes-Kos"], ["Hôtel", "à partir de 3★"]],
     price: "14 900 DH",
@@ -843,7 +843,7 @@ window.VOYAGES = {
   },
 
   "europe-grece-classique": {
-    mediaKey: "modal-europe-5", whatsapp: "212673280009",
+    mediaKey: "modal-europe-5", whatsapp: "212614152686",
     eyebrow: "Grèce · Circuit", title: "Athènes — Grèce classique", duration: "7 jours", tag: "Grèce",
     cadran: [["Destinations", "Athènes, Olympie, Delphes, Météores"], ["Durée", "7 jours / 6 nuits"], ["Vols", "Inclus"], ["Transport", "Bus avec guide"], ["Hôtel", "à partir de 3★"]],
     price: "16 700 DH",
@@ -862,7 +862,7 @@ window.VOYAGES = {
   },
 
   "europe-espagne-portugal": {
-    mediaKey: "modal-europe-6", whatsapp: "212673280009",
+    mediaKey: "modal-europe-6", whatsapp: "212614152686",
     eyebrow: "Espagne & Portugal · Circuit", title: "Circuit Espagne & Portugal", duration: "10 jours", tag: "Espagne & Portugal",
     cadran: [["Destinations", "Barcelone, Valence, Grenade, Séville, Lisbonne"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus"], ["Inclus", "Alhambra · Sagrada Família"], ["Transport", "Bus avec guide"]],
     price: "19 500 DH",
@@ -881,7 +881,7 @@ window.VOYAGES = {
   },
 
   "europe-italie": {
-    mediaKey: "modal-europe-7", whatsapp: "212673280009",
+    mediaKey: "modal-europe-7", whatsapp: "212614152686",
     eyebrow: "Italie · Circuit", title: "Circuit Italie", duration: "8 jours", tag: "Italie",
     cadran: [["Destinations", "Milan, Vérone, Venise, Pérouse, Rome"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus"], ["Inclus", "Venise · Pompéi"], ["Transport", "Bus avec guide"]],
     price: "21 500 DH",
@@ -900,7 +900,7 @@ window.VOYAGES = {
   },
 
   "europe-france-suisse": {
-    mediaKey: "modal-europe-8", whatsapp: "212673280009",
+    mediaKey: "modal-europe-8", whatsapp: "212614152686",
     eyebrow: "France & Suisse · Circuit", title: "France & Suisse", duration: "8 jours", tag: "France & Suisse",
     cadran: [["Destinations", "Paris, Lyon, Zurich"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus"], ["Inclus", "Tour Eiffel · Alpes"], ["Transport", "Bus avec guide"]],
     price: "22 400 DH",
@@ -919,7 +919,7 @@ window.VOYAGES = {
   },
 
   "europe-angleterre-ecosse": {
-    mediaKey: "modal-europe-9", whatsapp: "212673280009",
+    mediaKey: "modal-europe-9", whatsapp: "212614152686",
     eyebrow: "Royaume-Uni · Circuit", title: "Angleterre & Écosse", duration: "10 jours", tag: "Royaume-Uni",
     cadran: [["Destinations", "Londres, Newcastle, Édimbourg"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus"], ["Inclus", "Tour de Londres · Écosse"], ["Transport", "Bus avec guide"]],
     price: "27 000 DH",
@@ -938,7 +938,7 @@ window.VOYAGES = {
   },
 
   "europe-albanie-riviera": {
-    mediaKey: "modal-albanie-riviera", whatsapp: "212673280009",
+    mediaKey: "modal-albanie-riviera", whatsapp: "212614152686",
     eyebrow: "Europe · Albanie 2026",
     title: "Albanie — Mer & Galets, Côte Ionienne",
     duration: "8 jours",
@@ -999,7 +999,7 @@ window.VOYAGES = {
   },
 
   "croisiere-mediterranee-espagne-italie": {
-    mediaKey: "modal-croisiere-1", whatsapp: "212673280009",
+    mediaKey: "modal-croisiere-1", whatsapp: "212614152686",
     eyebrow: "Croisière · Méditerranée", title: "Croisière Méditerranée — Espagne & Italie", duration: "10 jours", tag: "Croisière",
     cadran: [["Bateau", "Harmony of the Seas (Royal Caribbean)"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus — Ryanair"], ["Formule", "2 nuits hôtel + 7 nuits croisière"], ["Cabine", "Double"]],
     price: "19 800 DH",
@@ -1017,7 +1017,7 @@ window.VOYAGES = {
   },
 
   "croisiere-mediterranee-premium": {
-    mediaKey: "modal-croisiere-2", whatsapp: "212673280009",
+    mediaKey: "modal-croisiere-2", whatsapp: "212614152686",
     eyebrow: "Croisière · Méditerranée", title: "Croisière Méditerranée Premium", duration: "10 jours", tag: "Croisière",
     cadran: [["Bateau", "Royal Caribbean International"], ["Durée", "10 jours / 9 nuits"], ["Vols", "Inclus"], ["Formule", "2 nuits hôtel + 7 nuits croisière"], ["Cabine", "Double"]],
     price: "21 800 DH",
@@ -1035,7 +1035,7 @@ window.VOYAGES = {
   },
 
   "croisiere-turquie-grece": {
-    mediaKey: "modal-croisiere-turquie-grece", whatsapp: "212673280009",
+    mediaKey: "modal-croisiere-turquie-grece", whatsapp: "212614152686",
     eyebrow: "Croisière · Méditerranée 2026",
     title: "Croisière Turquie & Grèce",
     duration: "8 jours",
@@ -1092,7 +1092,7 @@ window.VOYAGES = {
   },
 
   "croisiere-turquie-egypte": {
-    mediaKey: "modal-croisiere-turquie-egypte", whatsapp: "212673280009",
+    mediaKey: "modal-croisiere-turquie-egypte", whatsapp: "212614152686",
     eyebrow: "Croisière · Méditerranée 2026",
     title: "Croisière Turquie & Égypte",
     duration: "8 jours",
@@ -1148,7 +1148,7 @@ window.VOYAGES = {
   },
 
   "asie-ouzbekistan": {
-    mediaKey: "modal-ouzbekistan", whatsapp: "212673280009",
+    mediaKey: "modal-ouzbekistan", whatsapp: "212614152686",
     eyebrow: "Asie · Ouzbékistan 2026",
     title: "Ouzbékistan — Route de la Soie",
     duration: "10 jours",
@@ -1213,7 +1213,7 @@ window.VOYAGES = {
   },
 
   "asie-chine": {
-    mediaKey: "modal-chine", whatsapp: "212673280009",
+    mediaKey: "modal-chine", whatsapp: "212614152686",
     eyebrow: "Chine · Grand circuit", title: "Circuit Chine — Pékin, Shanghai & Merveilles", duration: "14 jours", tag: "Chine",
     cadran: [["Destinations", "Pékin, Shanghai et merveilles"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★"], ["Guide", "Francophone"]],
     price: "29 900 DH",
@@ -1232,7 +1232,7 @@ window.VOYAGES = {
   },
 
   "asie-chine-pekin-xian-guilin-shanghai": {
-    mediaKey: "modal-chine-pekin-xian-guilin-shanghai", whatsapp: "212673280009",
+    mediaKey: "modal-chine-pekin-xian-guilin-shanghai", whatsapp: "212614152686",
     eyebrow: "Chine · Départ 10 août 2026",
     title: "Chine impériale & paysages du Sud — Pékin, Xi'an, Guilin & Shanghai",
     duration: "15 jours",
@@ -1307,7 +1307,7 @@ window.VOYAGES = {
     cta: { title: "Envie de cette grande Chine ?", text: "Nous préparons votre circuit Chine impériale et paysages du Sud avec vols, hôtels 5☆, trains rapides et assistance Voyages 21." }
   },
   "asie-malaisie-thailande": {
-    mediaKey: "modal-malaisie", whatsapp: "212673280009",
+    mediaKey: "modal-malaisie", whatsapp: "212614152686",
     eyebrow: "Malaisie & Thaïlande · Circuit", title: "Malaisie & Thaïlande — KL, Krabi & Phuket", duration: "14 jours", tag: "Asie",
     cadran: [["Destinations", "Kuala Lumpur, Krabi, Phuket"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★"], ["Guide", "Inclus"]],
     price: "28 500 DH",
@@ -1326,7 +1326,7 @@ window.VOYAGES = {
   },
 
   "asie-malaisie-singapour": {
-    mediaKey: "modal-malaisie-singapour", whatsapp: "212673280009",
+    mediaKey: "modal-malaisie-singapour", whatsapp: "212614152686",
     eyebrow: "Combiné Asie · Malaisie & Singapour",
     title: "Malaisie & Singapour — Kuala Lumpur, Penang & Singapour",
     duration: "14 jours",
@@ -1396,7 +1396,7 @@ window.VOYAGES = {
     cta: { title: "Envie du combiné Malaisie & Singapour ?", text: "Nous préparons votre circuit entre Kuala Lumpur, Penang et Singapour avec vols, hôtels et assistance Voyages 21." }
   },
   "asie-malaisie-indonesie": {
-    mediaKey: "modal-malaisie-indonesie", whatsapp: "212673280009",
+    mediaKey: "modal-malaisie-indonesie", whatsapp: "212614152686",
     eyebrow: "Combiné Asie · Malaisie & Indonésie",
     title: "Malaisie & Indonésie — Kuala Lumpur, Bali & Jakarta",
     duration: "15 jours",
@@ -1465,7 +1465,7 @@ window.VOYAGES = {
     cta: { title: "Envie du combiné Malaisie & Indonésie ?", text: "Nous préparons votre voyage entre Kuala Lumpur, Bali et Jakarta avec vols, hôtels 5☆ et assistance Voyages 21." }
   },
   "asie-indonesie-thailande": {
-    mediaKey: "modal-indonesie-thailande", whatsapp: "212673280009",
+    mediaKey: "modal-indonesie-thailande", whatsapp: "212614152686",
     eyebrow: "Combiné Asie · Indonésie & Thaïlande",
     title: "Indonésie & Thaïlande — Jakarta, Bali & Phuket",
     duration: "14 jours",
@@ -1533,7 +1533,7 @@ window.VOYAGES = {
     cta: { title: "Envie du combiné Indonésie & Thaïlande ?", text: "Nous préparons votre voyage entre Jakarta, Bali et Phuket avec vols, hôtels 5☆ et assistance Voyages 21." }
   },
   "asie-thailande-bangkok": {
-    mediaKey: "modal-bangkok", whatsapp: "212673280009",
+    mediaKey: "modal-bangkok", whatsapp: "212614152686",
     eyebrow: "Thaïlande · Circuit", title: "Exotic Thailand — Bangkok, Krabi & Phuket", duration: "14 jours", tag: "Thaïlande",
     cadran: [["Destinations", "Bangkok, Krabi, Phuket"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★ et 4★ Deluxe"], ["Guide", "Francophone"]],
     price: "26 900 DH",
@@ -1553,7 +1553,7 @@ window.VOYAGES = {
   },
 
   "asie-vietnam": {
-    mediaKey: "modal-vietnam", whatsapp: "212673280009",
+    mediaKey: "modal-vietnam", whatsapp: "212614152686",
     eyebrow: "Vietnam · Grand circuit", title: "Découverte du Vietnam — Hanoi à Saigon", duration: "14 jours", tag: "Vietnam",
     cadran: [["Destinations", "Hanoi, Halong, Hué, Hoi An, Saigon"], ["Durée", "14 jours / 11 nuits"], ["Vols", "Inclus — Qatar Airways"], ["Hôtels", "5★"], ["Guide", "Francophone"]],
     price: "33 900 DH",
@@ -1573,7 +1573,7 @@ window.VOYAGES = {
 
 
   "afrique-tunisie-tunis-hammamet": {
-    mediaKey: "modal-tunis-hammamet", whatsapp: "212673280009",
+    mediaKey: "modal-tunis-hammamet", whatsapp: "212614152686",
     eyebrow: "Tunisie · Été 2026",
     title: "Combiné Tunis & Hammamet",
     duration: "8 jours",
@@ -1603,7 +1603,7 @@ window.VOYAGES = {
   },
 
   "zanzibar-detente": {
-    mediaKey: "modal-zanzibar", whatsapp: "212673280009",
+    mediaKey: "modal-zanzibar", whatsapp: "212614152686",
     eyebrow: "Zanzibar · Séjour balnéaire", title: "Séjour à Zanzibar — Détente & Loisirs", duration: "8 jours", tag: "Zanzibar",
     cadran: [["Destination", "Zanzibar (Tanzanie)"], ["Durée", "8 jours / 7 nuits"], ["Vols", "Inclus — Turkish Airlines"], ["Plages", "Nungwi et Kendwa"], ["Hôtels", "3★ / 4★"]],
     price: "18 500 DH",
@@ -1631,7 +1631,7 @@ window.VOYAGES = {
 
   "asie-azerbaidjan-turquie": {
     mediaKey: "modal-azerbaidjan-turquie",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Asie · Combiné septembre 2026",
     title: "Combiné Azerbaïdjan & Turquie",
     duration: "12 jours",
@@ -1715,7 +1715,7 @@ window.VOYAGES = {
   "omra-mouharram": {
     lang: "ar",
     mediaKey: "modal-omra",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "عمرة · رحلة مباشرة إلى المدينة المنورة",
     title: "عمرة محرّم 1448",
     duration: "14 ليلة",
@@ -1782,7 +1782,7 @@ window.VOYAGES = {
   },
 
   "omra-06-juillet": {
-    lang: "ar", mediaKey: "modal-omra-06", whatsapp: "212673280009",
+    lang: "ar", mediaKey: "modal-omra-06", whatsapp: "212614152686",
     eyebrow: "عمرة · رحلة مباشرة إلى المدينة المنورة", title: "عمرة 06 يوليوز", duration: "12 ليلة", tag: "عمرة",
     cadran: [
       ["نقطة الانطلاق", "الدار البيضاء"],
@@ -1838,7 +1838,7 @@ window.VOYAGES = {
   },
 
   "omra-08-juillet": {
-    lang: "ar", mediaKey: "modal-omra-08", whatsapp: "212673280009",
+    lang: "ar", mediaKey: "modal-omra-08", whatsapp: "212614152686",
     eyebrow: "عمرة · رحلة مباشرة إلى المدينة المنورة", title: "عمرة 08 يوليوز", duration: "10 ليالٍ", tag: "عمرة",
     cadran: [
       ["نقطة الانطلاق", "الدار البيضاء"],
@@ -1897,7 +1897,7 @@ window.VOYAGES = {
   },
 
   "omra-istanbul": {
-    lang: "ar", mediaKey: "modal-omra-istanbul", whatsapp: "212673280009",
+    lang: "ar", mediaKey: "modal-omra-istanbul", whatsapp: "212614152686",
     eyebrow: "عمرة مع إسطنبول · الخطوط التركية", title: "عمرة مع إسطنبول", duration: "14 ليلة", tag: "عمرة",
     cadran: [
       ["نقطة الانطلاق", "الدار البيضاء"],
@@ -1958,7 +1958,7 @@ window.VOYAGES = {
 
 
   "omra-27-juillet-etihad": {
-    lang: "ar", mediaKey: "modal-omra-27-juillet-etihad", whatsapp: "212673280009",
+    lang: "ar", mediaKey: "modal-omra-27-juillet-etihad", whatsapp: "212614152686",
     eyebrow: "عمرة · الاتحاد للطيران عبر أبو ظبي", title: "عمرتين في عمرة واحدة", duration: "19 ليلة", tag: "عمرة",
     cadran: [
       ["نقطة الانطلاق", "الدار البيضاء"],
@@ -2017,7 +2017,7 @@ window.VOYAGES = {
   },
 
   "omra-01-juillet": {
-    lang: "ar", mediaKey: "modal-omra-01", whatsapp: "212673280009",
+    lang: "ar", mediaKey: "modal-omra-01", whatsapp: "212614152686",
     eyebrow: "عمرة · صيغة اقتصادية", title: "عمرة 01 يوليوز", duration: "12 ليلة", tag: "عمرة",
     cadran: [
       ["نقطة الانطلاق", "الدار البيضاء"],
@@ -2073,7 +2073,7 @@ window.VOYAGES = {
 
   "maroc-merzouga": {
     mediaKey: "modal-maroc-merzouga",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Départ garanti 2026",
     title: "Merzouga — Marrakech · Ouarzazate · Dadès",
     duration: "Circuit",
@@ -2143,7 +2143,7 @@ window.VOYAGES = {
 
   "maroc-bin-el-ouidane": {
     mediaKey: "modal-maroc-bin-el-ouidane",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Week-end nature 2026",
     title: "Bin El Ouidane — La beauté divine de la nature",
     duration: "2 jours / 1 nuit",
@@ -2208,7 +2208,7 @@ window.VOYAGES = {
 
   "maroc-dakhla": {
     mediaKey: "modal-maroc-dakhla",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Wini Bik — Dakhla 2026",
     title: "Dakhla — Wini Bik",
     duration: "4 jours / 3 nuits",
@@ -2282,7 +2282,7 @@ window.VOYAGES = {
 
   "maroc-circuit-imperial-south": {
     mediaKey: "modal-circuit-imperial-south",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Circuits 2026",
     title: "Imperial Cities & Southern Morocco",
     duration: "8 jours / 7 nuits",
@@ -2379,7 +2379,7 @@ window.VOYAGES = {
 
   "maroc-circuit-imperial-cities": {
     mediaKey: "modal-circuit-imperial-cities",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Circuits 2026",
     title: "Imperial Cities Tour",
     duration: "8 jours / 7 nuits",
@@ -2474,7 +2474,7 @@ window.VOYAGES = {
 
   "maroc-circuit-best-morocco": {
     mediaKey: "modal-circuit-best-morocco",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Circuits 2026",
     title: "Best of Morocco — Cities, Heritage & Sahara",
     duration: "10 jours / 9 nuits",
@@ -2579,7 +2579,7 @@ window.VOYAGES = {
 
   "maroc-circuit-discover-kingdom": {
     mediaKey: "modal-circuit-discover-kingdom",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Circuits 2026",
     title: "Discover the Kingdom",
     duration: "12 jours / 11 nuits",
@@ -2668,7 +2668,7 @@ window.VOYAGES = {
 
   "maroc-circuit-grand-discovery": {
     mediaKey: "modal-circuit-grand-discovery",
-    whatsapp: "212673280009",
+    whatsapp: "212614152686",
     eyebrow: "Mon Maroc · Circuits 2026",
     title: "Splendid Morocco — Grand Discovery",
     duration: "15 jours / 14 nuits",

@@ -377,7 +377,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
             <span class="hint">Courte ligne affichée au-dessus du titre dans la fiche</span>
           </label>
           <label class="field" style="margin-top:.7rem">Numéro WhatsApp
-            <input name="whatsapp" value="212673280009">
+            <input name="whatsapp" value="212614152686">
           </label>
         </div>
 
@@ -1009,7 +1009,7 @@ async function quickSubmit() {
 
   qlog.textContent = 'Création du voyage…';
 
-  var product = { title: title, tag: tag, price: 'Sur devis', pdfUrl: pdfUrl, intro: [], highlights: [], whatsapp: '212673280009' };
+  var product = { title: title, tag: tag, price: 'Sur devis', pdfUrl: pdfUrl, intro: [], highlights: [], whatsapp: '212614152686' };
   try {
     var res = await fetch('/api/produits', {
       method: 'POST',
@@ -1072,7 +1072,7 @@ function editProduct(slug) {
   f.duration.value = v.duration || '';
   f.pricePrefix.value = v.pricePrefix || '';
   f.eyebrow.value = v.eyebrow || '';
-  f.whatsapp.value = v.whatsapp || '212673280009';
+  f.whatsapp.value = v.whatsapp || '212614152686';
   f.intro.value = Array.isArray(v.intro) ? v.intro.join('\n\n') : (v.intro || '');
   f.highlights.value = Array.isArray(v.highlights) ? v.highlights.join('\n') : (v.highlights || '');
   f.inclus.value = Array.isArray(v.inclus) ? v.inclus.join('\n') : (v.inclus || '');
@@ -1174,7 +1174,7 @@ async function submitForm(e) {
     duration: f.duration.value.trim(),
     pricePrefix: f.pricePrefix.value.trim(),
     eyebrow: f.eyebrow.value.trim(),
-    whatsapp: f.whatsapp.value.trim() || '212673280009',
+    whatsapp: f.whatsapp.value.trim() || '212614152686',
     intro: f.intro.value.trim().split(/\n\n+/).filter(Boolean),
     highlights: f.highlights.value.trim().split(/\n/).filter(Boolean),
     inclus: f.inclus.value.trim().split(/\n/).filter(Boolean),
