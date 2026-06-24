@@ -2736,6 +2736,8 @@
       }
       .nav-tel { display: none; }
       .nav-cta { display: none; }
+      /* Le bouton "Voir l'introduction" reste visible (compact) dans la barre du haut sur mobile */
+      .nav-cta.nav-intro { display: inline-flex; padding: 8px 12px; font-size: .6rem; margin-right: 8px; }
       .nav-logo { font-size: 1.1rem; }
       .nav-logo .v21-logo-sub { display: none; }
       .nav-burger {
@@ -3118,8 +3120,8 @@
     </div>
 
     <div class="nav-right">
-      <a href="tel:+212673280009" class="nav-tel">+212 6 73 28 00 09</a>
-      <a href="#contact" class="nav-cta">Réserver</a>
+      <a href="/cover-ete-2026.html" class="nav-cta nav-intro">▶ Voir l’introduction</a>
+      <a href="tel:+212614152686" class="nav-tel">+212 6 14 15 26 86</a>
       <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
       </button>
@@ -3175,8 +3177,6 @@
   ══════════════════════════════════════════ -->
   <section class="hero">
 
-    <a href="/cover-ete-2026.html" class="intro-return" aria-label="Revoir la page d'introduction vidéo">← Revoir l'introduction</a>
-
     <!-- Fallback gradient pendant le chargement -->
     <div class="hero-fallback"></div>
 
@@ -3193,9 +3193,7 @@
 
       <p class="hero-label" id="heroLabel">Voyages d'Été 2026</p>
 
-      <h1 class="hero-title" id="heroTitle">
-        Ici commence<br>votre bonheur.
-      </h1>
+      <h1 class="hero-title" id="heroTitle"></h1>
 
       <div class="hero-product-badge" id="heroProductBadge" aria-live="polite">
         <span class="hero-product-kicker">A partir de</span>
@@ -4482,7 +4480,7 @@
       const DEFAULTS = {
         videoUrl: '',
         label: "Voyages d'Ete 2026",
-        title: "Ici commence\nvotre bonheur.",
+        title: "",
         subtitle: "L'avenir appartient a ceux qui reservent tot :\ntarifs exclusifs, options garanties.",
         buttonText: "Voir les programmes",
         fontStyle: "editorial"
@@ -4509,11 +4507,8 @@
         const title = document.getElementById('heroTitle');
         const sub = document.getElementById('heroSubtitle');
         const button = document.getElementById('heroButton');
-        if (cfg.videoUrl && video && source && source.src !== cfg.videoUrl) {
-          source.src = cfg.videoUrl;
-          video.load();
-          video.play().catch(() => {});
-        }
+        // La video du hero est geree uniquement par initProductHero (pour rester
+        // synchronisee avec le prix affiche) : on ne la modifie pas ici.
         if (label) label.textContent = cfg.label || DEFAULTS.label;
         if (title) {
           const css = fontCss(cfg.fontStyle);
@@ -4547,10 +4542,9 @@
       ];
       const video = document.getElementById('heroVideo') || document.querySelector('.hero-video');
       const source = document.getElementById('heroVideoSource') || (video ? video.querySelector('source') : null);
-      const title = document.getElementById('heroTitle');
-      const label = document.getElementById('heroLabel');
       const price = document.getElementById('heroProductPrice');
       const name = document.getElementById('heroProductName');
+      const badge = document.getElementById('heroProductBadge');
       const button = document.getElementById('heroButton');
       let idx = 0;
       const fallbackVideo = source ? source.getAttribute('src') : '';
@@ -4558,21 +4552,24 @@
         return (Array.isArray(list) ? list : []).filter(s => s && (s.destination || s.name)).map(s => ({
           destination: s.destination || s.name || 'Voyages 21',
           name: s.name || s.destination || 'Voyage VOYAGES21',
-          price: s.price || 'Sur demande',
+          price: s.price || '',
           videoUrl: s.videoUrl || s.videoLink || '',
           link: s.link || '#destinations'
         }));
       }
-      function applySlide(slides) {
-        const item = slides[idx % slides.length];
-        const videoUrl = item.videoUrl || fallbackVideo;
-        if (source && video && videoUrl && source.getAttribute('src') !== videoUrl) {
-          source.setAttribute('src', videoUrl);
+      function setVideo(url) {
+        if (source && video && url && source.getAttribute('src') !== url) {
+          source.setAttribute('src', url);
           video.load();
           video.play().catch(() => {});
         }
-        if (label) label.textContent = 'Selection hero';
-        if (title) title.innerHTML = item.destination + '<br><span>' + item.name + '</span>';
+      }
+      let coverVideo = fallbackVideo;
+      // On ne touche plus au titre/label editorial du hero.
+      // La video du produit est utilisee si disponible, sinon coverVideo.
+      function applySlide(slides) {
+        const item = slides[idx % slides.length];
+        setVideo(item.videoUrl || coverVideo);
         if (price) price.textContent = item.price;
         if (name) name.textContent = item.name;
         if (button) button.href = item.link;
@@ -4581,12 +4578,21 @@
       fetch('/api/media', { cache: 'no-store' })
         .then(r => r.ok ? r.json() : {})
         .then(map => {
-          const slides = cleanSlides(map.__heroProducts && map.__heroProducts.items);
-          const finalSlides = slides.length ? slides : defaults;
-          applySlide(finalSlides);
-          setInterval(() => applySlide(finalSlides), 6500);
+          coverVideo = (map && map.__homepageCover && map.__homepageCover.videoUrl) || fallbackVideo;
+          const all = cleanSlides(map && map.__heroProducts && map.__heroProducts.items);
+          const list = all.length ? all : cleanSlides(defaults);
+          // Afficher tous les produits qui ont un prix (video propre si dispo, sinon coverVideo).
+          const slides = list.filter(s => s.price);
+          if (slides.length) {
+            if (badge) badge.style.display = '';
+            applySlide(slides);
+            if (slides.length > 1) setInterval(() => applySlide(slides), 6500);
+          } else {
+            if (badge) badge.style.display = 'none';
+            setVideo(coverVideo);
+          }
         })
-        .catch(() => { applySlide(defaults); setInterval(() => applySlide(defaults), 6500); });
+        .catch(() => {});
     }
     initProductHero();
 
@@ -5438,7 +5444,7 @@
           </li>
           <li>
             <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 .06h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            <span><a href="tel:+212673280009">+212 6 73 28 00 09</a><br>
+            <span><a href="tel:+212614152686">+212 6 14 15 26 86</a><br>
             <span style="font-size:.82rem;opacity:.7">Fax : 0524 33 10 07 / 0524 30 51 52</span></span>
           </li>
           <li>
