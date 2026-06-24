@@ -25,7 +25,6 @@ async function writeManifest(data) {
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
-    cacheControlMaxAge: 0,
   });
 }
 
