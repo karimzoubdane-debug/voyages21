@@ -392,16 +392,21 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
           </label>
         </div>
 
-        <!-- Photos -->
+        <!-- Photos : gérées désormais dans Admin Médias -->
         <div class="form-section">
-          <h3>Photos</h3>
-          <div class="photos-area" onclick="document.getElementById('photoInput').click()">
-            <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotos(this.files)">
-            <div>📷 Cliquez pour ajouter des photos (JPG, WebP, PNG)</div>
-            <div style="font-size:.8rem;color:#8a8279;margin-top:.35rem">Glissez aussi vos fichiers ici</div>
+          <h3>Photos &amp; vidéos</h3>
+          <div style="background:#fdfaf5;border:1px solid #e6ddcc;border-radius:8px;padding:.8rem 1rem;font-size:.88rem;color:#6b6457;line-height:1.5">
+            📷 Les photos et vidéos ne se gèrent <strong>plus ici</strong>. Une fois ce voyage enregistré, il apparaît
+            automatiquement dans <a href="/admin-medias.html" style="color:var(--blue);font-weight:700">Admin Médias</a>
+            (groupe « Voyages ajoutés ») où tu ajoutes / changes ses médias quand tu veux. Ce formulaire ne contient
+            que les <strong>données</strong> du voyage.
           </div>
-          <div class="photos-preview" id="photosPreview"></div>
-          <div id="photoUploadStatus" style="font-size:.8rem;color:var(--ok);margin-top:.4rem"></div>
+          <!-- éléments conservés masqués (compatibilité JS) -->
+          <div style="display:none">
+            <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotos(this.files)">
+            <div class="photos-preview" id="photosPreview"></div>
+            <div id="photoUploadStatus"></div>
+          </div>
         </div>
 
         <!-- Inclus / Exclus -->

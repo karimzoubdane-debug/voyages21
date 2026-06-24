@@ -35,6 +35,31 @@ async function writeManifest(data) {
   });
 }
 
+// Supprimer aussi l'entrée média du voyage (synchro Produits → Médias).
+// Le manifeste des médias est un blob séparé (media-manifest.json).
+const MEDIA_MANIFEST = 'media-manifest.json';
+async function removeMediaEntry(key) {
+  try {
+    const { blobs } = await list({ prefix: MEDIA_MANIFEST, limit: 1 });
+    const hit = blobs.find((b) => b.pathname === MEDIA_MANIFEST);
+    if (!hit) return;
+    const res = await fetch(hit.url + '?ts=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return;
+    const media = await res.json();
+    if (media && Object.prototype.hasOwnProperty.call(media, key)) {
+      delete media[key];
+      await put(MEDIA_MANIFEST, JSON.stringify(media), {
+        access: 'public',
+        contentType: 'application/json',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+      });
+    }
+  } catch {
+    // best-effort : si la médiathèque n'est pas joignable, on n'échoue pas la suppression du voyage
+  }
+}
+
 const corsHeaders = {
   'Cache-Control': 'no-store',
   'Access-Control-Allow-Origin': '*',
@@ -86,7 +111,9 @@ export async function POST(request) {
       .replace(/^-|-$/g, '');
 
     const data = await readManifest();
-    data.custom[slug] = { ...body.product, slug, createdAt: new Date().toISOString() };
+    // mediaKey = slug : le voyage est géré dans Admin Médias sous cette clé
+    // (le site lit ses photos/vidéos via mediaKey).
+    data.custom[slug] = { ...body.product, slug, mediaKey: slug, createdAt: new Date().toISOString() };
     await writeManifest(data);
     return Response.json({ ok: true, slug }, { headers: corsHeaders });
   } catch (e) {
@@ -120,6 +147,7 @@ export async function PUT(request) {
         ...data.custom[body.slug],
         ...body.product,
         slug: body.slug,
+        mediaKey: body.slug,
         updatedAt: new Date().toISOString(),
       };
     } else {
@@ -154,6 +182,7 @@ export async function DELETE(request) {
     if (type === 'delete') {
       delete data.custom[slug];
       delete data.status[slug];
+      await removeMediaEntry(slug); // le voyage disparaît aussi de la médiathèque
     } else {
       data.status[slug] = { ...(data.status[slug] || {}), hidden: true };
     }
