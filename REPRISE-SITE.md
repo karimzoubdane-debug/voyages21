@@ -46,7 +46,8 @@ _Dernière mise à jour : 2026-06-24_
     son mot de passe perso + son code de secours. Le « mode démo » a disparu.
 
 ## ▶️ Prochaines étapes (feux verts attendus)
-- **« go #75 »** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage).
+- ✅ **#75 fusionnée le 2026-06-24** : accueil (n° 0614-152686 tél+WhatsApp,
+  bouton « Voir l'introduction » dans la barre du haut, hero sans décalage prix/vidéo).
 - **« go #77 »** → activer le dépôt auto de la sauvegarde sur Drive (nécessite
   le secret `GDRIVE_SA_JSON`).
 - **#73** (Codex, obsolète/conflictuelle) → **à fermer** (rien à fusionner).
