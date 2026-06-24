@@ -6,6 +6,15 @@ export const dynamic = 'force-dynamic';
 
 const MANIFEST = 'voyages21/produits-manifest.json';
 
+function slugify(s) {
+  return String(s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '') || ('voyage-' + Date.now());
+}
+
 // Le catalogue n'est modifiable que par le propriétaire (l'équipe n'y touche pas).
 async function denyIfNotOwner(request, headers) {
   if ((await getRole(request)) === 'owner') return null;
@@ -13,17 +22,18 @@ async function denyIfNotOwner(request, headers) {
 }
 
 async function readManifest() {
+  const empty = { custom: {}, status: {}, pending: {} };
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
   const hit = blobs.find((b) => b.pathname === MANIFEST);
-  if (!hit) return { custom: {}, status: {} };
+  if (!hit) return { ...empty };
   // Le CDN Blob sert l'ancienne version après un overwrite (même URL) : on
   // casse le cache avec un paramètre unique pour toujours relire la dernière
   // version (sinon une suppression/un badge semble « ne pas prendre »).
   const fresh = hit.url + (hit.url.includes('?') ? '&' : '?') + 'ts=' + Date.now();
   const res = await fetch(fresh, { cache: 'no-store' });
-  if (!res.ok) return { custom: {}, status: {} };
+  if (!res.ok) return { ...empty };
   const data = await res.json();
-  return { custom: {}, status: {}, ...data };
+  return { ...empty, ...data };
 }
 
 async function writeManifest(data) {
@@ -85,31 +95,48 @@ export async function GET(request) {
       }
       return Response.json({ ok: true, product }, { headers: corsHeaders });
     }
-    return Response.json(data, { headers: corsHeaders });
+    // La file « en attente » (soumissions équipe) n'est visible que du propriétaire.
+    const out = { custom: data.custom || {}, status: data.status || {} };
+    if ((await getRole(request)) === 'owner') out.pending = data.pending || {};
+    return Response.json(out, { headers: corsHeaders });
   } catch {
     return Response.json({ custom: {}, status: {} }, { headers: corsHeaders });
   }
 }
 
-// POST /api/produits  { slug, product }  → créer un nouveau produit
+// POST /api/produits
+//   { submit: true, product }  → soumission équipe (tombe EN ATTENTE de validation)
+//   { slug, product }          → publication directe d'un produit (propriétaire)
 export async function POST(request) {
-  const denied = await denyIfNotOwner(request, corsHeaders);
-  if (denied) return denied;
+  const role = await getRole(request);
   try {
     const body = await request.json();
-    if (!body.slug || !body.product) {
-      return Response.json(
-        { ok: false, error: 'slug et product requis' },
-        { status: 400, headers: corsHeaders },
-      );
-    }
-    const slug = body.slug
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
 
+    // Soumission par l'équipe : le voyage n'est PAS publié, il attend la validation de Karim.
+    if (body.submit && body.product) {
+      if (role !== 'owner' && role !== 'team') {
+        return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers: corsHeaders });
+      }
+      const data = await readManifest();
+      const id = 'sub-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+      data.pending[id] = {
+        id,
+        product: body.product,
+        title: body.product.title || '',
+        submittedAt: new Date().toISOString(),
+      };
+      await writeManifest(data);
+      return Response.json({ ok: true, id }, { headers: corsHeaders });
+    }
+
+    // Publication directe : propriétaire uniquement.
+    if (role !== 'owner') {
+      return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers: corsHeaders });
+    }
+    if (!body.slug || !body.product) {
+      return Response.json({ ok: false, error: 'slug et product requis' }, { status: 400, headers: corsHeaders });
+    }
+    const slug = slugify(body.slug);
     const data = await readManifest();
     // mediaKey = slug : le voyage est géré dans Admin Médias sous cette clé
     // (le site lit ses photos/vidéos via mediaKey).
@@ -133,6 +160,25 @@ export async function PUT(request) {
   try {
     const body = await request.json();
     const data = await readManifest();
+
+    // Valider une soumission équipe → publie le voyage et le retire de la file.
+    if (body.action === 'validate' && body.id) {
+      const sub = data.pending[body.id];
+      if (!sub) {
+        return Response.json({ ok: false, error: 'soumission introuvable' }, { status: 404, headers: corsHeaders });
+      }
+      const slug = slugify((sub.product && sub.product.title) || sub.title || body.id);
+      data.custom[slug] = { ...sub.product, slug, mediaKey: slug, createdAt: new Date().toISOString() };
+      delete data.pending[body.id];
+      await writeManifest(data);
+      return Response.json({ ok: true, slug }, { headers: corsHeaders });
+    }
+    // Refuser une soumission → simple retrait de la file (rien n'est publié).
+    if (body.action === 'reject' && body.id) {
+      delete data.pending[body.id];
+      await writeManifest(data);
+      return Response.json({ ok: true }, { headers: corsHeaders });
+    }
 
     if (body.type === 'status') {
       if (!body.slug) {

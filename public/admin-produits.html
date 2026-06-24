@@ -244,6 +244,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         <input type="search" placeholder="Rechercher…" id="filterSearch" oninput="applyFilters()" style="min-width:180px">
       </label>
     </div>
+    <div id="pendingSection"></div>
     <div id="productList"><p class="empty">Chargement…</p></div>
   </div>
 
@@ -579,10 +580,80 @@ function reload() {
     .then(function(data) {
       manifest.custom = data.custom || {};
       manifest.status = data.status || {};
+      manifest.pending = data.pending || {};
+      renderPending();
       renderCatalogue();
       log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
     })
     .catch(function(e){ log('Erreur : ' + e.message); });
+}
+
+// ─────────────────────────────────────────
+// File « En attente de validation » (soumissions équipe)
+// ─────────────────────────────────────────
+function renderPending() {
+  var box = document.getElementById('pendingSection');
+  if (!box) return;
+  var pending = manifest.pending || {};
+  var ids = Object.keys(pending);
+  if (!ids.length) { box.innerHTML = ''; return; }
+  box.innerHTML =
+    '<div style="border:1px solid var(--gold);background:#fffaf0;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
+    + '<h3 style="margin:0 0 .7rem;color:var(--forest)">📥 En attente de validation (' + ids.length + ')</h3>'
+    + ids.map(function(id){
+        var s = pending[id] || {}; var p = s.product || {};
+        var meta = [p.tag, p.duration, p.price].filter(Boolean).map(esc).join(' · ');
+        return '<div style="display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;border-top:1px solid #eadfca;padding:.6rem 0">'
+          + '<div style="min-width:0"><div style="font-weight:700;color:var(--forest)">' + esc(p.title || '(sans titre)') + '</div>'
+          + '<div style="font-size:.82rem;color:#8a8279">' + meta + '</div></div>'
+          + '<div style="display:flex;gap:.5rem">'
+          + '<button class="mini ok" type="button" onclick="validatePending(\'' + esc(id) + '\')">✓ Valider &amp; publier</button>'
+          + '<button class="mini danger" type="button" onclick="rejectPending(\'' + esc(id) + '\')">✕ Refuser</button>'
+          + '</div></div>';
+      }).join('')
+    + '</div>';
+}
+
+function validatePending(id) {
+  log('Validation…');
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'validate', id: id })
+  })
+    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+    .then(function(res){
+      if (res.ok && res.d && res.d.ok) {
+        if (manifest.pending) delete manifest.pending[id];
+        toast('✅ Voyage validé et publié');
+        reload();
+      } else {
+        toast('❌ Validation refusée : ' + ((res.d && res.d.error) || 'erreur'));
+      }
+    })
+    .catch(function(e){ toast('❌ Erreur réseau pendant la validation'); log(e.message); });
+}
+
+function rejectPending(id) {
+  var s = (manifest.pending || {})[id] || {}; var p = s.product || {};
+  confirm2('Refuser cette soumission ?', '"' + (p.title || 'Sans titre') + '" sera retiré de la file (rien ne sera publié).', function(){
+    fetch('/api/produits', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'reject', id: id })
+    })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(res){
+        if (res.ok && res.d && res.d.ok) {
+          if (manifest.pending) delete manifest.pending[id];
+          toast('Soumission refusée');
+          renderPending();
+        } else {
+          toast('❌ ' + ((res.d && res.d.error) || 'échec du refus'));
+        }
+      })
+      .catch(function(){ toast('❌ Erreur réseau'); });
+  });
 }
 
 // ─────────────────────────────────────────
