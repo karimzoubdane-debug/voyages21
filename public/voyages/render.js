@@ -8,7 +8,7 @@
     var app = document.getElementById("app");
     if (!v) { app.innerHTML = '<p style="padding:2rem;text-align:center">Voyage introuvable.</p>'; return; }
 
-    var WHATSAPP = v.whatsapp || "212673280009";
+    var WHATSAPP = v.whatsapp || "212614152686";
     var MEDIA_KEY_ALIASES = {
         "modal-omra": "modal-omra-mouharram",
         "modal-omra-06": "modal-omra-06-juillet",
@@ -79,7 +79,7 @@
     var dates = v.dates || {};
     var cta = v.cta || {};
     var askUrl = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(L.askText(TITLE, ""));
-    var phone = v.phone || "+212673280009";
+    var phone = v.phone || "+212614152686";
     var telHref = "tel:" + String(phone).replace(/[^+0-9]/g, "");
     var ICONS = {
         wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.7 11.7 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.2 1.6 6L.2 24l6.4-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.1-1.3-6.1-3.6-8.4ZM12.2 21.7h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.2-1.3-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.8.6.8.2 1.4.2 2 0 .6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4Z"/></svg>',
