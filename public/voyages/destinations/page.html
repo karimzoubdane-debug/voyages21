@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination — Voyages21</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../destination.css?v=media-admin-v2">
+  <style>
+    .v21-dest-msg { max-width: 720px; margin: 18vh auto; padding: 0 24px; text-align: center;
+      font-family: 'DM Sans', sans-serif; color: #1B3A28; }
+    .v21-dest-msg h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: .6rem; }
+    .v21-dest-msg a { color: #C8A440; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div id="destinationApp"></div>
+  <div id="destinationMsg"></div>
+  <script src="../data.js"></script>
+  <script>
+    // Page de destination GÉNÉRIQUE : elle s'affiche à partir du back-office Menu,
+    // sans fichier dédié. L'URL porte la clé : page.html?key=<id-de-la-page>.
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var key = params.get('key') || '';
+      var msg = document.getElementById('destinationMsg');
+
+      function notFound(text) {
+        msg.innerHTML = '<div class="v21-dest-msg"><h1>Page indisponible</h1><p>' +
+          (text || 'Cette destination n’existe pas ou n’est plus disponible.') +
+          '</p><p><a href="/design/homepage-v2-luxe.html">← Retour à l’accueil</a></p></div>';
+      }
+
+      // Cherche le nœud (feuille) correspondant à la clé dans tout l'arbre du menu.
+      function findNode(items, k) {
+        for (var i = 0; i < (items || []).length; i++) {
+          var it = items[i];
+          if ((it.key && it.key === k) || it.id === k) return it;
+          var subs = (it.continents || []).reduce(function (acc, c) { return acc.concat(c.cols || []); }, [])
+            .concat(it.cols || []).concat(it.children || []);
+          var hit = findNode(subs, k);
+          if (hit) return hit;
+        }
+        return null;
+      }
+
+      if (!key) { notFound('Aucune destination demandée.'); return; }
+
+      fetch('/api/menu', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (config) {
+          var node = config ? findNode(config.items, key) : null;
+          if (!node) { notFound(); return; }
+          if (node.hidden) { notFound('Cette destination est momentanément masquée.'); return; }
+
+          var slugs = node.slugs || [];
+          window.DESTINATION_PAGE = {
+            title: node.title || node.label || 'Destination',
+            description: node.description || '',
+            countLabel: slugs.length + ' voyage' + (slugs.length > 1 ? 's' : ''),
+            slugs: slugs,
+          };
+          // On charge le moteur de rendu APRÈS avoir défini DESTINATION_PAGE.
+          var s = document.createElement('script');
+          s.src = '../destination-render.js?v=media-admin-v2';
+          document.body.appendChild(s);
+        })
+        .catch(function () { notFound('Erreur de chargement du menu.'); });
+    })();
+  </script>
+</body>
+</html>
