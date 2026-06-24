@@ -9,7 +9,11 @@ async function readManifest() {
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
   const hit = blobs.find((b) => b.pathname === MANIFEST);
   if (!hit) return { custom: {}, status: {} };
-  const res = await fetch(hit.url, { cache: 'no-store' });
+  // Le CDN Blob sert l'ancienne version après un overwrite (même URL) : on
+  // casse le cache avec un paramètre unique pour toujours relire la dernière
+  // version (sinon une suppression/un badge semble « ne pas prendre »).
+  const fresh = hit.url + (hit.url.includes('?') ? '&' : '?') + 'ts=' + Date.now();
+  const res = await fetch(fresh, { cache: 'no-store' });
   if (!res.ok) return { custom: {}, status: {} };
   const data = await res.json();
   return { custom: {}, status: {}, ...data };
@@ -21,6 +25,7 @@ async function writeManifest(data) {
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
+    cacheControlMaxAge: 0,
   });
 }
 
