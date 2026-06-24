@@ -30,42 +30,22 @@ _Dernière mise à jour : 2026-06-24_
   ajouter/modifier/retirer des voyages (`/admin-produits.html`), formulaire
   équipe (`/formulaire-voyage.html`), API `/api/produits`, badges de statut,
   + corrections (bouton Confirmer, suppression immédiate, anti-cache Blob).
-
-## ⏳ EN TEST — Espace admin unifié (PR #80, accès équipe protégé)
-PR ouverte (branche `claude/stoic-volta-u3hvla`, preview Vercel **au vert**).
-Objectif : **un seul lien** `/admin` pour toute l'administration, avec
-**séparation des rôles**. Karim doit tester puis dire « go #80 » → merge.
-
-- **`/admin`** : page de connexion + portail. Selon le mot de passe :
-  - **Propriétaire (Karim)** : accès aux 4 outils (Produits, Cover, Fiche
-    Voyages, Médias) + réglages.
-  - **Équipe** : accès **uniquement** à Fiche Voyages + Médias.
-- **Connexion / récupération** :
-  - Identifiant propriétaire de démo : **`DA21`** (tant que les variables Vercel
-    ne sont pas posées → bannière « mode démo »).
-  - **Mot de passe oublié** : code de secours **`VOYAGES21`** sur `/admin` pour
-    réinitialiser → on n'est jamais bloqué.
-- **Verrouillage serveur** (middleware) : `/admin-produits.html` et
-  `/admin-cover.html` redirigent vers `/admin` si on n'est pas propriétaire ;
-  `/admin-medias.html` et `/formulaire-voyage.html` exigent équipe ou
-  propriétaire. Les **écritures API** sont protégées pareil (lecture publique du
-  site ouverte).
-- **Réglages propriétaire** : définir/changer le **mot de passe équipe** +
-  **interrupteur ouvert/fermé** de l'accès équipe (instantané).
-- **Nouveautés ajoutées dans cette PR** :
-  - **Soumission directe par l'équipe** : l'équipe propose un voyage → il part
-    dans une **file de validation**, Karim valide/refuse depuis son espace.
-  - **Synchro Produits ↔ Médias** : les photos des voyages se piochent dans la
-    médiathèque (plus de double saisie).
-  - Bouton **« ← Espace admin »** sur chaque outil ; plus de menu/pied de page
-    du site public sur les pages `/admin`.
-- **À régler par Karim côté Vercel (1 fois)** : `V21_OWNER_PASSWORD` et
-  `V21_AUTH_SECRET`. **Ne pas fusionner avant qu'ils soient mis.**
+- **Espace admin unifié (#80, fusionné le 2026-06-24)** : **un seul lien**
+  `/admin` pour toute l'administration, avec **séparation des rôles**.
+  - **Propriétaire (Karim)** : 4 outils (Produits, Cover, Fiche Voyages, Médias)
+    + réglages. **Équipe** : Fiche Voyages + Médias uniquement.
+  - **Connexion = un mot de passe** (pas d'identifiant). Verrouillage serveur
+    (middleware) + écritures API protégées (lecture publique ouverte).
+  - **Réglages propriétaire** : mot de passe équipe + interrupteur ouvert/fermé
+    de l'accès équipe. **Soumission directe par l'équipe** (file de validation)
+    + **synchro Produits ↔ Médias** (photos piochées dans la médiathèque).
+  - **Mot de passe oublié** : bouton sur `/admin` → code de secours + nouveau
+    mot de passe (sans toucher à Vercel) → jamais bloqué.
+  - ✅ **Réglages Vercel posés (2026-06-24)** : `V21_OWNER_PASSWORD`,
+    `V21_AUTH_SECRET`, `V21_RECOVERY_CODE` (Production + Preview). Karim détient
+    son mot de passe perso + son code de secours. Le « mode démo » a disparu.
 
 ## ▶️ Prochaines étapes (feux verts attendus)
-- **Espace admin unifié (#80)** : Karim teste sur la preview (login `DA21`,
-  reset par `VOYAGES21`), pose `V21_OWNER_PASSWORD` + `V21_AUTH_SECRET` côté
-  Vercel, puis « go #80 » → merge.
 - **« go #75 »** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage).
 - **« go #77 »** → activer le dépôt auto de la sauvegarde sur Drive (nécessite
   le secret `GDRIVE_SA_JSON`).
