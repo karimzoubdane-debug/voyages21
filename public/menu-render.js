@@ -22,29 +22,48 @@
     return (arr || []).filter(function (n) { return n && !n.hidden; });
   }
 
+  function hasKids(n) { return n && n.children && visible(n.children).length; }
+
+  // Liens d'un menu déroulant desktop, récursifs (sous-menu → sous-sous-menu indentés).
+  function subLinks(nodes, depth) {
+    return visible(nodes).map(function (n) {
+      var pad = 14 + depth * 14;
+      var a = '<a href="' + esc(href(n)) + '"' + (n.alert ? ' class="is-alert"' : '') +
+        ' role="menuitem" style="padding-left:' + pad + 'px">' + esc(n.label) + '</a>';
+      return a + (hasKids(n) ? subLinks(n.children, depth + 1) : '');
+    }).join('');
+  }
+
+  // Liens mobiles d'un titre qui possède des enfants (indentés).
+  function mobileSub(nodes, depth) {
+    return visible(nodes).map(function (n) {
+      var pad = 14 + depth * 16;
+      var a = '<a href="' + esc(href(n)) + '" class="mobile-brochure-title" onclick="closeMobileNav()"' +
+        ' style="padding-left:' + pad + 'px;font-weight:500">' + esc(n.label) + '</a>';
+      return a + (hasKids(n) ? mobileSub(n.children, depth + 1) : '');
+    }).join('');
+  }
+
   function render(config) {
     if (!config || !Array.isArray(config.items)) return;
     var items = visible(config.items);
     if (!items.length) return;
 
-    var megaItem = items.filter(function (it) { return it.type === 'mega'; })[0] || null;
+    var megaItem = items.filter(function (it) { return it.type === 'mega' || it.continents; })[0] || null;
 
     // ---- Titres desktop (#navCenter) ----
     var navCenter = document.getElementById('navCenter');
     if (navCenter) {
       navCenter.innerHTML = items.map(function (it) {
-        if (it.type === 'mega') {
+        if (it.type === 'mega' || it.continents) {
           return '<button class="nav-title active" id="navDest" onclick="toggleDest(this)">' +
             esc(it.label) + ' <span class="nav-caret">▾</span></button>';
         }
-        if (it.type === 'submenu') {
-          var sub = visible(it.children).map(function (c) {
-            return '<a href="' + esc(href(c)) + '"' + (c.alert ? ' class="is-alert"' : '') +
-              ' role="menuitem">' + esc(c.label) + '</a>';
-          }).join('');
+        if (hasKids(it)) {
           return '<div class="nav-item"><a href="' + esc(href(it)) + '" class="nav-title">' +
             esc(it.label) + ' <span class="nav-caret">▾</span></a>' +
-            '<div class="nav-submenu" role="menu" aria-label="' + esc(it.label) + '">' + sub + '</div></div>';
+            '<div class="nav-submenu" role="menu" aria-label="' + esc(it.label) + '">' +
+            subLinks(it.children, 0) + '</div></div>';
         }
         return '<a href="' + esc(href(it)) + '" class="nav-title">' + esc(it.label) + '</a>';
       }).join('');
@@ -73,12 +92,13 @@
     var mobileNav = document.getElementById('mobileBrochureNav');
     if (mobileNav) {
       mobileNav.innerHTML = items.map(function (it) {
-        if (it.type === 'mega') {
+        if (it.type === 'mega' || it.continents) {
           return '<button class="mobile-brochure-title" id="mobileNavDest" onclick="toggleMobileDest(this)">' +
             esc(it.label) + ' <span class="nav-caret">▾</span></button>';
         }
-        return '<a href="' + esc(href(it)) + '" class="mobile-brochure-title" onclick="closeMobileNav()">' +
+        var line = '<a href="' + esc(href(it)) + '" class="mobile-brochure-title" onclick="closeMobileNav()">' +
           esc(it.label) + '</a>';
+        return line + (hasKids(it) ? mobileSub(it.children, 1) : '');
       }).join('');
     }
 

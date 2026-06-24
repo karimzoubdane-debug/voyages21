@@ -17,29 +17,28 @@
   .btn-save{ background:var(--gold); color:#2a2310; }
   .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
   .btn-add{ background:var(--forest); color:#fff; }
-  .btn-mini{ background:#fff; border:1px solid var(--line); color:var(--ink); padding:.25rem .5rem; border-radius:6px; cursor:pointer; font-size:.85rem; }
+  .btn-mini{ background:#fff; border:1px solid var(--line); color:var(--ink); padding:.25rem .55rem; border-radius:6px; cursor:pointer; font-size:.85rem; margin:2px 0; }
   .btn-mini:hover{ border-color:var(--gold); }
-  .wrap{ max-width:900px; margin:22px auto; padding:0 18px 80px; }
+  .wrap{ max-width:920px; margin:22px auto; padding:0 18px 90px; }
   .hint{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:8px; padding:12px 14px; font-size:.9rem; margin-bottom:18px; }
   .item{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:14px; }
   .row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .arrows{ display:flex; flex-direction:column; }
-  .arrows button{ line-height:1; padding:1px 6px; }
-  input.lbl{ flex:1; min-width:160px; border:1px solid var(--line); border-radius:7px; padding:.45rem .6rem; font-family:inherit; font-size:.95rem; }
+  .arrows{ display:inline-flex; flex-direction:column; }
+  .arrows button{ line-height:1; padding:1px 7px; }
+  input.lbl{ flex:1; min-width:150px; border:1px solid var(--line); border-radius:7px; padding:.45rem .6rem; font-family:inherit; font-size:.95rem; }
   .badge{ font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:.18rem .5rem; border-radius:20px; background:#eef3ee; color:var(--forest); }
   .badge.page{ background:#f6efdd; color:#8a6d12; }
   .hidden-tag{ color:#b23; font-weight:700; font-size:.8rem; }
-  .nest{ margin:10px 0 4px 18px; padding-left:14px; border-left:2px dashed var(--line); }
+  .nest{ margin:10px 0 4px 16px; padding-left:14px; border-left:2px dashed var(--line); }
   .sub{ background:#faf8f3; border:1px solid var(--line); border-radius:9px; padding:9px 11px; margin-bottom:9px; }
   .leaf{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-bottom:7px; }
-  .muted{ color:#897; font-size:.82rem; }
+  .muted{ color:#8a7d63; font-size:.82rem; }
   .pagebox{ margin-top:8px; }
   .pagebox textarea{ width:100%; border:1px solid var(--line); border-radius:7px; padding:.4rem .55rem; font-family:inherit; font-size:.88rem; resize:vertical; }
-  .pagebox select{ width:100%; min-height:90px; border:1px solid var(--line); border-radius:7px; padding:.3rem; font-family:inherit; font-size:.85rem; margin-top:6px; }
+  .pagebox select{ width:100%; min-height:84px; border:1px solid var(--line); border-radius:7px; padding:.3rem; font-family:inherit; font-size:.85rem; margin-top:6px; }
   .toolbar{ display:flex; gap:10px; align-items:center; margin:18px 0; flex-wrap:wrap; }
   .status{ font-size:.9rem; font-weight:600; }
   .del{ color:#b23; }
-  del{ color:#999; }
 </style>
 </head>
 <body>
@@ -51,10 +50,10 @@
 
 <div class="wrap">
   <div class="hint">
-    Pilote ici <strong>tout le menu du site</strong> : ajoute un titre, un continent ou un pays, change l'ordre (flèches ↑↓),
-    masque un élément (👁) — sa page se ferme aussi. Les <strong>nouvelles pages</strong> se créent toutes seules
-    (badge <span class="badge page">page auto</span>) : choisis les voyages qu'elles affichent.
-    N'oublie pas <strong>💾 Enregistrer</strong>.
+    Pilote ici <strong>tout le menu du site</strong> : ajoute un titre, un continent, un pays ou un
+    <strong>sous-menu</strong> (bouton ＋ sous chaque élément), change l'ordre (flèches ↑↓), masque un élément
+    (👁) — sa page se ferme aussi. Les <strong>nouvelles pages</strong> (badge <span class="badge page">page auto</span>)
+    se créent toutes seules : choisis les voyages qu'elles affichent. N'oublie pas <strong>💾 Enregistrer</strong>.
   </div>
 
   <div class="toolbar">
@@ -68,105 +67,113 @@
 
 <script src="/voyages/data.js"></script>
 <script>
-const COLORS = {};
+const MAX_DEPTH = 3; // profondeur de sous-menus sous un titre principal
 let state = { config: { v:1, items: [] }, voyages: [] };
 
 function slugify(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
   .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || ('page-'+Date.now()); }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function setStatus(t,ok){ const e=document.getElementById('status'); e.textContent=t; e.style.color = ok===false?'#b23':(ok?'#1B7':'#897'); }
+function setStatus(t,ok){ const e=document.getElementById('status'); e.textContent=t; e.style.color = ok===false?'#b23':(ok?'#1B7a3a':'#8a7d63'); }
 
-// ---- accès par chemin (tableau d'indices/clés) ----
-// Un chemin est p.ex. [0] ou [0,'continents',1] ou [0,'continents',1,'cols',2].
+// ---- chemin encodé en chaîne (sans guillemets) : "0/continents/1/cols/2" ----
+function pstr(path){ return path.join('/'); }
+function parsePath(s){ return String(s).split('/').map(x=> /^\d+$/.test(x) ? Number(x) : x); }
 function parentArrayOf(path){
-  // renvoie {arr, idx}
-  let array=state.config.items; let obj=null;
+  let array=state.config.items, obj=null;
   for(let s=0;s<path.length;s++){ const key=path[s];
-    if(typeof key==='number'){ if(s===path.length-1){ return {arr:array, idx:key}; } obj=array[key]; }
+    if(typeof key==='number'){ if(s===path.length-1) return {arr:array, idx:key}; obj=array[key]; }
     else { array=obj[key]; }
   }
   return {arr:array, idx:path[path.length-1]};
 }
 function getNode(path){ const {arr,idx}=parentArrayOf(path); return arr[idx]; }
 
-// ---- mutations ----
-function move(pathJSON, dir){ const path=JSON.parse(pathJSON); const {arr,idx}=parentArrayOf(path);
-  const j=idx+dir; if(j<0||j>=arr.length) return; const t=arr[idx]; arr[idx]=arr[j]; arr[j]=t; render(); }
-function toggleHide(pathJSON){ const n=getNode(JSON.parse(pathJSON)); n.hidden=!n.hidden; render(); }
-function remove(pathJSON){ const path=JSON.parse(pathJSON); const {arr,idx}=parentArrayOf(path);
+// ---- mutations (reçoivent le chemin en chaîne) ----
+function move(ps,dir){ const {arr,idx}=parentArrayOf(parsePath(ps)); const j=idx+dir;
+  if(j<0||j>=arr.length) return; const t=arr[idx]; arr[idx]=arr[j]; arr[j]=t; render(); }
+function toggleHide(ps){ const n=getNode(parsePath(ps)); n.hidden=!n.hidden; render(); }
+function remove(ps){ const {arr,idx}=parentArrayOf(parsePath(ps));
   if(!confirm('Supprimer « '+(arr[idx].label||'cet élément')+' » ?')) return; arr.splice(idx,1); render(); }
-function setLabel(pathJSON, val){ const n=getNode(JSON.parse(pathJSON)); n.label=val; }
-function setField(pathJSON, field, val){ const n=getNode(JSON.parse(pathJSON)); n[field]=val; }
-function setSlugs(pathJSON, sel){ const n=getNode(JSON.parse(pathJSON));
-  n.slugs=Array.from(sel.selectedOptions).map(o=>o.value); }
+function setLabel(ps,val){ getNode(parsePath(ps)).label=val; }
+function setField(ps,field,val){ getNode(parsePath(ps))[field]=val; }
+function setSlugs(ps,sel){ getNode(parsePath(ps)).slugs=Array.from(sel.selectedOptions).map(o=>o.value); }
 
 function newPageLeaf(label){ const id=slugify(label); return { id, key:id, label, hidden:false, title:label, description:'', slugs:[] }; }
 function addTitle(){ const label=prompt('Nom du nouveau titre principal :','Nouveau titre'); if(!label) return;
-  state.config.items.push({ id:slugify(label), key:slugify(label), label, type:'link', title:label, description:'', slugs:[], hidden:false }); render(); }
-function addContinent(pathJSON){ const n=getNode(JSON.parse(pathJSON)); n.continents=n.continents||[];
+  const id=slugify(label); state.config.items.push({ id, key:id, label, type:'link', title:label, description:'', slugs:[], hidden:false }); render(); }
+function addChildTo(ps){ const n=getNode(parsePath(ps)); n.children=n.children||[];
+  const label=prompt('Nom du sous-menu / sous-page :','Nouveau sous-menu'); if(!label) return;
+  n.children.push(newPageLeaf(label)); render(); }
+function addContinent(ps){ const n=getNode(parsePath(ps)); n.continents=n.continents||[];
   const label=prompt('Nom du continent / groupe :','Nouveau continent'); if(!label) return;
   n.continents.push({ id:slugify(label), label, hidden:false, cols:[] }); render(); }
-function addCol(pathJSON){ const n=getNode(JSON.parse(pathJSON)); n.cols=n.cols||[];
+function addCol(ps){ const n=getNode(parsePath(ps)); n.cols=n.cols||[];
   const label=prompt('Nom du pays / de la page :','Nouveau pays'); if(!label) return;
   n.cols.push(newPageLeaf(label)); render(); }
-function addChild(pathJSON){ const n=getNode(JSON.parse(pathJSON)); n.children=n.children||[];
-  const label=prompt('Nom du sous-lien :','Nouveau sous-lien'); if(!label) return;
-  n.children.push(newPageLeaf(label)); render(); }
 
-// ---- rendu ----
-function arrows(pathJSON){ return '<span class="arrows">'+
-  '<button class="btn-mini" onclick=\'move("'+pathJSON+'",-1)\'>▲</button>'+
-  '<button class="btn-mini" onclick=\'move("'+pathJSON+'",1)\'>▼</button></span>'; }
-function eyeBtn(pathJSON, hidden){ return '<button class="btn-mini" title="Afficher / masquer" onclick=\'toggleHide("'+pathJSON+'")\'>'+(hidden?'🙈':'👁')+'</button>'; }
-function delBtn(pathJSON){ return '<button class="btn-mini del" title="Supprimer" onclick=\'remove("'+pathJSON+'")\'>🗑</button>'; }
-function lblInput(pathJSON, val){ return '<input class="lbl" value="'+esc(val)+'" oninput=\'setLabel("'+pathJSON+'", this.value)\'>'; }
+// ---- briques de rendu ----
+function arrows(ps){ return '<span class="arrows">'+
+  '<button class="btn-mini" title="Monter" onclick="move(\''+ps+'\',-1)">▲</button>'+
+  '<button class="btn-mini" title="Descendre" onclick="move(\''+ps+'\',1)">▼</button></span>'; }
+function eyeBtn(ps,hidden){ return '<button class="btn-mini" title="Afficher / masquer" onclick="toggleHide(\''+ps+'\')">'+(hidden?'🙈':'👁')+'</button>'; }
+function delBtn(ps){ return '<button class="btn-mini del" title="Supprimer" onclick="remove(\''+ps+'\')">🗑</button>'; }
+function lblInput(ps,val){ return '<input class="lbl" value="'+esc(val)+'" oninput="setLabel(\''+ps+'\', this.value)">'; }
+function hiddenTag(node){ return node.hidden?'<span class="hidden-tag">masqué</span>':''; }
+function nodeRow(ps,node,badge){ return '<div class="row">'+arrows(ps)+eyeBtn(ps,node.hidden)+lblInput(ps,node.label)+badge+hiddenTag(node)+delBtn(ps)+'</div>'; }
 
-function pageBox(pathJSON, node){
-  // sélecteur de voyages + description, pour les pages auto-créées (sans url fixe)
+function pageBox(ps,node){
   if(node.url) return '';
   const opts = state.voyages.map(v=>'<option value="'+esc(v.slug)+'"'+((node.slugs||[]).indexOf(v.slug)>=0?' selected':'')+'>'+esc(v.title||v.slug)+'</option>').join('');
   return '<div class="pagebox">'+
     '<div class="muted">Description de la page (optionnel) :</div>'+
-    '<textarea rows="2" oninput=\'setField("'+pathJSON+'","description", this.value)\'>'+esc(node.description||'')+'</textarea>'+
-    '<div class="muted" style="margin-top:6px">Voyages affichés sur cette page (Ctrl/Cmd pour en choisir plusieurs) :</div>'+
-    '<select multiple onchange=\'setSlugs("'+pathJSON+'", this)\'>'+opts+'</select></div>';
+    '<textarea rows="2" oninput="setField(\''+ps+'\',\'description\', this.value)">'+esc(node.description||'')+'</textarea>'+
+    '<div class="muted" style="margin-top:6px">Voyages affichés (Ctrl/Cmd pour en choisir plusieurs) :</div>'+
+    '<select multiple onchange="setSlugs(\''+ps+'\', this)">'+opts+'</select></div>';
 }
 
-function leafRow(path, node, kindLabel){
-  const pj=JSON.stringify(path).replace(/"/g,'&quot;');
-  const isPage = !node.url;
-  return '<div class="leaf"><div class="row">'+arrows(pj)+eyeBtn(pj,node.hidden)+
-    lblInput(pj, node.label)+
-    (isPage?'<span class="badge page">page auto</span>':'<span class="badge">'+esc(kindLabel||'lien')+'</span>')+
-    (node.hidden?'<span class="hidden-tag">masqué</span>':'')+delBtn(pj)+'</div>'+
-    pageBox(pj, node)+'</div>';
+// Rendu récursif d'un nœud (titre, sous-menu, pays, page…).
+function renderNode(path, node, depth){
+  const ps = pstr(path);
+  const isMega = !!node.continents;
+  const hasChildren = node.children && node.children.length;
+  const wrap = depth===0 ? 'item' : (depth===1 ? 'sub' : 'leaf');
+  let badge;
+  if(isMega) badge='<span class="badge">méga-menu</span>';
+  else if(hasChildren) badge='<span class="badge">menu déroulant</span>';
+  else if(node.url) badge='<span class="badge">lien</span>';
+  else badge='<span class="badge page">page auto</span>';
+
+  let html = '<div class="'+wrap+'">' + nodeRow(ps,node,badge);
+
+  if(isMega){
+    html += '<div class="nest">';
+    (node.continents||[]).forEach((c,j)=>{
+      const cps = pstr(path.concat('continents',j));
+      html += '<div class="sub">' + nodeRow(cps,c,'<span class="badge">continent</span>') + '<div class="nest">';
+      (c.cols||[]).forEach((col,k)=>{ html += renderLeaf(path.concat('continents',j,'cols',k), col); });
+      html += '<button class="btn-mini" onclick="addCol(\''+cps+'\')">＋ Pays / page</button></div></div>';
+    });
+    html += '<button class="btn-mini" onclick="addContinent(\''+ps+'\')">＋ Continent / groupe</button></div>';
+  } else {
+    if(!node.url && !hasChildren) html += pageBox(ps,node);
+    html += '<div class="nest">';
+    (node.children||[]).forEach((ch,k)=>{ html += renderNode(path.concat('children',k), ch, depth+1); });
+    if(depth < MAX_DEPTH) html += '<button class="btn-mini" onclick="addChildTo(\''+ps+'\')">＋ Sous-menu</button>';
+    html += '</div>';
+  }
+  return html + '</div>';
+}
+
+// Feuille simple (pays dans un méga-menu) : pas de sous-niveau supplémentaire.
+function renderLeaf(path, node){
+  const ps = pstr(path);
+  const badge = node.url ? '<span class="badge">pays</span>' : '<span class="badge page">page auto</span>';
+  return '<div class="leaf">' + nodeRow(ps,node,badge) + pageBox(ps,node) + '</div>';
 }
 
 function render(){
-  const root=document.getElementById('tree');
-  root.innerHTML = state.config.items.map((it, i)=>{
-    const pj=JSON.stringify([i]).replace(/"/g,'&quot;');
-    let inner='';
-    if(it.type==='mega'){
-      inner = '<div class="nest">'+ (it.continents||[]).map((c, j)=>{
-        const cpj=JSON.stringify([i,'continents',j]).replace(/"/g,'&quot;');
-        const cols=(c.cols||[]).map((col,k)=>leafRow([i,'continents',j,'cols',k], col,'pays')).join('');
-        return '<div class="sub"><div class="row">'+arrows(cpj)+eyeBtn(cpj,c.hidden)+lblInput(cpj,c.label)+
-          '<span class="badge">continent</span>'+(c.hidden?'<span class="hidden-tag">masqué</span>':'')+delBtn(cpj)+'</div>'+
-          '<div class="nest">'+cols+'<button class="btn-mini" onclick=\'addCol("'+cpj+'")\'>＋ Pays / page</button></div></div>';
-      }).join('') + '<button class="btn-mini" onclick=\'addContinent("'+pj+'")\'>＋ Continent / groupe</button></div>';
-    } else if(it.type==='submenu'){
-      const kids=(it.children||[]).map((c,k)=>leafRow([i,'children',k], c,'sous-lien')).join('');
-      inner='<div class="nest">'+kids+'<button class="btn-mini" onclick=\'addChild("'+pj+'")\'>＋ Sous-lien</button></div>';
-    } else {
-      inner = pageBox(pj, it);
-    }
-    const typeBadge = it.type==='mega'?'méga-menu':(it.type==='submenu'?'menu déroulant':(it.url?'lien':'page auto'));
-    const badgeClass = (it.type!=='mega'&&it.type!=='submenu'&&!it.url)?'badge page':'badge';
-    return '<div class="item"><div class="row">'+arrows(pj)+eyeBtn(pj,it.hidden)+lblInput(pj,it.label)+
-      '<span class="'+badgeClass+'">'+typeBadge+'</span>'+(it.hidden?'<span class="hidden-tag">masqué</span>':'')+delBtn(pj)+'</div>'+
-      inner+'</div>';
-  }).join('');
+  document.getElementById('tree').innerHTML =
+    state.config.items.map((it,i)=> renderNode([i], it, 0)).join('');
 }
 
 // ---- chargement / sauvegarde ----
