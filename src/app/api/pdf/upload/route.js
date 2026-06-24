@@ -1,4 +1,5 @@
 import { put } from '@vercel/blob';
+import { getRole } from '../../../../lib/auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -15,6 +16,10 @@ export async function OPTIONS() {
 }
 
 export async function POST(request) {
+  const role = await getRole(request);
+  if (role !== 'owner' && role !== 'team') {
+    return Response.json({ error: 'non autorisé' }, { status: 401, headers: corsHeaders });
+  }
   try {
     const url = new URL(request.url);
     const filename = url.searchParams.get('filename') || 'brochure.pdf';

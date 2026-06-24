@@ -1,6 +1,5 @@
 import './globals.css'
-import NavBar from '@/components/NavBar'
-import Footer from '@/components/Footer'
+import SiteChrome from '@/components/SiteChrome'
 import ScrollToTop from '@/components/ScrollToTop'
 import Script from 'next/script'
 
@@ -31,11 +30,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <NavBar />
-        <main>{children}</main>
-        <Footer />
-
-        <Script src="/social-contact-bar.js" strategy="afterInteractive" />
+        <SiteChrome>{children}</SiteChrome>
 
         {/* Scroll to top */}
         <ScrollToTop />

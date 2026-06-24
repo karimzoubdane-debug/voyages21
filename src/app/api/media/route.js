@@ -1,4 +1,5 @@
 import { list, put } from '@vercel/blob';
+import { getRole } from '../../../lib/auth.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -61,6 +62,10 @@ export async function GET(request) {
 }
 
 export async function PUT(request) {
+  const role = await getRole(request);
+  if (role !== 'owner' && role !== 'team') {
+    return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers: corsHeaders });
+  }
   try {
     const body = await request.json();
     let data;

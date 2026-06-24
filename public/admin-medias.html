@@ -128,6 +128,7 @@
     <h1>Voyages21 — Gestion des médias</h1>
     <div class="sub">Sans mot de passe · choisissez un voyage, ajoutez photos &amp; vidéo</div>
     <div class="toolbar">
+        <button class="btn ghost" onclick="location.href='/admin'">← Espace admin</button>
         <button class="btn ghost" onclick="exportData()">Exporter (sauvegarde)</button>
         <button class="btn ghost" onclick="document.getElementById('importFile').click()">Importer</button>
         <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(this)">
@@ -289,6 +290,7 @@
     PRODUCTS.forEach(function (p) { TITLES[p.k] = p.t; });
     // ── Organisation du sélecteur par univers (affichage uniquement ; les clés médias ne changent JAMAIS) ──
     var PICKER_GROUPS = [
+        { key: 'admin-produits', label: '🆕 Voyages ajoutés (Admin Produits)' },
         { key: 'world-europe', label: 'Destinations du monde — Europe' },
         { key: 'world-africa', label: 'Destinations du monde — Afrique' },
         { key: 'world-americas', label: 'Destinations du monde — Amériques' },
@@ -906,8 +908,27 @@
         var el = document.getElementById(id);
         if (el) el.addEventListener('input', renderHomePreview);
     });
+    // Synchro : les voyages créés dans Admin Produits apparaissent ici (clé = slug).
+    function loadCustomProductsIntoPicker() {
+        return fetch('/api/produits', { cache: 'no-store' })
+            .then(function (r) { return r.ok ? r.json() : {}; })
+            .then(function (data) {
+                var custom = (data && data.custom) || {};
+                Object.keys(custom).forEach(function (slug) {
+                    if (TITLES[slug] !== undefined) return; // déjà présent
+                    var p = custom[slug] || {};
+                    var title = p.title || slug;
+                    PRODUCTS.push({ k: slug, t: title });
+                    PICKER_META[slug] = { g: 'admin-produits', c: p.tag || '' };
+                    TITLES[slug] = title;
+                    PICKER_LABELS[slug] = (p.tag ? p.tag + ' — ' : '') + title;
+                });
+            })
+            .catch(function () {});
+    }
+
     setHomeFields(DEFAULT_HOME_COVER);
-    buildPicker();
+    loadCustomProductsIntoPicker().then(buildPicker);
     apiGet().then(function (data) {
         MANIFEST = data || {};
         setOnline(true);
