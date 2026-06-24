@@ -1247,7 +1247,11 @@ function confirm2(title, msg, cb) {
   document.getElementById('confirmTitle').textContent = title;
   document.getElementById('confirmMsg').textContent = msg;
   confirmCb = cb;
-  document.getElementById('confirmOk').onclick = function() { closeConfirm(); if(confirmCb) confirmCb(); };
+  document.getElementById('confirmOk').onclick = function() {
+    var cbToRun = confirmCb;   // garder l'action AVANT que closeConfirm ne remette confirmCb à null
+    closeConfirm();
+    if (cbToRun) cbToRun();
+  };
   document.getElementById('confirmOverlay').hidden = false;
 }
 function closeConfirm() { document.getElementById('confirmOverlay').hidden = true; confirmCb = null; }
