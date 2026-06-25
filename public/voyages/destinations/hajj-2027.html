@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../voyage.css?v=media-admin-v6">
 <style>
-    body { font-family: 'Noto Naskh Arabic', 'DM Sans', sans-serif; }
+    body { font-family: 'Noto Naskh Arabic', 'DM Sans', sans-serif; background: #FAF9F6; }
     h1, h2, h3 { font-family: 'Noto Naskh Arabic', serif; }
     .num { direction: ltr; unicode-bidi: isolate; }
 
@@ -86,15 +86,21 @@
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
     .price-table td.hotel .hotel-link { position: relative; color: var(--forest); font-weight: 700; display: inline-block; text-decoration: none; background: rgba(200,164,64,.12); border: 1px solid #e53935; border-radius: 8px; padding: .2rem .55rem; transition: background .18s, color .18s, box-shadow .18s, transform .18s; animation: hotelActive 1.8s ease-in-out infinite; }
-    .price-table td.hotel .hotel-link::after { content: " 🔎"; font-size: .72em; opacity: .85; }
+    /* Emoji « cliquez pour voir » qui saute sur place toutes les 2s, juste avant le nom */
+    .price-table td.hotel .hotel-link::before { content: "👆"; display: inline-block; margin-inline-end: .35rem; animation: tapJump 2s ease-in-out infinite; }
+    @keyframes tapJump {
+        0%, 82%, 100% { transform: translateY(0); }
+        88% { transform: translateY(-6px); }
+        94% { transform: translateY(0); }
+    }
     @keyframes hotelActive {
         0%, 100% { box-shadow: 0 0 0 0 rgba(229,57,53,.35); border-color: #e8b53a; }
         50% { box-shadow: 0 0 0 4px rgba(229,57,53,0); border-color: #e53935; }
     }
     .price-table td.hotel .hotel-link:hover { background: #e53935; color: #fff; border-color: #e53935; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 16px rgba(229,57,53,.4); animation: none; }
-    /* Info-bulle « cliquez pour voir l'hôtel » */
-    .price-table td.hotel .hotel-link::before { content: "👁 اضغط لرؤية الفندق · Voir l'hôtel"; position: absolute; bottom: 122%; right: 50%; transform: translateX(50%) translateY(5px); background: #1b1b1b; color: #fff; font-size: .68rem; font-weight: 600; padding: .3rem .6rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: .18s; z-index: 6; }
-    .price-table td.hotel .hotel-link:hover::before { opacity: 1; transform: translateX(50%) translateY(0); }
+    /* Info-bulle « cliquez pour voir l'hôtel » au survol */
+    .price-table td.hotel .hotel-link::after { content: "👁 اضغط لرؤية الفندق · Voir l'hôtel"; position: absolute; bottom: 122%; right: 50%; transform: translateX(50%) translateY(5px); background: #1b1b1b; color: #fff; font-size: .68rem; font-weight: 600; padding: .3rem .6rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: .18s; z-index: 6; }
+    .price-table td.hotel .hotel-link:hover::after { opacity: 1; transform: translateX(50%) translateY(0); }
 
     /* Bannière : noms d'hôtels cliquables */
     .hotel-hint { display: flex; align-items: center; gap: .7rem; justify-content: center; flex-wrap: wrap; text-align: center;
@@ -112,8 +118,8 @@
     .supp ul { margin: .4rem 0 0; padding-inline-start: 1.2rem; }
 
     /* Inclus / Non inclus */
-    .incl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; align-items: start; }
-    .incl { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem 1.4rem; box-shadow: 0 6px 18px rgba(21,46,31,.05); }
+    .incl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; align-items: stretch; }
+    .incl { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem 1.4rem; box-shadow: 0 6px 18px rgba(21,46,31,.05); display: flex; flex-direction: column; }
     .incl h3 { font-size: 1.15rem; margin: 0 0 .7rem; display: flex; align-items: center; gap: .5rem; }
     .incl.yes h3 { color: var(--green); }
     .incl.no h3 { color: var(--red); }
@@ -123,7 +129,8 @@
     .incl li { margin-bottom: .5rem; font-size: .95rem; }
     .incl.opt li { list-style: none; margin-inline-start: -1rem; }
     .incl.opt li .p { color: var(--gold); font-weight: 800; font-family: 'DM Sans', sans-serif; }
-    .incl.opt .call { display: block; text-align: center; margin-top: .9rem; background: var(--gold); color: var(--forest2); font-weight: 800; text-decoration: none; border-radius: 999px; padding: .7rem 1rem; font-size: .9rem; }
+    .incl.opt .call { display: block; text-align: center; margin-top: auto; background: var(--gold); color: var(--forest2); font-weight: 800; text-decoration: none; border-radius: 999px; padding: .7rem 1rem; font-size: .9rem; }
+    .incl.opt ul { margin-bottom: 1rem; }
 
     .note-box { background: #fff; border: 1px solid var(--line); border-inline-start: 4px solid var(--gold); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1.4rem; color: var(--forest2); font-size: .95rem; }
     .note-box .contact-hl { display: inline-block; margin-top: .4rem; color: #b23a2e; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
@@ -241,7 +248,7 @@
     .formule.in tbody tr:nth-child(3) .price { transition-delay: .25s; }
     .formule.in tbody tr:nth-child(4) .price { transition-delay: .35s; }
     @media (prefers-reduced-motion: reduce) {
-        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .price-table td.hotel .hotel-link, .hotel-hint .badge { animation: none; }
+        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .price-table td.hotel .hotel-link, .price-table td.hotel .hotel-link::before { animation: none; }
         .reveal, .formule .price { opacity: 1; transform: none; transition: none; }
     }
 
@@ -322,7 +329,6 @@
     </div>
 
     <div class="hotel-hint">
-        <span class="badge">✨ جديد · NOUVEAU</span>
         <span>👆 اضغط على اسم أيّ فندق لزيارة صفحته ومشاهدة صوره وتقييماته</span>
         <span class="fr">Cliquez sur le nom d'un hôtel pour découvrir sa page</span>
     </div>
@@ -346,25 +352,25 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Snood+Al+Rayan+hotel+Makkah" target="_blank" rel="noopener">سنود الريان</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Al+Rayan+hotel+Makkah" target="_blank" rel="noopener">سنود الريان</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">67 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">74 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">86 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Best+Western+hotel+Makkah" target="_blank" rel="noopener">بست ويسترن</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Best+Western+hotel+Makkah" target="_blank" rel="noopener">بست ويسترن</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">70 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">76 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">87 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Jadah+Ajyad+hotel+Makkah" target="_blank" rel="noopener">جادة أجياد</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Jadah+Ajyad+hotel+Makkah" target="_blank" rel="noopener">جادة أجياد</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">75 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">79 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Snood+Ajyad+hotel+Makkah" target="_blank" rel="noopener">سنود أجياد</a><small>≈ 250 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Ajyad+hotel+Makkah" target="_blank" rel="noopener">سنود أجياد</a><small>≈ 250 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">77 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">84 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">99 500</span><small>درهم</small></td>
@@ -392,25 +398,25 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — الملحق المجدّد</a><small>المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — الملحق المجدّد</a><small>المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">105 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">123 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — المبنى الرئيسي</a><small>المدينة: أنوار المدينة موفنبيك</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — المبنى الرئيسي</a><small>المدينة: أنوار المدينة موفنبيك</small></td>
                     <td class="price"><span class="num">104 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">115 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">136 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Biltmore+Suites+Makkah+hotel" target="_blank" rel="noopener">السويس مكة — بلتمور 5 نجوم</a><small>المدينة: فندق المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Biltmore+Suites+Makkah+hotel" target="_blank" rel="noopener">السويس مكة — بلتمور 5 نجوم</a><small>المدينة: فندق المدينة</small></td>
                     <td class="price"><span class="num">132 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">146 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">173 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Fairmont+Makkah+Clock+Royal+Tower" target="_blank" rel="noopener">الفيرمونت</a><small>إطلالة على الحرم · فئة فاخرة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Fairmont+Makkah+Clock+Royal+Tower" target="_blank" rel="noopener">الفيرمونت</a><small>إطلالة على الحرم · فئة فاخرة</small></td>
                     <td class="price"><span class="num">137 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">154 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">185 900</span><small>درهم</small></td>
