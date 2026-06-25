@@ -54,7 +54,12 @@ _Dernière mise à jour : 2026-06-25_
   - **Label « علامة جودة خدمات الحج »** (Ministère du Tourisme, depuis 2006) ajouté
     en `public/label-qualite-hajj.jpg` + bannière de confiance en haut de la
     rubrique « Omra & Hajj » (`destinations/omra.html`) qui mène à la page Hajj.
-  - **Plaquette A4 imprimable** : `/plaquette-hajj-2027.html` (print → PDF, partage).
+  - **Plaquette A4** : abandonnée (jugée redondante avec la page web).
+  - **Animations** : cadran avis cliquable + battement de cœur, section services
+    optionnels animée + bouton « Appelez-nous » clignotant, apparition au
+    défilement, compteur de prix animé, shimmer sur les dates.
+  - **Contacts nommés** : Wafa (0614 15 26 86) / Fouad (0673 28 00 09) — à confirmer.
+  - **Visuel WhatsApp** : « مناسك الحج 2027 · 1448 هـ » + 2 numéros + site.
   - **Paiement** : du **20 juin au 10 juillet 2026** (Bareed Bank).
   - **Avis clients** : section « socle » en place — le bouton pointe pour l'instant
     vers les avis Google de l'agence ; **Karim a lancé une campagne d'avis Hajj sur

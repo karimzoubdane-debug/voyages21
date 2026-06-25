@@ -157,9 +157,53 @@
     .v21fab .opt.gps { background: var(--gold); color: var(--forest2); }
     .v21fab .opt .num { font-family: 'DM Sans', sans-serif; }
 
+    /* Animations */
+    @keyframes heartbeat {
+        0%, 28%, 70%, 100% { transform: scale(1); }
+        14% { transform: scale(1.05); }
+        42% { transform: scale(1.045); }
+    }
+    .why-card.is-center { animation: heartbeat 2.2s ease-in-out infinite; cursor: pointer; text-decoration: none; }
+    .why-card.is-center:hover { filter: brightness(1.07); }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(200,164,64,.5); }
+        50% { opacity: .55; box-shadow: 0 0 0 10px rgba(200,164,64,0); }
+    }
+    .blink { animation: blink 1.3s ease-in-out infinite; }
+
+    /* Services optionnels */
+    .options { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
+    .options .inner { background: linear-gradient(135deg, #fbf6ea 0%, #fff 100%); border: 1px solid var(--gold); border-radius: 18px; padding: 1.6rem 1.7rem; box-shadow: 0 10px 28px rgba(200,164,64,.16); position: relative; overflow: hidden; }
+    .options .inner::before { content: ""; position: absolute; top: -50%; inset-inline-start: -30%; width: 60%; height: 200%; background: linear-gradient(115deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-18deg); animation: sweep 4.5s ease-in-out infinite; }
+    @keyframes sweep { 0% { inset-inline-start: -40%; } 55%, 100% { inset-inline-start: 130%; } }
+    .options h2 { color: var(--forest); text-align: center; font-size: 1.4rem; margin: 0 0 1rem; position: relative; }
+    .options .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; position: relative; }
+    .opt-item { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.2rem; display: flex; gap: .8rem; align-items: center; transition: .2s; }
+    .opt-item:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(21,46,31,.1); }
+    .opt-item .ic { font-size: 1.7rem; }
+    .opt-item .t { color: var(--forest); font-weight: 700; }
+    .opt-item .p { color: var(--gold); font-weight: 800; font-family: 'DM Sans', sans-serif; }
+    .options .call { display: flex; justify-content: center; margin-top: 1.2rem; position: relative; }
+    .options .call a { display: inline-flex; align-items: center; gap: .5rem; background: var(--gold); color: var(--forest2); font-weight: 800; text-decoration: none; border-radius: 999px; padding: .9rem 1.8rem; }
+
+    /* Shimmer sur les bandeaux de dates */
+    .formule-top { position: relative; overflow: hidden; }
+    .formule-top .dates { position: relative; }
+    .formule-top::after { content: ""; position: absolute; top: 0; inset-inline-start: -30%; width: 40%; height: 100%; background: linear-gradient(115deg, transparent, rgba(228,210,160,.35), transparent); transform: skewX(-18deg); animation: sweep 5s ease-in-out infinite; }
+
+    /* Apparition au défilement */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+        .why-card.is-center, .blink, .options .inner::before, .formule-top::after { animation: none; }
+        .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
     @media (max-width: 760px) {
         .why-grid { grid-template-columns: 1fr; }
         .incl-grid { grid-template-columns: 1fr; }
+        .opt-grid { grid-template-columns: 1fr; }
         .price-table { font-size: .82rem; }
         .price-table th, .price-table td { padding: .6rem .4rem; }
         .carousel .slide { aspect-ratio: 4/3; }
@@ -176,7 +220,7 @@
 <header class="hajj-hero" id="hajjHero">
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
-    <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small>Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
+    <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small dir="ltr">Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
     <div class="rule"></div>
 </header>
 
@@ -202,17 +246,17 @@
     </div>
     <div class="why-grid">
         <div class="why-card">
-            <div class="big"><span class="num">26</span></div>
-            <h3>سنة من الخبرة</h3>
+            <div class="big"><span class="num">26</span> سنة</div>
+            <h3>من الخبرة</h3>
             <p>في تنظيم الأسفار، منها <b><span class="num">22</span> سنة</b> في خدمة ضيوف الرحمن (العمرة والحج).
             <span class="fr">26 ans d'expertise, dont 22 ans dédiés aux Lieux Saints.</span></p>
         </div>
-        <div class="why-card is-center">
+        <a class="why-card is-center" href="https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener" aria-label="قراءة آراء عملائنا">
             <div class="ic">★★★★★</div>
             <h3>حجّاجنا يشهدون لنا</h3>
-            <p>أصدق شهادة على جودتنا هي كلمات من رافقناهم. آراؤهم خيرُ توصية.
-            <span class="fr">Nos pèlerins témoignent pour nous — leurs avis, notre meilleure recommandation.</span></p>
-        </div>
+            <p>أصدق شهادة على جودتنا هي كلمات من رافقناهم. آراؤهم خيرُ توصية — <b>اضغط لقراءة آرائهم</b>.
+            <span class="fr">Nos pèlerins témoignent pour nous — cliquez pour lire leurs avis.</span></p>
+        </a>
         <div class="why-card">
             <div class="label-mini"><img src="/label-qualite-hajj.jpg" alt="علامة جودة خدمات الحج"></div>
             <h3>ثقة وزارة السياحة</h3>
@@ -321,13 +365,6 @@
                 </tr>
             </tbody>
         </table>
-        <div class="supp">
-            <b>إضافات اختيارية:</b>
-            <ul>
-                <li>إضافة <span class="num">23 000</span> درهم لحجز أبراج كدانة (عمائر).</li>
-                <li>إضافة <span class="num">2 000</span> درهم للتنقل من مكة إلى المدينة بقطار الحرمين السريع.</li>
-            </ul>
-        </div>
     </div>
 
     <!-- Inclus / Non inclus -->
@@ -363,6 +400,26 @@
     </div>
 
 </div>
+
+<!-- Services optionnels (section animée) -->
+<section class="options">
+    <div class="inner">
+        <h2>خدمات اختيارية</h2>
+        <div class="opt-grid">
+            <div class="opt-item">
+                <span class="ic">🏨</span>
+                <div><div class="t">حجز أبراج كدانة (عمائر)</div><div class="p">+ <span class="num">23 000</span> درهم</div></div>
+            </div>
+            <div class="opt-item">
+                <span class="ic">🚄</span>
+                <div><div class="t">التنقل من مكة إلى المدينة بقطار الحرمين السريع</div><div class="p">+ <span class="num">2 000</span> درهم</div></div>
+            </div>
+        </div>
+        <div class="call">
+            <a class="blink" href="tel:+212614152686">📞 اتصلوا بنا لمعرفة المزيد · Appelez-nous pour en savoir plus</a>
+        </div>
+    </div>
+</section>
 
 <!-- Avis clients (socle) — TODO: brancher le lien de la campagne d'avis Hajj Google quand prêt -->
 <div class="reviews-ref">
@@ -409,17 +466,17 @@
             <div class="blk">
                 <b>📍 العنوان</b>
                 <a class="addr" href="https://www.google.com/maps/place/?q=place_id:ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">شارع الأمير مولاي عبد الله، عمارة طيبة، الطابق الأول، شقة رقم 1 — مراكش 40000</a>
-                <a class="cbtn gps" href="https://www.google.com/maps/dir/?api=1&destination=Voyages%2021%20Marrakech&destination_place_id=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener" style="margin-top:.7rem">🧭 الاتجاهات على خرائط Google</a>
+                <a class="cbtn gps" href="https://www.google.com/maps/dir/?api=1&destination=Voyages%2021%20Marrakech&destination_place_id=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener" style="margin-top:.7rem">🧭 اضغط لتأتي إلينا · Cliquez pour venir chez nous</a>
             </div>
             <div class="blk">
                 <b>💬 واتساب</b>
-                <a class="cbtn wa" href="https://wa.me/212614152686" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0614 15 26 86</span></a>
-                <a class="cbtn wa" href="https://wa.me/212673280009" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0673 28 00 09</span></a>
+                <a class="cbtn wa" href="https://wa.me/212614152686" target="_blank" rel="noopener">واتساب وفاء · <span class="num" dir="ltr">0614 15 26 86</span></a>
+                <a class="cbtn wa" href="https://wa.me/212673280009" target="_blank" rel="noopener">واتساب فؤاد · <span class="num" dir="ltr">0673 28 00 09</span></a>
             </div>
             <div class="blk">
                 <b>📱 الهاتف</b>
-                <a class="cbtn tel" href="tel:+212614152686">اتصال <span class="num" dir="ltr">0614 15 26 86</span></a>
-                <a class="cbtn tel" href="tel:+212673280009">اتصال <span class="num" dir="ltr">0673 28 00 09</span></a>
+                <a class="cbtn tel" href="tel:+212614152686">اتصلوا بوفاء · <span class="num" dir="ltr">0614 15 26 86</span></a>
+                <a class="cbtn tel" href="tel:+212673280009">اتصلوا بفؤاد · <span class="num" dir="ltr">0673 28 00 09</span></a>
             </div>
         </div>
         <div class="code">رمز الوكالة: 2D/02 · www.voyages21.com</div>
@@ -431,11 +488,11 @@
 <!-- Barre flottante contacts -->
 <div class="v21fab" id="v21fab">
     <button class="main" id="fabMain" aria-label="تواصل سريع">💬</button>
-    <a class="opt wa" href="https://wa.me/212614152686" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0614…86</span></a>
-    <a class="opt wa" href="https://wa.me/212673280009" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0673…09</span></a>
-    <a class="opt tel" href="tel:+212614152686">📱 <span class="num" dir="ltr">0614 15 26 86</span></a>
-    <a class="opt tel" href="tel:+212673280009">📱 <span class="num" dir="ltr">0673 28 00 09</span></a>
-    <a class="opt gps" href="https://www.google.com/maps/dir/?api=1&destination=Voyages%2021%20Marrakech&destination_place_id=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">🧭 الاتجاهات</a>
+    <a class="opt wa" href="https://wa.me/212614152686" target="_blank" rel="noopener">واتساب وفاء · <span class="num" dir="ltr">0614 15 26 86</span></a>
+    <a class="opt wa" href="https://wa.me/212673280009" target="_blank" rel="noopener">واتساب فؤاد · <span class="num" dir="ltr">0673 28 00 09</span></a>
+    <a class="opt tel" href="tel:+212614152686">📱 وفاء · <span class="num" dir="ltr">0614 15 26 86</span></a>
+    <a class="opt tel" href="tel:+212673280009">📱 فؤاد · <span class="num" dir="ltr">0673 28 00 09</span></a>
+    <a class="opt gps" href="https://www.google.com/maps/dir/?api=1&destination=Voyages%2021%20Marrakech&destination_place_id=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">🧭 اضغط لتأتي إلينا</a>
 </div>
 
 <script>
@@ -445,6 +502,40 @@
     var fabMain = document.getElementById('fabMain');
     fabMain.addEventListener('click', function () { fab.classList.toggle('open'); });
     document.addEventListener('click', function (e) { if (!fab.contains(e.target)) fab.classList.remove('open'); });
+
+    // Apparition au défilement
+    var revealEls = document.querySelectorAll('.why, .formule, .options, .incl-grid, .note-box, .reviews-ref, .contact, .gallery');
+    Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('reveal'); });
+    function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+    function countUp(el) {
+        var target = parseInt((el.getAttribute('data-val') || el.textContent).replace(/[^0-9]/g, ''), 10);
+        if (!target || target < 1000) return; // on n'anime que les vrais montants
+        el.setAttribute('data-val', target);
+        var start = null, dur = 1100;
+        function step(ts) {
+            if (!start) start = ts;
+            var p = Math.min((ts - start) / dur, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = fmt(Math.round(target * eased));
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                en.target.classList.add('in');
+                if (en.target.classList.contains('formule')) {
+                    en.target.querySelectorAll('.price .num').forEach(countUp);
+                }
+                io.unobserve(en.target);
+            });
+        }, { threshold: 0.15 });
+        Array.prototype.forEach.call(revealEls, function (el) { io.observe(el); });
+    } else {
+        Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('in'); });
+    }
 
     // Galerie + photo hero depuis l'admin médias (clé "galerie-hajj")
     fetch('/api/media', { cache: 'no-store' })
