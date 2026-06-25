@@ -275,22 +275,34 @@
         .carousel .slide { aspect-ratio: 4/3; }
     }
 
-    /* ====== TEST — thème « vert fluo » du logo, version foncée + fond blanc ====== */
-    :root { --forest: #17263F; --forest2: #0f1b30; } /* l'ancien vert forêt → bleu nuit (texte + topbar) */
-    .hajj-hero { background: linear-gradient(160deg, #9ccb1c 0%, #7ba70d 100%); color: #14210a; }
-    .hajj-hero .eyebrow { color: #1f3305; }
-    .hajj-hero h1, .hajj-hero .slogan { color: #14210a; }
-    .hajj-hero .slogan small { color: #24380a; }
-    .hajj-hero .rule { background: #17263F; }
-    .formule-top { background: linear-gradient(160deg, #9ccb1c, #7ba70d); color: #14210a; }
-    .formule-top h3 small, .formule-top .dates { color: #21340a; }
-    .why-card.is-center { background: linear-gradient(160deg, #9ccb1c, #7ba70d); color: #14210a; }
-    .why-card.is-center h3, .why-card.is-center .big, .why-card.is-center .ic { color: #14210a; }
-    .why-card.is-center p, .why-card.is-center .fr { color: #24380a; }
-    .contact .inner { background: linear-gradient(160deg, #9ccb1c, #7ba70d); }
-    .contact h2, .contact .addr, .contact a, .contact .code, .contact .blk b { color: #14210a; }
-    .contact .cbtn { border-color: rgba(20,33,10,.35); color: #14210a; }
-    .contact .cbtn.gps { background: #17263F; color: #b6e63a; }
+    /* ====== Thème B — fond bleu nuit + texte vert fluo (logo en négatif) ====== */
+    :root { --forest: #17263F; --forest2: #0f1b30; }
+    /* Logo dans le hero */
+    .hajj-logo { width: 118px; height: auto; margin: 0 auto .4rem; display: block; filter: drop-shadow(0 6px 18px rgba(182,230,58,.35)); }
+    /* Hero : fond bleu nuit, texte vert fluo */
+    .hajj-hero { background: linear-gradient(160deg, #1f3454 0%, #0f1b30 100%); color: #cfe96a; }
+    .hajj-hero .eyebrow { color: #b6e63a; }
+    .hajj-hero h1 { color: #cfe96a; }
+    .hajj-hero .slogan { color: #ffffff; }
+    .hajj-hero .slogan small { color: #b6e63a; }
+    .hajj-hero .rule { background: #b6e63a; }
+    /* Bandeaux de formules */
+    .formule-top { background: linear-gradient(160deg, #1f3454, #0f1b30); color: #cfe96a; }
+    .formule-top h3 { color: #cfe96a; }
+    .formule-top h3 small, .formule-top .dates { color: #b6e63a; }
+    .formule-top .dates span { border-color: rgba(182,230,58,.45); }
+    /* Cadran avis (centre) */
+    .why-card.is-center { background: linear-gradient(160deg, #1f3454, #0f1b30); color: #ffffff; }
+    .why-card.is-center h3, .why-card.is-center .big, .why-card.is-center .ic { color: #cfe96a; }
+    .why-card.is-center p { color: rgba(255,255,255,.85); }
+    .why-card.is-center .fr { color: #b6e63a; }
+    /* Contact */
+    .contact .inner { background: linear-gradient(160deg, #1f3454, #0f1b30); }
+    .contact h2 { color: #cfe96a; }
+    .contact .blk b { color: #b6e63a; }
+    .contact .addr, .contact a, .contact .code { color: #eaf4cf; }
+    .contact .cbtn { border-color: rgba(182,230,58,.4); color: #eaf4cf; }
+    .contact .cbtn.gps { background: #b6e63a; color: #17263F; }
 </style>
 </head>
 <body>
@@ -301,6 +313,7 @@
 </div></div>
 
 <header class="hajj-hero" id="hajjHero">
+    <img class="hajj-logo" src="/logo-voyages21-hajj.png" alt="Voyages 21 — أسفار" onerror="this.style.display='none'">
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
     <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small dir="ltr">Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
