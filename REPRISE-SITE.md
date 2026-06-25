@@ -46,17 +46,23 @@ _Dernière mise à jour : 2026-06-25_
     son mot de passe perso + son code de secours. Le « mode démo » a disparu.
 
 ## ⏳ En attente de validation (preview à voir avant « go »)
-- **Hajj 2026 + Label Ministère (PR en cours, branche `claude/voyages21-website-ufgere`)** :
-  - Nouvelle page `/voyages/destinations/hajj-2026.html` : programme Hajj 2026
-    (2 formules économique/premium, tableau complet des prix, inclus/non-inclus,
-    encadré label + chiffres clés, CTA WhatsApp/tél).
+- **Hajj 2027 + Label Ministère (PR #88, branche `claude/voyages21-website-ufgere`)** :
+  - Nouvelle page `/voyages/destinations/hajj-2027.html` : programme **Hajj 2027
+    (1448 H)** — 2 formules économique/premium, tableau complet des prix,
+    inclus/non-inclus, encadré label + chiffres clés, slogan, **section avis
+    (socle)**, **bloc contact agence avec adresse cliquable GPS**, CTA WhatsApp/tél.
   - **Label « علامة جودة خدمات الحج »** (Ministère du Tourisme, depuis 2006) ajouté
     en `public/label-qualite-hajj.jpg` + bannière de confiance en haut de la
     rubrique « Omra & Hajj » (`destinations/omra.html`) qui mène à la page Hajj.
-  - **Plaquette A4 imprimable** : `/plaquette-hajj-2026.html` (print → PDF, partage).
+  - **Plaquette A4 imprimable** : `/plaquette-hajj-2027.html` (print → PDF, partage).
+  - **Paiement** : du **20 juin au 10 juillet 2026** (Bareed Bank).
+  - **Avis clients** : section « socle » en place — le bouton pointe pour l'instant
+    vers les avis Google de l'agence ; **Karim a lancé une campagne d'avis Hajj sur
+    Google**, le lien dédié sera branché plus tard (TODO en commentaire dans le code).
+  - **Slogan retenu (défaut)** : « أدِّ حجَّك… ونحن نتكفّل بالباقي » /
+    « Accomplissez votre Hajj en toute sérénité — nous nous occupons de tout le reste. »
+    (3 versions AR + 3 FR proposées à Karim, à arbitrer.)
   - ⏭️ Étape suivante demandée par Karim : **vidéo réseaux** (script + avatar).
-  - ⚠️ À vérifier avec Karim : dates exactes 2026, et fait que le Word source
-    mentionnait « 2027 » (corrigé en 2026 selon sa consigne).
 
 ## ▶️ Prochaines étapes (feux verts attendus)
 - **« go #75 »** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage).
