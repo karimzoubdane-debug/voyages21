@@ -44,6 +44,7 @@
     .trust-text h2 { color: var(--forest); font-size: 1.3rem; margin: .25rem 0 .35rem; }
     .trust-text p { color: var(--ink); font-size: .95rem; margin: 0; }
     .trust-text b { color: var(--forest); }
+    .trust-text .lic { margin-top: .6rem; display: inline-block; direction: ltr; background: var(--cream); border: 1px solid var(--gold); color: var(--forest2); font-size: .8rem; font-weight: 700; border-radius: 999px; padding: .35rem .9rem; }
 
     /* Pourquoi nous choisir — 3 cadrans */
     .why { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
@@ -62,7 +63,7 @@
     .why-card.is-center h3 { color: #fff; }
     .why-card p { font-size: .9rem; margin: 0; color: var(--muted); }
     .why-card.is-center p { color: rgba(255,255,255,.85); }
-    .why-card .fr { display: block; margin-top: .4rem; font-family: 'DM Sans', sans-serif; font-size: .82rem; color: var(--muted); }
+    .why-card .fr { display: block; direction: ltr; margin-top: .4rem; font-family: 'DM Sans', sans-serif; font-size: .82rem; color: var(--muted); }
     .why-card.is-center .fr { color: rgba(255,255,255,.7); }
 
     .hajj-wrap { max-width: var(--maxw); margin: 2.4rem auto 3rem; padding: 0 1.2rem; }
@@ -83,6 +84,9 @@
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
+    .price-table td.hotel .hotel-link { color: var(--forest); font-weight: 700; display: block; text-decoration: none; border-bottom: 1px dashed var(--gold); width: fit-content; }
+    .price-table td.hotel .hotel-link::after { content: " 🔎"; font-size: .7em; opacity: .7; }
+    .price-table td.hotel .hotel-link:hover { color: var(--gold); }
     .price-table td.hotel small { color: var(--muted); font-weight: 600; }
     .price-table tbody tr:hover { background: #faf8f2; }
     .price-table .price { font-weight: 700; color: var(--ink); white-space: nowrap; }
@@ -109,8 +113,12 @@
     .reviews-ref .stars { color: var(--gold); font-size: 1.4rem; letter-spacing: .15em; }
     .reviews-ref h2 { color: var(--forest); font-size: 1.4rem; margin: .5rem 0 .3rem; }
     .reviews-ref p { color: var(--ink); max-width: 62ch; margin: 0 auto; font-size: .98rem; }
-    .reviews-ref .gbtn { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.1rem; background: var(--forest); color: #fff; text-decoration: none; font-weight: 700; border-radius: 999px; padding: .85rem 1.6rem; }
-    .reviews-ref .gbtn:hover { filter: brightness(1.08); }
+    .reviews-ref .gbtn { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.1rem; background: var(--forest); color: #fff; text-decoration: none; font-weight: 700; border-radius: 999px; padding: .85rem 1.6rem; animation: glowPulse 1.8s ease-in-out infinite; }
+    .reviews-ref .gbtn:hover { filter: brightness(1.12); transform: translateY(-2px); }
+    @keyframes glowPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(200,164,64,.55); transform: scale(1); }
+        50% { box-shadow: 0 0 0 12px rgba(200,164,64,0); transform: scale(1.035); }
+    }
 
     /* Contact agence */
     .contact { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
@@ -132,7 +140,9 @@
     .carousel { position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 32px rgba(21,46,31,.12); background: #0d1f15; direction: ltr; }
     .carousel .track { display: flex; transition: transform .45s ease; }
     .carousel .slide { min-width: 100%; aspect-ratio: 16/9; background: #0d1f15 center/cover no-repeat; }
+    .carousel .slide.placeholder { display: flex; align-items: center; justify-content: center; color: var(--gold-soft); font-weight: 700; font-size: 1.05rem; background: repeating-linear-gradient(45deg, #122619, #122619 14px, #15321f 14px, #15321f 28px); text-align: center; padding: 1rem; }
     .carousel .nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.85); color: var(--forest2); border: 0; width: 42px; height: 42px; border-radius: 999px; cursor: pointer; font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    .carousel .nav[hidden] { display: none; }
     .carousel .prev { right: 12px; }
     .carousel .next { left: 12px; }
     .carousel .dots { position: absolute; bottom: 12px; inset-inline: 0; display: flex; gap: 7px; justify-content: center; }
@@ -187,17 +197,30 @@
     .options .call { display: flex; justify-content: center; margin-top: 1.2rem; position: relative; }
     .options .call a { display: inline-flex; align-items: center; gap: .5rem; background: var(--gold); color: var(--forest2); font-weight: 800; text-decoration: none; border-radius: 999px; padding: .9rem 1.8rem; }
 
-    /* Shimmer sur les bandeaux de dates */
+    /* Shimmer intensifié sur les bandeaux de dates */
     .formule-top { position: relative; overflow: hidden; }
-    .formule-top .dates { position: relative; }
-    .formule-top::after { content: ""; position: absolute; top: 0; inset-inline-start: -30%; width: 40%; height: 100%; background: linear-gradient(115deg, transparent, rgba(228,210,160,.35), transparent); transform: skewX(-18deg); animation: sweep 5s ease-in-out infinite; }
+    .formule-top::after { content: ""; position: absolute; top: 0; inset-inline-start: -30%; width: 55%; height: 100%; background: linear-gradient(115deg, transparent, rgba(228,210,160,.75), transparent); transform: skewX(-18deg); animation: sweep 2.8s ease-in-out infinite; }
+    .formule-top .dates { position: relative; z-index: 1; }
+    .formule-top .dates span { background: rgba(200,164,64,.14); border: 1px solid rgba(228,210,160,.45); border-radius: 999px; padding: .25rem .7rem; animation: datePulse 2s ease-in-out infinite; }
+    @keyframes datePulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(200,164,64,.0); border-color: rgba(228,210,160,.45); }
+        50% { box-shadow: 0 0 14px 1px rgba(200,164,64,.55); border-color: rgba(228,210,160,.9); }
+    }
 
     /* Apparition au défilement */
     .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.in { opacity: 1; transform: none; }
+
+    /* Apparition douce des prix (fondu léger, AUCUN défilement de chiffres) */
+    .formule .price { opacity: 0; transform: translateY(6px); transition: opacity .55s ease, transform .55s ease; }
+    .formule.in .price { opacity: 1; transform: none; }
+    .formule.in tbody tr:nth-child(1) .price { transition-delay: .05s; }
+    .formule.in tbody tr:nth-child(2) .price { transition-delay: .15s; }
+    .formule.in tbody tr:nth-child(3) .price { transition-delay: .25s; }
+    .formule.in tbody tr:nth-child(4) .price { transition-delay: .35s; }
     @media (prefers-reduced-motion: reduce) {
-        .why-card.is-center, .blink, .options .inner::before, .formule-top::after { animation: none; }
-        .reveal { opacity: 1; transform: none; transition: none; }
+        .why-card.is-center, .blink, .options .inner::before, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn { animation: none; }
+        .reveal, .formule .price { opacity: 1; transform: none; transition: none; }
     }
 
     @media (max-width: 760px) {
@@ -234,6 +257,7 @@
             <div class="k">علامة جودة معتمدة منذ 2006</div>
             <h2>وكالة حائزة على «علامة جودة خدمات الحج»</h2>
             <p>منحتها <b>وزارة السياحة المغربية</b> عبر الجامعة الوطنية لوكالات الأسفار، تقديرًا لجودة خدماتنا في تنظيم الحج. برنامج حج متكامل، فنادق قريبة من الحرمين، وتأطير ديني وتقني طيلة الرحلة.</p>
+            <div class="lic">رخصة وزارة السياحة رقم <b>2D/02</b> · Licence du Ministère du Tourisme N° 2D/02</div>
         </div>
     </div>
 </div>
@@ -246,16 +270,16 @@
     </div>
     <div class="why-grid">
         <div class="why-card">
-            <div class="big"><span class="num">26</span> سنة</div>
-            <h3>من الخبرة</h3>
+            <div class="big"><span class="num">26</span></div>
+            <h3>سنة من الخبرة</h3>
             <p>في تنظيم الأسفار، منها <b><span class="num">22</span> سنة</b> في خدمة ضيوف الرحمن (العمرة والحج).
-            <span class="fr">26 ans d'expertise, dont 22 ans dédiés aux Lieux Saints.</span></p>
+            <span class="fr" dir="ltr">26 ans d'expertise, dont 22 ans dédiés aux Lieux Saints.</span></p>
         </div>
         <a class="why-card is-center" href="https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener" aria-label="قراءة آراء عملائنا">
             <div class="ic">★★★★★</div>
             <h3>حجّاجنا يشهدون لنا</h3>
             <p>أصدق شهادة على جودتنا هي كلمات من رافقناهم. آراؤهم خيرُ توصية — <b>اضغط لقراءة آرائهم</b>.
-            <span class="fr">Nos pèlerins témoignent pour nous — cliquez pour lire leurs avis.</span></p>
+            <span class="fr" dir="ltr">Nos pèlerins témoignent pour nous — cliquez pour lire leurs avis.</span></p>
         </a>
         <div class="why-card">
             <div class="label-mini"><img src="/label-qualite-hajj.jpg" alt="علامة جودة خدمات الحج"></div>
@@ -294,25 +318,25 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hotel"><b>سنود الريان</b><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Snood+Al+Rayan+hotel+Makkah" target="_blank" rel="noopener">سنود الريان</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">67 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">74 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">86 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><b>بست ويسترن</b><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Best+Western+hotel+Makkah" target="_blank" rel="noopener">بست ويسترن</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">70 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">76 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">87 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><b>جادة أجياد</b><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Jadah+Ajyad+hotel+Makkah" target="_blank" rel="noopener">جادة أجياد</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">75 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">79 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><b>سنود أجياد</b><small>≈ 250 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Snood+Ajyad+hotel+Makkah" target="_blank" rel="noopener">سنود أجياد</a><small>≈ 250 م من الحرم · المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">77 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">84 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">99 500</span><small>درهم</small></td>
@@ -340,25 +364,25 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hotel"><b>أجياد مكة مكارم — الملحق المجدّد</b><small>المدينة: سجى المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — الملحق المجدّد</a><small>المدينة: سجى المدينة</small></td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">105 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">123 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><b>أجياد مكة مكارم — المبنى الرئيسي</b><small>المدينة: أنوار المدينة موفنبيك</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — المبنى الرئيسي</a><small>المدينة: أنوار المدينة موفنبيك</small></td>
                     <td class="price"><span class="num">104 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">115 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">136 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><b>السويس مكة — بلتمور 5 نجوم</b><small>المدينة: فندق المدينة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Biltmore+Suites+Makkah+hotel" target="_blank" rel="noopener">السويس مكة — بلتمور 5 نجوم</a><small>المدينة: فندق المدينة</small></td>
                     <td class="price"><span class="num">132 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">146 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">173 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><b>الفيرمونت</b><small>إطلالة على الحرم · فئة فاخرة</small></td>
+                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/search?q=Fairmont+Makkah+Clock+Royal+Tower" target="_blank" rel="noopener">الفيرمونت</a><small>إطلالة على الحرم · فئة فاخرة</small></td>
                     <td class="price"><span class="num">137 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">154 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">185 900</span><small>درهم</small></td>
@@ -432,15 +456,17 @@
 </div>
 
 <!-- Galerie carrousel (alimentée par l'admin médias : clé « galerie-hajj ») -->
-<section class="gallery" id="galleryWrap" hidden>
+<section class="gallery" id="galleryWrap">
     <div class="sec-head">
         <div class="eyebrow">Galerie</div>
         <h2>لحظات من رحلاتنا</h2>
     </div>
     <div class="carousel" id="carousel">
-        <div class="track" id="carTrack"></div>
-        <button class="nav prev" id="carPrev" aria-label="السابق">‹</button>
-        <button class="nav next" id="carNext" aria-label="التالي">›</button>
+        <div class="track" id="carTrack">
+            <div class="slide placeholder" id="carPlaceholder">📷 صور رحلاتنا قريبًا — Galerie en cours</div>
+        </div>
+        <button class="nav prev" id="carPrev" aria-label="السابق" hidden>‹</button>
+        <button class="nav next" id="carNext" aria-label="التالي" hidden>›</button>
         <div class="dots" id="carDots"></div>
     </div>
 </section>
@@ -506,29 +532,11 @@
     // Apparition au défilement
     var revealEls = document.querySelectorAll('.why, .formule, .options, .incl-grid, .note-box, .reviews-ref, .contact, .gallery');
     Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('reveal'); });
-    function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
-    function countUp(el) {
-        var target = parseInt((el.getAttribute('data-val') || el.textContent).replace(/[^0-9]/g, ''), 10);
-        if (!target || target < 1000) return; // on n'anime que les vrais montants
-        el.setAttribute('data-val', target);
-        var start = null, dur = 1100;
-        function step(ts) {
-            if (!start) start = ts;
-            var p = Math.min((ts - start) / dur, 1);
-            var eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = fmt(Math.round(target * eased));
-            if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-    }
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) {
                 if (!en.isIntersecting) return;
                 en.target.classList.add('in');
-                if (en.target.classList.contains('formule')) {
-                    en.target.querySelectorAll('.price .num').forEach(countUp);
-                }
                 io.unobserve(en.target);
             });
         }, { threshold: 0.15 });
@@ -543,21 +551,24 @@
         .then(function (media) {
             var rec = (media && media['galerie-hajj']) || {};
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
-            if (!imgs.length) return;
+            if (!imgs.length) return; // l'emplacement « Galerie en cours » reste affiché
 
             // Photo d'ambiance dans le hero
             var hero = document.getElementById('hajjHero');
             hero.classList.add('has-photo');
-            hero.style.setProperty('--x', '0');
             var st = document.createElement('style');
             st.textContent = '#hajjHero::after{background-image:url(\'' + imgs[0].replace(/'/g, "%27") + '\')}';
             document.head.appendChild(st);
 
-            // Carrousel
-            var wrap = document.getElementById('galleryWrap');
+            // Carrousel : on retire l'emplacement et on affiche les vraies photos
             var track = document.getElementById('carTrack');
             var dots = document.getElementById('carDots');
-            wrap.hidden = false;
+            var ph = document.getElementById('carPlaceholder');
+            if (ph) ph.remove();
+            if (imgs.length > 1) {
+                document.getElementById('carPrev').hidden = false;
+                document.getElementById('carNext').hidden = false;
+            }
             imgs.forEach(function (url, i) {
                 var s = document.createElement('div');
                 s.className = 'slide';
