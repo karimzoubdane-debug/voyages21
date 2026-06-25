@@ -313,7 +313,7 @@
 </div></div>
 
 <header class="hajj-hero" id="hajjHero">
-    <img class="hajj-logo" src="/logo-voyages21-hajj.png" alt="Voyages 21 — أسفار" onerror="this.style.display='none'">
+    <img class="hajj-logo" id="hajjLogo" alt="Voyages 21 — أسفار" style="display:none">
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
     <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small dir="ltr">Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
@@ -639,6 +639,14 @@
     fetch('/api/media', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : {}; })
         .then(function (media) {
+            // Logo piloté par l'admin médias (clé "logo-hajj")
+            var logoRec = (media && media['logo-hajj']) || {};
+            var logoUrl = logoRec.images && logoRec.images[0] && logoRec.images[0].url;
+            if (logoUrl) {
+                var lg = document.getElementById('hajjLogo');
+                if (lg) { lg.src = logoUrl; lg.style.display = 'block'; }
+            }
+
             var rec = (media && media['galerie-hajj']) || {};
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
             if (!imgs.length) return; // l'emplacement « Galerie en cours » reste affiché
