@@ -45,43 +45,57 @@ _Dernière mise à jour : 2026-06-25_
     `V21_AUTH_SECRET`, `V21_RECOVERY_CODE` (Production + Preview). Karim détient
     son mot de passe perso + son code de secours. Le « mode démo » a disparu.
 
-## ⏳ En attente de validation (preview à voir avant « go »)
-- **Hajj 2027 + Label Ministère (PR #88, branche `claude/voyages21-website-ufgere`)** :
-  - Nouvelle page `/voyages/destinations/hajj-2027.html` : programme **Hajj 2027
-    (1448 H)** — 2 formules économique/premium, tableau complet des prix,
-    inclus/non-inclus, encadré label + chiffres clés, slogan, **section avis
-    (socle)**, **bloc contact agence avec adresse cliquable GPS**, CTA WhatsApp/tél.
-  - **Label « علامة جودة خدمات الحج »** (Ministère du Tourisme, depuis 2006) ajouté
-    en `public/label-qualite-hajj.jpg` + bannière de confiance en haut de la
-    rubrique « Omra & Hajj » (`destinations/omra.html`) qui mène à la page Hajj.
-  - **Plaquette A4** : abandonnée (jugée redondante avec la page web).
-  - **Animations** : cadran avis cliquable + battement de cœur, section services
-    optionnels animée + bouton « Appelez-nous » clignotant, apparition au
-    défilement, compteur de prix animé, shimmer sur les dates.
-  - **Contacts nommés** : Wafa (0614 15 26 86) / Fouad (0673 28 00 09) — à confirmer.
-  - **Visuel WhatsApp** : « مناسك الحج 2027 · 1448 هـ » + 2 numéros + site.
-  - **Paiement** : du **20 juin au 10 juillet 2026** (Bareed Bank).
-  - **Avis clients** : section « socle » en place — le bouton pointe pour l'instant
-    vers les avis Google de l'agence ; **Karim a lancé une campagne d'avis Hajj sur
-    Google**, le lien dédié sera branché plus tard (TODO en commentaire dans le code).
-  - **Slogan validé** : « أنتم للعبادة… ونحن للتنظيم » /
-    « Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous. »
-  - **Section « Pourquoi nous choisir »** (3 cadrans) : 26 ans d'expérience dont
-    22 aux Lieux Saints · au centre « nos clients témoignent » · label Ministère
-    renouvelé chaque année (avec visuel du label).
-  - **Prix** : corrigés (chiffres forcés en LTR) + ordre des colonnes calé sur la
-    maquette officielle (Rabaïya / Thoulathiya / Thounaïya).
-  - **Contacts** : adresse Marrakech cliquable (point GPS) + **bouton Itinéraire
-    Google Maps** + **2 mobiles** (0614 15 26 86 / 0673 28 00 09) en WhatsApp et
-    tél + **barre flottante** (style fiches voyages).
-  - **Galerie carrousel** en bas de page, alimentée par l'admin médias (nouvelle
-    clé **« galerie-hajj »**, univers Omra & Hajj) → Karim y dépose ses vraies
-    photos. ⚠️ Le proxy de l'environnement bloque le téléchargement d'images du
-    web : les photos réelles passent donc par l'admin médias.
-  - **Diffusion WhatsApp** : balises Open Graph + **visuel carré**
-    `public/images/share-hajj-2027.png` (« HAJJ 2027 » + label, sans prix), généré
-    depuis `public/share-hajj-2027.html` (capture Chromium local).
-  - ⏭️ Étape suivante demandée par Karim : **vidéo réseaux** (script + avatar).
+## ⏳ Hajj 2027 — PR #88, branche `claude/voyages21-website-ufgere` (EN COURS, mode test)
+Page : `public/voyages/destinations/hajj-2027.html` · Carte d'accès : bannière en haut
+de `public/voyages/destinations/omra.html` (rubrique « Omra & Hajj » → mène à la page).
+Preview : `https://voyages21-git-claude-voyages21-website-ufgere-voyages21.vercel.app/voyages/destinations/hajj-2027.html`
+
+**Contenu en place (validé par Karim) :**
+- Programme Hajj 2027 (1448 H), paiement Bareed Bank **20 juin → 10 juillet 2026**.
+- 2 formules : **« برنامج الراحة » / « برنامج الراحة الممتاز »** (Confort / Confort Premium),
+  tableau complet des prix (colonnes رباعية/ثلاثية/ثنائية), chiffres forcés LTR.
+- Hôtels **Mecque ET Médine cliquables** (Google Maps), pastilles **taille uniforme**,
+  emoji 👆 sautillant + infobulle, sans distances en mètres.
+- Section **« Pourquoi nous choisir »** (3 cadrans, flux lumineux doré sur le contour) ;
+  cadran avis cliquable + battement de cœur. Services optionnels en **3ᵉ colonne**.
+- Label Ministère (`public/label-qualite-hajj.jpg`) + **licence 2D/02**.
+- Slogan « أنتم للعبادة… ونحن للتنظيم » / « la dévotion pour vous, l'organisation pour nous ».
+- Contacts **Wafa (0614 15 26 86) / Fouad (0673 28 00 09)**, WhatsApp + tél + Itinéraire GPS,
+  barre flottante à droite, mention « contactez-nous » soulignée rouge.
+- **Thème couleur (dernier choisi)** : **fond vert fluo uniforme `#c9f23a` + texte bleu nuit
+  `#17263F`** (bloc CSS « Thème » en bas du `<style>`, facile à modifier).
+- **Logo** dans la **bande bleue du haut, centré** (`#hajjLogo`), piloté par l'admin médias
+  clé **`logo-hajj`** → ✅ fonctionne.
+- **Visuel WhatsApp** : `public/images/share-hajj-2027.png` (« مناسك الحج 2027 · 1448 هـ »),
+  source `public/share-hajj-2027.html` (capture via Chromium local + playwright-core).
+
+**🐞 PROBLÈME OUVERT — le carrousel galerie ne s'affiche pas :**
+- La galerie est pilotée par l'admin médias, clé **`galerie-hajj`** (univers Omra & Hajj).
+- L'export du manifeste fourni par Karim (`voyages21medias_47.json`) **contient bien 6 images
+  valides** sous `galerie-hajj` (URLs `*.blob.vercel-storage.com`), et `logo-hajj` (1 image).
+- **Le logo s'affiche** (même mécanisme `/api/media`) **mais pas le carrousel.** Le code lit
+  `media['galerie-hajj'].images[].url` exactement comme le logo ; carrousel reconstruit en
+  `<img>` (object-fit cover) ; un **diagnostic visible** affiche « 0 photo détectée » si l'API
+  ne renvoie rien pour cette clé (+ `console.log('[galerie-hajj]…')`).
+- **Hypothèse n°1** : le live `/api/media` ne contient PAS `galerie-hajj` (enregistrement admin
+  qui n'a pas persisté), alors que l'export en mémoire l'avait → **re-sauver dans l'admin**
+  (preview) : Galerie Hajj 2027 → retirer/remettre une photo pour redéclencher « ✓ Enregistré ».
+- **Hypothèse n°2** : souci de rendu côté page (à confirmer via la console / le diagnostic).
+- ⚠️ **LIMITE ENVIRONNEMENT** : le proxy **bloque (403)** `www.voyages21.com` ET la preview
+  `*.vercel.app` → impossible d'interroger `/api/media` en direct depuis l'agent pour trancher.
+  Il faut le **retour visuel de Karim** (le diagnostic affiche « 0 photo détectée » ou le
+  carrousel) ou qu'il regarde la **console navigateur** (`[galerie-hajj] images détectées : N`).
+- ⚠️ **LIMITE FICHIERS** : les images **collées en aperçu** dans le chat ne sont PAS écrites sur
+  le disque de l'agent (seuls le tout 1ᵉʳ label joint + le `.json` exporté l'ont été). Donc logo
+  et photos passent **obligatoirement par l'admin médias** (clés `logo-hajj` / `galerie-hajj`).
+
+**Admin à utiliser (PREVIEW, car les clés galerie-hajj/logo-hajj n'existent pas encore en prod) :**
+`https://voyages21-git-claude-voyages21-website-ufgere-voyages21.vercel.app/admin`
+→ Médias → univers « Omra & Hajj » → « Galerie Hajj 2027 » + « Logo Voyages 21 ».
+
+⏭️ **Étapes restantes** : (1) résoudre l'affichage du carrousel, (2) « go officiel » = squash-merge
+PR #88 sur main, (3) **vidéo réseaux** (prompt Higgsfield déjà rédigé : route A photo réelle animée
+ou route B 100 % générée, format 9:16 + 1:1, textes « مناسك الحج 2027 », sans prix).
 
 ## ▶️ Prochaines étapes (feux verts attendus)
 - **« go #75 »** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage).
