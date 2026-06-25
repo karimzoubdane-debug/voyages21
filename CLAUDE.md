@@ -31,6 +31,18 @@ proposer la prochaine action et attendre le « go ». Mettre à jour
 `REPRISE.md` après chaque avancée. Karim n'a JAMAIS à réexpliquer le contexte
 ni à préciser la destination : c'est Claude qui rappelle où on en était.
 
+## 🇺🇸 Reprise « V21 USA » (INCOMING — touristes étrangers → Maroc) — PROJET CLOISONNÉ
+Dès que Karim écrit **« V21 USA »** (même seul) au début d'une conversation :
+lire **UNIQUEMENT** `v21-usa/REPRISE.md`. Résumer en **3 lignes** où on en est
+(dernière action + prochaine étape proposée), puis **TOUJOURS attendre le « go »
+de Karim** avant d'agir. Mettre à jour `v21-usa/REPRISE.md` après chaque avancée.
+- **Périmètre** : amener des étrangers présents aux USA à voyager au Maroc via
+  l'agence (incoming) — ads Meta/autres + social selling + asset HelloMorroco.
+- **CLOISONNEMENT STRICT** : ce projet est SÉPARÉ. NE PAS charger ni mélanger le
+  contexte du site (`REPRISE-SITE.md` / « www.voyages21.com ») ni de l'outgoing
+  (`content-studio/REPRISE.md` / « V21 STUDIO »). Aucune interférence entre les
+  trois projets. Si Karim n'a pas tapé « V21 USA », ne pas ouvrir ce dossier.
+
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
 - **Fondateur** : Karim Zoubdane
