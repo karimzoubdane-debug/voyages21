@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu / Navigation — Admin Voyages21</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --cream:#F5F0E8; --line:#e3ddd0; --ink:#2a2a2a; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); }
+  header{ background:var(--forest); color:#fff; padding:14px 20px; display:flex; align-items:center; gap:16px; position:sticky; top:0; z-index:10; }
+  header h1{ font-family:'Playfair Display',serif; font-size:1.15rem; margin:0; flex:1; }
+  header a.back{ color:#fff; text-decoration:none; font-size:.9rem; opacity:.85; }
+  header a.back:hover{ opacity:1; }
+  .btn{ border:0; border-radius:8px; padding:.55rem 1rem; font-weight:700; cursor:pointer; font-family:inherit; font-size:.9rem; }
+  .btn-save{ background:var(--gold); color:#2a2310; }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-add{ background:var(--forest); color:#fff; }
+  .btn-mini{ background:#fff; border:1px solid var(--line); color:var(--ink); padding:.25rem .55rem; border-radius:6px; cursor:pointer; font-size:.85rem; margin:2px 0; }
+  .btn-mini:hover{ border-color:var(--gold); }
+  .wrap{ max-width:920px; margin:22px auto; padding:0 18px 90px; }
+  .hint{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:8px; padding:12px 14px; font-size:.9rem; margin-bottom:18px; }
+  .item{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:14px; }
+  .row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .arrows{ display:inline-flex; flex-direction:column; }
+  .arrows button{ line-height:1; padding:1px 7px; }
+  input.lbl{ flex:1; min-width:150px; border:1px solid var(--line); border-radius:7px; padding:.45rem .6rem; font-family:inherit; font-size:.95rem; }
+  .badge{ font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:.18rem .5rem; border-radius:20px; background:#eef3ee; color:var(--forest); }
+  .badge.page{ background:#f6efdd; color:#8a6d12; }
+  .hidden-tag{ color:#b23; font-weight:700; font-size:.8rem; }
+  .nest{ margin:10px 0 4px 16px; padding-left:14px; border-left:2px dashed var(--line); }
+  .sub{ background:#faf8f3; border:1px solid var(--line); border-radius:9px; padding:9px 11px; margin-bottom:9px; }
+  .leaf{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-bottom:7px; }
+  .muted{ color:#8a7d63; font-size:.82rem; }
+  .pagebox{ margin-top:8px; }
+  .pagebox textarea{ width:100%; border:1px solid var(--line); border-radius:7px; padding:.4rem .55rem; font-family:inherit; font-size:.88rem; resize:vertical; }
+  .pagebox select{ width:100%; min-height:84px; border:1px solid var(--line); border-radius:7px; padding:.3rem; font-family:inherit; font-size:.85rem; margin-top:6px; }
+  .toolbar{ display:flex; gap:10px; align-items:center; margin:18px 0; flex-wrap:wrap; }
+  .status{ font-size:.9rem; font-weight:600; }
+  .del{ color:#b23; }
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="/admin">← Espace admin</a>
+  <h1>Menu / Navigation</h1>
+  <button class="btn btn-save" id="saveBtn" onclick="save()">💾 Enregistrer</button>
+</header>
+
+<div class="wrap">
+  <div class="hint">
+    Pilote ici <strong>tout le menu du site</strong> : ajoute un titre, un continent, un pays ou un
+    <strong>sous-menu</strong> (bouton ＋ sous chaque élément), change l'ordre (flèches ↑↓), masque un élément
+    (👁) — sa page se ferme aussi. Les <strong>nouvelles pages</strong> (badge <span class="badge page">page auto</span>)
+    se créent toutes seules : choisis les voyages qu'elles affichent. N'oublie pas <strong>💾 Enregistrer</strong>.
+  </div>
+
+  <div class="toolbar">
+    <button class="btn btn-add" onclick="addTitle()">＋ Titre principal</button>
+    <button class="btn btn-ghost" onclick="reload()">↻ Annuler mes changements</button>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div id="tree"></div>
+</div>
+
+<script src="/voyages/data.js"></script>
+<script>
+const MAX_DEPTH = 3; // profondeur de sous-menus sous un titre principal
+let state = { config: { v:1, items: [] }, voyages: [] };
+
+function slugify(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || ('page-'+Date.now()); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function setStatus(t,ok){ const e=document.getElementById('status'); e.textContent=t; e.style.color = ok===false?'#b23':(ok?'#1B7a3a':'#8a7d63'); }
+
+// ---- chemin encodé en chaîne (sans guillemets) : "0/continents/1/cols/2" ----
+function pstr(path){ return path.join('/'); }
+function parsePath(s){ return String(s).split('/').map(x=> /^\d+$/.test(x) ? Number(x) : x); }
+function parentArrayOf(path){
+  let array=state.config.items, obj=null;
+  for(let s=0;s<path.length;s++){ const key=path[s];
+    if(typeof key==='number'){ if(s===path.length-1) return {arr:array, idx:key}; obj=array[key]; }
+    else { array=obj[key]; }
+  }
+  return {arr:array, idx:path[path.length-1]};
+}
+function getNode(path){ const {arr,idx}=parentArrayOf(path); return arr[idx]; }
+
+// ---- mutations (reçoivent le chemin en chaîne) ----
+function move(ps,dir){ const {arr,idx}=parentArrayOf(parsePath(ps)); const j=idx+dir;
+  if(j<0||j>=arr.length) return; const t=arr[idx]; arr[idx]=arr[j]; arr[j]=t; render(); }
+function toggleHide(ps){ const n=getNode(parsePath(ps)); n.hidden=!n.hidden; render(); }
+function remove(ps){ const {arr,idx}=parentArrayOf(parsePath(ps));
+  if(!confirm('Supprimer « '+(arr[idx].label||'cet élément')+' » ?')) return; arr.splice(idx,1); render(); }
+function setLabel(ps,val){ getNode(parsePath(ps)).label=val; }
+function setField(ps,field,val){ getNode(parsePath(ps))[field]=val; }
+function setSlugs(ps,sel){ getNode(parsePath(ps)).slugs=Array.from(sel.selectedOptions).map(o=>o.value); }
+
+function newPageLeaf(label){ const id=slugify(label); return { id, key:id, label, hidden:false, title:label, description:'', slugs:[] }; }
+function addTitle(){ const label=prompt('Nom du nouveau titre principal :','Nouveau titre'); if(!label) return;
+  const id=slugify(label); state.config.items.push({ id, key:id, label, type:'link', title:label, description:'', slugs:[], hidden:false }); render(); }
+function addChildTo(ps){ const n=getNode(parsePath(ps)); n.children=n.children||[];
+  const label=prompt('Nom du sous-menu / sous-page :','Nouveau sous-menu'); if(!label) return;
+  n.children.push(newPageLeaf(label)); render(); }
+function addContinent(ps){ const n=getNode(parsePath(ps)); n.continents=n.continents||[];
+  const label=prompt('Nom du continent / groupe :','Nouveau continent'); if(!label) return;
+  n.continents.push({ id:slugify(label), label, hidden:false, cols:[] }); render(); }
+function addCol(ps){ const n=getNode(parsePath(ps)); n.cols=n.cols||[];
+  const label=prompt('Nom du pays / de la page :','Nouveau pays'); if(!label) return;
+  n.cols.push(newPageLeaf(label)); render(); }
+
+// ---- briques de rendu ----
+function arrows(ps){ return '<span class="arrows">'+
+  '<button class="btn-mini" title="Monter" onclick="move(\''+ps+'\',-1)">▲</button>'+
+  '<button class="btn-mini" title="Descendre" onclick="move(\''+ps+'\',1)">▼</button></span>'; }
+function eyeBtn(ps,hidden){ return '<button class="btn-mini" title="Afficher / masquer" onclick="toggleHide(\''+ps+'\')">'+(hidden?'🙈':'👁')+'</button>'; }
+function delBtn(ps){ return '<button class="btn-mini del" title="Supprimer" onclick="remove(\''+ps+'\')">🗑</button>'; }
+function lblInput(ps,val){ return '<input class="lbl" value="'+esc(val)+'" oninput="setLabel(\''+ps+'\', this.value)">'; }
+function hiddenTag(node){ return node.hidden?'<span class="hidden-tag">masqué</span>':''; }
+function nodeRow(ps,node,badge){ return '<div class="row">'+arrows(ps)+eyeBtn(ps,node.hidden)+lblInput(ps,node.label)+badge+hiddenTag(node)+delBtn(ps)+'</div>'; }
+
+function pageBox(ps,node){
+  if(node.url) return '';
+  const opts = state.voyages.map(v=>'<option value="'+esc(v.slug)+'"'+((node.slugs||[]).indexOf(v.slug)>=0?' selected':'')+'>'+esc(v.title||v.slug)+'</option>').join('');
+  return '<div class="pagebox">'+
+    '<div class="muted">Description de la page (optionnel) :</div>'+
+    '<textarea rows="2" oninput="setField(\''+ps+'\',\'description\', this.value)">'+esc(node.description||'')+'</textarea>'+
+    '<div class="muted" style="margin-top:6px">Voyages affichés (Ctrl/Cmd pour en choisir plusieurs) :</div>'+
+    '<select multiple onchange="setSlugs(\''+ps+'\', this)">'+opts+'</select></div>';
+}
+
+// Rendu récursif d'un nœud (titre, sous-menu, pays, page…).
+function renderNode(path, node, depth){
+  const ps = pstr(path);
+  const isMega = !!node.continents;
+  const hasChildren = node.children && node.children.length;
+  const wrap = depth===0 ? 'item' : (depth===1 ? 'sub' : 'leaf');
+  let badge;
+  if(isMega) badge='<span class="badge">méga-menu</span>';
+  else if(hasChildren) badge='<span class="badge">menu déroulant</span>';
+  else if(node.url) badge='<span class="badge">lien</span>';
+  else badge='<span class="badge page">page auto</span>';
+
+  let html = '<div class="'+wrap+'">' + nodeRow(ps,node,badge);
+
+  if(isMega){
+    html += '<div class="nest">';
+    (node.continents||[]).forEach((c,j)=>{
+      const cps = pstr(path.concat('continents',j));
+      html += '<div class="sub">' + nodeRow(cps,c,'<span class="badge">continent</span>') + '<div class="nest">';
+      (c.cols||[]).forEach((col,k)=>{ html += renderLeaf(path.concat('continents',j,'cols',k), col); });
+      html += '<button class="btn-mini" onclick="addCol(\''+cps+'\')">＋ Pays / page</button></div></div>';
+    });
+    html += '<button class="btn-mini" onclick="addContinent(\''+ps+'\')">＋ Continent / groupe</button></div>';
+  } else {
+    if(!node.url && !hasChildren) html += pageBox(ps,node);
+    html += '<div class="nest">';
+    (node.children||[]).forEach((ch,k)=>{ html += renderNode(path.concat('children',k), ch, depth+1); });
+    if(depth < MAX_DEPTH) html += '<button class="btn-mini" onclick="addChildTo(\''+ps+'\')">＋ Sous-menu</button>';
+    html += '</div>';
+  }
+  return html + '</div>';
+}
+
+// Feuille simple (pays dans un méga-menu) : pas de sous-niveau supplémentaire.
+function renderLeaf(path, node){
+  const ps = pstr(path);
+  const badge = node.url ? '<span class="badge">pays</span>' : '<span class="badge page">page auto</span>';
+  return '<div class="leaf">' + nodeRow(ps,node,badge) + pageBox(ps,node) + '</div>';
+}
+
+function render(){
+  document.getElementById('tree').innerHTML =
+    state.config.items.map((it,i)=> renderNode([i], it, 0)).join('');
+}
+
+// ---- chargement / sauvegarde ----
+function loadVoyages(){
+  const out=[]; const V=window.VOYAGES||{};
+  Object.keys(V).forEach(k=>out.push({ slug:k, title:(V[k]&&V[k].title)||k }));
+  return fetch('/api/produits',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
+    const custom=(d&&d.custom)||{}; Object.keys(custom).forEach(k=>{ if(!V[k]) out.push({ slug:k, title:(custom[k].title||k)+' (admin)' }); });
+  }).catch(()=>{}).then(()=>{ out.sort((a,b)=>a.title.localeCompare(b.title)); state.voyages=out; });
+}
+function reload(){ load(); }
+function load(){
+  setStatus('Chargement…');
+  Promise.all([
+    fetch('/api/menu',{cache:'no-store'}).then(r=>r.ok?r.json():null),
+    loadVoyages(),
+  ]).then(([config])=>{
+    if(config && Array.isArray(config.items)) state.config=config;
+    render(); setStatus('');
+  }).catch(()=>{ setStatus('Erreur de chargement', false); });
+}
+function save(){
+  setStatus('Enregistrement…');
+  fetch('/api/menu',{ method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ config: state.config }) })
+    .then(r=>r.json())
+    .then(d=>{ if(d.ok){ setStatus('✅ Enregistré — visible sur le site', true); } else { setStatus('❌ '+(d.error||'échec'), false); } })
+    .catch(()=>setStatus('❌ Erreur réseau', false));
+}
+load();
+</script>
+</body>
+</html>

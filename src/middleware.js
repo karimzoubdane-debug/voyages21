@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 import { getRole } from './lib/auth.js';
 
 // Réservées au propriétaire (Karim)
-const OWNER_ONLY = new Set(['/admin-produits.html', '/admin-cover.html']);
+const OWNER_ONLY = new Set(['/admin-produits.html', '/admin-cover.html', '/admin-menu.html']);
 // Accessibles à l'équipe ET au propriétaire
 const TEAM_OR_OWNER = new Set(['/admin-medias.html', '/formulaire-voyage.html']);
 
@@ -28,5 +28,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/admin-produits.html', '/admin-cover.html', '/admin-medias.html', '/formulaire-voyage.html'],
+  matcher: ['/admin-produits.html', '/admin-cover.html', '/admin-menu.html', '/admin-medias.html', '/formulaire-voyage.html'],
 };
