@@ -132,6 +132,18 @@
     .incl.opt .call { display: block; text-align: center; margin-top: auto; background: var(--gold); color: var(--forest2); font-weight: 800; text-decoration: none; border-radius: 999px; padding: .7rem 1rem; font-size: .9rem; }
     .incl.opt ul { margin-bottom: 1rem; }
 
+    /* Flux de lumière dorée autour du contour des cadrans */
+    @property --ba { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    .incl { position: relative; }
+    .incl::before {
+        content: ""; position: absolute; inset: 0; border-radius: 16px; padding: 2px; pointer-events: none;
+        background: conic-gradient(from var(--ba), transparent 0 60%, var(--gold) 78%, #fbeec2 86%, transparent 100%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude;
+        animation: borderFlow 5s linear infinite;
+    }
+    @keyframes borderFlow { to { --ba: 360deg; } }
+
     .note-box { background: #fff; border: 1px solid var(--line); border-inline-start: 4px solid var(--gold); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1.4rem; color: var(--forest2); font-size: .95rem; }
     .note-box .contact-hl { display: inline-block; margin-top: .4rem; color: #b23a2e; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
     .note-box .contact-hl:hover { color: #8e2d24; }
@@ -248,7 +260,7 @@
     .formule.in tbody tr:nth-child(3) .price { transition-delay: .25s; }
     .formule.in tbody tr:nth-child(4) .price { transition-delay: .35s; }
     @media (prefers-reduced-motion: reduce) {
-        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .price-table td.hotel .hotel-link, .price-table td.hotel .hotel-link::before { animation: none; }
+        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .price-table td.hotel .hotel-link, .price-table td.hotel .hotel-link::before, .incl::before { animation: none; }
         .reveal, .formule .price { opacity: 1; transform: none; transition: none; }
     }
 
