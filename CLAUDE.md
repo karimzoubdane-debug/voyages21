@@ -1,5 +1,12 @@
 # Voyages21 — Fiche projet
 
+## 🪙 Règle d'or de Karim (mot-clé « ma règle d'or »)
+Dès que Karim écrit **« ma règle d'or »** : avancer **pas à pas, une seule
+étape = une seule phrase**, puis **STOP et attendre son « go »** avant de passer
+à l'étape suivante. Ne JAMAIS enchaîner plusieurs étapes d'un coup. La règle
+reste active toute la conversation, jusqu'à ce que Karim dise « stop la règle
+d'or » (ou équivalent).
+
 > 🤝 **À LIRE EN PREMIER : `COLLAB-IA.md`** (racine du dépôt) — règles communes à
 > toutes les IA (Codex, Claude, autres) : source de vérité du site (vrai site
 > `src/app` + `public/voyages` vs maquettes `public/design`), jamais de push direct
