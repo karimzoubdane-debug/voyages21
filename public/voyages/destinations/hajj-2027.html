@@ -76,6 +76,7 @@
     .formule { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 28px rgba(21,46,31,.08); overflow: hidden; margin-bottom: 1.8rem; }
     .formule-top { background: linear-gradient(160deg, #25543b, #152e1f); color: #fff; padding: 1.2rem 1.4rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem 1rem; justify-content: space-between; }
     .formule-top h3 { font-size: 1.5rem; margin: 0; }
+    .formule-top h3 small { display: block; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .8rem; color: var(--gold-soft); margin-top: .15rem; letter-spacing: .03em; }
     .formule-top .dates { font-size: .9rem; color: var(--gold-soft); font-weight: 700; }
     .formule-top .dates span { display: inline-block; margin-inline-start: .8rem; }
 
@@ -84,9 +85,16 @@
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
-    .price-table td.hotel .hotel-link { color: var(--forest); font-weight: 700; display: inline-block; text-decoration: none; background: rgba(200,164,64,.12); border: 1px solid rgba(200,164,64,.5); border-radius: 8px; padding: .2rem .55rem; transition: .18s; }
-    .price-table td.hotel .hotel-link::after { content: " 🔎"; font-size: .72em; opacity: .8; }
-    .price-table td.hotel .hotel-link:hover { background: var(--gold); color: var(--forest2); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,164,64,.35); }
+    .price-table td.hotel .hotel-link { position: relative; color: var(--forest); font-weight: 700; display: inline-block; text-decoration: none; background: rgba(200,164,64,.12); border: 1px solid #e53935; border-radius: 8px; padding: .2rem .55rem; transition: background .18s, color .18s, box-shadow .18s, transform .18s; animation: hotelActive 1.8s ease-in-out infinite; }
+    .price-table td.hotel .hotel-link::after { content: " 🔎"; font-size: .72em; opacity: .85; }
+    @keyframes hotelActive {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(229,57,53,.35); border-color: #e8b53a; }
+        50% { box-shadow: 0 0 0 4px rgba(229,57,53,0); border-color: #e53935; }
+    }
+    .price-table td.hotel .hotel-link:hover { background: #e53935; color: #fff; border-color: #e53935; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 16px rgba(229,57,53,.4); animation: none; }
+    /* Info-bulle « cliquez pour voir l'hôtel » */
+    .price-table td.hotel .hotel-link::before { content: "👁 اضغط لرؤية الفندق · Voir l'hôtel"; position: absolute; bottom: 122%; right: 50%; transform: translateX(50%) translateY(5px); background: #1b1b1b; color: #fff; font-size: .68rem; font-weight: 600; padding: .3rem .6rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: .18s; z-index: 6; }
+    .price-table td.hotel .hotel-link:hover::before { opacity: 1; transform: translateX(50%) translateY(0); }
 
     /* Bannière : noms d'hôtels cliquables */
     .hotel-hint { display: flex; align-items: center; gap: .7rem; justify-content: center; flex-wrap: wrap; text-align: center;
@@ -104,13 +112,18 @@
     .supp ul { margin: .4rem 0 0; padding-inline-start: 1.2rem; }
 
     /* Inclus / Non inclus */
-    .incl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .incl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; align-items: start; }
     .incl { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem 1.4rem; box-shadow: 0 6px 18px rgba(21,46,31,.05); }
     .incl h3 { font-size: 1.15rem; margin: 0 0 .7rem; display: flex; align-items: center; gap: .5rem; }
     .incl.yes h3 { color: var(--green); }
     .incl.no h3 { color: var(--red); }
+    .incl.opt { border-color: var(--gold); background: linear-gradient(135deg, #fbf6ea 0%, #fff 60%); }
+    .incl.opt h3 { color: var(--forest); }
     .incl ul { margin: 0; padding-inline-start: 1.3rem; }
     .incl li { margin-bottom: .5rem; font-size: .95rem; }
+    .incl.opt li { list-style: none; margin-inline-start: -1rem; }
+    .incl.opt li .p { color: var(--gold); font-weight: 800; font-family: 'DM Sans', sans-serif; }
+    .incl.opt .call { display: block; text-align: center; margin-top: .9rem; background: var(--gold); color: var(--forest2); font-weight: 800; text-decoration: none; border-radius: 999px; padding: .7rem 1rem; font-size: .9rem; }
 
     .note-box { background: #fff; border: 1px solid var(--line); border-inline-start: 4px solid var(--gold); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1.4rem; color: var(--forest2); font-size: .95rem; }
     .note-box .contact-hl { display: inline-block; margin-top: .4rem; color: #b23a2e; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
@@ -228,7 +241,7 @@
     .formule.in tbody tr:nth-child(3) .price { transition-delay: .25s; }
     .formule.in tbody tr:nth-child(4) .price { transition-delay: .35s; }
     @media (prefers-reduced-motion: reduce) {
-        .why-card.is-center, .blink, .options .inner::before, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn { animation: none; }
+        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .price-table td.hotel .hotel-link, .hotel-hint .badge { animation: none; }
         .reveal, .formule .price { opacity: 1; transform: none; transition: none; }
     }
 
@@ -316,7 +329,7 @@
 
     <div class="formule">
         <div class="formule-top">
-            <h3>البرنامج الاقتصادي والمتوسط</h3>
+            <h3>برنامج الراحة<small dir="ltr">Programme Confort</small></h3>
             <div class="dates">
                 <span>مكة المكرمة: <span class="num">1 ← 17</span> ذو الحجة</span>
                 <span>المدينة المنورة: <span class="num">17 ← 21</span> ذو الحجة</span>
@@ -362,7 +375,7 @@
 
     <div class="formule">
         <div class="formule-top">
-            <h3>البرنامج السياحي والممتاز</h3>
+            <h3>برنامج الراحة الممتاز<small dir="ltr">Programme Confort Premium</small></h3>
             <div class="dates">
                 <span>مكة المكرمة: <span class="num">1 ← 15</span> ذو الحجة</span>
                 <span>المدينة المنورة: <span class="num">15 ← 21</span> ذو الحجة</span>
@@ -431,6 +444,14 @@
                 <li>أي رسوم تُحدثها السلطات السعودية لها علاقة بالحج.</li>
             </ul>
         </div>
+        <div class="incl opt">
+            <h3>＋ خدمات اختيارية</h3>
+            <ul>
+                <li>🏨 حجز أبراج كدانة (عمائر) <span class="p">+ <span class="num">23 000</span> درهم</span></li>
+                <li>🚄 التنقل من مكة إلى المدينة بقطار الحرمين السريع <span class="p">+ <span class="num">2 000</span> درهم</span></li>
+            </ul>
+            <a class="call blink" href="tel:+212614152686">📞 اتصلوا بنا لمعرفة المزيد · Appelez-nous</a>
+        </div>
     </div>
 
     <div class="note-box">
@@ -439,26 +460,6 @@
     </div>
 
 </div>
-
-<!-- Services optionnels (section animée) -->
-<section class="options">
-    <div class="inner">
-        <h2>خدمات اختيارية</h2>
-        <div class="opt-grid">
-            <div class="opt-item">
-                <span class="ic">🏨</span>
-                <div><div class="t">حجز أبراج كدانة (عمائر)</div><div class="p">+ <span class="num">23 000</span> درهم</div></div>
-            </div>
-            <div class="opt-item">
-                <span class="ic">🚄</span>
-                <div><div class="t">التنقل من مكة إلى المدينة بقطار الحرمين السريع</div><div class="p">+ <span class="num">2 000</span> درهم</div></div>
-            </div>
-        </div>
-        <div class="call">
-            <a class="blink" href="tel:+212614152686">📞 اتصلوا بنا لمعرفة المزيد · Appelez-nous pour en savoir plus</a>
-        </div>
-    </div>
-</section>
 
 <!-- Avis clients (socle) — TODO: brancher le lien de la campagne d'avis Hajj Google quand prêt -->
 <div class="reviews-ref">
@@ -545,7 +546,7 @@
     document.addEventListener('click', function (e) { if (!fab.contains(e.target)) fab.classList.remove('open'); });
 
     // Apparition au défilement
-    var revealEls = document.querySelectorAll('.why, .formule, .options, .incl-grid, .note-box, .reviews-ref, .contact, .gallery');
+    var revealEls = document.querySelectorAll('.why, .formule, .incl-grid, .note-box, .reviews-ref, .contact, .gallery');
     Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('reveal'); });
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
