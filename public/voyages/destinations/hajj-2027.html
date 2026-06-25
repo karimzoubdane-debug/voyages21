@@ -84,9 +84,16 @@
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
-    .price-table td.hotel .hotel-link { color: var(--forest); font-weight: 700; display: block; text-decoration: none; border-bottom: 1px dashed var(--gold); width: fit-content; }
-    .price-table td.hotel .hotel-link::after { content: " 🔎"; font-size: .7em; opacity: .7; }
-    .price-table td.hotel .hotel-link:hover { color: var(--gold); }
+    .price-table td.hotel .hotel-link { color: var(--forest); font-weight: 700; display: inline-block; text-decoration: none; background: rgba(200,164,64,.12); border: 1px solid rgba(200,164,64,.5); border-radius: 8px; padding: .2rem .55rem; transition: .18s; }
+    .price-table td.hotel .hotel-link::after { content: " 🔎"; font-size: .72em; opacity: .8; }
+    .price-table td.hotel .hotel-link:hover { background: var(--gold); color: var(--forest2); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,164,64,.35); }
+
+    /* Bannière : noms d'hôtels cliquables */
+    .hotel-hint { display: flex; align-items: center; gap: .7rem; justify-content: center; flex-wrap: wrap; text-align: center;
+        background: linear-gradient(135deg, #fbf6ea 0%, #fff 100%); border: 1px dashed var(--gold); border-radius: 14px;
+        padding: .8rem 1.1rem; margin: 0 0 1.3rem; color: var(--forest2); font-weight: 700; font-size: .94rem; box-shadow: 0 6px 18px rgba(200,164,64,.12); }
+    .hotel-hint .badge { background: var(--gold); color: var(--forest2); font-size: .7rem; font-weight: 800; letter-spacing: .04em; border-radius: 999px; padding: .25rem .7rem; animation: blink 1.6s ease-in-out infinite; }
+    .hotel-hint .fr { direction: ltr; color: var(--muted); font-weight: 600; font-size: .85rem; }
     .price-table td.hotel small { color: var(--muted); font-weight: 600; }
     .price-table tbody tr:hover { background: #faf8f2; }
     .price-table .price { font-weight: 700; color: var(--ink); white-space: nowrap; }
@@ -299,6 +306,12 @@
         <div class="eyebrow">صيغ البرنامج</div>
         <h2>اختاروا الصيغة التي تناسبكم</h2>
         <p>الأسعار بالدرهم المغربي، للفرد الواحد حسب نوع الغرفة، مع نصف الإقامة بالفنادق المذكورة.</p>
+    </div>
+
+    <div class="hotel-hint">
+        <span class="badge">✨ جديد · NOUVEAU</span>
+        <span>👆 اضغط على اسم أيّ فندق لزيارة صفحته ومشاهدة صوره وتقييماته</span>
+        <span class="fr">Cliquez sur le nom d'un hôtel pour découvrir sa page</span>
     </div>
 
     <div class="formule">
