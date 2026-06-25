@@ -649,7 +649,13 @@
 
             var rec = (media && media['galerie-hajj']) || {};
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
-            if (!imgs.length) return; // l'emplacement « Galerie en cours » reste affiché
+            try { console.log('[galerie-hajj] images détectées via /api/media :', imgs.length, imgs); } catch (e) {}
+            if (!imgs.length) {
+                // Diagnostic visible : l'API ne renvoie pas de photo pour cette clé
+                var ph0 = document.getElementById('carPlaceholder');
+                if (ph0) ph0.textContent = '📷 Galerie : 0 photo détectée via l\'API (clé « galerie-hajj »). Vérifier l\'enregistrement dans l\'admin.';
+                return;
+            }
 
             // Photo d'ambiance dans le hero
             var hero = document.getElementById('hajjHero');
