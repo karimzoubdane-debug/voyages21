@@ -85,6 +85,8 @@
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
+    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin: .25rem 0; }
+    .price-table td.hotel .hcity .ct { color: var(--muted); font-weight: 700; font-size: .82rem; white-space: nowrap; }
     .price-table td.hotel .hotel-link { position: relative; color: var(--forest); font-weight: 700; display: inline-block; text-decoration: none; background: rgba(200,164,64,.12); border: 1px solid #e53935; border-radius: 8px; padding: .2rem .55rem; transition: background .18s, color .18s, box-shadow .18s, transform .18s; animation: hotelActive 1.8s ease-in-out infinite; }
     /* Emoji « cliquez pour voir » qui saute sur place toutes les 2s, juste avant le nom */
     .price-table td.hotel .hotel-link::before { content: "👆"; display: inline-block; margin-inline-end: .35rem; animation: tapJump 2s ease-in-out infinite; }
@@ -364,25 +366,37 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Al+Rayan+hotel+Makkah" target="_blank" rel="noopener">سنود الريان</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Al+Rayan+hotel+Makkah" target="_blank" rel="noopener">سنود الريان</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                    </td>
                     <td class="price"><span class="num">67 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">74 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">86 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Best+Western+hotel+Makkah" target="_blank" rel="noopener">بست ويسترن</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Best+Western+hotel+Makkah" target="_blank" rel="noopener">بست ويسترن</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                    </td>
                     <td class="price"><span class="num">70 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">76 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">87 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Jadah+Ajyad+hotel+Makkah" target="_blank" rel="noopener">جادة أجياد</a><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Jadah+Ajyad+hotel+Makkah" target="_blank" rel="noopener">جادة أجياد</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                    </td>
                     <td class="price"><span class="num">75 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">79 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Ajyad+hotel+Makkah" target="_blank" rel="noopener">سنود أجياد</a><small>≈ 250 م من الحرم · المدينة: سجى المدينة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Ajyad+hotel+Makkah" target="_blank" rel="noopener">سنود أجياد</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                    </td>
                     <td class="price"><span class="num">77 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">84 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">99 500</span><small>درهم</small></td>
@@ -410,25 +424,37 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — الملحق المجدّد</a><small>المدينة: سجى المدينة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — الملحق المجدّد</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                    </td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">105 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">123 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — المبنى الرئيسي</a><small>المدينة: أنوار المدينة موفنبيك</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — المبنى الرئيسي</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Anwar+Al+Madinah+Movenpick+hotel" target="_blank" rel="noopener">أنوار المدينة موفنبيك</a></div>
+                    </td>
                     <td class="price"><span class="num">104 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">115 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">136 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Biltmore+Suites+Makkah+hotel" target="_blank" rel="noopener">السويس مكة — بلتمور 5 نجوم</a><small>المدينة: فندق المدينة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Biltmore+Suites+Makkah+hotel" target="_blank" rel="noopener">السويس مكة — بلتمور 5 نجوم</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=5+star+hotel+Madinah+near+Haram" target="_blank" rel="noopener">المدينة المنورة</a></div>
+                    </td>
                     <td class="price"><span class="num">132 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">146 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">173 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
-                    <td class="hotel"><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Fairmont+Makkah+Clock+Royal+Tower" target="_blank" rel="noopener">الفيرمونت</a><small>إطلالة على الحرم · فئة فاخرة</small></td>
+                    <td class="hotel">
+                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Fairmont+Makkah+Clock+Royal+Tower" target="_blank" rel="noopener">الفيرمونت</a></div>
+                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=5+star+hotel+Madinah+near+Haram" target="_blank" rel="noopener">المدينة المنورة</a></div>
+                    </td>
                     <td class="price"><span class="num">137 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">154 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">185 900</span><small>درهم</small></td>
