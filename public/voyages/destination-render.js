@@ -211,6 +211,7 @@
       + '<p>' + esc(cfg.description || 'Découvrez les voyages disponibles pour cette destination, puis ouvrez la fiche détaillée du programme qui vous intéresse.') + '</p></div>'
       + '<aside class="summary"><b>' + totalVisible + '</b><span>' + esc(String(cfg.countLabel || 'programmes disponibles').replace(/^\s*\d+\s*/, '')) + '</span></aside>'
       + '</section>'
+      + (cfg.featured || '')
       + content
       + '</main>';
     wireTabs();

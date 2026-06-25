@@ -11,12 +11,35 @@
 </head>
 <body>
   <div id="destinationApp"></div>
+  <style>
+    .v21-hajj-feature { max-width: 1060px; margin: 0 auto 1.4rem; }
+    .v21-hajj-feature .inner { display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap;
+      background: linear-gradient(160deg, #1B3A28 0%, #152E1F 100%); color: #fff;
+      border-radius: 18px; padding: 1.4rem 1.6rem; box-shadow: 0 12px 32px rgba(21,46,31,.18); }
+    .v21-hajj-feature .label { background: #fff; border-radius: 12px; padding: .5rem; width: 84px; flex: 0 0 auto; }
+    .v21-hajj-feature .label img { width: 100%; height: auto; display: block; }
+    .v21-hajj-feature .txt { flex: 1 1 280px; }
+    .v21-hajj-feature .k { color: #E4D2A0; font-weight: 700; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
+    .v21-hajj-feature h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: .3rem 0 .35rem; }
+    .v21-hajj-feature p { margin: 0; opacity: .9; font-size: .96rem; }
+    .v21-hajj-feature .go { flex: 0 0 auto; background: #C8A440; color: #152E1F; font-weight: 800;
+      text-decoration: none; border-radius: 999px; padding: .85rem 1.5rem; white-space: nowrap; }
+    .v21-hajj-feature .go:hover { filter: brightness(1.05); }
+    @media (max-width: 640px) { .v21-hajj-feature .inner { text-align: center; justify-content: center; } }
+  </style>
   <script src="../data.js"></script>
   <script>
     window.DESTINATION_PAGE = {
       title: 'Omra & Hajj',
-      description: 'Programmes Omra avec accompagnement, logistique et sérénité.',
+      description: 'Programmes Omra avec accompagnement, logistique et sérénité. Et le Hajj 2026 avec une agence labellisée par le Ministère du Tourisme depuis 2006.',
       countLabel: '6 programmes',
+      featured: '<div class="v21-hajj-feature"><div class="inner">'
+        + '<div class="label"><img src="/label-qualite-hajj.jpg" alt="Label Qualité des services du Hajj — Ministère du Tourisme marocain"></div>'
+        + '<div class="txt"><div class="k">Agence labellisée depuis 2006</div>'
+        + '<h3>Hajj 2026 — برنامج الحج</h3>'
+        + '<p>Détentrice de la « علامة جودة خدمات الحج » du Ministère du Tourisme. Formules économiques à premium, hôtels près des Lieux Saints, encadrement religieux et technique. Des milliers de pèlerins accompagnés.</p></div>'
+        + '<a class="go" href="/voyages/destinations/hajj-2026.html">Découvrir le Hajj 2026 ›</a>'
+        + '</div></div>',
       slugs: ['omra-mouharram', 'omra-06-juillet', 'omra-08-juillet', 'omra-istanbul', 'omra-27-juillet-etihad', 'omra-01-juillet']
     };
   </script>
