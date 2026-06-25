@@ -277,8 +277,11 @@
 
     /* ====== Thème — fond vert fluo + texte bleu nuit ====== */
     :root { --forest: #17263F; --forest2: #0f1b30; }
-    /* Logo dans le hero */
-    .hajj-logo { width: 118px; height: auto; margin: 0 auto .4rem; display: block; filter: drop-shadow(0 6px 18px rgba(23,38,63,.25)); }
+    /* Logo centré dans la bande bleue du haut */
+    .topbar-inner.topbar-logo { position: relative; justify-content: center; min-height: 64px; }
+    .topbar-inner.topbar-logo .back { position: absolute; inset-inline-start: 1.2rem; top: 50%; transform: translateY(-50%); }
+    .hajj-logo-bar { height: 52px; width: auto; display: block; border-radius: 8px; }
+    @media (max-width: 560px) { .hajj-logo-bar { height: 44px; } .topbar-inner.topbar-logo .back { font-size: .78rem; } }
     /* Hero : fond vert fluo, texte bleu nuit */
     .hajj-hero { background: #c9f23a; color: #17263F; }
     .hajj-hero .eyebrow { color: #2c4a06; }
@@ -303,13 +306,12 @@
 </head>
 <body>
 
-<div class="topbar"><div class="topbar-inner">
-    <a href="/voyages/destinations/omra.html">‹ العودة إلى العمرة والحج</a>
-    <span class="brand">VOYAGES 21</span>
+<div class="topbar"><div class="topbar-inner topbar-logo">
+    <a class="back" href="/voyages/destinations/omra.html">‹ العودة</a>
+    <img class="hajj-logo-bar" id="hajjLogo" alt="Voyages 21 — أسفار" style="display:none">
 </div></div>
 
 <header class="hajj-hero" id="hajjHero">
-    <img class="hajj-logo" id="hajjLogo" alt="Voyages 21 — أسفار" style="display:none">
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
     <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small dir="ltr">Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
