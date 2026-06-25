@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الحج 2027 — Voyages 21 · وكالة معتمدة منذ 2006</title>
-<meta name="description" content="برنامج الحج 2027 (1448هـ) مع وكالة أسفار 21 — وكالة حاصلة على علامة جودة خدمات الحج من وزارة السياحة المغربية منذ 2006. صيغ اقتصادية وممتازة، فنادق قرب الحرم، تأطير ديني وتقني.">
+<meta name="description" content="برنامج الحج 2027 (1448هـ) مع وكالة أسفار 21 — وكالة حاصلة على علامة جودة خدمات الحج من وزارة السياحة المغربية. 26 سنة خبرة، منها 22 سنة في خدمة ضيوف الرحمن. صيغ اقتصادية وممتازة، فنادق قرب الحرمين، تأطير ديني وتقني.">
+
+<!-- Open Graph / partage WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="الحج 2027 مع وكالة أسفار 21 — Voyages 21">
+<meta property="og:description" content="أدِّ حجَّك… ونحن نتكفّل بالباقي. وكالة حاصلة على علامة جودة خدمات الحج، 26 سنة خبرة. صيغ تناسب الجميع وفنادق قرب الحرمين.">
+<meta property="og:image" content="https://www.voyages21.com/images/share-hajj-2027.png">
+<meta property="og:url" content="https://www.voyages21.com/voyages/destinations/hajj-2027.html">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
@@ -12,36 +21,53 @@
 <style>
     body { font-family: 'Noto Naskh Arabic', 'DM Sans', sans-serif; }
     h1, h2, h3 { font-family: 'Noto Naskh Arabic', serif; }
+    .num { direction: ltr; unicode-bidi: isolate; }
 
-    /* HERO + label */
-    .hajj-hero { background: linear-gradient(160deg, var(--forest) 0%, var(--forest2) 100%); color: #fff; padding: 2.6rem 1.2rem 3rem; text-align: center; position: relative; overflow: hidden; }
+    /* HERO */
+    .hajj-hero { background: linear-gradient(160deg, rgba(27,58,40,.94) 0%, rgba(21,46,31,.97) 100%); color: #fff; padding: 2.8rem 1.2rem 3.2rem; text-align: center; position: relative; overflow: hidden; }
+    .hajj-hero::after { content: ""; position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .14; z-index: 0; }
+    .hajj-hero.has-photo::after { opacity: .22; }
+    .hajj-hero > * { position: relative; z-index: 1; }
     .hajj-hero .eyebrow { color: var(--gold-soft); font-size: .82rem; letter-spacing: .12em; font-weight: 700; }
     .hajj-hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: .5rem 0 .4rem; }
-    .hajj-hero .lead { max-width: 64ch; margin: .2rem auto 0; opacity: .92; font-size: 1.06rem; }
-    .hajj-hero .slogan { margin: .9rem auto 0; max-width: 60ch; font-family: 'Noto Naskh Arabic', serif; font-size: 1.15rem; color: var(--gold-soft); font-weight: 700; }
-    .hajj-hero .slogan small { display: block; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600; opacity: .8; margin-top: .3rem; letter-spacing: .02em; }
+    .hajj-hero .slogan { margin: .7rem auto 0; max-width: 60ch; font-family: 'Noto Naskh Arabic', serif; font-size: 1.25rem; color: #fff; font-weight: 700; }
+    .hajj-hero .slogan small { display: block; font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 600; color: var(--gold-soft); margin-top: .35rem; letter-spacing: .01em; }
     .hajj-hero .rule { width: 70px; height: 3px; background: var(--gold); margin: 1.2rem auto 0; border-radius: 2px; }
 
     /* Bandeau confiance / label */
-    .trust { max-width: var(--maxw); margin: -1.8rem auto 0; padding: 0 1.2rem; position: relative; z-index: 2; }
-    .trust-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 14px 38px rgba(21,46,31,.14); padding: 1.4rem 1.5rem; display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; justify-content: center; text-align: center; }
-    .trust-card .label-img { width: 96px; flex: 0 0 auto; }
+    .trust { max-width: var(--maxw); margin: -1.8rem auto 0; padding: 0 1.2rem; position: relative; z-index: 3; }
+    .trust-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 14px 38px rgba(21,46,31,.14); padding: 1.3rem 1.5rem; display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap; justify-content: center; text-align: center; }
+    .trust-card .label-img { width: 88px; flex: 0 0 auto; }
     .trust-card .label-img img { width: 100%; height: auto; display: block; }
-    .trust-text { max-width: 56ch; }
-    .trust-text .k { color: var(--gold); font-weight: 700; font-size: .8rem; letter-spacing: .08em; }
-    .trust-text h2 { color: var(--forest); font-size: 1.45rem; margin: .25rem 0 .4rem; }
-    .trust-text p { color: var(--ink); font-size: .98rem; margin: 0; }
+    .trust-text { max-width: 58ch; }
+    .trust-text .k { color: var(--gold); font-weight: 700; font-size: .78rem; letter-spacing: .08em; }
+    .trust-text h2 { color: var(--forest); font-size: 1.3rem; margin: .25rem 0 .35rem; }
+    .trust-text p { color: var(--ink); font-size: .95rem; margin: 0; }
     .trust-text b { color: var(--forest); }
 
-    /* Chiffres clés */
-    .stats { max-width: var(--maxw); margin: 1.6rem auto 0; padding: 0 1.2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .stat { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem .8rem; text-align: center; box-shadow: 0 6px 18px rgba(21,46,31,.06); }
-    .stat b { display: block; font-family: 'Playfair Display', serif; color: var(--forest); font-size: 1.8rem; }
-    .stat span { color: var(--muted); font-size: .82rem; }
+    /* Pourquoi nous choisir — 3 cadrans */
+    .why { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
+    .why .sec-head { text-align: center; margin-bottom: 1.3rem; }
+    .why .sec-head .eyebrow { color: var(--gold); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
+    .why .sec-head h2 { color: var(--forest); font-size: clamp(1.5rem, 4vw, 2rem); margin: .2rem 0 0; }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+    .why-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem 1.3rem; text-align: center; box-shadow: 0 8px 22px rgba(21,46,31,.07); display: flex; flex-direction: column; align-items: center; }
+    .why-card.is-center { background: linear-gradient(160deg, #1B3A28, #152E1F); color: #fff; }
+    .why-card .ic { font-size: 1.9rem; margin-bottom: .5rem; }
+    .why-card .label-mini { width: 74px; margin-bottom: .5rem; }
+    .why-card .label-mini img { width: 100%; height: auto; display: block; }
+    .why-card .big { font-family: 'Playfair Display', serif; color: var(--forest); font-size: 2rem; line-height: 1; margin-bottom: .35rem; }
+    .why-card.is-center .big { color: var(--gold-soft); }
+    .why-card h3 { font-size: 1.08rem; margin: 0 0 .35rem; color: var(--forest); }
+    .why-card.is-center h3 { color: #fff; }
+    .why-card p { font-size: .9rem; margin: 0; color: var(--muted); }
+    .why-card.is-center p { color: rgba(255,255,255,.85); }
+    .why-card .fr { display: block; margin-top: .4rem; font-family: 'DM Sans', sans-serif; font-size: .82rem; color: var(--muted); }
+    .why-card.is-center .fr { color: rgba(255,255,255,.7); }
 
-    .hajj-wrap { max-width: var(--maxw); margin: 2.2rem auto 3rem; padding: 0 1.2rem; }
+    .hajj-wrap { max-width: var(--maxw); margin: 2.4rem auto 3rem; padding: 0 1.2rem; }
     .sec-head { text-align: center; margin: 2.4rem 0 1.2rem; }
-    .sec-head .eyebrow { color: var(--gold); }
+    .sec-head .eyebrow { color: var(--gold); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
     .sec-head h2 { color: var(--forest); font-size: clamp(1.5rem, 4vw, 2rem); margin: .2rem 0 0; }
     .sec-head p { color: var(--muted); max-width: 60ch; margin: .5rem auto 0; }
 
@@ -59,9 +85,9 @@
     .price-table td.hotel b { color: var(--forest); display: block; }
     .price-table td.hotel small { color: var(--muted); font-weight: 600; }
     .price-table tbody tr:hover { background: #faf8f2; }
-    .price-table .price { font-family: 'DM Sans', sans-serif; font-weight: 700; color: var(--ink); white-space: nowrap; }
+    .price-table .price { font-weight: 700; color: var(--ink); white-space: nowrap; }
+    .price-table .price .num { font-family: 'DM Sans', sans-serif; }
     .price-table .price small { color: var(--muted); font-weight: 600; font-size: .72rem; display: block; }
-    .num { unicode-bidi: isolate; }
 
     .supp { background: #fbf6ea; border: 1px dashed var(--gold); border-radius: 12px; padding: .9rem 1.2rem; margin: 1.1rem 0 0; font-size: .92rem; color: var(--forest2); }
     .supp ul { margin: .4rem 0 0; padding-inline-start: 1.2rem; }
@@ -77,6 +103,42 @@
 
     .note-box { background: #fff; border: 1px solid var(--line); border-inline-start: 4px solid var(--gold); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1.4rem; color: var(--forest2); font-size: .95rem; }
 
+    /* Avis */
+    .reviews-ref { max-width: var(--maxw); margin: 2.6rem auto 0; padding: 0 1.2rem; }
+    .reviews-ref .inner { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 28px rgba(21,46,31,.07); padding: 1.6rem 1.7rem; text-align: center; }
+    .reviews-ref .stars { color: var(--gold); font-size: 1.4rem; letter-spacing: .15em; }
+    .reviews-ref h2 { color: var(--forest); font-size: 1.4rem; margin: .5rem 0 .3rem; }
+    .reviews-ref p { color: var(--ink); max-width: 62ch; margin: 0 auto; font-size: .98rem; }
+    .reviews-ref .gbtn { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.1rem; background: var(--forest); color: #fff; text-decoration: none; font-weight: 700; border-radius: 999px; padding: .85rem 1.6rem; }
+    .reviews-ref .gbtn:hover { filter: brightness(1.08); }
+
+    /* Contact agence */
+    .contact { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
+    .contact .inner { background: linear-gradient(160deg, var(--forest) 0%, var(--forest2) 100%); color: #fff; border-radius: 18px; padding: 1.7rem 1.7rem; }
+    .contact h2 { margin: 0 0 1.1rem; font-size: 1.3rem; color: var(--gold-soft); text-align: center; }
+    .contact .rows { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; }
+    .contact .blk b { display: block; color: var(--gold-soft); font-size: .82rem; letter-spacing: .04em; margin-bottom: .5rem; }
+    .contact .cbtn { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.1); border: 1px solid rgba(228,210,160,.35); color: #fff; text-decoration: none; border-radius: 10px; padding: .6rem .8rem; font-weight: 600; margin-bottom: .5rem; transition: .15s; }
+    .contact .cbtn:hover { background: rgba(255,255,255,.2); }
+    .contact .cbtn.wa { background: rgba(37,211,102,.18); border-color: rgba(37,211,102,.5); }
+    .contact .cbtn.gps { background: var(--gold); color: var(--forest2); border-color: var(--gold); justify-content: center; }
+    .contact .num { font-family: 'DM Sans', sans-serif; }
+    .contact .addr { color: #fff; text-decoration: none; line-height: 1.5; border-bottom: 1px solid rgba(228,210,160,.4); }
+    .contact .code { text-align: center; margin-top: 1.1rem; font-size: .82rem; color: var(--gold-soft); }
+
+    /* Carrousel galerie */
+    .gallery { max-width: var(--maxw); margin: 2.6rem auto 0; padding: 0 1.2rem; }
+    .gallery .sec-head { margin-top: 0; }
+    .carousel { position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 32px rgba(21,46,31,.12); background: #0d1f15; direction: ltr; }
+    .carousel .track { display: flex; transition: transform .45s ease; }
+    .carousel .slide { min-width: 100%; aspect-ratio: 16/9; background: #0d1f15 center/cover no-repeat; }
+    .carousel .nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.85); color: var(--forest2); border: 0; width: 42px; height: 42px; border-radius: 999px; cursor: pointer; font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    .carousel .prev { right: 12px; }
+    .carousel .next { left: 12px; }
+    .carousel .dots { position: absolute; bottom: 12px; inset-inline: 0; display: flex; gap: 7px; justify-content: center; }
+    .carousel .dots i { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.5); cursor: pointer; }
+    .carousel .dots i.on { background: var(--gold); width: 22px; }
+
     /* CTA */
     .hajj-cta { text-align: center; margin: 2.6rem auto 0; max-width: var(--maxw); padding: 0 1.2rem; }
     .hajj-cta .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
@@ -85,32 +147,22 @@
     .hajj-cta .tel { background: var(--gold); color: var(--forest2); }
     .hajj-cta .sec-note { color: var(--muted); font-size: .85rem; margin-top: 1rem; }
 
-    /* Avis clients (socle — lien campagne à brancher) */
-    .reviews-ref { max-width: var(--maxw); margin: 2.6rem auto 0; padding: 0 1.2rem; }
-    .reviews-ref .inner { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 28px rgba(21,46,31,.07); padding: 1.6rem 1.7rem; text-align: center; }
-    .reviews-ref .stars { color: var(--gold); font-size: 1.4rem; letter-spacing: .15em; }
-    .reviews-ref h2 { color: var(--forest); font-size: 1.4rem; margin: .5rem 0 .3rem; }
-    .reviews-ref p { color: var(--ink); max-width: 60ch; margin: 0 auto; font-size: .98rem; }
-    .reviews-ref .gbtn { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.1rem; background: var(--forest); color: #fff; text-decoration: none; font-weight: 700; border-radius: 999px; padding: .85rem 1.6rem; }
-    .reviews-ref .gbtn:hover { filter: brightness(1.08); }
+    /* Barre flottante contacts */
+    .v21fab { position: fixed; inset-inline-end: 18px; bottom: 20px; z-index: 9999; display: flex; flex-direction: column-reverse; align-items: center; gap: 9px; }
+    .v21fab .main { width: 54px; height: 54px; border-radius: 999px; border: 0; cursor: pointer; background: #25d366; color: #fff; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 28px rgba(16,35,26,.3); }
+    .v21fab .opt { opacity: 0; pointer-events: none; transform: translateY(8px); transition: .2s; display: flex; align-items: center; gap: .5rem; text-decoration: none; font-weight: 700; font-size: .82rem; border-radius: 999px; padding: .55rem .9rem; box-shadow: 0 8px 20px rgba(16,35,26,.22); white-space: nowrap; }
+    .v21fab.open .opt { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .v21fab .opt.wa { background: #25d366; color: #06311c; }
+    .v21fab .opt.tel { background: #fff; color: var(--forest2); }
+    .v21fab .opt.gps { background: var(--gold); color: var(--forest2); }
+    .v21fab .opt .num { font-family: 'DM Sans', sans-serif; }
 
-    /* Contact agence */
-    .contact { max-width: var(--maxw); margin: 1.6rem auto 0; padding: 0 1.2rem; }
-    .contact .inner { background: linear-gradient(160deg, var(--forest) 0%, var(--forest2) 100%); color: #fff; border-radius: 18px; padding: 1.6rem 1.7rem; }
-    .contact h2 { margin: 0 0 1rem; font-size: 1.3rem; color: var(--gold-soft); text-align: center; }
-    .contact .rows { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-    .contact .item { display: flex; gap: .7rem; align-items: flex-start; font-size: .96rem; }
-    .contact .item .ic { flex: 0 0 auto; font-size: 1.2rem; }
-    .contact a { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(228,210,160,.5); }
-    .contact a:hover { color: var(--gold-soft); }
-    .contact .code { text-align: center; margin-top: 1rem; font-size: .82rem; color: var(--gold-soft); }
-    .contact .num { unicode-bidi: isolate; }
-
-    @media (max-width: 720px) {
-        .stats { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 760px) {
+        .why-grid { grid-template-columns: 1fr; }
         .incl-grid { grid-template-columns: 1fr; }
         .price-table { font-size: .82rem; }
-        .price-table th, .price-table td { padding: .6rem .45rem; }
+        .price-table th, .price-table td { padding: .6rem .4rem; }
+        .carousel .slide { aspect-ratio: 4/3; }
     }
 </style>
 </head>
@@ -121,11 +173,10 @@
     <span class="brand">VOYAGES 21</span>
 </div></div>
 
-<header class="hajj-hero">
+<header class="hajj-hero" id="hajjHero">
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
-    <p class="lead">برنامج حج متكامل بإشراف وكالة معتمدة، حاصلة على <b>علامة جودة خدمات الحج</b> من وزارة السياحة المغربية. صيغ تناسب الجميع، فنادق قريبة من الحرمين، وتأطير ديني وتقني طيلة الرحلة.</p>
-    <p class="slogan">أدِّ حجَّك… ونحن نتكفّل بالباقي<small>Accomplissez votre Hajj en toute sérénité — nous nous occupons de tout le reste.</small></p>
+    <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small>Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
     <div class="rule"></div>
 </header>
 
@@ -138,25 +189,46 @@
         <div class="trust-text">
             <div class="k">علامة جودة معتمدة منذ 2006</div>
             <h2>وكالة حائزة على «علامة جودة خدمات الحج»</h2>
-            <p>منحتها <b>وزارة السياحة المغربية</b> عبر الجامعة الوطنية لوكالات الأسفار، تقديرًا لجودة خدماتنا في تنظيم الحج منذ سنة <b>2006</b>. ثقةٌ تُجدّدها معنا آلاف العائلات المغربية كل موسم.</p>
+            <p>منحتها <b>وزارة السياحة المغربية</b> عبر الجامعة الوطنية لوكالات الأسفار، تقديرًا لجودة خدماتنا في تنظيم الحج. برنامج حج متكامل، فنادق قريبة من الحرمين، وتأطير ديني وتقني طيلة الرحلة.</p>
         </div>
     </div>
 </div>
 
-<!-- Chiffres clés -->
-<div class="stats">
-    <div class="stat"><b class="num">2006</b><span>سنة الحصول على العلامة</span></div>
-    <div class="stat"><b class="num">+20</b><span>سنة خبرة في تنظيم الحج</span></div>
-    <div class="stat"><b>آلاف</b><span>الحجاج رافقناهم إلى بيت الله</span></div>
-</div>
+<!-- Pourquoi nous choisir -->
+<section class="why">
+    <div class="sec-head">
+        <div class="eyebrow">Pourquoi nous choisir</div>
+        <h2>لماذا تختاروننا؟</h2>
+    </div>
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="big"><span class="num">26</span></div>
+            <h3>سنة من الخبرة</h3>
+            <p>في تنظيم الأسفار، منها <b><span class="num">22</span> سنة</b> في خدمة ضيوف الرحمن (العمرة والحج).
+            <span class="fr">26 ans d'expertise, dont 22 ans dédiés aux Lieux Saints.</span></p>
+        </div>
+        <div class="why-card is-center">
+            <div class="ic">★★★★★</div>
+            <h3>حجّاجنا يشهدون لنا</h3>
+            <p>أصدق شهادة على جودتنا هي كلمات من رافقناهم. آراؤهم خيرُ توصية.
+            <span class="fr">Nos pèlerins témoignent pour nous — leurs avis, notre meilleure recommandation.</span></p>
+        </div>
+        <div class="why-card">
+            <div class="label-mini"><img src="/label-qualite-hajj.jpg" alt="علامة جودة خدمات الحج"></div>
+            <h3>ثقة وزارة السياحة</h3>
+            <p>تُجدّد <b>كلَّ عام</b> ثقتها بنا عبر «علامة جودة خدمات الحج» — علامة الجودة والاطمئنان.
+            <span class="fr">Le Ministère du Tourisme renouvelle sa confiance chaque année via le Label Qualité.</span></p>
+        </div>
+    </div>
+</section>
 
 <div class="hajj-wrap">
 
-    <!-- Formule 1 -->
+    <!-- Formules -->
     <div class="sec-head">
         <div class="eyebrow">صيغ البرنامج</div>
         <h2>اختاروا الصيغة التي تناسبكم</h2>
-        <p>الأسعار بالدرهم المغربي، للفرد الواحد حسب نوع الغرفة (ثنائية / ثلاثية / رباعية)، مع نصف الإقامة بالفنادق المذكورة.</p>
+        <p>الأسعار بالدرهم المغربي، للفرد الواحد حسب نوع الغرفة، مع نصف الإقامة بالفنادق المذكورة.</p>
     </div>
 
     <div class="formule">
@@ -171,41 +243,40 @@
             <thead>
                 <tr>
                     <th class="hotel">الفندق (مكة) / الفندق (المدينة)</th>
-                    <th>الغرفة الثنائية</th>
-                    <th>الغرفة الثلاثية</th>
                     <th>الغرفة الرباعية</th>
+                    <th>الغرفة الثلاثية</th>
+                    <th>الغرفة الثنائية</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="hotel"><b>سنود الريان</b><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
-                    <td class="price"><span class="num">86 500</span><small>درهم</small></td>
-                    <td class="price"><span class="num">74 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">67 500</span><small>درهم</small></td>
+                    <td class="price"><span class="num">74 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">86 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
                     <td class="hotel"><b>بست ويسترن</b><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
-                    <td class="price"><span class="num">87 500</span><small>درهم</small></td>
-                    <td class="price"><span class="num">76 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">70 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">76 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">87 500</span><small>درهم</small></td>
                 </tr>
                 <tr>
                     <td class="hotel"><b>جادة أجياد</b><small>≈ 950 م من الحرم · المدينة: سجى المدينة</small></td>
-                    <td class="price"><span class="num">95 000</span><small>درهم</small></td>
-                    <td class="price"><span class="num">79 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">75 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">79 500</span><small>درهم</small></td>
+                    <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
                     <td class="hotel"><b>سنود أجياد</b><small>≈ 250 م من الحرم · المدينة: سجى المدينة</small></td>
-                    <td class="price"><span class="num">99 500</span><small>درهم</small></td>
-                    <td class="price"><span class="num">84 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">77 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">84 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">99 500</span><small>درهم</small></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Formule 2 -->
     <div class="formule">
         <div class="formule-top">
             <h3>البرنامج السياحي والممتاز</h3>
@@ -218,35 +289,35 @@
             <thead>
                 <tr>
                     <th class="hotel">الفندق (مكة) / الفندق (المدينة)</th>
-                    <th>الغرفة الثنائية</th>
-                    <th>الغرفة الثلاثية</th>
                     <th>الغرفة الرباعية</th>
+                    <th>الغرفة الثلاثية</th>
+                    <th>الغرفة الثنائية</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="hotel"><b>أجياد مكة مكارم — الملحق المجدّد</b><small>المدينة: سجى المدينة</small></td>
-                    <td class="price"><span class="num">123 000</span><small>درهم</small></td>
-                    <td class="price"><span class="num">105 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">105 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">123 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
                     <td class="hotel"><b>أجياد مكة مكارم — المبنى الرئيسي</b><small>المدينة: أنوار المدينة موفنبيك</small></td>
-                    <td class="price"><span class="num">136 000</span><small>درهم</small></td>
-                    <td class="price"><span class="num">115 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">104 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">115 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">136 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
                     <td class="hotel"><b>السويس مكة — بلتمور 5 نجوم</b><small>المدينة: فندق المدينة</small></td>
-                    <td class="price"><span class="num">173 000</span><small>درهم</small></td>
-                    <td class="price"><span class="num">146 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">132 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">146 000</span><small>درهم</small></td>
+                    <td class="price"><span class="num">173 000</span><small>درهم</small></td>
                 </tr>
                 <tr>
                     <td class="hotel"><b>الفيرمونت</b><small>إطلالة على الحرم · فئة فاخرة</small></td>
-                    <td class="price"><span class="num">185 900</span><small>درهم</small></td>
-                    <td class="price"><span class="num">154 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">137 900</span><small>درهم</small></td>
+                    <td class="price"><span class="num">154 900</span><small>درهم</small></td>
+                    <td class="price"><span class="num">185 900</span><small>درهم</small></td>
                 </tr>
             </tbody>
         </table>
@@ -297,11 +368,25 @@
 <div class="reviews-ref">
     <div class="inner">
         <div class="stars">★★★★★</div>
-        <h2>آراء حجّاجنا… خير شاهد</h2>
-        <p>أصدق شهادة على جودة خدماتنا هي كلمات من رافقناهم إلى بيت الله الحرام. اقرؤوا تجارب حجّاج المواسم الماضية، واكتشفوا لماذا يثقون بنا عامًا بعد عام.</p>
+        <h2>آراء حجّاجنا… خيرُ شاهد</h2>
+        <p>أصدق شهادة على جودة خدماتنا هي كلمات من رافقناهم إلى بيت الله الحرام. اقرؤوا تجارب حجّاج المواسم الماضية — فآراؤهم خيرُ توصية، وهي أصدق دليل على ثقتهم بنا عامًا بعد عام.</p>
         <a class="gbtn" href="https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">قراءة آراء عملائنا على Google ›</a>
     </div>
 </div>
+
+<!-- Galerie carrousel (alimentée par l'admin médias : clé « galerie-hajj ») -->
+<section class="gallery" id="galleryWrap" hidden>
+    <div class="sec-head">
+        <div class="eyebrow">Galerie</div>
+        <h2>لحظات من رحلاتنا</h2>
+    </div>
+    <div class="carousel" id="carousel">
+        <div class="track" id="carTrack"></div>
+        <button class="nav prev" id="carPrev" aria-label="السابق">‹</button>
+        <button class="nav next" id="carNext" aria-label="التالي">›</button>
+        <div class="dots" id="carDots"></div>
+    </div>
+</section>
 
 <!-- CTA -->
 <div class="hajj-cta">
@@ -321,18 +406,90 @@
     <div class="inner">
         <h2>وكالة أسفار 21 — تواصلوا معنا</h2>
         <div class="rows">
-            <div class="item"><span class="ic">📍</span>
-                <span><a href="https://www.google.com/maps/place/?q=place_id:ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">شارع الأمير مولاي عبد الله، عمارة طيبة، الطابق الأول، شقة رقم 1 — مراكش 40000</a><br><small>اضغط لفتح الموقع على الخريطة</small></span></div>
-            <div class="item"><span class="ic">📱</span>
-                <span>الهاتف المحمول:<br><a class="num" dir="ltr" href="tel:+212614152686">+212 614 15 26 86</a><br><a class="num" dir="ltr" href="tel:+212673280009">+212 673 28 00 09</a></span></div>
-            <div class="item"><span class="ic">💬</span>
-                <span>واتساب:<br><a class="num" dir="ltr" href="https://wa.me/212614152686" target="_blank" rel="noopener">+212 614 15 26 86</a></span></div>
+            <div class="blk">
+                <b>📍 العنوان</b>
+                <a class="addr" href="https://www.google.com/maps/place/?q=place_id:ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">شارع الأمير مولاي عبد الله، عمارة طيبة، الطابق الأول، شقة رقم 1 — مراكش 40000</a>
+                <a class="cbtn gps" href="https://www.google.com/maps/dir/?api=1&destination=Voyages%2021%20Marrakech&destination_place_id=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener" style="margin-top:.7rem">🧭 الاتجاهات على خرائط Google</a>
+            </div>
+            <div class="blk">
+                <b>💬 واتساب</b>
+                <a class="cbtn wa" href="https://wa.me/212614152686" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0614 15 26 86</span></a>
+                <a class="cbtn wa" href="https://wa.me/212673280009" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0673 28 00 09</span></a>
+            </div>
+            <div class="blk">
+                <b>📱 الهاتف</b>
+                <a class="cbtn tel" href="tel:+212614152686">اتصال <span class="num" dir="ltr">0614 15 26 86</span></a>
+                <a class="cbtn tel" href="tel:+212673280009">اتصال <span class="num" dir="ltr">0673 28 00 09</span></a>
+            </div>
         </div>
         <div class="code">رمز الوكالة: 2D/02 · www.voyages21.com</div>
     </div>
 </div>
 
-<div style="height:2.5rem"></div>
+<div style="height:3rem"></div>
+
+<!-- Barre flottante contacts -->
+<div class="v21fab" id="v21fab">
+    <button class="main" id="fabMain" aria-label="تواصل سريع">💬</button>
+    <a class="opt wa" href="https://wa.me/212614152686" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0614…86</span></a>
+    <a class="opt wa" href="https://wa.me/212673280009" target="_blank" rel="noopener">واتساب <span class="num" dir="ltr">0673…09</span></a>
+    <a class="opt tel" href="tel:+212614152686">📱 <span class="num" dir="ltr">0614 15 26 86</span></a>
+    <a class="opt tel" href="tel:+212673280009">📱 <span class="num" dir="ltr">0673 28 00 09</span></a>
+    <a class="opt gps" href="https://www.google.com/maps/dir/?api=1&destination=Voyages%2021%20Marrakech&destination_place_id=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">🧭 الاتجاهات</a>
+</div>
+
+<script>
+(function () {
+    // Barre flottante
+    var fab = document.getElementById('v21fab');
+    var fabMain = document.getElementById('fabMain');
+    fabMain.addEventListener('click', function () { fab.classList.toggle('open'); });
+    document.addEventListener('click', function (e) { if (!fab.contains(e.target)) fab.classList.remove('open'); });
+
+    // Galerie + photo hero depuis l'admin médias (clé "galerie-hajj")
+    fetch('/api/media', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .then(function (media) {
+            var rec = (media && media['galerie-hajj']) || {};
+            var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
+            if (!imgs.length) return;
+
+            // Photo d'ambiance dans le hero
+            var hero = document.getElementById('hajjHero');
+            hero.classList.add('has-photo');
+            hero.style.setProperty('--x', '0');
+            var st = document.createElement('style');
+            st.textContent = '#hajjHero::after{background-image:url(\'' + imgs[0].replace(/'/g, "%27") + '\')}';
+            document.head.appendChild(st);
+
+            // Carrousel
+            var wrap = document.getElementById('galleryWrap');
+            var track = document.getElementById('carTrack');
+            var dots = document.getElementById('carDots');
+            wrap.hidden = false;
+            imgs.forEach(function (url, i) {
+                var s = document.createElement('div');
+                s.className = 'slide';
+                s.style.backgroundImage = "url('" + url.replace(/'/g, "%27") + "')";
+                track.appendChild(s);
+                var d = document.createElement('i');
+                if (i === 0) d.className = 'on';
+                d.addEventListener('click', function () { go(i); });
+                dots.appendChild(d);
+            });
+            var idx = 0, n = imgs.length;
+            function go(i) {
+                idx = (i + n) % n;
+                track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+                Array.prototype.forEach.call(dots.children, function (d, j) { d.className = j === idx ? 'on' : ''; });
+            }
+            document.getElementById('carPrev').addEventListener('click', function () { go(idx - 1); });
+            document.getElementById('carNext').addEventListener('click', function () { go(idx + 1); });
+            if (n > 1) setInterval(function () { go(idx + 1); }, 5000);
+        })
+        .catch(function () {});
+})();
+</script>
 
 </body>
 </html>

@@ -59,9 +59,23 @@ _Dernière mise à jour : 2026-06-25_
   - **Avis clients** : section « socle » en place — le bouton pointe pour l'instant
     vers les avis Google de l'agence ; **Karim a lancé une campagne d'avis Hajj sur
     Google**, le lien dédié sera branché plus tard (TODO en commentaire dans le code).
-  - **Slogan retenu (défaut)** : « أدِّ حجَّك… ونحن نتكفّل بالباقي » /
-    « Accomplissez votre Hajj en toute sérénité — nous nous occupons de tout le reste. »
-    (3 versions AR + 3 FR proposées à Karim, à arbitrer.)
+  - **Slogan validé** : « أنتم للعبادة… ونحن للتنظيم » /
+    « Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous. »
+  - **Section « Pourquoi nous choisir »** (3 cadrans) : 26 ans d'expérience dont
+    22 aux Lieux Saints · au centre « nos clients témoignent » · label Ministère
+    renouvelé chaque année (avec visuel du label).
+  - **Prix** : corrigés (chiffres forcés en LTR) + ordre des colonnes calé sur la
+    maquette officielle (Rabaïya / Thoulathiya / Thounaïya).
+  - **Contacts** : adresse Marrakech cliquable (point GPS) + **bouton Itinéraire
+    Google Maps** + **2 mobiles** (0614 15 26 86 / 0673 28 00 09) en WhatsApp et
+    tél + **barre flottante** (style fiches voyages).
+  - **Galerie carrousel** en bas de page, alimentée par l'admin médias (nouvelle
+    clé **« galerie-hajj »**, univers Omra & Hajj) → Karim y dépose ses vraies
+    photos. ⚠️ Le proxy de l'environnement bloque le téléchargement d'images du
+    web : les photos réelles passent donc par l'admin médias.
+  - **Diffusion WhatsApp** : balises Open Graph + **visuel carré**
+    `public/images/share-hajj-2027.png` (« HAJJ 2027 » + label, sans prix), généré
+    depuis `public/share-hajj-2027.html` (capture Chromium local).
   - ⏭️ Étape suivante demandée par Karim : **vidéo réseaux** (script + avatar).
 
 ## ▶️ Prochaines étapes (feux verts attendus)
