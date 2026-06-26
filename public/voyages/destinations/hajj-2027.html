@@ -713,22 +713,50 @@
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
             try { console.log('[galerie-hajj] images détectées via /api/media :', imgs.length, imgs); } catch (e) {}
 
-            // ── Hero : VIDÉO MP4 ou PHOTO (clé "hero-hajj"), sinon 1ʳᵉ photo de la galerie ──
+            // ── Hero : VIDÉO (fichier mp4 OU lien YouTube/Vimeo/Drive) puis PHOTO ──
+            // Vidéo cherchée d'abord sur "hero-hajj", à défaut sur "galerie-hajj".
             var heroRec = (media && media['hero-hajj']) || {};
-            var heroVideo = heroRec.videoUrl || heroRec.videoLink || '';
+            var galRec = (media && media['galerie-hajj']) || rec || {};
+            var heroMp4 = heroRec.videoUrl || galRec.videoUrl || '';
+            var heroLink = heroRec.videoLink || galRec.videoLink || '';
             var heroUrl = (heroRec.images && heroRec.images[0] && heroRec.images[0].url) || imgs[0] || '';
             var hero = document.getElementById('hajjHero');
-            try { console.log('[hero-hajj] videoUrl=', heroRec.videoUrl, '| videoLink=', heroRec.videoLink, '| img=', heroUrl); } catch (e) {}
-            if (heroVideo) {
+            try { console.log('[hero] mp4=', heroMp4, '| link=', heroLink, '| img=', heroUrl); } catch (e) {}
+            function setHeroPhoto(url) {
+                var st = document.createElement('style');
+                st.textContent = '#hajjHero::after{background-image:url(\'' + String(url).replace(/'/g, "%27") + '\')}';
+                document.head.appendChild(st);
+            }
+            function heroEmbedUrl(u) {
+                u = String(u || '');
+                var yt = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([A-Za-z0-9_-]{11})/);
+                if (yt) return 'https://www.youtube.com/embed/' + yt[1] + '?autoplay=1&mute=1&loop=1&playlist=' + yt[1] + '&controls=0&playsinline=1&modestbranding=1&rel=0';
+                var vm = u.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+                if (vm) return 'https://player.vimeo.com/video/' + vm[1] + '?autoplay=1&muted=1&loop=1&background=1';
+                var dr = u.match(/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
+                if (dr) return 'https://drive.google.com/file/d/' + dr[1] + '/preview';
+                return '';
+            }
+            if (heroMp4) {
                 hero.classList.add('has-photo');
                 hero.classList.add('has-video');
+                if (heroUrl) hero.querySelector('#hajjHeroVideo').setAttribute('poster', heroUrl);
                 var hv = document.getElementById('hajjHeroVideo');
-                if (hv) { hv.src = heroVideo; hv.style.display = 'block'; var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
+                if (hv) { hv.src = heroMp4; hv.style.display = 'block'; var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
+            } else if (heroLink && heroEmbedUrl(heroLink)) {
+                hero.classList.add('has-photo');
+                hero.classList.add('has-video');
+                var ifr = document.createElement('iframe');
+                ifr.className = 'hero-video';
+                ifr.src = heroEmbedUrl(heroLink);
+                ifr.setAttribute('frameborder', '0');
+                ifr.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+                ifr.allowFullscreen = true;
+                var hvEl = document.getElementById('hajjHeroVideo');
+                if (hvEl && hvEl.parentNode) hvEl.parentNode.insertBefore(ifr, hvEl);
             } else if (heroUrl) {
                 hero.classList.add('has-photo');
-                var st = document.createElement('style');
-                st.textContent = '#hajjHero::after{background-image:url(\'' + heroUrl.replace(/'/g, "%27") + '\')}';
-                document.head.appendChild(st);
+                setHeroPhoto(heroUrl);
             }
 
             // ── Galerie (carrousel) ──
