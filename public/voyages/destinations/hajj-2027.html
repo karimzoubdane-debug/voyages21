@@ -89,14 +89,31 @@
     .formule-top .dates { font-size: .9rem; color: var(--gold-soft); font-weight: 700; }
     .formule-top .dates span { display: inline-block; margin-inline-start: .8rem; }
 
+    .ptwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .price-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
     .price-table th, .price-table td { padding: .55rem .65rem; border-bottom: 1px solid var(--line); text-align: center; }
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
-    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin: .25rem 0; }
+    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: nowrap; white-space: nowrap; margin: .25rem 0; }
     .price-table td.hotel .hcity .ct { color: var(--muted); font-weight: 700; font-size: .82rem; white-space: nowrap; }
-    .price-table td.hotel .hotel-name { color: var(--forest); font-weight: 700; font-size: .82rem; }
+    .price-table td.hotel .hotel-name { color: var(--forest); font-weight: 700; font-size: .82rem; white-space: nowrap; }
+    /* Icône appareil photo : ouvre la galerie de l'hôtel (lightbox) */
+    .hotel-gal { flex: 0 0 auto; appearance: none; border: 1px solid var(--line, #e4ddcf); background: rgba(200,164,64,.12); border-radius: 8px; padding: .12rem .4rem; font-size: .95rem; line-height: 1; cursor: pointer; transition: background .15s, transform .15s, box-shadow .15s; }
+    .hotel-gal:hover { background: var(--gold); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,164,64,.4); }
+    .hotel-gal.is-empty { opacity: .32; cursor: default; filter: grayscale(1); }
+    .hotel-gal.is-empty:hover { background: rgba(200,164,64,.12); transform: none; box-shadow: none; }
+    /* Lightbox galerie hôtel (même principe que les fiches produits, fermable, sans quitter la page) */
+    .hotel-lightbox { position: fixed; inset: 0; background: rgba(16,35,26,.5); display: none; z-index: 1100; }
+    .hotel-lightbox.active { display: flex; align-items: flex-start; justify-content: center; padding: 4vh 14px; }
+    .hotel-lightbox .glb-box { position: relative; width: min(720px, 100%); max-height: 90vh; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.45); display: flex; flex-direction: column; }
+    .hotel-lightbox .glb-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .8rem 1rem; border-bottom: 1px solid var(--line, #e4ddcf); }
+    .hotel-lightbox .glb-head h4 { margin: 0; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--forest); }
+    .hotel-lightbox .glb-close { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 1px solid var(--line, #e4ddcf); color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; }
+    .hotel-lightbox .glb-inner { overflow-y: auto; padding: 16px; }
+    .hotel-lightbox .glb-inner img { width: 100%; border-radius: 12px; margin-bottom: 12px; display: block; }
+    .hotel-lightbox .glb-inner img:last-child { margin-bottom: 0; }
+    .hotel-lightbox .glb-empty { padding: 1.4rem; text-align: center; color: var(--muted); font-weight: 600; }
     .price-table td.hotel small { color: var(--muted); font-weight: 600; }
     .price-table tbody tr:hover { background: #faf8f2; }
     .price-table .price { font-weight: 700; color: var(--ink); white-space: nowrap; }
@@ -392,7 +409,7 @@
                 <span>المدينة المنورة: <span class="num">17 ← 21</span> ذو الحجة</span>
             </div>
         </div>
-        <table class="price-table">
+        <div class="ptwrap"><table class="price-table">
             <thead>
                 <tr>
                     <th class="hotel">الفندق (مكة) / الفندق (المدينة)</th>
@@ -404,8 +421,8 @@
             <tbody>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">سنود الريان</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">سنود الريان</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-snood-rayan" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">67 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">74 000</span><small>درهم</small></td>
@@ -413,8 +430,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">بست ويسترن</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">بست ويسترن</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-best-western" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">70 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">76 000</span><small>درهم</small></td>
@@ -422,8 +439,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">جادة أجياد</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">جادة أجياد</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-jada-ajyad" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">75 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">79 500</span><small>درهم</small></td>
@@ -431,15 +448,15 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">سنود أجياد</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">سنود أجياد</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-snood-ajyad" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">77 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">84 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">99 500</span><small>درهم</small></td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </div>
 
     <div class="formule">
@@ -450,7 +467,7 @@
                 <span>المدينة المنورة: <span class="num">15 ← 21</span> ذو الحجة</span>
             </div>
         </div>
-        <table class="price-table">
+        <div class="ptwrap"><table class="price-table">
             <thead>
                 <tr>
                     <th class="hotel">الفندق (مكة) / الفندق (المدينة)</th>
@@ -462,8 +479,8 @@
             <tbody>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">أجياد مكة مكارم — الملحق المجدّد</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">أجياد مكة مكارم — الملحق المجدّد</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-ajyad-makarem-annexe" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">105 000</span><small>درهم</small></td>
@@ -471,8 +488,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">أجياد مكة مكارم — المبنى الرئيسي</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">أنوار المدينة موفنبيك</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">أجياد مكة مكارم — المبنى الرئيسي</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-ajyad-makarem-principal" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">أنوار المدينة موفنبيك</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-anwar-movenpick" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">104 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">115 000</span><small>درهم</small></td>
@@ -480,8 +497,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">السويس مكة — بلتمور 5 نجوم</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">المدينة المنورة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">السويس مكة — بلتمور 5 نجوم</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-swiss-biltmore" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">المدينة المنورة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-premium" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">132 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">146 000</span><small>درهم</small></td>
@@ -489,15 +506,15 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">الفيرمونت</span></div>
-                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">المدينة المنورة</span></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">الفيرمونت</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-fairmont" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">المدينة المنورة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-premium" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">137 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">154 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">185 900</span><small>درهم</small></td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </div>
 
     <!-- Inclus / Non inclus -->
@@ -661,6 +678,43 @@
                 if (lg) { lg.src = logoUrl; lg.style.display = 'block'; }
             }
 
+            // ── Galeries photos par hôtel : icône 📷 → lightbox « sur place » (une clé média par hôtel) ──
+            var hlb = document.getElementById('hotelLightbox');
+            var hlbInner = document.getElementById('hotelLightboxInner');
+            var hlbTitle = document.getElementById('hotelLightboxTitle');
+            function openHotelGallery(name, urls) {
+                hlbTitle.textContent = name || '';
+                if (urls && urls.length) {
+                    hlbInner.innerHTML = urls.map(function (u) {
+                        return '<img src="' + u + '" alt="' + (name || '') + '" loading="lazy">';
+                    }).join('');
+                } else {
+                    hlbInner.innerHTML = '<div class="glb-empty">📷 الصور قريبًا · Photos bientôt disponibles</div>';
+                }
+                hlb.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeHotelGallery() {
+                hlb.classList.remove('active');
+                hlbInner.innerHTML = '';
+                document.body.style.overflow = '';
+            }
+            if (hlb) {
+                hlb.addEventListener('click', function (e) { if (e.target === hlb) closeHotelGallery(); });
+                var hlbClose = document.getElementById('hotelLightboxClose');
+                if (hlbClose) hlbClose.addEventListener('click', closeHotelGallery);
+                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeHotelGallery(); });
+                Array.prototype.forEach.call(document.querySelectorAll('.hotel-gal[data-gal]'), function (btn) {
+                    var key = btn.getAttribute('data-gal');
+                    var hrec = (media && media[key]) || {};
+                    var himgs = (hrec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
+                    var nm = btn.parentNode && btn.parentNode.querySelector('.hotel-name');
+                    var name = nm ? nm.textContent : '';
+                    if (himgs.length) btn.classList.remove('is-empty');
+                    btn.addEventListener('click', function () { openHotelGallery(name, himgs); });
+                });
+            }
+
             var rec = (media && media['galerie-hajj']) || {};
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
             try { console.log('[galerie-hajj] images détectées via /api/media :', imgs.length, imgs); } catch (e) {}
@@ -724,6 +778,17 @@
         .catch(function () {});
 })();
 </script>
+
+<!-- Lightbox galerie hôtel (s'ouvre sur place, fermable — sans quitter la page) -->
+<div class="hotel-lightbox" id="hotelLightbox" role="dialog" aria-modal="true" aria-label="Galerie photos de l'hôtel">
+    <div class="glb-box">
+        <div class="glb-head">
+            <h4 id="hotelLightboxTitle"></h4>
+            <button class="glb-close" id="hotelLightboxClose" type="button" aria-label="إغلاق · Fermer">×</button>
+        </div>
+        <div class="glb-inner" id="hotelLightboxInner"></div>
+    </div>
+</div>
 
 </body>
 </html>
