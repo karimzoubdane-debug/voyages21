@@ -186,8 +186,30 @@
     .contact .code { text-align: center; margin-top: 1.1rem; font-size: .82rem; color: var(--gold-soft); }
 
     /* Carrousel galerie */
-    .v21-gallery { display: block; position: static; max-width: var(--maxw); margin: 2rem auto 0; padding: 0 1.2rem; }
-    .v21-gallery .sec-head { margin-top: 0; }
+    /* Section « cercles » : avis + galerie côte à côte */
+    .circles { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
+    .circles-row { display: flex; gap: 2.6rem; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
+    .circle-col { display: flex; flex-direction: column; align-items: center; gap: .7rem; }
+    .circle { width: 340px; height: 340px; border-radius: 50%; overflow: hidden; box-shadow: 0 16px 40px rgba(21,46,31,.18); }
+    .circle-cap { font-family: 'Noto Naskh Arabic', serif; font-weight: 700; color: var(--forest); font-size: 1.15rem; }
+    /* Cercle avis */
+    .circle-avis { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .3rem; padding: 1.6rem; text-decoration: none; color: #17263F; background: #c9f23a; border: 4px solid #17263F; animation: glowPulse 1.8s ease-in-out infinite; }
+    .circle-avis:hover { filter: brightness(1.04); }
+    .circle-avis .ci-stars { color: #17263F; font-size: 1.7rem; letter-spacing: .1em; }
+    .circle-avis strong { font-family: 'Noto Naskh Arabic', serif; font-size: 1.6rem; }
+    .circle-avis .ci-sub { font-size: 1.1rem; opacity: .85; }
+    .circle-avis .ci-cta { margin-top: .5rem; background: #17263F; color: #c9f23a; font-weight: 800; border-radius: 999px; padding: .45rem 1rem; font-size: .82rem; }
+    /* Cercle galerie : carrousel circulaire */
+    .circle-gallery { background: #0d1f15; }
+    .circle-gallery .carousel { width: 100%; height: 100%; max-width: none; margin: 0; border-radius: 50%; background: #0d1f15; direction: ltr; box-shadow: none; }
+    .circle-gallery .track { height: 100%; }
+    .circle-gallery .slide-img { min-width: 100%; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
+    .circle-gallery .slide.placeholder { min-width: 100%; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; font-size: .9rem; }
+    .circle-gallery .nav { display: none !important; }
+    .circles .dots { display: flex; gap: 7px; justify-content: center; }
+    .circles .dots i { width: 8px; height: 8px; border-radius: 999px; background: rgba(23,38,63,.3); cursor: pointer; }
+    .circles .dots i.on { background: var(--forest); width: 20px; }
+    @media (max-width: 760px) { .circle { width: 300px; height: 300px; } }
     .carousel { position: relative; max-width: 680px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 32px rgba(21,46,31,.12); background: #0d1f15; direction: ltr; }
     .carousel .track { display: flex; transition: transform .45s ease; }
     .carousel .slide { min-width: 100%; aspect-ratio: 16/9; background: #0d1f15 center/cover no-repeat; }
@@ -545,29 +567,36 @@
 
 </div>
 
-<!-- Avis clients (socle) — TODO: brancher le lien de la campagne d'avis Hajj Google quand prêt -->
-<div class="reviews-ref">
-    <div class="inner">
-        <div class="stars">★★★★★</div>
-        <h2>آراء حجّاجنا… خيرُ شاهد</h2>
-        <p>أصدق شهادة على جودة خدماتنا هي كلمات من رافقناهم إلى بيت الله الحرام. اقرؤوا تجارب حجّاج المواسم الماضية — فآراؤهم خيرُ توصية، وهي أصدق دليل على ثقتهم بنا عامًا بعد عام.</p>
-        <a class="gbtn" href="https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">قراءة آراء عملائنا على Google ›</a>
-    </div>
-</div>
+<!-- Avis + Galerie : deux cercles côte à côte (carrousel circulaire à droite) -->
+<section class="circles" id="galleryWrap">
+    <div class="circles-row">
 
-<!-- Galerie carrousel (alimentée par l'admin médias : clé « galerie-hajj ») -->
-<section class="v21-gallery" id="galleryWrap">
-    <div class="sec-head">
-        <div class="eyebrow">Galerie</div>
-        <h2>لحظات من رحلاتنا</h2>
-    </div>
-    <div class="carousel" id="carousel">
-        <div class="track" id="carTrack">
-            <div class="slide placeholder" id="carPlaceholder">📷 صور رحلاتنا قريبًا — Galerie en cours</div>
+        <!-- Cercle AVIS -->
+        <div class="circle-col">
+            <a class="circle circle-avis" href="https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">
+                <span class="ci-stars">★★★★★</span>
+                <strong>آراء حجّاجنا</strong>
+                <span class="ci-sub">خيرُ شاهد</span>
+                <span class="ci-cta">اقرؤوا آراءهم على Google ›</span>
+            </a>
+            <div class="circle-cap">آراء حجّاجنا… خيرُ شاهد</div>
         </div>
-        <button class="nav prev" id="carPrev" aria-label="السابق" hidden>‹</button>
-        <button class="nav next" id="carNext" aria-label="التالي" hidden>›</button>
-        <div class="dots" id="carDots"></div>
+
+        <!-- Cercle GALERIE (carrousel circulaire) -->
+        <div class="circle-col">
+            <div class="circle circle-gallery">
+                <div class="carousel" id="carousel">
+                    <div class="track" id="carTrack">
+                        <div class="slide placeholder" id="carPlaceholder">📷 قريبًا</div>
+                    </div>
+                    <button class="nav prev" id="carPrev" aria-label="السابق" hidden>‹</button>
+                    <button class="nav next" id="carNext" aria-label="التالي" hidden>›</button>
+                </div>
+            </div>
+            <div class="dots" id="carDots"></div>
+            <div class="circle-cap">لحظات من رحلاتنا</div>
+        </div>
+
     </div>
 </section>
 
@@ -630,7 +659,7 @@
     document.addEventListener('click', function (e) { if (!fab.contains(e.target)) fab.classList.remove('open'); });
 
     // Apparition au défilement
-    var revealEls = document.querySelectorAll('.why, .formule, .incl-grid, .note-box, .reviews-ref, .contact, .v21-gallery');
+    var revealEls = document.querySelectorAll('.why, .formule, .incl-grid, .note-box, .circles, .contact');
     Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('reveal'); });
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
