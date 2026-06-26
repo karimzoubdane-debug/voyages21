@@ -179,8 +179,8 @@
     .contact .code { text-align: center; margin-top: 1.1rem; font-size: .82rem; color: var(--gold-soft); }
 
     /* Carrousel galerie */
-    .gallery { max-width: var(--maxw); margin: 2.6rem auto 0; padding: 0 1.2rem; }
-    .gallery .sec-head { margin-top: 0; }
+    .v21-gallery { display: block; position: static; max-width: var(--maxw); margin: 2.6rem auto 0; padding: 0 1.2rem; }
+    .v21-gallery .sec-head { margin-top: 0; }
     .carousel { position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 32px rgba(21,46,31,.12); background: #0d1f15; direction: ltr; }
     .carousel .track { display: flex; transition: transform .45s ease; }
     .carousel .slide { min-width: 100%; aspect-ratio: 16/9; background: #0d1f15 center/cover no-repeat; }
@@ -546,7 +546,7 @@
 </div>
 
 <!-- Galerie carrousel (alimentée par l'admin médias : clé « galerie-hajj ») -->
-<section class="gallery" id="galleryWrap">
+<section class="v21-gallery" id="galleryWrap">
     <div class="sec-head">
         <div class="eyebrow">Galerie</div>
         <h2>لحظات من رحلاتنا</h2>
@@ -620,7 +620,7 @@
     document.addEventListener('click', function (e) { if (!fab.contains(e.target)) fab.classList.remove('open'); });
 
     // Apparition au défilement
-    var revealEls = document.querySelectorAll('.why, .formule, .incl-grid, .note-box, .reviews-ref, .contact, .gallery');
+    var revealEls = document.querySelectorAll('.why, .formule, .incl-grid, .note-box, .reviews-ref, .contact, .v21-gallery');
     Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('reveal'); });
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
