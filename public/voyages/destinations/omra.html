@@ -11,12 +11,37 @@
 </head>
 <body>
   <div id="destinationApp"></div>
+  <style>
+    .v21-hajj-feature { max-width: 1060px; margin: 0 auto 1.4rem; }
+    .v21-hajj-feature .inner { display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap;
+      background: #c9f23a; color: #17263F;
+      border: 1px solid rgba(23,38,63,.18);
+      border-radius: 18px; padding: 1.4rem 1.6rem; box-shadow: 0 12px 32px rgba(108,150,10,.25); }
+    .v21-hajj-feature .label { background: #fff; border-radius: 12px; padding: .5rem; width: 84px; flex: 0 0 auto; }
+    .v21-hajj-feature .label img { width: 100%; height: auto; display: block; }
+    .v21-hajj-feature .txt { flex: 1 1 280px; }
+    .v21-hajj-feature .k { color: #2c4a06; font-weight: 700; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
+    .v21-hajj-feature h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: .3rem 0 .35rem; color: #17263F; }
+    .v21-hajj-feature p { margin: 0; color: #243d06; font-size: .96rem; }
+    .v21-hajj-feature .go { flex: 0 0 auto; background: #17263F; color: #c9f23a; font-weight: 800;
+      text-decoration: none; border-radius: 999px; padding: .85rem 1.5rem; white-space: nowrap; }
+    .v21-hajj-feature .go:hover { filter: brightness(1.12); }
+    @media (max-width: 640px) { .v21-hajj-feature .inner { text-align: center; justify-content: center; } }
+  </style>
   <script src="../data.js"></script>
   <script>
     window.DESTINATION_PAGE = {
       title: 'Omra & Hajj',
-      description: 'Programmes Omra avec accompagnement, logistique et sérénité.',
+      description: 'Programmes Omra avec accompagnement, logistique et sérénité. Et le Hajj 2027 avec une agence labellisée par le Ministère du Tourisme depuis 2006.',
       countLabel: '6 programmes',
+      featured: '<div class="v21-hajj-feature"><div class="inner">'
+        + '<div class="label"><img src="/label-qualite-hajj.jpg" alt="Label Qualité des services du Hajj — Ministère du Tourisme marocain"></div>'
+        + '<div class="txt"><div class="k">وكالة معتمدة منذ 2006 · Agence labellisée depuis 2006</div>'
+        + '<h3>الحج 2027 (1448 هـ) — Hajj 2027</h3>'
+        + '<p dir="rtl">حاصلون على «علامة جودة خدمات الحج» من وزارة السياحة المغربية · صيغ من الراحة إلى الممتاز، فنادق قرب الحرمين، وتأطير ديني وتقني · آلاف الحجاج رافقناهم.</p>'
+        + '<p style="opacity:.82;margin-top:.4rem">Détentrice du « Label Qualité des services du Hajj » du Ministère du Tourisme. Des milliers de pèlerins accompagnés.</p></div>'
+        + '<a class="go" href="/voyages/destinations/hajj-2027.html">اكتشفوا برنامج الحج 2027 · Découvrir ›</a>'
+        + '</div></div>',
       slugs: ['omra-mouharram', 'omra-06-juillet', 'omra-08-juillet', 'omra-istanbul', 'omra-27-juillet-etihad', 'omra-01-juillet']
     };
   </script>
