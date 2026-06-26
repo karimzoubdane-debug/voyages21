@@ -60,7 +60,7 @@
     .why .sec-head { text-align: center; margin-bottom: 1.3rem; }
     .why .sec-head .eyebrow { color: var(--gold); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
     .why .sec-head h2 { color: var(--forest); font-size: clamp(1.25rem, 3.2vw, 1.65rem); margin: .2rem 0 0; }
-    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; max-width: 760px; margin-inline: auto; }
     .why-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem 1.1rem; text-align: center; box-shadow: 0 8px 22px rgba(21,46,31,.07); display: flex; flex-direction: column; align-items: center; }
     .why-card.is-center { background: linear-gradient(160deg, #1B3A28, #152E1F); color: #fff; }
     .why-card .ic { font-size: 1.9rem; margin-bottom: .5rem; }
@@ -74,6 +74,12 @@
     .why-card.is-center p { color: rgba(255,255,255,.85); }
     .why-card .fr { display: block; direction: ltr; margin-top: .4rem; font-family: 'DM Sans', sans-serif; font-size: .82rem; color: var(--muted); }
     .why-card.is-center .fr { color: rgba(255,255,255,.7); }
+    /* Fond image (photo de groupe) piloté par l'admin (clé "avis-bg-hajj") — voile sombre via le dégradé inline */
+    .why-card.is-center.has-avis-bg { background-size: cover; background-position: center; color: #fff; }
+    .why-card.is-center.has-avis-bg .ic, .why-card.is-center.has-avis-bg h3 { color: #fff; }
+    .why-card.is-center.has-avis-bg .big { color: var(--gold-soft); }
+    .why-card.is-center.has-avis-bg p { color: rgba(255,255,255,.92); }
+    .why-card.is-center.has-avis-bg .fr { color: rgba(255,255,255,.82); }
 
     .hajj-wrap { max-width: var(--maxw); margin: 1.8rem auto 2.4rem; padding: 0 1.2rem; }
     .sec-head { text-align: center; margin: 1.6rem 0 1rem; }
@@ -89,37 +95,31 @@
     .formule-top .dates { font-size: .9rem; color: var(--gold-soft); font-weight: 700; }
     .formule-top .dates span { display: inline-block; margin-inline-start: .8rem; }
 
+    .ptwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .price-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
     .price-table th, .price-table td { padding: .55rem .65rem; border-bottom: 1px solid var(--line); text-align: center; }
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
-    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin: .25rem 0; }
+    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: nowrap; white-space: nowrap; margin: .25rem 0; }
     .price-table td.hotel .hcity .ct { color: var(--muted); font-weight: 700; font-size: .82rem; white-space: nowrap; }
-    .price-table td.hotel .hotel-link { position: relative; color: var(--forest); font-weight: 700; font-size: .82rem; display: inline-flex; align-items: center; justify-content: center; text-align: center; width: 200px; min-height: 34px; box-sizing: border-box; text-decoration: none; background: rgba(200,164,64,.12); border: 1px solid #e53935; border-radius: 8px; padding: .15rem .5rem; transition: background .18s, color .18s, box-shadow .18s, transform .18s; animation: hotelActive 1.8s ease-in-out infinite; }
-    @media (max-width: 760px) { .price-table td.hotel .hotel-link { width: 100%; max-width: 190px; } }
-    /* Emoji « cliquez pour voir » qui saute sur place toutes les 2s, juste avant le nom */
-    .price-table td.hotel .hotel-link::before { content: "👆"; display: inline-block; margin-inline-end: .35rem; animation: tapJump 2s ease-in-out infinite; }
-    @keyframes tapJump {
-        0%, 82%, 100% { transform: translateY(0); }
-        88% { transform: translateY(-6px); }
-        94% { transform: translateY(0); }
-    }
-    @keyframes hotelActive {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(229,57,53,.35); border-color: #e8b53a; }
-        50% { box-shadow: 0 0 0 4px rgba(229,57,53,0); border-color: #e53935; }
-    }
-    .price-table td.hotel .hotel-link:hover { background: #e53935; color: #fff; border-color: #e53935; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 16px rgba(229,57,53,.4); animation: none; }
-    /* Info-bulle « cliquez pour voir l'hôtel » au survol */
-    .price-table td.hotel .hotel-link::after { content: "👁 اضغط لرؤية الفندق · Voir l'hôtel"; position: absolute; bottom: 122%; right: 50%; transform: translateX(50%) translateY(5px); background: #1b1b1b; color: #fff; font-size: .68rem; font-weight: 600; padding: .3rem .6rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: .18s; z-index: 6; }
-    .price-table td.hotel .hotel-link:hover::after { opacity: 1; transform: translateX(50%) translateY(0); }
-
-    /* Bannière : noms d'hôtels cliquables */
-    .hotel-hint { display: flex; align-items: center; gap: .7rem; justify-content: center; flex-wrap: wrap; text-align: center;
-        background: linear-gradient(135deg, #fbf6ea 0%, #fff 100%); border: 1px dashed var(--gold); border-radius: 14px;
-        padding: .8rem 1.1rem; margin: 0 0 1.3rem; color: var(--forest2); font-weight: 700; font-size: .94rem; box-shadow: 0 6px 18px rgba(200,164,64,.12); }
-    .hotel-hint .badge { background: var(--gold); color: var(--forest2); font-size: .7rem; font-weight: 800; letter-spacing: .04em; border-radius: 999px; padding: .25rem .7rem; animation: blink 1.6s ease-in-out infinite; }
-    .hotel-hint .fr { direction: ltr; color: var(--muted); font-weight: 600; font-size: .85rem; }
+    .price-table td.hotel .hotel-name { color: var(--forest); font-weight: 700; font-size: .82rem; white-space: nowrap; }
+    /* Icône appareil photo : ouvre la galerie de l'hôtel (lightbox) */
+    .hotel-gal { flex: 0 0 auto; appearance: none; border: 1px solid var(--line, #e4ddcf); background: rgba(200,164,64,.12); border-radius: 8px; padding: .12rem .4rem; font-size: .95rem; line-height: 1; cursor: pointer; transition: background .15s, transform .15s, box-shadow .15s; }
+    .hotel-gal:hover { background: var(--gold); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,164,64,.4); }
+    .hotel-gal.is-empty { opacity: .32; cursor: default; filter: grayscale(1); }
+    .hotel-gal.is-empty:hover { background: rgba(200,164,64,.12); transform: none; box-shadow: none; }
+    /* Lightbox galerie hôtel (même principe que les fiches produits, fermable, sans quitter la page) */
+    .hotel-lightbox { position: fixed; inset: 0; background: rgba(16,35,26,.5); display: none; z-index: 1100; }
+    .hotel-lightbox.active { display: flex; align-items: flex-start; justify-content: center; padding: 4vh 14px; }
+    .hotel-lightbox .glb-box { position: relative; width: min(720px, 100%); max-height: 90vh; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.45); display: flex; flex-direction: column; }
+    .hotel-lightbox .glb-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .8rem 1rem; border-bottom: 1px solid var(--line, #e4ddcf); }
+    .hotel-lightbox .glb-head h4 { margin: 0; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--forest); }
+    .hotel-lightbox .glb-close { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 1px solid var(--line, #e4ddcf); color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; }
+    .hotel-lightbox .glb-inner { overflow-y: auto; padding: 16px; }
+    .hotel-lightbox .glb-inner img { width: 100%; border-radius: 12px; margin-bottom: 12px; display: block; }
+    .hotel-lightbox .glb-inner img:last-child { margin-bottom: 0; }
+    .hotel-lightbox .glb-empty { padding: 1.4rem; text-align: center; color: var(--muted); font-weight: 600; }
     .price-table td.hotel small { color: var(--muted); font-weight: 600; }
     .price-table tbody tr:hover { background: #faf8f2; }
     .price-table .price { font-weight: 700; color: var(--ink); white-space: nowrap; }
@@ -295,7 +295,7 @@
     .formule.in tbody tr:nth-child(3) .price { transition-delay: .25s; }
     .formule.in tbody tr:nth-child(4) .price { transition-delay: .35s; }
     @media (prefers-reduced-motion: reduce) {
-        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .price-table td.hotel .hotel-link, .price-table td.hotel .hotel-link::before, .incl::before { animation: none; }
+        .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .incl::before { animation: none; }
         .reveal, .formule .price { opacity: 1; transform: none; transition: none; }
     }
 
@@ -388,12 +388,6 @@
             <p>أصدق شهادة على جودتنا هي كلمات من رافقناهم. آراؤهم خيرُ توصية — <b>اضغط لقراءة آرائهم</b>.
             <span class="fr" dir="ltr">Nos pèlerins témoignent pour nous — cliquez pour lire leurs avis.</span></p>
         </a>
-        <div class="why-card">
-            <div class="label-mini"><img src="/label-qualite-hajj.jpg" alt="علامة جودة خدمات الحج"></div>
-            <h3>ثقة وزارة السياحة</h3>
-            <p>تُجدّد <b>كلَّ عام</b> ثقتها بنا عبر «علامة جودة خدمات الحج» — علامة الجودة والاطمئنان.
-            <span class="fr">Le Ministère du Tourisme renouvelle sa confiance chaque année via le Label Qualité.</span></p>
-        </div>
     </div>
 </section>
 
@@ -406,10 +400,6 @@
         <p>الأسعار بالدرهم المغربي، للفرد الواحد حسب نوع الغرفة، مع نصف الإقامة بالفنادق المذكورة.</p>
     </div>
 
-    <div class="hotel-hint">
-        <span>👆 اضغط على اسم أيّ فندق لزيارة صفحته ومشاهدة صوره وتقييماته</span>
-        <span class="fr">Cliquez sur le nom d'un hôtel pour découvrir sa page</span>
-    </div>
 
     <div class="formule">
         <div class="formule-top">
@@ -419,7 +409,7 @@
                 <span>المدينة المنورة: <span class="num">17 ← 21</span> ذو الحجة</span>
             </div>
         </div>
-        <table class="price-table">
+        <div class="ptwrap"><table class="price-table">
             <thead>
                 <tr>
                     <th class="hotel">الفندق (مكة) / الفندق (المدينة)</th>
@@ -431,8 +421,8 @@
             <tbody>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Al+Rayan+hotel+Makkah" target="_blank" rel="noopener">سنود الريان</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">سنود الريان</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-snood-rayan" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">67 500</span><small>درهم</small></td>
                     <td class="price"><span class="num">74 000</span><small>درهم</small></td>
@@ -440,8 +430,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Best+Western+hotel+Makkah" target="_blank" rel="noopener">بست ويسترن</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">بست ويسترن</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-best-western" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">70 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">76 000</span><small>درهم</small></td>
@@ -449,8 +439,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Jadah+Ajyad+hotel+Makkah" target="_blank" rel="noopener">جادة أجياد</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">جادة أجياد</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-jada-ajyad" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">75 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">79 500</span><small>درهم</small></td>
@@ -458,15 +448,15 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Snood+Ajyad+hotel+Makkah" target="_blank" rel="noopener">سنود أجياد</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">سنود أجياد</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-snood-ajyad" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">77 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">84 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">99 500</span><small>درهم</small></td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </div>
 
     <div class="formule">
@@ -477,7 +467,7 @@
                 <span>المدينة المنورة: <span class="num">15 ← 21</span> ذو الحجة</span>
             </div>
         </div>
-        <table class="price-table">
+        <div class="ptwrap"><table class="price-table">
             <thead>
                 <tr>
                     <th class="hotel">الفندق (مكة) / الفندق (المدينة)</th>
@@ -489,8 +479,8 @@
             <tbody>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — الملحق المجدّد</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Saja+Al+Madinah+hotel" target="_blank" rel="noopener">سجى المدينة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">أجياد مكة مكارم — الملحق المجدّد</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-ajyad-makarem-annexe" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">سجى المدينة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-saja" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">95 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">105 000</span><small>درهم</small></td>
@@ -498,8 +488,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Ajyad+Makkah+Makarem+hotel" target="_blank" rel="noopener">أجياد مكة مكارم — المبنى الرئيسي</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Anwar+Al+Madinah+Movenpick+hotel" target="_blank" rel="noopener">أنوار المدينة موفنبيك</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">أجياد مكة مكارم — المبنى الرئيسي</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-ajyad-makarem-principal" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">أنوار المدينة موفنبيك</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-anwar-movenpick" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">104 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">115 000</span><small>درهم</small></td>
@@ -507,8 +497,8 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Biltmore+Suites+Makkah+hotel" target="_blank" rel="noopener">السويس مكة — بلتمور 5 نجوم</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=5+star+hotel+Madinah+near+Haram" target="_blank" rel="noopener">المدينة المنورة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">السويس مكة — بلتمور 5 نجوم</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-swiss-biltmore" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">المدينة المنورة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-premium" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">132 000</span><small>درهم</small></td>
                     <td class="price"><span class="num">146 000</span><small>درهم</small></td>
@@ -516,15 +506,15 @@
                 </tr>
                 <tr>
                     <td class="hotel">
-                        <div class="hcity"><span class="ct">مكة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=Fairmont+Makkah+Clock+Royal+Tower" target="_blank" rel="noopener">الفيرمونت</a></div>
-                        <div class="hcity"><span class="ct">المدينة</span><a class="hotel-link" href="https://www.google.com/maps/search/?api=1&query=5+star+hotel+Madinah+near+Haram" target="_blank" rel="noopener">المدينة المنورة</a></div>
+                        <div class="hcity"><span class="ct">مكة</span><span class="hotel-name">الفيرمونت</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-mk-fairmont" aria-label="صور الفندق · Photos">📷</button></div>
+                        <div class="hcity"><span class="ct">المدينة</span><span class="hotel-name">المدينة المنورة</span><button class="hotel-gal is-empty" type="button" data-gal="hotel-md-premium" aria-label="صور الفندق · Photos">📷</button></div>
                     </td>
                     <td class="price"><span class="num">137 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">154 900</span><small>درهم</small></td>
                     <td class="price"><span class="num">185 900</span><small>درهم</small></td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </div>
 
     <!-- Inclus / Non inclus -->
@@ -688,26 +678,102 @@
                 if (lg) { lg.src = logoUrl; lg.style.display = 'block'; }
             }
 
+            // ── Galeries photos par hôtel : icône 📷 → lightbox « sur place » (une clé média par hôtel) ──
+            var hlb = document.getElementById('hotelLightbox');
+            var hlbInner = document.getElementById('hotelLightboxInner');
+            var hlbTitle = document.getElementById('hotelLightboxTitle');
+            function openHotelGallery(name, urls) {
+                hlbTitle.textContent = name || '';
+                if (urls && urls.length) {
+                    hlbInner.innerHTML = urls.map(function (u) {
+                        return '<img src="' + u + '" alt="' + (name || '') + '" loading="lazy">';
+                    }).join('');
+                } else {
+                    hlbInner.innerHTML = '<div class="glb-empty">📷 الصور قريبًا · Photos bientôt disponibles</div>';
+                }
+                hlb.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeHotelGallery() {
+                hlb.classList.remove('active');
+                hlbInner.innerHTML = '';
+                document.body.style.overflow = '';
+            }
+            if (hlb) {
+                hlb.addEventListener('click', function (e) { if (e.target === hlb) closeHotelGallery(); });
+                var hlbClose = document.getElementById('hotelLightboxClose');
+                if (hlbClose) hlbClose.addEventListener('click', closeHotelGallery);
+                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeHotelGallery(); });
+                Array.prototype.forEach.call(document.querySelectorAll('.hotel-gal[data-gal]'), function (btn) {
+                    var key = btn.getAttribute('data-gal');
+                    var hrec = (media && media[key]) || {};
+                    var himgs = (hrec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
+                    var nm = btn.parentNode && btn.parentNode.querySelector('.hotel-name');
+                    var name = nm ? nm.textContent : '';
+                    if (himgs.length) btn.classList.remove('is-empty');
+                    btn.addEventListener('click', function () { openHotelGallery(name, himgs); });
+                });
+            }
+
             var rec = (media && media['galerie-hajj']) || {};
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
             try { console.log('[galerie-hajj] images détectées via /api/media :', imgs.length, imgs); } catch (e) {}
 
-            // ── Hero : VIDÉO MP4 ou PHOTO (clé "hero-hajj"), sinon 1ʳᵉ photo de la galerie ──
+            // ── Hero : VIDÉO (fichier mp4 OU lien YouTube/Vimeo/Drive) puis PHOTO ──
+            // Vidéo cherchée d'abord sur "hero-hajj", à défaut sur "galerie-hajj".
             var heroRec = (media && media['hero-hajj']) || {};
-            var heroVideo = heroRec.videoUrl || heroRec.videoLink || '';
+            var galRec = (media && media['galerie-hajj']) || rec || {};
+            var heroMp4 = heroRec.videoUrl || galRec.videoUrl || '';
+            var heroLink = heroRec.videoLink || galRec.videoLink || '';
             var heroUrl = (heroRec.images && heroRec.images[0] && heroRec.images[0].url) || imgs[0] || '';
             var hero = document.getElementById('hajjHero');
-            try { console.log('[hero-hajj] videoUrl=', heroRec.videoUrl, '| videoLink=', heroRec.videoLink, '| img=', heroUrl); } catch (e) {}
-            if (heroVideo) {
+            try { console.log('[hero] mp4=', heroMp4, '| link=', heroLink, '| img=', heroUrl); } catch (e) {}
+            function setHeroPhoto(url) {
+                var st = document.createElement('style');
+                st.textContent = '#hajjHero::after{background-image:url(\'' + String(url).replace(/'/g, "%27") + '\')}';
+                document.head.appendChild(st);
+            }
+            function heroEmbedUrl(u) {
+                u = String(u || '');
+                var yt = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([A-Za-z0-9_-]{11})/);
+                if (yt) return 'https://www.youtube.com/embed/' + yt[1] + '?autoplay=1&mute=1&loop=1&playlist=' + yt[1] + '&controls=0&playsinline=1&modestbranding=1&rel=0';
+                var vm = u.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+                if (vm) return 'https://player.vimeo.com/video/' + vm[1] + '?autoplay=1&muted=1&loop=1&background=1';
+                var dr = u.match(/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
+                if (dr) return 'https://drive.google.com/file/d/' + dr[1] + '/preview';
+                return '';
+            }
+            if (heroMp4) {
                 hero.classList.add('has-photo');
                 hero.classList.add('has-video');
+                if (heroUrl) hero.querySelector('#hajjHeroVideo').setAttribute('poster', heroUrl);
                 var hv = document.getElementById('hajjHeroVideo');
-                if (hv) { hv.src = heroVideo; hv.style.display = 'block'; var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
+                if (hv) { hv.src = heroMp4; hv.style.display = 'block'; var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
+            } else if (heroLink && heroEmbedUrl(heroLink)) {
+                hero.classList.add('has-photo');
+                hero.classList.add('has-video');
+                var ifr = document.createElement('iframe');
+                ifr.className = 'hero-video';
+                ifr.src = heroEmbedUrl(heroLink);
+                ifr.setAttribute('frameborder', '0');
+                ifr.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+                ifr.allowFullscreen = true;
+                var hvEl = document.getElementById('hajjHeroVideo');
+                if (hvEl && hvEl.parentNode) hvEl.parentNode.insertBefore(ifr, hvEl);
             } else if (heroUrl) {
                 hero.classList.add('has-photo');
-                var st = document.createElement('style');
-                st.textContent = '#hajjHero::after{background-image:url(\'' + heroUrl.replace(/'/g, "%27") + '\')}';
-                document.head.appendChild(st);
+                setHeroPhoto(heroUrl);
+            }
+
+            // ── Fond image de la carte « avis » (clé "avis-bg-hajj") : remplace le vert uni ──
+            var avisRec = (media && media['avis-bg-hajj']) || {};
+            var avisBg = avisRec.images && avisRec.images[0] && avisRec.images[0].url;
+            if (avisBg) {
+                var avisCard = document.querySelector('.why-card.is-center');
+                if (avisCard) {
+                    avisCard.style.backgroundImage = "linear-gradient(160deg, rgba(15,27,48,.58), rgba(15,27,48,.72)), url('" + avisBg.replace(/'/g, "%27") + "')";
+                    avisCard.classList.add('has-avis-bg');
+                }
             }
 
             // ── Galerie (carrousel) ──
@@ -751,6 +817,17 @@
         .catch(function () {});
 })();
 </script>
+
+<!-- Lightbox galerie hôtel (s'ouvre sur place, fermable — sans quitter la page) -->
+<div class="hotel-lightbox" id="hotelLightbox" role="dialog" aria-modal="true" aria-label="Galerie photos de l'hôtel">
+    <div class="glb-box">
+        <div class="glb-head">
+            <h4 id="hotelLightboxTitle"></h4>
+            <button class="glb-close" id="hotelLightboxClose" type="button" aria-label="إغلاق · Fermer">×</button>
+        </div>
+        <div class="glb-inner" id="hotelLightboxInner"></div>
+    </div>
+</div>
 
 </body>
 </html>
