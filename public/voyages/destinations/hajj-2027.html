@@ -102,9 +102,10 @@
     .price-table thead th { background: var(--cream); color: var(--forest); font-weight: 700; font-size: .86rem; }
     .price-table th.hotel, .price-table td.hotel { text-align: right; }
     .price-table td.hotel b { color: var(--forest); display: block; }
-    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: nowrap; white-space: nowrap; margin: .25rem 0; }
-    .price-table td.hotel .hcity .ct { color: var(--muted); font-weight: 700; font-size: .82rem; white-space: nowrap; }
-    .price-table td.hotel .hotel-name { color: var(--forest); font-weight: 700; font-size: .82rem; white-space: nowrap; }
+    .price-table td.hotel .hcity { display: flex; align-items: center; gap: .4rem; flex-wrap: nowrap; margin: .25rem 0; }
+    .price-table td.hotel .hcity .ct { color: var(--muted); font-weight: 700; font-size: .82rem; white-space: nowrap; flex: 0 0 auto; }
+    /* Le nom d'hôtel peut passer sur 2 lignes pour que le tableau tienne sans scroll (les PRIX, eux, restent sur 1 ligne) */
+    .price-table td.hotel .hotel-name { color: var(--forest); font-weight: 700; font-size: .82rem; line-height: 1.2; overflow-wrap: anywhere; }
     /* Icône appareil photo : ouvre la galerie de l'hôtel (lightbox) */
     .hotel-gal { flex: 0 0 auto; appearance: none; border: 1px solid var(--line, #e4ddcf); background: rgba(200,164,64,.12); border-radius: 8px; padding: .12rem .4rem; font-size: .95rem; line-height: 1; cursor: pointer; transition: background .15s, transform .15s, box-shadow .15s; }
     .hotel-gal:hover { background: var(--gold); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,164,64,.4); }
