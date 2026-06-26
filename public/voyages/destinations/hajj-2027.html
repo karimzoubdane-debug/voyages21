@@ -27,7 +27,7 @@
     .num { direction: ltr; unicode-bidi: isolate; }
 
     /* HERO */
-    .hajj-hero { background: linear-gradient(160deg, rgba(27,58,40,.94) 0%, rgba(21,46,31,.97) 100%); color: #fff; padding: 2.8rem 1.2rem 3.2rem; text-align: center; position: relative; overflow: hidden; }
+    .hajj-hero { background: linear-gradient(160deg, #1a1a1a 0%, #000 100%); color: #fff; padding: 2.8rem 1.2rem 3.2rem; text-align: center; position: relative; overflow: hidden; }
     .hajj-hero::after { content: ""; position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .14; z-index: 0; }
     .hajj-hero.has-photo::after { opacity: .22; }
     .hajj-hero > * { position: relative; z-index: 1; }
@@ -36,8 +36,8 @@
     .hajj-hero.has-video::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(15,27,48,.12), rgba(15,27,48,.32)); pointer-events: none; }
     .hajj-hero.has-video, .hajj-hero.has-video h1, .hajj-hero.has-video .slogan { color: #ffffff; }
     .hajj-hero.has-video h1, .hajj-hero.has-video .slogan, .hajj-hero.has-video .eyebrow, .hajj-hero.has-video .slogan small { text-shadow: 0 2px 16px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.55); }
-    .hajj-hero.has-video .eyebrow, .hajj-hero.has-video .slogan small { color: #cfe96a; }
-    .hajj-hero.has-video .rule { background: #c9f23a; }
+    .hajj-hero.has-video .eyebrow, .hajj-hero.has-video .slogan small { color: #E8C66A; }
+    .hajj-hero.has-video .rule { background: #C8A440; }
     .hajj-hero .eyebrow { color: var(--gold-soft); font-size: .82rem; letter-spacing: .12em; font-weight: 700; }
     .hajj-hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: .5rem 0 .4rem; }
     .hajj-hero .slogan { margin: .7rem auto 0; max-width: 60ch; font-family: 'Noto Naskh Arabic', serif; font-size: 1.25rem; color: #fff; font-weight: 700; }
@@ -63,7 +63,7 @@
     .why .sec-head h2 { color: var(--forest); font-size: clamp(1.25rem, 3.2vw, 1.65rem); margin: .2rem 0 0; }
     .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; max-width: 760px; margin-inline: auto; }
     .why-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem 1.1rem; text-align: center; box-shadow: 0 8px 22px rgba(21,46,31,.07); display: flex; flex-direction: column; align-items: center; }
-    .why-card.is-center { background: linear-gradient(160deg, #1B3A28, #152E1F); color: #fff; }
+    .why-card.is-center { background: linear-gradient(160deg, #1a1a1a, #000); color: #fff; }
     .why-card .ic { font-size: 1.9rem; margin-bottom: .5rem; }
     .why-card .label-mini { width: 74px; margin-bottom: .5rem; }
     .why-card .label-mini img { width: 100%; height: auto; display: block; }
@@ -90,7 +90,7 @@
 
     /* Formule */
     .formule { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 28px rgba(21,46,31,.08); overflow: hidden; margin-bottom: 1.3rem; }
-    .formule-top { background: linear-gradient(160deg, #25543b, #152e1f); color: #fff; padding: .85rem 1.2rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; justify-content: space-between; }
+    .formule-top { background: linear-gradient(160deg, #1a1a1a, #000); color: #fff; padding: .85rem 1.2rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; justify-content: space-between; }
     .formule-top h3 { font-size: 1.25rem; margin: 0; }
     .formule-top h3 small { display: block; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .8rem; color: var(--gold-soft); margin-top: .15rem; letter-spacing: .03em; }
     .formule-top .dates { font-size: .9rem; color: var(--gold-soft); font-weight: 700; }
@@ -176,7 +176,7 @@
 
     /* Contact agence */
     .contact { max-width: var(--maxw); margin: 2.4rem auto 0; padding: 0 1.2rem; }
-    .contact .inner { background: linear-gradient(160deg, var(--forest) 0%, var(--forest2) 100%); color: #fff; border-radius: 18px; padding: 1.7rem 1.7rem; }
+    .contact .inner { background: linear-gradient(160deg, #1a1a1a 0%, #000 100%); color: #fff; border-radius: 18px; padding: 1.7rem 1.7rem; }
     .contact h2 { margin: 0 0 1.1rem; font-size: 1.3rem; color: var(--gold-soft); text-align: center; }
     .contact .rows { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; }
     .contact .blk b { display: block; color: var(--gold-soft); font-size: .82rem; letter-spacing: .04em; margin-bottom: .5rem; }
@@ -196,12 +196,12 @@
     .circle { width: 340px; height: 340px; border-radius: 50%; overflow: hidden; box-shadow: 0 16px 40px rgba(21,46,31,.18); }
     .circle-cap { font-family: 'Noto Naskh Arabic', serif; font-weight: 700; color: var(--forest); font-size: 1.15rem; }
     /* Cercle avis */
-    .circle-avis { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .3rem; padding: 1.6rem; text-decoration: none; color: #17263F; background: #c9f23a; border: 4px solid #17263F; animation: glowPulse 1.8s ease-in-out infinite; }
-    .circle-avis:hover { filter: brightness(1.04); }
-    .circle-avis .ci-stars { color: #17263F; font-size: 1.7rem; letter-spacing: .1em; }
+    .circle-avis { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .3rem; padding: 1.6rem; text-decoration: none; color: #E8C66A; background: #0a0a0a; border: 4px solid #C8A440; animation: glowPulse 1.8s ease-in-out infinite; }
+    .circle-avis:hover { filter: brightness(1.12); }
+    .circle-avis .ci-stars { color: #E8C66A; font-size: 1.7rem; letter-spacing: .1em; }
     .circle-avis strong { font-family: 'Noto Naskh Arabic', serif; font-size: 1.6rem; }
     .circle-avis .ci-sub { font-size: 1.1rem; opacity: .85; }
-    .circle-avis .ci-cta { margin-top: .5rem; background: #17263F; color: #c9f23a; font-weight: 800; border-radius: 999px; padding: .45rem 1rem; font-size: .82rem; }
+    .circle-avis .ci-cta { margin-top: .5rem; background: #C8A440; color: #0a0a0a; font-weight: 800; border-radius: 999px; padding: .45rem 1rem; font-size: .82rem; }
     /* Cercle galerie : carrousel circulaire */
     .circle-gallery { background: #0d1f15; }
     .circle-gallery .carousel { width: 100%; height: 100%; max-width: none; margin: 0; border-radius: 50%; background: #0d1f15; direction: ltr; box-shadow: none; }
@@ -316,28 +316,28 @@
     .topbar-inner.topbar-logo .back { position: absolute; inset-inline-start: 1.2rem; top: 50%; transform: translateY(-50%); }
     .hajj-logo-bar { height: 104px; width: auto; display: block; border-radius: 10px; }
     @media (max-width: 560px) { .topbar-inner.topbar-logo { min-height: 92px; } .hajj-logo-bar { height: 80px; } .topbar-inner.topbar-logo .back { font-size: .78rem; } }
-    /* Hero : fond vert fluo, texte bleu nuit */
-    .hajj-hero { background: #c9f23a; color: #17263F; padding: 2rem 1.2rem 2.2rem; }
+    /* Hero : fond noir Kiswa, texte or */
+    .hajj-hero { background: #0a0a0a; color: #E8C66A; padding: 2rem 1.2rem 2.2rem; }
     .hajj-hero h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); }
     .hajj-hero .slogan { font-size: 1.1rem; }
-    .hajj-hero .eyebrow { color: #2c4a06; }
-    .hajj-hero h1, .hajj-hero .slogan { color: #17263F; }
-    .hajj-hero .slogan small { color: #243d06; }
-    .hajj-hero .rule { background: #17263F; }
+    .hajj-hero .eyebrow { color: #C8A440; }
+    .hajj-hero h1, .hajj-hero .slogan { color: #E8C66A; }
+    .hajj-hero .slogan small { color: #C8A440; }
+    .hajj-hero .rule { background: #C8A440; }
     /* Bandeaux de formules */
-    .formule-top { background: #c9f23a; color: #17263F; }
-    .formule-top h3 { color: #17263F; }
-    .formule-top h3 small, .formule-top .dates { color: #2c4a06; }
-    .formule-top .dates span { border-color: rgba(23,38,63,.4); }
+    .formule-top { background: #0a0a0a; color: #E8C66A; }
+    .formule-top h3 { color: #E8C66A; }
+    .formule-top h3 small, .formule-top .dates { color: #C8A440; }
+    .formule-top .dates span { border-color: rgba(200,164,64,.45); }
     /* Cadran avis (centre) */
-    .why-card.is-center { background: #c9f23a; color: #17263F; }
-    .why-card.is-center h3, .why-card.is-center .big, .why-card.is-center .ic { color: #17263F; }
-    .why-card.is-center p, .why-card.is-center .fr { color: #243d06; }
+    .why-card.is-center { background: #0a0a0a; color: #E8C66A; }
+    .why-card.is-center h3, .why-card.is-center .big, .why-card.is-center .ic { color: #E8C66A; }
+    .why-card.is-center p, .why-card.is-center .fr { color: #efe1bd; }
     /* Contact */
-    .contact .inner { background: #c9f23a; padding: 1.3rem 1.4rem; }
-    .contact h2, .contact .addr, .contact a, .contact .code, .contact .blk b { color: #17263F; }
-    .contact .cbtn { border-color: rgba(23,38,63,.35); color: #17263F; }
-    .contact .cbtn.gps { background: #17263F; color: #c9f23a; }
+    .contact .inner { background: #0a0a0a; padding: 1.3rem 1.4rem; }
+    .contact h2, .contact .addr, .contact a, .contact .code, .contact .blk b { color: #E8C66A; }
+    .contact .cbtn { border-color: rgba(200,164,64,.35); color: #efe1bd; }
+    .contact .cbtn.gps { background: #C8A440; color: #0a0a0a; }
 </style>
 </head>
 <body>
