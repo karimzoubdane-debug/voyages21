@@ -26,7 +26,7 @@ FPS         = int(os.environ.get("FPS", "30"))
 SCENE_DUR   = 6.0
 N_SCENES    = 4
 DUR         = SCENE_DUR * N_SCENES            # 24 s
-XFADE       = 0.7                             # fondu enchaîné entre scènes (s)
+XDIP        = 0.8                             # fondu noir/or (dip) entre scènes (s)
 FADE_IN     = 0.6                             # fondu depuis le noir
 FADE_OUT    = 1.0                             # fondu vers le noir (logo visible)
 ZMAX        = 1.14                            # marge de sur-cadrage pour zoom/pan
@@ -35,6 +35,7 @@ CRF         = os.environ.get("CRF", "17")
 PRESET      = os.environ.get("PRESET", "medium")
 GOLD        = np.array([255.0, 198.0, 104.0], dtype=np.float32)
 GOLDN       = (GOLD / 255.0).astype(np.float32)
+DARKGOLD    = np.array([14.0, 10.0, 4.0], dtype=np.float32)   # cible du fondu final (noir/or)
 
 SRC_DIR = os.environ.get("SRC_DIR", os.path.join(os.path.dirname(__file__), "sources"))
 OUT     = sys.argv[1] if len(sys.argv) > 1 else "hajj_reel_silent.mp4"
@@ -43,12 +44,20 @@ TOTAL_FRAMES = int(round(DUR * FPS))
 # Ken Burns par scène : (zk0, zk1, (cx0,cy0), (cx1,cy1)) centres normalisés sur la base.
 # cy plus petit = plus haut. Affiné après réception des vraies maquettes.
 KB = [
-    (1.00, 1.085, (0.50, 0.46), (0.50, 0.42)),   # S1 ouverture : zoom vers le logo
-    (1.055, 1.055, (0.50, 0.63), (0.50, 0.40)),  # S2 "pourquoi" : panoramique bas->haut
-    (1.00, 1.10,  (0.50, 0.45), (0.50, 0.45)),   # S3 prix : zoom lent sur les cartes
-    (1.06, 1.00,  (0.50, 0.50), (0.50, 0.50)),   # S4 contact : léger zoom arrière
+    (1.00, 1.045, (0.50, 0.50), (0.50, 0.47)),   # S1 ouverture : zoom très doux vers le logo
+    (1.02, 1.05,  (0.50, 0.515),(0.50, 0.486)),  # S2 "pourquoi" : léger zoom + dérive vers le haut
+    (1.05, 1.00,  (0.50, 0.486),(0.50, 0.50)),   # S3 prix : zoom sur les cartes puis léger recul
+    (1.03, 1.00,  (0.50, 0.50), (0.50, 0.50)),   # S4 contact : léger recul, logo + numéros bien visibles
 ]
 SWEEP_STR = {0: 16.0, 1: 26.0, 2: 24.0, 3: 16.0}
+
+# Repli si scene{n}.png absent : noms d'origine des maquettes (rendu reproductible sans copies)
+SCENE_SRC = {
+    1: "ChatGPT Image 26 juin 2026, 10_28_24 (1).png",
+    2: "ChatGPT Image 26 juin 2026, 10_59_35.png",
+    3: "ChatGPT Image 26 juin 2026, 10_28_25 (3).png",
+    4: "ChatGPT Image 26 juin 2026, 10_28_26 (4).png",
+}
 
 def smooth(p):
     p = 0.0 if p < 0 else (1.0 if p > 1 else p)
@@ -57,6 +66,9 @@ def smooth(p):
 # ----------------------------------------------------------------------------- sources
 def load_or_placeholder(idx):
     path = os.path.join(SRC_DIR, f"scene{idx+1}.png")
+    if not os.path.exists(path):
+        alt = os.path.join(SRC_DIR, SCENE_SRC.get(idx+1, ""))
+        path = alt if os.path.exists(alt) else path
     if os.path.exists(path):
         img = Image.open(path).convert("RGB")
     else:
@@ -160,21 +172,16 @@ def render_scene(idx, st):
     arr += (sweep_band(st / SCENE_DUR) * SWEEP_STR[idx]) * GOLDN
     return arr
 
-def scene_at(tg):
+def dip_at(tg):
+    """scène active + facteur de luminosité (dip vers noir/or aux frontières)."""
     s = min(N_SCENES-1, int(tg // SCENE_DUR))
     st = tg - s*SCENE_DUR
-    out = [(s, st, 1.0)]
-    if s < N_SCENES-1:
-        b = (s+1)*SCENE_DUR
-        if tg >= b - XFADE/2:
-            a = (tg - (b - XFADE/2)) / XFADE
-            out = [(s, st, 1-a), (s+1, st - SCENE_DUR, a)]
-    if s > 0:
-        b = s*SCENE_DUR
-        if tg < b + XFADE/2:
-            a = (tg - (b - XFADE/2)) / XFADE
-            out = [(s-1, st + SCENE_DUR, 1-a), (s, st, a)]
-    return out
+    dipK = 1.0
+    for b in (SCENE_DUR, 2*SCENE_DUR, 3*SCENE_DUR):
+        d = abs(tg - b)
+        if d < XDIP/2:
+            dipK = min(dipK, smooth(d / (XDIP/2)))
+    return s, st, dipK
 
 # ----------------------------------------------------------------------------- encode
 ffmpeg = os.environ.get("FFMPEG_BIN")
@@ -192,15 +199,11 @@ proc = subprocess.Popen(cmd, stdin=subprocess.PIPE,
 print(f"Rendu : {TOTAL_FRAMES} frames @ {FPS}fps -> {OUT}", flush=True)
 for fi in range(TOTAL_FRAMES):
     tg = fi / FPS
-    parts = scene_at(tg)
-    if len(parts) == 1:
-        idx, st, _ = parts[0]
-        frame = render_scene(idx, st)
-    else:
-        (i0, s0, w0), (i1, s1, w1) = parts
-        frame = render_scene(i0, min(SCENE_DUR, max(0.0, s0))) * w0
-        frame += render_scene(i1, min(SCENE_DUR, max(0.0, s1))) * w1
-        frame += ((1.0 - abs(w0 - w1)) * 10.0) * GOLDN          # flash d'or transition
+    idx, st, dipK = dip_at(tg)
+    frame = render_scene(idx, min(SCENE_DUR, max(0.0, st)))
+    if dipK < 1.0:                                              # fondu noir/or entre scènes
+        frame *= dipK
+        frame += (1.0 - dipK) * DARKGOLD
 
     frame += particle_layer(tg) * GOLD
     frame += (0.085 * (0.82 + 0.18*math.sin(2*math.pi*0.1*tg))) * HALO_GOLD
@@ -210,7 +213,10 @@ for fi in range(TOTAL_FRAMES):
     k = 1.0
     if tg < FADE_IN:            k = smooth(tg / FADE_IN)
     if tg > DUR - FADE_OUT:     k = min(k, smooth((DUR - tg) / FADE_OUT))
-    if k < 1.0:                 frame *= k
+    if k < 1.0:
+        frame *= k
+        if tg > DUR - FADE_OUT:                 # fondu final vers noir/or (pas noir pur)
+            frame += (1.0 - k) * DARKGOLD
 
     np.clip(frame, 0, 255, out=frame)
     proc.stdin.write(frame.astype(np.uint8).tobytes())
