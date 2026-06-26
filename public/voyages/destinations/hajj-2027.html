@@ -74,6 +74,12 @@
     .why-card.is-center p { color: rgba(255,255,255,.85); }
     .why-card .fr { display: block; direction: ltr; margin-top: .4rem; font-family: 'DM Sans', sans-serif; font-size: .82rem; color: var(--muted); }
     .why-card.is-center .fr { color: rgba(255,255,255,.7); }
+    /* Fond image (photo de groupe) piloté par l'admin (clé "avis-bg-hajj") — voile sombre via le dégradé inline */
+    .why-card.is-center.has-avis-bg { background-size: cover; background-position: center; color: #fff; }
+    .why-card.is-center.has-avis-bg .ic, .why-card.is-center.has-avis-bg h3 { color: #fff; }
+    .why-card.is-center.has-avis-bg .big { color: var(--gold-soft); }
+    .why-card.is-center.has-avis-bg p { color: rgba(255,255,255,.92); }
+    .why-card.is-center.has-avis-bg .fr { color: rgba(255,255,255,.82); }
 
     .hajj-wrap { max-width: var(--maxw); margin: 1.8rem auto 2.4rem; padding: 0 1.2rem; }
     .sec-head { text-align: center; margin: 1.6rem 0 1rem; }
@@ -757,6 +763,17 @@
             } else if (heroUrl) {
                 hero.classList.add('has-photo');
                 setHeroPhoto(heroUrl);
+            }
+
+            // ── Fond image de la carte « avis » (clé "avis-bg-hajj") : remplace le vert uni ──
+            var avisRec = (media && media['avis-bg-hajj']) || {};
+            var avisBg = avisRec.images && avisRec.images[0] && avisRec.images[0].url;
+            if (avisBg) {
+                var avisCard = document.querySelector('.why-card.is-center');
+                if (avisCard) {
+                    avisCard.style.backgroundImage = "linear-gradient(160deg, rgba(15,27,48,.58), rgba(15,27,48,.72)), url('" + avisBg.replace(/'/g, "%27") + "')";
+                    avisCard.classList.add('has-avis-bg');
+                }
             }
 
             // ── Galerie (carrousel) ──
