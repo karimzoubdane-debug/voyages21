@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test logo Hajj — Voyages 21</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold: #C8A440; --gold-soft: #E8C66A; --navy: #17263F; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'DM Sans', sans-serif; color: #efe1bd;
+      background: radial-gradient(circle at 50% 30%, #161616 0%, #050505 70%); min-height: 100vh; }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+    h1 { font-family: 'Playfair Display', serif; color: var(--gold-soft); text-align: center; font-size: 1.7rem; margin: .4rem 0 .2rem; }
+    .lead { text-align: center; color: #cdbf9a; font-size: .95rem; max-width: 60ch; margin: 0 auto 1.6rem; }
+    .pick { display: flex; flex-direction: column; align-items: center; gap: .7rem; margin-bottom: 2rem; }
+    .pick label { background: var(--gold); color: #0a0a0a; font-weight: 800; border-radius: 999px; padding: .8rem 1.6rem; cursor: pointer; }
+    .pick input { display: none; }
+    .hint { color: #9c916f; font-size: .82rem; }
+
+    .card { background: #0a0a0a; border: 1px solid rgba(200,164,64,.25); border-radius: 18px; padding: 1.4rem; margin-bottom: 1.6rem; }
+    .card .t { color: var(--gold); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 800; margin-bottom: 1rem; text-align: center; }
+
+    /* 1. Rendu dans le bandeau (topbar bleu nuit, comme la page Hajj) */
+    .topbar { background: var(--navy); border-radius: 12px; min-height: 116px; display: flex; align-items: center; justify-content: center; }
+    .topbar img { height: 104px; width: auto; display: block; border-radius: 10px; }
+
+    /* 2. Grand aperçu sur fond noir Kiswa */
+    .big { display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+    .big img { max-width: 100%; max-height: 360px; display: block; }
+
+    .empty { color: #6f6750; text-align: center; padding: 2rem 0; font-style: italic; }
+    .steps { background: rgba(200,164,64,.06); border: 1px dashed rgba(200,164,64,.4); border-radius: 14px; padding: 1.1rem 1.3rem; font-size: .92rem; line-height: 1.6; }
+    .steps b { color: var(--gold-soft); }
+    code { background: rgba(255,255,255,.08); padding: .1rem .4rem; border-radius: 5px; color: var(--gold-soft); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Test du logo — Voyages 21 · أسفار</h1>
+    <p class="lead">Choisis ton fichier logo pour le voir tout de suite en contexte (fond noir Kiswa + bandeau de la page Hajj). <b>Rien n'est envoyé ni enregistré</b> — c'est juste un aperçu sur ton écran.</p>
+
+    <div class="pick">
+      <label for="logoFile">📤 Choisir mon fichier logo</label>
+      <input type="file" id="logoFile" accept="image/*">
+      <span class="hint">PNG, JPG ou WebP — idéalement avec fond transparent ou noir</span>
+    </div>
+
+    <div class="card">
+      <div class="t">1 · Dans le bandeau de la page Hajj (hauteur réelle)</div>
+      <div class="topbar"><img id="prevBar" alt="" style="display:none"><span class="empty" id="emptyBar">— aperçu —</span></div>
+    </div>
+
+    <div class="card">
+      <div class="t">2 · Grand aperçu sur fond noir Kiswa</div>
+      <div class="big"><img id="prevBig" alt="" style="display:none"><span class="empty" id="emptyBig">— aperçu —</span></div>
+    </div>
+
+    <div class="steps">
+      <b>Une fois qu'il te plaît :</b><br>
+      1. Va dans l'<b>Admin médias</b> → groupe « Omra &amp; Hajj » → clé <code>logo-hajj</code>.<br>
+      2. Téléverse ce même fichier et enregistre.<br>
+      3. Il remplacera l'ancien logo dans le hero de la page Hajj. ✅
+    </div>
+  </div>
+
+  <script>
+    var input = document.getElementById('logoFile');
+    var bar = document.getElementById('prevBar'), big = document.getElementById('prevBig');
+    var emptyBar = document.getElementById('emptyBar'), emptyBig = document.getElementById('emptyBig');
+    input.addEventListener('change', function () {
+      var f = input.files && input.files[0];
+      if (!f) return;
+      var url = URL.createObjectURL(f);
+      [ [bar, emptyBar], [big, emptyBig] ].forEach(function (p) {
+        p[0].src = url; p[0].style.display = 'block'; p[1].style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
