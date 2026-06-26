@@ -28,6 +28,7 @@
     .hajj-hero::after { content: ""; position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .14; z-index: 0; }
     .hajj-hero.has-photo::after { opacity: .22; }
     .hajj-hero > * { position: relative; z-index: 1; }
+    .hajj-hero > .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .3; z-index: 0; }
     .hajj-hero .eyebrow { color: var(--gold-soft); font-size: .82rem; letter-spacing: .12em; font-weight: 700; }
     .hajj-hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: .5rem 0 .4rem; }
     .hajj-hero .slogan { margin: .7rem auto 0; max-width: 60ch; font-family: 'Noto Naskh Arabic', serif; font-size: 1.25rem; color: #fff; font-weight: 700; }
@@ -36,7 +37,7 @@
 
     /* Bandeau confiance / label */
     .trust { max-width: var(--maxw); margin: -1.8rem auto 0; padding: 0 1.2rem; position: relative; z-index: 3; }
-    .trust-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 14px 38px rgba(21,46,31,.14); padding: 1.3rem 1.5rem; display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap; justify-content: center; text-align: center; }
+    .trust-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 14px 38px rgba(21,46,31,.14); padding: 1rem 1.3rem; display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; justify-content: center; text-align: center; }
     .trust-card .label-img { width: 88px; flex: 0 0 auto; }
     .trust-card .label-img img { width: 100%; height: auto; display: block; }
     .trust-text { max-width: 58ch; }
@@ -50,9 +51,9 @@
     .why { max-width: var(--maxw); margin: 1.8rem auto 0; padding: 0 1.2rem; }
     .why .sec-head { text-align: center; margin-bottom: 1.3rem; }
     .why .sec-head .eyebrow { color: var(--gold); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
-    .why .sec-head h2 { color: var(--forest); font-size: clamp(1.5rem, 4vw, 2rem); margin: .2rem 0 0; }
+    .why .sec-head h2 { color: var(--forest); font-size: clamp(1.25rem, 3.2vw, 1.65rem); margin: .2rem 0 0; }
     .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
-    .why-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem 1.3rem; text-align: center; box-shadow: 0 8px 22px rgba(21,46,31,.07); display: flex; flex-direction: column; align-items: center; }
+    .why-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem 1.1rem; text-align: center; box-shadow: 0 8px 22px rgba(21,46,31,.07); display: flex; flex-direction: column; align-items: center; }
     .why-card.is-center { background: linear-gradient(160deg, #1B3A28, #152E1F); color: #fff; }
     .why-card .ic { font-size: 1.9rem; margin-bottom: .5rem; }
     .why-card .label-mini { width: 74px; margin-bottom: .5rem; }
@@ -69,13 +70,13 @@
     .hajj-wrap { max-width: var(--maxw); margin: 1.8rem auto 2.4rem; padding: 0 1.2rem; }
     .sec-head { text-align: center; margin: 1.6rem 0 1rem; }
     .sec-head .eyebrow { color: var(--gold); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
-    .sec-head h2 { color: var(--forest); font-size: clamp(1.5rem, 4vw, 2rem); margin: .2rem 0 0; }
+    .sec-head h2 { color: var(--forest); font-size: clamp(1.25rem, 3.2vw, 1.65rem); margin: .2rem 0 0; }
     .sec-head p { color: var(--muted); max-width: 60ch; margin: .5rem auto 0; }
 
     /* Formule */
     .formule { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 28px rgba(21,46,31,.08); overflow: hidden; margin-bottom: 1.3rem; }
-    .formule-top { background: linear-gradient(160deg, #25543b, #152e1f); color: #fff; padding: 1.2rem 1.4rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem 1rem; justify-content: space-between; }
-    .formule-top h3 { font-size: 1.5rem; margin: 0; }
+    .formule-top { background: linear-gradient(160deg, #25543b, #152e1f); color: #fff; padding: .85rem 1.2rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; justify-content: space-between; }
+    .formule-top h3 { font-size: 1.25rem; margin: 0; }
     .formule-top h3 small { display: block; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .8rem; color: var(--gold-soft); margin-top: .15rem; letter-spacing: .03em; }
     .formule-top .dates { font-size: .9rem; color: var(--gold-soft); font-weight: 700; }
     .formule-top .dates span { display: inline-block; margin-inline-start: .8rem; }
@@ -122,7 +123,7 @@
 
     /* Inclus / Non inclus */
     .incl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; align-items: stretch; }
-    .incl { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem 1.4rem; box-shadow: 0 6px 18px rgba(21,46,31,.05); display: flex; flex-direction: column; }
+    .incl { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1rem 1.1rem; box-shadow: 0 6px 18px rgba(21,46,31,.05); display: flex; flex-direction: column; }
     .incl h3 { font-size: 1.15rem; margin: 0 0 .7rem; display: flex; align-items: center; gap: .5rem; }
     .incl.yes h3 { color: var(--green); }
     .incl.no h3 { color: var(--red); }
@@ -285,7 +286,9 @@
     .hajj-logo-bar { height: 104px; width: auto; display: block; border-radius: 10px; }
     @media (max-width: 560px) { .topbar-inner.topbar-logo { min-height: 92px; } .hajj-logo-bar { height: 80px; } .topbar-inner.topbar-logo .back { font-size: .78rem; } }
     /* Hero : fond vert fluo, texte bleu nuit */
-    .hajj-hero { background: #c9f23a; color: #17263F; }
+    .hajj-hero { background: #c9f23a; color: #17263F; padding: 2rem 1.2rem 2.2rem; }
+    .hajj-hero h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); }
+    .hajj-hero .slogan { font-size: 1.1rem; }
     .hajj-hero .eyebrow { color: #2c4a06; }
     .hajj-hero h1, .hajj-hero .slogan { color: #17263F; }
     .hajj-hero .slogan small { color: #243d06; }
@@ -300,7 +303,7 @@
     .why-card.is-center h3, .why-card.is-center .big, .why-card.is-center .ic { color: #17263F; }
     .why-card.is-center p, .why-card.is-center .fr { color: #243d06; }
     /* Contact */
-    .contact .inner { background: #c9f23a; }
+    .contact .inner { background: #c9f23a; padding: 1.3rem 1.4rem; }
     .contact h2, .contact .addr, .contact a, .contact .code, .contact .blk b { color: #17263F; }
     .contact .cbtn { border-color: rgba(23,38,63,.35); color: #17263F; }
     .contact .cbtn.gps { background: #17263F; color: #c9f23a; }
@@ -314,6 +317,7 @@
 </div></div>
 
 <header class="hajj-hero" id="hajjHero">
+    <video class="hero-video" id="hajjHeroVideo" muted loop playsinline preload="none" style="display:none"></video>
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
     <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small dir="ltr">Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
@@ -650,21 +654,29 @@
             var rec = (media && media['galerie-hajj']) || {};
             var imgs = (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
             try { console.log('[galerie-hajj] images détectées via /api/media :', imgs.length, imgs); } catch (e) {}
+
+            // ── Hero : VIDÉO MP4 ou PHOTO (clé "hero-hajj"), sinon 1ʳᵉ photo de la galerie ──
+            var heroRec = (media && media['hero-hajj']) || {};
+            var heroVideo = heroRec.videoUrl || '';
+            var heroUrl = (heroRec.images && heroRec.images[0] && heroRec.images[0].url) || imgs[0] || '';
+            var hero = document.getElementById('hajjHero');
+            if (heroVideo) {
+                hero.classList.add('has-photo');
+                var hv = document.getElementById('hajjHeroVideo');
+                if (hv) { hv.src = heroVideo; hv.style.display = 'block'; var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
+            } else if (heroUrl) {
+                hero.classList.add('has-photo');
+                var st = document.createElement('style');
+                st.textContent = '#hajjHero::after{background-image:url(\'' + heroUrl.replace(/'/g, "%27") + '\')}';
+                document.head.appendChild(st);
+            }
+
+            // ── Galerie (carrousel) ──
             if (!imgs.length) {
-                // Diagnostic visible : l'API ne renvoie pas de photo pour cette clé
                 var ph0 = document.getElementById('carPlaceholder');
                 if (ph0) ph0.textContent = '📷 Galerie : 0 photo détectée via l\'API (clé « galerie-hajj »). Vérifier l\'enregistrement dans l\'admin.';
                 return;
             }
-
-            // Photo d'ambiance dans le hero : « hero-hajj » dédié si présent, sinon 1ʳᵉ photo de la galerie
-            var heroRec = (media && media['hero-hajj']) || {};
-            var heroUrl = (heroRec.images && heroRec.images[0] && heroRec.images[0].url) || imgs[0];
-            var hero = document.getElementById('hajjHero');
-            hero.classList.add('has-photo');
-            var st = document.createElement('style');
-            st.textContent = '#hajjHero::after{background-image:url(\'' + heroUrl.replace(/'/g, "%27") + '\')}';
-            document.head.appendChild(st);
 
             // Carrousel : on retire l'emplacement et on affiche les vraies photos
             var track = document.getElementById('carTrack');
