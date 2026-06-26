@@ -4,7 +4,7 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-06-25_
+_Dernière mise à jour : 2026-06-26_
 
 ## Méthode de travail (règles fixes)
 - Site officiel : **https://www.voyages21.com** (page d'accueil = `public/design/homepage-v2-luxe.html`, servie par Vercel).
@@ -45,10 +45,13 @@ _Dernière mise à jour : 2026-06-25_
     `V21_AUTH_SECRET`, `V21_RECOVERY_CODE` (Production + Preview). Karim détient
     son mot de passe perso + son code de secours. Le « mode démo » a disparu.
 
-## ⏳ Hajj 2027 — PR #88, branche `claude/voyages21-website-ufgere` (EN COURS, mode test)
+## ✅ Hajj 2027 — PR #88 FUSIONNÉE sur `main` le 2026-06-26 (squash `c3f2beb`)
+**En ligne :** `https://www.voyages21.com/voyages/destinations/hajj-2027.html`
 Page : `public/voyages/destinations/hajj-2027.html` · Carte d'accès : bannière en haut
 de `public/voyages/destinations/omra.html` (rubrique « Omra & Hajj » → mène à la page).
-Preview : `https://voyages21-git-claude-voyages21-website-ufgere-voyages21.vercel.app/voyages/destinations/hajj-2027.html`
+⏭️ **Reste à faire** : (1) brancher le lien Google « avis Hajj » quand la campagne a des
+retours, (2) **vidéo réseaux** (prompt Higgsfield déjà rédigé : route A photo réelle animée
+ou route B 100 % générée, format 9:16 + 1:1, textes « مناسك الحج 2027 », sans prix).
 
 **Contenu en place (validé par Karim) :**
 - Programme Hajj 2027 (1448 H), paiement Bareed Bank **20 juin → 10 juillet 2026**.
