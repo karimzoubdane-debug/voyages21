@@ -176,8 +176,14 @@
           var v = customProducts[s] || {};
           return (v.groupId || '') === g.id;
         });
+        // Un groupe peut fournir du HTML libre (g.html) — utile pour un onglet
+        // qui pointe vers une page dédiée (ex. Hajj), en plus ou à la place des fiches.
+        var groupInner = g.html || '';
+        if ((g.slugs && g.slugs.length) || groupCustom.length) {
+          groupInner += renderGrid(g.slugs || [], groupCustom);
+        }
         panels += '<section data-dest-panel="' + esc(g.id) + '"' + (active ? '' : ' hidden') + '>'
-          + renderGrid(g.slugs || [], groupCustom) + '</section>';
+          + groupInner + '</section>';
       });
       content = nav + '</nav>' + panels;
     } else {
