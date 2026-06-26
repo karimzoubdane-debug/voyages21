@@ -27,6 +27,14 @@
       text-decoration: none; border-radius: 999px; padding: .85rem 1.5rem; white-space: nowrap; }
     .v21-hajj-feature .go:hover { filter: brightness(1.12); }
     @media (max-width: 640px) { .v21-hajj-feature .inner { text-align: center; justify-content: center; } }
+    /* Onglet « Hajj » qui clignote en doré pour attirer le regard (s'arrête une fois actif) */
+    [data-dest-tab="hajj"] { color: #C8A440; animation: hajjTabBlink 1.2s ease-in-out infinite; }
+    [data-dest-tab="hajj"].active { animation: none; }
+    @keyframes hajjTabBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(1.07); }
+    }
+    @media (prefers-reduced-motion: reduce) { [data-dest-tab="hajj"] { animation: none; } }
   </style>
   <script src="../data.js"></script>
   <script>
