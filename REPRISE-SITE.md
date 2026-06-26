@@ -69,7 +69,14 @@ Preview : `https://voyages21-git-claude-voyages21-website-ufgere-voyages21.verce
 - **Visuel WhatsApp** : `public/images/share-hajj-2027.png` (« مناسك الحج 2027 · 1448 هـ »),
   source `public/share-hajj-2027.html` (capture via Chromium local + playwright-core).
 
-**🐞 PROBLÈME OUVERT — le carrousel galerie ne s'affiche pas :**
+**✅ RÉSOLU (2026-06-26) — carrousel galerie invisible :** c'était une **collision de
+classe** : `.gallery` est déjà définie dans `voyage.css` comme lightbox modale
+(`display:none; position:fixed`) → notre section héritait de `display:none` (0×0 px).
+Corrigé en renommant la classe en **`.v21-gallery`**. Vérifié en local via Chromium
+(section 1060×692, carrousel 1022×575, 6 images). La console affichait déjà
+`[galerie-hajj] images détectées : 6` → les données étaient bonnes, c'était bien le rendu.
+
+**Historique du diagnostic (pour mémoire) :**
 - La galerie est pilotée par l'admin médias, clé **`galerie-hajj`** (univers Omra & Hajj).
 - L'export du manifeste fourni par Karim (`voyages21medias_47.json`) **contient bien 6 images
   valides** sous `galerie-hajj` (URLs `*.blob.vercel-storage.com`), et `logo-hajj` (1 image).
