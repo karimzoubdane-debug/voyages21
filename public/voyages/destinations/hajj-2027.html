@@ -32,9 +32,10 @@
     .hajj-hero.has-photo::after { opacity: .22; }
     .hajj-hero > * { position: relative; z-index: 1; }
     .hajj-hero > .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; z-index: 0; }
-    /* Quand une vidéo est active : voile sombre pour la lisibilité + texte clair */
-    .hajj-hero.has-video::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(15,27,48,.42), rgba(15,27,48,.6)); pointer-events: none; }
+    /* Vidéo active : voile très léger (vidéo nette) + ombre portée du texte pour la lisibilité */
+    .hajj-hero.has-video::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(15,27,48,.12), rgba(15,27,48,.32)); pointer-events: none; }
     .hajj-hero.has-video, .hajj-hero.has-video h1, .hajj-hero.has-video .slogan { color: #ffffff; }
+    .hajj-hero.has-video h1, .hajj-hero.has-video .slogan, .hajj-hero.has-video .eyebrow, .hajj-hero.has-video .slogan small { text-shadow: 0 2px 16px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.55); }
     .hajj-hero.has-video .eyebrow, .hajj-hero.has-video .slogan small { color: #cfe96a; }
     .hajj-hero.has-video .rule { background: #c9f23a; }
     .hajj-hero .eyebrow { color: var(--gold-soft); font-size: .82rem; letter-spacing: .12em; font-weight: 700; }
