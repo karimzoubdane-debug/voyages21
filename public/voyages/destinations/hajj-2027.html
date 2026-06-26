@@ -19,7 +19,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../voyage.css?v=media-admin-v6">
 <style>
-    body { font-family: 'Noto Naskh Arabic', 'DM Sans', sans-serif; background: #FFFFFF; }
+    body { font-family: 'Noto Naskh Arabic', 'DM Sans', sans-serif; background: #FFFFFF; zoom: 0.7; }
+    @media (max-width: 760px) { body { zoom: 0.85; } }
     h1, h2, h3 { font-family: 'Noto Naskh Arabic', serif; }
     .num { direction: ltr; unicode-bidi: isolate; }
 
@@ -28,7 +29,12 @@
     .hajj-hero::after { content: ""; position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .14; z-index: 0; }
     .hajj-hero.has-photo::after { opacity: .22; }
     .hajj-hero > * { position: relative; z-index: 1; }
-    .hajj-hero > .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .3; z-index: 0; }
+    .hajj-hero > .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; z-index: 0; }
+    /* Quand une vidéo est active : voile sombre pour la lisibilité + texte clair */
+    .hajj-hero.has-video::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(15,27,48,.42), rgba(15,27,48,.6)); pointer-events: none; }
+    .hajj-hero.has-video, .hajj-hero.has-video h1, .hajj-hero.has-video .slogan { color: #ffffff; }
+    .hajj-hero.has-video .eyebrow, .hajj-hero.has-video .slogan small { color: #cfe96a; }
+    .hajj-hero.has-video .rule { background: #c9f23a; }
     .hajj-hero .eyebrow { color: var(--gold-soft); font-size: .82rem; letter-spacing: .12em; font-weight: 700; }
     .hajj-hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: .5rem 0 .4rem; }
     .hajj-hero .slogan { margin: .7rem auto 0; max-width: 60ch; font-family: 'Noto Naskh Arabic', serif; font-size: 1.25rem; color: #fff; font-weight: 700; }
@@ -317,7 +323,7 @@
 </div></div>
 
 <header class="hajj-hero" id="hajjHero">
-    <video class="hero-video" id="hajjHeroVideo" muted loop playsinline preload="none" style="display:none"></video>
+    <video class="hero-video" id="hajjHeroVideo" autoplay muted loop playsinline preload="auto" style="display:none"></video>
     <div class="eyebrow">المملكة المغربية · موسم الحج 1448هـ — 2027</div>
     <h1>الحج 2027 مع وكالة أسفار 21</h1>
     <p class="slogan">أنتم للعبادة… ونحن للتنظيم<small dir="ltr">Votre Hajj, notre savoir-faire : la dévotion pour vous, l'organisation pour nous.</small></p>
@@ -657,11 +663,13 @@
 
             // ── Hero : VIDÉO MP4 ou PHOTO (clé "hero-hajj"), sinon 1ʳᵉ photo de la galerie ──
             var heroRec = (media && media['hero-hajj']) || {};
-            var heroVideo = heroRec.videoUrl || '';
+            var heroVideo = heroRec.videoUrl || heroRec.videoLink || '';
             var heroUrl = (heroRec.images && heroRec.images[0] && heroRec.images[0].url) || imgs[0] || '';
             var hero = document.getElementById('hajjHero');
+            try { console.log('[hero-hajj] videoUrl=', heroRec.videoUrl, '| videoLink=', heroRec.videoLink, '| img=', heroUrl); } catch (e) {}
             if (heroVideo) {
                 hero.classList.add('has-photo');
+                hero.classList.add('has-video');
                 var hv = document.getElementById('hajjHeroVideo');
                 if (hv) { hv.src = heroVideo; hv.style.display = 'block'; var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
             } else if (heroUrl) {
