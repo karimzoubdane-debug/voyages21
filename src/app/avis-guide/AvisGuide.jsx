@@ -6,54 +6,13 @@ import { upload } from '@vercel/blob/client'
 const GOOGLE_AVIS_URL =
   'https://search.google.com/local/writereview?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc'
 
-// ---- Sujets (Omra/Hajj/Qods, pays, services, autre) — bilingues ----
+// ---- Sujet : Hajj / Omra / Qods / Pays visité(s) — bilingue ----
 const SUJETS = [
-  {
-    groupe: { fr: 'Omra · Hajj · Qods', ar: 'العمرة · الحج · القدس' },
-    options: [
-      { key: 'Omra', fr: 'Omra', ar: 'العمرة' },
-      { key: 'Hajj', fr: 'Hajj', ar: 'الحج' },
-      { key: 'Qods', fr: 'Qods (Al-Qods / Jérusalem)', ar: 'القدس' },
-    ],
-  },
-  {
-    groupe: { fr: 'Pays visité', ar: 'البلد الذي زرته' },
-    options: [
-      { key: 'Maroc', fr: 'Maroc', ar: 'المغرب' },
-      { key: 'Turquie', fr: 'Turquie', ar: 'تركيا' },
-      { key: 'Egypte', fr: 'Égypte', ar: 'مصر' },
-      { key: 'Emirats', fr: 'Émirats / Dubaï', ar: 'الإمارات / دبي' },
-      { key: 'ArabieSaoudite', fr: 'Arabie Saoudite', ar: 'السعودية' },
-      { key: 'Espagne', fr: 'Espagne', ar: 'إسبانيا' },
-      { key: 'France', fr: 'France', ar: 'فرنسا' },
-      { key: 'Italie', fr: 'Italie', ar: 'إيطاليا' },
-      { key: 'Thailande', fr: 'Thaïlande', ar: 'تايلاند' },
-      { key: 'Maldives', fr: 'Maldives', ar: 'المالديف' },
-      { key: 'Tanzanie', fr: 'Tanzanie / Zanzibar', ar: 'تنزانيا / زنجبار' },
-      { key: 'AutrePays', fr: 'Autre pays', ar: 'بلد آخر' },
-    ],
-  },
-  {
-    groupe: { fr: 'Nos services', ar: 'خدماتنا' },
-    options: [
-      { key: 'Accueil', fr: 'Accueil & conseil en agence', ar: 'الاستقبال والنصائح بالوكالة' },
-      { key: 'Organisation', fr: 'Organisation & suivi du voyage', ar: 'تنظيم ومتابعة الرحلة' },
-      { key: 'Reservation', fr: 'Réservation (vol, hôtel…)', ar: 'الحجز (طيران، فندق…)' },
-    ],
-  },
-  {
-    groupe: { fr: 'Autre', ar: 'أخرى' },
-    options: [{ key: 'Autre', fr: 'Autre', ar: 'أخرى' }],
-  },
+  { key: 'Hajj', fr: 'Hajj', ar: 'الحج' },
+  { key: 'Omra', fr: 'Omra', ar: 'العمرة' },
+  { key: 'Qods', fr: 'Qods (Al-Qods / Jérusalem)', ar: 'القدس' },
+  { key: 'PaysVisites', fr: 'Pays visité(s)', ar: 'البلد/البلدان التي زرتها' },
 ]
-
-function findOption(key) {
-  for (const g of SUJETS) {
-    const o = g.options.find((x) => x.key === key)
-    if (o) return o
-  }
-  return null
-}
 
 const ASPECTS = [
   { key: 'orga', fr: 'Organisation impeccable', ar: 'تنظيم متقن' },
@@ -66,7 +25,7 @@ const ASPECTS = [
   { key: 'programme', fr: 'Programme bien respecté', ar: 'احترام دقيق للبرنامج' },
 ]
 
-// ---- Variantes de formulation (anti-duplication) ----
+// ---- Formulations (anti-duplication) ----
 const INTROS = {
   fr: [
     'Je recommande vivement Voyages 21.',
@@ -76,6 +35,16 @@ const INTROS = {
     'Excellente agence de voyages, je suis ravi(e).',
     'Que du positif avec Voyages 21 !',
     'Une agence en qui on peut avoir confiance.',
+    'Service impeccable du début à la fin avec Voyages 21.',
+    'Je suis pleinement satisfait(e) de Voyages 21.',
+    'Voyages 21, c’est du sérieux et du professionnalisme.',
+    'Rien à redire, tout était parfait avec Voyages 21.',
+    'Une expérience au top grâce à Voyages 21.',
+    'Merci à Voyages 21 pour ce voyage réussi.',
+    'Agence à recommander les yeux fermés.',
+    'Accompagnement de qualité avec Voyages 21.',
+    'Voyages 21 a dépassé nos attentes.',
+    'Très bon suivi et grande disponibilité chez Voyages 21.',
   ],
   ar: [
     'أنصح بشدة بوكالة Voyages 21.',
@@ -85,13 +54,23 @@ const INTROS = {
     'وكالة أسفار ممتازة، أنا في غاية الرضا.',
     'كل شيء كان إيجابياً مع Voyages 21!',
     'وكالة تستحق الثقة فعلاً.',
+    'خدمة متقنة من البداية إلى النهاية مع Voyages 21.',
+    'أنا راضٍ تماماً عن Voyages 21.',
+    'Voyages 21 تعني الجدية والاحترافية.',
+    'لا شيء يُعاب، كان كل شيء مثالياً مع Voyages 21.',
+    'تجربة ممتازة بفضل Voyages 21.',
+    'شكراً لـ Voyages 21 على هذه الرحلة الناجحة.',
+    'وكالة أنصح بها دون تردد.',
+    'مرافقة عالية الجودة مع Voyages 21.',
+    'فاقت Voyages 21 توقعاتنا.',
+    'متابعة جيدة جداً وتوفّر كبير لدى Voyages 21.',
   ],
 }
 const CLOTURES = {
   fr: [
     'À refaire sans hésiter !',
     'Je repartirai avec eux les yeux fermés.',
-    'Merci encore pour tout 🙏',
+    'Merci encore pour tout.',
     'Je les recommande à 100 %.',
     'Une équipe de confiance.',
     'Vivement le prochain voyage avec eux !',
@@ -99,7 +78,7 @@ const CLOTURES = {
   ar: [
     'سأكررها دون تردد!',
     'سأسافر معهم مجدداً بكل ثقة.',
-    'شكراً مرة أخرى على كل شيء 🙏',
+    'شكراً مرة أخرى على كل شيء.',
     'أنصح بهم بنسبة 100%.',
     'فريق يستحق الثقة.',
     'في انتظار الرحلة القادمة معهم!',
@@ -119,29 +98,31 @@ function formatMois(ym, lang) {
   return `${MOIS[lang][i]} ${y}`
 }
 
-function contextePhrase(key, dm, lang) {
-  if (!key || key === 'Autre' || key === 'AutrePays') return ''
+function contextePhrase(key, dm, lang, paysText) {
   const dateFr = dm ? ` en ${dm}` : ''
   const dateAr = dm ? ` في ${dm}` : ''
-  const opt = findOption(key)
-  const nom = opt ? opt[lang] : ''
-
   if (lang === 'ar') {
-    if (key === 'Accueil') return `كان الاستقبال والنصائح بالوكالة في القمة${dateAr}.`
-    if (key === 'Organisation') return `كان تنظيم ومتابعة رحلتنا${dateAr} مثاليين.`
-    if (key === 'Reservation') return `كان الحجز${dateAr} سهلاً ومنظماً.`
     if (key === 'Hajj') return `بالنسبة لرحلة الحج${dateAr}، كان كل شيء منظماً بشكل مثالي.`
     if (key === 'Omra') return `بالنسبة لرحلة العمرة${dateAr}، كان كل شيء منظماً بشكل مثالي.`
     if (key === 'Qods') return `بالنسبة لزيارة القدس${dateAr}، كان كل شيء منظماً بشكل مثالي.`
-    return `بالنسبة لرحلتنا (${nom})${dateAr}، كان كل شيء منظماً بشكل مثالي.`
+    if (key === 'PaysVisites') {
+      const list = (paysText || '').split(',').map((s) => s.trim()).filter(Boolean)
+      if (list.length === 0) return `بالنسبة لرحلتنا${dateAr}، كان كل شيء منظماً بشكل مثالي.`
+      if (list.length === 1) return `بالنسبة لرحلتنا (${list[0]})${dateAr}، كان كل شيء منظماً بشكل مثالي.`
+      return `بالنسبة لرحلاتنا (${list.join('، ')})${dateAr}، كان كل شيء منظماً بشكل مثالي.`
+    }
+    return ''
   }
-  if (key === 'Accueil') return `L’accueil et les conseils en agence ont été au top${dateFr}.`
-  if (key === 'Organisation') return `L’organisation et le suivi de notre voyage${dateFr} ont été parfaits.`
-  if (key === 'Reservation') return `La réservation${dateFr} a été simple et bien gérée.`
   if (key === 'Hajj') return `Pour notre Hajj${dateFr}, tout a été parfaitement organisé.`
   if (key === 'Omra') return `Pour notre Omra${dateFr}, tout a été parfaitement organisé.`
   if (key === 'Qods') return `Pour notre voyage à Al-Qods${dateFr}, tout a été parfaitement organisé.`
-  return `Pour notre voyage (${nom})${dateFr}, tout était parfaitement organisé.`
+  if (key === 'PaysVisites') {
+    const list = (paysText || '').split(',').map((s) => s.trim()).filter(Boolean)
+    if (list.length === 0) return `Pour notre voyage${dateFr}, tout était parfaitement organisé.`
+    if (list.length === 1) return `Pour notre voyage (${list[0]})${dateFr}, tout était parfaitement organisé.`
+    return `Pour nos voyages (${list.join(', ')})${dateFr}, tout était parfaitement organisé.`
+  }
+  return ''
 }
 
 function nbPhrase(n, lang) {
@@ -155,12 +136,12 @@ function nbPhrase(n, lang) {
   return ''
 }
 
-function genererAvis(lang, { sujet, date, nbPersonnes, aspects, conseiller, note, seed }) {
+function genererAvis(lang, { sujet, pays, date, nbPersonnes, aspects, conseiller, note, seed }) {
   const pick = (arr) => arr[seed % arr.length]
   const parts = [pick(INTROS[lang])]
 
   const dm = formatMois(date, lang)
-  const ctx = contextePhrase(sujet, dm, lang)
+  const ctx = contextePhrase(sujet, dm, lang, pays)
   if (ctx) parts.push(ctx)
 
   const n = parseInt(nbPersonnes, 10)
@@ -168,10 +149,12 @@ function genererAvis(lang, { sujet, date, nbPersonnes, aspects, conseiller, note
   if (nb) parts.push(nb)
 
   if (aspects.length) {
-    const labels = aspects.map((k) => {
-      const a = ASPECTS.find((x) => x.key === k)
-      return a ? a[lang] : ''
-    }).filter(Boolean)
+    const labels = aspects
+      .map((k) => {
+        const a = ASPECTS.find((x) => x.key === k)
+        return a ? a[lang] : ''
+      })
+      .filter(Boolean)
     if (labels.length) {
       if (lang === 'ar') {
         const joined =
@@ -202,71 +185,76 @@ function genererAvis(lang, { sujet, date, nbPersonnes, aspects, conseiller, note
   return parts.join(' ')
 }
 
-// ---- Textes d'interface bilingues ----
+// ---- Textes d'interface bilingues (sans emoji) ----
 const T = {
   fr: {
     titre: 'Aidez-nous à écrire votre avis',
-    sous: 'Répondez en 30 secondes, on rédige le texte pour vous 🙂',
+    sous: 'Répondez en 30 secondes, on rédige le texte pour vous.',
     q1: '1. Votre avis concerne…',
     choisir: '— Choisissez —',
+    q1pays: 'Quel(s) pays ? (séparez par des virgules si plusieurs)',
+    q1paysPh: 'Ex. Maroc, Turquie, Égypte',
     q2: '2. Date du voyage',
     q3: '3. Nombre de personnes',
     q4: '4. Ce qui vous a marqué (cochez ce qui vous parle)',
     q5: '5. Le prénom de votre conseiller (facultatif)',
     q5ph: 'Ex. Karim, Wafa, Fouad…',
     motLabel: 'Un mot personnel (facultatif)',
-    motPh: 'Ajoutez une touche personnelle, ça rend l’avis unique 🙏',
+    motPh: 'Ajoutez une touche personnelle, ça rend l’avis unique.',
     q6: '6. Une photo ou vidéo de votre voyage ? (facultatif)',
     consent: 'J’autorise Voyages 21 à utiliser ma photo / vidéo sur ses réseaux sociaux et supports de communication.',
-    ajouter: '➕ Ajouter une photo / vidéo',
-    cocheConsent: '☝️ Cochez la case d’autorisation pour pouvoir envoyer votre fichier.',
+    ajouter: 'Ajouter une photo / vidéo',
+    cocheConsent: 'Cochez la case d’autorisation pour pouvoir envoyer votre fichier.',
     envoi: 'Envoi de',
-    merciFichier: 'bien envoyé à l’agence 🙏',
-    rappelPhotoGoogle: '📸 Pensez aussi à ajouter cette photo à votre avis Google : dans la fenêtre Google, appuyez sur « Ajouter des photos ». Ça donne encore plus de poids à votre témoignage !',
-    erreurUp: 'Envoi impossible. Réessayez ou envoyez-le par WhatsApp 🙏',
+    merciFichier: 'bien envoyé à l’agence.',
+    rappelPhotoGoogle: 'Pensez aussi à ajouter cette photo à votre avis Google : dans la fenêtre Google, appuyez sur « Ajouter des photos ». Ça donne encore plus de poids à votre témoignage.',
+    erreurUp: 'Envoi impossible. Réessayez ou envoyez-le par WhatsApp.',
     noteUp: 'Votre photo/vidéo est partagée avec l’agence pour ses réseaux. Sur Google, vous pouvez aussi ajouter vos photos directement dans votre avis.',
     votreAvis: 'Votre avis',
-    autreForm: '🔄 Autre formulation',
-    rappel5: 'N’oubliez pas de mettre 5 étoiles sur Google 🙏',
-    copier: '📋 Copier mon avis',
-    copie: '✓ Avis copié !',
-    valider: '✅ Copier et valider sur Google',
-    instr: '👉 Sur Google : appuyez sur la case commentaire, faites appui long → Coller, mettez 5 étoiles, ajoutez vos photos puis Publier. Merci ! 🙏',
+    autreForm: 'Autre formulation',
+    rappel5: 'N’oubliez pas de mettre 5 étoiles sur Google.',
+    copier: 'Copier mon avis',
+    copie: 'Avis copié',
+    valider: 'Copier et valider sur Google',
+    instr: 'Sur Google : appuyez sur la case commentaire, faites appui long puis Coller, mettez 5 étoiles, ajoutez vos photos puis Publier. Merci.',
   },
   ar: {
     titre: 'ساعدنا في كتابة رأيك',
-    sous: 'أجب في 30 ثانية، ونحن نكتب النص لك 🙂',
+    sous: 'أجب في 30 ثانية، ونحن نكتب النص لك.',
     q1: '1. رأيك يخص…',
     choisir: '— اختر —',
+    q1pays: 'أي بلد/بلدان؟ (افصل بينها بفواصل إن كانت متعددة)',
+    q1paysPh: 'مثال: المغرب، تركيا، مصر',
     q2: '2. تاريخ الرحلة',
     q3: '3. عدد الأشخاص',
     q4: '4. ما الذي أعجبك (اختر ما يناسبك)',
     q5: '5. اسم مستشارك (اختياري)',
     q5ph: 'مثال: كريم، وفاء، فؤاد…',
     motLabel: 'كلمة شخصية (اختياري)',
-    motPh: 'أضف لمسة شخصية، فهذا يجعل رأيك فريداً 🙏',
+    motPh: 'أضف لمسة شخصية، فهذا يجعل رأيك فريداً.',
     q6: '6. صورة أو فيديو من رحلتك؟ (اختياري)',
     consent: 'أسمح لـ Voyages 21 باستعمال صورتي / الفيديو على شبكاتها الاجتماعية ووسائل التواصل.',
-    ajouter: '➕ إضافة صورة / فيديو',
-    cocheConsent: '☝️ فعّل خانة الإذن حتى تتمكن من إرسال ملفك.',
+    ajouter: 'إضافة صورة / فيديو',
+    cocheConsent: 'فعّل خانة الإذن حتى تتمكن من إرسال ملفك.',
     envoi: 'جارٍ إرسال',
-    merciFichier: 'تم إرساله إلى الوكالة 🙏',
-    rappelPhotoGoogle: '📸 لا تنسَ أيضاً إضافة هذه الصورة إلى رأيك على Google: في نافذة Google اضغط على «إضافة صور». هذا يعطي وزناً أكبر لشهادتك!',
-    erreurUp: 'تعذّر الإرسال. أعد المحاولة أو أرسله عبر واتساب 🙏',
+    merciFichier: 'تم إرساله إلى الوكالة.',
+    rappelPhotoGoogle: 'لا تنسَ أيضاً إضافة هذه الصورة إلى رأيك على Google: في نافذة Google اضغط على «إضافة صور». هذا يعطي وزناً أكبر لشهادتك.',
+    erreurUp: 'تعذّر الإرسال. أعد المحاولة أو أرسله عبر واتساب.',
     noteUp: 'تُشارَك صورتك/الفيديو مع الوكالة لشبكاتها. على Google يمكنك أيضاً إضافة صورك مباشرة في رأيك.',
     votreAvis: 'رأيك',
-    autreForm: '🔄 صياغة أخرى',
-    rappel5: 'لا تنسَ وضع 5 نجوم على Google 🙏',
-    copier: '📋 نسخ رأيي',
-    copie: '✓ تم نسخ الرأي!',
-    valider: '✅ انسخ وأكمل على Google',
-    instr: '👉 على Google: اضغط على خانة التعليق، اضغط مطوّلاً ← لصق، ضع 5 نجوم، أضف صورك ثم انشر. شكراً! 🙏',
+    autreForm: 'صياغة أخرى',
+    rappel5: 'لا تنسَ وضع 5 نجوم على Google.',
+    copier: 'نسخ رأيي',
+    copie: 'تم نسخ الرأي',
+    valider: 'انسخ وأكمل على Google',
+    instr: 'على Google: اضغط على خانة التعليق، اضغط مطوّلاً ثم لصق، ضع 5 نجوم، أضف صورك ثم انشر. شكراً.',
   },
 }
 
 export default function AvisGuide() {
   const [lang, setLang] = useState('fr')
   const [sujet, setSujet] = useState('')
+  const [pays, setPays] = useState('')
   const [date, setDate] = useState('')
   const [nbPersonnes, setNbPersonnes] = useState('')
   const [aspects, setAspects] = useState([])
@@ -279,8 +267,6 @@ export default function AvisGuide() {
   const [upState, setUpState] = useState('idle')
   const [upName, setUpName] = useState('')
 
-  // Démarre sur une formulation aléatoire (anti-duplication) — côté client
-  // uniquement, pour éviter tout décalage d'hydratation.
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 100000))
   }, [])
@@ -289,8 +275,8 @@ export default function AvisGuide() {
   const rtl = lang === 'ar'
 
   const avis = useMemo(
-    () => genererAvis(lang, { sujet, date, nbPersonnes, aspects, conseiller, note, seed }),
-    [lang, sujet, date, nbPersonnes, aspects, conseiller, note, seed]
+    () => genererAvis(lang, { sujet, pays, date, nbPersonnes, aspects, conseiller, note, seed }),
+    [lang, sujet, pays, date, nbPersonnes, aspects, conseiller, note, seed]
   )
 
   const toggleAspect = (k) =>
@@ -320,7 +306,7 @@ export default function AvisGuide() {
       await upload(`temoignages/${Date.now()}-${file.name}`, file, {
         access: 'public',
         handleUploadUrl: '/api/temoignage/upload',
-        clientPayload: JSON.stringify({ sujet, date, nbPersonnes, avis, consent: true }),
+        clientPayload: JSON.stringify({ sujet, pays, date, nbPersonnes, avis, consent: true }),
       })
       setUpState('done')
     } catch {
@@ -360,17 +346,7 @@ export default function AvisGuide() {
 
   return (
     <div style={{ width: '100%', maxWidth: 560 }} dir={rtl ? 'rtl' : 'ltr'}>
-      {/* Sélecteur de langue */}
-      <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 16 }} dir="ltr">
-        <button type="button" onClick={() => setLang('fr')} style={langBtn(lang === 'fr')}>
-          Français
-        </button>
-        <button type="button" onClick={() => setLang('ar')} style={langBtn(lang === 'ar')}>
-          العربية
-        </button>
-      </div>
-
-      <header style={{ textAlign: 'center', marginBottom: 22 }}>
+      <header style={{ textAlign: 'center', marginBottom: 14 }}>
         <div style={{ color: '#C8A440', fontSize: 34, letterSpacing: 4 }}>★ ★ ★ ★ ★</div>
         <h1
           style={{
@@ -383,24 +359,44 @@ export default function AvisGuide() {
         >
           {t.titre}
         </h1>
-        <p style={{ color: '#3a4a3f', fontSize: 15.5, margin: 0 }}>{t.sous}</p>
       </header>
+
+      {/* Sélecteur de langue sous le titre */}
+      <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 14 }} dir="ltr">
+        <button type="button" onClick={() => setLang('fr')} style={langBtn(lang === 'fr')}>
+          Français
+        </button>
+        <button type="button" onClick={() => setLang('ar')} style={langBtn(lang === 'ar')}>
+          العربية
+        </button>
+      </div>
+
+      <p style={{ color: '#3a4a3f', fontSize: 15.5, margin: '0 0 22px', textAlign: 'center' }}>{t.sous}</p>
 
       {/* 1. Sujet */}
       <section style={card}>
         <label htmlFor="sujet" style={labelStyle}>{t.q1}</label>
         <select id="sujet" value={sujet} onChange={(e) => setSujet(e.target.value)} style={field}>
           <option value="">{t.choisir}</option>
-          {SUJETS.map((g) => (
-            <optgroup key={g.groupe.fr} label={g.groupe[lang]}>
-              {g.options.map((o) => (
-                <option key={o.key} value={o.key}>
-                  {o[lang]}
-                </option>
-              ))}
-            </optgroup>
+          {SUJETS.map((o) => (
+            <option key={o.key} value={o.key}>
+              {o[lang]}
+            </option>
           ))}
         </select>
+
+        {sujet === 'PaysVisites' && (
+          <div style={{ marginTop: 14 }}>
+            <label htmlFor="pays" style={labelStyle}>{t.q1pays}</label>
+            <input
+              id="pays"
+              value={pays}
+              onChange={(e) => setPays(e.target.value)}
+              placeholder={t.q1paysPh}
+              style={field}
+            />
+          </div>
+        )}
       </section>
 
       {/* 2. Date + nb */}
@@ -448,7 +444,6 @@ export default function AvisGuide() {
                   fontWeight: on ? 700 : 500,
                 }}
               >
-                {on ? '✓ ' : ''}
                 {a[lang]}
               </button>
             )
@@ -526,11 +521,11 @@ export default function AvisGuide() {
         <input id="fichier" type="file" accept="image/*,video/*" onChange={onFichier} disabled={!consent} style={{ display: 'none' }} />
         {!consent && <p style={{ fontSize: 13, color: '#a07b1e', margin: '8px 0 0' }}>{t.cocheConsent}</p>}
         {upState === 'loading' && (
-          <p style={{ fontSize: 14, color: '#3a4a3f', margin: '10px 0 0' }}>⏳ {t.envoi} « {upName} »…</p>
+          <p style={{ fontSize: 14, color: '#3a4a3f', margin: '10px 0 0' }}>{t.envoi} « {upName} »…</p>
         )}
         {upState === 'done' && (
           <div style={{ marginTop: 12, background: '#eef5ee', border: '1.5px solid #cfe0cf', borderRadius: 10, padding: 12 }}>
-            <p style={{ fontSize: 14.5, color: '#1B3A28', fontWeight: 700, margin: 0 }}>✓ « {upName} » — {t.merciFichier}</p>
+            <p style={{ fontSize: 14.5, color: '#1B3A28', fontWeight: 700, margin: 0 }}>« {upName} » — {t.merciFichier}</p>
             <p style={{ fontSize: 14, color: '#2c3a31', margin: '8px 0 0' }}>{t.rappelPhotoGoogle}</p>
           </div>
         )}
