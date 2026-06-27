@@ -6,6 +6,16 @@
 
 _Dernière mise à jour : 2026-06-27_
 
+## ✅ Hajj 2027 — Hôtel Médine « Baltimore 5★ » (PR #103) — FUSIONNÉ le 2026-06-27 (squash `283e16a`)
+Correction du tableau des prix dans `public/voyages/destinations/hajj-2027.html`,
+programme **برنامج الراحة الممتاز (Confort Premium)**. Le nom « بلتمور 5 نجوم »
+était collé par erreur à la cellule Mecque ; c'est l'hôtel de **Médine**.
+- Ligne 173 000 — Mecque : `السويس مكة` (retrait du « بلتمور 5 نجوم »).
+- Lignes 173 000 et 185 900 — Médine : `المدينة المنورة بلتمور 5 نجوم` (ville puis hôtel).
+- Programme Confort + ligne Mecque (الفيرمونت) inchangés. Aucun ajout admin média
+  (clés galerie `hotel-md-premium` / `hotel-mk-swiss-biltmore` conservées).
+- En ligne : `https://www.voyages21.com/voyages/destinations/hajj-2027.html`.
+
 ## 🆕 En cours — Affiche cliquable /avis-affiche (PR #100, DRAFT, 2026-06-27)
 Au lieu d'un lien nu, envoyer **l'affiche cliquable**. Branche `claude/voyages21-website-56m5b9`.
 - **Page** : `src/app/avis-affiche/page.jsx` → affiche entière = lien vers avis Google,
