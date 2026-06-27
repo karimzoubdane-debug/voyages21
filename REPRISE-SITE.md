@@ -14,6 +14,10 @@ Lien simple à envoyer aux clients par WhatsApp pour laisser un avis Google en 1
   utilisé sur l'accueil + page Hajj).
 - **Lien final** : `https://www.voyages21.com/avis`
 - **Preview à tester** : `https://voyages21-git-claude-voyages21-website-56m5b9-voyages21.vercel.app/avis`
+- **QR code + affiche A4** livrés (commit `dd8ee12`) dans `marketing/avis/` :
+  QR couleur/noir/SVG + affiche A4 PDF prête à imprimer pour l'agence (scan →
+  fenêtre d'avis Google). Le QR pointe vers le lien court → réimpression jamais
+  nécessaire si le lien Google change.
 - ⏭️ Attendre le « go #99 » de Karim après test → squash-merge sur main.
 
 ## Méthode de travail (règles fixes)
