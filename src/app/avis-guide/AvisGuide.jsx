@@ -12,7 +12,13 @@ const SUJETS = [
   { key: 'Omra', fr: 'Omra', ar: 'العمرة' },
   { key: 'Qods', fr: 'Qods (Al-Qods / Jérusalem)', ar: 'القدس' },
   { key: 'PaysVisites', fr: 'Pays visité(s)', ar: 'البلد/البلدان التي زرتها' },
+  { key: 'BilletAvion', fr: 'Billet d’avion', ar: 'تذكرة طيران' },
+  { key: 'Accueil', fr: 'Accueil & conseil', ar: 'الاستقبال والنصائح' },
+  { key: 'Autre', fr: 'Autre (préciser)', ar: 'أخرى (حدّد)' },
 ]
+
+// Sujets qui ouvrent un champ libre (et le rôle de ce champ)
+const CHAMP_LIBRE = { PaysVisites: 'pays', Autre: 'autre' }
 
 const ASPECTS = [
   { key: 'orga', fr: 'Organisation impeccable', ar: 'تنظيم متقن' },
@@ -98,15 +104,19 @@ function formatMois(ym, lang) {
   return `${MOIS[lang][i]} ${y}`
 }
 
-function contextePhrase(key, dm, lang, paysText) {
+function contextePhrase(key, dm, lang, libre) {
   const dateFr = dm ? ` en ${dm}` : ''
   const dateAr = dm ? ` في ${dm}` : ''
+  const txt = (libre || '').trim()
   if (lang === 'ar') {
     if (key === 'Hajj') return `بالنسبة لرحلة الحج${dateAr}، كان كل شيء منظماً بشكل مثالي.`
     if (key === 'Omra') return `بالنسبة لرحلة العمرة${dateAr}، كان كل شيء منظماً بشكل مثالي.`
     if (key === 'Qods') return `بالنسبة لزيارة القدس${dateAr}، كان كل شيء منظماً بشكل مثالي.`
+    if (key === 'BilletAvion') return `بالنسبة لحجز تذكرة الطيران${dateAr}، كان كل شيء سهلاً وسريعاً.`
+    if (key === 'Accueil') return `كان الاستقبال والنصائح بالوكالة في القمة${dateAr}.`
+    if (key === 'Autre') return txt ? `بخصوص ${txt}${dateAr}، كان كل شيء رائعاً.` : ''
     if (key === 'PaysVisites') {
-      const list = (paysText || '').split(',').map((s) => s.trim()).filter(Boolean)
+      const list = txt.split(',').map((s) => s.trim()).filter(Boolean)
       if (list.length === 0) return `بالنسبة لرحلتنا${dateAr}، كان كل شيء منظماً بشكل مثالي.`
       if (list.length === 1) return `بالنسبة لرحلتنا (${list[0]})${dateAr}، كان كل شيء منظماً بشكل مثالي.`
       return `بالنسبة لرحلاتنا (${list.join('، ')})${dateAr}، كان كل شيء منظماً بشكل مثالي.`
@@ -116,8 +126,11 @@ function contextePhrase(key, dm, lang, paysText) {
   if (key === 'Hajj') return `Pour notre Hajj${dateFr}, tout a été parfaitement organisé.`
   if (key === 'Omra') return `Pour notre Omra${dateFr}, tout a été parfaitement organisé.`
   if (key === 'Qods') return `Pour notre voyage à Al-Qods${dateFr}, tout a été parfaitement organisé.`
+  if (key === 'BilletAvion') return `Pour la réservation de mon billet d’avion${dateFr}, tout a été simple et rapide.`
+  if (key === 'Accueil') return `L’accueil et les conseils en agence ont été au top${dateFr}.`
+  if (key === 'Autre') return txt ? `Pour ${txt}${dateFr}, tout a été parfait.` : ''
   if (key === 'PaysVisites') {
-    const list = (paysText || '').split(',').map((s) => s.trim()).filter(Boolean)
+    const list = txt.split(',').map((s) => s.trim()).filter(Boolean)
     if (list.length === 0) return `Pour notre voyage${dateFr}, tout était parfaitement organisé.`
     if (list.length === 1) return `Pour notre voyage (${list[0]})${dateFr}, tout était parfaitement organisé.`
     return `Pour nos voyages (${list.join(', ')})${dateFr}, tout était parfaitement organisé.`
@@ -136,12 +149,12 @@ function nbPhrase(n, lang) {
   return ''
 }
 
-function genererAvis(lang, { sujet, pays, date, nbPersonnes, aspects, conseiller, note, seed }) {
+function genererAvis(lang, { sujet, libre, date, nbPersonnes, aspects, conseiller, note, seed }) {
   const pick = (arr) => arr[seed % arr.length]
   const parts = [pick(INTROS[lang])]
 
   const dm = formatMois(date, lang)
-  const ctx = contextePhrase(sujet, dm, lang, pays)
+  const ctx = contextePhrase(sujet, dm, lang, libre)
   if (ctx) parts.push(ctx)
 
   const n = parseInt(nbPersonnes, 10)
@@ -194,6 +207,8 @@ const T = {
     choisir: '— Choisissez —',
     q1pays: 'Quel(s) pays ? (séparez par des virgules si plusieurs)',
     q1paysPh: 'Ex. Maroc, Turquie, Égypte',
+    q1autre: 'Précisez le sujet de votre avis',
+    q1autrePh: 'Ex. organisation d’un événement, transfert…',
     q2: '2. Date du voyage',
     q3: '3. Nombre de personnes',
     q4: '4. Ce qui vous a marqué (cochez ce qui vous parle)',
@@ -225,6 +240,8 @@ const T = {
     choisir: '— اختر —',
     q1pays: 'أي بلد/بلدان؟ (افصل بينها بفواصل إن كانت متعددة)',
     q1paysPh: 'مثال: المغرب، تركيا، مصر',
+    q1autre: 'حدّد موضوع رأيك',
+    q1autrePh: 'مثال: تنظيم حدث، نقل…',
     q2: '2. تاريخ الرحلة',
     q3: '3. عدد الأشخاص',
     q4: '4. ما الذي أعجبك (اختر ما يناسبك)',
@@ -254,7 +271,7 @@ const T = {
 export default function AvisGuide() {
   const [lang, setLang] = useState('fr')
   const [sujet, setSujet] = useState('')
-  const [pays, setPays] = useState('')
+  const [libre, setLibre] = useState('')
   const [date, setDate] = useState('')
   const [nbPersonnes, setNbPersonnes] = useState('')
   const [aspects, setAspects] = useState([])
@@ -275,8 +292,8 @@ export default function AvisGuide() {
   const rtl = lang === 'ar'
 
   const avis = useMemo(
-    () => genererAvis(lang, { sujet, pays, date, nbPersonnes, aspects, conseiller, note, seed }),
-    [lang, sujet, pays, date, nbPersonnes, aspects, conseiller, note, seed]
+    () => genererAvis(lang, { sujet, libre, date, nbPersonnes, aspects, conseiller, note, seed }),
+    [lang, sujet, libre, date, nbPersonnes, aspects, conseiller, note, seed]
   )
 
   const toggleAspect = (k) =>
@@ -306,7 +323,7 @@ export default function AvisGuide() {
       await upload(`temoignages/${Date.now()}-${file.name}`, file, {
         access: 'public',
         handleUploadUrl: '/api/temoignage/upload',
-        clientPayload: JSON.stringify({ sujet, pays, date, nbPersonnes, avis, consent: true }),
+        clientPayload: JSON.stringify({ sujet, libre, date, nbPersonnes, avis, consent: true }),
       })
       setUpState('done')
     } catch {
@@ -385,14 +402,16 @@ export default function AvisGuide() {
           ))}
         </select>
 
-        {sujet === 'PaysVisites' && (
+        {CHAMP_LIBRE[sujet] && (
           <div style={{ marginTop: 14 }}>
-            <label htmlFor="pays" style={labelStyle}>{t.q1pays}</label>
+            <label htmlFor="libre" style={labelStyle}>
+              {CHAMP_LIBRE[sujet] === 'pays' ? t.q1pays : t.q1autre}
+            </label>
             <input
-              id="pays"
-              value={pays}
-              onChange={(e) => setPays(e.target.value)}
-              placeholder={t.q1paysPh}
+              id="libre"
+              value={libre}
+              onChange={(e) => setLibre(e.target.value)}
+              placeholder={CHAMP_LIBRE[sujet] === 'pays' ? t.q1paysPh : t.q1autrePh}
               style={field}
             />
           </div>
