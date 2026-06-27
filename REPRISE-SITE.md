@@ -6,7 +6,16 @@
 
 _Dernière mise à jour : 2026-06-27_
 
-## 🆕 En cours — Lien court /avis (PR #99, DRAFT, 2026-06-27)
+## 🆕 En cours — Affiche cliquable /avis-affiche (PR #100, DRAFT, 2026-06-27)
+Au lieu d'un lien nu, envoyer **l'affiche cliquable**. Branche `claude/voyages21-website-56m5b9`.
+- **Page** : `src/app/avis-affiche/page.jsx` → affiche entière = lien vers avis Google,
+  + balises Open Graph (aperçu visuel sur WhatsApp). Lien : `https://www.voyages21.com/avis-affiche`.
+- **Visuel** : `public/images/affiche-avis.png` (digital, gros bouton « Laisser mon avis »).
+- **PDF cliquable** : `marketing/avis/voyages21-avis-affiche-CLIQUABLE.pdf` (annotation /Link pleine page).
+- **Preview** : `https://voyages21-git-claude-voyages21-website-56m5b9-voyages21.vercel.app/avis-affiche`
+- ⏭️ Attendre le « go #100 » de Karim après test → squash-merge sur main.
+
+## ✅ Lien court /avis (PR #99) — FUSIONNÉ le 2026-06-27 (squash `f44021e`)
 Lien simple à envoyer aux clients par WhatsApp pour laisser un avis Google en 1 clic
 (pensé pour les personnes âgées). Branche `claude/voyages21-website-56m5b9`.
 - **Route** : `src/app/avis/page.jsx` → `redirect()` vers la fenêtre « Laisser un avis »
