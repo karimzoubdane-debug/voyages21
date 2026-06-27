@@ -5753,5 +5753,133 @@
   </a>
 
   <script src="/social-contact-bar.js" defer></script>
+
+  <!-- ════════ Popup « Vitrine du moment » (piloté par /promos.json) ════════ -->
+  <style>
+    .v21-pop-overlay{position:fixed;inset:0;z-index:9998;display:none;align-items:center;justify-content:center;
+      background:rgba(13,26,18,.55);backdrop-filter:blur(3px);padding:18px;opacity:0;transition:opacity .35s ease}
+    .v21-pop-overlay.show{display:flex;opacity:1}
+    .v21-pop{position:relative;width:100%;max-width:380px;background:#F5F0E8;border-radius:20px;overflow:hidden;
+      box-shadow:0 24px 60px rgba(0,0,0,.4);transform:translateY(24px) scale(.97);transition:transform .4s cubic-bezier(.2,.8,.25,1);
+      font-family:'DM Sans',system-ui,sans-serif}
+    .v21-pop-overlay.show .v21-pop{transform:translateY(0) scale(1)}
+    .v21-pop-close{position:absolute;top:10px;right:10px;z-index:3;width:34px;height:34px;border:none;border-radius:50%;
+      background:rgba(0,0,0,.35);color:#fff;font-size:20px;line-height:34px;cursor:pointer;transition:background .2s}
+    .v21-pop-close:hover{background:rgba(0,0,0,.6)}
+    .v21-pop-media{position:relative;height:190px;background:linear-gradient(135deg,#1B3A28,#152E1F);
+      display:flex;align-items:flex-end;overflow:hidden}
+    .v21-pop-media img,.v21-pop-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .v21-pop-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(13,26,18,.85),rgba(13,26,18,.05) 60%)}
+    .v21-pop-badge{position:absolute;top:14px;left:14px;z-index:2;background:#C8A440;color:#152E1F;font-weight:700;
+      font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+    .v21-pop-titlewrap{position:relative;z-index:2;padding:14px 18px}
+    .v21-pop-title{color:#fff;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:24px;line-height:1.15;margin:0}
+    .v21-pop-sub{color:#E9DFcd;font-size:13px;margin:4px 0 0}
+    .v21-pop-body{padding:16px 18px 20px}
+    .v21-pop-price{color:#1B3A28;font-weight:700;font-size:19px;margin:0 0 12px}
+    .v21-pop-count{display:flex;gap:8px;margin:0 0 14px}
+    .v21-pop-count .seg{flex:1;background:#fff;border:1px solid #e3dac9;border-radius:10px;padding:6px 0;text-align:center}
+    .v21-pop-count .seg b{display:block;font-size:18px;color:#1B3A28;line-height:1}
+    .v21-pop-count .seg span{font-size:10px;color:#8a8170;text-transform:uppercase;letter-spacing:.03em}
+    .v21-pop-btns{display:flex;flex-direction:column;gap:9px}
+    .v21-pop-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border-radius:12px;
+      font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:none;transition:transform .15s,filter .15s}
+    .v21-pop-btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    .v21-pop-wa{background:#25D366;color:#fff}
+    .v21-pop-offer{background:#1B3A28;color:#fff}
+    .v21-pop-fineprint{text-align:center;font-size:11px;color:#9a917e;margin:12px 0 0}
+    @media(max-width:420px){.v21-pop{max-width:100%}.v21-pop-media{height:160px}.v21-pop-title{font-size:21px}}
+  </style>
+  <div class="v21-pop-overlay" id="v21Pop" role="dialog" aria-modal="true" aria-label="Offre du moment Voyages 21">
+    <div class="v21-pop">
+      <button class="v21-pop-close" id="v21PopClose" aria-label="Fermer">&times;</button>
+      <div class="v21-pop-media" id="v21PopMedia">
+        <span class="v21-pop-badge" id="v21PopBadge">Offre du jour</span>
+        <div class="v21-pop-titlewrap">
+          <h3 class="v21-pop-title" id="v21PopTitle"></h3>
+          <p class="v21-pop-sub" id="v21PopSub"></p>
+        </div>
+      </div>
+      <div class="v21-pop-body">
+        <p class="v21-pop-price" id="v21PopPrice"></p>
+        <div class="v21-pop-count" id="v21PopCount" style="display:none">
+          <div class="seg"><b id="v21cd">00</b><span>jours</span></div>
+          <div class="seg"><b id="v21ch">00</b><span>h</span></div>
+          <div class="seg"><b id="v21cm">00</b><span>min</span></div>
+          <div class="seg"><b id="v21cs">00</b><span>sec</span></div>
+        </div>
+        <div class="v21-pop-btns">
+          <a class="v21-pop-btn v21-pop-wa" id="v21PopWa" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.532 5.862L.06 23.25l5.586-1.457A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 01-5.003-1.367l-.358-.213-3.317.864.888-3.226-.233-.37A9.783 9.783 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182c5.422 0 9.818 4.396 9.818 9.818 0 5.422-4.396 9.818-9.818 9.818z"/></svg>
+            Demander sur WhatsApp
+          </a>
+          <a class="v21-pop-btn v21-pop-offer" id="v21PopOffer" style="display:none">Voir le programme</a>
+        </div>
+        <p class="v21-pop-fineprint">Voyages 21 — votre voyage sur mesure au Maroc et au-delà.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var KEY='v21_popup_vu', force=/[?&]promo=test/.test(location.search);
+    function dejaVu(){ if(force) return false; try{ return localStorage.getItem(KEY)===new Date().toISOString().slice(0,10); }catch(e){ return false; } }
+    function marquerVu(){ try{ localStorage.setItem(KEY,new Date().toISOString().slice(0,10)); }catch(e){} }
+    if(dejaVu()) return;
+
+    fetch('/promos.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(cfg){
+      if(!cfg || cfg.actif===false) return;
+      var offre=(cfg.offres||[]).filter(function(o){return o && o.actif!==false;})[0];
+      if(!offre) return;
+
+      // Remplir la carte
+      var $=function(id){return document.getElementById(id);};
+      $('v21PopBadge').textContent=offre.badge||'Offre du jour';
+      $('v21PopTitle').textContent=offre.titre||'';
+      $('v21PopSub').textContent=offre.sousTitre||'';
+      $('v21PopPrice').textContent=offre.prix||'';
+      var media=$('v21PopMedia');
+      if(offre.video){ var v=document.createElement('video'); v.src=offre.video; v.autoplay=true; v.muted=true; v.loop=true; v.playsInline=true; media.insertBefore(v,media.firstChild); }
+      else if(offre.image){ var im=document.createElement('img'); im.src=offre.image; im.alt=offre.titre||''; media.insertBefore(im,media.firstChild); }
+      var wa=$('v21PopWa');
+      var num=(offre.whatsappNumero||'212614152686').replace(/[^0-9]/g,'');
+      wa.href='https://wa.me/'+num+(offre.whatsappMessage?('?text='+encodeURIComponent(offre.whatsappMessage)):'');
+      if(offre.lienOffre){ var off=$('v21PopOffer'); off.href=offre.lienOffre; off.textContent=offre.texteBoutonOffre||'Voir le programme'; off.style.display='flex'; }
+
+      // Compte à rebours (si dateFin valide et future)
+      var timer=null;
+      if(offre.dateFin){
+        var fin=new Date(offre.dateFin).getTime();
+        if(fin && fin>Date.now()){
+          $('v21PopCount').style.display='flex';
+          var tick=function(){
+            var d=fin-Date.now(); if(d<=0){ clearInterval(timer); $('v21PopCount').style.display='none'; return; }
+            var s=Math.floor(d/1000), p=function(n){return(n<10?'0':'')+n;};
+            $('v21cd').textContent=p(Math.floor(s/86400)); $('v21ch').textContent=p(Math.floor(s%86400/3600));
+            $('v21cm').textContent=p(Math.floor(s%3600/60)); $('v21cs').textContent=p(s%60);
+          };
+          tick(); timer=setInterval(tick,1000);
+        }
+      }
+
+      // Affichage / fermeture
+      var pop=$('v21Pop'), ouvert=false;
+      function ouvrir(){ if(ouvert||dejaVu()) return; ouvert=true; pop.classList.add('show'); marquerVu(); window.removeEventListener('scroll',onScroll); }
+      function fermer(){ pop.classList.remove('show'); if(timer) clearInterval(timer); }
+      $('v21PopClose').addEventListener('click',fermer);
+      pop.addEventListener('click',function(e){ if(e.target===pop) fermer(); });
+      document.addEventListener('keydown',function(e){ if(e.key==='Escape') fermer(); });
+
+      var seuil=(cfg.scrollPourcent||25)/100, delai=(cfg.delaiMiniSecondes||4)*1000, pret=force;
+      setTimeout(function(){ pret=true; },delai);
+      function onScroll(){
+        if(!pret) return;
+        var h=document.documentElement, sc=(h.scrollTop||document.body.scrollTop)/((h.scrollHeight-h.clientHeight)||1);
+        if(sc>=seuil) ouvrir();
+      }
+      if(force){ setTimeout(ouvrir,600); }
+      else { window.addEventListener('scroll',onScroll,{passive:true}); }
+    }).catch(function(){});
+  })();
+  </script>
 </body>
 </html>
