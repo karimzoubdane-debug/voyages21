@@ -4,7 +4,21 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-06-26_
+_Dernière mise à jour : 2026-06-27_
+
+## 🆕 En cours — Lien court /avis (PR #99, DRAFT, 2026-06-27)
+Lien simple à envoyer aux clients par WhatsApp pour laisser un avis Google en 1 clic
+(pensé pour les personnes âgées). Branche `claude/voyages21-website-56m5b9`.
+- **Route** : `src/app/avis/page.jsx` → `redirect()` vers la fenêtre « Laisser un avis »
+  Google Business (`writereview?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc`, Place ID déjà
+  utilisé sur l'accueil + page Hajj).
+- **Lien final** : `https://www.voyages21.com/avis`
+- **Preview à tester** : `https://voyages21-git-claude-voyages21-website-56m5b9-voyages21.vercel.app/avis`
+- **QR code + affiche A4** livrés (commit `dd8ee12`) dans `marketing/avis/` :
+  QR couleur/noir/SVG + affiche A4 PDF prête à imprimer pour l'agence (scan →
+  fenêtre d'avis Google). Le QR pointe vers le lien court → réimpression jamais
+  nécessaire si le lien Google change.
+- ⏭️ Attendre le « go #99 » de Karim après test → squash-merge sur main.
 
 ## Méthode de travail (règles fixes)
 - Site officiel : **https://www.voyages21.com** (page d'accueil = `public/design/homepage-v2-luxe.html`, servie par Vercel).
