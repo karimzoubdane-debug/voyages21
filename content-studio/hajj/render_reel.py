@@ -69,10 +69,12 @@ def smooth(p):
 # ----------------------------------------------------------------------------- sources
 def load_or_placeholder(idx):
     path = os.path.join(SRC_DIR, f"scene{idx+1}.png")
-    if not os.path.exists(path):
-        alt = os.path.join(SRC_DIR, SCENE_SRC.get(idx+1, ""))
-        path = alt if os.path.exists(alt) else path
-    if os.path.exists(path):
+    if not os.path.isfile(path):
+        fname = SCENE_SRC.get(idx+1, "")
+        alt = os.path.join(SRC_DIR, fname) if fname else ""
+        if alt and os.path.isfile(alt):
+            path = alt
+    if os.path.isfile(path):
         img = Image.open(path).convert("RGB")
     else:
         img = Image.new("RGB", (1080, 1920), (12, 12, 14))
