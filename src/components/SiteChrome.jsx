@@ -10,7 +10,13 @@ import Footer from '@/components/Footer';
 // décor du site grand public.
 export default function SiteChrome({ children }) {
   const pathname = usePathname() || '';
-  const bare = pathname === '/admin' || pathname.startsWith('/admin/');
+  // Zones en plein écran, sans le décor du site grand public :
+  // l'administration (/admin) et les pages d'avis (à envoyer aux clients).
+  const bare =
+    pathname === '/admin' ||
+    pathname.startsWith('/admin/') ||
+    pathname === '/avis-affiche' ||
+    pathname === '/avis-guide';
 
   if (bare) {
     return <main>{children}</main>;
