@@ -12,7 +12,13 @@ Au lieu d'un lien nu, envoyer **l'affiche cliquable**. Branche `claude/voyages21
   + balises Open Graph (aperçu visuel sur WhatsApp). Lien : `https://www.voyages21.com/avis-affiche`.
 - **Visuel** : `public/images/affiche-avis.png` (digital, gros bouton « Laisser mon avis »).
 - **PDF cliquable** : `marketing/avis/voyages21-avis-affiche-CLIQUABLE.pdf` (annotation /Link pleine page).
-- **Preview** : `https://voyages21-git-claude-voyages21-website-56m5b9-voyages21.vercel.app/avis-affiche`
+- **Consignes** : encadré « Pour un avis qui nous aide vraiment » sous le visuel (note 5★, destination, conseiller, photo) + lien vers l'assistant.
+- **Assistant d'avis** : `src/app/avis-guide/page.jsx` (server, OG) + `AvisGuide.jsx` (client).
+  Page séparée à envoyer par WhatsApp/email : liste déroulante (voyages / service
+  accueil / autre) + cases « ce qui a plu » + conseiller + mot perso → rédige
+  l'avis (formulations variées) → boutons « Copier » et « Ouvrir Google et coller ».
+  ⚠️ Google n'autorise pas le pré-remplissage : flux = copier → ouvrir → coller.
+- **Preview** : `…/avis-affiche` et `…/avis-guide` sur `voyages21-git-claude-voyages21-website-56m5b9-voyages21.vercel.app`
 - ⏭️ Attendre le « go #100 » de Karim après test → squash-merge sur main.
 
 ## ✅ Lien court /avis (PR #99) — FUSIONNÉ le 2026-06-27 (squash `f44021e`)
