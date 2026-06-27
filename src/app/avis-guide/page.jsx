@@ -18,7 +18,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/affiche-avis.png',
+        url: '/images/plaquette-avis.png',
         width: 1080,
         height: 1350,
         alt: 'Laissez un avis à Voyages 21',
@@ -28,7 +28,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Laissez un avis à Voyages 21 ⭐',
-    images: ['/images/affiche-avis.png'],
+    images: ['/images/plaquette-avis.png'],
   },
 }
 
