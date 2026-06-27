@@ -44,7 +44,7 @@ export const metadata = {
 
 export default function AvisAffichePage() {
   return (
-    <main
+    <div
       style={{
         minHeight: '100vh',
         background: '#F5F0E8',
@@ -162,6 +162,6 @@ export default function AvisAffichePage() {
           Merci pour votre confiance — Voyages 21
         </p>
       </div>
-    </main>
+    </div>
   )
 }

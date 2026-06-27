@@ -1,24 +1,34 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { upload } from '@vercel/blob/client'
 
 const GOOGLE_AVIS_URL =
   'https://search.google.com/local/writereview?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc'
 
-// Listes facilement modifiables (voyages, services, autre)
+// Listes facilement modifiables (pays / services / autre)
 const SUJETS = [
   {
-    groupe: 'Nos voyages',
+    groupe: 'Pays visité',
     options: [
-      'Marrakech',
-      'Désert & Sahara',
-      'Circuit au Maroc',
-      'Villes impériales',
-      'Nord du Maroc (Chefchaouen, Tanger…)',
-      'Séjour balnéaire (Agadir…)',
-      'Hajj & Omra',
-      'Croisière',
-      'Voyage sur mesure',
+      'Maroc',
+      'Arabie Saoudite (Hajj & Omra)',
+      'Turquie',
+      'Égypte',
+      'Émirats / Dubaï',
+      'Espagne',
+      'France',
+      'Italie',
+      'Portugal',
+      'Grèce',
+      'Thaïlande',
+      'Maldives',
+      'Indonésie (Bali)',
+      'Malaisie',
+      'Tanzanie / Zanzibar',
+      'Kenya',
+      'Afrique du Sud',
+      'Autre pays',
     ],
   },
   {
@@ -32,6 +42,12 @@ const SUJETS = [
   { groupe: 'Autre', options: ['Autre'] },
 ]
 
+const SERVICES = [
+  'Accueil & conseil en agence',
+  'Organisation & suivi du voyage',
+  'Réservation (vol, hôtel…)',
+]
+
 const ASPECTS = [
   'Organisation impeccable',
   'Accueil chaleureux',
@@ -43,7 +59,6 @@ const ASPECTS = [
   'Programme bien respecté',
 ]
 
-// Variantes de formulation (pour éviter des avis identiques)
 const INTROS = [
   'Je recommande vivement Voyages 21.',
   'Très belle expérience avec Voyages 21.',
@@ -59,40 +74,54 @@ const CLOTURES = [
   'Une équipe de confiance.',
 ]
 
-function sujetPhrase(sujet) {
-  if (!sujet) return ''
-  if (sujet === 'Autre') return ''
-  if (sujet === 'Accueil & conseil en agence')
-    return 'L’accueil et les conseils en agence ont été au top. '
-  if (sujet === 'Organisation & suivi du voyage')
-    return 'L’organisation et le suivi de notre voyage ont été parfaits. '
-  if (sujet === 'Réservation (vol, hôtel…)')
-    return 'La réservation a été simple et bien gérée. '
-  if (sujet === 'Hajj & Omra')
-    return 'Pour notre Hajj/Omra, tout a été parfaitement organisé. '
-  if (sujet === 'Croisière') return 'Notre croisière s’est très bien passée. '
-  if (sujet === 'Voyage sur mesure')
-    return 'Notre voyage sur mesure correspondait exactement à nos envies. '
-  return `Nous avons adoré notre voyage (${sujet}). `
+const MOIS = [
+  'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+  'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+]
+
+function formatMois(ym) {
+  if (!ym) return ''
+  const [y, m] = ym.split('-')
+  const i = parseInt(m, 10) - 1
+  if (isNaN(i) || !MOIS[i]) return ''
+  return `${MOIS[i]} ${y}`
 }
 
-function genererAvis({ sujet, aspects, conseiller, note, seed }) {
-  const pick = (arr) => arr[seed % arr.length]
-  const parts = []
-  parts.push(pick(INTROS))
+function sujetPhrase(sujet, dateStr, nbStr) {
+  if (!sujet || sujet === 'Autre') return ''
+  if (SERVICES.includes(sujet)) {
+    if (sujet.startsWith('Accueil'))
+      return `L’accueil et les conseils en agence ont été au top${dateStr}.`
+    if (sujet.startsWith('Organisation'))
+      return `L’organisation et le suivi de notre voyage${dateStr} ont été parfaits.`
+    return `La réservation${dateStr} a été simple et bien gérée.`
+  }
+  if (sujet.includes('Hajj'))
+    return `Pour notre Hajj/Omra${dateStr}${nbStr}, tout a été parfaitement organisé.`
+  return `Pour notre voyage (${sujet})${dateStr}${nbStr}, tout était parfaitement organisé.`
+}
 
-  const sp = sujetPhrase(sujet)
-  if (sp) parts.push(sp.trim())
+function genererAvis({ sujet, date, nbPersonnes, aspects, conseiller, note, seed }) {
+  const pick = (arr) => arr[seed % arr.length]
+  const parts = [pick(INTROS)]
+
+  const dm = formatMois(date)
+  const dateStr = dm ? ` en ${dm}` : ''
+  const n = parseInt(nbPersonnes, 10)
+  let nbStr = ''
+  if (n === 2) nbStr = ' en couple'
+  else if (n >= 3) nbStr = ` à ${n} personnes`
+
+  const sp = sujetPhrase(sujet, dateStr, nbStr)
+  if (sp) parts.push(sp)
 
   if (aspects.length) {
     const liste = aspects.map((a) => a.toLowerCase())
-    let texte
-    if (liste.length === 1) texte = `J’ai particulièrement apprécié ${liste[0]}.`
-    else
-      texte = `J’ai particulièrement apprécié : ${liste
-        .slice(0, -1)
-        .join(', ')} et ${liste[liste.length - 1]}.`
-    parts.push(texte)
+    parts.push(
+      liste.length === 1
+        ? `J’ai particulièrement apprécié ${liste[0]}.`
+        : `J’ai particulièrement apprécié : ${liste.slice(0, -1).join(', ')} et ${liste[liste.length - 1]}.`
+    )
   }
 
   if (conseiller.trim())
@@ -106,21 +135,25 @@ function genererAvis({ sujet, aspects, conseiller, note, seed }) {
 
 export default function AvisGuide() {
   const [sujet, setSujet] = useState('')
+  const [date, setDate] = useState('')
+  const [nbPersonnes, setNbPersonnes] = useState('')
   const [aspects, setAspects] = useState([])
   const [conseiller, setConseiller] = useState('')
   const [note, setNote] = useState('')
   const [seed, setSeed] = useState(0)
   const [copie, setCopie] = useState(false)
 
+  // Upload témoignage photo/vidéo
+  const [upState, setUpState] = useState('idle') // idle | loading | done | error
+  const [upName, setUpName] = useState('')
+
   const avis = useMemo(
-    () => genererAvis({ sujet, aspects, conseiller, note, seed }),
-    [sujet, aspects, conseiller, note, seed]
+    () => genererAvis({ sujet, date, nbPersonnes, aspects, conseiller, note, seed }),
+    [sujet, date, nbPersonnes, aspects, conseiller, note, seed]
   )
 
   const toggleAspect = (a) =>
-    setAspects((prev) =>
-      prev.includes(a) ? prev.filter((x) => x !== a) : [...prev, a]
-    )
+    setAspects((p) => (p.includes(a) ? p.filter((x) => x !== a) : [...p, a]))
 
   async function copier() {
     try {
@@ -138,6 +171,23 @@ export default function AvisGuide() {
     window.open(GOOGLE_AVIS_URL, '_blank', 'noopener')
   }
 
+  async function onFichier(e) {
+    const file = e.target.files && e.target.files[0]
+    if (!file) return
+    setUpName(file.name)
+    setUpState('loading')
+    try {
+      await upload(`temoignages/${Date.now()}-${file.name}`, file, {
+        access: 'public',
+        handleUploadUrl: '/api/temoignage/upload',
+        clientPayload: JSON.stringify({ sujet, date, nbPersonnes, avis }),
+      })
+      setUpState('done')
+    } catch {
+      setUpState('error')
+    }
+  }
+
   const card = {
     background: '#fff',
     border: '2px solid #C8A440',
@@ -147,6 +197,16 @@ export default function AvisGuide() {
     boxShadow: '0 8px 28px rgba(27,58,40,.10)',
   }
   const labelStyle = { fontWeight: 700, color: '#1B3A28', display: 'block', marginBottom: 8 }
+  const field = {
+    width: '100%',
+    padding: '13px 12px',
+    fontSize: 16,
+    borderRadius: 10,
+    border: '1.5px solid #cdd5cd',
+    boxSizing: 'border-box',
+    background: '#fff',
+    color: '#152E1F',
+  }
 
   return (
     <div style={{ width: '100%', maxWidth: 560 }}>
@@ -168,25 +228,12 @@ export default function AvisGuide() {
         </p>
       </header>
 
-      {/* 1. Sujet */}
+      {/* 1. Sujet / pays */}
       <section style={card}>
         <label htmlFor="sujet" style={labelStyle}>
           1. Votre avis concerne…
         </label>
-        <select
-          id="sujet"
-          value={sujet}
-          onChange={(e) => setSujet(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '13px 12px',
-            fontSize: 16,
-            borderRadius: 10,
-            border: '1.5px solid #cdd5cd',
-            background: '#fff',
-            color: '#152E1F',
-          }}
-        >
+        <select id="sujet" value={sujet} onChange={(e) => setSujet(e.target.value)} style={field}>
           <option value="">— Choisissez —</option>
           {SUJETS.map((g) => (
             <optgroup key={g.groupe} label={g.groupe}>
@@ -200,9 +247,36 @@ export default function AvisGuide() {
         </select>
       </section>
 
-      {/* 2. Aspects */}
+      {/* 2. Date + nombre de personnes */}
       <section style={card}>
-        <span style={labelStyle}>2. Ce qui vous a marqué (cochez ce qui vous parle)</span>
+        <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 180px' }}>
+            <label htmlFor="date" style={labelStyle}>
+              2. Date du voyage
+            </label>
+            <input id="date" type="month" value={date} onChange={(e) => setDate(e.target.value)} style={field} />
+          </div>
+          <div style={{ flex: '1 1 140px' }}>
+            <label htmlFor="nb" style={labelStyle}>
+              3. Nombre de personnes
+            </label>
+            <input
+              id="nb"
+              type="number"
+              min="1"
+              inputMode="numeric"
+              value={nbPersonnes}
+              onChange={(e) => setNbPersonnes(e.target.value)}
+              placeholder="Ex. 4"
+              style={field}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Aspects */}
+      <section style={card}>
+        <span style={labelStyle}>4. Ce qui vous a marqué (cochez ce qui vous parle)</span>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 9 }}>
           {ASPECTS.map((a) => {
             const on = aspects.includes(a)
@@ -230,24 +304,17 @@ export default function AvisGuide() {
         </div>
       </section>
 
-      {/* 3. Conseiller + mot perso */}
+      {/* 5. Conseiller + mot perso */}
       <section style={card}>
         <label htmlFor="conseiller" style={labelStyle}>
-          3. Le prénom de votre conseiller (facultatif)
+          5. Le prénom de votre conseiller (facultatif)
         </label>
         <input
           id="conseiller"
           value={conseiller}
           onChange={(e) => setConseiller(e.target.value)}
           placeholder="Ex. Karim, Wafa, Fouad…"
-          style={{
-            width: '100%',
-            padding: '13px 12px',
-            fontSize: 16,
-            borderRadius: 10,
-            border: '1.5px solid #cdd5cd',
-            marginBottom: 16,
-          }}
+          style={{ ...field, marginBottom: 16 }}
         />
         <label htmlFor="note" style={labelStyle}>
           Un mot personnel (facultatif)
@@ -258,28 +325,60 @@ export default function AvisGuide() {
           onChange={(e) => setNote(e.target.value)}
           placeholder="Ajoutez une touche personnelle, ça rend l’avis unique 🙏"
           rows={2}
-          style={{
-            width: '100%',
-            padding: '13px 12px',
-            fontSize: 16,
-            borderRadius: 10,
-            border: '1.5px solid #cdd5cd',
-            resize: 'vertical',
-            fontFamily: 'inherit',
-          }}
+          style={{ ...field, resize: 'vertical', fontFamily: 'inherit' }}
         />
+      </section>
+
+      {/* 6. Photo / vidéo témoignage */}
+      <section style={card}>
+        <span style={labelStyle}>6. Une photo ou vidéo de votre voyage ? (facultatif)</span>
+        <label
+          htmlFor="fichier"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 10,
+            border: '2px dashed #C8A440',
+            borderRadius: 12,
+            padding: '16px',
+            cursor: 'pointer',
+            color: '#1B3A28',
+            fontWeight: 700,
+            background: '#fffdf7',
+          }}
+        >
+          ➕ Ajouter une photo / vidéo
+        </label>
+        <input
+          id="fichier"
+          type="file"
+          accept="image/*,video/*"
+          onChange={onFichier}
+          style={{ display: 'none' }}
+        />
+        {upState === 'loading' && (
+          <p style={{ fontSize: 14, color: '#3a4a3f', margin: '10px 0 0' }}>⏳ Envoi de « {upName} »…</p>
+        )}
+        {upState === 'done' && (
+          <p style={{ fontSize: 14, color: '#1B3A28', fontWeight: 700, margin: '10px 0 0' }}>
+            ✓ Merci ! « {upName} » bien envoyé à l’agence.
+          </p>
+        )}
+        {upState === 'error' && (
+          <p style={{ fontSize: 14, color: '#a23', margin: '10px 0 0' }}>
+            Envoi impossible. Réessayez ou envoyez-le par WhatsApp 🙏
+          </p>
+        )}
+        <p style={{ fontSize: 12.5, color: '#7a8a7f', margin: '8px 0 0' }}>
+          Votre photo/vidéo est partagée avec l’agence. Sur Google, vous pouvez aussi
+          ajouter vos photos directement dans votre avis 📸
+        </p>
       </section>
 
       {/* Aperçu de l'avis */}
       <section style={{ ...card, background: '#F5F0E8' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 10,
-          }}
-        >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
           <span style={labelStyle}>Votre avis</span>
           <button
             type="button"
@@ -314,6 +413,23 @@ export default function AvisGuide() {
           {avis}
         </p>
       </section>
+
+      {/* Rappel 5 étoiles */}
+      <div
+        style={{
+          background: '#FBF6E7',
+          border: '2px solid #C8A440',
+          borderRadius: 14,
+          padding: '14px 16px',
+          textAlign: 'center',
+          marginBottom: 18,
+        }}
+      >
+        <div style={{ fontSize: 30, letterSpacing: 4, color: '#C8A440' }}>★ ★ ★ ★ ★</div>
+        <strong style={{ color: '#1B3A28', fontSize: 16 }}>
+          N’oubliez pas de mettre 5 étoiles sur Google 🙏
+        </strong>
+      </div>
 
       {/* Boutons */}
       <button
@@ -351,7 +467,7 @@ export default function AvisGuide() {
           boxShadow: '0 12px 30px rgba(27,58,40,.25)',
         }}
       >
-        ⭐ Ouvrir Google et coller mon avis
+        ✅ Copier et valider sur Google
       </button>
 
       <p style={{ fontSize: 14, color: '#3a4a3f', textAlign: 'center', marginTop: 14, lineHeight: 1.5 }}>

@@ -34,7 +34,7 @@ export const metadata = {
 
 export default function AvisGuidePage() {
   return (
-    <main
+    <div
       style={{
         minHeight: '100vh',
         background: '#F5F0E8',
@@ -47,6 +47,6 @@ export default function AvisGuidePage() {
       }}
     >
       <AvisGuide />
-    </main>
+    </div>
   )
 }
