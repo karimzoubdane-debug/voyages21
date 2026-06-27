@@ -142,7 +142,23 @@ export default function AvisAffichePage() {
         >
           ⭐ Laisser mon avis sur Google
         </a>
-        <p style={{ textAlign: 'center', fontSize: 14, color: '#C8A440', fontWeight: 700, marginTop: 14 }}>
+
+        <a
+          href="/avis-guide"
+          style={{
+            display: 'block',
+            textAlign: 'center',
+            marginTop: 16,
+            fontSize: 15.5,
+            color: '#1B3A28',
+            fontWeight: 600,
+            textDecoration: 'underline',
+          }}
+        >
+          ✍️ Pas sûr de quoi écrire ? Laissez-vous guider →
+        </a>
+
+        <p style={{ textAlign: 'center', fontSize: 14, color: '#C8A440', fontWeight: 700, marginTop: 16 }}>
           Merci pour votre confiance — Voyages 21
         </p>
       </div>
