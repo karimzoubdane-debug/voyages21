@@ -144,6 +144,7 @@ export default function AvisGuide() {
   const [copie, setCopie] = useState(false)
 
   // Upload témoignage photo/vidéo
+  const [consent, setConsent] = useState(false)
   const [upState, setUpState] = useState('idle') // idle | loading | done | error
   const [upName, setUpName] = useState('')
 
@@ -173,14 +174,14 @@ export default function AvisGuide() {
 
   async function onFichier(e) {
     const file = e.target.files && e.target.files[0]
-    if (!file) return
+    if (!file || !consent) return
     setUpName(file.name)
     setUpState('loading')
     try {
       await upload(`temoignages/${Date.now()}-${file.name}`, file, {
         access: 'public',
         handleUploadUrl: '/api/temoignage/upload',
-        clientPayload: JSON.stringify({ sujet, date, nbPersonnes, avis }),
+        clientPayload: JSON.stringify({ sujet, date, nbPersonnes, avis, consent: true }),
       })
       setUpState('done')
     } catch {
@@ -332,6 +333,35 @@ export default function AvisGuide() {
       {/* 6. Photo / vidéo témoignage */}
       <section style={card}>
         <span style={labelStyle}>6. Une photo ou vidéo de votre voyage ? (facultatif)</span>
+
+        {/* Consentement obligatoire avant l'envoi */}
+        <label
+          style={{
+            display: 'flex',
+            gap: 10,
+            alignItems: 'flex-start',
+            fontSize: 14.5,
+            color: '#2c3a31',
+            background: '#FBF6E7',
+            border: '1.5px solid #e3dcc9',
+            borderRadius: 10,
+            padding: 12,
+            marginBottom: 12,
+            cursor: 'pointer',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            style={{ width: 20, height: 20, flexShrink: 0, marginTop: 1 }}
+          />
+          <span>
+            J’autorise <b>Voyages 21</b> à utiliser ma photo / vidéo sur ses réseaux
+            sociaux et supports de communication.
+          </span>
+        </label>
+
         <label
           htmlFor="fichier"
           style={{
@@ -342,10 +372,11 @@ export default function AvisGuide() {
             border: '2px dashed #C8A440',
             borderRadius: 12,
             padding: '16px',
-            cursor: 'pointer',
-            color: '#1B3A28',
+            cursor: consent ? 'pointer' : 'not-allowed',
+            color: consent ? '#1B3A28' : '#9aa79e',
             fontWeight: 700,
-            background: '#fffdf7',
+            background: consent ? '#fffdf7' : '#f4f1ea',
+            opacity: consent ? 1 : 0.7,
           }}
         >
           ➕ Ajouter une photo / vidéo
@@ -355,15 +386,36 @@ export default function AvisGuide() {
           type="file"
           accept="image/*,video/*"
           onChange={onFichier}
+          disabled={!consent}
           style={{ display: 'none' }}
         />
+        {!consent && (
+          <p style={{ fontSize: 13, color: '#a07b1e', margin: '8px 0 0' }}>
+            ☝️ Cochez la case d’autorisation pour pouvoir envoyer votre fichier.
+          </p>
+        )}
         {upState === 'loading' && (
           <p style={{ fontSize: 14, color: '#3a4a3f', margin: '10px 0 0' }}>⏳ Envoi de « {upName} »…</p>
         )}
         {upState === 'done' && (
-          <p style={{ fontSize: 14, color: '#1B3A28', fontWeight: 700, margin: '10px 0 0' }}>
-            ✓ Merci ! « {upName} » bien envoyé à l’agence.
-          </p>
+          <div
+            style={{
+              marginTop: 12,
+              background: '#eef5ee',
+              border: '1.5px solid #cfe0cf',
+              borderRadius: 10,
+              padding: 12,
+            }}
+          >
+            <p style={{ fontSize: 14.5, color: '#1B3A28', fontWeight: 700, margin: 0 }}>
+              ✓ Merci ! « {upName} » bien envoyé à l’agence 🙏
+            </p>
+            <p style={{ fontSize: 14, color: '#2c3a31', margin: '8px 0 0' }}>
+              📸 <b>Pensez aussi à ajouter cette photo à votre avis Google</b> : dans la
+              fenêtre Google, appuyez sur « Ajouter des photos ». Ça donne encore plus de
+              poids à votre témoignage !
+            </p>
+          </div>
         )}
         {upState === 'error' && (
           <p style={{ fontSize: 14, color: '#a23', margin: '10px 0 0' }}>
@@ -371,8 +423,8 @@ export default function AvisGuide() {
           </p>
         )}
         <p style={{ fontSize: 12.5, color: '#7a8a7f', margin: '8px 0 0' }}>
-          Votre photo/vidéo est partagée avec l’agence. Sur Google, vous pouvez aussi
-          ajouter vos photos directement dans votre avis 📸
+          Votre photo/vidéo est partagée avec l’agence pour ses réseaux. Sur Google, vous
+          pouvez aussi ajouter vos photos directement dans votre avis.
         </p>
       </section>
 
@@ -472,7 +524,7 @@ export default function AvisGuide() {
 
       <p style={{ fontSize: 14, color: '#3a4a3f', textAlign: 'center', marginTop: 14, lineHeight: 1.5 }}>
         👉 Sur Google : appuyez sur la case commentaire, faites <b>appui long → Coller</b>,
-        mettez <b>5 étoiles</b> puis <b>Publier</b>. Merci ! 🙏
+        mettez <b>5 étoiles</b>, <b>ajoutez vos photos</b> puis <b>Publier</b>. Merci ! 🙏
       </p>
     </div>
   )
