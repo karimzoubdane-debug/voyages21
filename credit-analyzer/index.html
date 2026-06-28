@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analyseur Crédit — Étude de faisabilité</title>
+<meta name="description" content="Analyse crédit à partir des bilans : ratios, interprétation, synthèse et éligibilité CMT/CLT, facilité de caisse, leasing, affacturage.">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="inner">
+    <div class="brand">
+      <span class="k">ÉTUDE DE FAISABILITÉ — VUE BANQUE</span>
+      <span class="t">Analyseur Crédit</span>
+    </div>
+    <input id="societe" class="soc-input" placeholder="Nom de la société…" autocomplete="off">
+    <div class="spacer"></div>
+    <div class="score-badge" id="scoreBadge" title="Solidité structurelle (bilan)">
+      <span class="n" id="scoreNum">—</span>
+      <span class="l">Solidité<br>structurelle</span>
+    </div>
+    <button class="btn ghost sm" id="btnExample">Charger l'exemple</button>
+    <button class="btn ghost sm" id="btnNew">Nouveau</button>
+    <button class="btn gold sm" id="btnExport">Exporter</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="dossier">1 · Dossier &amp; bilans</button>
+  <button class="tab" data-tab="analyse">2 · Analyse &amp; ratios</button>
+  <button class="tab" data-tab="eligibilite">3 · Éligibilité crédit</button>
+  <button class="tab" data-tab="documents">4 · Documents &amp; notes</button>
+  <button class="tab" data-tab="assistant">5 · Assistant</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- 1. DOSSIER -->
+  <section class="panel active" id="panel-dossier">
+    <div class="banner">
+      Saisis (ou importe) les <b>bilans de la même société</b> sur plusieurs exercices. Les chiffres viennent de la liasse :
+      bilan (masses) + CPC / ESG (CAF, EBE…). Tout se calcule automatiquement. <b>Données privées</b> : rien n'est envoyé à un serveur.
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div><h3>Bilans &amp; comptes de résultat</h3><div class="sub">Une colonne par exercice. Champs en dirhams (DH).</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" id="btnAddExercice">+ Ajouter un exercice</button>
+          <label class="btn sm" style="position:relative;overflow:hidden">
+            Importer un bilan (PDF)
+            <input type="file" id="pdfInput" accept="application/pdf" style="position:absolute;inset:0;opacity:0;cursor:pointer">
+          </label>
+        </div>
+      </div>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="io-table" id="ioTable"></table>
+      </div>
+      <div id="importMsg" class="small muted" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <details class="params">
+        <summary>Paramètres des normes bancaires (avancé)</summary>
+        <div class="params-grid" id="paramsGrid"></div>
+        <div class="small muted" style="margin-top:8px">Ces seuils pilotent l'interprétation et les verdicts. Valeurs par défaut = pratique bancaire courante (Maroc).</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 2. ANALYSE -->
+  <section class="panel" id="panel-analyse">
+    <div class="grid cols-4" id="kpiRow" style="margin-bottom:6px"></div>
+    <div class="card"><h3>Synthèse — santé financière</h3><div class="sub" id="synthSub"></div><div class="synth" id="synthBox"></div></div>
+    <div class="card"><h3>Batterie de ratios</h3><div class="sub">Comparaison sur 2 exercices, position vs norme bancaire, et lecture.</div><div id="ratiosWrap"></div></div>
+  </section>
+
+  <!-- 3. ELIGIBILITE -->
+  <section class="panel" id="panel-eligibilite">
+    <div class="card">
+      <h3>Verdict par ligne de crédit</h3>
+      <div class="sub">Étude de <b>faisabilité financière</b> (garanties supposées déjà prises). Sur le dernier exercice.</div>
+      <div id="verdicts"></div>
+    </div>
+    <div class="card">
+      <h3>Simulateur CMT / CLT</h3>
+      <div class="sub">Teste un financement à terme : montant, durée, différé, taux.</div>
+      <div class="grid cols-4" id="simInputs">
+        <div class="field"><label>Montant (DH)</label><input id="simMontant" type="number" value="600000"></div>
+        <div class="field"><label>Durée (ans)</label><input id="simDuree" type="number" value="7"></div>
+        <div class="field"><label>Différé (ans)</label><input id="simDiffere" type="number" value="1"></div>
+        <div class="field"><label>Taux (%)</label><input id="simTaux" type="number" step="0.1" value="6"></div>
+      </div>
+      <div id="simResult" style="margin-top:14px"></div>
+      <div style="overflow-x:auto;margin-top:8px"><table id="maxParDuree"></table></div>
+    </div>
+  </section>
+
+  <!-- 4. DOCUMENTS -->
+  <section class="panel" id="panel-documents">
+    <div class="card">
+      <h3>Documents du dossier</h3>
+      <div class="sub">Exposé d'activité, historique, réalisations, clients/fournisseurs, relevés… Ajoute tout document utile à l'étude.</div>
+      <div class="dropzone" id="dropzone">
+        Glisse des fichiers ici, ou <label style="color:var(--gold-d);font-weight:700;cursor:pointer">parcourir<input type="file" id="docInput" multiple style="display:none"></label>.
+        <div class="small" style="margin-top:6px">Conservés uniquement dans ce navigateur (session privée).</div>
+      </div>
+      <ul class="doc-list" id="docList"></ul>
+    </div>
+    <div class="card">
+      <h3>Notes pour l'analyse</h3>
+      <div class="sub">Donne-moi des informations utiles : contexte, projet de financement, particularités du secteur, qualité des clients/fournisseurs…</div>
+      <textarea class="notes" id="notes" placeholder="Ex : la société prépare l'achat d'un local (2,5 M DH). Clientèle MICE corporate à 60 jours. Saisonnalité forte en été…"></textarea>
+    </div>
+  </section>
+
+  <!-- 5. ASSISTANT -->
+  <section class="panel" id="panel-assistant">
+    <div class="card">
+      <h3>Assistant crédit</h3>
+      <div class="sub">Pose une question d'éligibilité ou sur les chiffres. Ex : « Éligible à un CMT 7 ans, différé 1 an, taux 6 % ? »</div>
+      <div class="banner" id="aiBanner">Mode <b>déterministe</b> actif (moteur de règles bancaires). Le chat conversationnel complet s'activera dès qu'une clé API sera connectée.</div>
+      <div class="chat">
+        <div class="chat-log" id="chatLog"></div>
+        <div class="suggest" id="suggest"></div>
+        <div class="chat-in">
+          <input id="chatInput" placeholder="Votre question…" autocomplete="off">
+          <button class="btn gold" id="chatSend">Envoyer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  Analyseur Crédit — outil d'aide à la décision. Les montants dépendent des hypothèses (durée, taux) et des normes paramétrées ;
+  ils ne constituent pas un engagement bancaire. Méthode CGNC (modèle normal) + CPC / ESG.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/engine.js"></script>
+<script src="assets/samples.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
