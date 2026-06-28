@@ -18,10 +18,15 @@ Application web **autonome** (HTML/CSS/JS, sans backend, sans dépendance) qui, 
 ## Confidentialité
 Les données restent **dans le navigateur** (session privée). Aucune information n'est envoyée à un serveur.
 
+## Lien immédiat (preview du site)
+L'app est servie par le déploiement existant du site, à l'URL :
+`https://<preview-du-site>.vercel.app/credit-analyzer/index.html`
+(pratique pour tester tout de suite, le temps de monter le projet dédié).
+
 ## Aperçu en local
 Ouvrir `index.html` dans un navigateur, ou servir le dossier :
 ```bash
-cd credit-analyzer && python3 -m http.server 8080
+cd public/credit-analyzer && python3 -m http.server 8080
 # puis http://localhost:8080
 ```
 
@@ -29,7 +34,7 @@ cd credit-analyzer && python3 -m http.server 8080
 Site **100 % statique** : aucun build, aucune variable d'environnement.
 
 1. Vercel → **Add New… › Project** → importer le dépôt `karimzoubdane-debug/voyages21`.
-2. **Root Directory** = `credit-analyzer`.
+2. **Root Directory** = `public/credit-analyzer`.
 3. **Framework Preset** = *Other* (build command : vide ; output : `.`).
 4. **Deploy**.
 
@@ -46,7 +51,7 @@ brancher `sendChat()` sur cette route. La structure du code est prête pour cet 
 
 ## Structure
 ```
-credit-analyzer/
+public/credit-analyzer/
   index.html            interface (onglets)
   assets/styles.css     design (charte V21)
   assets/engine.js      moteur financier (ratios + éligibilité) — testé
