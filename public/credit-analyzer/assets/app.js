@@ -543,13 +543,14 @@
     };
   }
   var convo = [];
+  var aiModel = 'claude-sonnet-4-6';
   function postJSON(url, body) {
     return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) {
         if (!r.ok || !j.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); });
   }
   function aiAnswer(q) {
-    return postJSON('/api/credit/chat', { messages: convo, context: buildContext(), notes: state.notes })
+    return postJSON('/api/credit/chat', { messages: convo, context: buildContext(), notes: state.notes, model: aiModel })
       .then(function (j) { if (!j.text) throw new Error('réponse vide'); return j.text; });
   }
   // Point d'entrée unique : tente l'IA (analyste senior), repli déterministe.
@@ -585,12 +586,12 @@
   function runResearch() {
     var q = $('researchIn').value.trim(); if (!q) return;
     var out = $('researchOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Recherche en cours…';
-    postJSON('/api/credit/research', { query: q }).then(function (j) { out.textContent = j.text || '(vide)'; },
+    postJSON('/api/credit/research', { query: q, model: aiModel }).then(function (j) { out.textContent = j.text || '(vide)'; },
       function (e) { out.textContent = '⚠ ' + (e.message || e); });
   }
   function runBrief() {
     var out = $('briefOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Génération du brief…';
-    postJSON('/api/credit/brief', { focus: $('briefFocus').value.trim() }).then(function (j) {
+    postJSON('/api/credit/brief', { focus: $('briefFocus').value.trim(), model: aiModel }).then(function (j) {
       if (j.items && j.items.length) {
         out.style.whiteSpace = 'normal';
         out.innerHTML = j.items.map(function (it) {
@@ -606,7 +607,7 @@
     var out = $('summarizeOut'); out.style.whiteSpace = 'pre-wrap';
     if (!text) { out.textContent = 'Choisis un document (avec texte extrait) ou colle un texte.'; return; }
     out.textContent = 'Résumé en cours…';
-    postJSON('/api/credit/summarize', { text: text, name: name }).then(function (j) { out.textContent = j.text; },
+    postJSON('/api/credit/summarize', { text: text, name: name, model: aiModel }).then(function (j) { out.textContent = j.text; },
       function (e) { out.textContent = '⚠ ' + (e.message || e); });
   }
 
@@ -783,6 +784,17 @@
     ['cdDuree', 'cdTaux', 'cdIS', 'cdCroissance', 'cdMarge', 'cdInvest', 'cdDiv'].forEach(function (id) { $(id).addEventListener('input', runCDSD); });
     $('chatSend').addEventListener('click', sendChat);
     $('chatInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') sendChat(); });
+    // Sélecteur de modèle IA (mémorisé)
+    var msel = $('aiModel');
+    if (msel) {
+      var saved = null; try { saved = localStorage.getItem('credit-ai-model'); } catch (e) {}
+      if (saved) msel.value = saved;
+      aiModel = msel.value;
+      msel.addEventListener('change', function () {
+        aiModel = msel.value; try { localStorage.setItem('credit-ai-model', aiModel); } catch (e) {}
+        toast('Modèle : ' + msel.options[msel.selectedIndex].text.split(' —')[0]);
+      });
+    }
     // Bloc 2 — Veille & marché
     $('researchBtn').addEventListener('click', runResearch);
     $('researchIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') runResearch(); });

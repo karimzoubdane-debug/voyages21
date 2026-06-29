@@ -1,7 +1,7 @@
 // POST /api/credit/brief — brèves d'actualité éco/finance (Maroc + international).
 // Corps : { focus?:string, n?:number }  →  { ok, items:[{titre, description}] }
 import { NextResponse } from 'next/server';
-import { getClient, runMessages, textFrom, WEB_SEARCH } from '../_lib.js';
+import { getClient, runMessages, textFrom, pickModel, webSearchFor } from '../_lib.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,10 +30,12 @@ export async function POST(request) {
     (focus ? '. Oriente le brief vers : ' + focus : '');
 
   try {
+    const model = pickModel(body);
     const msg = await runMessages(client, {
       system,
-      tools: [WEB_SEARCH],
+      tools: [webSearchFor(model)],
       max_tokens: 8000,
+      model: model,
       messages: [{ role: 'user', content: "Génère le brief du jour (Maroc + international)." }],
     });
     const raw = textFrom(msg);

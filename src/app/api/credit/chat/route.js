@@ -1,7 +1,7 @@
 // POST /api/credit/chat — discussion avec l'analyste crédit senior.
 // Corps : { messages:[{role,content}], context:{...analyse calculée...}, notes?:string }
 import { NextResponse } from 'next/server';
-import { getClient, runMessages, textFrom, PERSONA } from '../_lib.js';
+import { getClient, runMessages, textFrom, PERSONA, pickModel } from '../_lib.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -35,7 +35,7 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, error: 'Dernier message non utilisateur.' }, { status: 400 });
   }
   try {
-    const msg = await runMessages(client, { system: PERSONA, messages, max_tokens: 6000 });
+    const msg = await runMessages(client, { system: PERSONA, messages, max_tokens: 6000, model: pickModel(body) });
     return NextResponse.json({ ok: true, text: textFrom(msg) });
   } catch (e) {
     return NextResponse.json({ ok: false, error: String((e && e.message) || e) }, { status: 500 });

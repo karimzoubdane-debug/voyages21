@@ -1,7 +1,7 @@
 // POST /api/credit/summarize — résumé d'un document pour le dossier de crédit.
 // Corps : { text:string, name?:string }
 import { NextResponse } from 'next/server';
-import { getClient, runMessages, textFrom } from '../_lib.js';
+import { getClient, runMessages, textFrom, pickModel } from '../_lib.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -31,6 +31,7 @@ export async function POST(request) {
     const msg = await runMessages(client, {
       system: SYSTEM,
       max_tokens: 4000,
+      model: pickModel(body),
       messages: [{ role: 'user', content: 'Document « ' + name + ' » à résumer :\n\n' + text }],
     });
     return NextResponse.json({ ok: true, text: textFrom(msg) });

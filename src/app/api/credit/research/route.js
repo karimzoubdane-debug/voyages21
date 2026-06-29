@@ -1,7 +1,7 @@
 // POST /api/credit/research — recherche web (sources publiques) + synthèse.
 // Corps : { query:string }
 import { NextResponse } from 'next/server';
-import { getClient, runMessages, textFrom, WEB_SEARCH } from '../_lib.js';
+import { getClient, runMessages, textFrom, pickModel, webSearchFor } from '../_lib.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -27,10 +27,12 @@ export async function POST(request) {
   const query = (body.query || '').toString().slice(0, 2000);
   if (!query.trim()) return NextResponse.json({ ok: false, error: 'Question vide.' }, { status: 400 });
   try {
+    const model = pickModel(body);
     const msg = await runMessages(client, {
       system: SYSTEM,
-      tools: [WEB_SEARCH],
+      tools: [webSearchFor(model)],
       max_tokens: 8000,
+      model: model,
       messages: [{ role: 'user', content: query }],
     });
     return NextResponse.json({ ok: true, text: textFrom(msg) });

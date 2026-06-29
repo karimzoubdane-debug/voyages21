@@ -2,8 +2,21 @@
 // La clé se configure en variable d'environnement Vercel : ANTHROPIC_API_KEY.
 import Anthropic from '@anthropic-ai/sdk';
 
-export const MODEL = process.env.ANTHROPIC_MODEL || 'claude-opus-4-8';
-export const WEB_SEARCH = { type: 'web_search_20260209', name: 'web_search' };
+// Modèle par défaut : Sonnet 4.6 (bon rapport qualité/prix). Surchargé par
+// la variable ANTHROPIC_MODEL ou par le modèle choisi dans l'app.
+export const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+export const ALLOWED = ['claude-sonnet-4-6', 'claude-opus-4-8', 'claude-haiku-4-5'];
+
+// Choisit le modèle demandé par le client s'il est autorisé, sinon le défaut.
+export function pickModel(body) {
+  var m = body && body.model;
+  return ALLOWED.indexOf(m) >= 0 ? m : MODEL;
+}
+// Outil de recherche web adapté au modèle (filtrage dynamique sur Opus/Sonnet récents).
+export function webSearchFor(model) {
+  var advanced = /opus-4|sonnet-4-6/.test(model || '');
+  return { type: advanced ? 'web_search_20260209' : 'web_search_20250305', name: 'web_search' };
+}
 
 export function getClient() {
   const key = process.env.ANTHROPIC_API_KEY;
@@ -44,12 +57,12 @@ export function textFrom(message) {
 
 // Exécute une requête Messages, en gérant les continuations 'pause_turn'
 // (boucle des outils serveur comme web_search).
-export async function runMessages(client, { system, messages, tools, max_tokens = 4000 }) {
+export async function runMessages(client, { system, messages, tools, max_tokens = 4000, model = MODEL }) {
   let msgs = messages.slice();
   let last = null;
   for (let i = 0; i < 6; i++) {
     last = await client.messages.create({
-      model: MODEL,
+      model: model,
       max_tokens,
       thinking: { type: 'adaptive' },
       ...(system ? { system } : {}),
