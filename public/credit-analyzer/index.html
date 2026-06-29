@@ -34,6 +34,7 @@
   <button class="tab" data-tab="eligibilite">3 · Éligibilité crédit</button>
   <button class="tab" data-tab="documents">4 · Documents &amp; notes</button>
   <button class="tab" data-tab="assistant">5 · Assistant</button>
+  <button class="tab" data-tab="veille">6 · Veille &amp; marché</button>
 </nav>
 
 <main class="wrap">
@@ -157,9 +158,9 @@
   <!-- 5. ASSISTANT -->
   <section class="panel" id="panel-assistant">
     <div class="card">
-      <h3>Assistant crédit</h3>
-      <div class="sub">Pose une question d'éligibilité ou sur les chiffres. Ex : « Éligible à un CMT 7 ans, différé 1 an, taux 6 % ? »</div>
-      <div class="banner" id="aiBanner">Mode <b>déterministe</b> actif (moteur de règles bancaires). Le chat conversationnel complet s'activera dès qu'une clé API sera connectée.</div>
+      <h3>Assistant crédit — analyste senior</h3>
+      <div class="sub">Discute la décision : l'assistant raisonne comme un <b>analyste crédit senior</b>, pose les questions d'instruction et rend un avis motivé. Ex : « Éligible à un CMT 7 ans, différé 1 an, taux 6 % ? »</div>
+      <div class="banner" id="aiBanner">L'assistant tente d'abord l'<b>IA (analyste senior)</b> ; si la clé API n'est pas configurée côté serveur, il répond via le <b>moteur de règles</b> déterministe.</div>
       <div class="chat">
         <div class="chat-log" id="chatLog"></div>
         <div class="suggest" id="suggest"></div>
@@ -168,6 +169,41 @@
           <button class="btn gold" id="chatSend">Envoyer</button>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 6. VEILLE & MARCHÉ (Bloc 2) -->
+  <section class="panel" id="panel-veille">
+    <div class="banner">
+      <b>Bloc 2 — Veille & marché (IA).</b> Brief d'actualité éco/finance, recherche web sur <b>sources publiques</b>, et
+      résumé de documents. Nécessite la clé API configurée côté serveur. Pour un article auquel tu es abonné : colle son texte
+      dans « Résumé de document ».
+    </div>
+    <div class="card">
+      <h3>📰 Brief du jour — actualité éco &amp; finance</h3>
+      <div class="sub">Titres + descriptions (≤ 5 phrases), Maroc &amp; international, à partir de sources publiques.</div>
+      <div class="chat-in">
+        <input id="briefFocus" placeholder="Focus optionnel (ex : taux Bank Al-Maghrib, tourisme, change…)" autocomplete="off">
+        <button class="btn gold" id="briefBtn">Générer le brief</button>
+      </div>
+      <div id="briefOut" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h3>🔎 Recherche web</h3>
+      <div class="sub">Question marché / secteur / entreprise → synthèse sourcée.</div>
+      <div class="chat-in">
+        <input id="researchIn" placeholder="Ex : situation du secteur du tourisme au Maroc" autocomplete="off">
+        <button class="btn gold" id="researchBtn">Rechercher</button>
+      </div>
+      <div id="researchOut" class="interp" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h3>📄 Résumé de document</h3>
+      <div class="sub">Choisis un document importé (onglet Documents) ou colle un texte (ex : article de presse).</div>
+      <select id="docPick" style="width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-size:14px;margin-bottom:8px"></select>
+      <textarea class="notes" id="docPaste" placeholder="…ou colle ici le texte d'un article / document à résumer"></textarea>
+      <div style="margin-top:8px"><button class="btn gold" id="summarizeBtn">Résumer</button></div>
+      <div id="summarizeOut" style="margin-top:12px"></div>
     </div>
   </section>
 

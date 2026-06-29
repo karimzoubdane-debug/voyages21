@@ -351,6 +351,7 @@
     Array.prototype.forEach.call(list.querySelectorAll('[data-doc]'), function (b) {
       b.addEventListener('click', function () { documents.splice(+b.dataset.doc, 1); renderDocuments(); });
     });
+    refreshDocPick();
   }
   function addFiles(files) {
     Array.prototype.forEach.call(files, function (file) {
@@ -518,20 +519,95 @@
 
   function pushMsg(text, who) {
     var log = $('chatLog'); var m = el('div', 'msg ' + who); m.textContent = text; log.appendChild(m); log.scrollTop = log.scrollHeight;
+    return m;
+  }
+  // Contexte chiffré transmis à l'analyste IA
+  function buildContext() {
+    var cur = ref(), prev = prevRef(); if (!cur) return {};
+    var r = cur.r, cap = E.termCapacity(cur, config, { taux: config.tauxDefaut });
+    var fc = E.evalFaciliteCaisse(cur, config), le = E.evalLeasing(cur, config), af = E.evalAffacturage(cur, config);
+    var syn = E.buildSynthese(results, config);
+    function r2(x) { return (x == null || !isFinite(x)) ? null : Math.round(x * 100) / 100; }
+    function ri(x) { return (x == null || !isFinite(x)) ? null : Math.round(x); }
+    var d7 = (cap.parDuree.filter(function (p) { return p.duree === 7; })[0] || {});
+    return {
+      societe: state.societe, exercice: cur.annee, exercicePrecedent: prev ? prev.annee : null,
+      scoreSolidite: E.scoreSante(cur, config, prev),
+      masses: { FDR: ri(r.FDR), BFR: ri(r.BFR), TN: ri(r.TN), EBITDA: ri(r.EBITDA), CAF: ri(r.caf), horsBilan: ri(r.horsBilan) },
+      ratios: { autonomie: r2(r.autonomie), gearing: r2(r.gearing), netGearing: r2(r.netGearing), detteCaf_annees: r2(r.detteCaf), detteNetteEbitda: r2(r.detteNetteEbitda), dscr: r2(r.dscr), liquiditeGenerale: r2(r.liquiditeGenerale), margeNette: r2(r.margeNette), roe: r2(r.roe), croissanceCA: r2(r.croissanceCA), bfrJoursCA: r2(r.bfrJoursCA), poidsPersonnelVA: r2(r.poidsPersonnel) },
+      capaciteEndettement: { detteCafActuel_annees: r2(cap.detteCafActuel), additionnel_3xCAF: ri(cap.stockMaxAdd), additionnel_4xCAF: ri(cap.stockMaxAddHard), max_7ans: ri(d7.max) },
+      faciliteCaisse: { verdict: fc.verdict, max: ri(fc.max) },
+      leasing: { verdict: le.verdict, max: ri(le.max) },
+      affacturage: { verdict: af.verdict, max: ri(af.max), reserve: af.reserve || null },
+      forces: syn.forces, vigilances: syn.vigilances, unite: 'DH'
+    };
+  }
+  var convo = [];
+  function postJSON(url, body) {
+    return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok || !j.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); });
+  }
+  function aiAnswer(q) {
+    return postJSON('/api/credit/chat', { messages: convo, context: buildContext(), notes: state.notes })
+      .then(function (j) { if (!j.text) throw new Error('réponse vide'); return j.text; });
+  }
+  // Point d'entrée unique : tente l'IA (analyste senior), repli déterministe.
+  function ask(q) {
+    convo.push({ role: 'user', content: q });
+    return aiAnswer(q).then(function (t) { convo.push({ role: 'assistant', content: t }); return t; },
+      function (e) {
+        var t = answer(q) + '\n\n— (réponse du moteur de règles ; IA indisponible : ' + (e.message || e) + ')';
+        convo.push({ role: 'assistant', content: answer(q) }); return t;
+      });
   }
   function sendChat() {
     var inp = $('chatInput'); var q = inp.value.trim(); if (!q) return;
     pushMsg(q, 'user'); inp.value = '';
-    setTimeout(function () { pushMsg(answer(q), 'bot'); }, 120);
+    var bot = pushMsg('…', 'bot');
+    ask(q).then(function (t) { bot.textContent = t; $('chatLog').scrollTop = $('chatLog').scrollHeight; });
   }
-  // Champ de discussion présent dans chaque onglet (même moteur, historisé dans l'Assistant)
+  // Champ de discussion présent dans chaque onglet (historisé dans l'Assistant)
   function discussSend(key) {
     var inp = $('discussIn-' + key); if (!inp) return;
     var q = inp.value.trim(); if (!q) return; inp.value = '';
-    var a = answer(q);
-    var box = $('discussAns-' + key);
-    if (box) { box.innerHTML += '<div class="msg user">' + esc(q) + '</div><div class="msg bot">' + esc(a) + '</div>'; box.scrollTop = box.scrollHeight; }
-    pushMsg(q, 'user'); pushMsg(a, 'bot');
+    var box = $('discussAns-' + key), bot = null;
+    if (box) { box.appendChild(el('div', 'msg user', esc(q))); bot = el('div', 'msg bot', '…'); box.appendChild(bot); box.scrollTop = box.scrollHeight; }
+    pushMsg(q, 'user'); var botMain = pushMsg('…', 'bot');
+    ask(q).then(function (t) { if (bot) { bot.textContent = t; box.scrollTop = box.scrollHeight; } botMain.textContent = t; });
+  }
+  // ---------------- Bloc 2 : Veille & marché (IA) ----------------
+  function refreshDocPick() {
+    var sel = $('docPick'); if (!sel) return;
+    sel.innerHTML = '<option value="">— choisir un document importé —</option>' +
+      documents.map(function (d, i) { return '<option value="' + i + '"' + (d.text ? '' : ' disabled') + '>' + esc(d.name) + (d.text ? '' : ' (texte non extrait)') + '</option>'; }).join('');
+  }
+  function runResearch() {
+    var q = $('researchIn').value.trim(); if (!q) return;
+    var out = $('researchOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Recherche en cours…';
+    postJSON('/api/credit/research', { query: q }).then(function (j) { out.textContent = j.text || '(vide)'; },
+      function (e) { out.textContent = '⚠ ' + (e.message || e); });
+  }
+  function runBrief() {
+    var out = $('briefOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Génération du brief…';
+    postJSON('/api/credit/brief', { focus: $('briefFocus').value.trim() }).then(function (j) {
+      if (j.items && j.items.length) {
+        out.style.whiteSpace = 'normal';
+        out.innerHTML = j.items.map(function (it) {
+          return '<div style="border-left:3px solid var(--gold);padding:6px 12px;margin-bottom:10px;background:#fff;border-radius:8px">' +
+            '<b style="color:var(--green)">' + esc(it.titre) + '</b><div class="interp" style="margin-top:4px;white-space:pre-wrap">' + esc(it.description) + '</div></div>';
+        }).join('');
+      } else { out.textContent = j.text || '(vide)'; }
+    }, function (e) { out.textContent = '⚠ ' + (e.message || e); });
+  }
+  function runSummarize() {
+    var sel = $('docPick'), paste = $('docPaste').value.trim(), text = paste, name = 'texte collé';
+    if (!text && sel && sel.value !== '') { var d = documents[+sel.value]; if (d) { text = d.text || ''; name = d.name; } }
+    var out = $('summarizeOut'); out.style.whiteSpace = 'pre-wrap';
+    if (!text) { out.textContent = 'Choisis un document (avec texte extrait) ou colle un texte.'; return; }
+    out.textContent = 'Résumé en cours…';
+    postJSON('/api/credit/summarize', { text: text, name: name }).then(function (j) { out.textContent = j.text; },
+      function (e) { out.textContent = '⚠ ' + (e.message || e); });
   }
 
   // ---------------- Export rapport ----------------
@@ -674,6 +750,7 @@
     if (name === 'analyse') renderAnalyse();
     if (name === 'eligibilite') renderEligibilite();
     if (name === 'documents') renderDocuments();
+    if (name === 'veille') refreshDocPick();
   }
   function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(function () { t.classList.remove('show'); }, 2600); }
 
@@ -706,6 +783,11 @@
     ['cdDuree', 'cdTaux', 'cdIS', 'cdCroissance', 'cdMarge', 'cdInvest', 'cdDiv'].forEach(function (id) { $(id).addEventListener('input', runCDSD); });
     $('chatSend').addEventListener('click', sendChat);
     $('chatInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') sendChat(); });
+    // Bloc 2 — Veille & marché
+    $('researchBtn').addEventListener('click', runResearch);
+    $('researchIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') runResearch(); });
+    $('briefBtn').addEventListener('click', runBrief);
+    $('summarizeBtn').addEventListener('click', runSummarize);
     // champs de discussion par onglet
     Array.prototype.forEach.call(document.querySelectorAll('[data-discuss]'), function (b) {
       var key = b.dataset.discuss;
