@@ -524,6 +524,15 @@
     pushMsg(q, 'user'); inp.value = '';
     setTimeout(function () { pushMsg(answer(q), 'bot'); }, 120);
   }
+  // Champ de discussion présent dans chaque onglet (même moteur, historisé dans l'Assistant)
+  function discussSend(key) {
+    var inp = $('discussIn-' + key); if (!inp) return;
+    var q = inp.value.trim(); if (!q) return; inp.value = '';
+    var a = answer(q);
+    var box = $('discussAns-' + key);
+    if (box) { box.innerHTML += '<div class="msg user">' + esc(q) + '</div><div class="msg bot">' + esc(a) + '</div>'; box.scrollTop = box.scrollHeight; }
+    pushMsg(q, 'user'); pushMsg(a, 'bot');
+  }
 
   // ---------------- Export rapport ----------------
   function buildReport() {
@@ -697,6 +706,13 @@
     ['cdDuree', 'cdTaux', 'cdIS', 'cdCroissance', 'cdMarge', 'cdInvest', 'cdDiv'].forEach(function (id) { $(id).addEventListener('input', runCDSD); });
     $('chatSend').addEventListener('click', sendChat);
     $('chatInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') sendChat(); });
+    // champs de discussion par onglet
+    Array.prototype.forEach.call(document.querySelectorAll('[data-discuss]'), function (b) {
+      var key = b.dataset.discuss;
+      b.addEventListener('click', function () { discussSend(key); });
+      var inp = $('discussIn-' + key);
+      if (inp) inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') discussSend(key); });
+    });
     // suggestions
     var sugg = ['CMT 800 000 sur 7 ans, différé 1 an, taux 6 % ?', 'Montant max d\'une facilité de caisse ?', 'La société est-elle solide ?', 'Explique le BFR'];
     var sc = $('suggest'); sugg.forEach(function (q) { var b = el('button', null, esc(q)); b.addEventListener('click', function () { $('chatInput').value = q; sendChat(); }); sc.appendChild(b); });

@@ -54,10 +54,18 @@
         CF = num(ex.chargesFinancieres), PERS = num(ex.chargesPersonnel),
         ACH = num(ex.achats);
 
+    // -- Retraitements hors-bilan (méthode banque) --
+    // EENE (effets escomptés non échus) : réintégrés en créances clients (actif
+    //   circulant) ET en concours bancaires court terme (trésorerie passif).
+    // Crédit-bail hors bilan : l'encours est réintégré en immobilisations ET en
+    //   dettes financières (l'actif loué et son financement).
+    var EENE = num(ex.eene), CBHB = num(ex.creditBailHorsBilan);
+    AI += CBHB; DF += CBHB; AC += EENE; CLI += EENE; TP += EENE;
+
     var FP = (ex.financementPermanent != null && ex.financementPermanent !== '')
-              ? num(ex.financementPermanent) : (CP + DF + PROV);
+              ? num(ex.financementPermanent) + CBHB : (CP + DF + PROV);
     var totalBilan = (ex.totalBilan != null && ex.totalBilan !== '')
-              ? num(ex.totalBilan) : (AI + AC + TA);
+              ? num(ex.totalBilan) + EENE + CBHB : (AI + AC + TA);
     var FDR = FP - AI, BFR = AC - PC, TN = TA - TP;
     var EBITDA = EBE > 0 ? EBE : (REX + DOT);
     var detteNette = DF + TP - TA;
@@ -67,6 +75,7 @@
 
     return {
       FP: FP, totalBilan: totalBilan, totalDettes: totalDettes,
+      horsBilan: EENE + CBHB, eene: EENE, creditBailHB: CBHB,
       FDR: FDR, BFR: BFR, TN: TN, EBITDA: EBITDA, detteNette: detteNette,
       // Structure & solvabilité
       autonomie: safeDiv(CP, totalBilan),
@@ -367,6 +376,8 @@
       if (r.dscr >= cfg.dscrMin) forces.push('Service de la dette bien couvert (EBE / service = ' + ratio(r.dscr) + '×).');
       else if (r.dscr < cfg.dscrHard) vig.push('Couverture du service de la dette faible (EBE / service = ' + ratio(r.dscr) + '×).');
     }
+    if (num(r.horsBilan) > 0)
+      vig.push('Engagements hors-bilan réintégrés (' + dh(r.horsBilan) + ' : crédit-bail ' + dh(r.creditBailHB) + ' + EENE ' + dh(r.eene) + ') — endettement réel alourdi.');
     // Vigilances dynamiques
     if (prev && num(r.TN) < num(prev.r.TN) && num(r.TN) < num(r.BFR) * 0.1)
       vig.push('Trésorerie nette en forte baisse (' + dh(prev.r.TN) + ' → ' + dh(r.TN) + ') : le BFR a absorbé le fonds de roulement.');

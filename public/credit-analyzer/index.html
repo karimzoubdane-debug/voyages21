@@ -67,6 +67,12 @@
         <div class="small muted" style="margin-top:8px">Ces seuils pilotent l'interprétation et les verdicts. Valeurs par défaut = pratique bancaire courante (Maroc).</div>
       </details>
     </div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question sur la saisie ou le dossier ? Réponse immédiate, historisée dans l'onglet Assistant.</div>
+      <div class="discuss-ans" id="discussAns-dossier"></div>
+      <div class="chat-in"><input id="discussIn-dossier" placeholder="Votre question…" autocomplete="off"><button class="btn gold" data-discuss="dossier">Envoyer</button></div>
+    </div>
   </section>
 
   <!-- 2. ANALYSE -->
@@ -74,6 +80,12 @@
     <div class="grid cols-4" id="kpiRow" style="margin-bottom:6px"></div>
     <div class="card"><h3>Synthèse — santé financière</h3><div class="sub" id="synthSub"></div><div class="synth" id="synthBox"></div></div>
     <div class="card"><h3>Batterie de ratios</h3><div class="sub">Comparaison sur 2 exercices, position vs norme bancaire, et lecture.</div><div id="ratiosWrap"></div></div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question sur un ratio ou la synthèse ?</div>
+      <div class="discuss-ans" id="discussAns-analyse"></div>
+      <div class="chat-in"><input id="discussIn-analyse" placeholder="Ex : explique le DSCR…" autocomplete="off"><button class="btn gold" data-discuss="analyse">Envoyer</button></div>
+    </div>
   </section>
 
   <!-- 3. ELIGIBILITE -->
@@ -110,6 +122,12 @@
       <div id="cdsdResult" style="margin-top:14px"></div>
       <div style="overflow-x:auto;margin-top:8px"><table id="cdsdTable"></table></div>
     </div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question d'éligibilité ? Ex : « CMT 800 000 sur 7 ans à 6 % ? »</div>
+      <div class="discuss-ans" id="discussAns-eligibilite"></div>
+      <div class="chat-in"><input id="discussIn-eligibilite" placeholder="Votre question d'éligibilité…" autocomplete="off"><button class="btn gold" data-discuss="eligibilite">Envoyer</button></div>
+    </div>
   </section>
 
   <!-- 4. DOCUMENTS -->
@@ -127,6 +145,12 @@
       <h3>Notes pour l'analyse</h3>
       <div class="sub">Donne-moi des informations utiles : contexte, projet de financement, particularités du secteur, qualité des clients/fournisseurs…</div>
       <textarea class="notes" id="notes" placeholder="Ex : la société prépare l'achat d'un local (2,5 M DH). Clientèle MICE corporate à 60 jours. Saisonnalité forte en été…"></textarea>
+    </div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question à partir des documents ou des notes ?</div>
+      <div class="discuss-ans" id="discussAns-documents"></div>
+      <div class="chat-in"><input id="discussIn-documents" placeholder="Votre question…" autocomplete="off"><button class="btn gold" data-discuss="documents">Envoyer</button></div>
     </div>
   </section>
 

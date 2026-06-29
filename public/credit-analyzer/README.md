@@ -11,8 +11,10 @@ Application web **autonome** (HTML/CSS/JS, sans backend, sans dépendance) qui, 
 - propose un **simulateur** CMT/CLT (montant, durée, différé, taux) ;
 - calcule la **capacité d'endettement par la méthode banque** : cash disponible pour le service de la
   dette (CDSD = EBE − investissement − Δ BFR − IS − dividendes) **actualisé** sur la durée ;
+- applique les **retraitements hors-bilan** (méthode banque) : **crédit-bail** (encours réintégré en
+  immobilisations + dettes) et **EENE** (effets escomptés non échus réintégrés en clients + concours CT) ;
 - permet d'**importer des documents** et d'écrire des **notes** pour l'étude ;
-- intègre un **assistant** qui répond aux questions d'éligibilité.
+- intègre un **assistant** (champ de **discussion présent dans chaque onglet**, historisé) qui répond aux questions d'éligibilité.
 
 Ratios « vue banque » inclus (inspirés d'un modèle d'analyse crédit bancaire) : **DSCR** (EBE / service de
 la dette), **net gearing** & **leverage** (nets d'incorporels), **ROA**, **rotation de l'actif**, **rotation

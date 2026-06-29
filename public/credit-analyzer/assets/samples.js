@@ -34,7 +34,9 @@ window.CREDIT_FIELDS = [
     { key: 'provisionsDurables',   label: 'Provisions durables', hint: 'risques & charges stables' },
     { key: 'immoIncorporelles',    label: 'Immobilisations incorporelles', hint: 'pour le gearing net d\'incorporels' },
     { key: 'creditBail',           label: 'Annuités de crédit-bail', hint: 'incluses dans le service de la dette' },
-    { key: 'echeanceDLMT',         label: 'Échéance DLMT (annuité en capital)', hint: 'vide = estimée par la variation des dettes' }
+    { key: 'echeanceDLMT',         label: 'Échéance DLMT (annuité en capital)', hint: 'vide = estimée par la variation des dettes' },
+    { key: 'creditBailHorsBilan',  label: 'Crédit-bail hors bilan (encours)', hint: 'réintégré en immobilisations + dettes financières' },
+    { key: 'eene',                 label: 'Effets escomptés non échus (EENE)', hint: 'réintégrés en créances clients + concours court terme' }
   ]}
 ];
 
