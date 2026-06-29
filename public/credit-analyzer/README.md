@@ -9,8 +9,15 @@ Application web **autonome** (HTML/CSS/JS, sans backend, sans dépendance) qui, 
 - rend un **verdict par ligne de crédit** — **CMT/CLT**, **facilité de caisse**, **leasing**, **affacturage** —
   *favorable / sous réserves / défavorable*, avec le **pourquoi** et le **montant maximum** (selon durée/taux) ;
 - propose un **simulateur** CMT/CLT (montant, durée, différé, taux) ;
+- calcule la **capacité d'endettement par la méthode banque** : cash disponible pour le service de la
+  dette (CDSD = EBE − investissement − Δ BFR − IS − dividendes) **actualisé** sur la durée ;
 - permet d'**importer des documents** et d'écrire des **notes** pour l'étude ;
 - intègre un **assistant** qui répond aux questions d'éligibilité.
+
+Ratios « vue banque » inclus (inspirés d'un modèle d'analyse crédit bancaire) : **DSCR** (EBE / service de
+la dette), **net gearing** & **leverage** (nets d'incorporels), **ROA**, **rotation de l'actif**, **rotation
+des stocks**, en plus des ratios de structure / liquidité / rentabilité. Deux dossiers d'exemple fournis :
+**Voyages 21** et **La Maison du Fil** (cas réel issu d'un modèle bancaire).
 
 > Hypothèse de travail : **les garanties sont supposées déjà prises** — l'étude porte uniquement sur la
 > **capacité financière** de la société à honorer les crédits.

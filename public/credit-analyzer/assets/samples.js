@@ -29,6 +29,12 @@ window.CREDIT_FIELDS = [
     { key: 'resultatNet',          label: 'Résultat net' },
     { key: 'caf',                  label: 'CAF (capacité d\'autofinancement)' },
     { key: 'achats',               label: 'Achats consommés', hint: 'pour les délais fournisseurs' }
+  ]},
+  { group: 'Retraitements & service de la dette (optionnel)', rows: [
+    { key: 'provisionsDurables',   label: 'Provisions durables', hint: 'risques & charges stables' },
+    { key: 'immoIncorporelles',    label: 'Immobilisations incorporelles', hint: 'pour le gearing net d\'incorporels' },
+    { key: 'creditBail',           label: 'Annuités de crédit-bail', hint: 'incluses dans le service de la dette' },
+    { key: 'echeanceDLMT',         label: 'Échéance DLMT (annuité en capital)', hint: 'vide = estimée par la variation des dettes' }
   ]}
 ];
 
@@ -50,5 +56,38 @@ window.SAMPLE_V21 = {
       capitauxPropres: 1212863.97, dettesFinancement: 325226.64, financementPermanent: 1538090.61,
       passifCirculant: 1280393.51, tresoPassif: 116005.93, totalBilan: 2934490.05,
       clients: 454315.41, fournisseurs: 171969.00, stocks: 0 }
+  ]
+};
+
+// Cas réel (modèle d'analyse crédit d'une banque). Montants en DH (= KF × 1000).
+// Société en redressement : fonds propres négatifs en 2016-2017 puis positifs en 2018.
+window.SAMPLE_MAISONDUFIL = {
+  societe: 'LA MAISON DU FIL',
+  notes: "Cas issu d'un modèle d'analyse crédit bancaire (groupe Zenata). Affaire de négoce textile, fortement endettée (dettes Groupe & associés), en redressement : fonds propres négatifs en 2016 et 2017, repassés positifs en 2018. Montants convertis en DH (× 1000).",
+  exercices: [
+    { annee: 2016, ca: 9538400, va: -383200, ebe: -383200, resultatExploitation: -384200,
+      dotationsExploitation: 1000, resultatNet: -834000, caf: -833000, chargesFinancieres: 134200,
+      chargesPersonnel: 0, achats: 9835000,
+      actifImmobilise: 3500, actifCirculant: 16590800, tresoActif: 29300,
+      capitauxPropres: -937200, dettesFinancement: 15742900, provisionsDurables: 93100,
+      passifCirculant: 1724800, tresoPassif: 0, totalBilan: 16623600,
+      clients: 3215500, fournisseurs: 976100, stocks: 9421600,
+      immoIncorporelles: 3500, creditBail: 0, echeanceDLMT: 0 },
+    { annee: 2017, ca: 13694500, va: 710300, ebe: 710300, resultatExploitation: 709300,
+      dotationsExploitation: 1000, resultatNet: 714000, caf: 715000, chargesFinancieres: 16600,
+      chargesPersonnel: 0, achats: 12943300,
+      actifImmobilise: 2500, actifCirculant: 8282500, tresoActif: 956800,
+      capitauxPropres: -223200, dettesFinancement: 6861300, provisionsDurables: 0,
+      passifCirculant: 2603700, tresoPassif: 0, totalBilan: 9241800,
+      clients: 2698600, fournisseurs: 1852600, stocks: 3170000,
+      immoIncorporelles: 2500, creditBail: 0, echeanceDLMT: 0 },
+    { annee: 2018, ca: 15982000, va: 1185800, ebe: 1185800, resultatExploitation: 1184800,
+      dotationsExploitation: 1000, resultatNet: 863900, caf: 864900, chargesFinancieres: 54000,
+      chargesPersonnel: 0, achats: 14626200,
+      actifImmobilise: 2000, actifCirculant: 8019000, tresoActif: 48000,
+      capitauxPropres: 640700, dettesFinancement: 6861300, provisionsDurables: 0,
+      passifCirculant: 567000, tresoPassif: 0, totalBilan: 8069000,
+      clients: 3737000, fournisseurs: 515000, stocks: 1712000,
+      immoIncorporelles: 2000, creditBail: 0, echeanceDLMT: 0 }
   ]
 };

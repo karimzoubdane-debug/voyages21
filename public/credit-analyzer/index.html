@@ -21,7 +21,8 @@
       <span class="n" id="scoreNum">—</span>
       <span class="l">Solidité<br>structurelle</span>
     </div>
-    <button class="btn ghost sm" id="btnExample">Charger l'exemple</button>
+    <button class="btn ghost sm" id="btnExample" title="Charger l'exemple Voyages 21">Ex. V21</button>
+    <button class="btn ghost sm" id="btnExample2" title="Charger l'exemple La Maison du Fil (modèle banque)">Ex. Maison du Fil</button>
     <button class="btn ghost sm" id="btnNew">Nouveau</button>
     <button class="btn gold sm" id="btnExport" title="Exporter toute l'analyse en Word (.doc)">⬇ Exporter Word</button>
   </div>
@@ -93,6 +94,21 @@
       </div>
       <div id="simResult" style="margin-top:14px"></div>
       <div style="overflow-x:auto;margin-top:8px"><table id="maxParDuree"></table></div>
+    </div>
+    <div class="card">
+      <h3>Capacité d'endettement — méthode banque</h3>
+      <div class="sub">Cash disponible pour le service de la dette (CDSD) projeté puis <b>actualisé</b> : <code>EBE − Investissement − Variation BFR − IS − Dividendes</code>, sur la durée. (Inspiré du modèle bancaire fourni.)</div>
+      <div class="grid cols-4" id="cdsdInputs">
+        <div class="field"><label>Durée (ans)</label><input id="cdDuree" type="number" value="7"></div>
+        <div class="field"><label>Taux (%)</label><input id="cdTaux" type="number" step="0.1" value="6.5"></div>
+        <div class="field"><label>Taux IS (%)</label><input id="cdIS" type="number" step="0.1" value="31"></div>
+        <div class="field"><label>Croissance CA /an (%)</label><input id="cdCroissance" type="number" step="0.1" value="5"></div>
+        <div class="field"><label>Marge EBE (% du CA)</label><input id="cdMarge" type="number" step="0.1" placeholder="auto"></div>
+        <div class="field"><label>Investissement /an (DH)</label><input id="cdInvest" type="number" value="0"></div>
+        <div class="field"><label>Dividendes /an (DH)</label><input id="cdDiv" type="number" value="0"></div>
+      </div>
+      <div id="cdsdResult" style="margin-top:14px"></div>
+      <div style="overflow-x:auto;margin-top:8px"><table id="cdsdTable"></table></div>
     </div>
   </section>
 

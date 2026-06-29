@@ -51,6 +51,8 @@
       ['Structure financière & solvabilité', [
         ['autonomie', 'Autonomie financière', 'pct', 'Capitaux propres / Total bilan', cfg.autonomieMin, cfg.autonomieMin * 0.8, 'high', 'Part des fonds propres : indépendance vis-à-vis des créanciers.'],
         ['gearing', 'Gearing (levier)', 'ratio', 'Dettes financ. / Capitaux propres', cfg.gearingMax, cfg.gearingHard, 'low', 'Endettement à terme rapporté aux fonds propres.'],
+        ['netGearing', 'Net gearing', 'ratio', 'Dettes nettes / Fonds propres nets d\'incorporels', cfg.gearingMax, cfg.gearingHard, 'low', 'Levier net de trésorerie et d\'incorporels (vision banque).'],
+        ['leverage', 'Leverage', 'ratio', 'Total dettes / Fonds propres nets d\'incorporels', 2, 3, 'low', 'Endettement total rapporté aux fonds propres « durs ».'],
         ['endettementGlobal', 'Endettement global', 'pct', 'Total dettes / Total bilan', 0.70, 0.80, 'low', 'Poids de l\'ensemble des dettes.'],
         ['couvertureEmplois', 'Couverture des emplois stables', 'pct', 'Financement perm. / Actif immobilisé', 1, 1, 'high', 'Les ressources stables financent le long terme (FDR>0 si >100 %).'],
         ['solvabilite', 'Solvabilité générale', 'ratio', 'Total actif / Total dettes', 1.5, 1, 'high', 'Capacité de l\'actif à couvrir les dettes.']
@@ -71,6 +73,7 @@
         ['caf', 'CAF', 'dh', 'Résultat net + dotations', null, null, null, 'Cash récurrent dégagé pour rembourser.'],
         ['detteCaf', 'Capacité de remboursement', 'annees', 'Dettes financ. / CAF', cfg.detteCafMax, cfg.detteCafHard, 'low', 'Nombre d\'années de CAF pour solder la dette à terme.'],
         ['detteNetteEbitda', 'Dette nette / EBITDA', 'x', 'Dette nette / EBITDA', cfg.detteNetteEbitdaMax, cfg.detteNetteEbitdaHard, 'low', 'Levier en multiple d\'EBITDA (covenant courant).'],
+        ['dscr', 'Couverture du service de la dette (DSCR)', 'x', 'EBE / (frais fin. + échéance DLMT + crédit-bail)', cfg.dscrMin, cfg.dscrHard, 'high', 'L\'EBE couvre combien de fois le service annuel de la dette.'],
         ['cafSurCA', 'Marge d\'autofinancement', 'pct', 'CAF / CA', null, null, null, 'Capacité à générer du cash sur le CA.']
       ]],
       ['Rentabilité & activité', [
@@ -79,10 +82,13 @@
         ['margeExploitation', 'Marge d\'exploitation', 'pct', 'Résultat exploit. / CA', 0, 0, 'high', 'Rentabilité opérationnelle.'],
         ['margeNette', 'Marge nette', 'pct', 'Résultat net / CA', 0, 0, 'high', 'Rentabilité finale.'],
         ['roe', 'Rentabilité financière (ROE)', 'pct', 'Résultat net / Capitaux propres', null, null, null, 'Rendement des fonds propres.'],
+        ['roa', 'Rentabilité économique (ROA)', 'pct', 'Résultat net / Total actif', null, null, null, 'Rendement de l\'actif engagé.'],
+        ['rotationActif', 'Rotation de l\'actif', 'x', 'CA / Total actif', null, null, null, 'Intensité d\'utilisation de l\'actif.'],
         ['tauxVA', 'Taux de valeur ajoutée', 'pct', 'VA / CA', null, null, null, 'Création de valeur propre.'],
         ['poidsPersonnel', 'Poids de la masse salariale', 'pct', 'Charges personnel / VA', 0.60, 0.75, 'low', 'Part de la VA absorbée par les salaires.']
       ]],
       ['Rotation / délais', [
+        ['rotationStocks', 'Rotation des stocks', 'jours', 'Stocks / CA × 360', null, null, null, 'Durée moyenne d\'écoulement des stocks.'],
         ['delaiClients', 'Délai clients', 'jours', 'Clients / CA TTC × 360', null, null, null, 'Délai moyen d\'encaissement.'],
         ['delaiFournisseurs', 'Délai fournisseurs', 'jours', 'Fournisseurs / Achats TTC × 360', null, null, null, 'Délai moyen de paiement.']
       ]]
@@ -275,6 +281,7 @@
       base: 'quotité ' + Math.round(af.quotite * 100) + '% des créances clients', reasons: af.raisons, note: af.reserve });
     $('verdicts').innerHTML = out;
     runSimulator();
+    runCDSD();
   }
   function runSimulator() {
     var cur = ref(); if (!cur) return;
@@ -295,6 +302,38 @@
     cap.parDuree.forEach(function (p) {
       var ac = p.annuite / cap.CAF;
       tb.appendChild(el('tr', null, '<td>' + p.duree + ' ans</td><td class="num"><b>' + F.dh(p.max) + '</b></td><td class="num">' + F.dh(p.annuite) + '</td><td class="num">' + F.pct(ac) + '</td>'));
+    });
+    t.appendChild(tb);
+  }
+  function runCDSD() {
+    var cur = ref(); if (!cur) return;
+    var margeVal = $('cdMarge').value.trim();
+    var opts = {
+      duree: E.num($('cdDuree').value), taux: E.num($('cdTaux').value) / 100,
+      tauxIS: E.num($('cdIS').value) / 100, croissance: E.num($('cdCroissance').value) / 100,
+      invest: E.num($('cdInvest').value), dividendes: E.num($('cdDiv').value)
+    };
+    if (margeVal !== '') opts.margeEBE = E.num(margeVal) / 100;
+    var c = E.capaciteEndettementCDSD(cur, config, opts);
+    $('cdsdResult').innerHTML = verdictBlock({
+      ligne: 'Capacité d\'endettement — méthode banque (' + c.n + ' ans)',
+      verdict: c.capaciteAdd > 0 ? 'favorable' : 'reserves',
+      amountLabel: F.dh(c.capacite) + ' au total',
+      base: 'actualisation après IS ' + F.pct(c.Ri) + ' · marge EBE ' + F.pct(c.hyp.margeEBE) + ' · croissance ' + F.pct(c.hyp.croissance),
+      reasons: [
+        { label: 'Capacité totale (VA des cash-flows pour la dette)', value: c.capacite, fmt: 'dh', level: c.capacite > 0 ? 'ok' : 'hard' },
+        { label: 'Dettes financières déjà en place', value: c.DF, fmt: 'dh', level: 'ok' },
+        { label: 'Capacité additionnelle mobilisable', value: c.capaciteAdd, fmt: 'dh', level: c.capaciteAdd > 0 ? 'ok' : 'soft' }
+      ],
+      note: 'Plus rigoureux que « 3× CAF » : tient compte, année par année, de la croissance, du BFR et des investissements.'
+    });
+    var t = $('cdsdTable');
+    t.innerHTML = '<thead><tr><th>Année</th><th class="num">CA</th><th class="num">EBE</th><th class="num">Δ BFR</th><th class="num">IS</th><th class="num">CDSD</th><th class="num">VA du CDSD</th></tr></thead>';
+    var tb = el('tbody');
+    c.rows.forEach(function (row) {
+      tb.appendChild(el('tr', null, '<td>n+' + row.t + '</td><td class="num">' + F.dh(row.ca) + '</td><td class="num">' + F.dh(row.ebe) +
+        '</td><td class="num">' + F.dh(row.dbfr) + '</td><td class="num">' + F.dh(row.is) + '</td><td class="num"><b>' + F.dh(row.cdsd) +
+        '</b></td><td class="num">' + F.dh(row.va) + '</td>'));
     });
     t.appendChild(tb);
   }
@@ -599,6 +638,16 @@
         " → <b style='color:" + vColor(ev.verdict) + "'>" + vLabel(ev.verdict) + "</b>. Annuité " + F.dh(ev.annuite) + ". Plafond pour cette durée ≈ " + F.dh(ev.montantMax) + ".</p>");
       o.push(reasonsUL(ev.raisons.map(function (x) { return { label: x.label, value: x.value, fmt: x.fmt, level: x.level }; })));
     }
+    // Capacité d'endettement — méthode banque (CDSD actualisé)
+    var cdOpts = { duree: E.num($('cdDuree').value), taux: E.num($('cdTaux').value) / 100,
+      tauxIS: E.num($('cdIS').value) / 100, croissance: E.num($('cdCroissance').value) / 100,
+      invest: E.num($('cdInvest').value), dividendes: E.num($('cdDiv').value) };
+    var cdMargeV = $('cdMarge').value.trim(); if (cdMargeV !== '') cdOpts.margeEBE = E.num(cdMargeV) / 100;
+    var cd = E.capaciteEndettementCDSD(cur, config, cdOpts);
+    o.push(secT('Capacité d\'endettement — méthode banque (' + cd.n + ' ans)'));
+    o.push("<p>Cash disponible pour le service de la dette actualisé (après IS, taux " + F.pct(cd.Ri) + ") → <b>capacité totale " + F.dh(cd.capacite) + "</b>, dont <b>" + F.dh(cd.capaciteAdd) + "</b> mobilisables en plus des dettes existantes (" + F.dh(cd.DF) + "). Hypothèses : marge EBE " + F.pct(cd.hyp.margeEBE) + ", croissance " + F.pct(cd.hyp.croissance) + ".</p>");
+    o.push("<table border='1' cellspacing='0' cellpadding='5' style='border-collapse:collapse;width:100%;font-size:10pt'><tr style='background:" + GREENH + ";color:#fff'><td><b>Année</b></td><td align='right'><b>CA</b></td><td align='right'><b>EBE</b></td><td align='right'><b>Δ BFR</b></td><td align='right'><b>IS</b></td><td align='right'><b>CDSD</b></td><td align='right'><b>VA</b></td></tr>" +
+      cd.rows.map(function (row) { return "<tr><td>n+" + row.t + "</td><td align='right'>" + F.dh(row.ca) + "</td><td align='right'>" + F.dh(row.ebe) + "</td><td align='right'>" + F.dh(row.dbfr) + "</td><td align='right'>" + F.dh(row.is) + "</td><td align='right'><b>" + F.dh(row.cdsd) + "</b></td><td align='right'>" + F.dh(row.va) + "</td></tr>"; }).join('') + "</table>");
     // Notes & documents
     if (state.notes) { o.push(secT('Notes')); o.push("<p style='white-space:pre-wrap'>" + hesc(state.notes) + "</p>"); }
     if (documents.length) { o.push(secT('Documents joints')); o.push("<ul>" + documents.map(function (x) { return '<li>' + hesc(x.name) + '</li>'; }).join('') + "</ul>"); }
@@ -634,7 +683,10 @@
       renderDossier(); renderDocuments(); recompute(); showTab('dossier'); toast('Nouveau dossier');
     });
     $('btnExample').addEventListener('click', function () {
-      state = clone(window.SAMPLE_V21); renderDossier(); recompute(); showTab('analyse'); toast('Exemple chargé');
+      state = clone(window.SAMPLE_V21); renderDossier(); renderDocuments(); recompute(); showTab('analyse'); toast('Exemple V21 chargé');
+    });
+    $('btnExample2').addEventListener('click', function () {
+      state = clone(window.SAMPLE_MAISONDUFIL); renderDossier(); renderDocuments(); recompute(); showTab('analyse'); toast('Exemple Maison du Fil chargé');
     });
     $('btnExport').addEventListener('click', function () {
       if (!ref()) { toast('Aucune analyse à exporter'); return; }
@@ -642,6 +694,7 @@
       toast('Analyse exportée (Word)');
     });
     ['simMontant', 'simDuree', 'simDiffere', 'simTaux'].forEach(function (id) { $(id).addEventListener('input', runSimulator); });
+    ['cdDuree', 'cdTaux', 'cdIS', 'cdCroissance', 'cdMarge', 'cdInvest', 'cdDiv'].forEach(function (id) { $(id).addEventListener('input', runCDSD); });
     $('chatSend').addEventListener('click', sendChat);
     $('chatInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') sendChat(); });
     // suggestions

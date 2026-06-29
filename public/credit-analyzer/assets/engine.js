@@ -20,6 +20,9 @@
     annuiteCafHard: 0.65,      // plafond
     detteNetteEbitdaMax: 3.0,  // dette nette / EBITDA (covenant courant)
     detteNetteEbitdaHard: 3.5,
+    dscrMin: 2.0,              // EBE / service de la dette (confortable)
+    dscrHard: 1.3,             // plancher de couverture
+    tauxIS: 0.31,              // impôt sur les sociétés (Maroc) — méthode banque
     liquiditeGenMin: 1.0,      // actif circulant / passif circulant
     fcMoisCA: 1,               // facilité de caisse max = n mois de CA
     fcMoisCAprudent: 0.5,      // ~15 jours de CA
@@ -33,6 +36,9 @@
     return (typeof n === 'number' && isFinite(n)) ? n : 0;
   }
   function safeDiv(a, b) { b = num(b); return b === 0 ? null : num(a) / b; }
+  // Division "à dénominateur positif" : n/d si le dénominateur est <= 0
+  // (fonds propres, CAF ou EBE négatifs => ratio non significatif, comme en banque).
+  function posDiv(a, b) { b = num(b); return b > 0 ? num(a) / b : null; }
 
   // -------- Ratios d'un exercice ----------------------------------------
   function computeRatios(ex, cfg) {
@@ -56,6 +62,7 @@
     var EBITDA = EBE > 0 ? EBE : (REX + DOT);
     var detteNette = DF + TP - TA;
     var totalDettes = totalBilan - CP;
+    var INCORP = num(ex.immoIncorporelles), fpNets = CP - INCORP;
     var caTTC = CA * (1 + cfg.tva), achTTC = ACH * (1 + cfg.tva);
 
     return {
@@ -63,7 +70,9 @@
       FDR: FDR, BFR: BFR, TN: TN, EBITDA: EBITDA, detteNette: detteNette,
       // Structure & solvabilité
       autonomie: safeDiv(CP, totalBilan),
-      gearing: safeDiv(DF, CP),
+      gearing: posDiv(DF, CP),
+      netGearing: posDiv(detteNette, fpNets),
+      leverage: posDiv(totalDettes, fpNets),
       endettementGlobal: safeDiv(totalDettes, totalBilan),
       couvertureEmplois: safeDiv(FP, AI),
       solvabilite: safeDiv(totalBilan, totalDettes),
@@ -76,20 +85,25 @@
       bfrJoursCA: safeDiv(BFR, CA) == null ? null : BFR / CA * 360,
       // Capacité de remboursement
       caf: CAF,
-      detteCaf: safeDiv(DF, CAF),
-      detteNetteEbitda: safeDiv(detteNette, EBITDA),
+      detteCaf: posDiv(DF, CAF),
+      detteNetteEbitda: posDiv(detteNette, EBITDA),
       cafSurCA: safeDiv(CAF, CA),
       couvertureInterets: CF > 0 ? EBITDA / CF : null,
+      dscr: null,         // EBE / service de la dette — rempli au niveau série
+      serviceDette: null, // rempli au niveau série
       // Rentabilité & activité
       margeExploitation: safeDiv(REX, CA),
       margeNette: safeDiv(RN, CA),
       margeEbitda: safeDiv(EBITDA, CA),
-      roe: safeDiv(RN, CP),
+      roe: posDiv(RN, CP),
+      roa: safeDiv(RN, totalBilan),
+      rotationActif: safeDiv(CA, totalBilan),
       tauxVA: safeDiv(VA, CA),
       poidsPersonnel: safeDiv(PERS, VA),
       // Rotation
       delaiClients: caTTC ? CLI / caTTC * 360 : null,
       delaiFournisseurs: achTTC ? FRS / achTTC * 360 : null,
+      rotationStocks: CA ? STK / CA * 360 : null,
       croissanceCA: null // rempli au niveau série
     };
   }
@@ -107,6 +121,16 @@
       var ca0 = num(results[i - 1].input.ca), ca1 = num(results[i].input.ca);
       results[i].r.croissanceCA = ca0 ? (ca1 / ca0 - 1) : null;
     }
+    // DSCR = EBE / service de la dette (frais fin. + échéance DLMT + annuité crédit-bail)
+    results.forEach(function (res, i) {
+      var ex = res.input, r = res.r;
+      var ff = num(ex.chargesFinancieres), cb = num(ex.creditBail);
+      var ech = (ex.echeanceDLMT != null && ex.echeanceDLMT !== '') ? num(ex.echeanceDLMT)
+        : (i > 0 ? Math.max(0, num(results[i - 1].input.dettesFinancement) - num(ex.dettesFinancement)) : 0);
+      var service = ff + ech + cb;
+      r.serviceDette = service;
+      r.dscr = service > 0 ? r.EBITDA / service : null;
+    });
     return results;
   }
 
@@ -146,6 +170,46 @@
       CAF: CAF, DF: DF, detteCafActuel: safeDiv(DF, CAF),
       stockMaxAdd: stockMaxAdd, stockMaxAddHard: stockMaxAddHard,
       budgetAnnuel: budgetAnnuel, taux: taux, parDuree: parDuree
+    };
+  }
+
+  // -------- Capacité d'endettement — MÉTHODE BANQUE (cash-flow actualisé) ----
+  // Reproduit la logique de la feuille "Dette" : pour chaque année on projette
+  // le Cash Disponible pour le Service de la Dette (CDSD) = EBE − Investissement
+  // − Variation du BFR − IS − Dividendes, puis on l'actualise au taux après IS.
+  // La capacité = somme des CDSD actualisés sur la durée.
+  function capaciteEndettementCDSD(ref, cfg, opts) {
+    cfg = cfg || DEFAULT_CONFIG; opts = opts || {};
+    var ex = ref.input, r = ref.r;
+    var CA0 = num(ex.ca);
+    var EBE0 = num(ex.ebe) > 0 ? num(ex.ebe) : num(r.EBITDA);
+    var margeEBE = opts.margeEBE != null ? opts.margeEBE : (CA0 ? EBE0 / CA0 : 0);
+    var g = opts.croissance != null ? opts.croissance : 0;
+    var invest = opts.invest != null ? opts.invest : 0;
+    var dividendes = opts.dividendes != null ? opts.dividendes : 0;
+    var n = opts.duree || 7;
+    var taux = opts.taux != null ? opts.taux : cfg.tauxDefaut;
+    var tIS = opts.tauxIS != null ? opts.tauxIS : cfg.tauxIS;
+    var Ri = taux * (1 - tIS);                  // taux d'actualisation après IS
+    var bfrRatio = CA0 ? num(r.BFR) / CA0 : 0;  // BFR exprimé en % du CA
+    var dot = num(ex.dotationsExploitation), ff = num(ex.chargesFinancieres);
+    var rows = [], capacite = 0, caPrev = CA0;
+    for (var t = 1; t <= n; t++) {
+      var caT = CA0 * Math.pow(1 + g, t);
+      var ebeT = caT * margeEBE;
+      var dbfr = bfrRatio * (caT - caPrev);                 // variation du BFR
+      var isT = tIS * Math.max(0, ebeT - dot - ff);         // IS approché
+      var cdsd = ebeT - invest - dbfr - isT - dividendes;   // cash pour la dette
+      var va = cdsd / Math.pow(1 + Ri, t);
+      capacite += va;
+      rows.push({ t: t, ca: caT, ebe: ebeT, dbfr: dbfr, is: isT, cdsd: cdsd, va: va });
+      caPrev = caT;
+    }
+    var DF = num(ex.dettesFinancement);
+    return {
+      capacite: capacite, capaciteAdd: Math.max(0, capacite - DF),
+      Ri: Ri, n: n, DF: DF, rows: rows,
+      hyp: { margeEBE: margeEBE, croissance: g, invest: invest, dividendes: dividendes, taux: taux, tauxIS: tIS }
     };
   }
 
@@ -299,6 +363,10 @@
       if (r.croissanceCA >= 0) forces.push('Activité en croissance (CA ' + signePct(r.croissanceCA) + ').');
       else vig.push('Chiffre d\'affaires en recul (' + signePct(r.croissanceCA) + ').');
     }
+    if (r.dscr != null) {
+      if (r.dscr >= cfg.dscrMin) forces.push('Service de la dette bien couvert (EBE / service = ' + ratio(r.dscr) + '×).');
+      else if (r.dscr < cfg.dscrHard) vig.push('Couverture du service de la dette faible (EBE / service = ' + ratio(r.dscr) + '×).');
+    }
     // Vigilances dynamiques
     if (prev && num(r.TN) < num(prev.r.TN) && num(r.TN) < num(r.BFR) * 0.1)
       vig.push('Trésorerie nette en forte baisse (' + dh(prev.r.TN) + ' → ' + dh(r.TN) + ') : le BFR a absorbé le fonds de roulement.');
@@ -319,7 +387,7 @@
     function add(cond, w) { max += w; if (cond) s += w; }
     add(num(r.autonomie) >= cfg.autonomieMin, 18);
     add(r.detteCaf != null && r.detteCaf <= cfg.detteCafMax, 18);
-    add(num(r.gearing) <= cfg.gearingMax, 12);
+    add(r.gearing != null && r.gearing <= cfg.gearingMax, 12);
     add(num(r.liquiditeGenerale) >= cfg.liquiditeGenMin, 12);
     add(num(r.margeNette) > 0, 12);
     add(r.detteNetteEbitda != null && r.detteNetteEbitda <= cfg.detteNetteEbitdaMax, 12);
@@ -346,7 +414,8 @@
   var api = {
     DEFAULT_CONFIG: DEFAULT_CONFIG, num: num,
     computeRatios: computeRatios, analyzeDossier: analyzeDossier,
-    termCapacity: termCapacity, evalCreditTerme: evalCreditTerme,
+    termCapacity: termCapacity, capaciteEndettementCDSD: capaciteEndettementCDSD,
+    evalCreditTerme: evalCreditTerme,
     evalFaciliteCaisse: evalFaciliteCaisse, evalLeasing: evalLeasing,
     evalAffacturage: evalAffacturage, buildSynthese: buildSynthese,
     scoreSante: scoreSante, pvFactor: pvFactor, loanPayment: loanPayment,
