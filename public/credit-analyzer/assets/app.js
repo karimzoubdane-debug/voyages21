@@ -513,9 +513,99 @@
     return L.join('\n');
   }
   function download(name, text, type) {
-    var blob = new Blob([text], { type: type || 'text/plain;charset=utf-8' });
+    var blob = new Blob([type === 'doc' ? '﻿' + text : text],
+      { type: type === 'doc' ? 'application/msword' : (type || 'text/plain;charset=utf-8') });
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  }
+
+  // ---------------- Export Word (.doc) ----------------
+  var GREENH = '#1B3A28', GOLDH = '#C8A440';
+  function hesc(t) { return String(t == null ? '' : t).replace(/[&<>]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]; }); }
+  function vColor(v) { return v === 'favorable' ? '#2e7d4f' : v === 'reserves' ? '#b8860b' : '#b03a2e'; }
+  function vLabel(v) { return ({ favorable: 'FAVORABLE', reserves: 'SOUS RÉSERVES', defavorable: 'DÉFAVORABLE' })[v] || v; }
+  function reasonVal(x) {
+    return x.fmt === 'pct' ? F.pct(x.value) : x.fmt === 'dh' ? F.dh(x.value) :
+      x.fmt === 'annees' ? F.annees(x.value) : x.fmt === 'x' ? F.ratio(x.value) + '×' : F.ratio(x.value);
+  }
+  function reasonsUL(rs) {
+    return '<ul>' + rs.map(function (x) {
+      var okk = x.level ? x.level === 'ok' : x.ok;
+      var mark = okk ? '✓' : (x.level === 'hard' ? '✗' : '!');
+      return '<li>' + mark + ' ' + hesc(x.label) + ' = ' + reasonVal(x) + '</li>';
+    }).join('') + '</ul>';
+  }
+  function secT(t) { return "<h2 style='color:" + GREENH + ";font-family:Georgia,serif;border-bottom:2px solid " + GOLDH + ";padding-bottom:3px'>" + hesc(t) + "</h2>"; }
+  function verdictH(ligne, verdict, amountText, bulletsHtml) {
+    return "<h3 style='color:" + GREENH + ";margin-bottom:2px'>" + hesc(ligne) +
+      " — <span style='color:" + vColor(verdict) + "'>" + vLabel(verdict) + "</span></h3>" +
+      "<p style='margin:2px 0'>" + amountText + "</p>" + (bulletsHtml || '');
+  }
+  function buildReportHTML() {
+    var cur = ref(), prev = prevRef(); if (!cur) return '';
+    var r = cur.r, pr = prev ? prev.r : null, syn = E.buildSynthese(results, config);
+    var dt = new Date();
+    var dateStr = dt.toLocaleDateString('fr-FR') + ' ' + dt.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    var o = [];
+    o.push("<h1 style='color:" + GREENH + ";font-family:Georgia,serif;margin-bottom:2px'>Étude de faisabilité crédit — " + hesc(state.societe || 'Société') + "</h1>");
+    o.push("<p style='color:#555;margin-top:0'>Exercice " + hesc(cur.annee) + (prev ? " (vs " + hesc(prev.annee) + ")" : "") +
+      " · Solidité structurelle <b>" + E.scoreSante(cur, config, prev) + "/100</b> · Édité le " + hesc(dateStr) + "</p>");
+    // KPI résumé
+    o.push("<p><b>Chiffre d'affaires</b> " + F.dh(cur.input.ca) + (r.croissanceCA != null ? " (" + F.signePct(r.croissanceCA) + ")" : "") +
+      " &nbsp;·&nbsp; <b>EBITDA</b> " + F.dh(r.EBITDA) + " (marge " + F.pct(r.margeEbitda) + ")" +
+      " &nbsp;·&nbsp; <b>CAF</b> " + F.dh(r.caf) + " &nbsp;·&nbsp; <b>FDR</b> " + F.dh(r.FDR) +
+      " &nbsp;·&nbsp; <b>BFR</b> " + F.dh(r.BFR) + " &nbsp;·&nbsp; <b>Trésorerie nette</b> " + F.dh(r.TN) + "</p>");
+    // Synthèse
+    o.push(secT('Synthèse'));
+    o.push("<p><b>Points forts</b></p><ul>" + (syn.forces.map(function (x) { return '<li>' + hesc(x) + '</li>'; }).join('') || '<li>—</li>') + "</ul>");
+    o.push("<p><b>Points à surveiller</b></p><ul>" + ((syn.vigilances.length ? syn.vigilances : ['Aucun']).map(function (x) { return '<li>' + hesc(x) + '</li>'; }).join('')) + "</ul>");
+    // Ratios
+    o.push(secT('Batterie de ratios'));
+    var y1 = cur.annee, y0 = prev ? prev.annee : 'N-1';
+    ratioDefs(config).forEach(function (g) {
+      o.push("<h3 style='color:" + GREENH + "'>" + hesc(g[0]) + "</h3>");
+      o.push("<table border='1' cellspacing='0' cellpadding='5' style='border-collapse:collapse;width:100%;font-size:10pt'>");
+      o.push("<tr style='background:" + GREENH + ";color:#fff'><td><b>Ratio</b></td><td><b>Formule</b></td><td align='right'><b>" + hesc(y1) + "</b></td><td align='right'><b>" + hesc(y0) + "</b></td><td><b>Norme</b></td><td><b>Statut</b></td><td><b>Lecture</b></td></tr>");
+      g[1].forEach(function (dd) {
+        var v1 = r[dd[0]], v0 = pr ? pr[dd[0]] : null, lv = level(v1, dd[4], dd[5], dd[6]);
+        var norme = dd[4] == null ? '—' : (dd[6] === 'high' ? '≥ ' : '≤ ') + fval(dd[4], dd[2] === 'spct' ? 'pct' : dd[2]);
+        var statut = lv ? ({ ok: 'Conforme', soft: 'À surveiller', hard: 'Hors norme' })[lv] : '—';
+        var col = lv === 'ok' ? '#2e7d4f' : lv === 'soft' ? '#b8860b' : lv === 'hard' ? '#b03a2e' : '#555';
+        o.push("<tr><td>" + hesc(dd[1]) + "</td><td style='color:#666'>" + hesc(dd[3]) + "</td><td align='right'><b>" + fval(v1, dd[2]) +
+          "</b></td><td align='right' style='color:#888'>" + fval(v0, dd[2]) + "</td><td>" + norme + "</td><td style='color:" + col + "'><b>" + statut +
+          "</b></td><td style='color:#666'>" + hesc(dd[7]) + "</td></tr>");
+      });
+      o.push("</table><p style='font-size:4pt'>&nbsp;</p>");
+    });
+    // Éligibilité
+    o.push(secT('Éligibilité par ligne de crédit'));
+    o.push("<p style='color:#555'>Étude de faisabilité financière — garanties supposées déjà prises.</p>");
+    var cap = E.termCapacity(cur, config, { taux: config.tauxDefaut });
+    o.push(verdictH('CMT / CLT (crédit à terme)', (cap.CAF > 0 && cap.stockMaxAdd > 0) ? 'favorable' : 'reserves',
+      "Capacité additionnelle ~" + F.dh(cap.stockMaxAdd) + " (3×CAF) à " + F.dh(cap.stockMaxAddHard) + " (4×CAF). Dettes/CAF actuel : " + F.annees(cap.detteCafActuel) + ".",
+      "<ul>" + cap.parDuree.map(function (p) { return "<li>" + p.duree + " ans → max " + F.dh(p.max) + " (annuité " + F.dh(p.annuite) + ", annuité/CAF " + F.pct(p.annuite / cap.CAF) + ")</li>"; }).join('') + "</ul>"));
+    var fc = E.evalFaciliteCaisse(cur, config);
+    o.push(verdictH('Facilité de caisse', fc.verdict, "Max ~" + F.dh(fc.max) + " (" + fc.base + "), prudent ~" + F.dh(fc.prudent) + ".", reasonsUL(fc.raisons)));
+    var le = E.evalLeasing(cur, config);
+    o.push(verdictH('Leasing (crédit-bail)', le.verdict, "Enveloppe ~" + F.dh(le.max) + ". " + hesc(le.note), reasonsUL(le.raisons)));
+    var af = E.evalAffacturage(cur, config);
+    o.push(verdictH('Affacturage', af.verdict, "Ligne ~" + F.dh(af.max) + " (quotité " + Math.round(af.quotite * 100) + "% des créances clients)." + (af.reserve ? " Réserve : " + hesc(af.reserve) : ""), reasonsUL(af.raisons)));
+    // Simulation courante
+    var sm = E.num($('simMontant').value), sd = E.num($('simDuree').value), sdf = E.num($('simDiffere').value), st = E.num($('simTaux').value) / 100;
+    if (sm) {
+      var ev = E.evalCreditTerme(cur, { montant: sm, duree: sd, differe: sdf, taux: st }, config);
+      o.push(secT('Simulation CMT / CLT'));
+      o.push("<p>" + hesc(ev.ligne + ' de ' + F.dh(sm) + ' sur ' + sd + ' ans (différé ' + sdf + ', taux ' + F.pct(st) + ')') +
+        " → <b style='color:" + vColor(ev.verdict) + "'>" + vLabel(ev.verdict) + "</b>. Annuité " + F.dh(ev.annuite) + ". Plafond pour cette durée ≈ " + F.dh(ev.montantMax) + ".</p>");
+      o.push(reasonsUL(ev.raisons.map(function (x) { return { label: x.label, value: x.value, fmt: x.fmt, level: x.level }; })));
+    }
+    // Notes & documents
+    if (state.notes) { o.push(secT('Notes')); o.push("<p style='white-space:pre-wrap'>" + hesc(state.notes) + "</p>"); }
+    if (documents.length) { o.push(secT('Documents joints')); o.push("<ul>" + documents.map(function (x) { return '<li>' + hesc(x.name) + '</li>'; }).join('') + "</ul>"); }
+    o.push("<p style='color:#999;font-size:9pt;margin-top:18px'>Outil d'aide à la décision — non engageant. Méthode CGNC (modèle normal) + CPC / ESG. Contrôle d'or vérifié : TN = FDR − BFR.</p>");
+    return "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>" +
+      "<head><meta charset='utf-8'><title>Étude crédit " + hesc(state.societe || '') + "</title></head>" +
+      "<body style=\"font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#222\">" + o.join('\n') + "</body></html>";
   }
 
   // ---------------- Navigation & init ----------------
@@ -539,7 +629,7 @@
       state.exercices.push({ annee: y }); renderDossier(); recompute(); toast('Exercice ajouté');
     });
     $('btnNew').addEventListener('click', function () {
-      if (!confirm('Démarrer un dossier vierge ?')) return;
+      if (!confirm('Démarrer un dossier vierge ?\n\nPense à exporter l\'analyse en Word avant si tu veux la conserver — elle sera perdue sinon.')) return;
       state = { societe: '', notes: '', exercices: [{ annee: new Date().getFullYear() }] }; documents = [];
       renderDossier(); renderDocuments(); recompute(); showTab('dossier'); toast('Nouveau dossier');
     });
@@ -547,8 +637,9 @@
       state = clone(window.SAMPLE_V21); renderDossier(); recompute(); showTab('analyse'); toast('Exemple chargé');
     });
     $('btnExport').addEventListener('click', function () {
-      download((state.societe || 'dossier').replace(/\s+/g, '_') + '_etude_credit.md', buildReport());
-      toast('Rapport exporté (.md)');
+      if (!ref()) { toast('Aucune analyse à exporter'); return; }
+      download((state.societe || 'dossier').replace(/\s+/g, '_') + '_etude_credit.doc', buildReportHTML(), 'doc');
+      toast('Analyse exportée (Word)');
     });
     ['simMontant', 'simDuree', 'simDiffere', 'simTaux'].forEach(function (id) { $(id).addEventListener('input', runSimulator); });
     $('chatSend').addEventListener('click', sendChat);
