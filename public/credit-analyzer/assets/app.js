@@ -544,29 +544,56 @@
   }
   var convo = [];
   var aiModel = 'claude-sonnet-4-6';
+  var AI_ERR = '[[__AI_ERR__]] ';   // marqueur d'erreur en cours de flux (côté serveur)
   function postJSON(url, body) {
     return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) {
         if (!r.ok || !j.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); });
   }
-  function aiAnswer(q) {
-    return postJSON('/api/credit/chat', { messages: convo, context: buildContext(), notes: state.notes, model: aiModel })
-      .then(function (j) { if (!j.text) throw new Error('réponse vide'); return j.text; });
+  // Détecte le marqueur d'erreur dans le texte reçu ; lève une erreur le cas échéant.
+  function checkErr(t) {
+    var k = t.indexOf(AI_ERR);
+    if (k >= 0) { var e = new Error(t.slice(k + AI_ERR.length).trim() || 'flux interrompu'); e.partial = t.slice(0, k); throw e; }
+    if (!t) throw new Error('réponse vide');
+    return t;
   }
-  // Point d'entrée unique : tente l'IA (analyste senior), repli déterministe.
-  function ask(q) {
+  // Appel chat EN FLUX : lit la réponse token par token et appelle onDelta(texteCumulé).
+  function aiAnswer(q, onDelta) {
+    return fetch('/api/credit/chat', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: convo, context: buildContext(), notes: state.notes, model: aiModel })
+    }).then(function (r) {
+      if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { throw new Error(j.error || ('HTTP ' + r.status)); });
+      if (!r.body || !r.body.getReader) { return r.text().then(checkErr); } // repli navigateur sans flux
+      var reader = r.body.getReader(), dec = new TextDecoder(), full = '';
+      function pump() {
+        return reader.read().then(function (res) {
+          if (res.done) return checkErr(full);
+          full += dec.decode(res.value, { stream: true });
+          if (full.indexOf(AI_ERR) >= 0) return checkErr(full);
+          if (onDelta) onDelta(full);
+          return pump();
+        });
+      }
+      return pump();
+    });
+  }
+  // Point d'entrée unique : tente l'IA (analyste senior) en flux, repli déterministe.
+  function ask(q, onDelta) {
     convo.push({ role: 'user', content: q });
-    return aiAnswer(q).then(function (t) { convo.push({ role: 'assistant', content: t }); return t; },
+    return aiAnswer(q, onDelta).then(function (t) { convo.push({ role: 'assistant', content: t }); return t; },
       function (e) {
-        var t = answer(q) + '\n\n— (réponse du moteur de règles ; IA indisponible : ' + (e.message || e) + ')';
-        convo.push({ role: 'assistant', content: answer(q) }); return t;
+        var det = answer(q);
+        convo.push({ role: 'assistant', content: det });
+        return det + '\n\n— (réponse du moteur de règles ; IA indisponible : ' + (e.message || e) + ')';
       });
   }
   function sendChat() {
     var inp = $('chatInput'); var q = inp.value.trim(); if (!q) return;
     pushMsg(q, 'user'); inp.value = '';
     var bot = pushMsg('…', 'bot');
-    ask(q).then(function (t) { bot.textContent = t; $('chatLog').scrollTop = $('chatLog').scrollHeight; });
+    var live = function (partial) { bot.textContent = partial; $('chatLog').scrollTop = $('chatLog').scrollHeight; };
+    ask(q, live).then(function (t) { bot.textContent = t; $('chatLog').scrollTop = $('chatLog').scrollHeight; });
   }
   // Champ de discussion présent dans chaque onglet (historisé dans l'Assistant)
   function discussSend(key) {
@@ -575,7 +602,8 @@
     var box = $('discussAns-' + key), bot = null;
     if (box) { box.appendChild(el('div', 'msg user', esc(q))); bot = el('div', 'msg bot', '…'); box.appendChild(bot); box.scrollTop = box.scrollHeight; }
     pushMsg(q, 'user'); var botMain = pushMsg('…', 'bot');
-    ask(q).then(function (t) { if (bot) { bot.textContent = t; box.scrollTop = box.scrollHeight; } botMain.textContent = t; });
+    var live = function (partial) { if (bot) { bot.textContent = partial; box.scrollTop = box.scrollHeight; } botMain.textContent = partial; };
+    ask(q, live).then(function (t) { if (bot) { bot.textContent = t; box.scrollTop = box.scrollHeight; } botMain.textContent = t; });
   }
   // ---------------- Bloc 2 : Veille & marché (IA) ----------------
   // Dernières réponses IA mémorisées pour téléchargement Word « à la demande »

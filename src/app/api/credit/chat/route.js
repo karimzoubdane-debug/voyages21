@@ -1,11 +1,16 @@
-// POST /api/credit/chat — discussion avec l'analyste crédit senior.
-// Corps : { messages:[{role,content}], context:{...analyse calculée...}, notes?:string }
+// POST /api/credit/chat — discussion avec l'analyste crédit senior (réponse EN FLUX).
+// Corps : { messages:[{role,content}], context:{...analyse calculée...}, notes?:string, model?:string }
+// Réponse : flux texte (token par token). Si une erreur survient pendant le flux, on émet
+// un marqueur ASCII " [[__AI_ERR__]] " + message, que le client détecte pour basculer
+// proprement sur le moteur de règles.
 import { NextResponse } from 'next/server';
-import { getClient, runMessages, textFrom, PERSONA, pickModel } from '../_lib.js';
+import { getClient, PERSONA, pickModel } from '../_lib.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 120;
+
+export const ERR_MARK = '[[__AI_ERR__]] ';
 
 export async function POST(request) {
   const client = getClient();
@@ -34,10 +39,35 @@ export async function POST(request) {
   if (messages[messages.length - 1].role !== 'user') {
     return NextResponse.json({ ok: false, error: 'Dernier message non utilisateur.' }, { status: 400 });
   }
-  try {
-    const msg = await runMessages(client, { system: PERSONA, messages, max_tokens: 6000, model: pickModel(body) });
-    return NextResponse.json({ ok: true, text: textFrom(msg) });
-  } catch (e) {
-    return NextResponse.json({ ok: false, error: String((e && e.message) || e) }, { status: 500 });
-  }
+
+  const model = pickModel(body);
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      const send = (s) => { try { controller.enqueue(encoder.encode(s)); } catch (e) {} };
+      try {
+        const s = client.messages.stream({
+          model,
+          max_tokens: 6000,
+          thinking: { type: 'adaptive' },
+          system: PERSONA,
+          messages,
+        });
+        s.on('text', (delta) => { if (delta) send(delta); });
+        await s.finalMessage();
+      } catch (e) {
+        send(ERR_MARK + String((e && e.message) || e));
+      } finally {
+        try { controller.close(); } catch (e) {}
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-cache, no-transform',
+      'X-Accel-Buffering': 'no',
+    },
+  });
 }
