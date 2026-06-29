@@ -578,6 +578,8 @@
     ask(q).then(function (t) { if (bot) { bot.textContent = t; box.scrollTop = box.scrollHeight; } botMain.textContent = t; });
   }
   // ---------------- Bloc 2 : Veille & marché (IA) ----------------
+  // Dernières réponses IA mémorisées pour téléchargement Word « à la demande »
+  var lastResearch = '', lastBrief = null, lastSummarize = '', lastSummarizeName = '';
   function refreshDocPick() {
     var sel = $('docPick'); if (!sel) return;
     sel.innerHTML = '<option value="">— choisir un document importé —</option>' +
@@ -586,19 +588,20 @@
   function runResearch() {
     var q = $('researchIn').value.trim(); if (!q) return;
     var out = $('researchOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Recherche en cours…';
-    postJSON('/api/credit/research', { query: q, model: aiModel }).then(function (j) { out.textContent = j.text || '(vide)'; },
+    postJSON('/api/credit/research', { query: q, model: aiModel }).then(function (j) { lastResearch = j.text || ''; out.textContent = j.text || '(vide)'; },
       function (e) { out.textContent = '⚠ ' + (e.message || e); });
   }
   function runBrief() {
     var out = $('briefOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Génération du brief…';
     postJSON('/api/credit/brief', { focus: $('briefFocus').value.trim(), model: aiModel }).then(function (j) {
       if (j.items && j.items.length) {
+        lastBrief = { items: j.items };
         out.style.whiteSpace = 'normal';
         out.innerHTML = j.items.map(function (it) {
           return '<div style="border-left:3px solid var(--gold);padding:6px 12px;margin-bottom:10px;background:#fff;border-radius:8px">' +
             '<b style="color:var(--green)">' + esc(it.titre) + '</b><div class="interp" style="margin-top:4px;white-space:pre-wrap">' + esc(it.description) + '</div></div>';
         }).join('');
-      } else { out.textContent = j.text || '(vide)'; }
+      } else { lastBrief = { text: j.text || '' }; out.textContent = j.text || '(vide)'; }
     }, function (e) { out.textContent = '⚠ ' + (e.message || e); });
   }
   function runSummarize() {
@@ -607,7 +610,7 @@
     var out = $('summarizeOut'); out.style.whiteSpace = 'pre-wrap';
     if (!text) { out.textContent = 'Choisis un document (avec texte extrait) ou colle un texte.'; return; }
     out.textContent = 'Résumé en cours…';
-    postJSON('/api/credit/summarize', { text: text, name: name, model: aiModel }).then(function (j) { out.textContent = j.text; },
+    postJSON('/api/credit/summarize', { text: text, name: name, model: aiModel }).then(function (j) { lastSummarize = j.text || ''; lastSummarizeName = name; out.textContent = j.text; },
       function (e) { out.textContent = '⚠ ' + (e.message || e); });
   }
 
@@ -738,9 +741,82 @@
     if (state.notes) { o.push(secT('Notes')); o.push("<p style='white-space:pre-wrap'>" + hesc(state.notes) + "</p>"); }
     if (documents.length) { o.push(secT('Documents joints')); o.push("<ul>" + documents.map(function (x) { return '<li>' + hesc(x.name) + '</li>'; }).join('') + "</ul>"); }
     o.push("<p style='color:#999;font-size:9pt;margin-top:18px'>Outil d'aide à la décision — non engageant. Méthode CGNC (modèle normal) + CPC / ESG. Contrôle d'or vérifié : TN = FDR − BFR.</p>");
+    return wordDoc('Étude crédit ' + (state.societe || ''), o.join('\n'));
+  }
+
+  // ---------------- Word « à la demande » (Veille & Assistant) ----------------
+  // Enveloppe Word commune (namespaces Office) — réutilisée par tous les exports .doc
+  function wordDoc(title, bodyHtml) {
     return "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>" +
-      "<head><meta charset='utf-8'><title>Étude crédit " + hesc(state.societe || '') + "</title></head>" +
-      "<body style=\"font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#222\">" + o.join('\n') + "</body></html>";
+      "<head><meta charset='utf-8'><title>" + hesc(title) + "</title></head>" +
+      "<body style=\"font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#222\">" + bodyHtml + "</body></html>";
+  }
+  // Markdown léger → HTML (titres, listes, gras, code, liens) pour de jolis .doc
+  function mdToWordHTML(text) {
+    var lines = String(text == null ? '' : text).split('\n');
+    var out = [], inList = false;
+    function inline(s) {
+      s = hesc(s);
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+      s = s.replace(/`([^`]+)`/g, "<span style='font-family:Consolas,monospace'>$1</span>");
+      s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, "<a href='$2'>$1</a>");
+      return s;
+    }
+    function closeList() { if (inList) { out.push('</ul>'); inList = false; } }
+    lines.forEach(function (raw) {
+      var line = raw.replace(/\s+$/, '');
+      var h = line.match(/^(#{1,4})\s+(.*)$/);
+      var li = line.match(/^\s*[-*•]\s+(.*)$/);
+      if (h) { closeList(); var lv = Math.min(4, h[1].length) + 1; out.push("<h" + lv + " style='color:" + GREENH + ";font-family:Georgia,serif'>" + inline(h[2]) + "</h" + lv + ">"); }
+      else if (li) { if (!inList) { out.push('<ul>'); inList = true; } out.push('<li>' + inline(li[1]) + '</li>'); }
+      else if (line.trim() === '') { closeList(); }
+      else { closeList(); out.push("<p style='margin:5px 0'>" + inline(line) + "</p>"); }
+    });
+    closeList();
+    return out.join('\n');
+  }
+  // En-tête daté commun aux exports « Veille & marché »
+  function veilleWordDoc(title, subtitle, bodyHtml) {
+    var dt = new Date();
+    var dateStr = dt.toLocaleDateString('fr-FR') + ' ' + dt.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    var head =
+      "<h1 style='color:" + GREENH + ";font-family:Georgia,serif;margin-bottom:2px'>" + hesc(title) + "</h1>" +
+      "<p style='color:#555;margin-top:0'>" + (subtitle ? hesc(subtitle) + " · " : "") + "Édité le " + hesc(dateStr) + "</p>";
+    var foot = "<p style='color:#999;font-size:9pt;margin-top:18px'>Analyseur Crédit — Veille & marché. Informations issues de sources publiques : à recouper et vérifier avant toute décision.</p>";
+    return wordDoc(title, head + bodyHtml + foot);
+  }
+  function dlWord(filename, html) {
+    download(filename.replace(/\s+/g, '_'), html, 'doc');
+    toast('Téléchargé (Word)');
+  }
+  function downloadResearch() {
+    if (!lastResearch) { toast('Lance d\'abord une recherche'); return; }
+    var q = ($('researchIn').value || '').trim();
+    dlWord('recherche_marche.doc', veilleWordDoc('Recherche — Veille & marché', q ? 'Requête : ' + q : '', mdToWordHTML(lastResearch)));
+  }
+  function downloadBrief() {
+    if (!lastBrief) { toast('Génère d\'abord le brief'); return; }
+    var body;
+    if (lastBrief.items && lastBrief.items.length) {
+      body = lastBrief.items.map(function (it) {
+        return "<h3 style='color:" + GREENH + ";margin-bottom:2px'>" + hesc(it.titre) + "</h3>" +
+          "<p style='margin:2px 0 12px;white-space:pre-wrap'>" + hesc(it.description) + "</p>";
+      }).join('\n');
+    } else { body = mdToWordHTML(lastBrief.text || ''); }
+    var foc = ($('briefFocus').value || '').trim();
+    dlWord('brief_du_jour.doc', veilleWordDoc('Brief du jour — actualité éco & finance', foc ? 'Focus : ' + foc : 'Maroc & international', body));
+  }
+  function downloadSummarize() {
+    if (!lastSummarize) { toast('Génère d\'abord un résumé'); return; }
+    dlWord('resume_document.doc', veilleWordDoc('Résumé de document', lastSummarizeName ? 'Source : ' + lastSummarizeName : '', mdToWordHTML(lastSummarize)));
+  }
+  function downloadChat() {
+    if (!convo.length) { toast('Aucune discussion à télécharger'); return; }
+    var body = convo.map(function (m) {
+      if (m.role === 'user') return "<p style='margin:14px 0 2px;color:" + GREENH + ";font-weight:700'>❓ " + hesc(m.content) + "</p>";
+      return "<div style='margin:0 0 10px;padding-left:10px;border-left:3px solid " + GOLDH + "'>" + mdToWordHTML(m.content) + "</div>";
+    }).join('\n');
+    dlWord('discussion_analyste.doc', veilleWordDoc('Discussion avec l\'analyste crédit', state.societe ? 'Société : ' + state.societe : '', body));
   }
 
   // ---------------- Navigation & init ----------------
@@ -800,6 +876,9 @@
     $('researchIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') runResearch(); });
     $('briefBtn').addEventListener('click', runBrief);
     $('summarizeBtn').addEventListener('click', runSummarize);
+    // Téléchargements Word « à la demande » des réponses IA
+    var dlMap = { researchDl: downloadResearch, briefDl: downloadBrief, summarizeDl: downloadSummarize, chatDl: downloadChat };
+    Object.keys(dlMap).forEach(function (id) { var b = $(id); if (b) b.addEventListener('click', dlMap[id]); });
     // champs de discussion par onglet
     Array.prototype.forEach.call(document.querySelectorAll('[data-discuss]'), function (b) {
       var key = b.dataset.discuss;
