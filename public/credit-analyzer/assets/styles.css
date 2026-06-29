@@ -159,3 +159,9 @@ details.params summary{cursor:pointer;font-weight:600;color:var(--green);font-si
 .discuss-card{border-left:4px solid var(--gold)}
 .discuss-card .discuss-ans{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;max-height:300px;overflow-y:auto}
 .discuss-card .discuss-ans:empty{display:none}
+
+/* Lisibilité des réponses IA (texte sombre, taille confortable) */
+.msg{font-size:14.5px;line-height:1.6}
+.msg.bot{color:#1b2620}
+#researchOut,#summarizeOut,#briefOut{color:var(--ink);font-size:14px;line-height:1.6}
+#researchOut.interp,#briefOut .interp{color:var(--ink);font-size:14px}
