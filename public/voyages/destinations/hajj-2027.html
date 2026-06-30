@@ -8,6 +8,23 @@
 <title>الحج 2027 — Voyages 21 · وكالة معتمدة منذ 2006</title>
 <meta name="description" content="برنامج الحج 2027 (1448هـ) مع وكالة أسفار 21 — وكالة حاصلة على علامة جودة خدمات الحج من وزارة السياحة المغربية. 26 سنة خبرة، منها 22 سنة في خدمة ضيوف الرحمن. صيغ اقتصادية وممتازة، فنادق قرب الحرمين، تأطير ديني وتقني.">
 
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1385401490278950');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1385401490278950&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+
 <!-- Open Graph / partage WhatsApp -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="الحج 2027 مع وكالة أسفار 21 — Voyages 21">
@@ -669,6 +686,18 @@
     var fabMain = document.getElementById('fabMain');
     fabMain.addEventListener('click', function () { fab.classList.toggle('open'); });
     document.addEventListener('click', function (e) { if (!fab.contains(e.target)) fab.classList.remove('open'); });
+
+    // Suivi conversions Meta Pixel : clic WhatsApp ou téléphone = événement "Contact"
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href]');
+        if (!a || typeof fbq !== 'function') return;
+        var href = a.getAttribute('href') || '';
+        if (/wa\.me|api\.whatsapp\.com|whatsapp:/i.test(href)) {
+            fbq('track', 'Contact', { method: 'whatsapp' });
+        } else if (/^tel:/i.test(href)) {
+            fbq('track', 'Contact', { method: 'phone' });
+        }
+    }, true);
 
     // Apparition au défilement
     var revealEls = document.querySelectorAll('.why, .formule, .incl-grid, .note-box, .circles, .contact');
