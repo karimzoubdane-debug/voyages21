@@ -25,6 +25,16 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1385401490278950&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S6KCFFBSFW"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-S6KCFFBSFW');
+</script>
+<!-- End Google tag -->
+
 <!-- Open Graph / partage WhatsApp -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="الحج 2027 مع وكالة أسفار 21 — Voyages 21">
@@ -692,11 +702,12 @@ src="https://www.facebook.com/tr?id=1385401490278950&ev=PageView&noscript=1"/></
         var a = e.target.closest && e.target.closest('a[href]');
         if (!a || typeof fbq !== 'function') return;
         var href = a.getAttribute('href') || '';
-        if (/wa\.me|api\.whatsapp\.com|whatsapp:/i.test(href)) {
-            fbq('track', 'Contact', { method: 'whatsapp' });
-        } else if (/^tel:/i.test(href)) {
-            fbq('track', 'Contact', { method: 'phone' });
-        }
+        var method = null;
+        if (/wa\.me|api\.whatsapp\.com|whatsapp:/i.test(href)) method = 'whatsapp';
+        else if (/^tel:/i.test(href)) method = 'phone';
+        if (!method) return;
+        fbq('track', 'Contact', { method: method });
+        if (typeof gtag === 'function') gtag('event', 'contact', { method: method });
     }, true);
 
     // Apparition au défilement
