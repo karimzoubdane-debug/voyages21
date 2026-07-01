@@ -106,6 +106,14 @@ padding:16px 18px; cursor:pointer; transition:all 0.15s; display:flex; flex-dire
 padding:5px 12px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer;
 text-decoration:none; font-family:'Sora',sans-serif; transition:all 0.15s; display:inline-flex; align-items:center; gap:5px; }
 .btn-open:hover { background:var(--blue); color:#fff; }
+.kw-chip { background:rgba(200,164,64,0.12); border:1px solid rgba(200,164,64,0.4); color:var(--gold,#C8A440);
+padding:4px 10px; border-radius:6px; font-size:10.5px; font-weight:700; letter-spacing:.3px; cursor:pointer;
+font-family:'DM Mono',monospace; align-self:center; }
+.kw-chip:hover { background:rgba(200,164,64,0.22); }
+.kw-banner { background:rgba(200,164,64,0.08); border:1px solid rgba(200,164,64,0.3); border-radius:9px;
+padding:11px 14px; margin-bottom:14px; font-size:12.5px; color:#e7d6a8; line-height:1.5; cursor:pointer; }
+.kw-banner b { color:#C8A440; font-family:'DM Mono',monospace; font-size:13px; }
+.kw-alias { color:var(--text-m); font-size:11px; }
 .btn-claude { background:rgba(34,197,94,0.14); border:1px solid rgba(34,197,94,0.4); color:var(--green);
 padding:8px 16px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; margin-top:10px;
 font-family:'Sora',sans-serif; transition:all 0.15s; }
@@ -394,7 +402,7 @@ function cardHTML(p) {
   return `<div class="card" onclick="openDetail(${p.id})">
 <div class="card-top"><div class="card-title">${esc(p.title)}</div><span class="badge ${p.status}">${st.label}</span></div>
 <div class="card-desc">${esc((p.desc||'').substring(0,120))}${(p.desc||'').length>120?'…':''}</div>
-<div class="card-links">${urlBtn}${la?`<span style="font-size:10.5px;color:var(--text-m);align-self:center">Derniere action : <b style="color:var(--silver)">${esc(la.date)}</b></span>`:''}</div>
+<div class="card-links">${urlBtn}${p.keyword?`<span class="kw-chip" title="Tapez ce mot-cle dans Claude pour reprendre ce projet — clic = copier" onclick="event.stopPropagation();copyKw(this,'${esc(p.keyword)}')">&#128273; ${esc(p.keyword)}</span>`:''}${la?`<span style="font-size:10.5px;color:var(--text-m);align-self:center">Derniere action : <b style="color:var(--silver)">${esc(la.date)}</b></span>`:''}</div>
 <div><div class="prog-row"><span>${donePh}/${phases.length} phases</span><span class="prog-pct">${prog}%</span></div><div class="prog-bar"><div class="prog-fill ${fillClass}" style="width:${prog}%"></div></div></div>
 <div class="card-nextstep"><b>Prochaine :</b> ${p.nextStep?esc(p.nextStep.substring(0,60))+(p.nextStep.length>60?'…':''):'—'}</div>
 ${pendBlock}
@@ -437,8 +445,12 @@ function openDetail(id) {
   const stackHTML = p.stack?`<div class="stack-bloc"><div class="stack-lbl">Stack</div><div class="stack-val">${esc(p.stack)}</div></div>`:'';
   const livsHTML = (p.livrables&&p.livrables.length)?`<div class="livrables-ttl">Livrables & liens</div>${p.livrables.map(l=>`<div class="livrable-item"><div><div class="livrable-name">${esc(l.name)}</div><div class="livrable-type">${esc(l.type)}</div></div><a class="btn-open" href="${l.url}" target="_blank">Ouvrir</a></div>`).join('')}`:'';
 
+  const kwHTML = p.keyword
+    ? `<div class="kw-banner" onclick="copyKw(this,'${esc(p.keyword)}')" title="Cliquer pour copier">&#128273; Mot-cle de reprise : <b>${esc(p.keyword)}</b> — tapez-le dans une nouvelle conversation Claude pour reprendre ce projet.${(p.aliases&&p.aliases.length)?`<span class="kw-alias"> (ou : ${p.aliases.map(esc).join(', ')})</span>`:''}</div>`
+    : '';
   document.getElementById('d-body').innerHTML =
-    `<div class="modal-prog-bloc"><div class="big-pct">${prog}<span>%</span></div><div class="prog-detail"><div class="prog-detail-label">${donePh} phase${donePh>1?'s':''} terminee${donePh>1?'s':''} sur ${phases.length}</div><div class="prog-detail-bar"><div class="prog-detail-fill ${fillClass}" style="width:${prog}%"></div></div></div></div>`
+    kwHTML
+    + `<div class="modal-prog-bloc"><div class="big-pct">${prog}<span>%</span></div><div class="prog-detail"><div class="prog-detail-label">${donePh} phase${donePh>1?'s':''} terminee${donePh>1?'s':''} sur ${phases.length}</div><div class="prog-detail-bar"><div class="prog-detail-fill ${fillClass}" style="width:${prog}%"></div></div></div></div>`
     + pendingHTML + nextHTML + actionsHTML + phasesHTML + stackHTML + livsHTML
     + `<div class="modal-foot">Derniere revue de ce projet : ${esc(p.lastReview||'—')}</div>`;
   document.getElementById('ov-detail').classList.add('open');
@@ -447,9 +459,9 @@ function openDetail(id) {
 function workWithClaude(id){
   const p = projects.find(x=>x.id===id); if(!p) return;
   const prompt =
-`COCKPIT PROJET #${p.id} — ${p.title}
-URL : ${p.url||'—'}
-Je veux faire evoluer ce projet. Lis cockpit-data.json (projet id ${p.id}) sur le repo karimzoubdane-debug/voyages21, resume en 3 lignes ou on en est (statut + 3 dernieres actions + questions en attente), propose la prochaine etape concrete et attends mon go. Apres chaque avancee, mets a jour la fiche du projet (lastActions / pending / status) dans cockpit-data.json + PR.`;
+`${p.keyword || ('COCKPIT PROJET #'+p.id)}
+
+(Reprends le projet Voyages21 « ${p.title} » : lis cockpit-data.json, resume le statut + les 3 dernieres actions + l'etape en cours (nextStep) + les questions en attente, propose la prochaine etape concrete, puis attends mon go. Apres chaque avancee, mets a jour la fiche dans cockpit-data.json + PR.)`;
   const done = () => {
     const btn = document.querySelector('.btn-claude');
     if(btn){ const t=btn.innerHTML; btn.innerHTML='Instruction copiee &#10003; — colle-la dans Claude'; setTimeout(()=>btn.innerHTML=t,4000); }
@@ -457,6 +469,12 @@ Je veux faire evoluer ce projet. Lis cockpit-data.json (projet id ${p.id}) sur l
   };
   if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(prompt).then(done).catch(done); }
   else { const ta=document.createElement('textarea'); ta.value=prompt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done(); }
+}
+
+function copyKw(el, kw){
+  const flash = () => { const t=el.innerHTML; el.innerHTML='Copie &#10003;'; setTimeout(()=>el.innerHTML=t,1500); };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(kw).then(flash).catch(flash); }
+  else { const ta=document.createElement('textarea'); ta.value=kw; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); flash(); }
 }
 
 function closeModal(){ document.getElementById('ov-detail').classList.remove('open'); }

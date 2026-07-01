@@ -28,6 +28,48 @@ résumer en 3 lignes (statut + 3 dernières actions + questions en attente), pro
 prochaine étape concrète, **attendre le go**. Après chaque avancée, mettre à jour la fiche
 du projet (`lastActions`, `pending`, `status`, `nextStep`) dans `cockpit-data.json` + PR.
 
+### 🔑 Mots-clés projets — reprise instantanée (RÈGLE GÉNÉRALE)
+**Chaque projet a un mot-clé de reprise** (champ `keyword` + `aliases` dans `cockpit-data.json`).
+Dès que Karim écrit **un de ces mots-clés** (même seul, au début d'une conversation) :
+1. Lire `cockpit-data.json`, trouver le projet dont `keyword` ou un `aliases` **correspond**
+   (insensible à la casse/accents ; correspondance souple).
+2. Répondre par la **REPRISE STANDARD** (ne rien faire réexpliquer) :
+   - **Statut** + les **3 dernières actions** (`lastActions`),
+   - 📍 **Où on s'est arrêté** = `nextStep`,
+   - ⏳ **Sujets / actions en attente** = `pending`.
+3. **Proposer la prochaine étape concrète**, puis **attendre le « go »**.
+4. Travailler en branche + PR (jamais de push direct sur `main`).
+5. **Après chaque avancée**, mettre à jour la fiche (`lastActions`→garder les 3 plus récentes,
+   `pending`, `status`, `nextStep`, `lastReview`) dans `cockpit-data.json` + PR.
+
+Table de correspondance (mot-clé → projet) — la **source de vérité** reste `cockpit-data.json` :
+
+| Mot-clé | Projet | | Mot-clé | Projet |
+|---|---|---|---|---|
+| `WWW.VOYAGES21.COM` | Site Web Voyages21 | | `V21 USA` | Incoming USA → Maroc |
+| `HAJJ` | Page Hajj 2027 | | `DEVIS` | Application Devis |
+| `OMRA` | Pôle Omra | | `REELSAPP` | ReelsApp SaaS |
+| `CIRCUITS MAROC` | Circuits & Voyages Maroc | | `RETRAITE` | Simulateur retraite |
+| `CATALOGUE INTERNATIONAL` | Catalogue international | | `MONETISATION` | Système de monétisation |
+| `MARHABA` | Blog MARHABA & Chroniques | | `COCKPIT APP` | Le Cockpit (appli) |
+| `MICE` | MICE & Groupes | | `MULTI-IA` | App comparaison multi-IA |
+| `EXPERIENCES` | Expériences & Activités | | `PYTHON` | Plateforme apprentissage Python |
+| `PARTENAIRES` | Partenaires & Affiliation | | `YOUTUBE MONITOR` | YouTube Monitor |
+| `ESPACE CLIENT` | Espace Client | | `SAUVEGARDE` | Sauvegarde automatique |
+| `ADMIN` | Espace Admin & CMS | | `AUDIT VERCEL` | Audit Vercel |
+| `FORMULAIRE` | Formulaire de voyage | | `CRM` | Nettoyage base clients |
+| `FAQ` | FAQ | | `QUESTIONNAIRE` | Questionnaire de satisfaction |
+| `B2B` | Dossier stratégique B2B | | `VIDEO` | Contenu Vidéo & Reels |
+| `HAYDEN` | HAYDEN 21 écotourisme | | `ANALYSE FINANCIERE` | Analyse Financière |
+| `AGENCE WEB` | Agence Web IA | | `MONOREPO` | Infrastructure & Monorepo |
+| `V21 STUDIO` | Content Studio | | `EGYPTE` | Campagne Égypte |
+| `AVIS` / `GOOGLE MY BUSINESS` | Avis Google | | `SOCIAL SELLING` | Social selling |
+| `VEILLE CONCURRENTS` | Veille concurrents | | `VEILLE VIRALE` | Veille virale |
+| `CALENDRIER` | Calendrier éditorial | | `AUTOMATISATION` | Automatisation contenu + Chatbot |
+
+> Note : `www.voyages21.com` / `V21 USA` / `V21 STUDIO` gardent leurs procédures dédiées ci-dessous
+> (fichiers REPRISE), en plus de la fiche Cockpit. `REVUE COCKPIT` / `COCKPIT` seul = revue globale.
+
 ## 🔁 Reprise rapide du site (mot-clé « www.voyages21.com »)
 Dès que Karim écrit **« www.voyages21.com »** (même seul, ou « V21 site », ou
 « on reprend ») au début d'une conversation : NE PAS demander de contexte, NE PAS
