@@ -14,10 +14,18 @@ web IA, devis, content-studio, V21 USA, ReelsApp, YouTube Monitor, sauvegarde…
 terminé / abandonné), avec pour chaque projet son URL, ses **3 dernières actions** et
 ses **questions/décisions en attente**. Un cron (`.github/workflows/revue-cockpit.yml`)
 ouvre chaque soir (20:00 Maroc) une **Issue de rappel**. Dès que Karim écrit
-**« REVUE COCKPIT »** (ou « COCKPIT »), exécuter la procédure de `REVUE-COCKPIT.md`
+**« REVUE COCKPIT »** (ou « COCKPIT » seul), exécuter la procédure de `REVUE-COCKPIT.md`
 (collecter les évolutions du jour → mettre à jour `cockpit-data.json` → commit + PR →
 remonter les questions en attente). **Karim ne doit jamais réexpliquer ses projets :
 c'est le Cockpit qui se souvient.**
+
+**Reprise d'UN projet depuis l'appli (mot-clé « COCKPIT PROJET #<id> » ou « COCKPIT <nom> ») :**
+depuis le Cockpit, le bouton **« ▶ Travailler avec Claude »** de chaque fiche copie une
+instruction et ouvre Claude Code. Quand Karim colle « COCKPIT PROJET #<id> … » (ou écrit
+« COCKPIT » + un nom/numéro de projet) : lire `cockpit-data.json`, charger CE projet,
+résumer en 3 lignes (statut + 3 dernières actions + questions en attente), proposer la
+prochaine étape concrète, **attendre le go**. Après chaque avancée, mettre à jour la fiche
+du projet (`lastActions`, `pending`, `status`, `nextStep`) dans `cockpit-data.json` + PR.
 
 ## 🔁 Reprise rapide du site (mot-clé « www.voyages21.com »)
 Dès que Karim écrit **« www.voyages21.com »** (même seul, ou « V21 site », ou

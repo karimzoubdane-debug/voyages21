@@ -33,6 +33,21 @@
 7. **Répondre à Karim** en 3-5 lignes : ce qui a changé + la liste des **questions en attente
    qui réclament sa décision** (les `pending`).
 
+## ▶ Reprendre UN projet depuis l'appli (bouton « Travailler avec Claude »)
+Chaque fiche du Cockpit a un bouton **« ▶ Travailler avec Claude »** : il copie une
+instruction (`COCKPIT PROJET #<id> — <titre> …`) et ouvre **Claude Code** (`claude.ai/code`).
+Karim colle l'instruction dans une nouvelle session. À réception :
+1. Lire `cockpit-data.json`, trouver le projet par son `id` (ou son nom).
+2. Résumer en **3 lignes** : statut + 3 dernières actions + questions en attente.
+3. Proposer **la prochaine étape concrète**, puis **attendre le « go »**.
+4. Travailler sur le projet (branche + PR, jamais de push direct sur `main`).
+5. **Mettre à jour la fiche** (`lastActions`, `pending`, `status`, `nextStep`, `lastReview`)
+   dans `cockpit-data.json` + PR, pour que le Cockpit reste à jour.
+
+> Où accéder à Claude : **claude.ai/code** (web, ce que Karim utilise), l'app Claude Code
+> (Mac/Windows), l'extension IDE (VS Code / JetBrains) ou le CLI — toutes connectées au repo
+> `karimzoubdane-debug/voyages21`. Le fil conducteur d'un projet à l'autre = le Cockpit.
+
 ## 🧱 Schéma d'un projet (rappel)
 ```json
 {
