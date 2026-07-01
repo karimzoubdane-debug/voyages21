@@ -470,17 +470,18 @@
     {
       "id": 5,
       "cat": "marketing",
-      "status": "publie",
-      "title": "Avis Google (affiche + assistant)",
-      "desc": "Systeme de collecte d'avis Google Business : affiche cliquable, QR codes, plaquette WhatsApp, assistant de redaction d'avis FR/AR (/avis-guide) et lien court /avis.",
+      "status": "en_cours",
+      "title": "Avis Google / Google My Business",
+      "desc": "Systeme de collecte d'avis Google Business : affiche cliquable, QR codes, plaquette WhatsApp, assistant de redaction d'avis FR/AR (/avis-guide) et lien court /avis. Suivi de la fiche Google My Business.",
       "url": "https://www.voyages21.com/avis",
-      "nextStep": "Diffuser l'affiche + QR aux clients (agence, WhatsApp, email)",
+      "nextStep": "Diagnostiquer pourquoi les avis Google n'apparaissent pas, puis diffuser l'affiche + QR aux clients",
       "lastActions": [
+        { "date": "2026-07-01", "text": "Investigation : avis Google qui n'apparaissent pas (Google My Business)" },
         { "date": "2026-06-27", "text": "Affiche cliquable /avis-affiche + Open Graph WhatsApp (PR #100)" },
-        { "date": "2026-06-27", "text": "Assistant /avis-guide FR/AR + temoignages + plaquette WhatsApp (PR #100/#101)" },
-        { "date": "2026-06-26", "text": "Lien court /avis -> Google Business + QR code + affiche A4 (PR #99)" }
+        { "date": "2026-06-27", "text": "Assistant /avis-guide FR/AR + temoignages + plaquette WhatsApp (PR #100/#101)" }
       ],
       "pending": [
+        "PROBLEME : les avis Google n'apparaissent pas — diagnostiquer (fiche Google My Business / moderation / delai).",
         "ACTION KARIM : envoyer l'affiche/QR aux premiers clients pour lancer les avis"
       ],
       "lastReview": "2026-07-01",
@@ -929,6 +930,7 @@
       "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/client-database-cleanup-zubzov",
       "nextStep": "Finaliser le nettoyage et importer la base propre dans HubSpot",
       "lastActions": [
+        { "date": "2026-07-01", "text": "Session de travail : CRM / base clients" },
         { "date": "2026-06-04", "text": "Chantier de nettoyage base clients initie" }
       ],
       "pending": [
@@ -981,6 +983,7 @@
       "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/prompts-higgsfield.md",
       "nextStep": "Produire une premiere serie de reels a partir de la veille virale + prompts Higgsfield",
       "lastActions": [
+        { "date": "2026-07-01", "text": "Session de travail : contenu video" },
         { "date": "2026-06-30", "text": "Video header du site integree (public/video/2964957128.mp4)" },
         { "date": "2026-06-05", "text": "Prompts Higgsfield + veille virale (formats de reels) documentes" }
       ],
@@ -998,6 +1001,55 @@
       "phases": [
         {"name": "Preparation", "state": "done", "items": ["Prompts Higgsfield","Veille virale (formats)","Video header integree"]},
         {"name": "Production en serie", "state": "in_progress", "items": ["Series de reels","Montage / publication","Mesure performance"]}
+      ]
+    },
+    {
+      "id": 39,
+      "cat": "business",
+      "status": "en_cours",
+      "title": "Analyse Financiere",
+      "desc": "Travail d'analyse financiere (rentabilite, tresorerie, projections) pour piloter les decisions. A relier aux projets concernes (agence Voyages21, HAYDEN 21, simulateur retraite).",
+      "url": "",
+      "nextStep": "Preciser le perimetre de l'analyse et rassembler les chiffres source",
+      "lastActions": [
+        { "date": "2026-07-01", "text": "Session de travail : analyse financiere" }
+      ],
+      "pending": [
+        "PRECISER : l'analyse financiere porte sur quoi exactement (agence / HAYDEN 21 / retraite / autre) ?",
+        "Ou sont les chiffres source (Drive / Excel) ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Excel / Sheets · (a preciser)",
+      "livrables": [],
+      "phases": [
+        {"name": "Cadrage", "state": "in_progress", "items": ["Perimetre a definir","Chiffres source a rassembler"]},
+        {"name": "Analyse & restitution", "state": "todo", "items": ["Calculs","Recommandations"]}
+      ]
+    },
+    {
+      "id": 40,
+      "cat": "outils",
+      "status": "en_cours",
+      "title": "Infrastructure & Monorepo Voyages21",
+      "desc": "Gestion du monorepo karimzoubdane-debug/voyages21 qui heberge le site, ReelsApp, la monetisation, les outils et le Cockpit. Config Vercel multi-projets, branches, CI, sauvegardes.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21",
+      "nextStep": "Clarifier l'organisation du monorepo (quels dossiers = quels deploiements Vercel) et documenter",
+      "lastActions": [
+        { "date": "2026-07-01", "text": "Session de travail : infrastructure monorepo" },
+        { "date": "2026-06-02", "text": "Audit Vercel du projet realise" }
+      ],
+      "pending": [
+        "Documenter quel dossier correspond a quel deploiement Vercel ?",
+        "Nettoyer les vieilles branches (nombreuses branches claude/* et codex/*) ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "GitHub monorepo · Vercel · GitHub Actions",
+      "livrables": [
+        {"name": "Depot GitHub", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21"}
+      ],
+      "phases": [
+        {"name": "Etat des lieux", "state": "in_progress", "items": ["Monorepo (site + reelsapp + monetization + outils)","Config Vercel","Sauvegardes"]},
+        {"name": "Organisation & doc", "state": "todo", "items": ["Mapping dossiers -> deploiements","Nettoyage branches","Documentation"]}
       ]
     }
   ]
