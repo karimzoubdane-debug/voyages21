@@ -29,7 +29,29 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
-## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
+## 📍 Dernier point (27/06/2026 — soir) — 🎬 REEL HAJJ 2027 (Meta Ads)
+- Karim a fourni **5 maquettes vraies-couleurs Hajj 2027** (ChatGPT, uploadées sur
+  GitHub, commit `4dbda78`). Rangées + renommées dans l'ordre tunnel →
+  `content-studio/hajj-2027/01_cover … 05_cta.png`.
+- ✅ **3 reels livrés** — montage ffmpeg « Ken Burns » (travellings lents + fondus
+  enchaînés, **son OFF**, 9:16, 1080×1920, 30 fps, texte arabe parfaitement net) :
+  - `reel_v1_hajj2027.mp4` — 30 s, ordre marque → prix → CTA.
+  - `reel_15s_hajj2027.mp4` — 15 s punchy, même ordre.
+  - `reel_hookprix_30s.mp4` — 30 s, **hook-prix** (« dès 67 500 DH » en ouverture),
+    pour A/B test contre v1.
+- Choix assumé : **pas d'image→vidéo IA** sur ces slides (risque de déformer la
+  calligraphie arabe) ; le travelling garde le texte impeccable. **Higgsfield
+  instable** (approval stream casse à chaque appel) → v2 « motion IA » (couverture
+  + Mina, sans toucher au texte) en attente d'une fenêtre stable du connecteur.
+- Légende FR/AR + réglage ads (objectif **Messages WhatsApp**, Maroc + MRE 35-65+,
+  placements Reels/Stories) fournis dans le chat.
+- ⚠️ **Dépôt Drive** : le MCP Drive n'accepte que du base64 en paramètre → vidéos
+  ~25 Mo non poussables par appel d'outil. Karim les glisse à la main dans
+  `VOYAGES21-CONTENT-STUDIO/02-RESULTATS-GENERES` (cohérent avec la règle
+  « gros fichiers déposés à la main » du CLAUDE.md). Manifeste texte déposé si le
+  connecteur Drive se stabilise.
+
+## 📍 Point (13/06/2026 — matin)
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
   sous-agents sonnet, puis vérification adversariale). Fonctionne.
 - ✅ **Veille concurrents livrée** → `content-studio/veille-concurrents.md` :
