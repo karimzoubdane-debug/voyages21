@@ -5,8 +5,9 @@
 > est la **mémoire centrale** de tous les projets de Karim — il ne doit rien oublier.
 
 ## 🎛️ De quoi on parle
-- **Appli** : `cockpit-v4.html` (racine) — tableau de bord, lit `cockpit-data.json`.
-  Rendu en ligne : `https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html`
+- **Appli (PWA)** : `public/cockpit.html`, en ligne sur
+  `https://voyages21.vercel.app/cockpit.html` (installable mobile + bureau).
+  Lit `cockpit-data.json`. (`cockpit-v4.html` à la racine = simple redirection.)
 - **Données (source de vérité)** : `cockpit-data.json` (racine).
 - **Rappel automatique** : le workflow `.github/workflows/revue-cockpit.yml` tourne
   chaque soir à **20:00 Maroc** et ouvre/rafraîchit une **GitHub Issue**

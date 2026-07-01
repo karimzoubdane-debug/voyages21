@@ -90,7 +90,7 @@ jobs:
             body += `---\n`;
             body += `Pour mettre a jour le Cockpit (nouvelles actions, statut, questions resolues), `;
             body += `ouvrez une session et tapez **\`REVUE COCKPIT\`** — voir \`REVUE-COCKPIT.md\`.\n`;
-            body += `Appli : https://htmlpreview.github.io/?https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/cockpit-v4.html\n`;
+            body += `Appli (installable) : https://voyages21.vercel.app/cockpit.html\n`;
 
             const title = `🌙 Revue Cockpit — ${jour}`;
 
