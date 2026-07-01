@@ -7,8 +7,9 @@
 > Le site officiel est **https://www.voyages21.com** (`voyages21.vercel.app` = adresse technique).
 
 ## 🎛️ Cockpit Projets — mémoire centrale (mot-clé « REVUE COCKPIT » / « COCKPIT »)
-Le **Cockpit** (`cockpit-v4.html` + données `cockpit-data.json`, racine) est la
-**mémoire de TOUS les projets de Karim** (site, Hajj, avis, B2B, HAYDEN 21, agence
+Le **Cockpit** (appli PWA `public/cockpit.html`, en ligne sur
+`https://voyages21.vercel.app/cockpit.html`, données `cockpit-data.json` racine ;
+`cockpit-v4.html` = redirection) est la **mémoire de TOUS les projets de Karim** (site, Hajj, avis, B2B, HAYDEN 21, agence
 web IA, devis, content-studio, V21 USA, ReelsApp, YouTube Monitor, sauvegarde…),
 360° par **catégorie** et par **statut** (publié / en cours / en suspens / planifié /
 terminé / abandonné), avec pour chaque projet son URL, ses **3 dernières actions** et

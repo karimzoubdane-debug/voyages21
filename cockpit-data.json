@@ -778,28 +778,28 @@
       "cat": "outils",
       "status": "en_cours",
       "title": "Cockpit Projets (cette appli)",
-      "desc": "Tableau de bord central = memoire de tous les projets de Karim. 360 par categorie et statut, URL + 3 dernieres actions + questions en attente par projet, revue automatique du soir.",
-      "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html",
-      "nextStep": "Publier l'appli dans public/ pour une URL propre (voyages21.vercel.app) + completer les fiches",
+      "desc": "Tableau de bord central = memoire de tous les projets de Karim. 360 par categorie et statut, URL + 3 dernieres actions + questions en attente par projet, revue automatique du soir. Installable comme appli (PWA) sur mobile et bureau.",
+      "url": "https://voyages21.vercel.app/cockpit.html",
+      "nextStep": "Completer / corriger les fiches (statuts, projets oublies) + brancher sur le domaine voyages21.com",
       "lastActions": [
-        { "date": "2026-07-01", "text": "Recherche exhaustive du depot + 3 revues : passe de 14 a 36 projets" },
-        { "date": "2026-07-01", "text": "v5 : 360 projets par categorie/statut + URL + 3 dernieres actions + questions (PR #112 mergee)" },
-        { "date": "2026-07-01", "text": "Cron de revue du soir (20:00) + rappel GitHub Issue ajoutes" }
+        { "date": "2026-07-01", "text": "PWA : publie dans public/ (URL propre voyages21.vercel.app/cockpit.html), installable mobile + bureau (manifest, icones, service worker)" },
+        { "date": "2026-07-01", "text": "40 projets + tri 'plus recent' + menu deroulant + bouton 'Travailler avec Claude' + questions par projet" },
+        { "date": "2026-07-01", "text": "v5 : 360 projets par categorie/statut + cron de revue du soir" }
       ],
       "pending": [
-        "Publier l'appli dans public/ pour l'URL voyages21.vercel.app/cockpit-v4.html ?",
-        "Completer / corriger les fiches (les projets oublies retrouves dans les branches sont-ils toujours d'actualite ?)"
+        "Completer / corriger les fiches (les projets oublies retrouves dans les branches sont-ils toujours d'actualite ?)",
+        "Servir le Cockpit sur le domaine voyages21.com (une fois le domaine connecte) ?"
       ],
       "lastReview": "2026-07-01",
-      "stack": "HTML/JS statique · cockpit-data.json · raw GitHub · GitHub Actions (cron)",
+      "stack": "HTML/JS statique (PWA) · cockpit-data.json · raw GitHub · Vercel · GitHub Actions (cron)",
       "livrables": [
-        {"name": "Cockpit (rendu en ligne)", "type": "URL", "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html"},
+        {"name": "Cockpit (appli PWA)", "type": "URL", "url": "https://voyages21.vercel.app/cockpit.html"},
         {"name": "Donnees cockpit-data.json", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-data.json"}
       ],
       "phases": [
-        {"name": "v4 — Auto-sync", "state": "done", "items": ["Lecture cockpit-data.json depuis GitHub","Cartes + filtres + modal"]},
         {"name": "v5 — Memoire 360", "state": "done", "items": ["Statuts publie/suspens/abandonne","URL + 3 dernieres actions + questions","Cron revue du soir"]},
-        {"name": "Consolidation", "state": "in_progress", "items": ["36 projets seedes","Publication public/ a faire","Fiches a valider par Karim"]}
+        {"name": "App & confort", "state": "done", "items": ["40 projets seedes","Tri + menu deroulant + questions par projet","Bouton Travailler avec Claude","PWA installable mobile + bureau"]},
+        {"name": "Consolidation", "state": "in_progress", "items": ["Fiches a valider par Karim","Brancher domaine voyages21.com"]}
       ]
     },
     {

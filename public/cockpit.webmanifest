@@ -1,0 +1,17 @@
+{
+  "name": "Cockpit Projets — Voyages21",
+  "short_name": "Cockpit V21",
+  "description": "Memoire centrale de tous les projets de Karim Zoubdane : statuts, actions, questions en attente.",
+  "start_url": "/cockpit.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "lang": "fr",
+  "icons": [
+    { "src": "/icons/cockpit-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/cockpit-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/cockpit-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
