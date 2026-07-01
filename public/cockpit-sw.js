@@ -2,7 +2,7 @@
    - App shell en cache (offline).
    - Les donnees (cockpit-data.json sur raw GitHub) restent en reseau d'abord :
      l'appli gere elle-meme son cache localStorage en secours. */
-const CACHE = 'cockpit-v1';
+const CACHE = 'cockpit-v2';
 const SHELL = [
   '/cockpit.html',
   '/cockpit.webmanifest',
