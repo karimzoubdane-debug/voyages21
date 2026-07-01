@@ -19,18 +19,19 @@ _Dernière mise à jour : 2026-06-26_
 - **Vercel Blob partagé** : les données admin (manifest produits, médias) sont partagées entre preview et prod — toute action dans l'admin preview est immédiatement visible sur www.voyages21.com
 - **Sauvegarde** : workflow `.github/workflows/sauvegarde.yml` → Release à chaque PR fusionnée + chaque lundi. Dossier Drive : **« VOYAGES21 — SAUVEGARDES »** (id `1zA-k8LdhxbdSx7R4wGsKtqlQUMkWKyOI`).
 
-## ⏳ EN COURS — Avis Google EN DIRECT sur l'accueil (PR #98, draft)
-**Branche :** `claude/great-maxwell-k2yud3` · **Statut :** preview à valider → attente « go » de Karim.
-- Section « Avis Google » de l'accueil (`public/design/homepage-v2-luxe.html`) alimentée par les
-  **vrais avis Google** : note (4,9) + nombre total **en direct**, carrousel = **5 avis les plus récents** réels.
-- Route serveur **`/api/avis-google`** (clé secrète côté serveur, cache 6 h, gère ancienne + nouvelle API Places).
-  **Repli total** : sans clé / si l'API échoue → cartes statiques actuelles → **zéro casse possible**.
-- ✅ **Clé `GOOGLE_PLACES_API_KEY` posée dans Vercel** (Production + Preview) par Karim — projet Google Cloud
-  « REVIEWS SIT VOYAGES21 », Places API + Places API (New) activées + facturation (crédit gratuit).
-- ⚠️ Limite : l'API officielle ne renvoie que **5 avis max**. Pour TOUS les avis → widget Featurable (gratuit)
-  ou service payant (à voir plus tard). Le contexte (Instagram vs Google) : la cliente avait en fait commenté
-  sur **Instagram**, pas Google ; le lien « Rédiger un avis » de l'accueil, lui, fonctionne (Place ID correct).
-- ⏭️ Étapes : (1) valider la **preview Vercel** (note/total/carrousel = vrais avis), (2) **« go »** → squash-merge.
+## ⏳ EN COURS — Avis Google EN DIRECT (accueil + page Hajj) (PR #98, draft)
+**Branche :** `claude/great-maxwell-k2yud3` · **Statut :** ✅ API OK (vrais avis récupérés) → preview à valider → attente « go ».
+- Route serveur **`/api/avis-google`** (clé secrète, cache 6 h sur succès, **`?debug=1`** = appel frais + diagnostic
+  sans exposer la clé). Source **unique** pour tout le site. **Repli total** : sans clé / erreur → contenu statique (zéro casse).
+- **Accueil** (`public/design/homepage-v2-luxe.html`) : note + total + carrousel « Ce qu'ils écrivent sur Google »
+  = **vrais avis** (réel : **4,8 / 42 avis** ; l'ancien 4,9/19 était codé en dur).
+- **Page Hajj** (`public/voyages/destinations/hajj-2027.html`) : colonne d'avis Google en direct **à côté du cercle
+  « آراء حجّاجنا »** (même route → synchronisé) + **galerie d'images déplacée en section en dessous** (IDs conservés).
+- ✅ Clé `GOOGLE_PLACES_API_KEY` dans Vercel (Prod+Preview). Projet Google **918472731075** (« My First Project ») :
+  **Places API (New)** activée + essai gratuit actif. (Le projet « REVIEWS SIT VOYAGES21 » n'était pas celui de la clé.)
+- ⚠️ Limite API officielle = **5 avis max** (note + total complets). Avis Hajj = avis **agence généraux** (français),
+  non filtrés Hajj (Google ne le permet pas) — choix « Option A » assumé par Karim.
+- ⏭️ (1) valider la **preview** (accueil + Hajj), (2) **« go »** → squash-merge → en ligne.
 
 ## ✅ Déjà livré (fusionné sur main)
 - Tri des voyages par prix croissant sur les pages destination.
