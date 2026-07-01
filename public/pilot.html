@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V21 PILOT — Cockpit Contacts & Campagnes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1B3A28;--forest2:#152E1F;--gold:#C8A440;--cream:#F5F0E8;--ink:#1c2620;--muted:#7c8a80;--line:#e6e0d4;--white:#fffdf9;--ok:#2e8b57;--warn:#c98a2a;--bad:#c0504d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);display:flex;min-height:100vh}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+.side{width:236px;background:var(--forest);color:#e9efe9;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand .logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:#fff}
+.brand .logo b{color:var(--gold);font-style:normal}
+.brand .sub{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:2px}
+.nav{padding:14px 12px;flex:1;overflow:auto}
+.nav a{display:flex;align-items:center;gap:11px;padding:10px 14px;border-radius:10px;color:#cdd8cd;text-decoration:none;font-size:.9rem;font-weight:500;cursor:pointer;margin-bottom:2px;transition:.15s}
+.nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav a.on{background:var(--gold);color:var(--forest2);font-weight:700}
+.nav a .i{width:20px;text-align:center;font-size:1.05rem}
+.side .foot{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);font-size:.72rem;color:#9fb0a0}
+.side .foot b{color:#fff}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{background:var(--white);border-bottom:1px solid var(--line);padding:16px 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.top .lft{display:flex;align-items:center;gap:12px}
+.top h2{font-size:1.35rem;color:var(--forest)}
+.info-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);background:var(--white);color:var(--gold);font-weight:700;font-size:.85rem;cursor:pointer;display:grid;place-items:center;transition:.15s}
+.info-btn:hover{background:var(--gold);color:#fff}
+.top .who{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted)}
+.top .who .av{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--forest2);display:grid;place-items:center;font-weight:700}
+.wrap{padding:26px 30px;overflow:auto}
+.page{display:none}.page.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px 18px;position:relative}
+.kpi .hd{display:flex;justify-content:space-between;align-items:flex-start}
+.kpi .n{font-family:'Playfair Display',serif;font-size:2rem;color:var(--forest);line-height:1}
+.kpi .l{font-size:.8rem;color:var(--muted);margin-top:5px;font-weight:600}
+.kpi .exp{font-size:.72rem;color:var(--ink);margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);line-height:1.35}
+.kpi .exp b{color:var(--ok)} .kpi .exp.w b{color:var(--warn)}
+.mini-i{width:20px;height:20px;border-radius:50%;border:1.3px solid var(--line);color:var(--muted);font-size:.72rem;font-weight:700;cursor:pointer;display:grid;place-items:center;flex:none}
+.mini-i:hover{border-color:var(--gold);color:var(--gold)}
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{font-size:1.08rem;color:var(--forest);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card h3 .tag{margin-left:auto;font-family:'DM Sans';font-size:.7rem;background:var(--cream);color:var(--muted);padding:3px 9px;border-radius:20px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{text-align:left;color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;padding:8px 10px;border-bottom:2px solid var(--line)}
+td{padding:11px 10px;border-bottom:1px solid var(--line)}
+tr:hover td{background:#faf7f0}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600}
+.pill.g{background:#e7f2ea;color:var(--ok)}.pill.o{background:#fbf1df;color:var(--warn)}.pill.b{background:#f7e8e7;color:var(--bad)}.pill.n{background:#eceff2;color:#5b6b7a}
+.segs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.seg{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:.15s;position:relative}
+.seg:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 22px rgba(27,58,40,.08)}
+.seg .ic{font-size:1.5rem}.seg .nm{font-weight:700;margin:8px 0 2px;color:var(--forest)}
+.seg .ct{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--gold)}
+.seg .ds{font-size:.78rem;color:var(--muted);margin-top:4px}
+.composer{display:grid;grid-template-columns:1fr 1.05fr;gap:22px}
+.field{margin-bottom:15px}.field label{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.sel,.inp{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:.9rem;background:var(--white);color:var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--cream);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:.8rem;margin:0 6px 6px 0;cursor:pointer;transition:.12s}
+.chip.on{background:var(--forest);color:#fff;border-color:var(--forest)}
+.count-live{background:var(--forest);color:#fff;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.count-live .big{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold)}
+.src-box{display:flex;gap:8px}.src-box .inp{flex:1}
+.btn-mini{background:var(--forest);color:#fff;border:none;padding:0 14px;border-radius:10px;font-family:inherit;font-weight:600;font-size:.82rem;cursor:pointer;white-space:nowrap}
+.phone{background:#0b141a;border-radius:26px;padding:12px;max-width:310px;margin:0 auto;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.phone .scr{background:#e5ddd5;border-radius:16px;min-height:400px;padding:14px}
+.phone .hd{background:#075E54;color:#fff;margin:-14px -14px 12px;padding:12px 14px;border-radius:16px 16px 0 0;font-size:.85rem;display:flex;align-items:center;gap:8px}
+.phone .hd .d{width:30px;height:30px;border-radius:50%;background:var(--gold);display:grid;place-items:center;color:var(--forest2);font-weight:700;font-size:.8rem}
+.bubble{background:#fff;border-radius:10px;padding:10px 12px;font-size:.83rem;box-shadow:0 1px 1px rgba(0,0,0,.08);max-width:88%;margin-bottom:8px;line-height:1.4}
+.bubble .img{background:linear-gradient(120deg,#1B3A28,#2d5a3f);border-radius:7px;height:92px;margin:-2px -2px 8px;display:grid;place-items:center;color:var(--gold);font-size:.72rem;text-align:center;letter-spacing:.04em}
+.bubble .btn{display:block;text-align:center;color:#1e88e5;border-top:1px solid #eee;margin:8px -12px -10px;padding:9px;font-weight:600;font-size:.82rem}
+.bubble .tm{font-size:.62rem;color:#999;text-align:right;margin-top:3px}
+.btn-g{background:var(--gold);color:var(--forest2);border:none;padding:13px 22px;border-radius:11px;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;transition:.15s}
+.btn-g:hover{filter:brightness(1.06)}
+.btn-o{background:transparent;border:1px solid var(--line);color:var(--ink);padding:12px 18px;border-radius:11px;font-family:inherit;font-weight:600;cursor:pointer}
+.row-end{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+.drop{border:2px dashed var(--gold);border-radius:14px;padding:30px;text-align:center;background:#fdfbf5;color:var(--muted);margin-bottom:18px}
+.drop .big{font-size:2rem}
+.steps{display:flex;margin:18px 0}
+.step{flex:1;text-align:center;font-size:.78rem;color:var(--muted);position:relative;padding-top:26px}
+.step::before{content:attr(data-n);position:absolute;top:0;left:50%;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:var(--line);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.72rem}
+.step.done::before{background:var(--ok)}.step.now::before{background:var(--gold);color:var(--forest2)}
+.step::after{content:"";position:absolute;top:11px;left:-50%;width:100%;height:2px;background:var(--line);z-index:-1}.step:first-child::after{display:none}
+.lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.asset{background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:.15s}
+.asset:hover{border-color:var(--gold)}
+.asset .thumb{height:92px;display:grid;place-items:center;color:#fff;font-size:1.5rem}
+.asset .meta{padding:9px 11px}.asset .meta .t{font-size:.8rem;font-weight:600}.asset .meta .s{font-size:.7rem;color:var(--muted)}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:.82rem}
+.bar .lbl{width:130px}.bar .track{flex:1;background:var(--cream);border-radius:20px;height:22px;overflow:hidden}
+.bar .fill{height:100%;background:linear-gradient(90deg,var(--forest),var(--gold));border-radius:20px;display:flex;align-items:center;padding-left:10px;color:#fff;font-size:.72rem;font-weight:700}
+.note{background:#fdf6e6;border:1px solid #ecd9a8;border-radius:12px;padding:13px 16px;font-size:.83rem;color:#7a5f1e;margin-bottom:18px;display:flex;gap:10px}
+/* weekly planner */
+.week{display:grid;grid-template-columns:70px repeat(7,1fr);gap:6px;font-size:.78rem}
+.week .h{font-weight:700;color:var(--forest);text-align:center;padding:6px 0}
+.week .hour{color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:8px}
+.cell{background:var(--white);border:1px solid var(--line);border-radius:8px;min-height:46px;padding:4px;cursor:pointer;transition:.12s}
+.cell:hover{border-color:var(--gold);background:#fdfbf5}
+.ev{border-radius:6px;padding:4px 6px;font-size:.68rem;font-weight:600;color:#fff;line-height:1.2}
+.ev.wa{background:#075E54}.ev.em{background:#7a5cc9}.ev.ig{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)}
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(20,30,24,.55);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.overlay.on{display:flex;animation:fade .2s}
+.modal{background:var(--white);border-radius:18px;max-width:540px;width:100%;max-height:86vh;overflow:auto;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.modal .mh{background:var(--forest);color:#fff;padding:22px 26px;border-radius:18px 18px 0 0;position:sticky;top:0}
+.modal .mh .ic{font-size:1.8rem}.modal .mh h3{color:#fff;font-size:1.4rem;margin-top:6px}
+.modal .mh .x{position:absolute;top:18px;right:20px;cursor:pointer;color:#cdd8cd;font-size:1.4rem;background:none;border:none}
+.modal .mb{padding:22px 26px}
+.modal .blk{margin-bottom:18px}
+.modal .blk .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);font-weight:700;margin-bottom:6px}
+.modal .blk p{font-size:.9rem;line-height:1.55;color:var(--ink)}
+.modal ol{margin:6px 0 0 18px;font-size:.9rem;line-height:1.7}
+.badge-demo{position:fixed;bottom:16px;right:16px;background:var(--forest2);color:var(--gold);padding:8px 16px;border-radius:30px;font-size:.75rem;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.2);z-index:20}
+@media(max-width:900px){.side{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.composer{grid-template-columns:1fr}.segs,.lib{grid-template-columns:1fr 1fr}.week{font-size:.6rem;grid-template-columns:44px repeat(7,1fr)}}
+</style>
+</head>
+<body>
+<aside class="side">
+  <div class="brand"><div class="logo">Voyages<b>21</b></div><div class="sub">Pilot · Cockpit</div></div>
+  <nav class="nav">
+    <a data-p="dash" class="on"><span class="i">📊</span> Tableau de bord</a>
+    <a data-p="contacts"><span class="i">🗂️</span> Contacts</a>
+    <a data-p="segments"><span class="i">🎯</span> Segments</a>
+    <a data-p="campagnes"><span class="i">📢</span> Campagnes</a>
+    <a data-p="planning"><span class="i">📅</span> Planning</a>
+    <a data-p="scraping"><span class="i">🕷️</span> Scraping</a>
+    <a data-p="contenus"><span class="i">🖼️</span> Contenus</a>
+  </nav>
+  <div class="foot">Base : <b>7 182</b> contacts<br>Statut : <b style="color:#7CFC9A">● synchronisé</b></div>
+</aside>
+
+<div class="main">
+  <div class="top">
+    <div class="lft"><h2 id="ttl">Tableau de bord</h2><button class="info-btn" id="infoBtn" title="À quoi sert cette rubrique ?">ⓘ</button></div>
+    <div class="who"><span>DA21</span><div class="av">DA</div></div>
+  </div>
+  <div class="wrap">
+
+  <!-- DASHBOARD -->
+  <section class="page on" id="dash">
+    <div class="kpis">
+      <div class="kpi"><div class="hd"><div><div class="n">7 182</div><div class="l">Contacts propres</div></div><span class="mini-i" data-tip="Nombre total de contacts uniques dans ta base après nettoyage et suppression des doublons.">?</span></div><div class="exp">✅ Nettoyés depuis <b>24 643</b> lignes en vrac. <b>Base saine</b>.</div></div>
+      <div class="kpi"><div class="hd"><div><div class="n">3</div><div class="l">Campagnes ce mois</div></div><span class="mini-i" data-tip="Campagnes envoyées ce mois-ci, tous canaux confondus (WhatsApp + email).">?</span></div><div class="exp">↑ +2 vs mois dernier. <b>Bon rythme.</b></div></div>
+      <div class="kpi"><div class="hd"><div><div class="n">61%</div><div class="l">Taux de livraison</div></div><span class="mini-i" data-tip="% de messages réellement arrivés. Sur WhatsApp gratuit, limité par la règle « numéro enregistré ». L'API le monte à ~98%.">?</span></div><div class="exp w">⚠️ Bas car appli gratuite. Passe à l'<b>API</b> → 98%.</div></div>
+      <div class="kpi"><div class="hd"><div><div class="n">148</div><div class="l">Réponses reçues</div></div><span class="mini-i" data-tip="Nombre de clients qui ont répondu à tes messages. Un bon signal d'intérêt commercial.">?</span></div><div class="exp">↑ +34 cette semaine. <b>Clients intéressés.</b></div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>📈 Performance par produit <span class="tag">30 derniers jours</span></h3>
+        <div class="bar"><div class="lbl">Circuits Maroc</div><div class="track"><div class="fill" style="width:82%">82% ouverts</div></div></div>
+        <div class="bar"><div class="lbl">Moto 🏍️</div><div class="track"><div class="fill" style="width:74%">74%</div></div></div>
+        <div class="bar"><div class="lbl">Raid 4x4 🏜️</div><div class="track"><div class="fill" style="width:68%">68%</div></div></div>
+        <div class="bar"><div class="lbl">Hajj / Omra 🕋</div><div class="track"><div class="fill" style="width:91%">91%</div></div></div>
+        <div class="bar"><div class="lbl">Séjours détente</div><div class="track"><div class="fill" style="width:57%">57%</div></div></div>
+        <div class="note" style="margin:14px 0 0">💡 <b>Lecture :</b> le Hajj (91%) et les Circuits (82%) déclenchent le plus d'intérêt → mets-les en avant. Les séjours (57%) → à retravailler (visuel ou cible).</div>
+      </div>
+      <div class="card">
+        <h3>🕑 Activité récente</h3>
+        <table>
+          <tr><td>Campagne <b>Raid 4x4 2026</b></td><td><span class="pill g">envoyée</span></td></tr>
+          <tr><td>Import <b>Apify · hôtels Marrakech</b></td><td><span class="pill n">+312</span></td></tr>
+          <tr><td>Segment <b>Étrangers UE</b></td><td><span class="pill o">créé</span></td></tr>
+          <tr><td>Newsletter <b>Marhaba #12</b></td><td><span class="pill g">1 716 env.</span></td></tr>
+          <tr><td>3 contacts <b>STOP</b></td><td><span class="pill b">retirés</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="page" id="contacts">
+    <div class="drop"><div class="big">⬇️</div><b>Glisse ton fichier ici</b><br><span style="font-size:.82rem">CSV · Excel · Google Contacts — nettoyage automatique (dédup, fusion, numéros)</span></div>
+    <div class="steps"><div class="step done" data-n="✓">Import</div><div class="step done" data-n="✓">Nettoyage auto</div><div class="step now" data-n="3">Fiches unifiées</div><div class="step" data-n="4">Tags</div></div>
+    <div class="card">
+      <h3>🗂️ Contacts <span class="tag">7 182 fiches · 4 642 doublons fusionnés</span></h3>
+      <table>
+        <thead><tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Segment</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Brahim Sadik</td><td>+212 656 200 056</td><td>—</td><td><span class="pill n">Maroc</span></td><td>Google</td></tr>
+          <tr><td>My Hero</td><td>+212 661 181 618</td><td>—</td><td><span class="pill o">Moto</span></td><td>Google</td></tr>
+          <tr><td>DA Facetime</td><td>+212 661 247 049</td><td>—</td><td><span class="pill n">Maroc</span></td><td>Google</td></tr>
+          <tr><td>Entreprise Sara</td><td>+212 629 146 885</td><td>contact@sara.ma</td><td><span class="pill g">Pro / MICE</span></td><td>Manuel</td></tr>
+          <tr><td>Hôtel Atlas (Marrakech)</td><td>+212 524 448 812</td><td>resa@atlas.ma</td><td><span class="pill g">B2B</span></td><td>Apify</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SEGMENTS -->
+  <section class="page" id="segments">
+    <div class="note">💡 Un segment est une <b>liste vivante</b> : dès qu'un contact correspond aux filtres, il y entre automatiquement.</div>
+    <div class="segs">
+      <div class="seg"><div class="ic">🇲🇦</div><div class="nm">Maroc — WhatsApp</div><div class="ct">5 477</div><div class="ds">Indicatif +212 ou local</div></div>
+      <div class="seg"><div class="ic">🌍</div><div class="nm">Étrangers</div><div class="ct">248</div><div class="ds">Numéros internationaux</div></div>
+      <div class="seg"><div class="ic">📧</div><div class="nm">Emailables</div><div class="ct">1 716</div><div class="ds">Email valide → newsletter</div></div>
+      <div class="seg"><div class="ic">🏢</div><div class="nm">Pros / MICE</div><div class="ct">234</div><div class="ds">Organisation renseignée</div></div>
+      <div class="seg"><div class="ic">🏍️</div><div class="nm">Passionnés Moto</div><div class="ct">—</div><div class="ds">Tag « moto » (à enrichir)</div></div>
+      <div class="seg" style="border-style:dashed;display:grid;place-items:center;color:var(--gold)"><div><div class="ic">＋</div><div class="nm">Nouveau segment</div></div></div>
+    </div>
+  </section>
+
+  <!-- CAMPAGNES -->
+  <section class="page" id="campagnes">
+    <div class="composer">
+      <div class="card">
+        <h3>📢 Composer une campagne</h3>
+        <div class="field"><label>1 · Source du produit (depuis ton site)</label>
+          <div class="src-box"><input class="inp" placeholder="Colle un lien voyages21.com/circuits/raid-4x4"><button class="btn-mini">Importer</button></div></div>
+        <div class="field"><label>…ou choisis un produit du catalogue</label>
+          <select class="sel"><option>🏜️ Raid / Rallye 4x4 — Collection 2026</option><option>🗺️ Circuits classiques sur mesure</option><option>🏍️ Aventure Moto</option><option>🚗 Circuits & Autotours</option><option>🌴 Séjours détente</option><option>🕋 Hajj / Omra 2027</option><option>🏢 MICE / Groupes</option></select></div>
+        <div class="field"><label>2 · Type de contenu à envoyer</label>
+          <span class="chip on">📄 Plaquette PDF</span><span class="chip">🖥️ Landing page</span><span class="chip">🎬 Réel Instagram</span><span class="chip">💬 Texto simple</span><span class="chip">🔗 Lien</span><span class="chip">📋 Formulaire</span></div>
+        <div class="field"><label>3 · À qui l'envoyer (segment)</label>
+          <select class="sel" id="segSel"><option data-c="5 477">🇲🇦 Maroc — WhatsApp (5 477)</option><option data-c="248">🌍 Étrangers (248)</option><option data-c="1 716">📧 Emailables (1 716)</option><option data-c="234">🏢 Pros / MICE (234)</option></select></div>
+        <div class="count-live"><span class="big" id="cLive">5 477</span><span>contacts recevront ce message</span></div>
+        <div class="field"><label>4 · Message</label>
+          <textarea class="inp" rows="2">La Collection 2026 de nos raids 4x4 est arrivée 🏜️ Brochure en pièce jointe 👇</textarea></div>
+        <div class="field"><label>5 · Canal</label>
+          <span class="chip on">📱 WhatsApp</span><span class="chip">📧 Email</span><span class="chip">📱+📧 Les deux</span></div>
+        <div class="row-end"><button class="btn-o" onclick="document.querySelector('[data-p=planning]').click()">📅 Planifier</button><button class="btn-g">Envoyer par lots ▸</button></div>
+      </div>
+      <div>
+        <div style="text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:10px">Aperçu en temps réel</div>
+        <div class="phone"><div class="scr">
+          <div class="hd"><div class="d">V21</div><div><div style="font-weight:700">Voyages21</div><div style="font-size:.66rem;opacity:.8">compte pro</div></div></div>
+          <div class="bubble"><div class="img">📄 BROCHURE RAID 4X4 2026</div>La Collection 2026 de nos raids 4x4 est arrivée 🏜️ Brochure en pièce jointe 👇<div class="btn">🌐 Voir les circuits</div><div class="tm">12:24 ✓✓</div></div>
+        </div></div>
+        <div class="note" style="margin-top:16px">🛡️ <b>Anti-ban :</b> envoi étalé en lots de 200/h, désabonnements filtrés automatiquement.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANNING -->
+  <section class="page" id="planning">
+    <div class="note">📅 Glisse tes campagnes sur la semaine. Chaque couleur = un canal. Programme tout à l'avance, l'envoi part tout seul.</div>
+    <div class="card">
+      <h3>Semaine du 6 au 12 juillet <span class="tag">3 canaux</span></h3>
+      <div class="week">
+        <div class="h"></div><div class="h">Lun</div><div class="h">Mar</div><div class="h">Mer</div><div class="h">Jeu</div><div class="h">Ven</div><div class="h">Sam</div><div class="h">Dim</div>
+        <div class="hour">09:00</div>
+          <div class="cell"><div class="ev wa">📱 Raid 4x4 · Maroc</div></div><div class="cell"></div><div class="cell"><div class="ev em">📧 Marhaba #13</div></div><div class="cell"></div><div class="cell"><div class="ev wa">📱 Circuits · Maroc</div></div><div class="cell"></div><div class="cell"></div>
+        <div class="hour">13:00</div>
+          <div class="cell"></div><div class="cell"><div class="ev ig">🎬 Réel Moto · IG</div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="ev wa">📱 Séjours · Maroc</div></div><div class="cell"></div>
+        <div class="hour">18:00</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"><div class="ev em">📧 Étrangers UE</div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><div class="ev wa">📱 Hajj · Pros</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRAPING -->
+  <section class="page" id="scraping">
+    <div class="grid2">
+      <div class="card">
+        <h3>🕷️ Lancer un scraping</h3>
+        <div class="field"><label>Source</label><span class="chip on">🗺️ Apify · Google Maps</span><span class="chip">💼 Apollo · B2B</span></div>
+        <div class="field"><label>Quoi chercher</label><input class="inp" value="Agences de voyage"></div>
+        <div class="field"><label>Où (région / pays)</label><input class="inp" value="Casablanca, Rabat, Marrakech"></div>
+        <div class="field"><label>Volume</label><select class="sel"><option>100 résultats</option><option>500 résultats</option><option>Tout</option></select></div>
+        <div class="row-end"><button class="btn-g">▸ Lancer le scrape</button></div>
+        <div class="note" style="margin-top:16px">⚖️ Résultats <b>B2B publics</b> uniquement, injectés dans Contacts avec le tag source.</div>
+      </div>
+      <div class="card">
+        <h3>📥 Scrapes récents</h3>
+        <table>
+          <tr><td>Hôtels · Marrakech</td><td><span class="pill g">✓ 312</span></td></tr>
+          <tr><td>Comités entreprise · France</td><td><span class="pill g">✓ 88</span></td></tr>
+          <tr><td>Riads · Fès</td><td><span class="pill o">⏳ en cours</span></td></tr>
+          <tr><td>Tour-opérateurs · Espagne</td><td><span class="pill g">✓ 141</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENUS -->
+  <section class="page" id="contenus">
+    <div class="note">🖼️ Bibliothèque partagée — plaquettes, landing pages, réels, liens, formulaires. Attache n'importe quel contenu à une campagne en 1 clic.</div>
+    <div class="lib">
+      <div class="asset"><div class="thumb" style="background:linear-gradient(135deg,#7a2e2e,#b04a4a)">📄</div><div class="meta"><div class="t">Brochure Raid 4x4 2026</div><div class="s">Plaquette PDF · 4,2 Mo</div></div></div>
+      <div class="asset"><div class="thumb" style="background:linear-gradient(135deg,#1B3A28,#3a6b4d)">🖥️</div><div class="meta"><div class="t">Landing Circuits été</div><div class="s">Page web · /ete-2026</div></div></div>
+      <div class="asset"><div class="thumb" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)">🎬</div><div class="meta"><div class="t">Réel Moto Atlas</div><div class="s">Instagram · 22 s</div></div></div>
+      <div class="asset"><div class="thumb" style="background:linear-gradient(135deg,#2a3f7a,#4a6bb0)">📋</div><div class="meta"><div class="t">Formulaire devis</div><div class="s">Form · 5 champs</div></div></div>
+      <div class="asset"><div class="thumb" style="background:linear-gradient(135deg,#7a2e2e,#b04a4a)">📄</div><div class="meta"><div class="t">Programme Hajj 2027</div><div class="s">Plaquette PDF · 2,1 Mo</div></div></div>
+      <div class="asset"><div class="thumb" style="background:linear-gradient(135deg,#2e6b5a,#3a8b6d)">🔗</div><div class="meta"><div class="t">Lien réservation</div><div class="s">Lien court · v21.ma/r</div></div></div>
+      <div class="asset"><div class="thumb" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)">🎬</div><div class="meta"><div class="t">Témoignage client</div><div class="s">Réel · 45 s</div></div></div>
+      <div class="asset" style="border-style:dashed;display:grid;place-items:center;color:var(--gold)"><div style="text-align:center"><div style="font-size:1.6rem">＋</div><div style="font-size:.78rem">Importer</div></div></div>
+    </div>
+  </section>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="ov">
+  <div class="modal">
+    <div class="mh"><button class="x" id="mx">✕</button><div class="ic" id="mIc">📊</div><h3 id="mT">Titre</h3></div>
+    <div class="mb" id="mB"></div>
+  </div>
+</div>
+<div class="badge-demo">✦ Maquette cliquable — clique les ⓘ et « ? »</div>
+
+<script>
+const links=document.querySelectorAll('.nav a'),pages=document.querySelectorAll('.page'),ttl=document.getElementById('ttl');
+const names={dash:'Tableau de bord',contacts:'Contacts',segments:'Segments',campagnes:'Campagnes',planning:'Planning',scraping:'Scraping & Acquisition',contenus:'Bibliothèque de contenus'};
+let cur='dash';
+links.forEach(a=>a.onclick=()=>{links.forEach(x=>x.classList.remove('on'));a.classList.add('on');cur=a.dataset.p;pages.forEach(s=>s.classList.toggle('on',s.id===cur));ttl.textContent=names[cur];window.scrollTo(0,0);});
+// chips
+document.querySelectorAll('.field .chip').forEach(c=>c.onclick=function(){this.parentElement.querySelectorAll('.chip').forEach(s=>s.classList.remove('on'));this.classList.add('on');});
+// live counter
+const segSel=document.getElementById('segSel');if(segSel)segSel.onchange=function(){document.getElementById('cLive').textContent=this.selectedOptions[0].dataset.c;};
+// segment -> campagne
+document.querySelectorAll('.seg').forEach(s=>s.onclick=()=>document.querySelector('[data-p=campagnes]').click());
+
+// ---- Explications par rubrique ----
+const DOC={
+ dash:{ic:'📊',t:'Tableau de bord',obj:"Ta vue d'ensemble. En un coup d'œil, tu sais si ta machine marketing tourne : combien de contacts, quelles campagnes, combien de messages arrivent vraiment et combien de clients répondent.",how:["Lis les 4 chiffres du haut (les KPI) — chacun a un « ? » qui explique ce qu'il mesure.","Regarde « Performance par produit » pour voir quelle offre intéresse le plus.","Suis « Activité récente » comme un fil d'actualité de ce qui se passe."]},
+ contacts:{ic:'🗂️',t:'Contacts',obj:"La base centrale où vivent tous tes clients, sans doublon. C'est la mémoire de ton agence : chaque numéro, email et historique au même endroit.",how:["Glisse un fichier CSV/Excel/Google Contacts dans la zone d'import.","Le nettoyage se fait tout seul (dédup, fusion, numéros au bon format).","Retrouve, filtre et tague tes contacts ; chaque fiche montre sa source (Google, Apify, manuel…)."]},
+ segments:{ic:'🎯',t:'Segments',obj:"Découper ta base en groupes-cibles pour envoyer le bon message aux bonnes personnes, jamais tout à tout le monde.",how:["Chaque carte est un groupe avec son nombre exact de contacts.","Clique « ＋ Nouveau segment » et combine des filtres (pays, langue, intérêt, a un email…).","Le segment est vivant : il s'actualise seul quand un contact correspond."]},
+ campagnes:{ic:'📢',t:'Campagnes',obj:"Le cœur de l'outil : envoyer LE BON PRODUIT au BON GROUPE, avec le contenu de ton choix (plaquette, landing, réel, texto, lien, formulaire).",how:["1 · Choisis le produit : colle un lien de ton site OU prends-le dans le catalogue déroulant.","2 · Choisis le type de contenu à envoyer.","3 · Choisis le segment destinataire → le compteur affiche combien recevront.","4 · Écris le message, choisis le canal, vois l'aperçu téléphone en direct.","5 · « Envoyer par lots » (anti-ban) ou « Planifier » pour programmer plus tard."]},
+ planning:{ic:'📅',t:'Planning',obj:"Programmer tes envois à l'avance sur toute la semaine : quels jours, quelles heures, quel canal. Tu prépares tout une fois, ça part tout seul.",how:["Chaque colonne = un jour, chaque ligne = un créneau horaire.","Glisse une campagne sur la case voulue (jour + heure).","La couleur indique le canal : vert = WhatsApp, violet = email, dégradé = Instagram.","Tu peux tout préparer le lundi pour la semaine entière."]},
+ scraping:{ic:'🕷️',t:'Scraping & Acquisition',obj:"Aller chercher de NOUVEAUX contacts pros par région ou à l'international, pour agrandir ta base au-delà de tes clients actuels.",how:["Choisis la source : Apify (Google Maps, par ville) ou Apollo (B2B, par secteur/pays).","Indique quoi chercher, où, et le volume.","Lance : les résultats s'ajoutent à tes Contacts avec le tag de la source.","⚖️ Réservé au B2B public (entreprises) — pas de démarchage de particuliers non consentants."]},
+ contenus:{ic:'🖼️',t:'Bibliothèque de contenus',obj:"Ton stock de matériel marketing rangé au même endroit : plaquettes PDF, landing pages, réels Instagram, liens, formulaires.",how:["Importe un contenu (bouton ＋) — il devient réutilisable partout.","Chaque contenu a son type (plaquette, landing, réel, lien, formulaire…).","Depuis une campagne, tu l'attaches en 1 clic sans le chercher sur ton ordinateur."]}
+};
+const ov=document.getElementById('ov');
+function openDoc(k){const d=DOC[k];document.getElementById('mIc').textContent=d.ic;document.getElementById('mT').textContent=d.t;
+ document.getElementById('mB').innerHTML=`<div class="blk"><div class="k">🎯 Son objet</div><p>${d.obj}</p></div><div class="blk"><div class="k">📖 Mode d'emploi</div><ol>${d.how.map(x=>`<li>${x}</li>`).join('')}</ol></div>`;
+ ov.classList.add('on');}
+document.getElementById('infoBtn').onclick=()=>openDoc(cur);
+document.getElementById('mx').onclick=()=>ov.classList.remove('on');
+ov.onclick=e=>{if(e.target===ov)ov.classList.remove('on');};
+// petites bulles "?" sur KPI
+document.querySelectorAll('.mini-i').forEach(m=>m.onclick=()=>alert(m.dataset.tip));
+</script>
+</body>
+</html>
