@@ -19,6 +19,9 @@ note de synthèse BNP Paribas 7 pages, Avis Risk, Présentation Crédit / MEP + 
 - **Grande feuille façon document A4** : bloc blanc centré (≈ 820 px), interligne large, titres et
   paragraphes lisibles (pas de tableaux denses), imprimable.
 - Boutons : **⬇ Exporter la note (Word)**, **Enrichir avec l'IA** (optionnel), **Actualiser**.
+- **La « Décision / Recommandation » est un BOUTON À PART** : elle ne s'affiche pas automatiquement
+  dans la note ; on clique **« Générer la décision »** → elle sort dans son propre bloc, avec son
+  **propre export Word** (toujours exportable).
 
 ## 2. Champs de renseignement (qualitatifs, tous optionnels — non bloquants)
 Regroupés dans un panneau repliable en tête de page.
@@ -90,7 +93,7 @@ Paragraphe de synthèse + **✓ points forts** / **⚠ points de vigilance** + a
 Flux confiés (% du CA / flux mensuel moyen), lignes en place, comportement du compte (débiteur, ruptures),
 incidents (INT/CH), statut **WL**.
 
-### E. Décision / Recommandation
+### E. Décision / Recommandation — **bouton séparé** (« Générer la décision ») + **export Word propre**
 - **Lignes recommandées** (mapping besoin → ligne, depuis le catalogue) avec **montant indicatif** & justification :
   - décalages trésorerie → *Facilité de caisse / Découvert / Crédit Spot* ;
   - stocks importants / import MP → *Avance sur marchandises / Refinancement import / Obligations cautionnées douane* ;
@@ -121,6 +124,7 @@ Pièces fournies / **demandées non fournies** · avertissement (aide à la déc
 - **Zéro impact** sur le site voyages21.
 
 ## 8. À confirmer (défauts proposés)
-- **A.** La note **inclut** la section « Décision / Recommandation » (avis + lignes). *(défaut : oui)*
+- **A.** ~~La note inclut la section Décision~~ → **DÉCIDÉ** : la **Décision / Recommandation** est un
+  **bouton séparé** (« Générer la décision ») avec son **propre export Word**, distinct de la note d'analyse.
 - **B.** Génération **déterministe** + bouton **« Enrichir avec l'IA »**. *(défaut : oui)*
 - **C.** Nouveaux champs chiffrés (CCA, achats revendus, immo brutes+amort) ajoutés à l'onglet Dossier. *(défaut : oui)*
