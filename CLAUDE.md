@@ -6,6 +6,19 @@
 > sur `main`, toujours branche + PR + preview, une seule IA par branche à la fois.
 > Le site officiel est **https://www.voyages21.com** (`voyages21.vercel.app` = adresse technique).
 
+## 🎛️ Cockpit Projets — mémoire centrale (mot-clé « REVUE COCKPIT » / « COCKPIT »)
+Le **Cockpit** (`cockpit-v4.html` + données `cockpit-data.json`, racine) est la
+**mémoire de TOUS les projets de Karim** (site, Hajj, avis, B2B, HAYDEN 21, agence
+web IA, devis, content-studio, V21 USA, ReelsApp, YouTube Monitor, sauvegarde…),
+360° par **catégorie** et par **statut** (publié / en cours / en suspens / planifié /
+terminé / abandonné), avec pour chaque projet son URL, ses **3 dernières actions** et
+ses **questions/décisions en attente**. Un cron (`.github/workflows/revue-cockpit.yml`)
+ouvre chaque soir (20:00 Maroc) une **Issue de rappel**. Dès que Karim écrit
+**« REVUE COCKPIT »** (ou « COCKPIT »), exécuter la procédure de `REVUE-COCKPIT.md`
+(collecter les évolutions du jour → mettre à jour `cockpit-data.json` → commit + PR →
+remonter les questions en attente). **Karim ne doit jamais réexpliquer ses projets :
+c'est le Cockpit qui se souvient.**
+
 ## 🔁 Reprise rapide du site (mot-clé « www.voyages21.com »)
 Dès que Karim écrit **« www.voyages21.com »** (même seul, ou « V21 site », ou
 « on reprend ») au début d'une conversation : NE PAS demander de contexte, NE PAS
