@@ -1190,6 +1190,43 @@
     download((state.societe || 'dossier').replace(/\s+/g, '_') + '_decision.doc', wordDoc('Décision — ' + (state.societe || ''), decisionHTML()), 'doc');
     toast('Décision exportée (Word)');
   }
+  // ---- Export Word du commentaire d'analyste ----
+  function commentaireDocHTML() {
+    return "<h1 style='color:" + GREENH + ";font-family:Georgia,serif'>Commentaire de l'analyste — " + hesc(state.societe || '') + "</h1>" +
+      "<p style='color:#555'>Exercice " + hesc(ref() ? ref().annee : '') + "</p><div style='white-space:pre-wrap'>" + hesc(lastCommentaire) + "</div>";
+  }
+  function downloadCommentaire() {
+    if (!lastCommentaire) { toast("Génère d'abord le commentaire"); return; }
+    download((state.societe || 'dossier').replace(/\s+/g, '_') + '_commentaire.doc', wordDoc('Commentaire — ' + (state.societe || ''), commentaireDocHTML()), 'doc');
+    toast('Commentaire exporté (Word)');
+  }
+  // ---- Champ « Demander une explication » (contextualisée à la société) ----
+  var lastExplain = '', lastExplainTerm = '';
+  function explainDocHTML(term, text) {
+    return "<h1 style='color:" + GREENH + ";font-family:Georgia,serif'>Explication — " + hesc(term) + "</h1>" +
+      "<p style='color:#555'>" + hesc(state.societe || '') + (ref() ? " · exercice " + hesc(ref().annee) : '') + "</p>" +
+      "<div style='white-space:pre-wrap'>" + hesc(text) + "</div>";
+  }
+  function runExplain() {
+    var inp = $('explainIn'); if (!inp) return;
+    var q = inp.value.trim(); if (!q) return;
+    var out = $('explainOut'); if (!out) return;
+    out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Explication en cours…';
+    var prompt = "Explique de façon simple et pédagogique « " + q + " » DANS LE CONTEXTE de cette société. " +
+      "Donne : la définition, la formule, la VALEUR chez cette société (utilise les chiffres du contexte fourni) et ce que cela traduit concrètement pour elle (bon / à surveiller / risqué). " +
+      "Français, clair, 6 à 10 lignes, sans jargon inutile.";
+    lastExplain = ''; lastExplainTerm = q;
+    streamPost({ messages: [{ role: 'user', content: prompt }], context: buildContext(), notes: state.notes, model: aiModel }, function (p) { out.textContent = p; })
+      .then(function (t) {
+        out.textContent = t; lastExplain = t;
+        addTrace('Explication', "Explication : " + q.slice(0, 48) + " — " + (state.societe || ''), explainDocHTML(q, t));
+      }, function (e) { out.textContent = '⚠ IA indisponible : ' + (e.message || e); });
+  }
+  function downloadExplain() {
+    if (!lastExplain) { toast("Demande d'abord une explication"); return; }
+    download('explication_' + (lastExplainTerm || '').replace(/\s+/g, '_').slice(0, 30) + '.doc', wordDoc('Explication — ' + lastExplainTerm, explainDocHTML(lastExplainTerm, lastExplain)), 'doc');
+    toast('Explication exportée (Word)');
+  }
 
   // ---------------- Navigation & init ----------------
   function showTab(name) {
@@ -1253,8 +1290,9 @@
     var dlMap = { researchDl: downloadResearch, briefDl: downloadBrief, summarizeDl: downloadSummarize, chatDl: downloadChat };
     Object.keys(dlMap).forEach(function (id) { var b = $(id); if (b) b.addEventListener('click', dlMap[id]); });
     // Onglet Note d'analyse
-    var noteMap = { btnNoteRefresh: renderNote, btnNoteWord: downloadNote, btnNoteSave: saveNoteTrace, btnDecision: renderDecision, btnDecisionWord: downloadDecision, btnCommentaire: runCommentaire, btnTracesClear: clearTraces };
+    var noteMap = { btnNoteRefresh: renderNote, btnNoteWord: downloadNote, btnNoteSave: saveNoteTrace, btnDecision: renderDecision, btnDecisionWord: downloadDecision, btnCommentaire: runCommentaire, btnCommentaireWord: downloadCommentaire, explainBtn: runExplain, explainWord: downloadExplain, btnTracesClear: clearTraces };
     Object.keys(noteMap).forEach(function (id) { var b = $(id); if (b) b.addEventListener('click', noteMap[id]); });
+    var explainIn = $('explainIn'); if (explainIn) explainIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') runExplain(); });
     // champs de discussion par onglet
     Array.prototype.forEach.call(document.querySelectorAll('[data-discuss]'), function (b) {
       var key = b.dataset.discuss;

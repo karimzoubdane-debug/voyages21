@@ -116,10 +116,23 @@
     </div>
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-        <div><h3>💬 Commentaire de l'analyste</h3><div class="sub">Optionnel : l'IA rédige un commentaire d'analyste sur le dossier (inclus dans l'export si généré).</div></div>
-        <button class="btn sm" id="btnCommentaire">Générer le commentaire</button>
+        <div><h3>💬 Commentaire de l'analyste</h3><div class="sub">Optionnel : l'IA rédige un commentaire d'analyste sur le dossier (inclus dans l'export de la note si généré).</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" id="btnCommentaire">Générer le commentaire</button>
+          <button class="btn ghost sm" id="btnCommentaireWord">⬇ Word</button>
+        </div>
       </div>
       <div id="noteComment" class="interp" style="margin-top:10px;white-space:pre-wrap"></div>
+    </div>
+    <div class="card">
+      <h3>❓ Demander une explication</h3>
+      <div class="sub">Tape un terme ou un ratio (ex. « gearing », « BFR », « DSCR ») → l'IA l'explique <b>dans le contexte de cette société</b>, avec ses chiffres.</div>
+      <div class="chat-in">
+        <input id="explainIn" placeholder="Ex : explique le gearing pour cette société" autocomplete="off">
+        <button class="btn gold" id="explainBtn">Expliquer</button>
+      </div>
+      <div id="explainOut" class="interp" style="margin-top:10px;white-space:pre-wrap"></div>
+      <div style="margin-top:8px"><button class="btn ghost sm" id="explainWord">⬇ Télécharger en Word</button></div>
     </div>
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
