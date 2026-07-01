@@ -29,7 +29,7 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
-## 📍 Dernier point (27/06/2026 — soir) — 🎬 REEL HAJJ 2027 (Meta Ads)
+## 📍 Dernier point (01/07/2026) — 🎬 REEL HAJJ 2027 (Meta Ads)
 - Karim a fourni **5 maquettes vraies-couleurs Hajj 2027** (ChatGPT, uploadées sur
   GitHub, commit `4dbda78`). Rangées + renommées dans l'ordre tunnel →
   `content-studio/hajj-2027/01_cover … 05_cta.png`.
