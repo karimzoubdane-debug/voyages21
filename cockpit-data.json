@@ -1,10 +1,11 @@
 {
   "_meta": {
-    "version": "5.0",
+    "version": "5.1",
     "last_updated": "2026-07-01",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
+    "review_note": "Recherche fine et exhaustive du depot (fichiers, dossiers, branches, catalogues) + 3 passes de revue : inventaire, enrichissement (statuts/actions/questions), consolidation. Passe de 14 a 36 projets.",
     "repo": "karimzoubdane-debug/voyages21",
     "instructions": "MEMOIRE CENTRALE DES PROJETS DE KARIM. Mis a jour a chaque revue du soir (cron 20:00 + mot-cle REVUE COCKPIT). Pour chaque projet : statut, url, 3 dernieres actions, questions/decisions en attente. Ne pas modifier a la main sauf urgence.",
     "categories": [
@@ -79,31 +80,276 @@
       ]
     },
     {
-      "id": 5,
-      "cat": "marketing",
+      "id": 15,
+      "cat": "site",
       "status": "publie",
-      "title": "Avis Google (affiche + assistant)",
-      "desc": "Systeme de collecte d'avis Google Business : affiche cliquable, QR codes, plaquette WhatsApp, assistant de redaction d'avis FR/AR (/avis-guide) et lien court /avis.",
-      "url": "https://www.voyages21.com/avis",
-      "nextStep": "Diffuser l'affiche + QR aux clients (agence, WhatsApp, email)",
+      "title": "Pole Omra (catalogue departs)",
+      "desc": "Ensemble des pages Omra du site (6 departs : 01/06/08/27 juillet, Etihad, Istanbul, Mouharram) + page Omra principale. Menu Omra & Hajj avec onglets.",
+      "url": "https://www.voyages21.com/voyages/omra.html",
+      "nextStep": "Mettre a jour les departs Omra a venir + prix",
       "lastActions": [
-        { "date": "2026-06-27", "text": "Affiche cliquable /avis-affiche + Open Graph WhatsApp (PR #100)" },
-        { "date": "2026-06-27", "text": "Assistant /avis-guide FR/AR + temoignages + plaquette WhatsApp (PR #100/#101)" },
-        { "date": "2026-06-26", "text": "Lien court /avis -> Google Business + QR code + affiche A4 (PR #99)" }
+        { "date": "2026-06-15", "text": "Depart Omra 27 juillet (Etihad) integre (branche codex)" },
+        { "date": "2026-06-11", "text": "Prix Omra en arabe corriges" }
       ],
       "pending": [
-        "ACTION KARIM : envoyer l'affiche/QR aux premiers clients pour lancer les avis"
+        "Quels departs Omra garder / ajouter pour la saison a venir ?"
       ],
       "lastReview": "2026-07-01",
-      "stack": "Next.js (src/app/avis*) · marketing/avis (PDF, QR, plaquettes) · Google Business",
+      "stack": "HTML statique · public/voyages · menu Omra & Hajj",
       "livrables": [
-        {"name": "Lien avis /avis", "type": "URL", "url": "https://www.voyages21.com/avis"},
-        {"name": "Assistant d'avis /avis-guide", "type": "URL", "url": "https://www.voyages21.com/avis-guide"},
-        {"name": "Affiches & QR (marketing/avis)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/marketing/avis"}
+        {"name": "Page Omra", "type": "URL", "url": "https://www.voyages21.com/voyages/omra.html"}
       ],
       "phases": [
-        {"name": "Outils de collecte", "state": "done", "items": ["Lien court /avis","QR codes couleur/noir","Affiche A4 + digitale"]},
-        {"name": "Assistant & Diffusion", "state": "in_progress", "items": ["Assistant /avis-guide FR/AR","Plaquette WhatsApp","Diffusion aux clients a faire"]}
+        {"name": "Pages & departs", "state": "done", "items": ["6 departs Omra","Page Omra principale","Menu Omra & Hajj"]},
+        {"name": "Mise a jour saison", "state": "todo", "items": ["Departs a venir","Prix a actualiser"]}
+      ]
+    },
+    {
+      "id": 16,
+      "cat": "site",
+      "status": "publie",
+      "title": "Circuits & Voyages Maroc (catalogue)",
+      "desc": "Catalogue des circuits Maroc : villes imperiales, grand discovery, best morocco, discover kingdom, imperial south, Merzouga, Dakhla, Bin El Ouidane + routes /circuits (classiques, moto, raid 4x4).",
+      "url": "https://www.voyages21.com/circuits/classiques",
+      "nextStep": "Harmoniser les fiches circuits (prix, medias) et relier au moteur de devis",
+      "lastActions": [
+        { "date": "2026-06-12", "text": "Rubrique combines + circuits harmonises (branches backup)" },
+        { "date": "2026-05-20", "text": "Fiches circuits classiques / moto / raid 4x4 creees" }
+      ],
+      "pending": [
+        "Uniformiser la grille de prix des circuits Maroc ?",
+        "Relier les circuits au moteur de devis / formulaire ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/circuits) · HTML statique (public/voyages/maroc-*)",
+      "livrables": [
+        {"name": "Circuits classiques", "type": "URL", "url": "https://www.voyages21.com/circuits/classiques"}
+      ],
+      "phases": [
+        {"name": "Fiches circuits", "state": "done", "items": ["8 circuits Maroc","Routes classiques / moto / raid 4x4"]},
+        {"name": "Harmonisation", "state": "in_progress", "items": ["Prix","Medias","Lien vers devis"]}
+      ]
+    },
+    {
+      "id": 17,
+      "cat": "site",
+      "status": "publie",
+      "title": "Catalogue Voyages Internationaux",
+      "desc": "~45 pages de destinations internationales : Europe (10), Asie (10), Turquie (5), Croisieres (4), Egypte (3), USA/Canada (3), Amerique latine (Perou, Cuba), Afrique (Tunisie, Zanzibar).",
+      "url": "https://www.voyages21.com/voyages/europe-italie.html",
+      "nextStep": "Corriger encodages / medias restants et verifier les tarifs par destination",
+      "lastActions": [
+        { "date": "2026-06-14", "text": "Correction encodage des pages + medias Tunis-Hammamet (branches codex)" },
+        { "date": "2026-06-10", "text": "Tarifs Egypte Sharm corriges + combines Asie ajoutes" }
+      ],
+      "pending": [
+        "Quelles destinations mettre en avant cette saison ?",
+        "Verifier les tarifs a jour sur toutes les pages internationales ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "HTML statique · public/voyages (~60 pages au total)",
+      "livrables": [
+        {"name": "Exemple : Italie", "type": "URL", "url": "https://www.voyages21.com/voyages/europe-italie.html"}
+      ],
+      "phases": [
+        {"name": "Production des pages", "state": "done", "items": ["Europe, Asie, Turquie","Croisieres, Egypte","Ameriques, Afrique"]},
+        {"name": "Qualite & tarifs", "state": "in_progress", "items": ["Encodages","Medias","Tarifs a jour"]}
+      ]
+    },
+    {
+      "id": 18,
+      "cat": "site",
+      "status": "en_cours",
+      "title": "Blog MARHABA & Chroniques",
+      "desc": "Espace editorial du site : blog MARHABA, page Chroniques, galerie En Images. Sert le SEO et l'inspiration voyage.",
+      "url": "https://www.voyages21.com/marhaba",
+      "nextStep": "Definir la ligne editoriale + calendrier de publication du blog",
+      "lastActions": [
+        { "date": "2026-05-25", "text": "Pages Marhaba / Chroniques / En Images en place" }
+      ],
+      "pending": [
+        "Qui redige les articles (Content Studio / Claude) et a quelle frequence ?",
+        "Relier le blog au calendrier editorial ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/marhaba, chroniques, en-images)",
+      "livrables": [
+        {"name": "Marhaba", "type": "URL", "url": "https://www.voyages21.com/marhaba"},
+        {"name": "Chroniques", "type": "URL", "url": "https://www.voyages21.com/chroniques"}
+      ],
+      "phases": [
+        {"name": "Structure", "state": "done", "items": ["Pages Marhaba / Chroniques / En Images"]},
+        {"name": "Contenu", "state": "todo", "items": ["Ligne editoriale","Calendrier","Premiers articles"]}
+      ]
+    },
+    {
+      "id": 19,
+      "cat": "site",
+      "status": "en_cours",
+      "title": "MICE & Groupes Maroc",
+      "desc": "Page dediee au tourisme d'affaires (Meetings, Incentives, Conferences, Events) et aux groupes au Maroc. Levier B2B a fort panier.",
+      "url": "https://www.voyages21.com/mice",
+      "nextStep": "Completer l'offre MICE (cas clients, formulaire de demande groupe)",
+      "lastActions": [
+        { "date": "2026-05-22", "text": "Page MICE & Groupes Maroc creee" }
+      ],
+      "pending": [
+        "Ajouter des references / cas clients MICE ?",
+        "Formulaire de demande groupe dedie ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/mice)",
+      "livrables": [
+        {"name": "Page MICE", "type": "URL", "url": "https://www.voyages21.com/mice"}
+      ],
+      "phases": [
+        {"name": "Page en ligne", "state": "done", "items": ["Presentation MICE & Groupes"]},
+        {"name": "Enrichissement", "state": "todo", "items": ["Cas clients","Formulaire groupe","Diffusion B2B"]}
+      ]
+    },
+    {
+      "id": 20,
+      "cat": "site",
+      "status": "publie",
+      "title": "Experiences & Activites au Maroc",
+      "desc": "Page catalogue des experiences et activites au Maroc (108 activites recensees cote B2B). Complementaire des circuits.",
+      "url": "https://www.voyages21.com/experiences",
+      "nextStep": "Relier les experiences au catalogue B2B (108 activites) et au devis",
+      "lastActions": [
+        { "date": "2026-05-22", "text": "Page Experiences & Activites en ligne" }
+      ],
+      "pending": [
+        "Injecter les 108 activites du dossier B2B dans la page ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/experiences)",
+      "livrables": [
+        {"name": "Page Experiences", "type": "URL", "url": "https://www.voyages21.com/experiences"}
+      ],
+      "phases": [
+        {"name": "Page en ligne", "state": "done", "items": ["Experiences & activites"]},
+        {"name": "Catalogue complet", "state": "todo", "items": ["108 activites","Lien devis"]}
+      ]
+    },
+    {
+      "id": 21,
+      "cat": "site",
+      "status": "en_cours",
+      "title": "Partenaires & Affiliation (DMC)",
+      "desc": "Page Partenaires & Affiliation Voyages21 DMC Maroc : recruter agences/apporteurs d'affaires. Levier d'acquisition B2B2C.",
+      "url": "https://www.voyages21.com/partenaires",
+      "nextStep": "Definir le programme d'affiliation (commissions, Rewardful) et l'onboarding partenaires",
+      "lastActions": [
+        { "date": "2026-05-24", "text": "Page Partenaires & Affiliation creee" }
+      ],
+      "pending": [
+        "Quel modele de commission pour les partenaires ?",
+        "Activer Rewardful pour le suivi d'affiliation ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/partenaires) · Rewardful",
+      "livrables": [
+        {"name": "Page Partenaires", "type": "URL", "url": "https://www.voyages21.com/partenaires"}
+      ],
+      "phases": [
+        {"name": "Page en ligne", "state": "done", "items": ["Presentation programme"]},
+        {"name": "Programme actif", "state": "todo", "items": ["Commissions","Rewardful","Onboarding"]}
+      ]
+    },
+    {
+      "id": 22,
+      "cat": "site",
+      "status": "en_suspens",
+      "title": "Espace Client (compte)",
+      "desc": "Espace client du site (src/app/account) : connexion, suivi des demandes/voyages. Chantier lie a l'espace admin unifie.",
+      "url": "https://www.voyages21.com/account",
+      "nextStep": "Definir le perimetre de l'espace client (auth, suivi devis) ou le mettre de cote",
+      "lastActions": [
+        { "date": "2026-05-18", "text": "Page compte (account) ebauchee" }
+      ],
+      "pending": [
+        "DECISION : developpe-t-on un vrai espace client (auth + suivi) ou on reporte ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/account)",
+      "livrables": [
+        {"name": "Espace client", "type": "URL", "url": "https://www.voyages21.com/account"}
+      ],
+      "phases": [
+        {"name": "Ebauche", "state": "in_progress", "items": ["Page account"]},
+        {"name": "Fonctionnel", "state": "todo", "items": ["Auth","Suivi devis / voyages"]}
+      ]
+    },
+    {
+      "id": 23,
+      "cat": "site",
+      "status": "en_cours",
+      "title": "Espace Admin & CMS (Sanity)",
+      "desc": "Back-office du site : page /admin (Admin Produits), outils admin standalone (admin-cover, admin-medias, admin-produits, voyage-admin) et CMS Sanity.io pour le contenu.",
+      "url": "https://www.voyages21.com/admin",
+      "nextStep": "Unifier l'espace admin (produits + medias) et brancher Sanity comme source de contenu",
+      "lastActions": [
+        { "date": "2026-06-16", "text": "Couverture des programmes brochure dans l'admin (commit 68210a1)" },
+        { "date": "2026-06-08", "text": "CMS owner/admin (branche codex cms-owner-admin)" }
+      ],
+      "pending": [
+        "Unifier les differents outils admin en un seul espace ?",
+        "Sanity devient-il la source unique du contenu du site ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/admin) · public/admin-*.html · Sanity.io",
+      "livrables": [
+        {"name": "Admin Produits", "type": "URL", "url": "https://www.voyages21.com/admin"},
+        {"name": "Admin Medias", "type": "URL", "url": "https://www.voyages21.com/admin-medias.html"}
+      ],
+      "phases": [
+        {"name": "Outils admin", "state": "done", "items": ["Admin produits","Admin medias","Admin cover"]},
+        {"name": "Unification & CMS", "state": "in_progress", "items": ["Espace unifie","Sanity source de contenu"]}
+      ]
+    },
+    {
+      "id": 24,
+      "cat": "site",
+      "status": "publie",
+      "title": "Formulaire de demande de voyage",
+      "desc": "Formulaire de demande / devis en ligne (public/formulaire-voyage.html) pour capter les demandes clients depuis le site.",
+      "url": "https://www.voyages21.com/formulaire-voyage.html",
+      "nextStep": "Brancher le formulaire sur le CRM (HubSpot) et l'app Devis",
+      "lastActions": [
+        { "date": "2026-05-15", "text": "Formulaire de demande de voyage en ligne" }
+      ],
+      "pending": [
+        "Ou arrivent les demandes du formulaire (email / HubSpot / Make) ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "HTML/JS · Web3Forms · (a brancher HubSpot)",
+      "livrables": [
+        {"name": "Formulaire de voyage", "type": "URL", "url": "https://www.voyages21.com/formulaire-voyage.html"}
+      ],
+      "phases": [
+        {"name": "Formulaire en ligne", "state": "done", "items": ["Saisie demande client"]},
+        {"name": "Integration CRM", "state": "todo", "items": ["HubSpot","App Devis"]}
+      ]
+    },
+    {
+      "id": 25,
+      "cat": "site",
+      "status": "publie",
+      "title": "FAQ — Questions frequentes",
+      "desc": "Page FAQ du site (src/app/faq) : rassure et repond aux questions frequentes des voyageurs (SEO + conversion).",
+      "url": "https://www.voyages21.com/faq",
+      "nextStep": "Enrichir la FAQ avec les questions reelles des clients",
+      "lastActions": [
+        { "date": "2026-05-20", "text": "Page FAQ creee" }
+      ],
+      "pending": [],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/faq)",
+      "livrables": [
+        {"name": "FAQ", "type": "URL", "url": "https://www.voyages21.com/faq"}
+      ],
+      "phases": [
+        {"name": "Page en ligne", "state": "done", "items": ["Questions frequentes"]}
       ]
     },
     {
@@ -133,31 +379,6 @@
         {"name": "Catalogue & Presentation", "state": "done", "items": ["78 slides master B2B","Grilles tarifaires MAD/USD/EUR","Analyse OTA"]},
         {"name": "Strategie Prospection", "state": "in_progress", "items": ["SWOT complet","Plan 12 mois","Cibles UK / Europe / Canada"]},
         {"name": "CRM & Deploiement", "state": "todo", "items": ["Pipeline HubSpot B2B","Sequences emails Brevo","Reporting KPIs mensuel"]}
-      ]
-    },
-    {
-      "id": 3,
-      "cat": "outils",
-      "status": "en_cours",
-      "title": "Application Devis & Tarification",
-      "desc": "Outil web standalone (HTML/JS) pour l'equipe finance : generation de devis clients avec import des tarifs hotels depuis Google Drive, export PDF automatique.",
-      "url": "",
-      "nextStep": "Developper l'interface de saisie et le moteur de calcul des marges",
-      "lastActions": [
-        { "date": "2026-04-15", "text": "Architecture standalone HTML/JS validee" },
-        { "date": "2026-04-15", "text": "Contrats hotels Drive = source de donnees retenue" }
-      ],
-      "pending": [
-        "Confirmer que la source des tarifs = contrats hotels sur Drive (format ?)",
-        "Qui teste l'outil cote equipe finance ?"
-      ],
-      "lastReview": "2026-07-01",
-      "stack": "HTML · JavaScript · Google Drive API · PDF.js",
-      "livrables": [],
-      "phases": [
-        {"name": "Conception", "state": "done", "items": ["Architecture standalone validee","Contrats hotels Drive = source","Equipe finance = utilisateurs"]},
-        {"name": "Developpement", "state": "in_progress", "items": ["Interface saisie devis","Import tarifs hotels","Calcul marges + prix vente","Export PDF"]},
-        {"name": "Deploiement", "state": "todo", "items": ["Tests equipe finance","Formation","Mise en production"]}
       ]
     },
     {
@@ -247,6 +468,181 @@
       ]
     },
     {
+      "id": 5,
+      "cat": "marketing",
+      "status": "publie",
+      "title": "Avis Google (affiche + assistant)",
+      "desc": "Systeme de collecte d'avis Google Business : affiche cliquable, QR codes, plaquette WhatsApp, assistant de redaction d'avis FR/AR (/avis-guide) et lien court /avis.",
+      "url": "https://www.voyages21.com/avis",
+      "nextStep": "Diffuser l'affiche + QR aux clients (agence, WhatsApp, email)",
+      "lastActions": [
+        { "date": "2026-06-27", "text": "Affiche cliquable /avis-affiche + Open Graph WhatsApp (PR #100)" },
+        { "date": "2026-06-27", "text": "Assistant /avis-guide FR/AR + temoignages + plaquette WhatsApp (PR #100/#101)" },
+        { "date": "2026-06-26", "text": "Lien court /avis -> Google Business + QR code + affiche A4 (PR #99)" }
+      ],
+      "pending": [
+        "ACTION KARIM : envoyer l'affiche/QR aux premiers clients pour lancer les avis"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/avis*) · marketing/avis (PDF, QR, plaquettes) · Google Business",
+      "livrables": [
+        {"name": "Lien avis /avis", "type": "URL", "url": "https://www.voyages21.com/avis"},
+        {"name": "Assistant d'avis /avis-guide", "type": "URL", "url": "https://www.voyages21.com/avis-guide"},
+        {"name": "Affiches & QR (marketing/avis)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/marketing/avis"}
+      ],
+      "phases": [
+        {"name": "Outils de collecte", "state": "done", "items": ["Lien court /avis","QR codes couleur/noir","Affiche A4 + digitale"]},
+        {"name": "Assistant & Diffusion", "state": "in_progress", "items": ["Assistant /avis-guide FR/AR","Plaquette WhatsApp","Diffusion aux clients a faire"]}
+      ]
+    },
+    {
+      "id": 14,
+      "cat": "marketing",
+      "status": "en_suspens",
+      "title": "Campagne Egypte / Sharm el-Sheikh",
+      "desc": "Campagne de contenu / offre autour de l'Egypte (Sharm el-Sheikh) documentee dans content-studio. En pause en attendant priorisation.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/campagne-egypte-sharm.md",
+      "nextStep": "Decider si on active la campagne Egypte ou si on la met de cote",
+      "lastActions": [
+        { "date": "2026-06-08", "text": "Note de campagne Egypte / Sharm redigee (content-studio)" }
+      ],
+      "pending": [
+        "DECISION : active-t-on la campagne Egypte maintenant, ou apres le focus Maroc ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Content Studio · Meta Ads",
+      "livrables": [
+        {"name": "Note campagne Egypte (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/campagne-egypte-sharm.md"}
+      ],
+      "phases": [
+        {"name": "Cadrage", "state": "done", "items": ["Note de campagne redigee"]},
+        {"name": "Activation", "state": "todo", "items": ["Decision go / no-go","Creas","Diffusion"]}
+      ]
+    },
+    {
+      "id": 26,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Veille concurrents",
+      "desc": "Veille documentee des concurrents (agences / DMC / OTA) dans content-studio/veille-concurrents.md. Alimente la strategie contenu et commerciale.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/veille-concurrents.md",
+      "nextStep": "Actualiser la veille et en tirer 3 actions concretes",
+      "lastActions": [
+        { "date": "2026-06-05", "text": "Veille concurrents documentee" }
+      ],
+      "pending": [
+        "A quelle frequence actualiser la veille (mensuelle ?)"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Content Studio · Apify · analyse manuelle",
+      "livrables": [
+        {"name": "Veille concurrents (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/veille-concurrents.md"}
+      ],
+      "phases": [
+        {"name": "Veille initiale", "state": "done", "items": ["Concurrents recenses"]},
+        {"name": "Suivi & actions", "state": "todo", "items": ["Mise a jour reguliere","Actions concretes"]}
+      ]
+    },
+    {
+      "id": 27,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Veille virale (contenus qui marchent)",
+      "desc": "Veille des contenus viraux voyage (formats, hooks, tendances) dans content-studio/veille-virale.md. Sert a produire des reels performants.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/veille-virale.md",
+      "nextStep": "Transformer les formats reperes en 3 scripts de reels",
+      "lastActions": [
+        { "date": "2026-06-05", "text": "Veille virale documentee" }
+      ],
+      "pending": [
+        "Quels formats viraux tester en premier ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Content Studio · Apify · Higgsfield",
+      "livrables": [
+        {"name": "Veille virale (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/veille-virale.md"}
+      ],
+      "phases": [
+        {"name": "Veille initiale", "state": "done", "items": ["Formats viraux repertories"]},
+        {"name": "Production", "state": "todo", "items": ["Scripts de reels","Tests"]}
+      ]
+    },
+    {
+      "id": 28,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Calendrier editorial",
+      "desc": "Calendrier editorial de la marque (content-studio/calendrier-editorial.md) : quoi publier, quand, sur quel canal.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/calendrier-editorial.md",
+      "nextStep": "Remplir le calendrier des 4 prochaines semaines et lancer la production",
+      "lastActions": [
+        { "date": "2026-06-05", "text": "Calendrier editorial cadre" }
+      ],
+      "pending": [
+        "Valider le rythme de publication par canal (IG / FB / TikTok / YouTube) ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Content Studio · Notion",
+      "livrables": [
+        {"name": "Calendrier editorial (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/calendrier-editorial.md"}
+      ],
+      "phases": [
+        {"name": "Cadre", "state": "done", "items": ["Structure du calendrier"]},
+        {"name": "Remplissage & prod", "state": "todo", "items": ["4 semaines planifiees","Production"]}
+      ]
+    },
+    {
+      "id": 29,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Social selling / Marketing digital",
+      "desc": "Chantier social selling & marketing digital (branche digital-marketing-social-selling) : la relation qui close la vente, pas seulement la pub. Complementaire de V21 USA.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/digital-marketing-social-selling-iywu0v",
+      "nextStep": "Definir la routine de social selling (DM, suivi, closing) et l'outiller",
+      "lastActions": [
+        { "date": "2026-06-18", "text": "Chantier social selling initie (branche dediee)" }
+      ],
+      "pending": [
+        "Quelle routine quotidienne de social selling ?",
+        "Quel outil de suivi des conversations (ManyChat / CRM) ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Meta / Instagram · ManyChat · CRM",
+      "livrables": [
+        {"name": "Branche social selling (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/digital-marketing-social-selling-iywu0v"}
+      ],
+      "phases": [
+        {"name": "Cadrage", "state": "in_progress", "items": ["Principe social selling defini"]},
+        {"name": "Routine & outils", "state": "todo", "items": ["Process DM / closing","Outil de suivi"]}
+      ]
+    },
+    {
+      "id": 30,
+      "cat": "marketing",
+      "status": "en_suspens",
+      "title": "Automatisation contenu + Chatbot",
+      "desc": "Scenario d'automatisation du contenu (Notion redige, Claude ecrit, Make publie, ManyChat capture les leads, Canva habille) + chatbot du site. Issu de l'analyse de 12 videos (branche debug-chatbot).",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/debug-chatbot-error-lsgD1",
+      "nextStep": "Decider : deployer le scenario d'automatisation (executable en 1 week-end) ou le reporter",
+      "lastActions": [
+        { "date": "2026-05-14", "text": "SCENARIO_FINAL + STRATEGIE_AUTOMATISATION_CONTENU rediges (analyse 12 videos)" },
+        { "date": "2026-05-14", "text": "Chatbot du site en debug (branche dediee)" }
+      ],
+      "pending": [
+        "DECISION : lance-t-on le scenario Notion -> Claude -> Make -> ManyChat ?",
+        "Le chatbot du site : on le reprend ou on l'abandonne ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Notion · Claude · Make · ManyChat · Canva",
+      "livrables": [
+        {"name": "SCENARIO_FINAL (branche)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/debug-chatbot-error-lsgD1"}
+      ],
+      "phases": [
+        {"name": "Strategie", "state": "done", "items": ["Scenario final","Strategie automatisation contenu","Analyse 12 videos"]},
+        {"name": "Deploiement", "state": "todo", "items": ["Notion + Claude + Make + ManyChat","Chatbot site"]}
+      ]
+    },
+    {
       "id": 9,
       "cat": "incoming",
       "status": "en_cours",
@@ -272,6 +668,31 @@
         {"name": "Strategie & Cible", "state": "done", "items": ["Objectif incoming defini","2 cercles de cible valides","Leviers ads + social selling"]},
         {"name": "Creas & Ads", "state": "in_progress", "items": ["Budget a definir","Creas Cercle 1","Offre d'appel"]},
         {"name": "Conversion & Avis", "state": "todo", "items": ["Social selling / closing","Premiers avis clients","Montee en puissance Cercle 2"]}
+      ]
+    },
+    {
+      "id": 3,
+      "cat": "outils",
+      "status": "en_cours",
+      "title": "Application Devis & Tarification",
+      "desc": "Outil web standalone (HTML/JS) pour l'equipe finance : generation de devis clients avec import des tarifs hotels depuis Google Drive, export PDF automatique.",
+      "url": "",
+      "nextStep": "Developper l'interface de saisie et le moteur de calcul des marges",
+      "lastActions": [
+        { "date": "2026-04-15", "text": "Architecture standalone HTML/JS validee" },
+        { "date": "2026-04-15", "text": "Contrats hotels Drive = source de donnees retenue" }
+      ],
+      "pending": [
+        "Confirmer que la source des tarifs = contrats hotels sur Drive (format ?)",
+        "Qui teste l'outil cote equipe finance ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "HTML · JavaScript · Google Drive API · PDF.js",
+      "livrables": [],
+      "phases": [
+        {"name": "Conception", "state": "done", "items": ["Architecture standalone validee","Contrats hotels Drive = source","Equipe finance = utilisateurs"]},
+        {"name": "Developpement", "state": "in_progress", "items": ["Interface saisie devis","Import tarifs hotels","Calcul marges + prix vente","Export PDF"]},
+        {"name": "Deploiement", "state": "todo", "items": ["Tests equipe finance","Formation","Mise en production"]}
       ]
     },
     {
@@ -303,6 +724,130 @@
       ]
     },
     {
+      "id": 31,
+      "cat": "outils",
+      "status": "en_suspens",
+      "title": "Simulateur Retraite Anticipee (Maroc)",
+      "desc": "Application Streamlit qui compare depart anticipe vs rester jusqu'a 60 ans pour un cadre bancaire marocain (GPBM) : capital net, VAN, breakeven, rente viagere, export Excel/PDF. Dossier retraite_anticipee/ (branche dediee).",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/moroccan-retirement-simulator-34e3u/retraite_anticipee",
+      "nextStep": "Deployer le simulateur (Streamlit Cloud) ou l'archiver s'il n'est plus utile",
+      "lastActions": [
+        { "date": "2026-05-30", "text": "App Streamlit complete (scenarios A/B, VAN, breakeven, export Excel/PDF)" }
+      ],
+      "pending": [
+        "DECISION : ce simulateur sert-il encore ? On le deploie, on le garde de cote ou on l'abandonne ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Python · Streamlit · Plotly · export Excel/PDF",
+      "livrables": [
+        {"name": "Simulateur retraite (branche)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/moroccan-retirement-simulator-34e3u/retraite_anticipee"}
+      ],
+      "phases": [
+        {"name": "Developpement", "state": "done", "items": ["Scenarios A/B","Calculs VAN / breakeven","Export Excel / PDF"]},
+        {"name": "Deploiement", "state": "todo", "items": ["Streamlit Cloud","OU archivage"]}
+      ]
+    },
+    {
+      "id": 32,
+      "cat": "outils",
+      "status": "en_suspens",
+      "title": "Systeme de Monetisation (acces payant Claude)",
+      "desc": "App Next.js autonome (dossier monetization/) : vendre l'acces a un chat Claude par email + mot de passe, limiter les tokens par forfait, suivre les couts, revoquer un client en 1 clic. Independant du site.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/add-monetization-system-m5xXY/monetization",
+      "nextStep": "Decider si on lance ce produit (acces payant a Claude) et le deployer, sinon archiver",
+      "lastActions": [
+        { "date": "2026-05-28", "text": "App monetization complete : login, dashboard chat, admin panel, profil, MongoDB + bcrypt" }
+      ],
+      "pending": [
+        "DECISION : commercialise-t-on l'acces payant a Claude ? Pour quelle cible / prix ?",
+        "Sinon on archive le projet ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js · MongoDB · bcrypt · Claude API · Vercel",
+      "livrables": [
+        {"name": "App monetization (branche)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/add-monetization-system-m5xXY/monetization"}
+      ],
+      "phases": [
+        {"name": "Developpement", "state": "done", "items": ["Login + auth","Dashboard chat Claude","Admin panel + suivi couts","Revocation client"]},
+        {"name": "Lancement", "state": "todo", "items": ["Cible + prix","Deploiement","OU archivage"]}
+      ]
+    },
+    {
+      "id": 12,
+      "cat": "outils",
+      "status": "en_cours",
+      "title": "Cockpit Projets (cette appli)",
+      "desc": "Tableau de bord central = memoire de tous les projets de Karim. 360 par categorie et statut, URL + 3 dernieres actions + questions en attente par projet, revue automatique du soir.",
+      "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html",
+      "nextStep": "Publier l'appli dans public/ pour une URL propre (voyages21.vercel.app) + completer les fiches",
+      "lastActions": [
+        { "date": "2026-07-01", "text": "Recherche exhaustive du depot + 3 revues : passe de 14 a 36 projets" },
+        { "date": "2026-07-01", "text": "v5 : 360 projets par categorie/statut + URL + 3 dernieres actions + questions (PR #112 mergee)" },
+        { "date": "2026-07-01", "text": "Cron de revue du soir (20:00) + rappel GitHub Issue ajoutes" }
+      ],
+      "pending": [
+        "Publier l'appli dans public/ pour l'URL voyages21.vercel.app/cockpit-v4.html ?",
+        "Completer / corriger les fiches (les projets oublies retrouves dans les branches sont-ils toujours d'actualite ?)"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "HTML/JS statique · cockpit-data.json · raw GitHub · GitHub Actions (cron)",
+      "livrables": [
+        {"name": "Cockpit (rendu en ligne)", "type": "URL", "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html"},
+        {"name": "Donnees cockpit-data.json", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-data.json"}
+      ],
+      "phases": [
+        {"name": "v4 — Auto-sync", "state": "done", "items": ["Lecture cockpit-data.json depuis GitHub","Cartes + filtres + modal"]},
+        {"name": "v5 — Memoire 360", "state": "done", "items": ["Statuts publie/suspens/abandonne","URL + 3 dernieres actions + questions","Cron revue du soir"]},
+        {"name": "Consolidation", "state": "in_progress", "items": ["36 projets seedes","Publication public/ a faire","Fiches a valider par Karim"]}
+      ]
+    },
+    {
+      "id": 33,
+      "cat": "outils",
+      "status": "planifie",
+      "title": "App comparaison multi-IA",
+      "desc": "Projet exploratoire : application de comparaison de plusieurs modeles d'IA cote a cote (branche multi-ai-comparison-app). Base Next.js posee, contenu a preciser.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/multi-ai-comparison-app-rehGW",
+      "nextStep": "Preciser l'objectif de l'app (usage interne ? produit ?) ou l'abandonner",
+      "lastActions": [
+        { "date": "2026-05-26", "text": "Branche exploratoire creee (scaffold Next.js)" }
+      ],
+      "pending": [
+        "A quoi doit servir cette app multi-IA ? On la poursuit ou on l'abandonne ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (exploratoire)",
+      "livrables": [
+        {"name": "Branche multi-IA (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/multi-ai-comparison-app-rehGW"}
+      ],
+      "phases": [
+        {"name": "Exploration", "state": "in_progress", "items": ["Scaffold pose","Objectif a preciser"]}
+      ]
+    },
+    {
+      "id": 34,
+      "cat": "outils",
+      "status": "planifie",
+      "title": "Plateforme apprentissage Python",
+      "desc": "Projet exploratoire : plateforme d'apprentissage Python (branche setup-python-learning-platform). Base posee, a cadrer.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/setup-python-learning-platform-0WhJn",
+      "nextStep": "Preciser le public et l'objectif, ou abandonner",
+      "lastActions": [
+        { "date": "2026-05-26", "text": "Branche exploratoire creee" }
+      ],
+      "pending": [
+        "Ce projet est-il toujours d'actualite ? Pour qui ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js / Python (exploratoire)",
+      "livrables": [
+        {"name": "Branche Python learning (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/setup-python-learning-platform-0WhJn"}
+      ],
+      "phases": [
+        {"name": "Exploration", "state": "in_progress", "items": ["Base posee","A cadrer"]}
+      ]
+    },
+    {
       "id": 11,
       "cat": "veille",
       "status": "en_cours",
@@ -325,34 +870,6 @@
       "phases": [
         {"name": "Script & Config", "state": "done", "items": ["monitor.js","channels.json (chaines de reference)"]},
         {"name": "Automatisation", "state": "todo", "items": ["Cron d'execution","Notifications","Ajout de chaines"]}
-      ]
-    },
-    {
-      "id": 12,
-      "cat": "outils",
-      "status": "en_cours",
-      "title": "Cockpit Projets (cette appli)",
-      "desc": "Tableau de bord central = memoire de tous les projets de Karim. v5 : 360 par categorie et statut (publie/en cours/en suspens/planifie/termine/abandonne), URL + 3 dernieres actions + questions en attente par projet, revue automatique du soir.",
-      "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html",
-      "nextStep": "Publier l'appli dans public/ pour une URL propre (voyages21.vercel.app) + activer le cron de revue du soir",
-      "lastActions": [
-        { "date": "2026-07-01", "text": "v5 : 360 projets par categorie/statut + URL + 3 dernieres actions + questions en attente" },
-        { "date": "2026-07-01", "text": "Cron de revue du soir (20:00) + rappel GitHub Issue ajoutes" },
-        { "date": "2026-04-19", "text": "v4 : lecture auto des donnees depuis GitHub (cockpit-data.json)" }
-      ],
-      "pending": [
-        "Publier l'appli dans public/ pour l'URL voyages21.vercel.app/cockpit-v4.html ?",
-        "Completer / corriger les fiches projets seedees automatiquement"
-      ],
-      "lastReview": "2026-07-01",
-      "stack": "HTML/JS statique · cockpit-data.json · raw GitHub · GitHub Actions (cron)",
-      "livrables": [
-        {"name": "Cockpit (rendu en ligne)", "type": "URL", "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html"},
-        {"name": "Donnees cockpit-data.json", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-data.json"}
-      ],
-      "phases": [
-        {"name": "v4 — Auto-sync", "state": "done", "items": ["Lecture cockpit-data.json depuis GitHub","Cartes + filtres + modal"]},
-        {"name": "v5 — Memoire 360", "state": "in_progress", "items": ["Statuts publie/suspens/abandonne","URL + 3 dernieres actions + questions","Cron revue du soir","Publication public/ a faire"]}
       ]
     },
     {
@@ -380,27 +897,52 @@
       ]
     },
     {
-      "id": 14,
-      "cat": "marketing",
+      "id": 35,
+      "cat": "veille",
       "status": "en_suspens",
-      "title": "Campagne Egypte / Sharm el-Sheikh",
-      "desc": "Campagne de contenu / offre autour de l'Egypte (Sharm el-Sheikh) documentee dans content-studio. En pause en attendant priorisation.",
-      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/campagne-egypte-sharm.md",
-      "nextStep": "Decider si on active la campagne Egypte ou si on la met de cote",
+      "title": "Audit Vercel Voyages21",
+      "desc": "Audit de la configuration / performance Vercel du projet (branche vercel-audit-voyages21). Verifier reglages, domaines, perfs.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/vercel-audit-voyages21-qzr4og",
+      "nextStep": "Appliquer les recommandations de l'audit Vercel restantes",
       "lastActions": [
-        { "date": "2026-06-08", "text": "Note de campagne Egypte / Sharm redigee (content-studio)" }
+        { "date": "2026-06-02", "text": "Audit Vercel realise (branche dediee)" }
       ],
       "pending": [
-        "DECISION : active-t-on la campagne Egypte maintenant, ou apres le focus Maroc ?"
+        "Quelles recommandations de l'audit reste-t-il a appliquer ?"
       ],
       "lastReview": "2026-07-01",
-      "stack": "Content Studio · Meta Ads",
+      "stack": "Vercel · Next.js",
       "livrables": [
-        {"name": "Note campagne Egypte (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/campagne-egypte-sharm.md"}
+        {"name": "Branche audit Vercel (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/vercel-audit-voyages21-qzr4og"}
       ],
       "phases": [
-        {"name": "Cadrage", "state": "done", "items": ["Note de campagne redigee"]},
-        {"name": "Activation", "state": "todo", "items": ["Decision go / no-go","Creas","Diffusion"]}
+        {"name": "Audit", "state": "done", "items": ["Analyse config Vercel"]},
+        {"name": "Corrections", "state": "todo", "items": ["Appliquer recommandations"]}
+      ]
+    },
+    {
+      "id": 36,
+      "cat": "veille",
+      "status": "en_suspens",
+      "title": "Nettoyage base clients / CRM",
+      "desc": "Chantier de nettoyage et structuration de la base clients (branche client-database-cleanup) : deduplication, qualification, prep import CRM (HubSpot).",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/client-database-cleanup-zubzov",
+      "nextStep": "Finaliser le nettoyage et importer la base propre dans HubSpot",
+      "lastActions": [
+        { "date": "2026-06-04", "text": "Chantier de nettoyage base clients initie" }
+      ],
+      "pending": [
+        "Ou est la base clients source (fichier / Drive) ?",
+        "On importe dans HubSpot une fois nettoyee ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "CSV / Sheets · HubSpot",
+      "livrables": [
+        {"name": "Branche nettoyage clients (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/client-database-cleanup-zubzov"}
+      ],
+      "phases": [
+        {"name": "Nettoyage", "state": "in_progress", "items": ["Deduplication","Qualification"]},
+        {"name": "Import CRM", "state": "todo", "items": ["HubSpot"]}
       ]
     }
   ]
