@@ -5826,7 +5826,8 @@
     function marquerVu(){ try{ localStorage.setItem(KEY,new Date().toISOString().slice(0,10)); }catch(e){} }
     if(dejaVu()) return;
 
-    fetch('/promos.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(cfg){
+    function charger(){ return fetch('/api/promos',{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).catch(function(){ return fetch('/promos.json',{cache:'no-store'}).then(function(r){return r.json();}); }); }
+    charger().then(function(cfg){
       if(!cfg || cfg.actif===false) return;
       var offre=(cfg.offres||[]).filter(function(o){return o && o.actif!==false;})[0];
       if(!offre) return;

@@ -18,6 +18,7 @@ const TOOLS = {
   cover: { href: '/admin-cover.html', icon: '📕', title: 'Cover Magazine', desc: 'Gérer les couvertures du site' },
   fiche: { href: '/formulaire-voyage.html', icon: '📝', title: 'Fiche Voyages', desc: 'Préparer une fiche voyage' },
   medias: { href: '/admin-medias.html', icon: '🖼️', title: 'Gestion des médias', desc: 'Photos et vidéos des voyages' },
+  popup: { href: '/admin-popup.html', icon: '📣', title: 'Popup / Offre du jour', desc: "Fenêtre promo de l'accueil (image ou reel)" },
 };
 
 export default function AdminPortal() {
@@ -226,7 +227,7 @@ export default function AdminPortal() {
   }
 
   const isOwner = role === 'owner';
-  const tools = isOwner ? [TOOLS.produits, TOOLS.cover, TOOLS.fiche, TOOLS.medias] : [TOOLS.fiche, TOOLS.medias];
+  const tools = isOwner ? [TOOLS.produits, TOOLS.cover, TOOLS.popup, TOOLS.fiche, TOOLS.medias] : [TOOLS.fiche, TOOLS.medias];
 
   return (
     <Shell>
