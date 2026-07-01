@@ -6,6 +6,11 @@
 > sur `main`, toujours branche + PR + preview, une seule IA par branche à la fois.
 > Le site officiel est **https://www.voyages21.com** (`voyages21.vercel.app` = adresse technique).
 
+## 🗣️ Style de réponse à Karim (RÈGLE GRAVÉE — toujours)
+Répondre **TOUJOURS** à Karim en **liste de points, 1 point = 1 phrase courte**, droit
+au but, sans blabla ni longs paragraphes. Une action = une phrase, puis attendre son
+« go » avant l'étape suivante quand il pilote pas à pas.
+
 ## 🔁 Reprise rapide du site (mot-clé « www.voyages21.com »)
 Dès que Karim écrit **« www.voyages21.com »** (même seul, ou « V21 site », ou
 « on reprend ») au début d'une conversation : NE PAS demander de contexte, NE PAS
