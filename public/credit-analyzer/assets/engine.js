@@ -53,6 +53,11 @@
         RN = num(ex.resultatNet), CAF = num(ex.caf),
         CF = num(ex.chargesFinancieres), PERS = num(ex.chargesPersonnel),
         ACH = num(ex.achats);
+    // -- Compléments "note d'analyse" (facultatifs, non bloquants) --
+    var CCA = num(ex.comptesCourantsAssocies),      // comptes courants d'associés (quasi-FP)
+        ACHR = num(ex.achatsRevendus),              // achats revendus (négoce) -> marge commerciale
+        IMMOB = num(ex.immoBrutes),                 // immobilisations brutes
+        AMORTC = num(ex.amortissementsCumules);     // amortissements cumulés
 
     // -- Retraitements hors-bilan (méthode banque) --
     // EENE (effets escomptés non échus) : réintégrés en créances clients (actif
@@ -113,6 +118,17 @@
       delaiClients: caTTC ? CLI / caTTC * 360 : null,
       delaiFournisseurs: achTTC ? FRS / achTTC * 360 : null,
       rotationStocks: CA ? STK / CA * 360 : null,
+      // -- Compléments "note d'analyse" --
+      cca: CCA,
+      erElargi: safeDiv(CP + CCA, totalBilan),          // (FP + CCA) / total bilan
+      gearingElargi: posDiv(DF, CP + CCA),              // dettes financ. / (FP + CCA)
+      margeCommercialeBrute: CA ? (CA - (ACHR || ACH)) / CA : null, // (ventes − achats revendus) / ventes
+      cfbe: CAF,                                        // cash-flow brut d'exploitation = CAF
+      cfne: null,                                       // cash-flow net = CFBE − ΔBFR (au niveau série)
+      pbp: posDiv(DF, CAF),                             // pay-back = dettes financ. / CFBE (années)
+      amortissementAI: safeDiv(AMORTC, IMMOB),          // taux d'amortissement de l'actif immobilisé
+      stockMois: CA ? STK / CA * 12 : null,             // rotation stocks en mois
+      delaiFournisseursMois: achTTC ? FRS / achTTC * 12 : null,
       croissanceCA: null // rempli au niveau série
     };
   }
@@ -129,6 +145,11 @@
     for (var i = 1; i < results.length; i++) {
       var ca0 = num(results[i - 1].input.ca), ca1 = num(results[i].input.ca);
       results[i].r.croissanceCA = ca0 ? (ca1 / ca0 - 1) : null;
+    }
+    // CFNE = cash-flow net d'exploitation = CFBE − variation du BFR (nécessite l'exercice précédent)
+    for (var j = 1; j < results.length; j++) {
+      var rj = results[j].r, dBFR = num(rj.BFR) - num(results[j - 1].r.BFR);
+      rj.cfne = num(rj.cfbe) - dBFR;
     }
     // DSCR = EBE / service de la dette (frais fin. + échéance DLMT + annuité crédit-bail)
     results.forEach(function (res, i) {
@@ -421,6 +442,8 @@
   function signePct(x) { return x == null ? '—' : (x >= 0 ? '+' : '') + (num(x) * 100).toFixed(1).replace('.', ',') + ' %'; }
   function ratio(x) { return x == null ? '—' : num(x).toFixed(2).replace('.', ','); }
   function annees(x) { return x == null ? '—' : num(x).toFixed(1).replace('.', ',') + ' an' + (num(x) >= 2 ? 's' : ''); }
+  function jours(x) { return x == null ? '—' : Math.round(num(x)) + ' j'; }
+  function mois(x) { return x == null ? '—' : num(x).toFixed(1).replace('.', ',') + ' mois'; }
 
   var api = {
     DEFAULT_CONFIG: DEFAULT_CONFIG, num: num,
@@ -430,7 +453,7 @@
     evalFaciliteCaisse: evalFaciliteCaisse, evalLeasing: evalLeasing,
     evalAffacturage: evalAffacturage, buildSynthese: buildSynthese,
     scoreSante: scoreSante, pvFactor: pvFactor, loanPayment: loanPayment,
-    fmt: { dh: dh, pct: pct, signePct: signePct, ratio: ratio, annees: annees }
+    fmt: { dh: dh, pct: pct, signePct: signePct, ratio: ratio, annees: annees, jours: jours, mois: mois }
   };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

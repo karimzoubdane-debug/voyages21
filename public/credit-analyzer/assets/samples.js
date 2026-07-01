@@ -37,6 +37,12 @@ window.CREDIT_FIELDS = [
     { key: 'echeanceDLMT',         label: 'Échéance DLMT (annuité en capital)', hint: 'vide = estimée par la variation des dettes' },
     { key: 'creditBailHorsBilan',  label: 'Crédit-bail hors bilan (encours)', hint: 'réintégré en immobilisations + dettes financières' },
     { key: 'eene',                 label: 'Effets escomptés non échus (EENE)', hint: 'réintégrés en créances clients + concours court terme' }
+  ]},
+  { group: 'Compléments Note d\'analyse (optionnel)', rows: [
+    { key: 'comptesCourantsAssocies', label: 'Comptes courants d\'associés (CCA)', hint: 'quasi-fonds propres → ER élargi & apports' },
+    { key: 'achatsRevendus',          label: 'Achats revendus (négoce)', hint: 'pour la marge commerciale brute' },
+    { key: 'immoBrutes',              label: 'Immobilisations brutes', hint: 'pour le % d\'amortissement de l\'actif' },
+    { key: 'amortissementsCumules',   label: 'Amortissements cumulés', hint: 'pour le % d\'amortissement de l\'actif' }
   ]}
 ];
 
@@ -50,14 +56,16 @@ window.SAMPLE_V21 = {
       actifImmobilise: 709343.09, actifCirculant: 2065739.84, tresoActif: 383394.29,
       capitauxPropres: 984586.67, dettesFinancement: 480146.74, financementPermanent: 1464733.41,
       passifCirculant: 1693743.81, tresoPassif: 0, totalBilan: 3158477.22,
-      clients: 772916.64, fournisseurs: 165496.45, stocks: 0 },
+      clients: 772916.64, fournisseurs: 165496.45, stocks: 0,
+      immoBrutes: 1015955.80, amortissementsCumules: 506612.71, comptesCourantsAssocies: 63430.19 },
     { annee: 2025, ca: 11228163.76, va: 911689.21, ebe: 328812.60, resultatExploitation: 291420.56,
       dotationsExploitation: 37392.04, resultatNet: 228277.30, caf: 265669.34, chargesFinancieres: 0,
       chargesPersonnel: 566448.61, achats: 10107841.90,
       actifImmobilise: 691951.05, actifCirculant: 2116782.07, tresoActif: 125756.93,
       capitauxPropres: 1212863.97, dettesFinancement: 325226.64, financementPermanent: 1538090.61,
       passifCirculant: 1280393.51, tresoPassif: 116005.93, totalBilan: 2934490.05,
-      clients: 454315.41, fournisseurs: 171969.00, stocks: 0 }
+      clients: 454315.41, fournisseurs: 171969.00, stocks: 0,
+      immoBrutes: 1015955.80, amortissementsCumules: 544004.75, comptesCourantsAssocies: 8096.23 }
   ]
 };
 

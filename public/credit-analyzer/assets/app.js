@@ -14,7 +14,7 @@
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function load() { try { var s = JSON.parse(localStorage.getItem(LS_KEY)); return s && s.exercices ? s : null; } catch (e) { return null; } }
   function save() {
-    try { localStorage.setItem(LS_KEY, JSON.stringify({ societe: state.societe, exercices: state.exercices, notes: state.notes, config: config })); } catch (e) {}
+    try { localStorage.setItem(LS_KEY, JSON.stringify({ societe: state.societe, exercices: state.exercices, notes: state.notes, renseignements: state.renseignements, config: config })); } catch (e) {}
   }
   function $(id) { return document.getElementById(id); }
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
@@ -847,6 +847,283 @@
     dlWord('discussion_analyste.doc', veilleWordDoc('Discussion avec l\'analyste crédit', state.societe ? 'Société : ' + state.societe : '', body));
   }
 
+  // ================= Onglet Note d'analyse & décision =================
+  // Champs de renseignement (qualitatifs, TOUS optionnels — jamais bloquants)
+  var RENSEIGN = [
+    ['Identité', [
+      ['formeJuridique', 'Forme juridique (SARL, SA…)'], ['capitalSocial', 'Capital social (DH)'],
+      ['dateCreation', 'Date de création (année)'], ['secteur', 'Secteur'], ['region', 'Région'],
+      ['objetSocial', "Objet social / description de l'activité", 1]
+    ]],
+    ['Actionnariat & dirigeants', [['actionnariat', 'Actionnariat / dirigeants (noms, âges, %)', 1]]],
+    ['Demande de concours', [
+      ['objetConcours', 'Objet du concours (besoin, montant, durée, affectation)', 1],
+      ['sourceRemb', 'Source de remboursement']
+    ]],
+    ['Marché & concentration', [
+      ['clientsPrincipaux', 'Principaux clients (+ poids %)'], ['fournisseursPrincipaux', 'Principaux fournisseurs (+ poids %)'],
+      ['saisonnalite', 'Saisonnalité']
+    ]],
+    ['Relations bancaires', [
+      ['poolBancaire', 'Pool bancaire'], ['fluxConfies', 'Flux confiés (% du CA / flux mensuel)'],
+      ['lignesEnPlace', 'Lignes en place'], ['incidents', 'Incidents (impayés, chèques)'],
+      ['cotation', 'Cotation Bank Al-Maghrib'], ['wl', 'Statut Watch List (WL)']
+    ]],
+    ['Garanties & faits marquants', [
+      ['garanties', 'Garanties / sûretés proposées'], ['cautionsDonnees', 'Cautions données (hors-bilan)'],
+      ['litiges', 'Litiges / contentieux'], ['faitMarquant', 'Faits marquants', 1],
+      ['piecesManquantes', 'Pièces demandées non fournies']
+    ]]
+  ];
+  function renderRenseign() {
+    var g = $('renseignGrid'); if (!g) return; g.innerHTML = '';
+    var R = state.renseignements || (state.renseignements = {});
+    RENSEIGN.forEach(function (grp) {
+      var h = el('div', 'rens-grp', esc(grp[0])); h.style.gridColumn = '1/-1'; g.appendChild(h);
+      grp[1].forEach(function (f) {
+        var key = f[0], lab = f[1], area = f[2];
+        var wrap = el('div', 'field'); if (area) wrap.style.gridColumn = '1/-1';
+        var val = esc(R[key] == null ? '' : R[key]);
+        wrap.innerHTML = '<label>' + esc(lab) + '</label>' +
+          (area ? '<textarea data-r="' + key + '" rows="2" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit">' + val + '</textarea>'
+                : '<input data-r="' + key + '" value="' + val + '">');
+        g.appendChild(wrap);
+      });
+    });
+    Array.prototype.forEach.call(g.querySelectorAll('[data-r]'), function (inp) {
+      inp.addEventListener('input', function () { (state.renseignements || (state.renseignements = {}))[inp.dataset.r] = inp.value; save(); });
+    });
+  }
+
+  // Phrase explicative simple par ratio / terme (affichée sous chaque chiffre + Lexique)
+  var EXPLAIN = {
+    ca: "Ce que l'entreprise a vendu sur l'exercice (chiffre d'affaires).",
+    croissanceCA: "Hausse ou baisse des ventes par rapport à l'exercice précédent.",
+    margeCommercialeBrute: "Ce qui reste des ventes après avoir payé la marchandise revendue (négoce).",
+    margeNette: "Bénéfice final pour 100 DH de ventes (profitabilité).",
+    ebe: "Argent dégagé par l'exploitation avant impôts, intérêts et amortissements. S'il est négatif on parle d'IBE.",
+    resultatNet: "Bénéfice ou perte final de l'exercice.",
+    caf: "Trésorerie récurrente dégagée par l'activité pour rembourser et investir (cash-flow brut, CFBE).",
+    cfne: "Ce qui reste de cette trésorerie une fois le cycle (stocks/clients) financé (cash-flow net, CFNE).",
+    autonomie: "Part des fonds propres dans le bilan (ER) : plus c'est haut, moins l'entreprise dépend des banques.",
+    erElargi: "Même mesure en comptant les comptes courants d'associés comme des fonds propres.",
+    cca: "Argent laissé par les associés dans l'entreprise (quasi-fonds propres).",
+    gearing: "Dette bancaire pour 1 DH de fonds propres : sous 1, l'endettement est sain.",
+    gearingElargi: "Le gearing en intégrant les comptes courants d'associés aux fonds propres.",
+    detteNetteEbitda: "Nombre d'années d'EBE nécessaires pour rembourser la dette nette.",
+    pbp: "Nombre d'années pour rembourser la dette de financement avec le cash-flow brut (pay-back).",
+    dscr: "Nombre de fois où l'EBE couvre le service annuel de la dette.",
+    liquiditeGenerale: "Capacité de l'actif à court terme à couvrir les dettes à court terme.",
+    FDR: "Matelas de sécurité du haut de bilan (ressources stables − actif immobilisé).",
+    BFR: "Argent immobilisé par le cycle : stocks + créances clients − dettes fournisseurs.",
+    TN: "Cash réellement disponible (FDR − BFR). Négatif = trésorerie « en rouge ».",
+    fdrSurBfr: "Le fonds de roulement couvre-t-il le besoin du cycle (BFR) ?",
+    rotationStocks: "Durée moyenne avant que le stock soit vendu.",
+    delaiClients: "Temps moyen pour être payé par les clients.",
+    delaiFournisseurs: "Temps moyen pour payer les fournisseurs.",
+    amortissementAI: "Usure comptable de l'outil de production (proche de 100 % = matériel ancien).",
+    endettementGlobal: "Poids de l'ensemble des dettes dans le bilan.",
+    roe: "Rendement des fonds propres (résultat net / fonds propres)."
+  };
+
+  function ancienneteTxt() {
+    var d = (state.renseignements || {}).dateCreation; if (!d) return '';
+    var m = String(d).match(/\d{4}/); if (!m) return '';
+    return 'créée en ' + m[0] + ' (' + (new Date().getFullYear() - (+m[0])) + " ans d'ancienneté)";
+  }
+  function nNeg(v, fmt) {
+    var s = fval(v, fmt);
+    return (v != null && isFinite(v) && v < 0) ? "<b style='color:#b03a2e'>" + s + " (en rouge)</b>" : "<b>" + s + "</b>";
+  }
+  function nH(t) { return "<h3 style='color:" + GREENH + ";font-family:Georgia,serif;border-bottom:1px solid " + GOLDH + ";padding-bottom:3px;margin:18px 0 6px'>" + hesc(t) + "</h3>"; }
+  function nStat(label, val, exKey) {
+    var ex = EXPLAIN[exKey] || '';
+    return "<div style='margin:7px 0;padding:6px 11px;border-left:3px solid " + GOLDH + ";background:#fbfaf6;border-radius:0 8px 8px 0'>" +
+      "<span style='color:" + GREENH + ";font-weight:700'>" + hesc(label) + "</span> : " + val +
+      (ex ? "<div style='color:#5a6b60;font-size:12.5px;font-style:italic;margin-top:2px'>" + hesc(ex) + "</div>" : "") + "</div>";
+  }
+  function rP(txt) { return txt ? "<p style='margin:4px 0'>" + hesc(txt) + "</p>" : ""; }
+
+  // HTML de la note (utilisé à l'écran ET dans l'export Word — styles inline)
+  function noteHTML() {
+    var cur = ref(), prev = prevRef(); if (!cur) return "<p>Aucun bilan chargé — saisis un dossier dans l'onglet 1.</p>";
+    var r = cur.r, pr = prev ? prev.r : null, R = state.renseignements || {}, syn = E.buildSynthese(results, config);
+    var score = E.scoreSante(cur, config, prev);
+    var ebeNeg = (r.EBITDA != null && r.EBITDA < 0);
+    var dt = new Date(), dstr = dt.toLocaleDateString('fr-FR');
+    var o = [];
+    // En-tête
+    o.push("<h1 style='color:" + GREENH + ";font-family:Georgia,serif;margin-bottom:2px'>Note d'analyse — " + hesc(state.societe || 'Société') + "</h1>");
+    var sub = [];
+    if (R.activite || R.objetSocial) sub.push(hesc(R.objetSocial || R.activite));
+    if (R.secteur) sub.push(hesc(R.secteur));
+    if (ancienneteTxt()) sub.push(hesc(ancienneteTxt()));
+    sub.push('exercice ' + hesc(cur.annee) + (prev ? ' vs ' + hesc(prev.annee) : ''));
+    sub.push('solidité <b>' + score + '/100</b>');
+    sub.push('édité le ' + dstr);
+    o.push("<p style='color:#555;margin-top:0'>" + sub.join(' · ') + "</p>");
+    if (R.actionnariat) o.push(rP('Actionnariat : ' + R.actionnariat));
+    if (R.objetConcours) { o.push(nH('Objet du concours')); o.push(rP(R.objetConcours)); if (R.sourceRemb) o.push(rP('Source de remboursement : ' + R.sourceRemb)); }
+
+    // Bloc 1 — Activité & rentabilité
+    o.push(nH('1 · Activité & rentabilité'));
+    o.push(nStat("Chiffre d'affaires", nNeg(cur.input.ca, 'dh') + (r.croissanceCA != null ? ' (' + F.signePct(r.croissanceCA) + ' vs N-1)' : ''), 'ca'));
+    if (r.margeCommercialeBrute != null) o.push(nStat('Marge commerciale brute', nNeg(r.margeCommercialeBrute, 'pct'), 'margeCommercialeBrute'));
+    o.push(nStat('Marge nette / profitabilité', nNeg(r.margeNette, 'pct'), 'margeNette'));
+    o.push(nStat('Résultat net', nNeg(cur.input.resultatNet, 'dh') + (pr ? ' vs ' + F.dh(prev.input.resultatNet) : ''), 'resultatNet'));
+    o.push(nStat(ebeNeg ? 'IBE (insuffisance brute d\'exploitation)' : 'EBE (excédent brut d\'exploitation)', nNeg(r.EBITDA, 'dh') + ' (marge ' + F.pct(r.margeEbitda) + ')', 'ebe'));
+
+    // Bloc 2 — Assise financière
+    o.push(nH('2 · Assise financière (structure)'));
+    o.push(nStat('Fonds propres', nNeg(cur.input.capitauxPropres, 'dh'), null));
+    o.push(nStat('Autonomie financière (ER)', nNeg(r.autonomie, 'pct') + (r.erElargi != null ? ' · ER élargi ' + F.pct(r.erElargi) : ''), 'autonomie'));
+    if (E.num(r.cca) > 0) o.push(nStat("Apports des associés (CCA)", nNeg(r.cca, 'dh'), 'cca'));
+    o.push(nStat('Endettement à terme (gearing)', (r.gearing != null ? nNeg(r.gearing, 'ratio') : '<b>nul</b>') + (r.gearingElargi != null ? ' · gearing élargi ' + F.ratio(r.gearingElargi) : ''), 'gearing'));
+    if (r.detteNetteEbitda != null) o.push(nStat('Dette nette / EBE (net leverage)', nNeg(r.detteNetteEbitda, 'x'), 'detteNetteEbitda'));
+    o.push(nStat('Dettes fournisseurs', F.dh(E.num(cur.input.fournisseurs)) + (r.delaiFournisseurs != null ? ' (délai ' + F.jours(r.delaiFournisseurs) + ')' : ''), 'delaiFournisseurs'));
+
+    // Bloc 3 — Actif immobilisé & endettement
+    o.push(nH('3 · Actif immobilisé & endettement'));
+    o.push(nStat('Actif immobilisé (net)', F.dh(E.num(cur.input.actifImmobilise)) + (r.amortissementAI != null ? ' · amorti à ' + F.pct(r.amortissementAI) : ''), 'amortissementAI'));
+    o.push(nStat('Dettes de financement', F.dh(E.num(cur.input.dettesFinancement)) + (E.num(r.horsBilan) > 0 ? ' + hors-bilan ' + F.dh(r.horsBilan) : ''), 'endettementGlobal'));
+
+    // Bloc 4 — Cycle & équilibre financier
+    o.push(nH("4 · Cycle d'exploitation & équilibre financier"));
+    if (E.num(cur.input.stocks) > 0) o.push(nStat('Stocks', F.dh(E.num(cur.input.stocks)) + ' (rotation ' + F.jours(r.rotationStocks) + ' / ' + F.mois(r.stockMois) + ')', 'rotationStocks'));
+    o.push(nStat('Créances clients', F.dh(E.num(cur.input.clients)) + (r.delaiClients != null ? ' (délai ' + F.jours(r.delaiClients) + ')' : ''), 'delaiClients'));
+    o.push(nStat('Fonds de roulement (FDR)', nNeg(r.FDR, 'dh') + (r.fdrSurBfr != null ? ' · couvre ' + F.pct(r.fdrSurBfr) + ' du BFR' : ''), 'FDR'));
+    o.push(nStat("Besoin en fonds de roulement (BFR)", nNeg(r.BFR, 'dh'), 'BFR'));
+    o.push(nStat('Trésorerie nette', nNeg(r.TN, 'dh'), 'TN'));
+    o.push(nStat('Cash-flow brut (CFBE)', nNeg(r.cfbe, 'dh') + (r.cfne != null ? ' · CFNE ' + F.dh(r.cfne) : ''), 'caf'));
+    if (r.pbp != null) o.push(nStat('Pay-back (PBP)', nNeg(r.pbp, 'annees'), 'pbp'));
+
+    // Bloc C — Fondamentaux / synthèse
+    o.push(nH('Fondamentaux financiers — synthèse'));
+    o.push("<p style='margin:4px 0'><b>✓ Points forts</b></p><ul>" + (syn.forces.map(function (x) { return '<li>' + hesc(x) + '</li>'; }).join('') || '<li>—</li>') + "</ul>");
+    o.push("<p style='margin:4px 0'><b>⚠ Points de vigilance</b></p><ul>" + ((syn.vigilances.length ? syn.vigilances : ['Aucun majeur']).map(function (x) { return '<li>' + hesc(x) + '</li>'; }).join('')) + "</ul>");
+
+    // Bloc D — Relations bancaires (si renseigné)
+    var rels = [];
+    if (R.fluxConfies) rels.push('Flux confiés : ' + R.fluxConfies + '.');
+    if (R.poolBancaire) rels.push('Pool bancaire : ' + R.poolBancaire + '.');
+    if (R.lignesEnPlace) rels.push('Lignes en place : ' + R.lignesEnPlace + '.');
+    if (R.incidents) rels.push('Incidents : ' + R.incidents + '.');
+    if (R.cotation) rels.push('Cotation Bank Al-Maghrib : ' + R.cotation + '.');
+    if (R.wl) rels.push('Watch List : ' + R.wl + '.');
+    if (rels.length) { o.push(nH('Relations bancaires')); rels.forEach(function (x) { o.push(rP(x)); }); }
+
+    // Pièces manquantes
+    if (R.piecesManquantes) { o.push(nH('Pièces')); o.push(rP('Demandées, non fournies : ' + R.piecesManquantes + '.')); }
+
+    // Lexique
+    var used = ['ca', 'margeNette', 'ebe', 'caf', 'cfne', 'autonomie', 'erElargi', 'gearing', 'detteNetteEbitda', 'pbp', 'FDR', 'BFR', 'TN', 'fdrSurBfr', 'rotationStocks', 'delaiClients', 'delaiFournisseurs', 'amortissementAI'];
+    o.push(nH('Lexique — chaque terme en une phrase'));
+    o.push("<ul style='font-size:12.5px;color:#333'>" + used.map(function (k) { return '<li><b>' + hesc(termLabel(k)) + '</b> : ' + hesc(EXPLAIN[k]) + '</li>'; }).join('') + "</ul>");
+    o.push("<p style='color:#999;font-size:9pt;margin-top:14px'>Note d'analyse — aide à la décision, non engageante. Méthode CGNC (modèle normal) + CPC/ESG/CAF. Contrôle : TN = FDR − BFR.</p>");
+    return o.join('\n');
+  }
+  function termLabel(k) {
+    return ({ ca: "Chiffre d'affaires", margeNette: 'Marge nette / profitabilité', ebe: 'EBE / IBE', caf: 'CFBE (cash-flow brut)',
+      cfne: 'CFNE (cash-flow net)', autonomie: 'ER (autonomie)', erElargi: 'ER élargi', gearing: 'Gearing',
+      detteNetteEbitda: 'Net leverage (dette nette/EBE)', pbp: 'PBP (pay-back)', FDR: 'FDR', BFR: 'BFR', TN: 'Trésorerie nette',
+      fdrSurBfr: 'Couverture du BFR', rotationStocks: 'Rotation des stocks', delaiClients: 'Délai clients',
+      delaiFournisseurs: 'Délai fournisseurs', amortissementAI: "Amortissement de l'actif" })[k] || k;
+  }
+
+  // ---- Décision / Recommandation (bouton séparé) ----
+  function recommendLignes(cur) {
+    var r = cur.r, R = state.renseignements || {}, out = [];
+    var fc = E.evalFaciliteCaisse(cur, config), af = E.evalAffacturage(cur, config);
+    var cap = E.termCapacity(cur, config, { taux: config.tauxDefaut });
+    var d7 = cap.parDuree.filter(function (x) { return x.duree === 7; })[0] || {};
+    var ctx = ((R.objetConcours || '') + ' ' + (R.objetSocial || '') + ' ' + (R.activite || '') + ' ' + (R.clientsPrincipaux || '')).toLowerCase();
+    if (E.num(r.BFR) > 0) out.push(['Facilité de caisse', 'Couvre les décalages encaissements/décaissements du cycle (BFR ' + F.dh(r.BFR) + ').', 'jusqu\'à ~' + F.dh(fc.max)]);
+    if (E.num(r.rotationStocks) > 90) out.push(['Avance sur marchandises / Refinancement des importations', 'Stocks lourds (' + F.jours(r.rotationStocks) + ') à financer, adossés au nantissement.', 'selon l\'assiette de stock']);
+    if (/export/.test(ctx)) out.push(["Préfinancement export / Mobilisation de créances sur l'étranger", "Activité tournée vers l'export : financer le cycle jusqu'à l'encaissement.", 'selon commandes']);
+    if (E.num(r.delaiClients) > 75) out.push(['Escompte de papier commercial / Affacturage', 'Délais clients longs (' + F.jours(r.delaiClients) + ') : mobiliser le poste clients.', 'ligne ~' + F.dh(af.max)]);
+    if (/march[eé]s? public|adjudicat|ma[iî]tre d.ouvrage/.test(ctx)) out.push(['Avances sur marchés publics nantis + cautions', 'Activité sur marchés publics : avances sur créances nanties et cautions de marché.', 'selon marchés']);
+    if (/investiss|acqui|mat[eé]riel|local|extension|cr[eé]ation|modernis/.test(ctx)) out.push(['CMT / CLT ou Crédit-bail', "Besoin d'investissement : financement à terme ou crédit-bail (même enveloppe de capacité).", 'jusqu\'à ~' + F.dh(d7.max) + ' (7 ans)']);
+    if (!out.length) out.push(['Ligne à cibler selon le besoin', "Précise l'« Objet du concours » pour cibler la ligne adaptée.", '—']);
+    return out;
+  }
+  function decisionHTML() {
+    var cur = ref(), prev = prevRef(); if (!cur) return "<p>Aucun bilan chargé.</p>";
+    var r = cur.r, R = state.renseignements || {}, syn = E.buildSynthese(results, config);
+    var score = E.scoreSante(cur, config, prev);
+    var avis = score >= 60 ? 'favorable' : (score >= 40 ? 'reserves' : 'defavorable');
+    var lab = { favorable: 'FAVORABLE', reserves: 'FAVORABLE SOUS RÉSERVES', defavorable: "DÉFAVORABLE EN L'ÉTAT" }[avis];
+    var o = [];
+    o.push("<h1 style='color:" + GREENH + ";font-family:Georgia,serif'>Décision / Recommandation — " + hesc(state.societe || 'Société') + "</h1>");
+    o.push("<p style='margin:2px 0'>Avis : <b style='color:" + vColor(avis) + ";font-size:14pt'>" + lab + "</b> — solidité structurelle " + score + "/100 · exercice " + hesc(cur.annee) + ".</p>");
+    o.push(nH('Lignes recommandées'));
+    o.push("<ul>" + recommendLignes(cur).map(function (l) { return "<li><b>" + hesc(l[0]) + "</b> — " + hesc(l[1]) + " <i>(" + hesc(l[2]) + ")</i></li>"; }).join('') + "</ul>");
+    o.push(nH('Conditions & covenants proposés'));
+    o.push("<ul><li>Fonds propres / dette ≥ 100 % sur la durée du concours.</li>" +
+      "<li>DSCR ≥ " + config.dscrHard + "× ; gearing ≤ " + config.gearingMax + " ; autonomie ≥ " + Math.round(config.autonomieMin * 100) + " %.</li>" +
+      "<li>Domiciliation des flux, negative pledge, reporting annuel des états financiers.</li></ul>");
+    o.push(nH('Réserves & charge au gestionnaire'));
+    var charges = (syn.vigilances.length ? syn.vigilances.slice() : ['Aucune vigilance majeure.']);
+    if (R.piecesManquantes) charges.push('Recueillir les pièces demandées non fournies : ' + R.piecesManquantes + '.');
+    if (R.garanties) charges.push('Formaliser / renouveler les garanties : ' + R.garanties + '.');
+    if (R.wl) charges.push('Suivre le statut Watch List : ' + R.wl + '.');
+    o.push("<ul>" + charges.map(function (x) { return '<li>' + hesc(x) + '</li>'; }).join('') + "</ul>");
+    o.push("<p style='color:#999;font-size:9pt;margin-top:14px'>Aide à la décision — non engageante. À statuer en comité.</p>");
+    return o.join('\n');
+  }
+
+  // ---- Commentaire IA (optionnel, en flux) ----
+  var lastCommentaire = '';
+  function streamPost(body, onDelta) {
+    return fetch('/api/credit/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) {
+        if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { throw new Error(j.error || ('HTTP ' + r.status)); });
+        if (!r.body || !r.body.getReader) return r.text().then(checkErr);
+        var reader = r.body.getReader(), dec = new TextDecoder(), full = '';
+        function pump() {
+          return reader.read().then(function (res) {
+            if (res.done) return checkErr(full);
+            full += dec.decode(res.value, { stream: true });
+            if (full.indexOf(AI_ERR) >= 0) return checkErr(full);
+            if (onDelta) onDelta(full);
+            return pump();
+          });
+        }
+        return pump();
+      });
+  }
+  function runCommentaire() {
+    var out = $('noteComment'); if (!out) return;
+    out.style.whiteSpace = 'pre-wrap'; out.textContent = "Rédaction du commentaire d'analyste…";
+    var prompt = "Rédige un COMMENTAIRE d'analyste crédit senior (10 à 15 lignes) sur ce dossier, à partir des chiffres du contexte : " +
+      "appréciation de la solidité et des tendances, principaux risques, et une orientation de décision (lignes à privilégier, réserves). " +
+      "Style banque marocaine, français, structuré, sans réafficher tous les chiffres.";
+    lastCommentaire = '';
+    streamPost({ messages: [{ role: 'user', content: prompt }], context: buildContext(), notes: state.notes, model: aiModel }, function (p) { out.textContent = p; })
+      .then(function (t) { out.textContent = t; lastCommentaire = t; },
+        function (e) { out.textContent = '⚠ Commentaire IA indisponible : ' + (e.message || e); });
+  }
+
+  function renderNote() {
+    renderRenseign();
+    var s = $('noteSheet'); if (s) s.innerHTML = noteHTML();
+    var d = $('decisionOut'); if (d && !d.dataset.done) d.innerHTML = '<p class="muted">Clique « Générer la décision » pour obtenir l\'avis et les lignes recommandées.</p>';
+  }
+  function renderDecision() {
+    var d = $('decisionOut'); if (!d) return;
+    d.innerHTML = decisionHTML(); d.dataset.done = '1';
+  }
+  function downloadNote() {
+    if (!ref()) { toast('Aucune analyse'); return; }
+    var body = noteHTML() + (lastCommentaire ? "<h3 style='color:" + GREENH + "'>Commentaire de l'analyste</h3><div style='white-space:pre-wrap'>" + hesc(lastCommentaire) + "</div>" : '');
+    download((state.societe || 'dossier').replace(/\s+/g, '_') + '_note_analyse.doc', wordDoc("Note d'analyse — " + (state.societe || ''), body), 'doc');
+    toast('Note exportée (Word)');
+  }
+  function downloadDecision() {
+    if (!ref()) { toast('Aucune analyse'); return; }
+    download((state.societe || 'dossier').replace(/\s+/g, '_') + '_decision.doc', wordDoc('Décision — ' + (state.societe || ''), decisionHTML()), 'doc');
+    toast('Décision exportée (Word)');
+  }
+
   // ---------------- Navigation & init ----------------
   function showTab(name) {
     currentTab = name;
@@ -854,6 +1131,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('.panel'), function (p) { p.classList.toggle('active', p.id === 'panel-' + name); });
     if (name === 'analyse') renderAnalyse();
     if (name === 'eligibilite') renderEligibilite();
+    if (name === 'note') renderNote();
     if (name === 'documents') renderDocuments();
     if (name === 'veille') refreshDocPick();
   }
@@ -907,6 +1185,9 @@
     // Téléchargements Word « à la demande » des réponses IA
     var dlMap = { researchDl: downloadResearch, briefDl: downloadBrief, summarizeDl: downloadSummarize, chatDl: downloadChat };
     Object.keys(dlMap).forEach(function (id) { var b = $(id); if (b) b.addEventListener('click', dlMap[id]); });
+    // Onglet Note d'analyse
+    var noteMap = { btnNoteRefresh: renderNote, btnNoteWord: downloadNote, btnDecision: renderDecision, btnDecisionWord: downloadDecision, btnCommentaire: runCommentaire };
+    Object.keys(noteMap).forEach(function (id) { var b = $(id); if (b) b.addEventListener('click', noteMap[id]); });
     // champs de discussion par onglet
     Array.prototype.forEach.call(document.querySelectorAll('[data-discuss]'), function (b) {
       var key = b.dataset.discuss;

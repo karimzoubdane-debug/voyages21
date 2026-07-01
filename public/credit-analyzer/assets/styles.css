@@ -167,3 +167,18 @@ details.params summary{cursor:pointer;font-weight:600;color:var(--green);font-si
 #researchOut,#summarizeOut,#briefOut{color:#000;font-weight:600;font-size:14px;line-height:1.6}
 #researchOut.interp,#briefOut .interp{color:#000;font-weight:600;font-size:14px}
 #briefOut b{color:var(--green)}
+
+/* ===== Onglet Note d'analyse ===== */
+#renseignGrid .field input,#renseignGrid .field textarea{text-align:left;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;color:#222a24}
+#renseignGrid .field label{font-size:12px;color:var(--grey)}
+.rens-grp{grid-column:1/-1;font-weight:700;color:var(--green);border-bottom:1px solid var(--gold);padding:6px 0 3px;margin-top:6px;font-size:13px}
+@media(max-width:720px){#renseignGrid{grid-template-columns:1fr}}
+/* La « grande feuille » lisible (note & décision) */
+.feuille{background:#fff;max-width:820px;margin:14px auto 0;padding:30px 38px;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);color:#1b2620;font-size:14px;line-height:1.6}
+.feuille h1{font-size:22px;margin:0 0 4px}
+.feuille h3{font-size:16px}
+.feuille ul{margin:4px 0 10px;padding-left:20px}
+.feuille li{margin:3px 0}
+.feuille:empty{display:none}
+@media(max-width:720px){.feuille{padding:20px 16px}}
+@media print{.topbar,.tabs,.foot,.banner,.btn,.discuss-card{display:none!important}.feuille{box-shadow:none;border:none;max-width:none;margin:0}}

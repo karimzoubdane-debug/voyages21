@@ -31,10 +31,11 @@
 <nav class="tabs" id="tabs">
   <button class="tab active" data-tab="dossier">1 · Dossier &amp; bilans</button>
   <button class="tab" data-tab="analyse">2 · Analyse &amp; ratios</button>
-  <button class="tab" data-tab="eligibilite">3 · Éligibilité crédit</button>
-  <button class="tab" data-tab="documents">4 · Documents &amp; notes</button>
-  <button class="tab" data-tab="assistant">5 · Assistant</button>
-  <button class="tab" data-tab="veille">6 · Veille &amp; marché</button>
+  <button class="tab" data-tab="note">3 · Note d'analyse</button>
+  <button class="tab" data-tab="eligibilite">4 · Éligibilité crédit</button>
+  <button class="tab" data-tab="documents">5 · Documents &amp; notes</button>
+  <button class="tab" data-tab="assistant">6 · Assistant</button>
+  <button class="tab" data-tab="veille">7 · Veille &amp; marché</button>
 </nav>
 
 <main class="wrap">
@@ -89,7 +90,49 @@
     </div>
   </section>
 
-  <!-- 3. ELIGIBILITE -->
+  <!-- 3. NOTE D'ANALYSE -->
+  <section class="panel" id="panel-note">
+    <div class="banner">
+      <b>Note d'analyse &amp; décision.</b> Une note <b>rédigée, lisible et exportable en Word</b>, générée à partir de tes bilans.
+      Renseigne les champs ci-dessous (<b>facultatifs — rien ne bloque</b>) pour l'enrichir, puis génère la <b>décision</b> à part.
+    </div>
+    <div class="card">
+      <details class="params" open>
+        <summary>Renseignements sur la société (facultatifs)</summary>
+        <div class="params-grid" id="renseignGrid"></div>
+        <div class="small muted" style="margin-top:8px">Tout est optionnel : un champ vide (ou une date absente) n'empêche jamais l'analyse.</div>
+      </details>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>Note d'analyse</h3><div class="sub">Analyse rédigée en 4 blocs + synthèse, avec une phrase d'explication sous chaque indicateur.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" id="btnNoteRefresh">↻ Actualiser</button>
+          <button class="btn gold sm" id="btnNoteWord">⬇ Exporter la note (Word)</button>
+        </div>
+      </div>
+      <div class="feuille" id="noteSheet"></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>💬 Commentaire de l'analyste</h3><div class="sub">Optionnel : l'IA rédige un commentaire d'analyste sur le dossier (inclus dans l'export si généré).</div></div>
+        <button class="btn sm" id="btnCommentaire">Générer le commentaire</button>
+      </div>
+      <div id="noteComment" class="interp" style="margin-top:10px;white-space:pre-wrap"></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>⚖ Décision / Recommandation</h3><div class="sub">Bouton séparé : avis motivé + lignes de crédit recommandées + covenants + charge au gestionnaire.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn gold sm" id="btnDecision">Générer la décision</button>
+          <button class="btn sm" id="btnDecisionWord">⬇ Exporter la décision (Word)</button>
+        </div>
+      </div>
+      <div class="feuille" id="decisionOut" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <!-- 4. ELIGIBILITE -->
   <section class="panel" id="panel-eligibilite">
     <div class="card">
       <h3>Verdict par ligne de crédit</h3>
