@@ -545,6 +545,18 @@
   var convo = [];
   var aiModel = 'claude-sonnet-4-6';
   var AI_ERR = '[[__AI_ERR__]] ';   // marqueur d'erreur en cours de flux (côté serveur)
+  // Traduit une erreur IA technique en message clair pour l'utilisateur.
+  function friendlyAIError(e) {
+    var m = String((e && e.message) || e || '');
+    if (/credit balance|plans ?& ?billing|purchase credits|insufficient|quota/i.test(m))
+      return "crédit de l'API IA épuisé. Ajoute des crédits sur console.anthropic.com (Plans & Billing) — les analyses déterministes (note, décision, ratios) restent disponibles.";
+    if (/overloaded|rate.?limit|429|too many req/i.test(m))
+      return "service IA momentanément surchargé — réessaie dans un instant.";
+    if (/401|authentication|invalid.*api.?key|x-api-key|permission/i.test(m))
+      return "clé API IA invalide ou expirée — vérifie la variable ANTHROPIC_API_KEY côté serveur.";
+    if (/IA non configurée|ANTHROPIC_API_KEY/i.test(m)) return m;
+    return m.replace(/\{[\s\S]*\}/, '').trim() || m;   // masque le JSON technique éventuel
+  }
   function postJSON(url, body) {
     return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) {
@@ -585,7 +597,7 @@
       function (e) {
         var det = answer(q);
         convo.push({ role: 'assistant', content: det });
-        return det + '\n\n— (réponse du moteur de règles ; IA indisponible : ' + (e.message || e) + ')';
+        return det + '\n\n— (réponse du moteur de règles ; IA indisponible : ' + friendlyAIError(e) + ')';
       });
   }
   function sendChat() {
@@ -617,7 +629,7 @@
     var q = $('researchIn').value.trim(); if (!q) return;
     var out = $('researchOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Recherche en cours…';
     postJSON('/api/credit/research', { query: q, model: aiModel }).then(function (j) { lastResearch = j.text || ''; out.textContent = j.text || '(vide)'; },
-      function (e) { out.textContent = '⚠ ' + (e.message || e); });
+      function (e) { out.textContent = '⚠ ' + friendlyAIError(e); });
   }
   function runBrief() {
     var out = $('briefOut'); out.style.whiteSpace = 'pre-wrap'; out.textContent = 'Génération du brief…';
@@ -630,7 +642,7 @@
             '<b style="color:var(--green)">' + esc(it.titre) + '</b><div class="interp" style="margin-top:4px;white-space:pre-wrap">' + esc(it.description) + '</div></div>';
         }).join('');
       } else { lastBrief = { text: j.text || '' }; out.textContent = j.text || '(vide)'; }
-    }, function (e) { out.textContent = '⚠ ' + (e.message || e); });
+    }, function (e) { out.textContent = '⚠ ' + friendlyAIError(e); });
   }
   function runSummarize() {
     var sel = $('docPick'), paste = $('docPaste').value.trim(), text = paste, name = 'texte collé';
@@ -639,7 +651,7 @@
     if (!text) { out.textContent = 'Choisis un document (avec texte extrait) ou colle un texte.'; return; }
     out.textContent = 'Résumé en cours…';
     postJSON('/api/credit/summarize', { text: text, name: name, model: aiModel }).then(function (j) { lastSummarize = j.text || ''; lastSummarizeName = name; out.textContent = j.text; },
-      function (e) { out.textContent = '⚠ ' + (e.message || e); });
+      function (e) { out.textContent = '⚠ ' + friendlyAIError(e); });
   }
 
   // ---------------- Export rapport ----------------
@@ -1132,7 +1144,7 @@
         out.textContent = t; lastCommentaire = t;
         addTrace('Commentaire', "Commentaire — " + (state.societe || '') + " (" + hesc(ref() ? ref().annee : '') + ")",
           "<h1 style='color:" + GREENH + "'>Commentaire de l'analyste — " + hesc(state.societe || '') + "</h1><div style='white-space:pre-wrap'>" + hesc(t) + "</div>");
-      }, function (e) { out.textContent = '⚠ Commentaire IA indisponible : ' + (e.message || e); });
+      }, function (e) { out.textContent = '⚠ Commentaire IA indisponible : ' + friendlyAIError(e); });
   }
 
   // ---- Traces conservées (historique local, supprimables à la demande) ----
@@ -1220,7 +1232,7 @@
       .then(function (t) {
         out.textContent = t; lastExplain = t;
         addTrace('Explication', "Explication : " + q.slice(0, 48) + " — " + (state.societe || ''), explainDocHTML(q, t));
-      }, function (e) { out.textContent = '⚠ IA indisponible : ' + (e.message || e); });
+      }, function (e) { out.textContent = '⚠ IA indisponible : ' + friendlyAIError(e); });
   }
   function downloadExplain() {
     if (!lastExplain) { toast("Demande d'abord une explication"); return; }
