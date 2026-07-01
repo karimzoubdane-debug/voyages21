@@ -1,101 +1,406 @@
 {
   "_meta": {
-    "version": "4.0",
-    "last_updated": "2026-04-19",
-    "updated_by": "karim",
+    "version": "5.0",
+    "last_updated": "2026-07-01",
+    "updated_by": "claude",
+    "last_review": "2026-07-01",
+    "review_time": "20:00 (Maroc)",
     "repo": "karimzoubdane-debug/voyages21",
-    "instructions": "Ce fichier est mis a jour automatiquement par Cowork a la fin de chaque session. Ne pas modifier manuellement sauf urgence."
+    "instructions": "MEMOIRE CENTRALE DES PROJETS DE KARIM. Mis a jour a chaque revue du soir (cron 20:00 + mot-cle REVUE COCKPIT). Pour chaque projet : statut, url, 3 dernieres actions, questions/decisions en attente. Ne pas modifier a la main sauf urgence.",
+    "categories": [
+      { "key": "site", "label": "Site Web Voyages21.com" },
+      { "key": "business", "label": "Business & Commercial" },
+      { "key": "eco", "label": "Ecotourisme & Immobilier" },
+      { "key": "web", "label": "Creation de Sites Web (agence)" },
+      { "key": "marketing", "label": "Contenu & Marketing" },
+      { "key": "incoming", "label": "Incoming USA -> Maroc" },
+      { "key": "outils", "label": "Apps & Outils IA" },
+      { "key": "veille", "label": "Veille & Expertise" }
+    ],
+    "statuses": ["publie", "en_cours", "en_suspens", "planifie", "termine", "abandonne"]
   },
   "projects": [
     {
       "id": 1,
-      "cat": "business",
-      "status": "actif",
-      "title": "Plateforme Web Voyages21.com",
-      "desc": "Refonte complete du site en Next.js, 4 langues (FR/EN/ES/DE). SITE LIVE : voyages21.vercel.app. Design ref : Black Tomato (blacktomato.com). Video header : fichier 2964957128.",
-      "nextStep": "Phase 3 : Construire la page d'accueil inspiration Black Tomato + integrer video header 2964957128",
+      "cat": "site",
+      "status": "en_cours",
+      "title": "Site Web Voyages21.com",
+      "desc": "Refonte complete du site en Next.js, 4 langues (FR/EN/ES/DE). Site live. Design ref : Black Tomato. Video header : fichier 2964957128.",
+      "url": "https://www.voyages21.com",
+      "nextStep": "Phase 3 : Construire la page d'accueil (inspiration Black Tomato) + integrer la video header 2964957128",
+      "lastActions": [
+        { "date": "2026-06-30", "text": "Meta Pixel + Google Tag + suivi conversion ajoutes sur la page Hajj 2027 (PR #108)" },
+        { "date": "2026-06-27", "text": "Hajj 2027 : hotel Medine = Baltimore 5 etoiles corrige (PR #103 + #105)" },
+        { "date": "2026-06-27", "text": "Avis Google : affiche cliquable /avis-affiche + assistant /avis-guide (PR #100)" }
+      ],
+      "pending": [
+        "DECISION : connecter le domaine voyages21.com (Valablue -> Vercel) — migrer les emails AVANT de quitter Valablue. On lance quand ?",
+        "Choisir le prestataire video header definitif (fichier 2964957128 a heberger Cloudinary ou Vercel Blob ?)"
+      ],
+      "lastReview": "2026-07-01",
       "stack": "Next.js · Tailwind CSS · Sanity.io · Vercel Pro · next-intl · DeepL · Make.com · HubSpot · Rewardful · PayPal",
       "livrables": [
-        {"name": "Site en ligne (Vercel)", "type": "URL", "url": "https://voyages21.vercel.app"},
-        {"name": "CLAUDE_SITE_V21.md — Contexte Cowork (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/CLAUDE_SITE_V21.md"},
-        {"name": "Design ref : Black Tomato", "type": "URL", "url": "https://www.blacktomato.com"},
-        {"name": "Video Header : 2964957128 (Drive local)", "type": "VIDEO", "url": "https://drive.google.com/drive/folders/1LLOudY9JCGq2kz65OaqJgAJ3mTb8E_hv"}
+        {"name": "Site en ligne", "type": "URL", "url": "https://www.voyages21.com"},
+        {"name": "REPRISE-SITE.md (memoire du site)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/REPRISE-SITE.md"},
+        {"name": "Design ref : Black Tomato", "type": "URL", "url": "https://www.blacktomato.com"}
       ],
       "phases": [
-        {"name": "Phase 1 — Infrastructure", "state": "done", "items": ["VS Code installe","Node.js v24 + npm v11","Next.js + Tailwind CSS cree","GitHub : karimzoubdane-debug/voyages21","Vercel : voyages21.vercel.app en ligne","Sanity.io CMS installe","CLAUDE_SITE_V21.md deploye sur GitHub (contexte Cowork automatique)"]},
-        {"name": "Phase 2 — Automatisation Photos", "state": "in_progress", "items": ["Script Google Apps Script dispatch-photos-voyages21","Dispatch par mot-cle dans nom de fichier","DECISION : Claude Vision API (~$0.003/photo) apres fin du site"]},
-        {"name": "Phase 3 — Pages Site", "state": "todo", "items": ["Page d'accueil (inspiration Black Tomato + video header 2964957128)","Page Circuits","Pages Activites","Page Contact / Devis","Integration Sanity (contenu)","4 langues : FR / EN / ES / DE"]},
-        {"name": "Phase 4 — Lancement", "state": "todo", "items": ["Connecter domaine voyages21.com (Valablue => Vercel)","Migration emails AVANT quitter Valablue","Make.com automations","HubSpot CRM operationnel","Rewardful affiliation","DeepL integration"]}
+        {"name": "Phase 1 — Infrastructure", "state": "done", "items": ["Next.js + Tailwind CSS","GitHub + Vercel en ligne","Sanity.io CMS installe","Contexte Cowork automatique deploye"]},
+        {"name": "Phase 2 — Automatisation Photos", "state": "in_progress", "items": ["Script Google Apps Script dispatch-photos","Dispatch par mot-cle","DECISION : Claude Vision API apres fin du site"]},
+        {"name": "Phase 3 — Pages Site", "state": "todo", "items": ["Page d'accueil (Black Tomato + video header)","Page Circuits","Pages Activites","Page Contact / Devis","Integration Sanity","4 langues FR/EN/ES/DE"]},
+        {"name": "Phase 4 — Lancement", "state": "todo", "items": ["Connecter domaine voyages21.com","Migration emails","Make.com automations","HubSpot CRM","Rewardful affiliation","DeepL"]}
+      ]
+    },
+    {
+      "id": 4,
+      "cat": "site",
+      "status": "publie",
+      "title": "Page Hajj 2027 (1448 H)",
+      "desc": "Page dediee Hajj & Omra : theme noir Kiswa, logo cercle or, galeries hotels, hero video, tableaux de prix, dates gregoriennes, contacts + WhatsApp. En ligne et suivie (Meta Pixel).",
+      "url": "https://www.voyages21.com/voyages/destinations/hajj-2027.html",
+      "nextStep": "Suivre les conversions (Meta Pixel) et relancer la diffusion",
+      "lastActions": [
+        { "date": "2026-06-30", "text": "Meta Pixel + Google Tag + suivi conversion (PR #108)" },
+        { "date": "2026-06-27", "text": "Cellule Medine = Baltimore 5 etoiles corrigee (PR #103/#105)" },
+        { "date": "2026-06-20", "text": "Contacts Hajj Fouad + Haja Wafaa + bouton WhatsApp (PR #96)" }
+      ],
+      "pending": [
+        "Lancer une campagne de diffusion payante sur la page ? (budget a definir)"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "HTML statique · public/voyages/destinations · Meta Pixel · Google Tag",
+      "livrables": [
+        {"name": "Page Hajj 2027 en ligne", "type": "URL", "url": "https://www.voyages21.com/voyages/destinations/hajj-2027.html"}
+      ],
+      "phases": [
+        {"name": "Conception & Design", "state": "done", "items": ["Theme noir Kiswa + logo or","Hero video","Onglets العمرة / الحج"]},
+        {"name": "Contenu & Prix", "state": "done", "items": ["Tableaux de prix par programme","Hotels Mecque / Medine","Dates gregoriennes","Contacts + WhatsApp"]},
+        {"name": "Tracking & Diffusion", "state": "in_progress", "items": ["Meta Pixel + Google Tag poses","Diffusion payante a lancer"]}
+      ]
+    },
+    {
+      "id": 5,
+      "cat": "marketing",
+      "status": "publie",
+      "title": "Avis Google (affiche + assistant)",
+      "desc": "Systeme de collecte d'avis Google Business : affiche cliquable, QR codes, plaquette WhatsApp, assistant de redaction d'avis FR/AR (/avis-guide) et lien court /avis.",
+      "url": "https://www.voyages21.com/avis",
+      "nextStep": "Diffuser l'affiche + QR aux clients (agence, WhatsApp, email)",
+      "lastActions": [
+        { "date": "2026-06-27", "text": "Affiche cliquable /avis-affiche + Open Graph WhatsApp (PR #100)" },
+        { "date": "2026-06-27", "text": "Assistant /avis-guide FR/AR + temoignages + plaquette WhatsApp (PR #100/#101)" },
+        { "date": "2026-06-26", "text": "Lien court /avis -> Google Business + QR code + affiche A4 (PR #99)" }
+      ],
+      "pending": [
+        "ACTION KARIM : envoyer l'affiche/QR aux premiers clients pour lancer les avis"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/avis*) · marketing/avis (PDF, QR, plaquettes) · Google Business",
+      "livrables": [
+        {"name": "Lien avis /avis", "type": "URL", "url": "https://www.voyages21.com/avis"},
+        {"name": "Assistant d'avis /avis-guide", "type": "URL", "url": "https://www.voyages21.com/avis-guide"},
+        {"name": "Affiches & QR (marketing/avis)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/marketing/avis"}
+      ],
+      "phases": [
+        {"name": "Outils de collecte", "state": "done", "items": ["Lien court /avis","QR codes couleur/noir","Affiche A4 + digitale"]},
+        {"name": "Assistant & Diffusion", "state": "in_progress", "items": ["Assistant /avis-guide FR/AR","Plaquette WhatsApp","Diffusion aux clients a faire"]}
       ]
     },
     {
       "id": 2,
       "cat": "business",
-      "status": "actif",
+      "status": "en_cours",
       "title": "Dossier Strategique B2B — Voyages 21",
-      "desc": "Catalogue complet 108 activites, presentation agence 78 slides, grilles tarifaires multi-devises (MAD/USD/EUR), strategie prospection internationale B2B.",
-      "nextStep": "Finaliser strategie OTA et configurer pipeline HubSpot",
+      "desc": "Catalogue 108 activites, presentation agence 78 slides, grilles tarifaires multi-devises (MAD/USD/EUR), strategie prospection internationale B2B.",
+      "url": "https://drive.google.com/file/d/1WtcA3Go0SsV7H-muLXOV7K0AW_0XuJg2/view",
+      "nextStep": "Finaliser strategie OTA et configurer le pipeline HubSpot",
+      "lastActions": [
+        { "date": "2026-05-15", "text": "SWOT Voyages 21 complet + plan 12 mois (budget ~217 400 MAD)" },
+        { "date": "2026-05-10", "text": "Analyse OTA : Viator, Civitatis, Airbnb" },
+        { "date": "2026-05-01", "text": "78 slides master B2B produits + grilles tarifaires MAD/USD/EUR" }
+      ],
+      "pending": [
+        "Choisir les OTA prioritaires a attaquer en premier (Viator / Civitatis / Airbnb) ?",
+        "Valider le budget prospection ~217 400 MAD sur 12 mois ?"
+      ],
+      "lastReview": "2026-07-01",
       "stack": "PowerPoint · Google Drive · HTML/JS · HubSpot",
       "livrables": [
-        {"name": "Presentation Agence Voyages21 (78 slides)", "type": "PPTX", "url": "https://drive.google.com/file/d/1WtcA3Go0SsV7H-muLXOV7K0AW_0XuJg2/view"},
+        {"name": "Presentation Agence (78 slides)", "type": "PPTX", "url": "https://drive.google.com/file/d/1WtcA3Go0SsV7H-muLXOV7K0AW_0XuJg2/view"},
         {"name": "Catalogue Voyages 21 — Merged", "type": "PDF", "url": "https://drive.google.com/file/d/1bUqIB3MkF7yQmzB_HtuTj2YwUr_tgSBk/view"}
       ],
       "phases": [
-        {"name": "Catalogue & Presentation", "state": "done", "items": ["78 slides master B2B PPTX produit","Grilles tarifaires MAD/USD/EUR","Analyse OTA : Viator, Civitatis, Airbnb"]},
-        {"name": "Strategie Prospection", "state": "in_progress", "items": ["SWOT Voyages 21 complet","Plan 12 mois — Budget ~217 400 MAD","Cibles : UK, Europe, Canada"]},
-        {"name": "CRM & Deploiement", "state": "todo", "items": ["HubSpot CRM pipeline B2B configure","Sequences emails Brevo","Reporting KPIs mensuel"]}
+        {"name": "Catalogue & Presentation", "state": "done", "items": ["78 slides master B2B","Grilles tarifaires MAD/USD/EUR","Analyse OTA"]},
+        {"name": "Strategie Prospection", "state": "in_progress", "items": ["SWOT complet","Plan 12 mois","Cibles UK / Europe / Canada"]},
+        {"name": "CRM & Deploiement", "state": "todo", "items": ["Pipeline HubSpot B2B","Sequences emails Brevo","Reporting KPIs mensuel"]}
       ]
     },
     {
       "id": 3,
-      "cat": "business",
-      "status": "actif",
+      "cat": "outils",
+      "status": "en_cours",
       "title": "Application Devis & Tarification",
-      "desc": "Outil web standalone (HTML/JavaScript) pour l'equipe finance — generation de devis clients avec import tarifs hotels depuis Google Drive. Export PDF automatique.",
+      "desc": "Outil web standalone (HTML/JS) pour l'equipe finance : generation de devis clients avec import des tarifs hotels depuis Google Drive, export PDF automatique.",
+      "url": "",
       "nextStep": "Developper l'interface de saisie et le moteur de calcul des marges",
+      "lastActions": [
+        { "date": "2026-04-15", "text": "Architecture standalone HTML/JS validee" },
+        { "date": "2026-04-15", "text": "Contrats hotels Drive = source de donnees retenue" }
+      ],
+      "pending": [
+        "Confirmer que la source des tarifs = contrats hotels sur Drive (format ?)",
+        "Qui teste l'outil cote equipe finance ?"
+      ],
+      "lastReview": "2026-07-01",
       "stack": "HTML · JavaScript · Google Drive API · PDF.js",
       "livrables": [],
       "phases": [
-        {"name": "Conception", "state": "done", "items": ["Architecture standalone HTML/JS validee","Contrats hotels Drive = source de donnees","Equipe finance = utilisateurs cibles"]},
-        {"name": "Developpement", "state": "in_progress", "items": ["Interface saisie devis","Import tarifs hotels depuis contrats","Calcul automatique marges et prix vente","Export PDF devis client"]},
-        {"name": "Deploiement", "state": "todo", "items": ["Tests avec equipe finance","Formation utilisateurs","Mise en production"]}
+        {"name": "Conception", "state": "done", "items": ["Architecture standalone validee","Contrats hotels Drive = source","Equipe finance = utilisateurs"]},
+        {"name": "Developpement", "state": "in_progress", "items": ["Interface saisie devis","Import tarifs hotels","Calcul marges + prix vente","Export PDF"]},
+        {"name": "Deploiement", "state": "todo", "items": ["Tests equipe finance","Formation","Mise en production"]}
       ]
     },
     {
-      "id": 7,
+      "id": 6,
       "cat": "eco",
-      "status": "actif",
+      "status": "en_suspens",
       "title": "HAYDEN 21 — Complexe Ecotourisme Tamazouzte",
-      "desc": "Complexe d'animation ecotouristique a Tamazouzte (Al Haouz) : e-bike, ateliers cuisine marocaine, paintball. Dossier financement soumis (Go Siyaha, Intelaka CMT).",
-      "nextStep": "Obtenir reponse financement Go Siyaha / Intelaka CMT",
+      "desc": "Complexe d'animation ecotouristique a Tamazouzte (Al Haouz) : e-bike, ateliers cuisine marocaine, paintball. Dossier de financement soumis (Go Siyaha, Intelaka CMT).",
+      "url": "https://drive.google.com/file/d/1aqGhv181fDcB_TDIANwH_Ix3Dr3DLkSV/view",
+      "nextStep": "Obtenir la reponse de financement Go Siyaha / Intelaka CMT",
+      "lastActions": [
+        { "date": "2026-04-10", "text": "Dossier de financement soumis (Go Siyaha + Intelaka CMT)" },
+        { "date": "2026-03-20", "text": "Business plan complet — budget ~723 500 MAD, subvention ~39%" }
+      ],
+      "pending": [
+        "EN ATTENTE reponse financement Go Siyaha / Intelaka CMT — faut-il relancer l'organisme ?",
+        "Que fait-on en attendant : geler ou preparer les travaux ?"
+      ],
+      "lastReview": "2026-07-01",
       "stack": "Business Plan · Go Siyaha · Intelaka CMT",
       "livrables": [
         {"name": "Business Plan HAYDEN 21", "type": "DOCX", "url": "https://drive.google.com/file/d/1aqGhv181fDcB_TDIANwH_Ix3Dr3DLkSV/view"},
         {"name": "Etude Financiere HAYDEN", "type": "XLSX", "url": "https://drive.google.com/file/d/1OyX_me6rzGxY7MNrA4hqt6lIa2ogGEnv/view"}
       ],
       "phases": [
-        {"name": "Business Plan & Financement", "state": "done", "items": ["Business plan complet redige","Budget total ~723 500 MAD","Subvention Go Siyaha ~39% modelisee","Intelaka CMT 1,75% / 7 ans"]},
-        {"name": "Dossier de Financement", "state": "in_progress", "items": ["Dossier soumis","En attente reponse financement"]},
-        {"name": "Travaux & Amenagement", "state": "todo", "items": ["Amenagement terrain Tamazouzte","Equipements VTT e-bike","Espace cuisine + paintball"]},
+        {"name": "Business Plan & Financement", "state": "done", "items": ["Business plan complet","Budget ~723 500 MAD","Subvention Go Siyaha ~39%","Intelaka CMT 1,75% / 7 ans"]},
+        {"name": "Dossier de Financement", "state": "in_progress", "items": ["Dossier soumis","EN ATTENTE reponse"]},
+        {"name": "Travaux & Amenagement", "state": "todo", "items": ["Amenagement terrain","Equipements VTT e-bike","Cuisine + paintball"]},
         {"name": "Ouverture Commerciale", "state": "todo", "items": ["Site web HAYDEN 21","Referencement OTA","Partenariats Voyages 21"]}
       ]
     },
     {
-      "id": 10,
+      "id": 7,
       "cat": "web",
-      "status": "actif",
+      "status": "en_cours",
       "title": "Agence Web IA — Creation Industrielle de Sites",
-      "desc": "Service creation rapide sites web clients via workflow automatise : WhatsApp audio => transcription => Google Drive => Claude => HTML/Tailwind. 3 formules (Vitrine, Booking, Premium).",
+      "desc": "Service de creation rapide de sites clients via workflow automatise : WhatsApp audio -> transcription -> Drive -> Claude -> HTML/Tailwind. 3 formules (Vitrine, Booking, Premium).",
+      "url": "https://drive.google.com/drive/folders/1wgeQ1amnDxx5XaREGGJeAzeW7OGYquV1",
       "nextStep": "Realiser le site La Maisonnette (Site 2 — 3 suites, jardin, piscine)",
+      "lastActions": [
+        { "date": "2026-05-05", "text": "Site 1 DA21 livre (multi-pages Premium ~2200 lignes, Bookeo + Tawk.to)" },
+        { "date": "2026-04-28", "text": "Prompt Maitre V2 (SEO, Schema.org, Web3Forms) + 3 formules definies" }
+      ],
+      "pending": [
+        "Client La Maisonnette : recuperer les contenus (photos, textes, tarifs) ?",
+        "Finaliser la grille tarifaire commerciale des 3 formules ?"
+      ],
+      "lastReview": "2026-07-01",
       "stack": "HTML · Tailwind CSS · Web3Forms · Bookeo · Tawk.to · Make.com · Claude API",
       "livrables": [
-        {"name": "Site DA21 — Livre (Multi-pages Premium)", "type": "HTML", "url": "https://drive.google.com/drive/folders/1wgeQ1amnDxx5XaREGGJeAzeW7OGYquV1"}
+        {"name": "Site DA21 — Livre (Premium)", "type": "HTML", "url": "https://drive.google.com/drive/folders/1wgeQ1amnDxx5XaREGGJeAzeW7OGYquV1"}
       ],
       "phases": [
-        {"name": "Methode & Formules", "state": "done", "items": ["3 formules : Vitrine / Booking / Premium","Prompt Maitre V2 cree (SEO, Schema.org, Web3Forms)","Workflow WhatsApp => Make => Claude => HTML"]},
-        {"name": "Site 1 — DA21 (Livre)", "state": "done", "items": ["Multi-pages Premium ~2200 lignes","VTT 350/500/750 · Paintball 250/400/550 · Cuisine 650/900/1200 MAD","Bookeo + Tawk.to chat integre"]},
-        {"name": "Site 2 — La Maisonnette", "state": "in_progress", "items": ["3 suites + jardin 2000m2 + piscine + pergola","A construire"]},
-        {"name": "Commercial", "state": "todo", "items": ["Portfolio clients","Grille tarifaire finalisee","Processus de vente"]}
+        {"name": "Methode & Formules", "state": "done", "items": ["3 formules Vitrine/Booking/Premium","Prompt Maitre V2","Workflow WhatsApp -> Make -> Claude -> HTML"]},
+        {"name": "Site 1 — DA21", "state": "done", "items": ["Multi-pages Premium","Bookeo + Tawk.to"]},
+        {"name": "Site 2 — La Maisonnette", "state": "in_progress", "items": ["3 suites + jardin + piscine","A construire"]},
+        {"name": "Commercial", "state": "todo", "items": ["Portfolio clients","Grille tarifaire","Processus de vente"]}
+      ]
+    },
+    {
+      "id": 8,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Content Studio V21 (outgoing)",
+      "desc": "Systeme de creation de contenu IA (visuels, videos, posts, calendrier, ads, veille concurrents) pour la marque Voyages21. Plateforme partageable equipes.",
+      "url": "https://voyages21.vercel.app/v21-studio/",
+      "nextStep": "Tester le skill « tour de controle » en nouvelle session (installe le 12/06)",
+      "lastActions": [
+        { "date": "2026-06-12", "text": "Skill « tour de controle » (orchestration sous-agents) installe" },
+        { "date": "2026-06-10", "text": "Plateforme V21 Studio (public/v21-studio) mise en place" },
+        { "date": "2026-06-05", "text": "Veille concurrents + veille virale documentees" }
+      ],
+      "pending": [
+        "Tester « tour de controle » sur une vraie serie de contenus ?",
+        "Deposer les medias sources dans le Drive VOYAGES21-CONTENT-STUDIO ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Higgsfield · Google Drive · Notion · Apify · public/v21-studio",
+      "livrables": [
+        {"name": "Plateforme V21 Studio", "type": "URL", "url": "https://voyages21.vercel.app/v21-studio/"},
+        {"name": "Dossier content-studio (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/content-studio"}
+      ],
+      "phases": [
+        {"name": "Cadre & Marque", "state": "done", "items": ["aboutme.md profil de marque","Calendrier editorial","Prompts Higgsfield"]},
+        {"name": "Plateforme & Veille", "state": "in_progress", "items": ["V21 Studio en ligne","Veille concurrents / virale","Skill tour de controle a tester"]},
+        {"name": "Production en serie", "state": "todo", "items": ["Series de visuels / videos","Publication multi-canaux","Mesure performance"]}
+      ]
+    },
+    {
+      "id": 9,
+      "cat": "incoming",
+      "status": "en_cours",
+      "title": "V21 USA — Incoming (etrangers aux USA -> Maroc)",
+      "desc": "Amener des etrangers presents aux USA a voyager au Maroc via l'agence (incoming). Leviers : ads Meta/Instagram/Facebook + social selling + asset HelloMorroco. PROJET CLOISONNE.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/v21-usa/REPRISE.md",
+      "nextStep": "Definir budget ads + creas Cercle 1 (diaspora marocaine / communautes arabes-musulmanes)",
+      "lastActions": [
+        { "date": "2026-06-25", "text": "Cible validee : Cercle 1 (diaspora/arabes-musulmans/francophiles) + Cercle 2 (cultural traveler US 35-65 CSP+)" },
+        { "date": "2026-06-20", "text": "Projet cloisonne V21 USA + systeme de reprise (PR #86)" }
+      ],
+      "pending": [
+        "Fixer le budget publicitaire de demarrage (Cercle 1) ?",
+        "Valider les premieres creas ads + l'offre d'appel ?",
+        "Comment valoriser l'asset HelloMorroco dans le tunnel ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Meta Ads (FB/IG) · Social selling · HelloMorroco · Landing incoming",
+      "livrables": [
+        {"name": "Memoire projet v21-usa/REPRISE.md", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/v21-usa/REPRISE.md"}
+      ],
+      "phases": [
+        {"name": "Strategie & Cible", "state": "done", "items": ["Objectif incoming defini","2 cercles de cible valides","Leviers ads + social selling"]},
+        {"name": "Creas & Ads", "state": "in_progress", "items": ["Budget a definir","Creas Cercle 1","Offre d'appel"]},
+        {"name": "Conversion & Avis", "state": "todo", "items": ["Social selling / closing","Premiers avis clients","Montee en puissance Cercle 2"]}
+      ]
+    },
+    {
+      "id": 10,
+      "cat": "outils",
+      "status": "en_cours",
+      "title": "ReelsApp — SaaS veille YouTube",
+      "desc": "Application SaaS (Next.js) dans le sous-dossier reelsapp/ : auth Clerk, DB Supabase, jobs Inngest, YouTube Data API. Dashboard + creation de projets fonctionnels.",
+      "url": "https://reelsapp-two.vercel.app",
+      "nextStep": "Developper la generation de clips (route /api/clips)",
+      "lastActions": [
+        { "date": "2026-06-15", "text": "PR #20 mergee : DB via pooler Supabase, auth Clerk, dashboard, creation de projet" },
+        { "date": "2026-06-10", "text": "Migration Prisma v7 + adapter WASM obligatoire" }
+      ],
+      "pending": [
+        "Prochaine feature prioritaire : generation de clips ou import YouTube ?",
+        "Modele economique / pricing du SaaS ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js 16 · Clerk v7 · Prisma v7 · Supabase · Inngest · YouTube Data API · Vercel",
+      "livrables": [
+        {"name": "ReelsApp en ligne", "type": "URL", "url": "https://reelsapp-two.vercel.app"},
+        {"name": "Code reelsapp/ (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/reelsapp"}
+      ],
+      "phases": [
+        {"name": "Infra & Auth", "state": "done", "items": ["Next.js 16 + Clerk","Supabase + Prisma pooler","Inngest jobs"]},
+        {"name": "Coeur produit", "state": "in_progress", "items": ["Dashboard + projets OK","Generation de clips a faire"]},
+        {"name": "Lancement SaaS", "state": "todo", "items": ["Pricing","Onboarding","Marketing"]}
+      ]
+    },
+    {
+      "id": 11,
+      "cat": "veille",
+      "status": "en_cours",
+      "title": "YouTube Monitor (script de veille)",
+      "desc": "Script Node (youtube-monitor/) qui surveille des chaines YouTube de reference (web, SEO, freelance...) et sort les nouveautes. Sert la veille & expertise.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/youtube-monitor",
+      "nextStep": "Automatiser l'execution (cron) et brancher la sortie sur une notification",
+      "lastActions": [
+        { "date": "2026-05-11", "text": "Configuration des chaines a surveiller mise a jour (channels.json)" }
+      ],
+      "pending": [
+        "Ou envoyer les alertes (email / Notion / WhatsApp) ?",
+        "Quelles chaines ajouter a la surveillance ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Node.js · YouTube Data API · channels.json",
+      "livrables": [
+        {"name": "Script youtube-monitor (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/youtube-monitor"}
+      ],
+      "phases": [
+        {"name": "Script & Config", "state": "done", "items": ["monitor.js","channels.json (chaines de reference)"]},
+        {"name": "Automatisation", "state": "todo", "items": ["Cron d'execution","Notifications","Ajout de chaines"]}
+      ]
+    },
+    {
+      "id": 12,
+      "cat": "outils",
+      "status": "en_cours",
+      "title": "Cockpit Projets (cette appli)",
+      "desc": "Tableau de bord central = memoire de tous les projets de Karim. v5 : 360 par categorie et statut (publie/en cours/en suspens/planifie/termine/abandonne), URL + 3 dernieres actions + questions en attente par projet, revue automatique du soir.",
+      "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html",
+      "nextStep": "Publier l'appli dans public/ pour une URL propre (voyages21.vercel.app) + activer le cron de revue du soir",
+      "lastActions": [
+        { "date": "2026-07-01", "text": "v5 : 360 projets par categorie/statut + URL + 3 dernieres actions + questions en attente" },
+        { "date": "2026-07-01", "text": "Cron de revue du soir (20:00) + rappel GitHub Issue ajoutes" },
+        { "date": "2026-04-19", "text": "v4 : lecture auto des donnees depuis GitHub (cockpit-data.json)" }
+      ],
+      "pending": [
+        "Publier l'appli dans public/ pour l'URL voyages21.vercel.app/cockpit-v4.html ?",
+        "Completer / corriger les fiches projets seedees automatiquement"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "HTML/JS statique · cockpit-data.json · raw GitHub · GitHub Actions (cron)",
+      "livrables": [
+        {"name": "Cockpit (rendu en ligne)", "type": "URL", "url": "https://htmlpreview.github.io/?https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-v4.html"},
+        {"name": "Donnees cockpit-data.json", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-data.json"}
+      ],
+      "phases": [
+        {"name": "v4 — Auto-sync", "state": "done", "items": ["Lecture cockpit-data.json depuis GitHub","Cartes + filtres + modal"]},
+        {"name": "v5 — Memoire 360", "state": "in_progress", "items": ["Statuts publie/suspens/abandonne","URL + 3 dernieres actions + questions","Cron revue du soir","Publication public/ a faire"]}
+      ]
+    },
+    {
+      "id": 13,
+      "cat": "veille",
+      "status": "publie",
+      "title": "Sauvegarde automatique du site",
+      "desc": "Workflow GitHub (.github/workflows/sauvegarde.yml) : a chaque merge sur main (et chaque lundi), genere une Release avec le zip du site, le bundle git et le manifeste des medias.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/releases",
+      "nextStep": "Deposer les gros fichiers (zip + bundle) dans le Drive VOYAGES21 — SAUVEGARDES",
+      "lastActions": [
+        { "date": "2026-06-23", "text": "Rappel de sauvegarde active (rappeler Karim en fin de session)" }
+      ],
+      "pending": [
+        "ACTION KARIM : telecharger la derniere Release + deposer zip/bundle dans le Drive SAUVEGARDES"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "GitHub Actions · Releases · Google Drive",
+      "livrables": [
+        {"name": "Releases (sauvegardes)", "type": "URL", "url": "https://github.com/karimzoubdane-debug/voyages21/releases"}
+      ],
+      "phases": [
+        {"name": "Automatisation", "state": "done", "items": ["Workflow sauvegarde.yml","Release a chaque merge + lundi","Manifeste medias"]},
+        {"name": "Depot manuel Drive", "state": "in_progress", "items": ["Deposer gros fichiers dans le Drive SAUVEGARDES"]}
+      ]
+    },
+    {
+      "id": 14,
+      "cat": "marketing",
+      "status": "en_suspens",
+      "title": "Campagne Egypte / Sharm el-Sheikh",
+      "desc": "Campagne de contenu / offre autour de l'Egypte (Sharm el-Sheikh) documentee dans content-studio. En pause en attendant priorisation.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/campagne-egypte-sharm.md",
+      "nextStep": "Decider si on active la campagne Egypte ou si on la met de cote",
+      "lastActions": [
+        { "date": "2026-06-08", "text": "Note de campagne Egypte / Sharm redigee (content-studio)" }
+      ],
+      "pending": [
+        "DECISION : active-t-on la campagne Egypte maintenant, ou apres le focus Maroc ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Content Studio · Meta Ads",
+      "livrables": [
+        {"name": "Note campagne Egypte (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/campagne-egypte-sharm.md"}
+      ],
+      "phases": [
+        {"name": "Cadrage", "state": "done", "items": ["Note de campagne redigee"]},
+        {"name": "Activation", "state": "todo", "items": ["Decision go / no-go","Creas","Diffusion"]}
       ]
     }
   ]
