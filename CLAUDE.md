@@ -48,6 +48,16 @@ de Karim** avant d'agir. Mettre à jour `v21-usa/REPRISE.md` après chaque avanc
   (`content-studio/REPRISE.md` / « V21 STUDIO »). Aucune interférence entre les
   trois projets. Si Karim n'a pas tapé « V21 USA », ne pas ouvrir ce dossier.
 
+## 🕋 Reprise « V21 HAJJ » (promotion produit Hajj 2027 + Google Ads)
+Dès que Karim écrit **« V21 HAJJ »** (même seul) au début d'une conversation :
+lire `REPRISE-HAJJ.md` (racine du dépôt). Résumer en **3 lignes** où on en est
+(dernière action + tâches en suspens + prochaine étape proposée), puis
+**TOUJOURS attendre le « go »** avant d'agir. Mettre à jour `REPRISE-HAJJ.md`
+après chaque avancée (config campagne, décision, tâche livrée). Karim n'a JAMAIS
+à réexpliquer le contexte : c'est Claude qui rappelle où on en était.
+- **Périmètre** : booster la page `public/voyages/destinations/hajj-2027.html`
+  via Google Ads (Performance Max) + Meta Pixel/GA4 + campagne Meta phase 2.
+
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
 - **Fondateur** : Karim Zoubdane
