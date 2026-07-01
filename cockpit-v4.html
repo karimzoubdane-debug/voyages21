@@ -60,8 +60,14 @@ padding:7px 14px; border-radius:20px; font-family:'Sora',sans-serif; font-size:1
 .chip:hover { border-color:var(--border2); color:var(--white); }
 .chip.active { background:var(--blue-dim); border-color:rgba(47,111,212,0.4); color:var(--blue-l); }
 .chip.warn.active { background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.4); color:var(--orange); }
+.ctrl-sel { background:var(--bg3); border:1px solid var(--border); color:var(--silver);
+padding:7px 12px; border-radius:8px; font-family:'Sora',sans-serif; font-size:12px; font-weight:600; cursor:pointer; }
+.ctrl-sel:focus { outline:none; border-color:var(--blue); }
+.ctrl-sel.goto { color:var(--blue-l); border-color:rgba(47,111,212,0.35); background:var(--blue-dim); max-width:220px; }
+.ctrl-sel optgroup { color:var(--text-m); background:var(--bg2); }
+.ctrl-sel option { color:var(--text); background:var(--bg2); font-weight:500; }
 .search-input { margin-left:auto; background:var(--bg3); border:1px solid var(--border); color:var(--text);
-padding:8px 14px; border-radius:8px; font-family:'Sora',sans-serif; font-size:13px; min-width:220px; }
+padding:8px 14px; border-radius:8px; font-family:'Sora',sans-serif; font-size:13px; min-width:200px; }
 .search-input:focus { outline:none; border-color:var(--blue); }
 
 .main { padding:14px 32px 60px; }
@@ -211,6 +217,7 @@ let projects = [];
 let categories = [];
 let currentFilter = 'all';
 let currentSearch = '';
+let currentSort = 'cat';
 
 const STATUS = {
   publie:    { label:'Publie',     order:1 },
@@ -291,9 +298,33 @@ function buildToolbar() {
   });
   const nbPend = projects.filter(p=>(p.pending||[]).length).length;
   html += `<button class="chip warn" data-f="pending" onclick="filter('pending',this)">&#9203; En attente (${nbPend})</button>`;
+  html += `<select class="ctrl-sel" onchange="setSort(this.value)">
+    <option value="cat"${currentSort==='cat'?' selected':''}>Trier : par categorie</option>
+    <option value="recent"${currentSort==='recent'?' selected':''}>Trier : plus recent</option>
+  </select>`;
+  html += gotoSelectHTML();
   html += `<input class="search-input" type="text" placeholder="Rechercher un projet..." oninput="search(this.value)">`;
   tb.innerHTML = html;
 }
+
+function lastDate(p){
+  const ds = (p.lastActions||[]).map(a=>a.date).filter(Boolean).sort();
+  return (ds.length ? ds[ds.length-1] : '') || p.lastReview || '';
+}
+
+function gotoSelectHTML(){
+  let opts = '<option value="">Aller a un projet…</option>';
+  categories.forEach(c=>{
+    const items = projects.filter(p=>p.cat===c.key).sort((a,b)=>lastDate(b).localeCompare(lastDate(a)));
+    if(!items.length) return;
+    opts += `<optgroup label="${esc(c.label)}">`;
+    items.forEach(p=>{ opts += `<option value="${p.id}">${esc(p.title)}</option>`; });
+    opts += `</optgroup>`;
+  });
+  return `<select class="ctrl-sel goto" onchange="gotoProject(this.value);this.selectedIndex=0;">${opts}</select>`;
+}
+function setSort(v){ currentSort=v; render(); }
+function gotoProject(id){ if(id) openDetail(parseInt(id,10)); }
 
 function matchFilter(p) {
   if (currentFilter==='all') return true;
@@ -308,6 +339,14 @@ function render() {
     const matchS = !s || p.title.toLowerCase().includes(s) || (p.desc&&p.desc.toLowerCase().includes(s));
     return matchFilter(p) && matchS;
   });
+  if (currentSort==='recent') {
+    const sorted = visible.slice().sort((a,b)=>lastDate(b).localeCompare(lastDate(a)));
+    main.innerHTML = sorted.length
+      ? `<div class="section-block"><div class="section-label">Tous les projets — du plus recent au plus ancien (${sorted.length})</div><div class="grid">${sorted.map(cardHTML).join('')}</div></div>`
+      : '<div style="text-align:center;color:var(--text-m);padding:60px">Aucun projet trouve</div>';
+    updateStats();
+    return;
+  }
   const grouped = {}; categories.forEach(c=>grouped[c.key]=[]);
   visible.forEach(p => { (grouped[p.cat] = grouped[p.cat]||[]).push(p); });
   let html = '';
