@@ -9,6 +9,8 @@
 //    { ok: false } (la page garde alors ses cartes statiques).
 //  - Mode diagnostic : ?debug=1 force un appel frais (sans cache) et renvoie le
 //    détail de ce que Google répond (status + message) pour dépanner.
+//  - Langue : ?lang=ar renvoie les avis traduits en arabe par Google (l'accueil
+//    reste en français par défaut). Chaque langue est mise en cache séparément.
 //
 // L'API Places officielle ne renvoie qu'au maximum 5 avis ; la note et le
 // nombre total restent en revanche exacts et à jour.
@@ -44,12 +46,12 @@ function fetchOpts(noStore) {
 }
 
 // Ancienne API Places (Place Details) — la plus simple et la mieux documentée.
-async function fromLegacy(noStore) {
+async function fromLegacy(noStore, lang) {
   const fields = 'name,rating,user_ratings_total,reviews,url';
   const url =
     'https://maps.googleapis.com/maps/api/place/details/json' +
     `?place_id=${encodeURIComponent(PLACE_ID)}` +
-    `&fields=${fields}&language=fr&reviews_sort=newest&key=${API_KEY}`;
+    `&fields=${fields}&language=${lang}&reviews_sort=newest&key=${API_KEY}`;
 
   const res = await fetch(url, fetchOpts(noStore));
   const json = await res.json().catch(() => ({}));
@@ -72,9 +74,9 @@ async function fromLegacy(noStore) {
 }
 
 // Nouvelle API Places — repli si l'ancienne n'est pas activée sur le projet.
-async function fromNew(noStore) {
+async function fromNew(noStore, lang) {
   const url =
-    `https://places.googleapis.com/v1/places/${encodeURIComponent(PLACE_ID)}?languageCode=fr`;
+    `https://places.googleapis.com/v1/places/${encodeURIComponent(PLACE_ID)}?languageCode=${lang}`;
   const fieldMask = 'displayName,rating,userRatingCount,googleMapsUri,reviews';
 
   const res = await fetch(url, {
@@ -109,8 +111,12 @@ async function fromNew(noStore) {
 const noStoreHeaders = { 'cache-control': 'no-store' };
 
 export async function GET(request) {
-  let debug = false;
-  try { debug = new URL(request.url).searchParams.get('debug') === '1'; } catch (e) {}
+  let debug = false, lang = 'fr';
+  try {
+    const sp = new URL(request.url).searchParams;
+    debug = sp.get('debug') === '1';
+    if (sp.get('lang') === 'ar') lang = 'ar';
+  } catch (e) {}
   const noStore = debug;
 
   if (!API_KEY) {
@@ -124,12 +130,12 @@ export async function GET(request) {
     const attempts = [];
     let data = null;
 
-    const legacy = await fromLegacy(noStore);
+    const legacy = await fromLegacy(noStore, lang);
     attempts.push({ api: 'legacy', http: legacy.http, status: legacy.status, message: legacy.message });
     if (legacy.ok) data = legacy;
 
     if (!data) {
-      const fresh = await fromNew(noStore);
+      const fresh = await fromNew(noStore, lang);
       attempts.push({ api: 'new', http: fresh.http, status: fresh.status, message: fresh.message });
       if (fresh.ok) data = fresh;
     }
@@ -143,7 +149,7 @@ export async function GET(request) {
       ok: true, rating: data.rating, total: data.total,
       mapsUrl: data.mapsUrl, reviews: data.reviews,
     };
-    if (debug) { payload._api = data.api; payload._count = data.reviews.length; }
+    if (debug) { payload._api = data.api; payload._lang = lang; payload._count = data.reviews.length; }
 
     return new Response(JSON.stringify(payload), {
       headers: {
