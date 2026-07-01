@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "5.3",
+    "version": "5.4",
     "last_updated": "2026-07-01",
     "updated_by": "claude",
     "last_review": "2026-07-01",
@@ -1764,15 +1764,15 @@
       "lastActions": [
         {
           "date": "2026-07-01",
+          "text": "Bouton 'Generer le brief' (fichier .md par projet, section EN SUSPENS incluse) + mots-cles de reprise + icone corrigee"
+        },
+        {
+          "date": "2026-07-01",
           "text": "PWA : publie dans public/ (URL propre voyages21.vercel.app/cockpit.html), installable mobile + bureau (manifest, icones, service worker)"
         },
         {
           "date": "2026-07-01",
           "text": "40 projets + tri 'plus recent' + menu deroulant + bouton 'Travailler avec Claude' + questions par projet"
-        },
-        {
-          "date": "2026-07-01",
-          "text": "v5 : 360 projets par categorie/statut + cron de revue du soir"
         }
       ],
       "pending": [
@@ -1791,6 +1791,11 @@
           "name": "Donnees cockpit-data.json",
           "type": "GitHub",
           "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/cockpit-data.json"
+        },
+        {
+          "name": "COCKPIT-SPEC.md — blueprint complet (recreer l'appli)",
+          "type": "GitHub",
+          "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/COCKPIT-SPEC.md"
         }
       ],
       "phases": [

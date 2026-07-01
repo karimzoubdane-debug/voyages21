@@ -7,9 +7,9 @@
 <meta name="description" content="Memoire centrale de tous les projets de Karim Zoubdane.">
 <link rel="manifest" href="/cockpit.webmanifest">
 <meta name="theme-color" content="#0d1117">
-<link rel="icon" type="image/png" sizes="192x192" href="/icons/cockpit-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icons/cockpit-512.png">
 <link rel="icon" type="image/svg+xml" href="/icons/cockpit.svg">
-<link rel="apple-touch-icon" href="/icons/cockpit-180.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/icons/cockpit-512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -118,6 +118,10 @@ padding:11px 14px; margin-bottom:14px; font-size:12.5px; color:#e7d6a8; line-hei
 padding:8px 16px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; margin-top:10px;
 font-family:'Sora',sans-serif; transition:all 0.15s; }
 .btn-claude:hover { background:var(--green); color:#06210f; }
+.btn-brief { background:rgba(167,139,250,0.14); border:1px solid rgba(167,139,250,0.45); color:var(--purple);
+padding:8px 16px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; margin-top:10px;
+font-family:'Sora',sans-serif; transition:all 0.15s; }
+.btn-brief:hover { background:var(--purple); color:#1a1030; }
 
 .prog-row { display:flex; justify-content:space-between; font-size:11px; color:var(--text-m); margin-bottom:5px; }
 .prog-pct { font-weight:700; color:var(--silver); }
@@ -433,7 +437,8 @@ function openDetail(id) {
   document.getElementById('d-hdr').innerHTML =
     `<div style="flex:1"><div class="modal-hdr-title">${esc(p.title)}</div><div class="modal-hdr-sub">${esc(p.desc)}</div>`
     + `<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="badge ${p.status}" style="margin-top:10px">${st.label}</span>${urlBtn}`
-    + `<button class="btn-claude" onclick="workWithClaude(${p.id})">&#9654; Travailler avec Claude</button></div></div>`
+    + `<button class="btn-claude" onclick="workWithClaude(${p.id})">&#9654; Travailler avec Claude</button>`
+    + `<button class="btn-brief" onclick="generateBrief(${p.id})" title="Telecharger un fichier .md complet pour recreer/continuer ce projet avec n'importe quelle IA">&#128196; Generer le brief</button></div></div>`
     + `<button class="btn-x" onclick="closeModal()">&times;</button>`;
 
   const pendingHTML = (p.pending&&p.pending.length)
@@ -469,6 +474,86 @@ function workWithClaude(id){
   };
   if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(prompt).then(done).catch(done); }
   else { const ta=document.createElement('textarea'); ta.value=prompt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done(); }
+}
+
+function catLabelOf(key){ const c=(categories||[]).find(x=>x.key===key); return c?c.label:key; }
+
+function projectBrief(p){
+  const st=(STATUS[p.status]||{label:p.status}).label;
+  const prog=calcProg(p);
+  const d=new Date(); const today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const L=[];
+  L.push(`# BRIEF PROJET — ${p.title}`);
+  L.push('');
+  L.push(`> Fichier genere automatiquement par le Cockpit Voyages21 le ${today}.`);
+  L.push(`> Donne-le a n'importe quelle IA : il contient TOUT le contexte pour recreer / continuer ce projet a l'identique.`);
+  L.push(`> Source de verite (toujours a jour) : cockpit-data.json — repo GitHub karimzoubdane-debug/voyages21.`);
+  L.push('');
+  L.push(`## 1. Identite`);
+  L.push(`- **Mot-cle de reprise** : \`${p.keyword||('#'+p.id)}\``);
+  if(p.aliases&&p.aliases.length) L.push(`- Alias : ${p.aliases.join(', ')}`);
+  L.push(`- Categorie : ${catLabelOf(p.cat)}`);
+  L.push(`- Statut : ${st} — Avancement : ${prog}%`);
+  if(p.url) L.push(`- URL : ${p.url}`);
+  if(p.stack) L.push(`- Stack / outils : ${p.stack}`);
+  L.push('');
+  L.push(`## 2. Description & objectif`);
+  L.push(p.desc||'—');
+  L.push('');
+  L.push(`## 3. Ou on s'est arrete (prochaine etape)`);
+  L.push(p.nextStep||'—');
+  L.push('');
+  L.push(`## 4. 3 dernieres actions realisees`);
+  (p.lastActions||[]).slice(0,3).forEach(a=>L.push(`- ${a.date} — ${a.text}`));
+  if(!(p.lastActions||[]).length) L.push('- (aucune action enregistree)');
+  L.push('');
+  L.push(`## 5. ⏳ EN SUSPENS — questions / actions / evolutions en attente (pending)`);
+  if((p.pending||[]).length){ p.pending.forEach(q=>L.push(`- [ ] ${q}`)); }
+  else { L.push('- (rien en attente pour le moment)'); }
+  L.push('');
+  L.push(`## 6. Planning & etapes`);
+  (p.phases||[]).forEach(ph=>{
+    const e=ph.state==='done'?'Termine':ph.state==='in_progress'?'En cours':'A faire';
+    L.push(`### ${ph.name} — ${e}`);
+    (ph.items||[]).forEach(i=>L.push(`- ${i}`));
+  });
+  if(!(p.phases||[]).length) L.push('_(pas de planning detaille)_');
+  L.push('');
+  if((p.livrables||[]).length){
+    L.push(`## 7. Livrables & liens`);
+    p.livrables.forEach(l=>L.push(`- ${l.name} (${l.type}) : ${l.url}`));
+    L.push('');
+  }
+  L.push(`## 8. Instructions pour l'IA`);
+  L.push(`1. Lis ce brief en entier.`);
+  L.push(`2. Reprends le projet exactement a l'etape « Ou on s'est arrete » (section 3).`);
+  L.push(`3. Traite EN PRIORITE les points de la section 5 (EN SUSPENS).`);
+  L.push(`4. Respecte la stack/les outils indiques ; livre le meme resultat.`);
+  L.push(`5. Tiens ce brief a jour a chaque avancee (actions, prochaine etape, pending).`);
+  L.push(`   Sur le repo voyages21, la source reste \`cockpit-data.json\` (mise a jour a chaque REVUE COCKPIT).`);
+  L.push('');
+  L.push(`---`);
+  L.push(`_Ce fichier reflete l'etat au ${today}. Regenere-le depuis le Cockpit pour la version la plus recente._`);
+  return L.join('\n');
+}
+
+function generateBrief(id){
+  const p = projects.find(x=>x.id===id); if(!p) return;
+  const md = projectBrief(p);
+  const slug = (p.keyword||('projet-'+p.id)).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  try {
+    const blob = new Blob([md], {type:'text/markdown;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `brief-${slug}.md`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+    const btn = document.querySelector('.btn-brief');
+    if(btn){ const t=btn.innerHTML; btn.innerHTML='Brief telecharge &#10003;'; setTimeout(()=>btn.innerHTML=t,3000); }
+  } catch(e){
+    // Fallback : copier dans le presse-papier
+    if(navigator.clipboard){ navigator.clipboard.writeText(md); alert('Brief copie dans le presse-papier (telechargement direct indisponible ici).'); }
+  }
 }
 
 function copyKw(el, kw){
