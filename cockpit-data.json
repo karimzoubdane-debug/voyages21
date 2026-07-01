@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "version": "5.1",
+    "version": "5.2",
     "last_updated": "2026-07-01",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
-    "review_note": "Recherche fine et exhaustive du depot (fichiers, dossiers, branches, catalogues) + 3 passes de revue : inventaire, enrichissement (statuts/actions/questions), consolidation. Passe de 14 a 36 projets.",
+    "review_note": "Recherche fine et exhaustive du depot (fichiers, dossiers, branches, catalogues) + 3 passes de revue : inventaire, enrichissement (statuts/actions/questions), consolidation. 38 projets (ajout Contenu Video & Reels + Questionnaire de satisfaction/Avis Google).",
     "repo": "karimzoubdane-debug/voyages21",
     "instructions": "MEMOIRE CENTRALE DES PROJETS DE KARIM. Mis a jour a chaque revue du soir (cron 20:00 + mot-cle REVUE COCKPIT). Pour chaque projet : statut, url, 3 dernieres actions, questions/decisions en attente. Ne pas modifier a la main sauf urgence.",
     "categories": [
@@ -943,6 +943,61 @@
       "phases": [
         {"name": "Nettoyage", "state": "in_progress", "items": ["Deduplication","Qualification"]},
         {"name": "Import CRM", "state": "todo", "items": ["HubSpot"]}
+      ]
+    },
+    {
+      "id": 37,
+      "cat": "marketing",
+      "status": "publie",
+      "title": "Questionnaire de satisfaction (-> Avis Google Business)",
+      "desc": "Questionnaire de satisfaction client qui debouche sur un avis Google Business : affiche + QR dedies (marketing/avis/questionnaire-*) et assistant /avis-guide (FR/AR) qui redige l'avis a partir des reponses (voyages / accueil / conseiller).",
+      "url": "https://www.voyages21.com/avis-guide",
+      "nextStep": "Diffuser le questionnaire (affiche + QR) aux clients apres chaque voyage",
+      "lastActions": [
+        { "date": "2026-06-27", "text": "Assistant /avis-guide FR/AR : questionnaire -> redaction d'avis + copier/coller Google (PR #100)" },
+        { "date": "2026-06-26", "text": "Affiche questionnaire A4 + QR codes (couleur/noir) generes" }
+      ],
+      "pending": [
+        "ACTION KARIM : envoyer le questionnaire aux clients recents pour declencher les avis",
+        "Ou consigner les reponses (satisfaction) au-dela de l'avis Google ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Next.js (src/app/avis-guide) · marketing/avis (questionnaire PDF, QR) · Google Business",
+      "livrables": [
+        {"name": "Assistant / questionnaire d'avis", "type": "URL", "url": "https://www.voyages21.com/avis-guide"},
+        {"name": "Affiche + QR questionnaire (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/tree/main/marketing/avis"}
+      ],
+      "phases": [
+        {"name": "Outils", "state": "done", "items": ["Assistant /avis-guide FR/AR","Affiche questionnaire A4 + QR"]},
+        {"name": "Diffusion", "state": "in_progress", "items": ["Envoyer aux clients","Suivi des reponses"]}
+      ]
+    },
+    {
+      "id": 38,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Contenu Video & Reels",
+      "desc": "Production de contenu video pour la marque : reels (formats viraux), video header du site (public/video/2964957128.mp4), generation via Higgsfield (prompts dedies). Alimente Instagram/TikTok/YouTube et le site.",
+      "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/prompts-higgsfield.md",
+      "nextStep": "Produire une premiere serie de reels a partir de la veille virale + prompts Higgsfield",
+      "lastActions": [
+        { "date": "2026-06-30", "text": "Video header du site integree (public/video/2964957128.mp4)" },
+        { "date": "2026-06-05", "text": "Prompts Higgsfield + veille virale (formats de reels) documentes" }
+      ],
+      "pending": [
+        "Quel rythme de production de reels par semaine ?",
+        "Qui monte/publie les videos (Higgsfield -> montage -> publication) ?",
+        "Sujets des 3 premiers reels ?"
+      ],
+      "lastReview": "2026-07-01",
+      "stack": "Higgsfield · Content Studio · public/video · Instagram/TikTok/YouTube",
+      "livrables": [
+        {"name": "Prompts Higgsfield (GitHub)", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/content-studio/prompts-higgsfield.md"},
+        {"name": "Video header du site", "type": "GitHub", "url": "https://github.com/karimzoubdane-debug/voyages21/blob/main/public/video/2964957128.mp4"}
+      ],
+      "phases": [
+        {"name": "Preparation", "state": "done", "items": ["Prompts Higgsfield","Veille virale (formats)","Video header integree"]},
+        {"name": "Production en serie", "state": "in_progress", "items": ["Series de reels","Montage / publication","Mesure performance"]}
       ]
     }
   ]
