@@ -28,6 +28,19 @@ résumer en 3 lignes (statut + 3 dernières actions + questions en attente), pro
 prochaine étape concrète, **attendre le go**. Après chaque avancée, mettre à jour la fiche
 du projet (`lastActions`, `pending`, `status`, `nextStep`) dans `cockpit-data.json` + PR.
 
+### ➕ Créer un projet (mot-clé « NOUVEAU PROJET »)
+Depuis le Cockpit, le bouton **« ➕ Nouveau projet »** ouvre un formulaire qui copie une
+instruction commençant par **« NOUVEAU PROJET (Cockpit) … »** et ouvre Claude Code. Quand
+Karim colle ça (ou écrit **« NOUVEAU PROJET : … »** dans n'importe quelle conversation) :
+1. Lire `cockpit-data.json`, **attribuer un `id`** libre (max des ids + 1) et **garder le `keyword`**
+   fourni (sinon en dériver un depuis le titre, en MAJUSCULES, unique) + `aliases` éventuels.
+2. Créer la fiche complète (schéma ci-dessous) : `cat`, `status`, `title`, `keyword`, `desc`,
+   `url`, `nextStep`, `lastActions` (la 1ʳᵉ action datée du jour), `pending`, `lastReview`=aujourd'hui,
+   `stack`, `livrables` (vide si rien), `phases` (au moins une phase de départ).
+3. Mettre à jour `_meta.last_updated`. **Commit + PR** (jamais de push direct sur `main`).
+4. Confirmer à Karim en 3 lignes + rappeler le **mot-clé** de reprise du nouveau projet.
+Le projet se comporte ensuite **exactement comme les autres** (reprise par mot-clé, brief, revue du soir).
+
 ### 🔑 Mots-clés projets — reprise instantanée (RÈGLE GÉNÉRALE)
 **Chaque projet a un mot-clé de reprise** (champ `keyword` + `aliases` dans `cockpit-data.json`).
 Dès que Karim écrit **un de ces mots-clés** (même seul, au début d'une conversation) :
