@@ -27,15 +27,21 @@
 - **Règle de style de réponse** gravée dans `CLAUDE.md` (PR #113).
 - **Titres/descriptions enrichis** (via appli mobile, 2026-07-02) pour améliorer la force de l'annonce :
   titres ajoutés (inscription, renvoi au site, expérience depuis 2000, engagements tenus) + 3ᵉ description.
-- **Campagne ACTIVÉE** (2026-07-02) : sortie de veille → État « Éligible ». Annonces en revue (« En attente »),
-  diffusion dès validation (~quelques heures). Budget 220 DH/jour (~1540 DH sur 7 jours).
+- **Campagne ACTIVÉE** (2026-07-02) : État « Éligible », diffuse déjà (571 clics, 14,2k impressions, CPC ~0,33 DH,
+  coût ~187 DH). Budget 220 DH/jour (~1540 DH sur 7 jours).
+- **Liste clients importée** (2026-07-02) : segment « clients Voyages21 », 7 445/7 458 lignes acceptées, matching en cours (~24 h).
+  Pas encore utilisable en signal (éligibilité) — voir tâches en suspens.
 
 ---
 
-## ⏳ Ce qui RESTE À FAIRE (tâches en suspens)
-- 🎯 **Fournir la liste Excel clients** (audience Customer Match) — EN ATTENTE de Karim.
-  - Format attendu : colonnes `Email | Téléphone (+212…) | Prénom | Nom | Pays (MA)`.
-- 📧 **Configurer la 2ᵉ adresse email** du rapport quotidien — EN ATTENTE (ajouter l'email comme utilisateur via Admin → Accès et sécurité).
+## ⏳ Ce qui RESTE À FAIRE (tâches en suspens) — ORDRE DE REPRISE
+- 🎯 **Attacher le segment « clients Voyages21 » comme signal d'audience** — BLOQUÉ pour l'instant :
+  message « problèmes d'éligibilité » (matching pas fini ~24 h + compte trop récent pour Customer Match en ciblage).
+  → RÉESSAYER dans **24-48 h** : Campagne Hajj → Groupe de composants → colonne « Audience signal » (crayon) →
+  « Vos données » → chercher « clients Voyages21 ». La liste (7 445 contacts) est déjà importée et matche seule.
+- 📧 **1. Configurer la 2ᵉ adresse email** du rapport quotidien (ajouter l'email comme utilisateur via Admin → Accès et sécurité).
+- ❓ **2. Q1 : termes de recherche** (repérer le trafic poubelle).
+- ❓ **3. Q2 : bannières Display** (voir les aperçus).
 - 📈 (Optionnel) Améliorer la **force de l'annonce** (actuellement « Médiocre ») : ajouter titres/descriptions via appli mobile.
 - 🔗 (Optionnel) Ajouter 2 sitelinks pour atteindre 6 (version web).
 - 🎬 **Phase 2** : produire du contenu (visuels/vidéos Higgsfield) + campagne Meta (Instagram/Facebook) avec la liste Excel.
@@ -73,4 +79,4 @@
 
 ---
 
-*Dernière mise à jour : 2026-07-02 — campagne ACTIVÉE (Éligible), annonces en revue ; reste : audience Excel + 2ᵉ email + Q1/Q2.*
+*Dernière mise à jour : 2026-07-02 — campagne diffuse ; liste clients importée (matching en cours) ; reste, dans l'ordre : réessayer signal audience (24-48h) → 2ᵉ email → Q1 termes de recherche → Q2 bannières Display.*
