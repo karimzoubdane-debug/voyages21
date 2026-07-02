@@ -10,6 +10,8 @@
 Répondre **TOUJOURS** à Karim en **liste de points, 1 point = 1 phrase courte**, droit
 au but, sans blabla ni longs paragraphes. Une action = une phrase, puis attendre son
 « go » avant l'étape suivante quand il pilote pas à pas.
+**TOUJOURS donner les liens dans un bloc de code (```) prêts à copier-coller** (bouton
+copie), jamais un lien noyé dans une phrase.
 
 ## 🔁 Reprise rapide du site (mot-clé « www.voyages21.com »)
 Dès que Karim écrit **« www.voyages21.com »** (même seul, ou « V21 site », ou
