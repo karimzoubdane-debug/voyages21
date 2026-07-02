@@ -25,6 +25,8 @@
 - **Appel litige** soumis pour la mauvaise classification « Vente de billets d'événements » (via appli mobile).
 - **Rapport email quotidien** Google Ads programmé à **08h00** vers `karimzoubdane@gmail.com`.
 - **Règle de style de réponse** gravée dans `CLAUDE.md` (PR #113).
+- **Titres/descriptions enrichis** (via appli mobile, 2026-07-02) pour améliorer la force de l'annonce :
+  titres ajoutés (inscription, renvoi au site, expérience depuis 2000, engagements tenus) + 3ᵉ description.
 
 ---
 
@@ -71,4 +73,4 @@
 
 ---
 
-*Dernière mise à jour : 2026-07-01 — campagne en pause, en attente de l'appel Google.*
+*Dernière mise à jour : 2026-07-02 — titres/descriptions enrichis ; campagne en pause, en attente de l'appel Google.*
