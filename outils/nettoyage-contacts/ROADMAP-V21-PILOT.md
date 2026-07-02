@@ -10,6 +10,15 @@ nettoyage de la base clients.
 > session PILOT** : « On avait prévu de transformer PILOT en vrai CRM —
 > on s'y met ? ». Arrêter le rappel une fois le module CRM livré.
 
+## ⏸️ REPRISE — où on en est (à lire en premier)
+- ✅ Base fusionnée : **7 938 contacts** (7 182 + 756 de l'iPhone), segmentée.
+- ✅ Maquette en ligne : `/pilot.html` sur la preview Vercel de la branche.
+- ✅ **Lot 0 terminé** : app `pilot-app/` (Next.js + Supabase), isolée, build OK, déployée.
+- ⏸️ **EN ATTENTE** : les 2 clés Supabase (compte de Karim) pour activer login + Lot 1.
+  - À faire sur ORDINATEUR (plus simple) : créer projet Supabase → Settings → API
+    → copier `Project URL` + `anon public key` → me les donner.
+- ➡️ Prochaine étape dès les clés reçues : déployer le lien de test PILOT, puis **Lot 1 (Contacts)**.
+
 ## État actuel
 - ✅ Nettoyage base clients (24 643 → 7 182 contacts uniques)
 - ✅ Segmentation (Maroc, Étrangers, Emailables, Pros/MICE)
