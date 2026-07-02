@@ -27,12 +27,12 @@
 - **Règle de style de réponse** gravée dans `CLAUDE.md` (PR #113).
 - **Titres/descriptions enrichis** (via appli mobile, 2026-07-02) pour améliorer la force de l'annonce :
   titres ajoutés (inscription, renvoi au site, expérience depuis 2000, engagements tenus) + 3ᵉ description.
+- **Campagne ACTIVÉE** (2026-07-02) : sortie de veille → État « Éligible ». Annonces en revue (« En attente »),
+  diffusion dès validation (~quelques heures). Budget 220 DH/jour (~1540 DH sur 7 jours).
 
 ---
 
 ## ⏳ Ce qui RESTE À FAIRE (tâches en suspens)
-- ⏳ **Attendre l'approbation de l'appel Google** (litige « billets d'événements ») — automatique, ~1-2 jours.
-- ▶️ **Réactiver la campagne** (actuellement EN PAUSE) après validation de l'appel.
 - 🎯 **Fournir la liste Excel clients** (audience Customer Match) — EN ATTENTE de Karim.
   - Format attendu : colonnes `Email | Téléphone (+212…) | Prénom | Nom | Pays (MA)`.
 - 📧 **Configurer la 2ᵉ adresse email** du rapport quotidien — EN ATTENTE (ajouter l'email comme utilisateur via Admin → Accès et sécurité).
@@ -73,4 +73,4 @@
 
 ---
 
-*Dernière mise à jour : 2026-07-02 — titres/descriptions enrichis ; campagne en pause, en attente de l'appel Google.*
+*Dernière mise à jour : 2026-07-02 — campagne ACTIVÉE (Éligible), annonces en revue ; reste : audience Excel + 2ᵉ email + Q1/Q2.*
