@@ -114,6 +114,17 @@ font-family:'DM Mono',monospace; align-self:center; }
 padding:11px 14px; margin-bottom:14px; font-size:12.5px; color:#e7d6a8; line-height:1.5; cursor:pointer; }
 .kw-banner b { color:#C8A440; font-family:'DM Mono',monospace; font-size:13px; }
 .kw-alias { color:var(--text-m); font-size:11px; }
+.np-field { margin-bottom:13px; }
+.np-label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--text-m); margin-bottom:5px; }
+.np-input, .np-area, .np-sel { width:100%; background:var(--bg3); border:1px solid var(--border); color:var(--text);
+padding:9px 12px; border-radius:8px; font-family:'Sora',sans-serif; font-size:13px; }
+.np-input:focus, .np-area:focus, .np-sel:focus { outline:none; border-color:var(--blue); }
+.np-area { min-height:56px; resize:vertical; line-height:1.5; }
+.np-row { display:flex; gap:12px; } .np-row > div { flex:1; }
+.np-hint { font-size:10.5px; color:var(--text-m); margin-top:3px; }
+.btn-create { width:100%; background:var(--green); color:#06210f; border:none; padding:12px; border-radius:8px;
+font-family:'Sora',sans-serif; font-size:14px; font-weight:700; cursor:pointer; margin-top:6px; }
+.btn-create:hover { filter:brightness(1.08); }
 .btn-claude { background:rgba(34,197,94,0.14); border:1px solid rgba(34,197,94,0.4); color:var(--green);
 padding:8px 16px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; margin-top:10px;
 font-family:'Sora',sans-serif; transition:all 0.15s; }
@@ -224,6 +235,7 @@ header,.toolbar,.main { padding-left:16px; padding-right:16px; }
 <div class="hstat"><div class="hstat-val warn" id="s-pending">0</div><div class="hstat-lbl">En attente</div></div>
 <div class="hstat"><div class="hstat-val" id="s-avg">0%</div><div class="hstat-lbl">Avancement</div></div>
 <div class="sync-badge"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">Synchronisation...</span></div>
+<button class="btn" onclick="openNewProject()" style="font-size:11px;padding:6px 14px;background:var(--green);color:#06210f;">&#43; Nouveau projet</button>
 <button id="installBtn" class="btn" onclick="installApp()" style="display:none;font-size:11px;padding:6px 14px;">&#11015; Installer l'appli</button>
 <button class="btn btn-ghost" onclick="loadData()" style="font-size:11px;padding:6px 14px;">Rafraichir</button>
 </div>
@@ -240,6 +252,13 @@ header,.toolbar,.main { padding-left:16px; padding-right:16px; }
 <div class="modal">
 <div class="modal-hdr" id="d-hdr"></div>
 <div class="modal-body" id="d-body"></div>
+</div>
+</div>
+
+<div class="overlay" id="ov-new" onclick="closeOv(event,'ov-new')">
+<div class="modal" style="max-width:560px">
+<div class="modal-hdr"><div style="flex:1"><div class="modal-hdr-title">&#43; Nouveau projet</div><div class="modal-hdr-sub">Remplis les champs, puis « Creer » copie l'instruction et ouvre Claude Code. Claude cree la fiche (id + mot-cle) dans cockpit-data.json + PR.</div></div><button class="btn-x" onclick="closeNew()">&times;</button></div>
+<div class="modal-body" id="new-body"></div>
 </div>
 </div>
 
@@ -589,6 +608,58 @@ function copyKw(el, kw){
   const flash = () => { const t=el.innerHTML; el.innerHTML='Copie &#10003;'; setTimeout(()=>el.innerHTML=t,1500); };
   if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(kw).then(flash).catch(flash); }
   else { const ta=document.createElement('textarea'); ta.value=kw; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); flash(); }
+}
+
+function openNewProject(){
+  const cats = (categories&&categories.length?categories:DEFAULT_CATS)
+    .map(c=>`<option value="${c.key}">${esc(c.label)}</option>`).join('');
+  const stats = Object.keys(STATUS).sort((a,b)=>STATUS[a].order-STATUS[b].order)
+    .map(k=>`<option value="${k}"${k==='en_cours'?' selected':''}>${STATUS[k].label}</option>`).join('');
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('new-body').innerHTML =
+`<div class="np-field"><label class="np-label">Titre du projet *</label><input id="np-title" class="np-input" placeholder="Ex. Boutique en ligne V21"></div>
+<div class="np-row">
+  <div class="np-field"><label class="np-label">Mot-cle de reprise</label><input id="np-kw" class="np-input" placeholder="(auto depuis le titre)"><div class="np-hint">En MAJUSCULES, court, unique.</div></div>
+  <div class="np-field"><label class="np-label">Statut</label><select id="np-status" class="np-sel">${stats}</select></div>
+</div>
+<div class="np-row">
+  <div class="np-field"><label class="np-label">Categorie</label><select id="np-cat" class="np-sel">${cats}</select></div>
+  <div class="np-field"><label class="np-label">URL (optionnel)</label><input id="np-url" class="np-input" placeholder="https://…"></div>
+</div>
+<div class="np-field"><label class="np-label">Description / objectif</label><textarea id="np-desc" class="np-area" placeholder="En 1-2 phrases : c'est quoi, pour quoi faire ?"></textarea></div>
+<div class="np-field"><label class="np-label">Premiere action realisee (${today})</label><input id="np-action" class="np-input" placeholder="Ex. Idee cadree + nom choisi"></div>
+<div class="np-field"><label class="np-label">Prochaine etape</label><input id="np-next" class="np-input" placeholder="Ex. Definir le budget"></div>
+<div class="np-field"><label class="np-label">Questions / actions en attente (1 par ligne)</label><textarea id="np-pending" class="np-area" placeholder="Ex. Quel budget ?&#10;Ex. Qui s'en occupe ?"></textarea></div>
+<button class="btn-create" onclick="submitNewProject()">&#43; Creer le projet (copie l'instruction + ouvre Claude)</button>`;
+  document.getElementById('ov-new').classList.add('open');
+}
+function closeNew(){ document.getElementById('ov-new').classList.remove('open'); }
+
+function submitNewProject(){
+  const v = id => (document.getElementById(id)?document.getElementById(id).value:'').trim();
+  const title = v('np-title');
+  if(!title){ alert('Donne au moins un titre au projet.'); return; }
+  const kw = (v('np-kw') || title).toUpperCase();
+  const catSel = document.getElementById('np-cat');
+  const catKey = catSel.value; const catLabel = catSel.options[catSel.selectedIndex].text;
+  const status = document.getElementById('np-status').value;
+  const url = v('np-url'); const desc = v('np-desc'); const action = v('np-action'); const next = v('np-next');
+  const today = new Date().toISOString().slice(0,10);
+  const pend = v('np-pending').split('\n').map(s=>s.trim()).filter(Boolean);
+  let t = `NOUVEAU PROJET (Cockpit) — cree cette fiche dans cockpit-data.json (assigne un id, garde le mot-cle), commit + PR. Ensuite il doit se comporter comme les autres (mot-cle de reprise, brief, etc.).\n\n`;
+  t += `Titre : ${title}\n`;
+  t += `Mot-cle : ${kw}\n`;
+  t += `Categorie : ${catKey} (${catLabel})\n`;
+  t += `Statut : ${status}\n`;
+  if(url) t += `URL : ${url}\n`;
+  t += `Description : ${desc||'(a preciser)'}\n`;
+  if(action) t += `Premiere action (${today}) : ${action}\n`;
+  t += `Prochaine etape : ${next||'(a definir)'}\n`;
+  t += `En attente :\n` + (pend.length?pend.map(q=>`- ${q}`).join('\n'):'- (rien pour l’instant)') + `\n`;
+  const done = () => { window.open('https://claude.ai/code','_blank'); closeNew();
+    alert('Instruction copiee ! Colle-la dans Claude Code (nouvel onglet ouvert) et envoie — je cree la fiche.'); };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done).catch(done); }
+  else { const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done(); }
 }
 
 function closeModal(){ document.getElementById('ov-detail').classList.remove('open'); try{ history.replaceState(null,'', location.pathname); }catch(e){} }
