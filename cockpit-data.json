@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "version": "5.4",
-    "last_updated": "2026-07-01",
+    "version": "5.5",
+    "last_updated": "2026-07-02",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
@@ -2335,6 +2335,44 @@
             "Mapping dossiers -> deploiements",
             "Nettoyage branches",
             "Documentation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "cat": "outils",
+      "status": "en_cours",
+      "title": "Projet TEST — demo de creation",
+      "keyword": "TEST",
+      "aliases": [
+        "PROJET TEST",
+        "DEMO"
+      ],
+      "desc": "Projet cree pour tester le flux « Nouveau projet » du Cockpit : verifier qu'un projet ajoute apparait et reagit comme les autres (mot-cle, brief, mises a jour). A supprimer une fois le test valide.",
+      "url": "",
+      "nextStep": "Verifier que la fiche apparait dans le Cockpit et que le mot-cle TEST fonctionne, puis decider de la supprimer",
+      "lastActions": [
+        {
+          "date": "2026-07-02",
+          "text": "Fiche creee via le flux « Nouveau projet » (test du cycle complet)"
+        }
+      ],
+      "pending": [
+        "Le test est-il concluant (la fiche apparait + mot-cle marche) ?",
+        "Supprimer ce projet test une fois valide ?"
+      ],
+      "lastReview": "2026-07-02",
+      "stack": "Cockpit (cockpit-data.json)",
+      "livrables": [],
+      "phases": [
+        {
+          "name": "Test de creation",
+          "state": "in_progress",
+          "items": [
+            "Fiche ajoutee",
+            "Verifier affichage + mot-cle",
+            "Supprimer apres validation"
           ]
         }
       ]
