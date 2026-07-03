@@ -81,16 +81,23 @@ court-circuiter et aller droit au but).
   - **Pipeline composite PRÊT et VALIDÉ** (dans `reel-engine/`) : `reel_composite.html`
     (mode `__NOBG` transparent) + `capture_composite.js` (PNG alpha) + `composite.sh`
     (xfade des clips + overlay du premier plan). Validé le 03/07 avec images fixes → graphe OK.
-  - ▶️ **PROCHAINE SESSION (sur DA21-VIDEO)** — turnkey :
-    1. `git fetch origin claude/adoring-goodall-ulziw4 && git checkout claude/adoring-goodall-ulziw4`
-       (le pipeline + ce REPRISE sont sur cette branche, pas sur main).
-    2. Outils : `apt-get install -y ffmpeg fonts-noto-core` + `npm i playwright-core`
+  - ✅✅ **VRAI FOND VIDÉO LIVRÉ (03/07 soir, env DA21-VIDEO)** : les 5 clips CloudFront
+    téléchargés sans blocage (`curl` OK sur DA21-VIDEO), pipeline exécuté de bout en bout.
+    **3 masters HD rendus** (vrais plans filmés SOUS la typo cinétique) :
+    - `reel_VIDEO_full.mp4` (~38 Mo, 40,9 s) · `reel_VIDEO_short.mp4` (~25 Mo, 23,7 s) ·
+      `reel_VIDEO_hookprix.mp4` (~38 Mo, 40,9 s). Livrés dans le chat.
+    - QA visuelle OK : Kaaba (cover) · Mina tentes drone (programme) · Médine dôme vert (prix).
+    - Previews compressés poussés → `public/reels/reel_30s.mp4` / `reel_15s.mp4` /
+      `reel_hookprix.mp4` (mêmes noms, remplacent les versions fonds-images). Page `hajj.html`
+      mise à jour (« vrais fonds vidéo filmés »).
+    - Artefacts de build (`clips/`, `fg/`, masters) **gitignorés** (éphémères, régénérables).
+  - ▶️ **REBUILD (session DA21-VIDEO)** — turnkey, si besoin de re-rendre :
+    1. `git fetch origin claude/adoring-goodall-ulziw4 && git checkout claude/adoring-goodall-ulziw4`.
+    2. Outils : `apt-get update && apt-get install -y ffmpeg fonts-noto-core` + `npm i playwright-core`
        (Chromium déjà préinstallé dans `/opt/pw-browsers`).
-    3. Télécharger les 5 clips (bloc `curl` ci-dessus).
+    3. Télécharger les 5 clips (bloc `curl` ci-dessus ; si liens expirés → `job_display` + job-ids).
     4. Pour chaque version (`full`/`short`/`hookprix`) : `node capture_composite.js chromium_path.txt
        "$PWD/reel_composite.html" ./fg <version>` puis `bash composite.sh <version>`.
-    5. Livrer les masters dans le chat + pousser les previews `public/reels/` (mêmes noms :
-       `reel_30s.mp4`/`reel_15s.mp4`/`reel_hookprix.mp4`) + mettre à jour la page `hajj.html`.
   - 🔔 **RAPPEL À FAIRE À KARIM (il l'a demandé)** : lui **rappeler le « cas n°2 »** — quand il
     aura un **ordinateur**, éditer **DA21** directement (survol → ⚙️ → ajouter les 2 domaines +
     la liste par défaut) pour **tout regrouper sur un seul environnement** (site + studio + vidéo)
