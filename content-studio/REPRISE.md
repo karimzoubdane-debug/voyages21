@@ -63,16 +63,38 @@ court-circuiter et aller droit au but).
     - `mina`       = `26af6b9d-45ae-4a85-a0a6-9ea97da75565` (Mina, tentes, drone)
     - `medina`     = `c72be85f-8472-41c6-9640-956acc1098a8` (Médine, dôme vert)
     - `hotel`      = `410ab0d2-d328-4893-bb1d-e79bbfa525ee` (chambre vue Kaaba)
-  - **Verrou restant = TÉLÉCHARGEMENT** : le proxy bloque `*.cloudfront.net` et
-    `*.higgsfield.ai` (403, refus de politique — interdit de contourner). ➡️ **ACTION KARIM :
-    ajouter ces 2 domaines aux « domaines autorisés » de l'environnement** (comme `*.apify.com`,
-    garder la liste par défaut cochée). **S'applique aux NOUVELLES sessions.**
+  - ✅ **VERROU TÉLÉCHARGEMENT RÉSOLU (03/07 soir)** : Karim a créé un environnement
+    **`DA21-VIDEO`** (Accès réseau = Personnalisé + `*.cloudfront.net` + `*.higgsfield.ai`
+    + liste par défaut incluse). ➡️ **La session vidéo DOIT tourner sur l'env `DA21-VIDEO`**
+    (pas DA21). Sur DA21-VIDEO, `curl` des liens ci-dessous fonctionne.
+  - **Liens directs des 5 clips** (publics, sans signature — `curl` OK sur DA21-VIDEO ;
+    si expirés, re-générer via `job_display` + les job-ids ci-dessus) :
+    ```bash
+    cd content-studio/hajj-2027/reel-engine && mkdir -p clips
+    B=https://d8j0ntlcm91z4.cloudfront.net/user_3DrnEP6MWcOADYof2iApd0HQrOD
+    curl -sSL -o clips/kaaba_day.mp4  "$B/hf_20260703_222617_b05cf88a-faba-4953-b63c-15a33ae59610.mp4"
+    curl -sSL -o clips/kaaba_dusk.mp4 "$B/hf_20260703_222834_92207f9f-0e65-4bd7-a680-9410673e1105.mp4"
+    curl -sSL -o clips/mina.mp4       "$B/hf_20260703_222901_26af6b9d-45ae-4a85-a0a6-9ea97da75565.mp4"
+    curl -sSL -o clips/medina.mp4     "$B/hf_20260703_222905_c72be85f-8472-41c6-9640-956acc1098a8.mp4"
+    curl -sSL -o clips/hotel.mp4      "$B/hf_20260703_222845_410ab0d2-d328-4893-bb1d-e79bbfa525ee.mp4"
+    ```
   - **Pipeline composite PRÊT et VALIDÉ** (dans `reel-engine/`) : `reel_composite.html`
     (mode `__NOBG` transparent) + `capture_composite.js` (PNG alpha) + `composite.sh`
     (xfade des clips + overlay du premier plan). Validé le 03/07 avec images fixes → graphe OK.
-  - ▶️ **PROCHAINE SESSION (domaines OK)** : télécharger les 5 clips dans `reel-engine/clips/`,
-    `node capture_composite.js … <version>` puis `bash composite.sh <version>` pour les 3 formats
-    → livrer + pousser les previews `public/reels/`.
+  - ▶️ **PROCHAINE SESSION (sur DA21-VIDEO)** — turnkey :
+    1. `git fetch origin claude/adoring-goodall-ulziw4 && git checkout claude/adoring-goodall-ulziw4`
+       (le pipeline + ce REPRISE sont sur cette branche, pas sur main).
+    2. Outils : `apt-get install -y ffmpeg fonts-noto-core` + `npm i playwright-core`
+       (Chromium déjà préinstallé dans `/opt/pw-browsers`).
+    3. Télécharger les 5 clips (bloc `curl` ci-dessus).
+    4. Pour chaque version (`full`/`short`/`hookprix`) : `node capture_composite.js chromium_path.txt
+       "$PWD/reel_composite.html" ./fg <version>` puis `bash composite.sh <version>`.
+    5. Livrer les masters dans le chat + pousser les previews `public/reels/` (mêmes noms :
+       `reel_30s.mp4`/`reel_15s.mp4`/`reel_hookprix.mp4`) + mettre à jour la page `hajj.html`.
+  - 🔔 **RAPPEL À FAIRE À KARIM (il l'a demandé)** : lui **rappeler le « cas n°2 »** — quand il
+    aura un **ordinateur**, éditer **DA21** directement (survol → ⚙️ → ajouter les 2 domaines +
+    la liste par défaut) pour **tout regrouper sur un seul environnement** (site + studio + vidéo)
+    au lieu de garder DA21-VIDEO séparé.
 - ⏳ **RESTE (besoin de Karim)** :
   - 🔊 **Son** (Talbiya + nappe) : env. bloque téléchargements audio → Karim **upload les
     fichiers audio dans le chat** (comme une image) → mixage ffmpeg local (voix devant, nappe
