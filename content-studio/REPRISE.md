@@ -53,15 +53,31 @@ court-circuiter et aller droit au but).
      → image statique avec **WhatsApp Wafaa/Fouad + www.voyages21.com** visibles et fixes.
   Aperçus : `public/reels/reel_30s.mp4` (e98bbdf) · `reel_15s.mp4` (cc029dd) ·
   `reel_hookprix.mp4` (6870c80). PR #111 (branche `claude/adoring-goodall-ulziw4`).
+- 🎥 **VRAI FOND VIDÉO — DÉBLOQUÉ CÔTÉ GÉNÉRATION (03/07 soir)** :
+  - La génération Higgsfield **fonctionne maintenant** (plus de « permission stream
+    closed »). Testé : `kling3_0_turbo`, 9:16, 5 s, **7,5 crédits/clip** (reste ~429).
+  - **5 clips cinématiques réels générés** (dans le compte Higgsfield de Karim, ré-affichables
+    via `job_display`) :
+    - `kaaba_day`  = `b05cf88a-faba-4953-b63c-15a33ae59610` (Kaaba jour, tawaf)
+    - `kaaba_dusk` = `92207f9f-0e65-4bd7-a680-9410673e1105` (Kaaba dorée, blue hour)
+    - `mina`       = `26af6b9d-45ae-4a85-a0a6-9ea97da75565` (Mina, tentes, drone)
+    - `medina`     = `c72be85f-8472-41c6-9640-956acc1098a8` (Médine, dôme vert)
+    - `hotel`      = `410ab0d2-d328-4893-bb1d-e79bbfa525ee` (chambre vue Kaaba)
+  - **Verrou restant = TÉLÉCHARGEMENT** : le proxy bloque `*.cloudfront.net` et
+    `*.higgsfield.ai` (403, refus de politique — interdit de contourner). ➡️ **ACTION KARIM :
+    ajouter ces 2 domaines aux « domaines autorisés » de l'environnement** (comme `*.apify.com`,
+    garder la liste par défaut cochée). **S'applique aux NOUVELLES sessions.**
+  - **Pipeline composite PRÊT et VALIDÉ** (dans `reel-engine/`) : `reel_composite.html`
+    (mode `__NOBG` transparent) + `capture_composite.js` (PNG alpha) + `composite.sh`
+    (xfade des clips + overlay du premier plan). Validé le 03/07 avec images fixes → graphe OK.
+  - ▶️ **PROCHAINE SESSION (domaines OK)** : télécharger les 5 clips dans `reel-engine/clips/`,
+    `node capture_composite.js … <version>` puis `bash composite.sh <version>` pour les 3 formats
+    → livrer + pousser les previews `public/reels/`.
 - ⏳ **RESTE (besoin de Karim)** :
-  - 🔊 **Son** (Talbiya + nappe) : env. bloque téléchargements audio ET génération
-    Higgsfield → Karim **upload les fichiers audio dans le chat** (comme une image) →
-    mixage ffmpeg local (voix devant, nappe atténuée, ducking, fondus).
-  - 🎥 **Vrai fond vidéo filmé** : génération payante Higgsfield **échoue en session
-    web/remote** (« permission stream closed », approbation impossible même via iPhone ;
-    l'import URL, lui, marche). Solution = **clé API Higgsfield + domaine autorisé**
-    (recette Apify) OU upload de clips réels ; le foreground (animations) sera rendu en
-    transparence et posé par-dessus la vidéo.
+  - 🔊 **Son** (Talbiya + nappe) : env. bloque téléchargements audio → Karim **upload les
+    fichiers audio dans le chat** (comme une image) → mixage ffmpeg local (voix devant, nappe
+    atténuée, ducking, fondus). (Ou générer la nappe via Higgsfield `generate_audio`, à tester
+    maintenant que la génération est débloquée — mais même verrou de téléchargement CloudFront.)
 - ⚠️ Instabilité env. : le conteneur **redémarre** parfois (tue les jobs de fond) →
   rendre **au premier plan**, une vidéo à la fois, frames **JPEG/24 i-s**.
 

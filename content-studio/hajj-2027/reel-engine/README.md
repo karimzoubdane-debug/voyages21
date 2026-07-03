@@ -26,7 +26,33 @@ ffmpeg -y -framerate 24 -i frames/f%04d.jpg -c:v libx264 -pix_fmt yuv420p -crf 1
 ```
 (Le 1er argument de `capture.js` est un fichier contenant le chemin du binaire Chromium.)
 
+## 🎥 VRAI FOND VIDÉO FILMÉ (composite) — pipeline prêt
+La génération Higgsfield **fonctionne** désormais (testée le 03/07/2026, `kling3_0_turbo`,
+7,5 crédits / clip 5 s). Le SEUL verrou restant = **télécharger** le clip : le proxy bloque
+`*.cloudfront.net` / `*.higgsfield.ai` (403). Une fois ces 2 domaines ajoutés aux
+**domaines autorisés** de l'environnement (comme `*.apify.com`), tout devient automatique.
+
+Fichiers du composite (dans ce dossier) :
+- `reel_composite.html` — même moteur + mode `window.__NOBG` (fond transparent, on garde
+  texte + cadrans + scrim + particules).
+- `capture_composite.js` — capture le PREMIER PLAN en **PNG alpha** (24 i/s, 1080×1920).
+- `composite.sh` — étire chaque clip à la durée de sa scène, enchaîne les scènes en
+  **xfade**, puis **superpose** le premier plan PNG sur le fond vidéo. Sort le master + preview.
+
+Étapes (session avec domaines autorisés) :
+```bash
+# 1) récupérer les 5 clips dans ./clips/ (job-ids dans REPRISE.md, re-affichables via job_display)
+#    kaaba_day.mp4 kaaba_dusk.mp4 mina.mp4 medina.mp4 hotel.mp4
+# 2) premier plan transparent (par version)
+node capture_composite.js chromium_path.txt "$PWD/reel_composite.html" ./fg full
+# 3) montage final
+bash composite.sh full        # -> reel_VIDEO_full.mp4 + preview_full.mp4
+```
+Mapping scène→clip par défaut (modifiable en tête de `composite.sh`) : cover=kaaba_day,
+pourquoi=kaaba_dusk, programme=mina, prix=medina, options=hotel, cta=kaaba_dusk.
+Pipeline **validé** le 03/07 avec des images fixes en guise de clips (graphe ffmpeg OK) —
+il ne reste qu'à brancher les vrais clips.
+
 ## Notes
 - **Son** : les reels sont muets. Pour la Talbiya + nappe : mixer en local avec ffmpeg à partir des fichiers audio fournis (l'environnement bloque téléchargements et génération audio).
-- **Vrai fond vidéo filmé** : nécessite Higgsfield débloqué (clé API + domaine autorisé, recette Apify) — la génération payante MCP échoue dans les sessions web/remote (approbation impossible).
 - Aperçus web déployés dans `public/reels/` (page `public/reels/hajj.html`).
