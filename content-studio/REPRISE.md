@@ -44,6 +44,15 @@ court-circuiter et aller droit au but).
   (Kidana +23 000 / train +2 000), scène **avis Google** (atterrissage + ★★★★★),
   fin **« زوروا موقعنا » + site tapé lettre par lettre**, rayons obliques **supprimés**,
   petits textes **agrandis**.
+- ✅ **v7 LIVRÉE (03/07 soir) — 3 formats rendus, envoyés dans le chat, poussés** :
+  1. **Avis Google** (cadran pw5) : atterrit doucement **puis grandit** (~×1,5) — occupe
+     les 3/4 de l'écran, avec « Nos avis Google ★★★★★ ».
+  2. **Prix** : **une formule par écran** (Confort 67 500 apparaît → disparaît → Premium
+     95 000), les deux centrées.
+  3. **Fin figée** : sur les ~1,3 dernières s tout se fige (fonds, particules, curseur)
+     → image statique avec **WhatsApp Wafaa/Fouad + www.voyages21.com** visibles et fixes.
+  Aperçus : `public/reels/reel_30s.mp4` (e98bbdf) · `reel_15s.mp4` (cc029dd) ·
+  `reel_hookprix.mp4` (6870c80). PR #111 (branche `claude/adoring-goodall-ulziw4`).
 - ⏳ **RESTE (besoin de Karim)** :
   - 🔊 **Son** (Talbiya + nappe) : env. bloque téléchargements audio ET génération
     Higgsfield → Karim **upload les fichiers audio dans le chat** (comme une image) →
