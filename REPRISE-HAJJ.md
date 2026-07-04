@@ -51,6 +51,18 @@
 
 ---
 
+## 🔄 NOUVELLE FEUILLE DE ROUTE (2026-07-04) — passage « vues » → « contacts »
+Constat : Performance Max = 2 790 clics, ~889 DH dépensés (solde restant 510,99 DH), **0 appel / 0 contact**.
+Trafic non qualifié (Display/appli pas cher). PMax pas adapté à un compte neuf + petit budget. On bascule :
+- **🥇 Priorité 1 — Meta** (accepte la liste clients, pas de blocage) :
+  1) audience personnalisée avec la liste 7 445 · 2) audience similaire (lookalike) ·
+  3) pub avec le Reel Hajj, objectif **« Messages/WhatsApp »** (PAS « vues ») · 4) reciblage visiteurs (Pixel posé). Budget ~100-150 DH/j.
+- **🥈 Priorité 2 — Google Search** (vraie intention) : remplacer PMax par campagne « Recherche »,
+  mots-clés exacts (حج 2027, وكالة حج معتمدة, تسجيل الحج المغرب) + extension d'appel. Budget ~100 DH/j.
+- **🥉 Priorité 3 — Couper le gâchis** : mettre Performance Max EN PAUSE, ne pas recharger dessus.
+- **🎁 Priorité 4 — Organique gratuit** : Reel en Story + statut WhatsApp + broadcast WhatsApp à la liste.
+- Ordre : demain = Meta d'abord ; ensuite Search ; en continu = pause PMax + organique.
+
 ## ❓ Questions en suspens
 - **Q1** : voir le rapport « Termes de recherche » (ce que les gens ont vraiment tapé + repérer le trafic poubelle).
 - **Q2** : voir les aperçus des bannières Display affichées.
@@ -82,4 +94,4 @@
 
 ---
 
-*Dernière mise à jour : 2026-07-04 — Reel Hajj publié sur Instagram/Facebook ; campagne Google Ads diffuse ; échéance 7 juillet ; reste, dans l'ordre : réessayer signal audience (24-48h) → 2ᵉ email → Q1 termes de recherche → Q2 bannières Display.*
+*Dernière mise à jour : 2026-07-04 — BASCULE STRATÉGIE : PMax = 0 appel sur 2 790 clics → on passe à Meta (liste clients + Reel, objectif Messages) en priorité, puis Google Search, pause PMax. Reel Hajj déjà publié IG/FB. Solde Google restant : 510,99 DH.*
