@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "5.5",
-    "last_updated": "2026-07-02",
+    "last_updated": "2026-07-04",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
@@ -160,25 +160,27 @@
       ],
       "desc": "Page dediee Hajj & Omra : theme noir Kiswa, logo cercle or, galeries hotels, hero video, tableaux de prix, dates gregoriennes, contacts + WhatsApp. En ligne et suivie (Meta Pixel).",
       "url": "https://www.voyages21.com/voyages/destinations/hajj-2027.html",
-      "nextStep": "Suivre les conversions (Meta Pixel) et relancer la diffusion",
+      "nextStep": "Suivre les 1ers resultats de la campagne Meta (48-72h) : cout par conversation, et repondre VITE aux leads WhatsApp 0661-247049",
       "lastActions": [
+        {
+          "date": "2026-07-04",
+          "text": "CAMPAGNE META LANCEE (en revision) : Reel Hajj booste depuis Android (0% frais Apple), objectif messages WhatsApp 0661-247049, audience Maroc 31-65 H+F, 70 USD sur 7 jours"
+        },
+        {
+          "date": "2026-07-04",
+          "text": "Prep attaque Meta : boutons WhatsApp pre-remplis (msg Hajj 2027) + evenement standard Lead sur clic WhatsApp"
+        },
         {
           "date": "2026-06-30",
           "text": "Meta Pixel + Google Tag + suivi conversion (PR #108)"
-        },
-        {
-          "date": "2026-06-27",
-          "text": "Cellule Medine = Baltimore 5 etoiles corrigee (PR #103/#105)"
-        },
-        {
-          "date": "2026-06-20",
-          "text": "Contacts Hajj Fouad + Haja Wafaa + bouton WhatsApp (PR #96)"
         }
       ],
       "pending": [
-        "Lancer une campagne de diffusion payante sur la page ? (budget a definir)"
+        "Repondre rapidement aux leads WhatsApp (0661-247049) : delai de reponse = 1er facteur de conversion",
+        "Analyser les resultats du test apres 48-72h (cout/conversation) puis decider scale ou ajustement",
+        "Prochaines campagnes a faire depuis l'ordinateur (Meta Ads Manager) pour eviter les frais Apple"
       ],
-      "lastReview": "2026-07-01",
+      "lastReview": "2026-07-04",
       "stack": "HTML statique · public/voyages/destinations · Meta Pixel · Google Tag",
       "livrables": [
         {
@@ -212,7 +214,8 @@
           "state": "in_progress",
           "items": [
             "Meta Pixel + Google Tag poses",
-            "Diffusion payante a lancer"
+            "Campagne Meta lancee : Reel Hajj boost, messages WhatsApp, Maroc 31-65, 70 USD/7j",
+            "Analyser resultats + decider scale"
           ]
         }
       ]
