@@ -13,6 +13,7 @@
 - Page à promouvoir : `public/voyages/destinations/hajj-2027.html`
 - URL live : https://www.voyages21.com/voyages/destinations/hajj-2027.html
 - Budget engagé décidé : **7 jours à 200 DH = 1400 DH**, puis recharge pour récupérer les 300 USD de crédit.
+- **Échéance produit Hajj : 7 juillet 2026** (mise à jour — avant c'était le 10).
 
 ---
 
@@ -31,6 +32,8 @@
   coût ~187 DH). Budget 220 DH/jour (~1540 DH sur 7 jours).
 - **Liste clients importée** (2026-07-02) : segment « clients Voyages21 », 7 445/7 458 lignes acceptées, matching en cours (~24 h).
   Pas encore utilisable en signal (éligibilité) — voir tâches en suspens.
+- **Reel Instagram Hajj publié** (2026-07-04) sur @voyages21maroc (+ Facebook) : vidéo IA 41 s, son talbya (audio d'origine),
+  légende de vente + avis Google + lieu Marrakech, 19 hashtags en 1er commentaire (Marrakech, Agadir, Essaouira, Ouarzazate, Beni Mellal…).
 
 ---
 
@@ -79,4 +82,4 @@
 
 ---
 
-*Dernière mise à jour : 2026-07-02 — campagne diffuse ; liste clients importée (matching en cours) ; reste, dans l'ordre : réessayer signal audience (24-48h) → 2ᵉ email → Q1 termes de recherche → Q2 bannières Display.*
+*Dernière mise à jour : 2026-07-04 — Reel Hajj publié sur Instagram/Facebook ; campagne Google Ads diffuse ; échéance 7 juillet ; reste, dans l'ordre : réessayer signal audience (24-48h) → 2ᵉ email → Q1 termes de recherche → Q2 bannières Display.*
