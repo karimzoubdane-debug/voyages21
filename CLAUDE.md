@@ -6,6 +6,21 @@
 > sur `main`, toujours branche + PR + preview, une seule IA par branche à la fois.
 > Le site officiel est **https://www.voyages21.com** (`voyages21.vercel.app` = adresse technique).
 
+## 🧭 COCKPIT 360 — le Cockpit vit désormais dans SON dépôt : `karimzoubdane-debug/v21-cockpit`
+**Dès que Karim écrit « COCKPIT 360 » (ou « DÉPÔTS PROJETS », ou « INBOX », même seul)** :
+NE PAS faire réexpliquer. Le Cockpit (accueil = vue Dépôts × Projets `index.html`,
+fiches `cockpit.html`, données `cockpit-data.json`, consignes `COCKPIT-INBOX.md`) est
+**migré dans le dépôt privé isolé `v21-cockpit`** (déploiement Vercel dédié).
+1. Lire `_meta.cockpit360` du `cockpit-data.json` de **v21-cockpit** (ou, à défaut,
+   celui de ce dépôt qui sert de pointeur) + `COCKPIT-INBOX.md` de v21-cockpit.
+2. Résumer en 3 lignes (phase + `lastStep` + `nextStep` + `pending`), remonter l'INBOX,
+   proposer la suite, **attendre le go**.
+3. Après chaque avancée : mettre à jour `_meta.cockpit360` (phase, lastStep, nextStep,
+   pending, updated) **dans v21-cockpit** + PR. Les mots-clés de reprise par projet
+   (table plus bas, champ `keyword`) restent valables dans toute conversation.
+🔴 v21-cockpit ne fait qu'AFFICHER la zone rouge (site voyages21/main + mini-site
+HelloMorroco branche `codex/welcomechina-maroc-circuits`) — jamais y toucher depuis là-bas.
+
 ## 🎛️ Cockpit Projets — mémoire centrale (mot-clé « REVUE COCKPIT » / « COCKPIT »)
 Le **Cockpit** (appli PWA `public/cockpit.html`, en ligne sur
 `https://voyages21.vercel.app/cockpit.html`, données `cockpit-data.json` racine ;

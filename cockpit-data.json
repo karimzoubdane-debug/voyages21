@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "5.5",
-    "last_updated": "2026-07-02",
+    "last_updated": "2026-07-06",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
@@ -49,7 +49,26 @@
       "planifie",
       "termine",
       "abandonne"
-    ]
+    ],
+    "cockpit360": {
+      "keyword": "COCKPIT 360",
+      "aliases": [
+        "COCKPIT DEPOTS",
+        "DEPOTS PROJETS",
+        "INBOX"
+      ],
+      "moved_to": "karimzoubdane-debug/v21-cockpit",
+      "note": "Le Cockpit 360 vit desormais dans son PROPRE depot prive v21-cockpit (accueil = vue Depots x Projets, cockpit.html = fiches, cockpit-data.json + COCKPIT-INBOX.md la-bas). Ce fichier-ci reste la memoire historique dans voyages21 jusqu au basculement complet.",
+      "phase": "Phase 3 — depot isole v21-cockpit (migration livree, PR ouvertes)",
+      "lastStep": "2026-07-06 : creation du depot isole v21-cockpit + migration de la version peche (PR #134) : index.html (Depots x Projets), cockpit.html, cockpit-data.json, COCKPIT-INBOX.md, PWA. Donnees lues en relatif depuis le nouveau depot. Zone rouge intacte.",
+      "nextStep": "Karim : importer v21-cockpit dans Vercel (2 clics) -> URL de production ; fusionner la PR de v21-cockpit ; decider du sort de la PR #134 (fusionner ou fermer).",
+      "pending": [
+        "Import Vercel du depot v21-cockpit — action Karim",
+        "Sort de la PR #134 de voyages21 (version peche devenue redondante ?) — decision Karim",
+        "Automatisation minuit (Phase 4) — attente go"
+      ],
+      "updated": "2026-07-06"
+    }
   },
   "projects": [
     {
