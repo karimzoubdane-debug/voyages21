@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cockpit — Dépôts × Projets · Voyages21</title>
+<meta name="theme-color" content="#152E1F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --gold-soft:#e3cf9a;
+  --cream:#F5F0E8; --ink:#20261f; --muted:#6d7a68; --line:#e7e0d3;
+  --card:#ffffff; --card2:#fbf8f2;
+  --ok:#2e7d5b; --warn:#c98a1e; --danger:#c0492f; --info:#3b6ea5;
+  --pub:#2e7d5b; --priv:#8a6d1e;
+  --shadow:0 1px 2px rgba(20,46,31,.05),0 8px 24px rgba(20,46,31,.06);
+  --radius:16px;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--cream);
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+  padding-bottom:90px;
+}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* ---------- HEADER ---------- */
+header.top{
+  background:linear-gradient(160deg,var(--forest) 0%,var(--forest2) 100%);
+  color:#f3efe6; padding:26px 0 22px; position:relative; overflow:hidden;
+  border-bottom:3px solid var(--gold);
+}
+header.top:before{content:"";position:absolute;inset:0;
+  background:radial-gradient(700px 200px at 90% -20%,rgba(200,164,64,.18),transparent 60%);}
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand h1{font-family:var(--serif);font-weight:700;font-size:clamp(21px,4.6vw,30px);margin:0;letter-spacing:.2px}
+.brand h1 em{color:var(--gold-soft);font-style:italic}
+.sub{color:#c9d3c4;font-size:13.5px;margin:6px 0 0;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 12px}
+.stat .n{font-family:var(--serif);font-size:22px;font-weight:700;color:#fff;line-height:1}
+.stat .l{font-size:11px;color:#bcc7b7;margin-top:5px;text-transform:uppercase;letter-spacing:.5px}
+.stat.rouge .n{color:#ffbfae}
+
+/* ---------- TOOLBAR ---------- */
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(245,240,232,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:11px 0;margin-bottom:6px}
+.toolbar .wrap{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:#fff;
+  border:1px solid var(--line);border-radius:11px;padding:9px 12px}
+.search input{border:0;outline:0;font:inherit;flex:1;background:transparent;color:var(--ink)}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;
+  padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
+.chip:hover{border-color:var(--gold)}
+.chip.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+.chip.rouge.active{background:var(--danger);border-color:var(--danger)}
+.chip.archi.active{background:var(--warn);border-color:var(--warn)}
+
+/* ---------- REPO CARD ---------- */
+main{padding-top:10px}
+.repo{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);margin:14px 0;overflow:hidden}
+.repo.protege{border-left:5px solid var(--danger)}
+.repo.archi{opacity:.92;border-left:5px solid var(--warn)}
+.repo.unknown{border-left:5px dashed #b9c0b2}
+.rhead{display:flex;align-items:center;gap:12px;padding:16px 16px;cursor:pointer;user-select:none}
+.chev{color:var(--muted);transition:.2s;font-size:15px;flex:none}
+.repo.open .chev{transform:rotate(90deg)}
+.rname{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:.2px;
+  word-break:break-all;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rname code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14.5px}
+.rmeta{margin-left:auto;display:flex;align-items:center;gap:14px;flex:none}
+.rmeta .mi{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);white-space:nowrap}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#bbb}
+.badge{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.4px}
+.b-pub{background:#e5f2eb;color:var(--pub)}
+.b-priv{background:#f5ecd4;color:var(--priv)}
+.b-lock{background:#fbe3dc;color:var(--danger)}
+.b-archi{background:#f7ecd6;color:var(--warn)}
+.b-count{background:#eef0ea;color:#5a6653}
+.pill{font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px}
+
+/* risk line under head */
+.riskline{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px 44px}
+.rk{font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:8px;display:inline-flex;gap:6px;align-items:center}
+.rk-protege{background:#fbe3dc;color:var(--danger)}
+.rk-fragile{background:#fdeccb;color:#a15a12}
+.rk-doublon{background:#e7e0f2;color:#5c4b8a}
+.rk-bloat{background:#e6eef5;color:var(--info)}
+.rk-unknown{background:#eef0ea;color:#5a6653}
+
+/* body */
+.rbody{display:none;padding:2px 16px 16px 16px;border-top:1px solid var(--line);background:var(--card2)}
+.repo.open .rbody{display:block}
+.rdesc{font-size:13.5px;color:#43503f;margin:14px 0 12px;line-height:1.55}
+.ractions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.btn{font:inherit;font-size:12.5px;font-weight:600;border-radius:10px;padding:8px 13px;
+  border:1px solid var(--line);background:#fff;color:var(--forest);cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.btn:hover{border-color:var(--gold);background:#fffdf7}
+.btn.gh{background:var(--forest);color:#fff;border-color:var(--forest)}
+.btn.gh:hover{background:#204632}
+.btn.mark.on{background:var(--warn);color:#fff;border-color:var(--warn)}
+.btn.danger{color:var(--danger)}
+
+.belly-h{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
+  font-weight:700;margin:6px 0 8px;display:flex;align-items:center;gap:8px}
+.belly-h:after{content:"";flex:1;height:1px;background:var(--line)}
+.empty{font-size:13px;color:var(--muted);font-style:italic;padding:6px 0 4px}
+
+/* project row */
+.proj{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:9px 0;transition:.15s}
+.proj.mk{background:#fdf6e8;border-color:#eBd9ad}
+.proj-top{display:flex;align-items:flex-start;gap:10px}
+.sdot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none}
+.proj-title{font-weight:700;font-size:14px;flex:1;line-height:1.35}
+.proj-title .kw{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--muted);font-weight:600}
+.sstat{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;flex:none}
+.proj-desc{font-size:12.7px;color:#54604f;margin:7px 0 9px;line-height:1.5}
+.proj-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.upd{display:inline-flex;align-items:center;gap:6px}
+.upd b{color:#43503f;font-weight:600}
+.nolink{color:var(--danger);font-weight:700;background:#fbe3dc;padding:3px 8px;border-radius:8px;font-size:11px}
+.plink{color:var(--info);font-weight:700;text-decoration:none}
+.plink:hover{text-decoration:underline}
+.mini{margin-left:auto;display:flex;gap:6px}
+.imark{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 9px;font-size:11px;
+  font-weight:600;color:var(--muted);cursor:pointer}
+.imark.on{background:var(--warn);color:#fff;border-color:var(--warn)}
+
+/* menage bar */
+#menage{position:fixed;left:0;right:0;bottom:0;z-index:30;transform:translateY(110%);transition:.28s;
+  background:var(--forest2);color:#f0ece2;border-top:3px solid var(--gold)}
+#menage.show{transform:translateY(0)}
+#menage .wrap{display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap}
+#menage .mtxt{font-size:13px;flex:1;min-width:200px}
+#menage .mtxt b{color:var(--gold-soft)}
+#menage .btn.copy{background:var(--gold);color:#2a2410;border-color:var(--gold)}
+#menage .btn.ghost{background:transparent;color:#cdd6c8;border-color:rgba(255,255,255,.25)}
+
+footer.legend{max-width:1080px;margin:26px auto 10px;padding:16px;color:var(--muted);font-size:12px;line-height:1.7}
+.legend b{color:#43503f}
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:#20261f;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;transition:.25s;z-index:40;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:560px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .rmeta{gap:9px}
+  .rmeta .mi.hide-s{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span style="font-size:26px">🎛️</span>
+      <h1>Cockpit — <em>Dépôts × Projets</em></h1>
+    </div>
+    <p class="sub">Vue 360° : tes dépôts GitHub, et le « ventre » de chacun — les projets qu'il contient, leur description, leur lien, leur dernière mise à jour et les risques. Déplie un dépôt pour voir ses projets.</p>
+    <div class="stats" id="stats">
+      <div class="stat"><div class="n" id="st-repos">–</div><div class="l">Dépôts</div></div>
+      <div class="stat"><div class="n" id="st-proj">–</div><div class="l">Projets</div></div>
+      <div class="stat rouge"><div class="n" id="st-prot">–</div><div class="l">🔒 Protégés</div></div>
+      <div class="stat"><div class="n" id="st-archi">–</div><div class="l">🗄️ Archivables</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <label class="search">
+      <span>🔎</span>
+      <input id="q" type="search" placeholder="Chercher un dépôt ou un projet…" autocomplete="off">
+    </label>
+    <div class="chips" id="chips">
+      <button class="chip active" data-f="all">Tous</button>
+      <button class="chip" data-f="public">🌍 Publics</button>
+      <button class="chip" data-f="private">🔒 Privés</button>
+      <button class="chip rouge" data-f="protege">🔴 Protégés</button>
+      <button class="chip archi" data-f="archi">🗄️ Archivables</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap" id="repos"></main>
+
+<footer class="legend wrap">
+  <p><b>Comment lire cette page.</b> Chaque bloc = un <b>dépôt GitHub</b>. Le chiffre à droite (« N proj. ») = nombre de projets dans son ventre. Clique pour déplier. Un projet <b>sans lien</b> est signalé en rouge « ⚠️ Pas de lien ». La date « MàJ » = dernière activité connue.</p>
+  <p><b>Marquer « à archiver »</b> ne supprime rien (réversible, gardé dans ce navigateur). Ça remplit la barre du bas — ensuite dis à Claude <b>« COCKPIT MÉNAGE »</b> et il applique proprement (archive GitHub / retrait de fiche via PR). Le site et le mini-site HelloMorroco sont en <b>zone rouge</b> et ne peuvent pas être marqués.</p>
+  <p style="opacity:.7">Snapshot dépôts : <span id="snap">–</span> · rafraîchi à la demande (« MAJ DÉPÔTS » + capture) ou par le cron de minuit.</p>
+</footer>
+
+<div id="menage">
+  <div class="wrap">
+    <div class="mtxt">🗄️ <b id="mcount">0</b> élément(s) marqué(s) « à archiver » — rien n'est supprimé.</div>
+    <button class="btn copy" onclick="copyMenage()">📋 Copier pour Claude</button>
+    <button class="btn ghost" onclick="clearMarks()">Tout démarquer</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const RAW='https://raw.githubusercontent.com/karimzoubdane-debug/voyages21/claude/github-projects-review-s9rjx4/cockpit-data.json';
+const GH='https://github.com/karimzoubdane-debug/voyages21';
+
+const STATUS={
+  publie:{l:'Publié',c:'#2e7d5b',bg:'#e5f2eb'},
+  en_cours:{l:'En cours',c:'#3b6ea5',bg:'#e6eef5'},
+  en_suspens:{l:'En suspens',c:'#c98a1e',bg:'#fbeecb'},
+  planifie:{l:'Planifié',c:'#7a6bab',bg:'#ece7f6'},
+  termine:{l:'Terminé',c:'#556',bg:'#eceef0'},
+  abandonne:{l:'Abandonné',c:'#999',bg:'#eee'}
+};
+const LANG={HTML:'#e34c26',TypeScript:'#3178c6',JavaScript:'#f1e05a','—':'#bbb'};
+const RKICON={protege:'🔒',fragile:'⚠️',doublon:'🔁',bloat:'📦',unknown:'❔'};
+const RKLBL={protege:'Protégé',fragile:'Branche fragile',doublon:'Doublon',bloat:'Surchargé',unknown:'À qualifier'};
+
+let REPOS=[], PROJ=[], META={}, FILTER='all', Q='';
+const MK=new Set(JSON.parse(localStorage.getItem('cockpit_marks')||'[]'));
+const OPEN=new Set(JSON.parse(localStorage.getItem('cockpit_open')||'["voyages21"]'));
+
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1900);}
+function projById(id){return PROJ.find(p=>String(p.id)===String(id));}
+function repoProjects(r){
+  if(r.projectIds==='*rest*'){
+    const claimed=new Set();
+    REPOS.forEach(x=>{if(Array.isArray(x.projectIds))x.projectIds.forEach(i=>claimed.add(String(i)));});
+    return PROJ.filter(p=>!claimed.has(String(p.id)));
+  }
+  return (r.projectIds||[]).map(projById).filter(Boolean);
+}
+
+async function boot(){
+  try{
+    const res=await fetch(RAW+'?t='+Date.now());
+    const d=await res.json();
+    REPOS=d.repos||FALLBACK.repos; PROJ=d.projects||[]; META=d._meta||{};
+  }catch(e){ REPOS=FALLBACK.repos; PROJ=FALLBACK.projects||[]; META=FALLBACK._meta||{}; }
+  document.getElementById('snap').textContent=(META.last_updated||'—');
+  render();
+}
+
+function matches(r){
+  if(FILTER==='public'&&r.vis!=='public')return false;
+  if(FILTER==='private'&&r.vis!=='private')return false;
+  if(FILTER==='protege'&&!r.protected)return false;
+  if(FILTER==='archi'&&!r.archive)return false;
+  if(Q){
+    const hay=(r.name+' '+r.desc+' '+repoProjects(r).map(p=>p.title+' '+(p.keyword||'')+' '+(p.desc||'')).join(' ')).toLowerCase();
+    if(!hay.includes(Q))return false;
+  }
+  return true;
+}
+
+function render(){
+  // stats
+  document.getElementById('st-repos').textContent=REPOS.length;
+  document.getElementById('st-proj').textContent=PROJ.length;
+  document.getElementById('st-prot').textContent=REPOS.filter(r=>r.protected).length;
+  document.getElementById('st-archi').textContent=REPOS.filter(r=>r.archive).length;
+
+  const host=document.getElementById('repos');
+  const list=REPOS.filter(matches);
+  if(!list.length){host.innerHTML='<p class="empty" style="text-align:center;padding:30px">Aucun dépôt ne correspond.</p>';updateMenage();return;}
+  host.innerHTML=list.map(cardHTML).join('');
+  updateMenage();
+}
+
+function cardHTML(r){
+  const projs=repoProjects(r);
+  const open=OPEN.has(r.id);
+  const cls=['repo', open?'open':'', r.protected?'protege':'', r.archive?'archi':'', r.unknown?'unknown':''].join(' ');
+  const langc=LANG[r.lang]||'#bbb';
+  const vis = r.vis==='private'
+    ? '<span class="badge b-priv">Privé</span>'
+    : '<span class="badge b-pub">Public</span>';
+  const lock = r.protected?'<span class="badge b-lock">🔒 Protégé</span>':'';
+  const arc = r.archive?'<span class="badge b-archi">🗄️ Archivable</span>':'';
+  const risks=(r.risks||[]).map(k=>`<span class="rk rk-${k.type}">${RKICON[k.type]||'•'} ${esc(k.text)}</span>`).join('');
+  const risksLine = risks?`<div class="riskline">${risks}</div>`:'';
+
+  return `<section class="${cls}" data-id="${r.id}">
+    <div class="rhead" onclick="toggle('${r.id}')">
+      <span class="chev">▶</span>
+      <span class="rname"><code>${esc(r.name)}</code> ${vis}${lock}${arc}</span>
+      <span class="rmeta">
+        <span class="mi hide-s"><span class="dot" style="background:${langc}"></span>${esc(r.lang)}</span>
+        <span class="mi">🕗 ${esc(r.updateRel||r.ghUpdate||'—')}</span>
+        <span class="badge b-count">${projs.length} proj.</span>
+      </span>
+    </div>
+    ${risksLine}
+    <div class="rbody">
+      <p class="rdesc">${esc(r.desc||'')}${r.note?` <em style="color:#8a6d1e">— ${esc(r.note)}</em>`:''}</p>
+      <div class="ractions">
+        <a class="btn gh" href="${esc(r.url)}" target="_blank" rel="noopener">↗ Ouvrir sur GitHub</a>
+        ${r.live?`<a class="btn" href="${esc(r.live)}" target="_blank" rel="noopener">🌐 Voir le site</a>`:''}
+        ${r.protected
+          ? '<span class="btn danger" style="cursor:default">🔒 Zone rouge — protégé</span>'
+          : `<button class="btn mark ${MK.has('repo:'+r.id)?'on':''}" onclick="mark('repo:${r.id}',event)">🗄️ ${MK.has('repo:'+r.id)?'Marqué à archiver':'Marquer à archiver'}</button>`}
+        ${r.archive?`<a class="btn danger" href="${esc(r.url)}/settings" target="_blank" rel="noopener">⚙️ Archiver/Supprimer sur GitHub</a>`:''}
+      </div>
+      <div class="belly-h">🫀 Ventre du dépôt — ${projs.length} projet(s)</div>
+      ${projs.length?projs.sort(byDate).map(p=>projHTML(p,r)).join(''):'<p class="empty">Aucun projet rattaché.</p>'}
+    </div>
+  </section>`;
+}
+
+function lastAct(p){const a=(p.lastActions||[])[0];return a||null;}
+function byDate(a,b){return (lastAct(b)?.date||'').localeCompare(lastAct(a)?.date||'');}
+
+function projHTML(p,r){
+  const st=STATUS[p.status]||{l:p.status,c:'#666',bg:'#eee'};
+  const la=lastAct(p);
+  const marked=MK.has('proj:'+p.id);
+  const link = p.url
+    ? `<a class="plink" href="${esc(p.url)}" target="_blank" rel="noopener">🔗 Visualiser</a>`
+    : `<span class="nolink">⚠️ Pas de lien — à signaler</span>`;
+  const upd = la
+    ? `<span class="upd">📅 <b>${esc(la.date)}</b> — ${esc(la.text)}</span>`
+    : `<span class="upd" style="font-style:italic">Aucune action datée</span>`;
+  return `<div class="proj ${marked?'mk':''}">
+    <div class="proj-top">
+      <span class="sdot" style="background:${st.c}"></span>
+      <span class="proj-title">${esc(p.title)} ${p.keyword?`<span class="kw">${esc(p.keyword)}</span>`:''}</span>
+      <span class="sstat" style="color:${st.c};background:${st.bg}">${st.l}</span>
+    </div>
+    <p class="proj-desc">${esc(p.desc||'—')}</p>
+    <div class="proj-foot">
+      ${link}
+      ${upd}
+      <span class="mini">
+        <button class="imark ${marked?'on':''}" onclick="mark('proj:${p.id}',event)">🗄️ ${marked?'marqué':'archiver'}</button>
+      </span>
+    </div>
+  </div>`;
+}
+
+function toggle(id){
+  if(OPEN.has(id))OPEN.delete(id);else OPEN.add(id);
+  localStorage.setItem('cockpit_open',JSON.stringify([...OPEN]));
+  render();
+}
+function mark(key,e){
+  e.stopPropagation();
+  if(MK.has(key))MK.delete(key);else MK.add(key);
+  localStorage.setItem('cockpit_marks',JSON.stringify([...MK]));
+  render();
+}
+function clearMarks(){MK.clear();localStorage.setItem('cockpit_marks','[]');render();toast('Marques effacées');}
+function updateMenage(){
+  const bar=document.getElementById('menage');
+  document.getElementById('mcount').textContent=MK.size;
+  bar.classList.toggle('show',MK.size>0);
+}
+function copyMenage(){
+  const lines=['COCKPIT MÉNAGE — éléments à archiver (rien de destructif sans mon go) :'];
+  [...MK].forEach(k=>{
+    if(k.startsWith('repo:')){const r=REPOS.find(x=>x.id===k.slice(5));lines.push('• DÉPÔT : '+(r?r.name:k.slice(5)));}
+    else{const p=projById(k.slice(5));lines.push('• PROJET : '+(p?p.title:k.slice(5)));}
+  });
+  lines.push('','Propose-moi le plan (archive GitHub réversible pour les dépôts, retrait de fiche via PR pour les projets), et attends mon go.');
+  const txt=lines.join('\n');
+  navigator.clipboard?.writeText(txt).then(()=>toast('Copié — colle-le à Claude'),()=>toast('Copie impossible'));
+}
+
+// filters
+document.getElementById('chips').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b)return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  b.classList.add('active'); FILTER=b.dataset.f; render();
+});
+document.getElementById('q').addEventListener('input',e=>{Q=e.target.value.trim().toLowerCase();render();});
+
+// fallback data (used only if fetch fails) — kept minimal
+const FALLBACK={_meta:{last_updated:'2026-07-06'},repos:[],projects:[]};
+
+boot();
+</script>
+</body>
+</html>
