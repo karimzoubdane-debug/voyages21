@@ -64,6 +64,25 @@
      "risk": "Branche non fusionnee : sa suppression tue la preview Vercel du mini-site."
     }
    ]
+  },
+  "cockpit360": {
+   "keyword": "COCKPIT 360",
+   "aliases": [
+    "COCKPIT DEPOTS",
+    "COCKPIT 360",
+    "DEPOTS PROJETS",
+    "INBOX"
+   ],
+   "page": "/cockpit-repos.html",
+   "inbox": "COCKPIT-INBOX.md",
+   "phase": "Phase 2 terminee — appli livree (PR #134)",
+   "lastStep": "Cockpit unifie Depots x Projets en ligne (preview). Couleur peche appliquee. Boite a consignes COCKPIT-INBOX.md creee. Mot-cle de reprise = COCKPIT 360.",
+   "nextStep": "Phase 3 (au go de Karim) : convention .cockpit.json + Action minuit (auto-decouverte depots/projets). Decision en attente : creer un depot isole v21-cockpit ?",
+   "pending": [
+    "Creer un depot isole v21-cockpit pour heberger le Cockpit (au lieu de vivre dans voyages21) ? — attente go",
+    "Automatisation minuit (Phase 3) — attente go"
+   ],
+   "updated": "2026-07-06"
   }
  },
  "projects": [

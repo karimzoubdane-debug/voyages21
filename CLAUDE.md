@@ -6,6 +6,25 @@
 > sur `main`, toujours branche + PR + preview, une seule IA par branche à la fois.
 > Le site officiel est **https://www.voyages21.com** (`voyages21.vercel.app` = adresse technique).
 
+## 🧭 Reprise instantanée du Cockpit 360 (mot-clé « COCKPIT 360 ») + Boîte à consignes (« INBOX »)
+**Dès que Karim écrit « COCKPIT 360 » (ou « DÉPÔTS PROJETS », même seul)** au début d'une
+conversation — même toute nouvelle : NE PAS faire réexpliquer. Exécuter la REPRISE STANDARD :
+1. Lire `cockpit-data.json` → objet **`_meta.cockpit360`** : il contient toujours la **phase**,
+   le **dernier pas** (`lastStep`), la **prochaine étape** (`nextStep`) et les sujets **en attente** (`pending`).
+2. Lire aussi **`COCKPIT-INBOX.md`** (les consignes que Karim a déposées).
+3. Résumer en 3 lignes (phase + dernier pas + prochaine étape), remonter l'INBOX, **proposer** la
+   suite, **attendre le go**.
+4. L'appli = **`public/cockpit-repos.html`** (vue Dépôts × Projets, en ligne sur
+   `voyages21.vercel.app/cockpit-repos.html`). Après chaque avancée, **mettre à jour
+   `_meta.cockpit360`** (`phase`, `lastStep`, `nextStep`, `pending`, `updated`) + PR.
+
+**Boîte à consignes — mot-clé « INBOX »** : Karim écrit ses notes/consignes dans
+`COCKPIT-INBOX.md` (via GitHub ou en me le disant). Dès qu'il tape **« INBOX »**, je lis ce
+fichier, je résume, je propose un plan et **j'attends le go** ; une fois fait, je déplace la
+ligne en « ✅ FAIT » (date + PR). **Chaque projet garde son propre mot-clé de reprise**
+(table plus bas / champ `keyword`) et fonctionne dans toute conversation ayant ce dépôt chargé,
+**quel que soit le dépôt du projet**.
+
 ## 🎛️ Cockpit Projets — mémoire centrale (mot-clé « REVUE COCKPIT » / « COCKPIT »)
 Le **Cockpit** (appli PWA `public/cockpit.html`, en ligne sur
 `https://voyages21.vercel.app/cockpit.html`, données `cockpit-data.json` racine ;

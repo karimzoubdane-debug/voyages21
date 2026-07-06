@@ -4,14 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cockpit — Dépôts × Projets · Voyages21</title>
-<meta name="theme-color" content="#152E1F">
+<meta name="theme-color" content="#9C4526">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --gold-soft:#e3cf9a;
-  --cream:#F5F0E8; --ink:#20261f; --muted:#6d7a68; --line:#e7e0d3;
+  /* Palette pêche (remplace le vert forêt) */
+  --forest:#C15E38; --forest2:#9C4526; --gold:#C8A440; --gold-soft:#f2d9b8;
+  --peach:#F2A277; --peach-soft:#fbe0cd;
+  --cream:#FBF3EC; --ink:#2a231f; --muted:#8a7568; --line:#efe2d6;
   --card:#ffffff; --card2:#fbf8f2;
   --ok:#2e7d5b; --warn:#c98a1e; --danger:#c0492f; --info:#3b6ea5;
   --pub:#2e7d5b; --priv:#8a6d1e;
@@ -41,11 +43,11 @@ header.top:before{content:"";position:absolute;inset:0;
 .brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .brand h1{font-family:var(--serif);font-weight:700;font-size:clamp(21px,4.6vw,30px);margin:0;letter-spacing:.2px}
 .brand h1 em{color:var(--gold-soft);font-style:italic}
-.sub{color:#c9d3c4;font-size:13.5px;margin:6px 0 0;max-width:640px}
+.sub{color:#f6e2d3;font-size:13.5px;margin:6px 0 0;max-width:640px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
 .stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 12px}
 .stat .n{font-family:var(--serif);font-size:22px;font-weight:700;color:#fff;line-height:1}
-.stat .l{font-size:11px;color:#bcc7b7;margin-top:5px;text-transform:uppercase;letter-spacing:.5px}
+.stat .l{font-size:11px;color:#f2d3c0;margin-top:5px;text-transform:uppercase;letter-spacing:.5px}
 .stat.rouge .n{color:#ffbfae}
 
 /* ---------- TOOLBAR ---------- */
