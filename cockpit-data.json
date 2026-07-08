@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "5.5",
-    "last_updated": "2026-07-06",
+    "last_updated": "2026-07-08",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
@@ -2392,6 +2392,104 @@
             "Fiche ajoutee",
             "Verifier affichage + mot-cle",
             "Supprimer apres validation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "cat": "incoming",
+      "status": "en_cours",
+      "title": "WELCOME CHINA — Marché chinois (WeChat, Xiaohongshu, Douyin)",
+      "keyword": "WELCOME CHINA",
+      "aliases": [
+        "CHINE",
+        "WECHAT",
+        "XIAOHONGSHU",
+        "DOUYIN",
+        "HELLO MOROCCO",
+        "HELLOMORROCO"
+      ],
+      "desc": "Conquérir le marché chinois (incoming Chine -> Maroc) : mini-site HelloMorroco localisé en chinois, WeChat Official Account, Xiaohongshu (RED), pub chinoise, WeChat Pay cross-border. Dossier A->Z : welcome-china/DOSSIER-WELCOME-CHINA.md",
+      "url": "https://voyages21-git-codex-welcomechina-maroc-circuits-voyages21.vercel.app/HelloMorroco",
+      "nextStep": "ÉTAPE 1 : décision domaine (cn.voyages21.com ou domaine dédié) + localisation chinoise du mini-site + dépôt dossier WeChat Official Account + compte Xiaohongshu perso",
+      "lastActions": [
+        {
+          "date": "2026-07-08",
+          "text": "Dossier stratégique complet A->Z rédigé (6 chantiers, budget, calendrier 12 mois) + fiche Cockpit créée"
+        },
+        {
+          "date": "2026-07-08",
+          "text": "Validation réglementaire : pas d'entité chinoise requise ; Office des Changes = régime export services (rapatriement 60j, compte devises 70%)"
+        },
+        {
+          "date": "2026-07-08",
+          "text": "Découverte critique : *.vercel.app bloqué en Chine -> domaine custom obligatoire avant tout investissement"
+        }
+      ],
+      "pending": [
+        "Domaine : cn.voyages21.com (gratuit) ou achat d'un domaine dédié ?",
+        "Dépôt de marque Chine CNIPA (~300-600 EUR) : go ou pas ?",
+        "Qui peut relire le chinois (guide/partenaire natif) ?"
+      ],
+      "lastReview": "2026-07-08",
+      "stack": "Mini-site public/WelcomeChina (branche codex) · WeChat OA · Xiaohongshu · WeChat Pay cross-border",
+      "livrables": [
+        {
+          "name": "Dossier stratégique A->Z",
+          "type": "doc",
+          "url": "welcome-china/DOSSIER-WELCOME-CHINA.md"
+        },
+        {
+          "name": "Mini-site HelloMorroco",
+          "type": "URL",
+          "url": "https://voyages21-git-codex-welcomechina-maroc-circuits-voyages21.vercel.app/HelloMorroco"
+        }
+      ],
+      "phases": [
+        {
+          "name": "Chantier 0 — Fondations (domaine, localisation zh, marque)",
+          "state": "in_progress",
+          "items": [
+            "Domaine accessible Chine",
+            "Mini-site 100% chinois",
+            "Nom de marque chinois"
+          ]
+        },
+        {
+          "name": "Chantier 1 — WeChat (OA + SEO 搜一搜)",
+          "state": "todo",
+          "items": [
+            "Official Account vérifié",
+            "Menu + articles",
+            "Réponses types"
+          ]
+        },
+        {
+          "name": "Chantier 2 — Xiaohongshu",
+          "state": "todo",
+          "items": [
+            "Compte perso 3 posts/sem",
+            "1000 abonnés",
+            "Compte entreprise"
+          ]
+        },
+        {
+          "name": "Chantier 3-4 — Douyin + Publicité",
+          "state": "todo",
+          "items": [
+            "XHS Ads test",
+            "WeChat Moments Ads",
+            "Douyin via partenaire"
+          ]
+        },
+        {
+          "name": "Chantier 6 — Paiements (WeChat Pay cross-border)",
+          "state": "todo",
+          "items": [
+            "RDV banque",
+            "Comparatif agrégateurs",
+            "UnionPay CMI"
           ]
         }
       ]
