@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v22 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v23 en production) : page unique chiffrée.
 
-## L'appli — état v22 (09/07/2026)
+## L'appli — état v23 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,11 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v23 — 3 vues : **🎯 Objectifs** (actuel/cible/levier ; production 130 M officiel,
+  reste proposé), **🛡️ Risque opérationnel** (déf + cas PLADER/082/AUTUTI/échues + 3 lignes de
+  défense + plan), **🧭 Feuille de route externe** (organigramme cible + ciblage prospects par
+  RM/DCAF + foyers : terrain/pages jaunes, CRI, Maroc PME, chambre de commerce, fournisseurs &
+  clients de nos clients, marchés publics + KPIs/planning). Comble les écarts b) et c). Validé (0 err JS).
 - 09/07/2026 : v22 — **prépa oral + risque** : (1) rubrique quiz **🎤 Oral CAF** (36 q : chiffres
   du CAF, clients, technicité financière, management, lignes de crédit, risque) ; (2) onglet
   **⚠️ Risque & CA** = concentration PNB (top3 27,5%, ALSA 12,6%, PNB total 9,33 M/218 clients),
