@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v21 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v22 en production) : page unique chiffrée.
 
-## L'appli — état v21 (09/07/2026)
+## L'appli — état v22 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,13 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v22 — **prépa oral + risque** : (1) rubrique quiz **🎤 Oral CAF** (36 q : chiffres
+  du CAF, clients, technicité financière, management, lignes de crédit, risque) ; (2) onglet
+  **⚠️ Risque & CA** = concentration PNB (top3 27,5%, ALSA 12,6%, PNB total 9,33 M/218 clients),
+  scénarios de départ (ALSA −12,6%, top3 −27,5%), plan par CA (Elantry/Talbi/Hajjani) + planning
+  de suivi ; (3) fiche Cours **couverture de la présentation** (sommaire vs appli + écarts : taux
+  par client, risque op dédié, feuille de route externe). PNB/concentration calculés depuis dataset
+  PNB de l'appli. Validé (0 err JS).
 - 09/07/2026 : v21 — fix décalage : les sous-menus (Oral/Outils, alignés à droite) sortaient
   hors écran à gauche → passés en **panneau pleine largeur sous la barre** (vrai méga-menu),
   items en pastilles qui s'enroulent. Tous dans l'écran (390px). Validé (0 err JS).
