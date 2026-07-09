@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v18 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v19 en production) : page unique chiffrée.
 
-## L'appli — état v18 (09/07/2026)
+## L'appli — état v19 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,9 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v19 — **UX mobile** : la barre d'onglets (18 onglets) ne s'empile plus
+  (`flex-wrap`) mais défile sur **une seule ligne horizontale** (swipe), boutons compacts,
+  onglet actif recentré auto. Hauteur barre 600→48 px. Résout « le menu occupe tout l'écran ».
 - 09/07/2026 : v18 — onglet **🗺️ Plan d'action** (portefeuille interne) : liste des
   **26 autorisations échues (836 M** ; Talbi 500 M groupe MENARA, Elantry 230 M, Hajjani 105 M/16 doss.),
   synthèse flux CR/DB, et feuille de route PNB & maîtrise du risque (renouvellements, production CMT/CPI
