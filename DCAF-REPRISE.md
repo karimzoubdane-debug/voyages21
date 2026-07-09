@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v14 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v15 en production) : page unique chiffrée.
 
-## L'appli — état v14 (09/07/2026)
+## L'appli — état v15 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -38,6 +38,14 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
   & AENG, 📈 Flux portefeuille — 75 q, la plupart en 5 niveaux N1→N5), **Flashcards**
   (+20 analyse financière +27 circulaires v14), Mises à jour (import Excel/CSV via SheetJS
   embarqué), Question à Claude (chat API Anthropic, clé de Karim en localStorage).
+- **Analyse Flux vs CA v15 (09/07/2026)** : exploitation complète de la data flux confiés.
+  Onglet **📈 Flux vs CA** = tableau trié (56 clients à CA, 53 avec flux couplés) — captation
+  crédit (CR réel / CA), tendance CR, ratio DB/CR (sorties/recettes), CA non capté ; tri par
+  colonne, code couleur. + fiche Cours « Flux confiés vs CA » (sous-captés / fuites / loyaux /
+  couple CR-DB déséquilibré) + 10 questions de quiz ciblées (rubrique 📈 Flux). Données jointes
+  depuis les tableaux CA/Part de marché + Flux couplés ; captation validée = part de marché
+  déclarée au %. Sources de reconstruction : `scratchpad/ca.csv`, `flux.csv`, `analyse_flux.json`
+  (à re-générer depuis les scans si besoin — non commités car données clients).
 - **Modules v14 (procédures BMCI, ajout 09/07/2026)** : bâtis à partir des scans de Karim
   — COR 1490 (segmentation Retail/Corpo CO1/CO2/SE + MNC), COR 0821 (processus d'octroi
   + Watch List 9-10 / compromis 11-12 + check-list), procédures COMEX (AVAL/REFI, préfi,
@@ -85,6 +93,10 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v15 — **analyse Flux confiés vs CA** : onglet 📈 Flux vs CA (tableau trié
+  captation/DB-CR/CA non capté, 56 clients), fiche Cours de synthèse + 10 questions ciblées.
+  Data flux entièrement exploitée (captation crédit CR/CA + couple CR/DB + momentum). Validé
+  navigateur (0 erreur JS), aucune donnée en clair. Répond à la demande A+B+C de Karim.
 - 09/07/2026 : v14 — modules **circulaires BMCI & Trade Finance** : onglet 📚 Cours
   (5 fiches), 75 questions de quiz (🏦 Segmentation R/C · 📁 Octroi de crédit · 🌍 Trade
   Finance & AENG · 📈 Flux portefeuille) + 27 flashcards, niveaux N1→N5 généralisés.
