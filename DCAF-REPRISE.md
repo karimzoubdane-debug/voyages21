@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v17 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v18 en production) : page unique chiffrée.
 
-## L'appli — état v17 (09/07/2026)
+## L'appli — état v18 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,11 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v18 — onglet **🗺️ Plan d'action** (portefeuille interne) : liste des
+  **26 autorisations échues (836 M** ; Talbi 500 M groupe MENARA, Elantry 230 M, Hajjani 105 M/16 doss.),
+  synthèse flux CR/DB, et feuille de route PNB & maîtrise du risque (renouvellements, production CMT/CPI
+  0/130 M, auto-util 64%, captation sous-captés, pilotage par chargé). Échues calculées depuis le dataset
+  ENG/ENG_ASM/ENG_HAJ de l'appli (échéances < 09/07/2026). Le plan externe viendra ensuite. Validé (0 err JS).
 - 09/07/2026 : v17 — onglet **🎤 Mémo oral** (aide-mémoire chiffres du CAF pour le jour J) :
   bascule **1 page dense** ⇄ **2-3 pages aéré** + bouton **Imprimer/PDF** (`@media print`
   n'imprime que le mémo actif). Reprend scorecard (67,1% −1,1pt, CORPO 91,9%, PME-MID 80,4%),
