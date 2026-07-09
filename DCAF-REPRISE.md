@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v23 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v24 en production) : page unique chiffrée.
 
-## L'appli — état v23 (09/07/2026)
+## L'appli — état v24 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,12 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v24 — recentrage **DÉCONCENTRATION** (axe fort du CAF, validé avec Karim). (1) Mémo
+  oral **refait aéré** (8 sections, bascule Aéré/Compact) : par rubrique = chiffres clés + top/Pareto
+  + risque si départ + effort de déconcentration. Pareto calculé : **26 clients = 80% du PNB** ; ramener
+  top3 à 20% = +3,48 M sur le reste. (2) **Objectifs** avec vrais chiffres scorecards (prod CMT+CPI 130 M
+  = Elantry 50/Talbi 40/Hajjani 40 à 0 ; TRO par rubrique ; PNB par CA). (3) **Organigramme corrigé** :
+  DCAF + 2 RM + 1 animateur commercial. Validé (0 err JS).
 - 09/07/2026 : v23 — 3 vues : **🎯 Objectifs** (actuel/cible/levier ; production 130 M officiel,
   reste proposé), **🛡️ Risque opérationnel** (déf + cas PLADER/082/AUTUTI/échues + 3 lignes de
   défense + plan), **🧭 Feuille de route externe** (organigramme cible + ciblage prospects par
