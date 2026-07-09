@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v19 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v20 en production) : page unique chiffrée.
 
-## L'appli — état v19 (09/07/2026)
+## L'appli — état v20 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,10 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v20 — **navigation « style site web voyages21 »** : les 18 onglets remplacés
+  par un bandeau (vert forêt #1B3A28 + or #C8A440, titres serif) avec **5 rubriques déroulantes
+  au clic** — Portefeuille · Analyse · Réviser · Oral · Outils. Sélection ferme le menu, rubrique
+  active en or, clic dehors ferme. Reprend le pattern méga-menu du site. Validé (0 err JS).
 - 09/07/2026 : v19 — **UX mobile** : la barre d'onglets (18 onglets) ne s'empile plus
   (`flex-wrap`) mais défile sur **une seule ligne horizontale** (swipe), boutons compacts,
   onglet actif recentré auto. Hauteur barre 600→48 px. Résout « le menu occupe tout l'écran ».
