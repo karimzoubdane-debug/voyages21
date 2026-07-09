@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v16 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v17 en production) : page unique chiffrée.
 
-## L'appli — état v16 (09/07/2026)
+## L'appli — état v17 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -93,6 +93,12 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v17 — onglet **🎤 Mémo oral** (aide-mémoire chiffres du CAF pour le jour J) :
+  bascule **1 page dense** ⇄ **2-3 pages aéré** + bouton **Imprimer/PDF** (`@media print`
+  n'imprime que le mémo actif). Reprend scorecard (67,1% −1,1pt, CORPO 91,9%, PME-MID 80,4%),
+  encours (autoris. 1 349 M / util. 857 M, auto-util 64%), PNB 8,8 M −14%, production CMT+CPI
+  0/130 M (piège TRO 169%), segments, captation flux vs CA, repères circulaires, posture.
+  Karim compare les 2 formats et choisit ; le toggle reste dispo. Validé navigateur (0 err JS).
 - 09/07/2026 : v16 — onglet 📈 Flux vs CA doté d'un **sélecteur multi-clients** (liste
   déroulante avec recherche + tout cocher/décocher), d'un **filtre par segment** et d'un
   filtre texte + réinitialiser. Validé navigateur (0 erreur JS).
