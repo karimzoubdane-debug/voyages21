@@ -98,6 +98,14 @@ Table de correspondance (mot-clé → projet) — la **source de vérité** rest
 > Note : `www.voyages21.com` / `V21 USA` / `V21 STUDIO` gardent leurs procédures dédiées ci-dessous
 > (fichiers REPRISE), en plus de la fiche Cockpit. `REVUE COCKPIT` / `COCKPIT` seul = revue globale.
 
+## 🏦 Reprise « DCAF » (préparation entretien + appli portefeuille) — PROJET CLOISONNÉ & CONFIDENTIEL
+Dès que Karim écrit **« DCAF »** (même seul, ou « CAF MARRAKECH », ou « ENTRETIEN DCAF ») :
+lire **UNIQUEMENT** `DCAF-REPRISE.md` (racine). Résumer en **3 lignes** (dernière action +
+points en suspens + prochaine étape), puis **attendre le go**. Mettre à jour
+`DCAF-REPRISE.md` après chaque avancée. 🔴 CONFIDENTIEL : jamais de données clients
+bancaires en clair dans le dépôt — tout vit dans la page chiffrée `public/dcaf/index.html`.
+Ne pas mélanger avec le site, le Studio ou V21 USA.
+
 ## 🔁 Reprise rapide du site (mot-clé « www.voyages21.com »)
 Dès que Karim écrit **« www.voyages21.com »** (même seul, ou « V21 site », ou
 « on reprend ») au début d'une conversation : NE PAS demander de contexte, NE PAS
