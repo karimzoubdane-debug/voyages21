@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v30 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v31 en production) : page unique chiffrée.
 
-## L'appli — état v30 (10/07/2026)
+## L'appli — état v31 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,18 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v31 — gros lot (demande Karim). (1) **CAF en chiffres enrichi** : bloc **clients &
+  segments** (E2 50 %, I1 22 %, E1 15 %, ELS 10 %, I2 2 %), scorecard avec **objectif annuel +
+  proratisé (×4/12)** + réalisé + TRO + vs 2025, **ligne rouge production** 0/130 M (proraté 43 M,
+  écart −43 M), bloc **par CA** (stock DAV/OVD/CCT/CMT par RM). (2) nouvel onglet **🔍 Concentration** :
+  sélecteur par rubrique (PNB/DAV/OVD/CCT/CMT/FACT), **liste des clients du 80 %** avec poids individuel
+  + cumulé, seuils 50 %/80 % surlignés (calcul live). (3) nouvel onglet **🌍 Trade international** :
+  11 clients (finex=refi+crédoc), aut 123 / util 80 Mmad (65 %, écart −43), **objectifs 2026 refi 225
+  Mdhs (104 % ✅) · crédoc 32 Mdhs (16 % 🔴 → axe capter du crédoc)**. Source : « ETAT DES LIGNES TRADE
+  CAF MARRAKECH AU 03-07-2026 ». (4) **Présentation** portée à 12 slides (+ clients/segments, + par-CA
+  détail, + trade). Fix bug d'assemblage (le `</body>` dans la string presPDF cassait le script → borné
+  sur `</script>`). Validé headless (0 err JS, pas de fuite de script, PDF paysage OK).
+  ⏳ Pas de mars-26 (comparaison N-1 = avril-25) ; production par rubrique non dispo hors CMT+CPI.
 - 10/07/2026 : v30 — (1) **recharte BMCI** : recolor global vers **vert BMCI #00915A + fond blanc**
   (navy→#00563A pour nav/entêtes, cream/paper→blanc), **or gardé uniquement pour les highlights**
   (choix de Karim). (2) Nouvel onglet **🖥️ Présentation** : diaporama projetable 9 slides (titre →
