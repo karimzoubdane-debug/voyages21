@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v29 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v30 en production) : page unique chiffrée.
 
-## L'appli — état v29 (10/07/2026)
+## L'appli — état v30 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,14 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v30 — (1) **recharte BMCI** : recolor global vers **vert BMCI #00915A + fond blanc**
+  (navy→#00563A pour nav/entêtes, cream/paper→blanc), **or gardé uniquement pour les highlights**
+  (choix de Karim). (2) Nouvel onglet **🖥️ Présentation** : diaporama projetable 9 slides (titre →
+  chiffres clés → équipes → grandes masses ressources/emplois → PNB & évolution → concentration/top10
+  → forces/attention → 5 axes), **alimenté par les datasets** (Pareto + top 10 calculés en direct →
+  se met à jour tout seul). Navigation ←/→, plein écran, **Export PDF** (ouvre une fenêtre d'impression,
+  1 slide/page A4 paysage — PDF seul, pas de PPTX à la demande de Karim). Validé headless (0 err JS,
+  9 slides, PDF @page landscape OK). NB : onglet « Entretien blanc » NON créé (Karim a dit non).
 - 10/07/2026 : v29 — **base PNB avril-26 vs avril-25 (glissement ANNUEL, pas mars — le doc n'a pas
   de colonne mars)** transcrite (222 lignes, `pnb_evol.csv` ; total 04/26 = 9 334 099 = identique
   à l'appli → validé). **3 volets** : (1) **CAF en chiffres refait sur le scorecard** : tableau
