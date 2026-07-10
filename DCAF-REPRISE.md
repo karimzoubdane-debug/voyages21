@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v25 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v26 en production) : page unique chiffrée.
 
-## L'appli — état v25 (09/07/2026)
+## L'appli — état v26 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,10 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v26 — onglet **🎯 Déconcentration** (l'axe fort du CAF) : objectif top3 <20% = +3,48 M
+  sur le reste, répartition de l'effort par CA (Elantry +1,9 / Talbi +1,2 / Hajjani +0,4 M), 4 leviers
+  (production neuve, activation dormantes, captation sous-captés, conquête externe), pilotage (part du
+  top3/top10). Re-chiffré avec le wrapper auto-open v25. Validé (0 err JS). Entretien blanc lancé ensuite.
 - 09/07/2026 : v25 — **ouverture automatique ré-activée** (lien `#clé` + souvenir localStorage) :
   plus de saisie du mot de passe ; contenu toujours chiffré (protégé pour un tiers). Suite au
   refus motivé de « supprimer toute protection » (secret bancaire). Wrapper seul modifié, blob
