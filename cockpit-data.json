@@ -1377,18 +1377,22 @@
       ],
       "desc": "Chantier social selling & marketing digital (branche digital-marketing-social-selling) : la relation qui close la vente, pas seulement la pub. Complementaire de V21 USA.",
       "url": "https://github.com/karimzoubdane-debug/voyages21/tree/claude/digital-marketing-social-selling-iywu0v",
-      "nextStep": "Definir la routine de social selling (DM, suivi, closing) et l'outiller",
+      "nextStep": "Valider (ou ajuster) le schema de routine propose, puis trancher l'outil de suivi (ManyChat vs CRM)",
       "lastActions": [
+        {
+          "date": "2026-07-10",
+          "text": "Premier visuel : schema du parcours en 6 etapes (reperage -> closing -> suivi) + routine quotidienne proposee (artifact)"
+        },
         {
           "date": "2026-06-18",
           "text": "Chantier social selling initie (branche dediee)"
         }
       ],
       "pending": [
-        "Quelle routine quotidienne de social selling ?",
+        "Quelle routine quotidienne de social selling ? (proposition dans le schema, a valider)",
         "Quel outil de suivi des conversations (ManyChat / CRM) ?"
       ],
-      "lastReview": "2026-07-01",
+      "lastReview": "2026-07-10",
       "stack": "Meta / Instagram · ManyChat · CRM",
       "livrables": [
         {
@@ -1402,7 +1406,8 @@
           "name": "Cadrage",
           "state": "in_progress",
           "items": [
-            "Principe social selling defini"
+            "Principe social selling defini",
+            "Schema du parcours (6 etapes) + routine proposee"
           ]
         },
         {
