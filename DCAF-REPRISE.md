@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v26 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v27 en production) : page unique chiffrée.
 
-## L'appli — état v26 (09/07/2026)
+## L'appli — état v27 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,12 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v27 — (1) onglet **👤 Client 360** : table client-par-client PNB + CR + DB (fin mai 2026)
+  + solde CR−DB + % cumul, triable/filtrable ; **top 10 en or, club 50% (9 clients) souligné, club 80%
+  (26, Pareto) fond crème** + séparateurs. PNB pour 218 clients, CR/DB pour ~46 (les gros ; reste = version
+  100% sur transcription). (2) onglet **📊 CAF en chiffres** : KPIs + points forts + points d'attention
+  déclinés en 5 axes d'action prioritaires (déconcentrer, produire, activer, assainir, homogénéiser).
+  Validé (0 err JS). NB : entretien blanc en cours (Q1 débriefée).
 - 10/07/2026 : v26 — onglet **🎯 Déconcentration** (l'axe fort du CAF) : objectif top3 <20% = +3,48 M
   sur le reste, répartition de l'effort par CA (Elantry +1,9 / Talbi +1,2 / Hajjani +0,4 M), 4 leviers
   (production neuve, activation dormantes, captation sous-captés, conquête externe), pilotage (part du
