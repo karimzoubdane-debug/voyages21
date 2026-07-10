@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v32 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v33 en production) : page unique chiffrée.
 
-## L'appli — état v32 (10/07/2026)
+## L'appli — état v33 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,15 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v33 — présentation refondue (18 slides). (1) **Page d'accueil présentation étoffée** :
+  la slide « chiffres clés » scindée en **2 slides scorecard** (« les masses » = PNB/DAV/DAT/ressources/
+  overdraft/CCT/factoring/CMT/CPI/production avec obj·réalisé·TRO·vs2025 · « activité & qualité » =
+  prospection EER/visites/couverture + équipement + auto-util + KPI qualitatifs échus/PRG/RMPM) → aucune
+  rubrique du scorecard oubliée. (2) **chaque slide d'agrégat affiche la LISTE du top 80 %** (poids
+  individuel + % cumulé, calcul live, 2 colonnes si >12) — le club 50 % surligné. (3) **fix listes
+  coupées** : dossiers échus refait avec **les 26 échus en 2 colonnes** (plus de troncature), risque
+  concentration ajusté ; tous les slides tiennent dans le 16:9 (overflow ≤3px vérifié). Validé headless
+  (0 err JS, 18 slides, PDF paysage OK).
 - 10/07/2026 : v32 — (1) **segments renommés** CO2/CO1/MC1/II/MC2 (ex-E2/E1/I1/ELS/I2), 222 clients
   vérifiés. (2) **CAF en chiffres = page d'accueil scorecard exhaustive** dans l'ordre PNB → agrégats
   cumulés → ressources détail → emplois/remplois détail → prospection (EER 110/visites 127/couverture
