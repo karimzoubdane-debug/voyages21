@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v31 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v32 en production) : page unique chiffrée.
 
-## L'appli — état v31 (10/07/2026)
+## L'appli — état v32 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,17 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v32 — (1) **segments renommés** CO2/CO1/MC1/II/MC2 (ex-E2/E1/I1/ELS/I2), 222 clients
+  vérifiés. (2) **CAF en chiffres = page d'accueil scorecard exhaustive** dans l'ordre PNB → agrégats
+  cumulés → ressources détail → emplois/remplois détail → prospection (EER 110/visites 127/couverture
+  81) → équipement 2,32 → KPI qualitatifs (échus réactif 6 %, 26 autoris. échues 836 M, PRG 59, RMPM 92,
+  2 PNB nég). (3) **Présentation refondue → 17 slides** : une page par agrégat (①PNB ②DAV ③Overdraft
+  ④CCT ⑤CMT ⑥Factoring) avec glissement an + objectif/TRO/production + concentration 50/80 ; + slide
+  **taux d'utilisation** (64 %, 496 M dormants, dépassements) ; + slide **dossiers échus** (26/836 M avec
+  échéances et poids) ; + slide **risque de concentration** (départ top1 −10,6 % / top3 −27,5 % / top10
+  −53,5 %). (4) **Visuel CAF (dashboard hero + tuiles)** ajouté en tête de la page d'accueil (Synthèse).
+  Fix : suppression des 2 slides « grandes masses » redondantes. Validé headless (0 err JS, 17 slides,
+  PDF paysage OK). Données : échus = ENG (dates), utilisation = AUT, risque départ = PNB.
 - 10/07/2026 : v31 — gros lot (demande Karim). (1) **CAF en chiffres enrichi** : bloc **clients &
   segments** (E2 50 %, I1 22 %, E1 15 %, ELS 10 %, I2 2 %), scorecard avec **objectif annuel +
   proratisé (×4/12)** + réalisé + TRO + vs 2025, **ligne rouge production** 0/130 M (proraté 43 M,
