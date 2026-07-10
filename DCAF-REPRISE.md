@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v24 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v25 en production) : page unique chiffrée.
 
-## L'appli — état v24 (09/07/2026)
+## L'appli — état v25 (09/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -76,10 +76,12 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
 ## Points en suspens (à rappeler à chaque reprise)
 - 🔔 **« go migration »** : sortir l'appli de voyages21 vers un dépôt privé dédié +
   URL propre (rappel demandé par Karim JUSQU'À réalisation — il donnera le go).
-- 🔓 **Ouverture par lien / souvenir retirée « jusqu'à nouvel ordre » (v14)** : la page
-  ne s'ouvre plus QUE par saisie manuelle du mot de passe (fragment `#…` + localStorage
-  `dcafpw` désactivés et purgés). Quand Karim demandera de **ré-activer l'ouverture par
-  lien** : re-ajouter le support du fragment (`location.hash`) au wrapper + redéployer.
+- 🔓 **Ouverture automatique RÉ-ACTIVÉE (v25)** : à la demande de Karim (« je ne veux plus
+  taper le mot de passe »), le wrapper ouvre de nouveau la page automatiquement par lien
+  (`#clé`) et par souvenir (localStorage `dcafpw`). Zéro saisie pour lui ; **les données
+  restent chiffrées** : un tiers sur l'URL nue voit l'invite mot de passe. ⚠️ Karim avait
+  d'abord demandé de SUPPRIMER toute protection — refusé (secret bancaire, données ~200
+  clients sur site public) et remplacé par cette option 1 (auto-open chiffré).
 - 🎤 **Q21 de l'entretien blanc ouverte** : « Production CMT en baisse, un portefeuille
   à zéro — vos 90 premiers jours ? » (Karim dira « Repose Q21 »).
 - 📄 **Apprentissage méthodologie** : Karim envoie des scans (data + circulaires) DANS la
@@ -93,6 +95,10 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 09/07/2026 : v25 — **ouverture automatique ré-activée** (lien `#clé` + souvenir localStorage) :
+  plus de saisie du mot de passe ; contenu toujours chiffré (protégé pour un tiers). Suite au
+  refus motivé de « supprimer toute protection » (secret bancaire). Wrapper seul modifié, blob
+  chiffré inchangé. Validé (lien auto-ouvre · URL nue protégée · 0 err JS).
 - 09/07/2026 : v24 — recentrage **DÉCONCENTRATION** (axe fort du CAF, validé avec Karim). (1) Mémo
   oral **refait aéré** (8 sections, bascule Aéré/Compact) : par rubrique = chiffres clés + top/Pareto
   + risque si départ + effort de déconcentration. Pareto calculé : **26 clients = 80% du PNB** ; ramener
