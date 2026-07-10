@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v27 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v28 en production) : page unique chiffrée.
 
-## L'appli — état v27 (09/07/2026)
+## L'appli — état v28 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,11 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v28 — **Client 360 « version 100 % »** : CR/DB fin mai-26 désormais renseignés pour
+  **les 218 clients** (avant : ~47). Transcription COMPLÈTE des flux couplés des 4 pages (255 lignes →
+  `flux_all.csv`), fusion par nom normalisé avec le PNB (205 appariés + 13 sans flux couplé mis à 0).
+  Plus aucun « — » dans la table. Note de bas de table mise à jour (« 100 % transcrits »). Wrapper
+  auto-open inchangé (blob re-chiffré). Validé headless (218/218 flux, 0 « — », 0 err JS).
 - 10/07/2026 : v27 — (1) onglet **👤 Client 360** : table client-par-client PNB + CR + DB (fin mai 2026)
   + solde CR−DB + % cumul, triable/filtrable ; **top 10 en or, club 50% (9 clients) souligné, club 80%
   (26, Pareto) fond crème** + séparateurs. PNB pour 218 clients, CR/DB pour ~46 (les gros ; reste = version
