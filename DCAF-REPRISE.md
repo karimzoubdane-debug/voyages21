@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v28 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v29 en production) : page unique chiffrée.
 
-## L'appli — état v28 (10/07/2026)
+## L'appli — état v29 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,18 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v29 — **base PNB avril-26 vs avril-25 (glissement ANNUEL, pas mars — le doc n'a pas
+  de colonne mars)** transcrite (222 lignes, `pnb_evol.csv` ; total 04/26 = 9 334 099 = identique
+  à l'appli → validé). **3 volets** : (1) **CAF en chiffres refait sur le scorecard** : tableau
+  objectif annuel (déduit du TRO) · réalisé avr-26 · TRO · vs N-1, + **zoom par agrégat** (PNB, DAV,
+  Overdraft, CCT, CMT, Factoring) avec **concentration Pareto/club 50 %-80 %** et **répartition par
+  paliers** de clients (PNB >200k/100-200/50-100/<50, paliers adaptés par agrégat). (2) nouvel onglet
+  **📉 Évolution PNB** : global −3,7 % (base comparable −5,8 %), par RM (ELA +1,1 % seul en hausse ·
+  ASM −4,4 % · HAJ −20,6 %), top hausses/baisses, nouveaux/perdus, concentration top3 35→27 %. Reframe
+  clé : **déconcentration SUBIE (effondrement Menara Real Estate −894 k) → à rendre CHOISIE**. (3)
+  **Client 360** : colonnes **PNB avr-25 + Évol. an %** (167/218 appariés) ; corrige au passage le bug
+  « % cumul = undefined » (v27/v28). Validé headless (0 err JS, 10 colonnes, tri OK). ⏳ Si Karim a une
+  colonne **mars-26**, refaire le comparatif en mensuel.
 - 10/07/2026 : v28 — **Client 360 « version 100 % »** : CR/DB fin mai-26 désormais renseignés pour
   **les 218 clients** (avant : ~47). Transcription COMPLÈTE des flux couplés des 4 pages (255 lignes →
   `flux_all.csv`), fusion par nom normalisé avec le PNB (205 appariés + 13 sans flux couplé mis à 0).
