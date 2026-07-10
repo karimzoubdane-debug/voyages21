@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v33 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v34 en production) : page unique chiffrée.
 
-## L'appli — état v33 (10/07/2026)
+## L'appli — état v34 (10/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,12 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 10/07/2026 : v34 — nouvel onglet **📄 Note de synthèse** : compte rendu complet consolidant tous les
+  chiffrages et analyses — **synthèse en tête** (hero : KPIs + 3 messages clés + 5 axes) puis 8 sections
+  détaillées (scorecard complet, clients/segments, par-CA, concentration Pareto, évolution annuelle,
+  trade, risques départ/échus/utilisation, points forts→plan) + conclusion. **Bouton Export PDF**
+  (fenêtre d'impression A4 portrait). Confidentiel (reste dans le blob chiffré). Validé headless
+  (0 err JS, 10 sections, 5 tableaux, PDF A4 OK).
 - 10/07/2026 : v33 — présentation refondue (18 slides). (1) **Page d'accueil présentation étoffée** :
   la slide « chiffres clés » scindée en **2 slides scorecard** (« les masses » = PNB/DAV/DAT/ressources/
   overdraft/CCT/factoring/CMT/CPI/production avec obj·réalisé·TRO·vs2025 · « activité & qualité » =
