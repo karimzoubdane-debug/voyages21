@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v38 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
-## L'appli — état v38 (11/07/2026)
+## L'appli — état v39 (11/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,7 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 11/07/2026 : v39 — onglet **🏭 Par secteur** (Portefeuille) d'après le répertoire (Doc 2/3, 200 clients) : répartition par **secteur d'activité** (17 secteurs, Travaux publics 15 %, ~40 % BTP), **posture** (Augmenter 77 % / Stabiliser 19 % / Réduire 5 %), **couverture engagement** (66 % SANS engagement = gisement production), **segments officiels** (CO1 106/CO2 63/MNC1 25/MNC2 4/II 2). Écart de périmètre signalé (200 vs 222 base PNB). +5 flashcards +5 quiz. Doc 1 = engagements (déjà intégrés). Validé (0 err JS).
 - 11/07/2026 : v38 — onglet **🔰 Basic COMEX** (sous Réviser) : 6 fiches ultra-simples néophyte (CREDOC, REMDOC, REFI, AENG, AVAL, documents à contrôler) d'après notes + circulaires, avec **export par fiche PDF / Word / Image** + tout-en-un. Données CAF laissées en Portefeuille. Validé (0 err JS).
 - 11/07/2026 : v37 — **référence AUTONOME « Commerce international »** (Karim : atteindre l'expertise + page détachable). Page **publique non chiffrée** (que du savoir, aucune donnée client) : `public/commerce-international/index.html` → `/commerce-international/`. Expert sourcé : instruments, **UCP 600 + ISBP 821 (2023)**, URC 522, URDG 758, **Incoterms 2020**, **IGOC 2026 Office des Changes Maroc (1er janv. 2026)**, SMAEX, annexe documents, fraude Qingdao, glossaire, **quiz 8 Q**, podcast. Bouton **« 🌍 Réf. Commerce int'l ↗ »** dans le DCAF (nouvel onglet). Valeurs IGOC à confirmer sur oc.gov.ma (signalé). Validé (0 err JS).
 - 11/07/2026 : v36 — nouvel onglet **🌐 COMEX** (commerce international) à partir du fichier
