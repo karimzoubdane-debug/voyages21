@@ -18,6 +18,20 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v41 (11/07/2026, tentative)
+- **⏸️ PNB par secteur — BLOQUÉ, en attente de données** : tentative de construction de la vue
+  demandée (11/07 soir). Vérification faite : la table nominative **client → secteur** (celle
+  qui a servi aux comptages du répertoire v39, 200 clients/17 secteurs) n'a **jamais été
+  conservée** dans la source de l'appli — seuls les **totaux agrégés par secteur** (comptes de
+  clients, %) ont été gravés en HTML dans l'onglet 🏭 Par secteur (v39), sans tableau JS
+  réutilisable client-par-client. Impossible donc de croiser PNB × secteur par client sans
+  inventer une répartition. **Décision (Karim, 11/07) : ne rien estimer/inventer** — Karim
+  renverra la donnée nominative (répertoire client + secteur, ou tout ce qu'il a) dans une
+  prochaine session pour permettre le vrai croisement PNB/secteur avec le marquage
+  « Travaux publics » + « Transports » en niveau agrégé seulement. **Aucun code déployé**,
+  aucune donnée modifiée. Prochaine étape = Karim renvoie le répertoire nominatif (client +
+  secteur) → construire et déployer la vue v41 « PNB par secteur ».
+
 ## L'appli — état v40 (11/07/2026)
 - **v40 — Posture commerciale par client (Client 360)** : intégration de la feuille
   « posture commerciale » du CA (65 clients ciblés). Nouvelle colonne **Posture** dans
