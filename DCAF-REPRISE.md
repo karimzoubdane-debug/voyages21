@@ -18,23 +18,32 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
-## L'appli — état v41 (11/07/2026)
-- **✅ PNB par secteur — LIVRÉ**. Karim a renvoyé le PDF nominatif « Pnb_par_client_par_secteur »
-  (répertoire client → secteur, 200 clients, même base que v39). Croisement fait par nom
-  (normalisation + tolérance abréviations) avec la base PNB avr-26 de l'appli : **159/166
-  clients rapprochés sur 15 secteurs itemisables** (les 7 non rapprochés — AGENCY CMG LTD,
-  KECHFAB, PRESTIGE VITALITY, SOCIETE BOUFARES HERITIERS FRICO, COGETRAKS, CARRIPREFA déjà
-  signalé en v39, M. SBAI HOUSSINE — probablement hors périmètre de la base PNB). Nouvelle
-  section dans l'onglet 🏭 Par secteur : **6 275 852 DH sur les 15 secteurs itemisés (67,2 %
-  du PNB base app 9 334 099)**, classement décroissant avec barre + % + mention du taux de
-  rapprochement par secteur. **Travaux publics (29 clients, 15 % en nombre) reste marqué
-  « niveau agrégé seulement »** — toujours aucune liste nominative dans les documents
-  transmis, PNB non calculable, pas de chiffre inventé. **Transports terrestres & aériens**
-  affiché à part comme **partiel** (8/12 clients identifiés, 1 382 777 DH, 4 clients manquants
-  non extrapolés). Aucune estimation, aucune donnée inventée — conforme à la consigne de
-  Karim (« tu fais avec ce que tu as sans rien estimer ni inventer »). Validé headless
-  (0 erreur JS, capture visuelle du bloc conforme). Re-chiffré (nouveaux SALT/IV, même mot de
-  passe), round-trip de déchiffrement vérifié avant déploiement.
+## L'appli — état v41 (11/07/2026) — PNB par secteur COMPLET (4 pages du répertoire)
+- **✅ PNB par secteur — LIVRÉ COMPLET.** Karim a envoyé les **4 pages photos** du répertoire
+  (IdSAB + Nom Abrégé + Seg + **Secteur Activité** + Total AUT), dont **la 4ᵉ page — celle
+  qui manquait — contenant les clients « Travaux publics » ET « Transports terrestres &
+  aériens » nominativement**. Transcription des 4 pages → `scratchpad/sect_map.csv`
+  (17 secteurs), croisement par nom normalisé avec la base PNB avr-26 (`sect_pnb.json`).
+- **Résultat : 187/218 clients rapprochés.** Les 31 non rapprochés sont des clients **hors
+  répertoire** (écart base 218 vs répertoire ~187) et pèsent **0,5 % du PNB** (regroupés en
+  « Non classé »). PNB total base = **9 334 098 DH**.
+- **Classement secteurs par PNB** (onglet 🏭 Par secteur, nouvelle section « 📊 PNB par
+  secteur — CALCULÉ ») : **Travaux publics 17,2 % (1,60 M, 25 cl) · Transports terrestres &
+  aériens 15,7 % (1,46 M, 12 cl) · Industrie alim. & commerciale 15,3 % · Activités services
+  13,4 %** → **top 4 = 61,6 %**. Sphère construction/BTP (TP + Promo immo + Carrières +
+  Commerces équip./matériaux) ≈ **31 %** = 1ère concentration sectorielle.
+- **Plus fait en v41** : section « 🔎 Détail par secteur » — chaque secteur dépliable
+  (`<details>`) montre ses top clients (jusqu'à 80 % du PNB du secteur) **avec badge posture**
+  (Augmenter/Stabiliser/Réduire) + croisement **secteur × posture** (PNB par posture).
+  Cette version **remplace** la section « nominatif 159/166 / Travaux publics agrégé » qui
+  avait été poussée en parallèle sur `main` (47657ce) **sans la 4ᵉ page** — l'ancienne était
+  incomplète, la v41 finale la supersede avec les données complètes.
+- Construit **sur le fichier main actuel** (préserve tout le reste), section secteur
+  échangée chirurgicalement. Validé headless (0 erreur JS, Client 360 intact, 187/218
+  affiché, Segments préservés), round-trip de déchiffrement vérifié avant déploiement.
+- ⚠️ **Collision multi-sessions** : un autre fil a poussé un v41 en direct sur `main` pendant
+  ce travail. Rappel COLLAB-IA : une seule IA par branche. Si nouvelle divergence, repartir
+  de `origin/main` et re-fusionner comme fait ici.
 
 ## L'appli — état v40 (11/07/2026)
 - **v40 — Posture commerciale par client (Client 360)** : intégration de la feuille
