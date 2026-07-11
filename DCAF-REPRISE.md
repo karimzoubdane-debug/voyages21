@@ -27,13 +27,15 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
   Bandeau de synthèse en tête : 3 cartes (nb clients + PNB + % du total) par posture.
   66/218 clients de C360 rapprochés par nom normalisé (seul « CARRIPREFA » non retrouvé
   côté C360 — c'est un client d'engagement Hajjani). Validé headless : 0 erreur JS.
-- **⏳ PNB par secteur — DÉFÉRÉ (page manquante)** : la 2ᵉ demande (croiser le PNB par
-  secteur) est mise EN ATTENTE volontairement pour ne pas produire un chiffrage trompeur.
-  Le secteur le plus lourd, **« Travaux publics » (29 clients)**, n'apparaît sur AUCUNE
-  des pages du répertoire fournies (il n'existe que dans le comptage de la synthèse), et
-  le comptage « Transports » ne se réconcilie pas. → **Demander à Karim la page manquante
-  du répertoire** (celle qui liste les clients « Travaux publics » et « Transports ») avant
-  de construire le PNB par secteur client par client.
+- **⏳ PNB par secteur — À CONSTRUIRE en v41 (décision 11/07 au soir)** : Karim confirme
+  qu'il a envoyé **tout ce qu'il a** — les pages ne sont PAS illisibles, mais le secteur le
+  plus lourd **« Travaux publics » (29 clients)** n'est **itemisé sur aucune page** (il
+  n'existe que dans le total de la synthèse), idem pour la réconciliation « Transports ».
+  → **DÉCISION** : ne plus attendre de page manquante. Construire le PNB par secteur avec
+  **les secteurs itemisables** (liste nominative disponible) et marquer **« Travaux publics »
+  + « Transports » en “niveau agrégé seulement”** avec une note honnête (pas de chiffre
+  inventé). Prochaine étape concrète de reprise = coder cette vue « Par secteur » enrichie
+  et la déployer en v41.
 
 ## L'appli — état v39 (11/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
