@@ -18,6 +18,23 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v40 (11/07/2026)
+- **v40 — Posture commerciale par client (Client 360)** : intégration de la feuille
+  « posture commerciale » du CA (65 clients ciblés). Nouvelle colonne **Posture** dans
+  l'onglet 👤 Client 360, avec badge couleur : ▲ **Augmenter** (vert #00915A, développer
+  l'encours/PNB) · ● **Stabiliser** (or, maintenir) · ▼ **Réduire** (rouge, sortir/alléger
+  le risque) · « — » = client non listé sur la feuille. Colonne triable (Augmenter>Stabiliser>Réduire).
+  Bandeau de synthèse en tête : 3 cartes (nb clients + PNB + % du total) par posture.
+  66/218 clients de C360 rapprochés par nom normalisé (seul « CARRIPREFA » non retrouvé
+  côté C360 — c'est un client d'engagement Hajjani). Validé headless : 0 erreur JS.
+- **⏳ PNB par secteur — DÉFÉRÉ (page manquante)** : la 2ᵉ demande (croiser le PNB par
+  secteur) est mise EN ATTENTE volontairement pour ne pas produire un chiffrage trompeur.
+  Le secteur le plus lourd, **« Travaux publics » (29 clients)**, n'apparaît sur AUCUNE
+  des pages du répertoire fournies (il n'existe que dans le comptage de la synthèse), et
+  le comptage « Transports » ne se réconcilie pas. → **Demander à Karim la page manquante
+  du répertoire** (celle qui liste les clients « Travaux publics » et « Transports ») avant
+  de construire le PNB par secteur client par client.
+
 ## L'appli — état v39 (11/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
