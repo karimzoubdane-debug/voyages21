@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v35 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v36 en production) : page unique chiffrée.
 
-## L'appli — état v35 (10/07/2026)
+## L'appli — état v36 (11/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,16 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 11/07/2026 : v36 — nouvel onglet **🌐 COMEX** (commerce international) à partir du fichier
+  `COMEX_FINEX.ods` de Karim + **recherche sources officielles** (ICC UCP 600 credoc / URC 522 remise doc /
+  SMAEX ; cas Qingdao 2014 réel). Contenu : comparatif des 4 instruments (virement/REMDOC/CREDOC/AENG),
+  fiche de révision enrichie, **annexe documents par instrument** (objet + points de contrôle), cas de
+  fraude (SOMIA note interne + Qingdao sourcé), **2 écarts signalés** (REMDOC « 50 % garantie » vs URC 522
+  banque = intermédiaire ; AENG export « rembourse le partenaire étranger » = logique import → à reclarifier),
+  + **podcast spécial COMEX** (fiche NotebookLM + dialogue, boutons copier). Injecté aussi **+12 flashcards +
+  9 quiz** rubrique 🌍 Trade Finance. Théorie sourcée, rien inventé ; règles BMCI (J+120) = notes de Karim.
+  Validé headless (0 err JS). Wrapper anti-cache (swfix) conservé.
+  ⏳ Écarts à confirmer avec Karim sur sa doc BMCI.
 - 10/07/2026 : v35 — nouvel onglet **🎙️ Podcast** (dupliquer l'expérience NotebookLM de
   Karim) : (1) **fiche maître** = document source complet en 10 sections à coller dans NotebookLM pour
   qu'il génère son podcast à deux voix ; (2) **ma version** = dialogue écrit à deux voix (Yasmine &
