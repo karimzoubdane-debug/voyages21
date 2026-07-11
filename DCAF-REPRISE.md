@@ -18,6 +18,24 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v41 (11/07/2026)
+- **✅ PNB par secteur — LIVRÉ**. Karim a renvoyé le PDF nominatif « Pnb_par_client_par_secteur »
+  (répertoire client → secteur, 200 clients, même base que v39). Croisement fait par nom
+  (normalisation + tolérance abréviations) avec la base PNB avr-26 de l'appli : **159/166
+  clients rapprochés sur 15 secteurs itemisables** (les 7 non rapprochés — AGENCY CMG LTD,
+  KECHFAB, PRESTIGE VITALITY, SOCIETE BOUFARES HERITIERS FRICO, COGETRAKS, CARRIPREFA déjà
+  signalé en v39, M. SBAI HOUSSINE — probablement hors périmètre de la base PNB). Nouvelle
+  section dans l'onglet 🏭 Par secteur : **6 275 852 DH sur les 15 secteurs itemisés (67,2 %
+  du PNB base app 9 334 099)**, classement décroissant avec barre + % + mention du taux de
+  rapprochement par secteur. **Travaux publics (29 clients, 15 % en nombre) reste marqué
+  « niveau agrégé seulement »** — toujours aucune liste nominative dans les documents
+  transmis, PNB non calculable, pas de chiffre inventé. **Transports terrestres & aériens**
+  affiché à part comme **partiel** (8/12 clients identifiés, 1 382 777 DH, 4 clients manquants
+  non extrapolés). Aucune estimation, aucune donnée inventée — conforme à la consigne de
+  Karim (« tu fais avec ce que tu as sans rien estimer ni inventer »). Validé headless
+  (0 erreur JS, capture visuelle du bloc conforme). Re-chiffré (nouveaux SALT/IV, même mot de
+  passe), round-trip de déchiffrement vérifié avant déploiement.
+
 ## L'appli — état v40 (11/07/2026)
 - **v40 — Posture commerciale par client (Client 360)** : intégration de la feuille
   « posture commerciale » du CA (65 clients ciblés). Nouvelle colonne **Posture** dans
@@ -114,6 +132,12 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 11/07/2026 : v41 — nouvelle section **💰 PNB par secteur d'activité (nominatif)** dans l'onglet
+  🏭 Par secteur : croisement du PDF répertoire (client→secteur) envoyé par Karim avec la base
+  PNB de l'appli, 159/166 clients rapprochés sur 15 secteurs itemisables (6 275 852 DH, 67,2 %
+  du PNB base app). Travaux publics (29 clients) toujours marqué agrégé seulement (aucune liste
+  nominative reçue) ; Transports terrestres & aériens affiché en partiel (8/12 clients). Rien
+  d'inventé/estimé. Validé headless (0 err JS).
 - 11/07/2026 : v39 — onglet **🏭 Par secteur** (Portefeuille) d'après le répertoire (Doc 2/3, 200 clients) : répartition par **secteur d'activité** (17 secteurs, Travaux publics 15 %, ~40 % BTP), **posture** (Augmenter 77 % / Stabiliser 19 % / Réduire 5 %), **couverture engagement** (66 % SANS engagement = gisement production), **segments officiels** (CO1 106/CO2 63/MNC1 25/MNC2 4/II 2). Écart de périmètre signalé (200 vs 222 base PNB). +5 flashcards +5 quiz. Doc 1 = engagements (déjà intégrés). Validé (0 err JS).
 - 11/07/2026 : v38 — onglet **🔰 Basic COMEX** (sous Réviser) : 6 fiches ultra-simples néophyte (CREDOC, REMDOC, REFI, AENG, AVAL, documents à contrôler) d'après notes + circulaires, avec **export par fiche PDF / Word / Image** + tout-en-un. Données CAF laissées en Portefeuille. Validé (0 err JS).
 - 11/07/2026 : v37 — **référence AUTONOME « Commerce international »** (Karim : atteindre l'expertise + page détachable). Page **publique non chiffrée** (que du savoir, aucune donnée client) : `public/commerce-international/index.html` → `/commerce-international/`. Expert sourcé : instruments, **UCP 600 + ISBP 821 (2023)**, URC 522, URDG 758, **Incoterms 2020**, **IGOC 2026 Office des Changes Maroc (1er janv. 2026)**, SMAEX, annexe documents, fraude Qingdao, glossaire, **quiz 8 Q**, podcast. Bouton **« 🌍 Réf. Commerce int'l ↗ »** dans le DCAF (nouvel onglet). Valeurs IGOC à confirmer sur oc.gov.ma (signalé). Validé (0 err JS).
