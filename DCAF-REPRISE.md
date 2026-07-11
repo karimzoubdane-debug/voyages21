@@ -16,9 +16,9 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    « redresser le centre » (dire continuité / développement / préparer la fusion) ;
    mots bannis : résigné, chance, épuisé, m'offrir ; point à muscler : poser la
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
-2. **Appli d'analyse de portefeuille** (v36 en production) : page unique chiffrée.
+2. **Appli d'analyse de portefeuille** (v37 en production) : page unique chiffrée.
 
-## L'appli — état v36 (11/07/2026)
+## L'appli — état v37 (11/07/2026)
 - **URL** : https://www.voyages21.com/dcaf/ (fichier `public/dcaf/index.html` de ce dépôt).
   Contenu 100 % chiffré AES-GCM (PBKDF2 200 000 itérations). Depuis la v14, la page
   **s'ouvre UNIQUEMENT par saisie manuelle du mot de passe** : l'ouverture automatique
@@ -95,6 +95,7 @@ La source maître n'est PAS en clair dans le dépôt (confidentialité). Pour la
   (instructions + données JSON) pour son chat mobile.
 
 ## Dernières actions
+- 11/07/2026 : v37 — **référence AUTONOME « Commerce international »** (Karim : atteindre l'expertise + page détachable). Page **publique non chiffrée** (que du savoir, aucune donnée client) : `public/commerce-international/index.html` → `/commerce-international/`. Expert sourcé : instruments, **UCP 600 + ISBP 821 (2023)**, URC 522, URDG 758, **Incoterms 2020**, **IGOC 2026 Office des Changes Maroc (1er janv. 2026)**, SMAEX, annexe documents, fraude Qingdao, glossaire, **quiz 8 Q**, podcast. Bouton **« 🌍 Réf. Commerce int'l ↗ »** dans le DCAF (nouvel onglet). Valeurs IGOC à confirmer sur oc.gov.ma (signalé). Validé (0 err JS).
 - 11/07/2026 : v36 — nouvel onglet **🌐 COMEX** (commerce international) à partir du fichier
   `COMEX_FINEX.ods` de Karim + **recherche sources officielles** (ICC UCP 600 credoc / URC 522 remise doc /
   SMAEX ; cas Qingdao 2014 réel). Contenu : comparatif des 4 instruments (virement/REMDOC/CREDOC/AENG),
