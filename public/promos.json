@@ -1,0 +1,25 @@
+{
+  "_aide": "Édite ce fichier pour changer la popup d'accueil de Voyages 21. Mets 'actif': false (global) pour tout désactiver. Chaque offre a son propre 'actif'. La popup affiche la 1re offre active. Champs image OU video (laisse vide si rien). 'dateFin' active un compte à rebours (format AAAA-MM-JJTHH:MM:SS). Pour tester l'affichage immédiatement, ajoute ?promo=test à l'URL.",
+  "actif": true,
+  "scrollPourcent": 25,
+  "delaiMiniSecondes": 4,
+  "frequence": "jour",
+  "offres": [
+    {
+      "id": "caire-sharm-ete-2026",
+      "actif": true,
+      "type": "offre-du-jour",
+      "badge": "Offre du jour",
+      "titre": "Le Caire & Sharm El Sheikh",
+      "sousTitre": "Départ limité — Été 2026",
+      "prix": "À partir de 17 900 DH / personne",
+      "image": "",
+      "video": "",
+      "lienOffre": "",
+      "texteBoutonOffre": "Voir le programme",
+      "whatsappNumero": "212614152686",
+      "whatsappMessage": "Bonjour Voyages 21 👋 Je suis intéressé(e) par l'offre Le Caire & Sharm El Sheikh (Été 2026, à partir de 17 900 DH). Pouvez-vous m'envoyer le programme ?",
+      "dateFin": ""
+    }
+  ]
+}
