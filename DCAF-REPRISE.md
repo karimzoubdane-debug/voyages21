@@ -18,6 +18,25 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v45 (12/07/2026)
+- **✅ Onglet Synthèse — fusion des 2 grilles de tuiles redondantes.** Karim a repéré (capture
+  d'écran) que la même info apparaissait deux fois avec des valeurs différentes : une grille
+  statique en tête (8,8 M PNB, 336 M Ressources, 326 M Court terme, 211 M CMT, 0/130 M
+  Production neuve, 9→26 Concentration, 26 Autoris. échues, 104%/16% Trade) + une grille
+  dynamique juste en dessous (PNB cumulé 04/26 en DH bruts, DAV, Autorisations, Utilisations…
+  avec 👁 50/80 %). **Fix : un seul tableau (17 tuiles), un cadran par agrégat**, dans l'ordre
+  PNB → Ressources (rollup) → DAV → Court terme (rollup) → Overdraft/Autres CCT/Factoring →
+  CMT → Autorisations/Utilisations → Taux de tirage/Autorisations dormantes → Production neuve
+  → Autorisations échues → Trade refi/crédoc → Clients en base/PNB nul. Chaque tuile qui a un
+  détail par client (PNB, DAV, CMT, Overdraft, Autres CCT, Factoring, Autorisations,
+  Utilisations) est cliquable → popup 50/80 % (classement clients, cumul). Les rollups
+  (Ressources, Court terme) restent informatifs (pas de détail par client car DAT n'est pas
+  ventilé par client dans la base). **La tuile PNB affiche désormais 8,8 M (chiffre officiel)**
+  au lieu du recalcul 9 334 099 DH ; le clic ouvre toujours le détail 218 clients, avec un
+  bandeau dans la popup rappelant que 8,8 M reste le chiffre à citer à l'oral. Ancienne grille
+  statique supprimée (plus de doublon). Validé headless (0 err JS, 17 tuiles, clic PNB → popup
+  + bandeau OK).
+
 ## L'appli — état v44 (11/07/2026)
 - **✅ Clarification PNB officiel vs recalcul interne** (Karim a repéré l'écart 8,8 M / 9,33 M
   et soupçonnait un bug de PNB négatif compté en positif). Vérifié : **0 PNB négatif** dans le
