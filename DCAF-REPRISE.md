@@ -18,6 +18,18 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v50 (12/07/2026) — Vue 360 groupes : cohérence PNB↔crédit + groupes non renseignés corrigés
+- **✅ Re-contrôle Karim (« certains groupes pas renseignés »)**. Cause trouvée : le crédit était
+  rattaché via les **parenthèses de l'engagement** et le PNB via le **répertoire** → divergences.
+  Corrigé : **tout rattaché par le répertoire (source unique)**, parenthèses en secours seulement.
+- **2 erreurs de rattachement corrigées** : **Menara Real Estate** (mis à tort en LAHLOU) →
+  **ZAHID** (Menara), et **Jardin Majorelle** dont le crédit partait en PB/YSL revient à
+  **JAKUBOWICZ** (cohérent avec son PNB). ZAHID passe à 13 sociétés / 345 M consolidé.
+- **Groupes sans ligne de crédit affichés explicitement** (au lieu d'un vide) : 5 groupes
+  (ROBBEZ MASSON, PB/YSL, PEREZ, SMIRI, LAHLOU) → note « Aucun engagement — dépôts/flux » ou
+  « engagements globaux X M, détail non disponible » selon le cas. 24 groupes avec détail crédit.
+- Validé headless : 29 cartes, 24 crédit + 5 notes, 0 err JS, round-trip OK.
+
 ## L'appli — état v49 (12/07/2026) — Vue 360 groupes : détail des lignes de crédit par société + consolidé
 - **✅ Demande Karim** : pour chaque groupe, le **détail des lignes de crédit par société ET consolidé**.
 - **Source** : datasets d'engagements `ENG` / `ENG_ASM` / `ENG_HAJ` (3 RM) — ils contiennent déjà, par
