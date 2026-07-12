@@ -94,9 +94,6 @@
     var priceHtml = "";
     if (v.priceTable && v.priceTable.style === "hotel-grid") {
         var pt = v.priceTable;
-        function galBtn(h) {
-            return h.key ? '<button class="hotel-gal is-empty" type="button" data-gal="' + h.key + '" aria-label="صور الفندق · Photos">📷</button>' : "";
-        }
         var ptColgroup = '<colgroup><col class="c-hotel"><col class="c-hotel">'
             + pt.columns.map(function () { return '<col class="c-price">'; }).join("") + '</colgroup>';
         priceHtml = '<div class="ptwrap"><table class="price-table price-table--grid">' + ptColgroup + '<thead><tr>'
@@ -109,8 +106,8 @@
                         ? '<td class="price">—</td>'
                         : '<td class="price"><span class="num">' + bidiNum(p) + '</span><small>' + (pt.currency || "درهم") + "</small></td>";
                 }).join("");
-                return "<tr><td class=\"hotel\"><span class=\"hotel-name\">" + r.medinaHotel.name + "</span>" + galBtn(r.medinaHotel) + "</td>"
-                    + "<td class=\"hotel\"><span class=\"hotel-name\">" + r.meccaHotel.name + "</span>" + galBtn(r.meccaHotel) + "</td>"
+                return "<tr><td class=\"hotel\">" + r.medinaHotel.name + "</td>"
+                    + "<td class=\"hotel\">" + r.meccaHotel.name + "</td>"
                     + pricesHtml + "</tr>";
             }).join("") + "</tbody></table></div>"
             + (pt.note ? '<p class="note">' + bidiNum(pt.note) + "</p>" : "");

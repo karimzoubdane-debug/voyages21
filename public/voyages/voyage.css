@@ -143,9 +143,7 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 .price-table--grid th,.price-table--grid td{padding:.4rem .3rem;}
 .price-table--grid th.hotel,.price-table--grid td.hotel{text-align:center;}
 .price-table--grid thead th{font-size:.62rem;line-height:1.15;white-space:normal;}
-.price-table--grid td.hotel{display:flex;flex-direction:column;align-items:center;gap:.25rem;border-bottom:1px solid var(--line);}
-.price-table--grid td.hotel .hotel-name{font-size:.68rem;line-height:1.2;overflow-wrap:break-word;}
-.price-table--grid .hotel-gal{padding:.08rem .3rem;font-size:.78rem;}
+.price-table--grid td.hotel{font-weight:700;color:var(--forest);line-height:1.2;overflow-wrap:break-word;}
 .price-table--grid .price .num{font-size:.74rem;}
 .price-table--grid .price small{font-size:.6rem;}
 @media (max-width:640px){
