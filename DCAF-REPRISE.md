@@ -18,6 +18,23 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v48 (12/07/2026) — Chaque cadran Synthèse → liste des 80 % (Pareto)
+- **✅ Demande Karim (5 captures)** : « je ne veux pas ces vues [fiches texte], je veux pour chaque
+  cadran la liste des 80 % ». Les tuiles scorecard ouvraient une fiche explicative → remplacées par
+  la **liste Pareto 50 %/80 %** des clients sous-jacents (comme le PNB).
+- **Correspondances trouvées** (exactes) : **CMT 211 M = champ cmt** ; **Court terme 326 M =
+  Overdraft + Autres CCT + Factoring** (composite ovd+cct+fact) ; **Ressources 336 M ≈ DAV**
+  (dépôts à vue ; les DAT ne sont pas détaillés par client dans la base → signalé dans le pop-up).
+  Helper générique `paretoList(acc,label,sub)` : trie, calcule n50/n80, tableau surligné 🟩/🟨.
+- **Routage** : Ressources→80 % DAV · Court terme→80 % composite CT · CMT→80 % cmt · PNB &
+  Concentration→80 % pnb (+ liste PNB nul) · Production neuve→liste des **clients à PNB sans
+  engagement** (gisement, « 80 % » impossible car production nulle) · Clients PNB nul→liste.
+- **Ratios sans liste 80 %** (honnête) : Trade (refi/crédoc), Taux de tirage, Dormantes, Clients
+  en base → restent une fiche courte expliquant *pourquoi* pas de liste (ce sont des ratios/totaux,
+  pas une somme répartie par client) + renvoi vers Autorisations/Utilisations. Échues→renvoi onglet
+  Engagements/Alertes. Validé headless (Ressources 154, Court terme 49, CMT 12, Production 130 ;
+  0 err JS), round-trip vérifié.
+
 ## L'appli — état v47 (12/07/2026) — Vue 360° par Groupe d'Affaires
 - **✅ Nouvel onglet 🏢 Vue 360 groupes** (menu Portefeuille, après « Par secteur »). Demande de
   Karim : une vue 360° par **Groupe d'Affaires** (BERRADA, ZAHID/Menara, ALSA, PB/YSL, OUMAASSOU…)
