@@ -18,6 +18,20 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v49 (12/07/2026) — Vue 360 groupes : détail des lignes de crédit par société + consolidé
+- **✅ Demande Karim** : pour chaque groupe, le **détail des lignes de crédit par société ET consolidé**.
+- **Source** : datasets d'engagements `ENG` / `ENG_ASM` / `ENG_HAJ` (3 RM) — ils contiennent déjà, par
+  société, le **détail des lignes** (CONFIRMING, FC, EPC, CADIV, CBM, CMT, Leasing, AVAL, CREDOC/REFI,
+  CPI…) + montant + échéance, et **le groupe entre parenthèses** dans le nom (« ALSA AL BAIDA (ALSA) »).
+  Parsé + rattaché au groupe → `scratchpad/group_credit.json`. **24 groupes** avec lignes détaillées,
+  18 engagements hors-groupe (indépendants). Total lignes détaillées ≈ **1 215 M**.
+- **UI** : dans chaque carte de l'onglet 🏢 Vue 360 groupes, sous le tableau des sociétés, nouvelle
+  section **« 💳 Lignes de crédit — détail par société · consolidé XX M »** : par société engagée,
+  montant + échéance + chargé d'affaires + **chaque ligne en chip** (type + montant). Ex. ZAHID 345 M
+  consolidé (Menara Prefa 160 M : FC 19M/EPC 35M/CDIV 30M/CMT 28,8M/CBM 35M/Leasing 12,4M ; Carrière
+  & Transport Menara 120 M ; Menara Real Estate 62 M ; Menara Transport 3 M). 5ᵉ KPI ajouté
+  (« Lignes crédit détaillées »). Validé headless (29 cartes, 24 sections crédit, 0 err JS), round-trip OK.
+
 ## L'appli — état v48 (12/07/2026) — Chaque cadran Synthèse → liste des 80 % (Pareto)
 - **✅ Demande Karim (5 captures)** : « je ne veux pas ces vues [fiches texte], je veux pour chaque
   cadran la liste des 80 % ». Les tuiles scorecard ouvraient une fiche explicative → remplacées par
