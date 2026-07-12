@@ -92,7 +92,24 @@
         ? '<ul class="hotels">' + v.hotels.map(function (h) { return "<li>" + h + "</li>"; }).join("") + "</ul>"
         : (v.hebergement ? '<div class="stay">' + v.hebergement + "</div>" : "");
     var priceHtml = "";
-    if (v.priceTable) {
+    if (v.priceTable && v.priceTable.style === "hotel-pairs") {
+        priceHtml = '<div class="ptwrap"><table class="price-table"><thead><tr><th class="hotel">' + (v.priceTable.hotelHeader || "") + "</th>"
+            + v.priceTable.columns.map(function (c) { return "<th>" + c + "</th>"; }).join("")
+            + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
+                var hotelsHtml = (r.hotels || []).map(function (h) {
+                    return '<div class="hcity"><span class="ct">' + h.city + '</span><span class="hotel-name">' + h.name + "</span>"
+                        + (h.key ? '<button class="hotel-gal is-empty" type="button" data-gal="' + h.key + '" aria-label="صور الفندق · Photos">📷</button>' : "")
+                        + "</div>";
+                }).join("");
+                var pricesHtml = (r.prices || []).map(function (p) {
+                    return (p == null || p === "—")
+                        ? '<td class="price">—</td>'
+                        : '<td class="price"><span class="num">' + bidiNum(p) + '</span><small>' + (v.priceTable.currency || "درهم") + "</small></td>";
+                }).join("");
+                return "<tr><td class=\"hotel\">" + hotelsHtml + "</td>" + pricesHtml + "</tr>";
+            }).join("") + "</tbody></table></div>"
+            + (v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "");
+    } else if (v.priceTable) {
         priceHtml = '<div class="ptable-wrap"><table class="ptable"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
                 return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : '<td>' + bidiNum(c) + "</td>"; }).join("") + "</tr>";
@@ -209,7 +226,16 @@
     }
     fetch("/api/media", { cache: "no-store" })
         .then(function (r) { return r.ok ? r.json() : {}; })
-        .then(function (m) { applyMedia(mediaRecord(m, v.mediaKey)); })
+        .then(function (m) {
+            applyMedia(mediaRecord(m, v.mediaKey));
+            Array.prototype.forEach.call(document.querySelectorAll(".hotel-gal[data-gal]"), function (btn) {
+                var key = btn.getAttribute("data-gal");
+                var hrec = (m && m[key]) || {};
+                var himgs = (hrec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
+                if (himgs.length) btn.classList.remove("is-empty");
+                btn.addEventListener("click", function () { window.openHotelGallery(himgs); });
+            });
+        })
         .catch(function () { applyMedia(null); });
 
     fetch("/api/produits", { cache: "no-store" })
@@ -287,6 +313,13 @@
         document.getElementById("gallery").classList.remove("active");
         document.getElementById("galleryInner").innerHTML = "";
         document.body.style.overflow = "";
+    };
+    window.openHotelGallery = function (imgs) {
+        if (!imgs || !imgs.length) return;
+        var inner = document.getElementById("galleryInner");
+        inner.innerHTML = imgs.map(function (u) { return '<img src="' + u + '" alt="" loading="lazy">'; }).join("");
+        document.getElementById("gallery").classList.add("active");
+        document.body.style.overflow = "hidden";
     };
     window.ask = function (label) {
         window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(L.askText(TITLE, label)), "_blank");

@@ -113,6 +113,28 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 .ptable tr:last-child td,.ptable tbody tr:last-child th{border-bottom:none;}
 .ptable tbody th .pt-city{display:block;font-weight:400;font-size:.74rem;color:var(--forest);font-family:'DM Sans',sans-serif;margin-top:.15rem;}
 
+/* tableau de prix « hôtel-pairs » (même style que la page Hajj 2027 : ville + hôtel + photo par ligne) */
+.ptwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.price-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.price-table th,.price-table td{padding:.55rem .65rem;border-bottom:1px solid var(--line);text-align:center;}
+.price-table thead th{background:var(--cream);color:var(--forest);font-weight:700;font-size:.86rem;}
+.price-table th.hotel,.price-table td.hotel{text-align:right;}
+.price-table td.hotel .hcity{display:flex;align-items:center;gap:.4rem;flex-wrap:nowrap;margin:.25rem 0;}
+.price-table td.hotel .hcity .ct{color:var(--muted);font-weight:700;font-size:.82rem;white-space:nowrap;flex:0 0 auto;}
+.price-table td.hotel .hotel-name{color:var(--forest);font-weight:700;font-size:.82rem;line-height:1.2;overflow-wrap:anywhere;}
+.hotel-gal{flex:0 0 auto;margin-inline-start:auto;appearance:none;border:1px solid var(--line);background:rgba(200,164,64,.12);border-radius:8px;padding:.12rem .4rem;font-size:.95rem;line-height:1;cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s;}
+.hotel-gal:hover{background:var(--gold);transform:translateY(-1px);box-shadow:0 4px 12px rgba(200,164,64,.4);}
+.hotel-gal.is-empty{opacity:.32;cursor:default;filter:grayscale(1);}
+.hotel-gal.is-empty:hover{background:rgba(200,164,64,.12);transform:none;box-shadow:none;}
+.price-table tbody tr:hover{background:#faf8f2;}
+.price-table .price{font-weight:700;color:var(--ink);white-space:nowrap;}
+.price-table .price .num{font-family:'DM Sans',sans-serif;}
+.price-table .price small{color:var(--muted);font-weight:600;font-size:.72rem;display:block;}
+@media (max-width:640px){
+  .price-table{font-size:.82rem;}
+  .price-table th,.price-table td{padding:.6rem .4rem;}
+}
+
 /* galerie photos type Intrepid : fond clair, ascenseur vertical */
 .gallery{position:fixed;inset:0;background:rgba(16,35,26,.5);display:none;z-index:1100;}
 .gallery.active{display:flex;align-items:flex-start;justify-content:center;padding:4vh 14px;}
