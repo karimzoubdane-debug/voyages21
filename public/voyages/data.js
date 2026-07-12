@@ -1889,27 +1889,27 @@ window.VOYAGES = {
       rows: [
         {
           hotels: [
-            { city: "مكة", name: "موطن لمار (بدون إفطار)", key: "hotel-mk-watan-lamar" },
-            { city: "المدينة", name: "كراند بلازا المدينة (بدون إفطار)", key: "hotel-md-grand-plaza" }
+            { city: "مكة", name: "موطن لمار", key: "hotel-mk-watan-lamar" },
+            { city: "المدينة", name: "كراند بلازا المدينة", key: "hotel-md-grand-plaza" }
           ],
           prices: ["14 900", "15 700", "16 000", "16 800"]
         },
         {
           hotels: [
-            { city: "مكة", name: "ضيافة الرجاء (بالإفطار)", key: "hotel-mk-diyafat-alraja" },
-            { city: "المدينة", name: "كراند بلازا بدر المقام (بالإفطار)", key: "hotel-md-badr-almaqam" }
+            { city: "مكة", name: "ضيافة الرجاء", key: "hotel-mk-diyafat-alraja" },
+            { city: "المدينة", name: "كراند بلازا بدر المقام", key: "hotel-md-badr-almaqam" }
           ],
           prices: ["—", "18 500", "19 500", "21 500"]
         },
         {
           hotels: [
-            { city: "مكة", name: "الشهداء (بالإفطار)", key: "hotel-mk-shuhada" },
-            { city: "المدينة", name: "ميسان الحارثية (بالإفطار)", key: "hotel-md-maysan-harithiya" }
+            { city: "مكة", name: "الشهداء", key: "hotel-mk-shuhada" },
+            { city: "المدينة", name: "ميسان الحارثية", key: "hotel-md-maysan-harithiya" }
           ],
           prices: ["—", "21 600", "22 800", "25 500"]
         }
       ],
-      note: "الأسعار بالدرهم المغربي للفرد بالغرفة."
+      note: "الأسعار بالدرهم المغربي للفرد بالغرفة. المدينة المنورة بدون إفطار، مكة المكرمة بالإفطار."
     },
     route: ["الدار البيضاء", "المدينة المنورة", "مكة المكرمة", "الدار البيضاء"],
     dates: {
@@ -1971,27 +1971,27 @@ window.VOYAGES = {
       rows: [
         {
           hotels: [
-            { city: "مكة", name: "موطن لمار (بدون إفطار)", key: "hotel-mk-watan-lamar" },
-            { city: "المدينة", name: "كراند بلازا المدينة (بدون إفطار)", key: "hotel-md-grand-plaza" }
+            { city: "مكة", name: "موطن لمار", key: "hotel-mk-watan-lamar" },
+            { city: "المدينة", name: "كراند بلازا المدينة", key: "hotel-md-grand-plaza" }
           ],
           prices: ["13 500", "14 000", "14 500", "15 000"]
         },
         {
           hotels: [
-            { city: "مكة", name: "ضيافة الرجاء (بالإفطار)", key: "hotel-mk-diyafat-alraja" },
-            { city: "المدينة", name: "كراند بلازا بدر المقام (بالإفطار)", key: "hotel-md-badr-almaqam" }
+            { city: "مكة", name: "ضيافة الرجاء", key: "hotel-mk-diyafat-alraja" },
+            { city: "المدينة", name: "كراند بلازا بدر المقام", key: "hotel-md-badr-almaqam" }
           ],
           prices: ["—", "16 000", "16 800", "18 200"]
         },
         {
           hotels: [
-            { city: "مكة", name: "الشهداء (بالإفطار)", key: "hotel-mk-shuhada" },
-            { city: "المدينة", name: "ميسان الحارثية (بالإفطار)", key: "hotel-md-maysan-harithiya" }
+            { city: "مكة", name: "الشهداء", key: "hotel-mk-shuhada" },
+            { city: "المدينة", name: "ميسان الحارثية", key: "hotel-md-maysan-harithiya" }
           ],
           prices: ["—", "17 900", "19 000", "20 900"]
         }
       ],
-      note: "الأسعار بالدرهم المغربي للفرد بالغرفة."
+      note: "الأسعار بالدرهم المغربي للفرد بالغرفة. المدينة المنورة بدون إفطار، مكة المكرمة بالإفطار."
     },
     route: ["الدار البيضاء", "المدينة المنورة", "مكة المكرمة", "الدار البيضاء"],
     dates: {
