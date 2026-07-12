@@ -46,6 +46,10 @@
   .wa-hero{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.3rem;background:#25D366;color:#fff;font-weight:800;text-decoration:none;border-radius:999px;padding:.85rem 1.6rem;font-size:1rem;box-shadow:0 10px 26px rgba(37,211,102,.35);}
   .wa-hero:hover{filter:brightness(1.05);}
 
+  .back-home{position:fixed;top:14px;left:14px;z-index:40;display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.94);color:var(--forest);font-weight:800;font-size:.72rem;text-decoration:none;border-radius:999px;padding:.5rem .9rem;box-shadow:0 8px 22px rgba(0,0,0,.2);backdrop-filter:blur(6px);}
+  .back-home:hover{background:#fff;}
+  .back-home svg{width:14px;height:14px;flex-shrink:0;}
+
   .o-wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.2rem 2.6rem;}
   .trust{margin:-1.6rem auto 0;position:relative;z-index:3;}
   .trust-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 32px rgba(21,46,31,.12);padding:1rem 1.3rem;text-align:center;font-size:.95rem;color:var(--forest2);}
@@ -95,6 +99,8 @@
 </style>
 </head>
 <body>
+
+<a class="back-home" href="/" aria-label="العودة إلى الصفحة الرئيسية"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg><span>الرئيسية</span></a>
 
 <div class="o-hero" id="oHero">
   <video class="hero-video" id="oHeroVideo" muted loop playsinline autoplay preload="auto" style="display:none"></video>
