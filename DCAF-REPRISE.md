@@ -18,6 +18,25 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v47 (12/07/2026) — Vue 360° par Groupe d'Affaires
+- **✅ Nouvel onglet 🏢 Vue 360 groupes** (menu Portefeuille, après « Par secteur »). Demande de
+  Karim : une vue 360° par **Groupe d'Affaires** (BERRADA, ZAHID/Menara, ALSA, PB/YSL, OUMAASSOU…)
+  avec, pour chaque groupe, ses **sociétés** + **secteur** + en cumul **PNB, engagements
+  (autorisations), utilisations** et **taux d'utilisation**.
+- **Source** : colonne « Groupe d'Affaires » des 4 pages du répertoire → `scratchpad/group_map.csv`
+  (109 sociétés, **29 groupes**). Croisé au **PNB** (C360) et aux **engagements/utilisations**
+  (dataset AUT) de la base → `scratchpad/group_360.json`. 10 sociétés sans PNB ni AUT (affichées
+  à 0, hors base).
+- **Chiffres clés** : 29 groupes · PNB cumulé 6,3 M · engagements 1 063 M · utilisations 662 M.
+  **ALSA** = 1er par PNB (1,2 M, 12 sociétés, 181 M autorisés, tx 71 %). **ZAHID/Menara** = 1er
+  par engagements (196 M autorisés, 12 sociétés, tx 42 %). JAKUBOWICZ (Jardin Majorelle) tx 100 %.
+- **UI** : panneau `#p-grp`, cartes dépliables (`<details>`) par groupe (triées par PNB), tableau
+  société/secteur/PNB/engagement/utilisation, + bandeau synthèse et insight risque « vue
+  consolidée groupe ». Construit sur main courant (v46). Validé headless (29 cartes, expand OK,
+  0 err JS), round-trip de déchiffrement vérifié.
+- ⚠️ Le rattachement société→groupe vient du répertoire (transcription photo) — fiable sur les
+  grands groupes ; à vérifier au cas par cas pour les petites entités.
+
 ## L'appli — état v46 (12/07/2026) — Fiches détail cadrans « polies »
 - **✅ Fix affichage « cassé » des pop-ups scorecard** (Karim, capture : la fiche « Court terme »
   s'affichait comme une simple boîte blanche titre+texte, perçue comme cassée/inachevée).
