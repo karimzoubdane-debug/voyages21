@@ -18,6 +18,19 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v46 (12/07/2026)
+- **✅ Popup Concentration PNB — retrait définitif du 9 334 099.** Karim a testé le v45 en
+  preview et ne voulait toujours plus voir « 9 33... » nulle part, même dans la popup de détail
+  (elle affichait le total interne 9 334 099 DH en toutes lettres dans la phrase-résumé, avec
+  seulement un bandeau d'avertissement en dessous — source du doublon/malaise). **Fix** : la
+  phrase-résumé de la popup PNB affiche maintenant directement **« 8 829 579 DH — chiffre
+  officiel scorecard, −14 % vs 2025 »** (nombre complet, pas abrégé) à la place du recalcul
+  interne ; le bandeau d'avertissement rouge séparé est supprimé (évite le doublon). Le tableau
+  de classement des clients en dessous reste inchangé (données réelles par client, non
+  modifiées). Popups des autres agrégats (DAV, CMT, Overdraft…) non touchées — seul le cas PNB
+  était concerné. Validé headless (0 err JS, popup PNB affiche 8 829 579 sans trace de
+  9 334 099, popup DAV non affectée).
+
 ## L'appli — état v45 (12/07/2026)
 - **✅ Onglet Synthèse — fusion des 2 grilles de tuiles redondantes.** Karim a repéré (capture
   d'écran) que la même info apparaissait deux fois avec des valeurs différentes : une grille
