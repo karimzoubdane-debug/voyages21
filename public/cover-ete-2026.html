@@ -14,6 +14,7 @@ h1{margin:0;color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:cl
 .magic-button{position:absolute;z-index:4;left:50%;bottom:clamp(28px,6vh,62px);transform:translateX(-50%);display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.85rem 1.45rem;border:1px solid rgba(255,255,255,.58);border-radius:999px;background:rgba(10,10,8,.34);color:#fff;text-decoration:none;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(14px);box-shadow:0 10px 38px rgba(0,0,0,.28);transition:background .18s,color .18s,border-color .18s;animation:heartBeat 2.25s ease-in-out infinite;transform-origin:center}.magic-button:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);animation-play-state:paused}
 .sound{position:absolute;right:18px;bottom:18px;z-index:5;width:42px;height:42px;border:1px solid rgba(255,255,255,.42);border-radius:999px;background:rgba(10,10,8,.34);color:#fff;display:none;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(14px);font-size:1rem}.sound.show{display:flex}.sound.on{background:rgba(200,164,64,.88);color:#111;border-color:rgba(200,164,64,.88)}
 .brochure-shell{display:none;position:relative;min-height:100svh;background:#f6f0e7;color:var(--ink)}.show-brochure .cover{display:none}.show-brochure .brochure-shell{display:block}.brochure-shell iframe{display:block;width:100%;height:calc(100svh - 38px);border:0;background:#f6f0e7}.brochure-tools{height:38px;display:flex;align-items:center;justify-content:center;background:#102416;border-bottom:1px solid rgba(200,164,64,.28)}.back-cover{display:inline-flex;align-items:center;justify-content:center;min-height:26px;padding:.35rem .72rem;border:1px solid rgba(20,17,12,.18);border-radius:4px;background:var(--gold);color:var(--ink);text-decoration:none;font-size:.66rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;box-shadow:none;transition:filter .18s}.back-cover:hover{filter:brightness(.94)}
+.promo-overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(8,8,6,.66);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s ease}.promo-overlay.show{display:flex}.promo-overlay.in{opacity:1}.promo-card{position:relative;width:100%;max-width:460px;max-height:92svh;overflow:auto;background:var(--cream);color:#1B3A28;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.4);transform:translateY(14px) scale(.97);opacity:0;transition:transform .32s cubic-bezier(.16,.84,.22,1),opacity .32s ease;font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.promo-overlay.in .promo-card{transform:translateY(0) scale(1);opacity:1}.promo-close{position:absolute;top:10px;right:10px;z-index:2;width:32px;height:32px;border:none;border-radius:999px;background:rgba(20,17,12,.12);color:#1B3A28;font-size:1.15rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}.promo-close:hover{background:rgba(20,17,12,.22)}.promo-head{text-align:center;background:linear-gradient(160deg,#1B3A28,#0f2317);color:#fff;padding:1.5rem 1.2rem 1.2rem;border-radius:18px 18px 0 0}.promo-eyebrow{margin:0 0 .3rem;color:#e8cf8d;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.promo-head h2{margin:0 0 .25rem;font-family:"Playfair Display",Georgia,serif;font-size:1.5rem}.promo-sub{margin:0;font-size:.82rem;color:#efe1bd}.promo-cards{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;padding:1.1rem}.promo-prog{background:#fff;border:1px solid rgba(20,17,12,.1);border-radius:14px;padding:.85rem .6rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.35rem}.promo-logo{height:20px;width:auto;object-fit:contain;margin-bottom:.15rem}.promo-dates{margin:0;font-size:.68rem;font-weight:700;color:#1B3A28;line-height:1.2}.promo-price{margin:0;font-size:.78rem;color:#4a4a42}.promo-price strong{color:#1B3A28;font-family:"Playfair Display",Georgia,serif;font-size:1rem}.promo-cta{margin-top:.3rem;display:inline-flex;align-items:center;justify-content:center;width:100%;background:#C8A440;color:#1B3A28;font-weight:800;font-size:.72rem;text-decoration:none;border-radius:999px;padding:.55rem .5rem;transition:filter .15s}.promo-cta:hover{filter:brightness(1.08)}.promo-foot{text-align:center;padding:0 1.2rem 1.2rem;font-size:.72rem;color:#6b6b60}@media(max-width:420px){.promo-head h2{font-size:1.28rem}.promo-logo{height:17px}.promo-dates{font-size:.62rem}.promo-price strong{font-size:.9rem}.promo-cta{font-size:.66rem}}
 .fallback-note{display:none;background:var(--cream);color:var(--ink);padding:2rem;font-size:.95rem}@keyframes imageReveal{0%{transform:scale(var(--cover-scale,1.22))}76%,100%{transform:scale(1)}}@keyframes videoSettle{0%{transform:scale(1.015)}100%{transform:scale(1)}}@keyframes heartBeat{0%,40%,70%,100%{transform:translateX(-50%) scale(1);background:rgba(10,10,8,.34)}52%{transform:translateX(-50%) scale(1.07);background:#d71920}60%{transform:translateX(-50%) scale(.98);background:#d71920}}@media(max-width:720px){.brand{top:12px;left:14px}.brand img{width:72px}.copy{top:61%;width:calc(100% - 24px);grid-template-columns:1fr;gap:.18rem;text-align:center;padding:.68rem .9rem;background:rgba(248,241,228,.24);backdrop-filter:blur(1px)}.eyebrow{font-size:.66rem;white-space:normal}h1{font-size:clamp(1.85rem,11vw,3.25rem)}.subtitle{font-size:clamp(1.05rem,6.4vw,1.55rem);white-space:normal}.magic-button{width:calc(100% - 36px);max-width:360px;text-align:center;letter-spacing:.08em;bottom:22px}.sound{bottom:12px;right:12px;width:38px;height:38px}.brochure-tools{height:36px}.brochure-shell iframe{height:calc(100svh - 36px)}.back-cover{min-height:24px;padding:.3rem .62rem;font-size:.6rem}}@media(prefers-reduced-motion:reduce){.layer{transition:opacity .2s ease}.layer.active img,.layer.active video,.magic-button{animation:none;transform:translateX(-50%)}}
 </style>
 </head>
@@ -35,6 +36,31 @@ h1{margin:0;color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:cl
   <button class="sound" id="soundButton" type="button" aria-label="Activer le son" title="Activer le son">OFF</button>
   <audio id="coverAudio" loop preload="none"></audio>
 </main>
+<div class="promo-overlay" id="promoOverlay" role="dialog" aria-modal="true" aria-label="Omra Septembre 2026">
+  <div class="promo-card">
+    <button class="promo-close" id="promoClose" type="button" aria-label="Fermer">&times;</button>
+    <div class="promo-head">
+      <p class="promo-eyebrow">Omra &middot; Departs groupes</p>
+      <h2>Omra Septembre 2026</h2>
+      <p class="promo-sub">Deux vols directs vers les Lieux Saints</p>
+    </div>
+    <div class="promo-cards">
+      <div class="promo-prog">
+        <img class="promo-logo" src="/images/logo-ram.png" alt="Royal Air Maroc">
+        <p class="promo-dates">09 &rarr; 23 Sept 2026</p>
+        <p class="promo-price">Des <strong>14 900 DH</strong></p>
+        <a class="promo-cta" href="/omra-septembre-ram.html">Voir le programme</a>
+      </div>
+      <div class="promo-prog">
+        <img class="promo-logo" src="/images/logo-saudia.png" alt="Saudia">
+        <p class="promo-dates">24 Sept &rarr; 05 Oct 2026</p>
+        <p class="promo-price">Des <strong>13 500 DH</strong></p>
+        <a class="promo-cta" href="/omra-septembre-saudia.html">Voir le programme</a>
+      </div>
+    </div>
+    <p class="promo-foot">0673-28-00-03 &middot; Voyages 21 / &#1571;&#1587;&#1601;&#1575;&#1585; 21</p>
+  </div>
+</div>
 <section class="brochure-shell" id="brochure" aria-label="Brochure VOYAGES21 Ete 2026">
   <div class="brochure-tools">
     <a class="back-cover" href="#cover" id="backCover">Revoir l'intro</a>
@@ -74,6 +100,20 @@ soundButton.addEventListener("click",toggleSound);
 magicButton.addEventListener("click",e=>{if(magicButton.getAttribute("href")==="#brochure"){e.preventDefault();goBrochure()}});
 backCover.addEventListener("click",e=>{e.preventDefault();goCover()});
 getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")location.replace(DEFAULT_COVER.buttonUrl)});
+(function(){
+  const PROMO_KEY="v21_promo_omra_sept_seen";
+  const overlay=document.getElementById("promoOverlay"),closeBtn=document.getElementById("promoClose");
+  if(!overlay||sessionStorage.getItem(PROMO_KEY)||location.hash==="#brochure")return;
+  let armed=false,shown=false;
+  function openPromo(){if(shown)return;shown=true;detach();overlay.classList.add("show");requestAnimationFrame(()=>requestAnimationFrame(()=>overlay.classList.add("in")))}
+  function closePromo(){overlay.classList.remove("in");try{sessionStorage.setItem(PROMO_KEY,"1")}catch(e){}setTimeout(()=>overlay.classList.remove("show"),300)}
+  function onTrigger(){openPromo()}
+  function attach(){if(armed)return;armed=true;window.addEventListener("wheel",onTrigger,{passive:true});window.addEventListener("touchmove",onTrigger,{passive:true});window.addEventListener("scroll",onTrigger,{passive:true})}
+  function detach(){armed=false;window.removeEventListener("wheel",onTrigger);window.removeEventListener("touchmove",onTrigger);window.removeEventListener("scroll",onTrigger)}
+  closeBtn.addEventListener("click",closePromo);
+  overlay.addEventListener("click",e=>{if(e.target===overlay)closePromo()});
+  setTimeout(attach,1200);
+})();
 </script>
 <script src="/social-contact-bar.js" defer></script>
 </body>
