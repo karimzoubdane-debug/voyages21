@@ -18,6 +18,67 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v44 (11/07/2026)
+- **✅ Clarification PNB officiel vs recalcul interne** (Karim a repéré l'écart 8,8 M / 9,33 M
+  et soupçonnait un bug de PNB négatif compté en positif). Vérifié : **0 PNB négatif** dans le
+  tableau des 218 clients (Client 360) — pas de bug d'`abs()`. L'écart est un **écart de
+  périmètre déjà connu** : 8,8 M (8 829 579 DH, −14 %) = chiffre **officiel** du scorecard
+  (222 clients, inclut 23 inactifs + **2 clients à PNB négatif non identifiés nominativement**) ;
+  9,33 M = **recalcul interne** sur les 218 clients du tableau détaillé (sert aussi de base à
+  l'onglet Par secteur). **Menara Real Estate n'est PAS un des 2 PNB négatifs** : son PNB 2026
+  est positif (502 259 DH) mais en forte baisse vs 2025 (1 396 565 DH), soit −894 306 DH —
+  évolution négative ≠ PNB négatif. **Décision : retenir et citer à l'oral uniquement 8,8 M
+  / −14 %** (jamais 9,33 M). Ajouts pour lever toute ambiguïté définitivement :
+  - Bandeau d'alerte rouge en tête du tableau **Client 360** avec les deux chiffres et la
+    distinction PNB négatif/évolution négative.
+  - 2 nouvelles **flashcards + 2 questions de quiz** (rubrique Scorecard) verrouillant le
+    chiffre 8,8 M et la distinction PNB négatif/évolution négative.
+  Validé headless (0 err JS, 121 flashcards, 301 questions de quiz). Rebasé et réappliqué sur
+  la version v41 PNB par secteur COMPLET (voir note collision multi-sessions ci-dessous).
+
+## L'appli — état v43 (11/07/2026)
+- **✅ Fix bug d'affichage Flashcards** (signalé par Karim : « pas bien cadrées »). Cause
+  identifiée : `#fcQ`/`#fcA` sont en `display:flex` mais le contenu (texte + balises `<b>`)
+  était injecté tel quel sans conteneur bloc → chaque fragment de texte devenait son propre
+  **élément flex** (comportement flex par défaut sur du contenu non enveloppé), d'où un texte
+  éclaté en colonnes façon puzzle sur les cartes à réponse longue (ex. cartes Scorecard,
+  Management). **Fix** : le contenu est désormais injecté dans un `<div>` unique par face
+  (un seul élément flex, texte qui s'enroule normalement) + petit ajustement de hauteur de
+  carte auto-adaptatif (`fitFcCard()`, plafonné à 60 % de la fenêtre) en filet de sécurité pour
+  les réponses très longues. Vérifié sur les 119 cartes (0 dépassement, 0 erreur JS), y compris
+  les 5 plus longues (Scorecard ×3, Management ×2). Aucune régression sur les cartes courtes.
+
+## L'appli — état v42 (11/07/2026)
+- **✅ Cahier d'oral — Q21 « Quel est votre style de management ? »** (21 fiches). Sujet
+  sensible traité : Karim porte une étiquette de management « dur/tyrannique » (racontars de
+  détracteurs). Reformulé en réponse **indirecte** (le jury demandera probablement le style de
+  management, pas l'étiquette frontalement) : distinction **bonne foi** (accompagnement) vs
+  **mauvaise foi contagieuse** (deux choix — subir avec des résultats décevants pour la DG, ou
+  réagir avec justesse/pragmatisme) → « une main ferme, dans un gant de velours », clôture sur
+  **équité**. Réflexe imposé : ne jamais citer de cas individuel identifiable (ni fonction, ni
+  service, ni origine) — leçon tirée du 1er jet de Karim qui citait un cas précis (CA à 34 % de
+  scorecard, une cheffe de service) : trop identifiable, à proscrire à l'oral. Bascule prévue
+  sur la question directe (« on dit que vous êtes dur ») si le jury la pose quand même. Inséré
+  en section I (Posture & motivation), après Q2. Validé headless (0 err JS, clic/dépliage OK).
+  ⚠️ **Homonymie à noter** : ce Q21 (fiche du Cahier d'oral) est SANS RAPPORT avec le
+  « Q21 de l'entretien blanc » cité dans les points en suspens ci-dessous (question CMT/90
+  premiers jours, déclenchée par « Repose Q21 » en conversation) — deux numérotations
+  différentes qui coïncident par hasard. Pas de renumérotation faite (impact mineur), mais
+  à garder en tête pour éviter toute confusion avec Karim.
+
+## ⚠️ Collision multi-sessions résolue (12/07/2026)
+Pendant que ce fil construisait le v41 « PNB par secteur » (nominatif 159/166, Travaux publics
+en agrégé faute de 4ᵉ page), un autre fil a reçu la 4ᵉ page manquante et livré un **v41 COMPLET**
+(187/218, Travaux publics + Transports nominatifs) directement fusionné sur `main` (PR #177).
+Les deux fils avaient donc chacun modifié le même fichier chiffré `public/dcaf/index.html` en
+parallèle → conflit de fusion sur la PR #175 au moment du merge. **Résolution** : re-parti de
+`origin/main` (qui contient le v41 complet, la version à conserver), et **réappliqué
+chirurgicalement** par-dessus les 3 correctifs de ce fil (v42 Q21, v43 fix flashcards, v44
+clarification PNB) — aucune perte des deux côtés, validé headless après fusion (0 err JS,
+121 flashcards, 301 quiz, section Par secteur complète intacte). **Rappel COLLAB-IA** : une
+seule IA par branche à la fois ; en cas de nouvelle divergence, repartir de `origin/main` et
+refusionner comme fait ici.
+
 ## L'appli — état v41 (11/07/2026) — PNB par secteur COMPLET (4 pages du répertoire)
 - **✅ PNB par secteur — LIVRÉ COMPLET.** Karim a envoyé les **4 pages photos** du répertoire
   (IdSAB + Nom Abrégé + Seg + **Secteur Activité** + Total AUT), dont **la 4ᵉ page — celle
