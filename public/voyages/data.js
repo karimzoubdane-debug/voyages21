@@ -1882,34 +1882,29 @@ window.VOYAGES = {
       "مكة المكرمة: موطن لمار (بدون إفطار) · ضيافة الرجاء (بالإفطار) · الشهداء (بالإفطار) — حسب الفئة"
     ],
     priceTable: {
-      style: "hotel-pairs",
-      hotelHeader: "الفندق (مكة) / الفندق (المدينة)",
-      columns: ["الغرفة الخماسية", "الغرفة الرباعية", "الغرفة الثلاثية", "الغرفة الثنائية"],
+      style: "hotel-grid",
+      medina: { label: "المدينة المنورة" },
+      mecca: { label: "مكة المكرمة" },
+      columns: ["ثنائية", "ثلاثية", "رباعية", "خماسية"],
       currency: "درهم",
       rows: [
         {
-          hotels: [
-            { city: "مكة", name: "موطن لمار (بدون إفطار)", key: "hotel-mk-watan-lamar" },
-            { city: "المدينة", name: "كراند بلازا المدينة (بدون إفطار)", key: "hotel-md-grand-plaza" }
-          ],
-          prices: ["14 900", "15 700", "16 000", "16 800"]
+          medinaHotel: { name: "كراند بلازا المدينة", key: "hotel-md-grand-plaza" },
+          meccaHotel: { name: "موطن لمار", key: "hotel-mk-watan-lamar" },
+          prices: ["16 800", "16 000", "15 700", "14 900"]
         },
         {
-          hotels: [
-            { city: "مكة", name: "ضيافة الرجاء (بالإفطار)", key: "hotel-mk-diyafat-alraja" },
-            { city: "المدينة", name: "كراند بلازا بدر المقام (بالإفطار)", key: "hotel-md-badr-almaqam" }
-          ],
-          prices: ["—", "18 500", "19 500", "21 500"]
+          medinaHotel: { name: "كراند بلازا بدر المقام", key: "hotel-md-badr-almaqam" },
+          meccaHotel: { name: "ضيافة الرجاء", key: "hotel-mk-diyafat-alraja" },
+          prices: ["21 500", "19 500", "18 500", "—"]
         },
         {
-          hotels: [
-            { city: "مكة", name: "الشهداء (بالإفطار)", key: "hotel-mk-shuhada" },
-            { city: "المدينة", name: "ميسان الحارثية (بالإفطار)", key: "hotel-md-maysan-harithiya" }
-          ],
-          prices: ["—", "21 600", "22 800", "25 500"]
+          medinaHotel: { name: "ميسان الحارثية", key: "hotel-md-maysan-harithiya" },
+          meccaHotel: { name: "الشهداء", key: "hotel-mk-shuhada" },
+          prices: ["25 500", "22 800", "21 600", "—"]
         }
       ],
-      note: "الأسعار بالدرهم المغربي للفرد بالغرفة."
+      note: "الأسعار بالدرهم المغربي للفرد بالغرفة. المدينة المنورة بدون إفطار، مكة المكرمة بالإفطار."
     },
     route: ["الدار البيضاء", "المدينة المنورة", "مكة المكرمة", "الدار البيضاء"],
     dates: {
@@ -1964,34 +1959,29 @@ window.VOYAGES = {
       "مكة المكرمة: موطن لمار (بدون إفطار) · ضيافة الرجاء (بالإفطار) · الشهداء (بالإفطار) — حسب الفئة"
     ],
     priceTable: {
-      style: "hotel-pairs",
-      hotelHeader: "الفندق (مكة) / الفندق (المدينة)",
-      columns: ["الغرفة الخماسية", "الغرفة الرباعية", "الغرفة الثلاثية", "الغرفة الثنائية"],
+      style: "hotel-grid",
+      medina: { label: "المدينة المنورة" },
+      mecca: { label: "مكة المكرمة" },
+      columns: ["ثنائية", "ثلاثية", "رباعية", "خماسية"],
       currency: "درهم",
       rows: [
         {
-          hotels: [
-            { city: "مكة", name: "موطن لمار (بدون إفطار)", key: "hotel-mk-watan-lamar" },
-            { city: "المدينة", name: "كراند بلازا المدينة (بدون إفطار)", key: "hotel-md-grand-plaza" }
-          ],
-          prices: ["13 500", "14 000", "14 500", "15 000"]
+          medinaHotel: { name: "كراند بلازا المدينة", key: "hotel-md-grand-plaza" },
+          meccaHotel: { name: "موطن لمار", key: "hotel-mk-watan-lamar" },
+          prices: ["15 000", "14 500", "14 000", "13 500"]
         },
         {
-          hotels: [
-            { city: "مكة", name: "ضيافة الرجاء (بالإفطار)", key: "hotel-mk-diyafat-alraja" },
-            { city: "المدينة", name: "كراند بلازا بدر المقام (بالإفطار)", key: "hotel-md-badr-almaqam" }
-          ],
-          prices: ["—", "16 000", "16 800", "18 200"]
+          medinaHotel: { name: "كراند بلازا بدر المقام", key: "hotel-md-badr-almaqam" },
+          meccaHotel: { name: "ضيافة الرجاء", key: "hotel-mk-diyafat-alraja" },
+          prices: ["18 200", "16 800", "16 000", "—"]
         },
         {
-          hotels: [
-            { city: "مكة", name: "الشهداء (بالإفطار)", key: "hotel-mk-shuhada" },
-            { city: "المدينة", name: "ميسان الحارثية (بالإفطار)", key: "hotel-md-maysan-harithiya" }
-          ],
-          prices: ["—", "17 900", "19 000", "20 900"]
+          medinaHotel: { name: "ميسان الحارثية", key: "hotel-md-maysan-harithiya" },
+          meccaHotel: { name: "الشهداء", key: "hotel-mk-shuhada" },
+          prices: ["20 900", "19 000", "17 900", "—"]
         }
       ],
-      note: "الأسعار بالدرهم المغربي للفرد بالغرفة."
+      note: "الأسعار بالدرهم المغربي للفرد بالغرفة. المدينة المنورة بدون إفطار، مكة المكرمة بالإفطار."
     },
     route: ["الدار البيضاء", "المدينة المنورة", "مكة المكرمة", "الدار البيضاء"],
     dates: {
