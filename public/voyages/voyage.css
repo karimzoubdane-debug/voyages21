@@ -111,17 +111,7 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 .ptable tbody th{font-weight:700;color:#000;font-family:'Playfair Display',serif;}
 .ptable tbody td{color:#000;}
 .ptable tr:last-child td,.ptable tbody tr:last-child th{border-bottom:none;}
-
-/* variante « 2 colonnes d'hôtel » (Médine / Mekkah côte à côte) : largeurs fixes
-   pour que tout tienne sur la largeur de l'écran, sans scroll horizontal */
-.ptable--wide{table-layout:fixed;}
-.ptable--wide th,.ptable--wide td{padding:.5rem .35rem;text-align:center;font-size:.82rem;vertical-align:middle;}
-.ptable--wide thead th{white-space:normal;font-size:.66rem;}
-.ptable--wide tbody th{white-space:normal;line-height:1.2;font-size:.78rem;}
-@media (max-width:640px){
-  .ptable--wide th,.ptable--wide td{padding:.35rem .25rem;font-size:.68rem;}
-  .ptable--wide tbody th{font-size:.7rem;}
-}
+.ptable tbody th .pt-city{display:block;font-weight:400;font-size:.74rem;color:var(--forest);font-family:'DM Sans',sans-serif;margin-top:.15rem;}
 
 /* galerie photos type Intrepid : fond clair, ascenseur vertical */
 .gallery{position:fixed;inset:0;background:rgba(16,35,26,.5);display:none;z-index:1100;}
