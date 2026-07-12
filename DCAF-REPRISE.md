@@ -18,6 +18,16 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v46 (12/07/2026) — Fiches détail cadrans « polies »
+- **✅ Fix affichage « cassé » des pop-ups scorecard** (Karim, capture : la fiche « Court terme »
+  s'affichait comme une simple boîte blanche titre+texte, perçue comme cassée/inachevée).
+  Vérifié d'abord headless (mobile 390 px) : **aucun bug technique** — les 18 pop-ups s'ouvrent,
+  0 vide, 0 débordement, 0 erreur JS ; c'était donc un souci d'apparence, pas de code.
+  **Fix** : les fiches texte de `synDetail` (Ressources, Court terme, Production, Échues, Trade,
+  Taux tirage, Dormantes, Clients base/nul) ont désormais un **bandeau d'en-tête dégradé
+  navy→vert** avec la **valeur en gros + le libellé**, puis un corps propre (💡 + explication),
+  cohérent avec le reste de l'appli. Capture de contrôle OK. Validé headless (0 err JS).
+
 ## L'appli — état v45 (12/07/2026) — Synthèse : PNB unique + tous cadrans cliquables
 - **✅ Dédoublonnage des cadrans de la page Synthèse** (demande de Karim sur capture) : la page
   affichait **2 PNB** (tuile `#cafViz` « 8,8 M PNB cumulé » officielle + carte `#kpis`
