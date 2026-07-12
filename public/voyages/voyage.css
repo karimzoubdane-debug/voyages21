@@ -105,13 +105,23 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 /* tableau de prix (identique à la brochure) */
 .ptable-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;}
 .ptable{width:100%;border-collapse:collapse;margin:.5rem 0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
-.ptable th,.ptable td{padding:.7rem .9rem;text-align:start;font-size:.9rem;border-bottom:1px solid var(--line);}
-.ptable td{white-space:nowrap;}
+.ptable th,.ptable td{padding:.7rem .9rem;text-align:start;font-size:.9rem;border-bottom:1px solid var(--line);white-space:nowrap;}
 .ptable thead th{background:var(--forest);color:#fff;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;}
 .ptable tbody th{font-weight:700;color:#000;font-family:'Playfair Display',serif;}
 .ptable tbody td{color:#000;}
 .ptable tr:last-child td,.ptable tbody tr:last-child th{border-bottom:none;}
-.ptable tbody th .pt-city{display:block;font-weight:400;font-size:.74rem;color:var(--forest);font-family:'DM Sans',sans-serif;margin-top:.15rem;}
+
+/* < 640px : le tableau devient une pile de cartes (une par hôtel), plus de scroll horizontal */
+@media (max-width:640px){
+  .ptable-wrap{overflow-x:visible;}
+  .ptable thead{display:none;}
+  .ptable,.ptable tbody,.ptable tr,.ptable th,.ptable td{display:block;width:100%;}
+  .ptable tbody tr{padding:.5rem 0;border-bottom:1px solid var(--line);}
+  .ptable tbody th{padding:.6rem .9rem .3rem;border-bottom:none;white-space:normal;}
+  .ptable tbody td{display:flex;justify-content:space-between;align-items:center;padding:.3rem .9rem;border-bottom:none;}
+  .ptable tbody td::before{content:attr(data-label);font-weight:600;color:var(--forest);font-size:.82rem;}
+  .ptable tbody tr:last-child{border-bottom:none;}
+}
 
 /* galerie photos type Intrepid : fond clair, ascenseur vertical */
 .gallery{position:fixed;inset:0;background:rgba(16,35,26,.5);display:none;z-index:1100;}

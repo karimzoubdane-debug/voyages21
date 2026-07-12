@@ -95,7 +95,9 @@
     if (v.priceTable) {
         priceHtml = '<div class="ptable-wrap"><table class="ptable"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
-                return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : '<td>' + bidiNum(c) + "</td>"; }).join("") + "</tr>";
+                return "<tr>" + r.map(function (c, i) {
+                    return i === 0 ? "<th>" + c + "</th>" : '<td data-label="' + v.priceTable.head[i] + '">' + bidiNum(c) + "</td>";
+                }).join("") + "</tr>";
             }).join("") + "</tbody></table></div>"
             + (v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "");
     }
