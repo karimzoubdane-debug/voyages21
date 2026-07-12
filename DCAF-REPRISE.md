@@ -18,6 +18,23 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v45 (12/07/2026) — Synthèse : PNB unique + tous cadrans cliquables
+- **✅ Dédoublonnage des cadrans de la page Synthèse** (demande de Karim sur capture) : la page
+  affichait **2 PNB** (tuile `#cafViz` « 8,8 M PNB cumulé » officielle + carte `#kpis`
+  « 9 334 099 DH PNB cumulé 04/26 » recalculée) et **2 CMT** (« 211 M » / « 211,1 »).
+  → Supprimé du bloc `#kpis` les cartes **PNB** et **Encours CMT** (doublons). Il ne reste
+  **qu'UN cadran PNB = 8,8 M (le chiffre à annoncer)** et un seul CMT.
+- **✅ Tous les cadrans cliquables (œil 👁 → détail)** : les 8 tuiles scorecard (`#cafViz`)
+  étaient statiques → rendues cliquables via `synDetail(key)`. Le cadran **PNB** (et
+  « Concentration ») ouvre un pop-up « **PNB — le chiffre à annoncer** » : rappelle 8,8 M / −14 %,
+  puis liste **50 %/80 % (Pareto)** des clients + un **tableau des clients à PNB nul**
+  (réactiver/sortir). CMT → concentration CMT. Les autres tuiles (Ressources, Court terme,
+  Production, Échues, Trade) + les cartes `#kpis` sans champ (Taux tirage, Dormantes, Clients
+  base, PNB nul) ouvrent une fiche explicative courte (argument d'oral). Aucun doublon restant.
+- Construit **sur le main courant (v44)** — préserve v41 secteur + v42/43/44. Validé headless :
+  8 tuiles cliquables, 10 cartes kpis (PNB & CMT retirés), pop-up PNB OK (50/80 + PNB nul),
+  **0 erreur JS**, round-trip de déchiffrement vérifié.
+
 ## L'appli — état v44 (11/07/2026)
 - **✅ Clarification PNB officiel vs recalcul interne** (Karim a repéré l'écart 8,8 M / 9,33 M
   et soupçonnait un bug de PNB négatif compté en positif). Vérifié : **0 PNB négatif** dans le
