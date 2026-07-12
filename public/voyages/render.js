@@ -92,7 +92,29 @@
         ? '<ul class="hotels">' + v.hotels.map(function (h) { return "<li>" + h + "</li>"; }).join("") + "</ul>"
         : (v.hebergement ? '<div class="stay">' + v.hebergement + "</div>" : "");
     var priceHtml = "";
-    if (v.priceTable && v.priceTable.style === "hotel-pairs") {
+    if (v.priceTable && v.priceTable.style === "hotel-grid") {
+        var pt = v.priceTable;
+        function galBtn(h) {
+            return h.key ? '<button class="hotel-gal is-empty" type="button" data-gal="' + h.key + '" aria-label="صور الفندق · Photos">📷</button>' : "";
+        }
+        var ptColgroup = '<colgroup><col class="c-hotel"><col class="c-hotel">'
+            + pt.columns.map(function () { return '<col class="c-price">'; }).join("") + '</colgroup>';
+        priceHtml = '<div class="ptwrap"><table class="price-table price-table--grid">' + ptColgroup + '<thead><tr>'
+            + '<th class="hotel">' + (pt.medina.label || "") + "</th>"
+            + '<th class="hotel">' + (pt.mecca.label || "") + "</th>"
+            + pt.columns.map(function (c) { return "<th>" + c + "</th>"; }).join("")
+            + "</tr></thead><tbody>" + pt.rows.map(function (r) {
+                var pricesHtml = (r.prices || []).map(function (p) {
+                    return (p == null || p === "—")
+                        ? '<td class="price">—</td>'
+                        : '<td class="price"><span class="num">' + bidiNum(p) + '</span><small>' + (pt.currency || "درهم") + "</small></td>";
+                }).join("");
+                return "<tr><td class=\"hotel\"><span class=\"hotel-name\">" + r.medinaHotel.name + "</span>" + galBtn(r.medinaHotel) + "</td>"
+                    + "<td class=\"hotel\"><span class=\"hotel-name\">" + r.meccaHotel.name + "</span>" + galBtn(r.meccaHotel) + "</td>"
+                    + pricesHtml + "</tr>";
+            }).join("") + "</tbody></table></div>"
+            + (pt.note ? '<p class="note">' + bidiNum(pt.note) + "</p>" : "");
+    } else if (v.priceTable && v.priceTable.style === "hotel-pairs") {
         priceHtml = '<div class="ptwrap"><table class="price-table"><thead><tr><th class="hotel">' + (v.priceTable.hotelHeader || "") + "</th>"
             + v.priceTable.columns.map(function (c) { return "<th>" + c + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {

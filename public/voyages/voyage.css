@@ -135,6 +135,26 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
   .price-table th,.price-table td{padding:.6rem .4rem;}
 }
 
+/* variante compacte 6 colonnes (Médine + Mekkah + 4 tailles de chambre sur une seule grille,
+   façon affiche imprimée) : largeurs fixes + police resserrée pour tenir sans scroll ni chevauchement */
+.price-table--grid{table-layout:fixed;font-size:.72rem;}
+.price-table--grid col.c-hotel{width:23%;}
+.price-table--grid col.c-price{width:13.5%;}
+.price-table--grid th,.price-table--grid td{padding:.4rem .3rem;}
+.price-table--grid th.hotel,.price-table--grid td.hotel{text-align:center;}
+.price-table--grid thead th{font-size:.62rem;line-height:1.15;white-space:normal;}
+.price-table--grid td.hotel{display:flex;flex-direction:column;align-items:center;gap:.25rem;border-bottom:1px solid var(--line);}
+.price-table--grid td.hotel .hotel-name{font-size:.68rem;line-height:1.2;overflow-wrap:break-word;}
+.price-table--grid .hotel-gal{padding:.08rem .3rem;font-size:.78rem;}
+.price-table--grid .price .num{font-size:.74rem;}
+.price-table--grid .price small{font-size:.6rem;}
+@media (max-width:640px){
+  .price-table--grid{font-size:.64rem;}
+  .price-table--grid th,.price-table--grid td{padding:.3rem .18rem;}
+  .price-table--grid thead th{font-size:.56rem;}
+  .price-table--grid td.hotel .hotel-name{font-size:.62rem;}
+}
+
 /* galerie photos type Intrepid : fond clair, ascenseur vertical */
 .gallery{position:fixed;inset:0;background:rgba(16,35,26,.5);display:none;z-index:1100;}
 .gallery.active{display:flex;align-items:flex-start;justify-content:center;padding:4vh 14px;}
