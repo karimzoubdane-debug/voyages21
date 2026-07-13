@@ -18,6 +18,19 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v53 (13/07/2026) — Propagation Menara + outil de recherche société→secteur
+- **✅ Propagation de la correction Menara** (demandée par Karim « remets tout à jour y compris présentation
+  et note de synthèse ») : **Note de synthèse** — « PNB global −3,7 % » → **−14 %** (cohérent avec l'officiel
+  et l'onglet Évolution). **Présentation** vérifiée : elle citait déjà le 8,8 M officiel + « Menara Prefa »
+  (positif, entité différente) — pas de chiffre stale à corriger.
+- **✅ Nouvel outil de recherche société → secteur** (demande Karim) : en tête de l'onglet 🏭 Par secteur,
+  une barre de recherche. On tape un **nom** OU un **IdSAB** → tableau : Société · IdSAB · **Secteur
+  d'activité** · Groupe · PNB. Construit depuis l'objet `IDS` (nom→IdSAB) de l'appli croisé à sect_map +
+  group_map + C360. **92/218 sociétés ont un IdSAB** dans l'appli (recherche par nom OK pour les 218) ;
+  pour couvrir les 126 restantes en IdSAB il faudrait transcrire la colonne IdSAB des 4 pages du répertoire.
+  Ex. « 10069170 » ou « MENARA REAL » → MENARA REAL ESTATE · Promotion immobilière · ZAHID · −502 k.
+- Validé headless (recherche nom + IdSAB OK, note −14 %, 0 err JS), round-trip OK.
+
 ## L'appli — état v52 (13/07/2026) — 🔴 CORRECTION MAJEURE : Menara Real Estate = PNB NÉGATIF −502 259 DH
 - **Karim a détecté une erreur de signe** (preuve Excel, cellule G223 = −502259,09) : j'avais transcrit
   Menara Real Estate en **+502 259** au lieu de **−502 259** (PNB NÉGATIF). Ma base avait donc **0 négatif** ;
