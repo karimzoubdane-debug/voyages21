@@ -18,6 +18,20 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v54 (13/07/2026) — Bandeau PNB négatifs (Client 360) + tentative IdSAB photos
+- **✅ Bandeau « PNB négatifs » en tête du Client 360** (Karim : « je ne vois pas encore les PNB
+  négatifs, mentionne-les ») : bloc rouge calculé en direct depuis C360 listant tous les clients à
+  PNB < 0, avec total. Actuellement **1 client = Menara Real Estate −502 k (ASM)**. Note : le
+  scorecard officiel en compte 2 (base 222), le 2ᵉ est hors du tableau détaillé (218). Auto-adaptatif
+  si un autre négatif apparaît. Validé headless (0 err JS).
+- **⛔ IdSAB depuis les photos — NON livré (fiabilité insuffisante)** : test de transcription page 1
+  recoupé aux 92 IdSAB connus (`IDS`) → **désalignements ligne/numéro** (ex. valeur lue pour
+  « MAZAYA BINAA » en conflit avec l'IdSAB connu). À la résolution des photos, l'alignement sur ~200
+  lignes n'est pas garantissable → refus de livrer des IdSAB faux pour un outil d'oral. **La recherche
+  par IdSAB reste à 92/218.** Pour compléter proprement : Karim doit fournir la **colonne « id SAB » de
+  l'Excel PNB** (export CSV `id SAB` + `Nom`, ou captures nettes de toutes les lignes) → mapping exact
+  des 218 en un coup.
+
 ## L'appli — état v53 (13/07/2026) — Propagation Menara + outil de recherche société→secteur
 - **✅ Propagation de la correction Menara** (demandée par Karim « remets tout à jour y compris présentation
   et note de synthèse ») : **Note de synthèse** — « PNB global −3,7 % » → **−14 %** (cohérent avec l'officiel
