@@ -18,6 +18,28 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v52 (13/07/2026) — 🔴 CORRECTION MAJEURE : Menara Real Estate = PNB NÉGATIF −502 259 DH
+- **Karim a détecté une erreur de signe** (preuve Excel, cellule G223 = −502259,09) : j'avais transcrit
+  Menara Real Estate en **+502 259** au lieu de **−502 259** (PNB NÉGATIF). Ma base avait donc **0 négatif** ;
+  c'était faux. Menara Real Estate est **l'un des clients à PNB négatif du scorecard** (passé de +1 396 565
+  en 2025 à −502 259 en 2026 : baisse ET passage en négatif — probable provision/reprise d'agios).
+- **Correction en cascade (tout recalculé)** :
+  - **Base PNB** : Menara −502 259 ; total base **9,33 M → 8,33 M** (se rapproche de l'officiel 8,8 M).
+  - **Client 360** : Menara en bas de tableau, PNB en **rouge −502 k**, % cumulé « — », évol −136 %.
+    Pareto recalculé sur le PNB positif (N50=9, N80=26 conservés). Filtre « PNB nul » = strictement 0
+    (Menara négatif n'est plus compté comme nul).
+  - **Bandeau v44 + 1 flashcard + 1 quiz** qui affirmaient « Menara positif / évolution négative » →
+    **corrigés** : Menara = PNB négatif (distinction PNB négatif vs simple baisse conservée, Menara sert
+    d'exemple du négatif). Réponse du quiz basculée de « Positif » à « Négatif (−502 259) ».
+  - **Par secteur** : Promotion immobilière devient **nette négative (−464 k)** (Menara la plombe) ; total 8,33 M.
+  - **Vue 360 groupes** : ZAHID **633 k → 131 k** ; ALSA devient 1er groupe par PNB. KPI PNB cumulé 6,3→5,3 M.
+  - **Évolution PNB** : base 9,69→**8,33 M (−14 %)** (au lieu de −3,7 %, colle désormais à l'officiel) ;
+    Menara = 1ʳᵉ baisse **−1 898 824** (passe en négatif).
+  - Toutes les mentions « 9,33 M » (base recalcul) → « 8,33 M » (sauf le distracteur de quiz).
+- ⚠️ Le scorecard officiel indique **2 clients à PNB négatif** (base 222) : Menara en est **1 identifié** ;
+  le 2ᵉ est hors du tableau détaillé (218 clients). Les compteurs « 2 négatifs » du scorecard restent.
+- Validé headless (Client 360 Menara −502 k rouge, secteur Promo négatif, ZAHID 131 k, 0 err JS), round-trip OK.
+
 ## L'appli — état v51 (12/07/2026) — Fiche « Projet Vision BMCI » (Cahier d'oral)
 - **✅ 5 photos « Projet Vision BMCI 2025 — Guide d'entretien des Ambassadeurs »** (démarche de
   transformation culturelle BMCI ; signature « collaborateurs engagés, audacieux et tournés vers
