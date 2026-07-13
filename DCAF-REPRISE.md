@@ -18,6 +18,20 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v51 (12/07/2026) — Fiche « Projet Vision BMCI » (Cahier d'oral)
+- **✅ 5 photos « Projet Vision BMCI 2025 — Guide d'entretien des Ambassadeurs »** (démarche de
+  transformation culturelle BMCI ; signature « collaborateurs engagés, audacieux et tournés vers
+  l'avenir »). Karim y a participé comme **ambassadeur** (entretiens sur une expérience d'équipe
+  engagée/audacieuse) ; ses réponses manuscrites : 3 souhaits = **Responsabiliser · Synergie
+  siège↔réseau · Confiance**. Karim : « casez ces documents là où ils devraient être logiquement ».
+- **Placement** : nouvelle fiche **🌟 VISION** dans le **Cahier d'oral** (nouvelle section
+  « VII · Vision & valeurs »), 22 fiches désormais. Contenu : contexte Projet Vision + sa participation
+  d'ambassadeur + facteurs clés de succès (engagement individuel/collectif, entraide, fiabilité,
+  dépassement, solutions audacieuses) + ses 3 souhaits + réflexe oral (« ces 3 leviers = le rôle
+  d'un directeur de CAF : responsabiliser, lien siège-réseau, piloter par la confiance »).
+  Nom de l'interviewé volontairement gardé générique (« un directeur régional »). Validé headless
+  (fiche s'ouvre au clic, 0 err JS), round-trip OK.
+
 ## L'appli — état v50 (12/07/2026) — Vue 360 groupes : cohérence PNB↔crédit + groupes non renseignés corrigés
 - **✅ Re-contrôle Karim (« certains groupes pas renseignés »)**. Cause trouvée : le crédit était
   rattaché via les **parenthèses de l'engagement** et le PNB via le **répertoire** → divergences.
