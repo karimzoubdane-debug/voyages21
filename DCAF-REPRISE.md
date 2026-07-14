@@ -18,6 +18,25 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v56 (14/07/2026) — 🔴 Recontrôle complet des groupes (répertoire scan CamScanner) + IdSAB
+- **Karim a détecté des erreurs de rattachement** (« je trouve Jardin Majorelle dans le groupe de
+  Jakubowicz »). Il a envoyé le **répertoire scanné (PDF CamScanner, 4 pages, net)** = source de vérité.
+- **Cause** : ma transcription depuis les photos floues était **décalée sur plusieurs lignes (page 1)**.
+  **Rebuild complet du mapping société→groupe depuis le scan** (`scratchpad/repertoire.csv`, 200 clients :
+  nom;groupe;idsab). **Erreurs corrigées** : JARDIN MAJORELLE JAKUBOWICZ→**PB/YSL** ; DUSHOW MAROC →N/C ;
+  INVEST IMMO CONSULTING PB/YSL→**SBAI** ; L'INDUSTRIE DE L'HYGIENE ZAHID→N/C ; MAZAYA BINAA ZAHID→N/C ;
+  TALEB VENTURE CAPITAL ZAHID→N/C ; SOCIETE REGIONALE MULTISERVICES LAKHMIRI→N/C ; ATLAS KARTING
+  BIHMIDEN→N/C ; 360 S SMIRI→N/C ; LES RESIDENCES DU GUELIZ LAHLOU→N/C ; + ajouts (MARRAKECH GRAND PRIX
+  →ZAHID, RATH CAPITAL→ROUANDI, PACK POWER→LAKHMIRI, MENARA UNIVERSITE→ZAHID, Z5 HOLDING→ZAHID,
+  ATLANTIS GRAN BLEU→SMIRI, LES VILLAS DE LA PAIX→LAHLOU…). **30 groupes** désormais.
+- **✅ Bonus IdSAB** : le scan net donne aussi l'IdSAB (règle confirmée **app = « 1 » + idsab répertoire**).
+  **Validation : 82/82 IdSAB concordent** avec les 92 déjà connus → transcription fiable. Recherche
+  société→secteur : **couverture IdSAB 92 → 181/218**. (1 doublon mineur Food Toast/Sucre, tous 2 N/C, blanchi.)
+- **Régénéré depuis les données corrigées** : group_360, group_credit (crédit ré-attribué par le bon
+  groupe), panneau 🏢 Vue 360 groupes (cartes + KPI + classement décroissant), et l'array LOOKUP de la
+  recherche. Validé headless (JAKUBOWICZ sans Jardin Majorelle, Jardin Majorelle→PB/YSL, recherche OK,
+  0 err JS), round-trip OK. `scratchpad/pdfpg/p01..p04.png` = pages rendues du scan.
+
 ## L'appli — état v55 (13/07/2026) — Classement des groupes par PNB (décroissant)
 - **✅ Tableau-classement compact** en tête de l'onglet 🏢 Vue 360 groupes (demande Karim « ordre
   décroissant de PNB par groupe ») : rang · groupe · nb sociétés · PNB · % du total · % cumulé.
