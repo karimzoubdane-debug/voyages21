@@ -18,6 +18,14 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v55 (13/07/2026) — Classement des groupes par PNB (décroissant)
+- **✅ Tableau-classement compact** en tête de l'onglet 🏢 Vue 360 groupes (demande Karim « ordre
+  décroissant de PNB par groupe ») : rang · groupe · nb sociétés · PNB · % du total · % cumulé.
+  Les cartes étaient déjà triées ainsi ; ce tableau donne le classement d'un coup d'œil.
+- **Classement (post-correction Menara)** : 1. ALSA 1,23 M · 2. JAKUBOWICZ 977 k · 3. EL BAROUDI
+  548 k · 4. LAKHMIRI 356 k · 5. CARTIER 341 k … **ZAHID retombe 12ᵉ (131 k)** à cause de Menara
+  Real Estate −502 k. Top 3 = 52 % du PNB des groupes. Total groupes 5,31 M. Validé headless (0 err JS).
+
 ## L'appli — état v54 (13/07/2026) — Bandeau PNB négatifs (Client 360) + tentative IdSAB photos
 - **✅ Bandeau « PNB négatifs » en tête du Client 360** (Karim : « je ne vois pas encore les PNB
   négatifs, mentionne-les ») : bloc rouge calculé en direct depuis C360 listant tous les clients à
