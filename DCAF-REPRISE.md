@@ -18,6 +18,20 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v59 (15/07/2026) — 📋 Liste triable (IdSAB) dans la Vue 360
+- **✅ Demande Karim** : « rajoute l'IdSAB et fais une SEULE liste pour pouvoir classer par ordre
+  décroissant le CA, le PNB, l'engagement, etc. ». Ajout d'une **bascule de vue** dans l'onglet
+  🧭 360 Groupe/Client : **🏢 Par groupe** (v58) / **📋 Liste triable**.
+- **Liste triable** = une seule liste plate de 218 clients, colonnes **IdSAB · Société · Groupe · Seg ·
+  RM · PNB · Engagement · Utilisation · CA · Flux confié · Capt. %**. **Clic sur un entête = tri
+  décroissant** (2ᵉ clic = croissant, flèche ▼/▲). Ligne TOTAL en pied (sticky). Nom + engagement
+  cliquables → détail des lignes de crédit (eng360).
+- **IdSAB** : 177/218 renseignés depuis le répertoire scanné (`scratchpad/gvue2.json`, jointure par
+  nom normalisé) ; « — » = société hors répertoire officiel. (Meilleure couverture que l'objet IDS
+  interne qui n'en couvrait que 90.)
+- Validé headless **chiffré** : 218 lignes, tri CA/PNB/IdSAB OK, totaux OK (PNB 8 329 580 · CA 10 443 M ·
+  Flux 3 756 M = 36 %), popups OK, **0 erreur JS**.
+
 ## L'appli — état v58 (15/07/2026) — 🧭 Vue 360° Groupe / Client (CA consolidé · Flux confié)
 - **✅ Demande Karim** : « catégoriser les clients par groupe pour connaître le CA consolidé du groupe ;
   un visuel groupé/client avec PNB, Engagement, CA, Flux confié (chiffres + %), Seg, RM ; clic sur
