@@ -18,6 +18,18 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v62 (15/07/2026) — Fix impression PDF vide (Présentation dossier + Note de synthèse)
+- **🐞 Bug signalé Karim** : « quand je veux imprimer le PDF est vide » sur les 2 nouveaux onglets.
+- **Cause** : la règle `@media print` globale de l'appli (pour le Mémo oral) masque TOUT sauf `#p-memo`
+  (`body *{visibility:hidden!important} #p-memo{visible}`) → impression blanche depuis tout autre onglet.
+- **Fix** : fonction `dcafPrint(id)` (ajoute une classe `pr-pdos`/`pr-ndos` sur `body`, imprime, retire au
+  `afterprint`) + règles `@media print` dédiées (guardées par la classe, `!important`, placées après la règle
+  globale pour gagner la cascade) qui révèlent le panneau ciblé, masquent le reste, cassent les ombres/bordures
+  et gèrent les sauts de page. Boutons « Imprimer / PDF » recâblés sur `dcafPrint`.
+- **Validé** : PDF généré headless (page chiffrée) = **2 pages, 2540 caractères, chiffres présents** (plus vide).
+- NB : les onglets Présentation/Note **du portefeuille** (existants) gardent l'ancien comportement d'impression
+  (hors périmètre de la demande) — à harmoniser plus tard si besoin.
+
 ## L'appli — état v61 (15/07/2026) — 2 onglets « Réviser » : Présentation dossier + Note de synthèse (plan-cible)
 - **✅ Demande Karim** : après validation du plan-cible (livré en Word `Plan-cible_DCAF_entretien.docx`),
   intégrer dans le menu **Réviser** deux onglets dédiés reprenant le plan **sauf la Partie 4** (projet de
