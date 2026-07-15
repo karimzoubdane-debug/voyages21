@@ -18,6 +18,22 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v58 (15/07/2026) — 🧭 Vue 360° Groupe / Client (CA consolidé · Flux confié)
+- **✅ Demande Karim** : « catégoriser les clients par groupe pour connaître le CA consolidé du groupe ;
+  un visuel groupé/client avec PNB, Engagement, CA, Flux confié (chiffres + %), Seg, RM ; clic sur
+  l'engagement total → popup détaillant les engagements ».
+- **Nouvel onglet** `🧭 360 Groupe/Client` (menu Analyse, à côté de Flux vs CA). Pour chaque groupe :
+  entête consolidé **CA · PNB · Engagement · Flux confié (valeur + %)**, triable (CA / Flux / PNB / Engagement),
+  N/C en fin de liste. Par société : **Seg · RM (chargé) · PNB · Engagement (clic → lignes de crédit via eng360)
+  · CA · Flux confié (valeur + %)**. Ligne CONSOLIDÉ en pied de tableau.
+- **Clic sur l'engagement total d'un groupe** (🔎) → popup : total autorisé / utilisation / taux + tableau
+  société par société (autorisé, utilisé, taux), chaque société cliquable vers le détail des lignes.
+- **Convention** : Flux confié société = captation crédit × CA ; Flux confié groupe = Σ flux ÷ Σ CA.
+  KPIs globaux : **30 groupes · CA consolidé 10 443 M · PNB 8 329 580 · Engagement 1 591 M · Flux confié 3 756 M (36 % du CA)**.
+  CA/flux affichés seulement pour les 55 sociétés dont le CA figure au dossier (« — » sinon).
+- Données : `scratchpad/gvue.json` (218 clients : nom, grp, seg, rm, pnb, aut, util, ca, capt, flux).
+  Validé headless **chiffré** (déverrouillage OK, 31 details = 30 groupes + N/C, popups OK, **0 erreur JS**).
+
 ## L'appli — état v57 (14/07/2026) — Recherche société → groupe (N/C explicite)
 - **✅ Demande Karim** : « insérer le nom d'une société et avoir le groupe auquel elle appartient,
   sinon N/C ». La recherche (en tête de 🏭 Par secteur) le faisait déjà (colonne Groupe) ; ajusté pour
