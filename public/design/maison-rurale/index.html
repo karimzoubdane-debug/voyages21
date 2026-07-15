@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dar El Baraka — Maison d'hôtes rurale au Maroc</title>
+  <meta name="description" content="Dar El Baraka, une maison d'hôtes rurale au cœur de la campagne marocaine : chambres authentiques, table du terroir, jardin, piscine et expériences nature. Réservez votre séjour au calme." />
+
+  <!-- ⚠️ MAQUETTE — contenu placeholder à remplacer par les vrais textes/photos/tarifs du client -->
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            olive:   { DEFAULT: '#4A5D3A', dark: '#38472C' },
+            terra:   { DEFAULT: '#B5623A', dark: '#9A4F2D' },
+            cream:   '#F7F1E6',
+            sand:    '#EDE3D2',
+            gold:    '#C8A440',
+            ink:     '#2A2620',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: #2A2620; background: #F7F1E6; }
+    .font-title { font-family: 'Cormorant Garamond', serif; }
+    .hero-overlay { background: linear-gradient(180deg, rgba(42,38,32,.35) 0%, rgba(42,38,32,.15) 40%, rgba(42,38,32,.65) 100%); }
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .fade-up.in { opacity: 1; transform: none; }
+    .link-underline { position: relative; }
+    .link-underline::after { content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:#C8A440; transition:width .3s ease; }
+    .link-underline:hover::after { width:100%; }
+    /* Photos placeholder : dégradés + motif, à remplacer par de vraies images */
+    .ph { background-size: cover; background-position: center; }
+    .ph-1 { background-image: linear-gradient(135deg,#6b7a52 0%,#4A5D3A 60%,#38472C 100%); }
+    .ph-2 { background-image: linear-gradient(135deg,#c98a5f 0%,#B5623A 60%,#9A4F2D 100%); }
+    .ph-3 { background-image: linear-gradient(135deg,#d9c9a8 0%,#EDE3D2 60%,#cbb98f 100%); }
+    .ph-hero { background-image: linear-gradient(135deg,#5c6b45 0%,#4A5D3A 45%,#8a5a3a 100%); }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <header id="top" class="fixed inset-x-0 top-0 z-50 transition-all duration-300" data-nav>
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
+      <a href="#top" class="font-title text-2xl font-semibold tracking-wide text-cream" data-logo>
+        Dar&nbsp;El&nbsp;Baraka
+      </a>
+      <nav class="hidden items-center gap-8 text-sm font-medium text-cream md:flex" data-menu>
+        <a href="#maison"      class="link-underline">La maison</a>
+        <a href="#chambres"    class="link-underline">Chambres</a>
+        <a href="#experiences" class="link-underline">Expériences</a>
+        <a href="#table"       class="link-underline">La table</a>
+        <a href="#tarifs"      class="link-underline">Tarifs</a>
+        <a href="#contact"     class="rounded-full bg-terra px-5 py-2 text-cream transition hover:bg-terra-dark">Réserver</a>
+      </nav>
+      <button class="text-cream md:hidden" data-burger aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h18M4 13h18M4 19h18"/></svg>
+      </button>
+    </div>
+    <!-- mobile menu -->
+    <div class="hidden flex-col gap-1 bg-olive-dark px-5 pb-5 text-cream md:hidden" data-mobile>
+      <a href="#maison"      class="border-b border-white/10 py-3">La maison</a>
+      <a href="#chambres"    class="border-b border-white/10 py-3">Chambres</a>
+      <a href="#experiences" class="border-b border-white/10 py-3">Expériences</a>
+      <a href="#table"       class="border-b border-white/10 py-3">La table</a>
+      <a href="#tarifs"      class="border-b border-white/10 py-3">Tarifs</a>
+      <a href="#contact"     class="py-3 font-semibold text-gold">Réserver mon séjour →</a>
+    </div>
+  </header>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <div class="ph ph-hero absolute inset-0"></div>
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="relative z-10 mx-auto max-w-4xl px-6 text-center text-cream">
+      <p class="mb-5 text-sm uppercase tracking-[0.35em] text-gold">Maison d'hôtes · Campagne marocaine</p>
+      <h1 class="font-title text-5xl font-medium leading-tight md:text-7xl">
+        Le temps ralentit<br /><span class="italic">à la campagne</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-xl text-base font-light text-cream/90 md:text-lg">
+        Une maison de terre et de pierre, nichée entre oliviers et montagnes.
+        Cinq chambres, une table du terroir, un grand jardin — et le silence des vraies vacances.
+      </p>
+      <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="#contact" class="rounded-full bg-terra px-8 py-3.5 font-medium text-cream shadow-lg transition hover:bg-terra-dark">Réserver un séjour</a>
+        <a href="#chambres" class="rounded-full border border-cream/60 px-8 py-3.5 font-medium text-cream transition hover:bg-cream/10">Découvrir les chambres</a>
+      </div>
+    </div>
+    <a href="#maison" class="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-bounce text-cream/80" aria-label="Descendre">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12l7 7 7-7"/></svg>
+    </a>
+  </section>
+
+  <!-- ══════════════ BANDEAU CHIFFRES ══════════════ -->
+  <section class="bg-olive text-cream">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-6 py-12 text-center md:grid-cols-4">
+      <div><p class="font-title text-4xl text-gold">5</p><p class="mt-1 text-sm tracking-wide text-cream/80">chambres & suites</p></div>
+      <div><p class="font-title text-4xl text-gold">4 ha</p><p class="mt-1 text-sm tracking-wide text-cream/80">jardin & oliveraie</p></div>
+      <div><p class="font-title text-4xl text-gold">100%</p><p class="mt-1 text-sm tracking-wide text-cream/80">cuisine maison</p></div>
+      <div><p class="font-title text-4xl text-gold">45 min</p><p class="mt-1 text-sm tracking-wide text-cream/80">de la ville</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ LA MAISON ══════════════ -->
+  <section id="maison" class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="grid items-center gap-14 md:grid-cols-2">
+      <div class="fade-up">
+        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-terra">Notre histoire</p>
+        <h2 class="font-title text-4xl font-medium leading-tight md:text-5xl">Une vieille ferme<br />devenue refuge</h2>
+        <p class="mt-6 leading-relaxed text-ink/80">
+          Dar El Baraka est née de la restauration patiente d'une ferme familiale, bâtie en pisé
+          et en pierre sèche. Nous avons gardé les murs épais qui gardent la fraîcheur, les poutres
+          de cèdre et les tomettes d'origine, en y ajoutant tout le confort d'aujourd'hui.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Ici, on se réveille au chant des oiseaux, on partage un thé sous la treille, on cueille
+          les légumes du potager avant le dîner. Un lieu pensé pour souffler, loin du bruit.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3 text-sm">
+          <span class="rounded-full bg-sand px-4 py-2">🌿 Jardin bio</span>
+          <span class="rounded-full bg-sand px-4 py-2">🏊 Piscine naturelle</span>
+          <span class="rounded-full bg-sand px-4 py-2">🔥 Cheminée</span>
+          <span class="rounded-full bg-sand px-4 py-2">🐴 Balades</span>
+          <span class="rounded-full bg-sand px-4 py-2">📶 Wi-Fi</span>
+        </div>
+      </div>
+      <div class="fade-up grid grid-cols-2 gap-4">
+        <div class="ph ph-1 h-64 rounded-2xl shadow-md"></div>
+        <div class="ph ph-3 mt-8 h-64 rounded-2xl shadow-md"></div>
+        <div class="ph ph-2 h-48 rounded-2xl shadow-md"></div>
+        <div class="ph ph-1 -mt-8 h-48 rounded-2xl shadow-md"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ CHAMBRES ══════════════ -->
+  <section id="chambres" class="bg-sand/60 py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mb-14 text-center fade-up">
+        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-terra">Où dormir</p>
+        <h2 class="font-title text-4xl font-medium md:text-5xl">Nos chambres & suites</h2>
+        <p class="mx-auto mt-4 max-w-xl text-ink/70">Chacune porte le nom d'un arbre du domaine. Linge en lin lavé, produits d'accueil artisanaux, vue sur la campagne.</p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-3">
+        <!-- carte -->
+        <article class="fade-up overflow-hidden rounded-2xl bg-cream shadow-sm transition hover:shadow-xl">
+          <div class="ph ph-2 h-56"></div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <h3 class="font-title text-2xl">L'Olivier</h3>
+              <span class="text-sm text-terra">dès 780 DH</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-ink/70">Chambre double avec terrasse privée face à l'oliveraie. Lit king-size, salle d'eau à l'italienne.</p>
+            <p class="mt-4 text-xs uppercase tracking-wide text-ink/50">2 pers · 22 m² · terrasse</p>
+          </div>
+        </article>
+        <article class="fade-up overflow-hidden rounded-2xl bg-cream shadow-sm transition hover:shadow-xl">
+          <div class="ph ph-1 h-56"></div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <h3 class="font-title text-2xl">Le Figuier</h3>
+              <span class="text-sm text-terra">dès 950 DH</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-ink/70">Suite familiale sous les poutres, coin salon et cheminée. Idéale pour les familles ou les longs séjours.</p>
+            <p class="mt-4 text-xs uppercase tracking-wide text-ink/50">3–4 pers · 34 m² · cheminée</p>
+          </div>
+        </article>
+        <article class="fade-up overflow-hidden rounded-2xl bg-cream shadow-sm transition hover:shadow-xl">
+          <div class="ph ph-3 h-56"></div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <h3 class="font-title text-2xl">Le Grenadier</h3>
+              <span class="text-sm text-terra">dès 1 100 DH</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-ink/70">Notre plus belle suite : baignoire en tadelakt, dressing, accès direct au jardin et à la piscine.</p>
+            <p class="mt-4 text-xs uppercase tracking-wide text-ink/50">2 pers · 40 m² · jardin privatif</p>
+          </div>
+        </article>
+      </div>
+      <p class="mt-10 text-center text-sm text-ink/60">Petit-déjeuner du terroir inclus dans chaque nuitée · Deux autres chambres disponibles (Le Cèdre, L'Amandier).</p>
+    </div>
+  </section>
+
+  <!-- ══════════════ EXPÉRIENCES ══════════════ -->
+  <section id="experiences" class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="mb-14 text-center fade-up">
+      <p class="mb-4 text-sm uppercase tracking-[0.3em] text-terra">À vivre sur place</p>
+      <h2 class="font-title text-4xl font-medium md:text-5xl">Les expériences du domaine</h2>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div class="fade-up rounded-2xl border border-sand bg-cream p-7 transition hover:-translate-y-1 hover:shadow-lg">
+        <div class="mb-4 text-3xl">🥾</div>
+        <h3 class="font-title text-2xl">Randonnées</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Sentiers vers les collines et la rivière, accompagnés par un guide du village.</p>
+      </div>
+      <div class="fade-up rounded-2xl border border-sand bg-cream p-7 transition hover:-translate-y-1 hover:shadow-lg">
+        <div class="mb-4 text-3xl">👩‍🍳</div>
+        <h3 class="font-title text-2xl">Atelier cuisine</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Apprenez le tajine, le pain et le couscous avec Fatima, notre cuisinière.</p>
+      </div>
+      <div class="fade-up rounded-2xl border border-sand bg-cream p-7 transition hover:-translate-y-1 hover:shadow-lg">
+        <div class="mb-4 text-3xl">🫒</div>
+        <h3 class="font-title text-2xl">Récolte des olives</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">En saison, participez à la cueillette et repartez avec votre huile.</p>
+      </div>
+      <div class="fade-up rounded-2xl border border-sand bg-cream p-7 transition hover:-translate-y-1 hover:shadow-lg">
+        <div class="mb-4 text-3xl">🧖</div>
+        <h3 class="font-title text-2xl">Hammam & bien-être</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Hammam traditionnel et massage à l'huile d'argan, sur réservation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ LA TABLE ══════════════ -->
+  <section id="table" class="relative overflow-hidden bg-olive-dark text-cream">
+    <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 md:grid-cols-2 md:py-32">
+      <div class="fade-up">
+        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-gold">La table d'hôtes</p>
+        <h2 class="font-title text-4xl font-medium leading-tight md:text-5xl">Du potager<br />à l'assiette</h2>
+        <p class="mt-6 leading-relaxed text-cream/85">
+          Chaque soir, une table d'hôtes réunit les voyageurs autour d'un menu unique,
+          composé le matin même avec les légumes du jardin, les œufs de la ferme et les
+          produits des paysans voisins. Cuisine marocaine généreuse, options végétariennes.
+        </p>
+        <ul class="mt-6 space-y-2 text-cream/85">
+          <li class="flex items-center gap-3"><span class="text-gold">✦</span> Petit-déjeuner beldi inclus</li>
+          <li class="flex items-center gap-3"><span class="text-gold">✦</span> Dîner table d'hôtes — 180 DH / pers</li>
+          <li class="flex items-center gap-3"><span class="text-gold">✦</span> Pique-nique randonnée sur demande</li>
+        </ul>
+      </div>
+      <div class="fade-up grid grid-cols-2 gap-4">
+        <div class="ph ph-3 h-72 rounded-2xl shadow-lg"></div>
+        <div class="ph ph-2 mt-10 h-72 rounded-2xl shadow-lg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ AVIS ══════════════ -->
+  <section class="mx-auto max-w-5xl px-6 py-24 text-center md:py-32">
+    <p class="mb-4 text-sm uppercase tracking-[0.3em] text-terra fade-up">Ils ont séjourné chez nous</p>
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+      <figure class="fade-up rounded-2xl bg-cream p-7 text-left shadow-sm">
+        <div class="text-gold">★★★★★</div>
+        <blockquote class="mt-3 text-ink/80">« Un havre de paix absolu. L'accueil, la cuisine, le calme… on serait bien restés une semaine de plus. »</blockquote>
+        <figcaption class="mt-4 text-sm font-medium text-ink/60">— Camille & Thomas, France</figcaption>
+      </figure>
+      <figure class="fade-up rounded-2xl bg-cream p-7 text-left shadow-sm">
+        <div class="text-gold">★★★★★</div>
+        <blockquote class="mt-3 text-ink/80">« La table d'hôtes est un festival de saveurs. Les chambres sont magnifiques et fraîches. Merci pour tout. »</blockquote>
+        <figcaption class="mt-4 text-sm font-medium text-ink/60">— Sofia, Casablanca</figcaption>
+      </figure>
+      <figure class="fade-up rounded-2xl bg-cream p-7 text-left shadow-sm">
+        <div class="text-gold">★★★★★</div>
+        <blockquote class="mt-3 text-ink/80">« Parfait pour déconnecter en famille. Les enfants ont adoré la ferme et la piscine. On reviendra ! »</blockquote>
+        <figcaption class="mt-4 text-sm font-medium text-ink/60">— The Bennett family, UK</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══════════════ TARIFS ══════════════ -->
+  <section id="tarifs" class="bg-sand/60 py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="mb-14 text-center fade-up">
+        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-terra">Séjours</p>
+        <h2 class="font-title text-4xl font-medium md:text-5xl">Nos formules</h2>
+        <p class="mx-auto mt-4 max-w-xl text-ink/70">Tarifs indicatifs par nuit, petit-déjeuner inclus. Réductions pour séjours de 3 nuits et plus.</p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="fade-up rounded-2xl border border-sand bg-cream p-8">
+          <h3 class="font-title text-2xl">Escapade</h3>
+          <p class="mt-2 text-sm text-ink/60">La chambre, en amoureux</p>
+          <p class="mt-6 font-title text-4xl">780 <span class="text-lg">DH</span></p>
+          <p class="text-xs text-ink/50">/ nuit · 2 pers</p>
+          <ul class="mt-6 space-y-2 text-sm text-ink/75">
+            <li>✓ Chambre double</li>
+            <li>✓ Petit-déjeuner du terroir</li>
+            <li>✓ Accès jardin & piscine</li>
+          </ul>
+          <a href="#contact" class="mt-8 block rounded-full border border-olive py-3 text-center font-medium text-olive transition hover:bg-olive hover:text-cream">Réserver</a>
+        </div>
+        <div class="fade-up relative rounded-2xl border-2 border-terra bg-cream p-8 shadow-lg">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-terra px-4 py-1 text-xs font-semibold text-cream">Le plus demandé</span>
+          <h3 class="font-title text-2xl">Table & Terroir</h3>
+          <p class="mt-2 text-sm text-ink/60">Nuit + dîner table d'hôtes</p>
+          <p class="mt-6 font-title text-4xl">1 090 <span class="text-lg">DH</span></p>
+          <p class="text-xs text-ink/50">/ nuit · 2 pers</p>
+          <ul class="mt-6 space-y-2 text-sm text-ink/75">
+            <li>✓ Chambre double</li>
+            <li>✓ Petit-déjeuner + dîner</li>
+            <li>✓ Une activité au choix</li>
+          </ul>
+          <a href="#contact" class="mt-8 block rounded-full bg-terra py-3 text-center font-medium text-cream transition hover:bg-terra-dark">Réserver</a>
+        </div>
+        <div class="fade-up rounded-2xl border border-sand bg-cream p-8">
+          <h3 class="font-title text-2xl">Domaine privé</h3>
+          <p class="mt-2 text-sm text-ink/60">La maison entière, en groupe</p>
+          <p class="mt-6 font-title text-4xl">Sur devis</p>
+          <p class="text-xs text-ink/50">5 chambres · jusqu'à 12 pers</p>
+          <ul class="mt-6 space-y-2 text-sm text-ink/75">
+            <li>✓ Privatisation complète</li>
+            <li>✓ Pension complète</li>
+            <li>✓ Événements & retraites</li>
+          </ul>
+          <a href="#contact" class="mt-8 block rounded-full border border-olive py-3 text-center font-medium text-olive transition hover:bg-olive hover:text-cream">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ CONTACT ══════════════ -->
+  <section id="contact" class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="grid gap-14 md:grid-cols-2">
+      <div class="fade-up">
+        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-terra">Réserver</p>
+        <h2 class="font-title text-4xl font-medium leading-tight md:text-5xl">Venez vous poser<br />chez nous</h2>
+        <p class="mt-6 leading-relaxed text-ink/80">
+          Écrivez-nous pour vérifier les disponibilités ou préparer votre séjour sur mesure.
+          Nous répondons sous 24 h.
+        </p>
+        <div class="mt-8 space-y-4 text-ink/85">
+          <p class="flex items-center gap-3"><span class="text-terra">📍</span> Route de la vallée, région d'Agafay — Maroc</p>
+          <p class="flex items-center gap-3"><span class="text-terra">📞</span> <a href="tel:+212600000000" class="link-underline">+212 6 00 00 00 00</a></p>
+          <p class="flex items-center gap-3"><span class="text-terra">✉️</span> <a href="mailto:contact@darelbaraka.ma" class="link-underline">contact@darelbaraka.ma</a></p>
+        </div>
+        <a href="https://wa.me/212600000000" target="_blank" rel="noopener"
+           class="mt-8 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-medium text-white shadow-md transition hover:opacity-90">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.489-.955z"/></svg>
+          Écrire sur WhatsApp
+        </a>
+      </div>
+
+      <!-- Formulaire (Web3Forms — remplacer la clé) -->
+      <form action="https://api.web3forms.com/submit" method="POST" class="fade-up rounded-2xl bg-cream p-8 shadow-sm">
+        <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS" />
+        <input type="hidden" name="subject" value="Nouvelle demande — Dar El Baraka" />
+        <div class="grid gap-5">
+          <div>
+            <label class="mb-1 block text-sm font-medium text-ink/70">Nom complet</label>
+            <input name="name" required class="w-full rounded-lg border border-sand bg-white px-4 py-3 outline-none focus:border-terra" placeholder="Votre nom" />
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-ink/70">Email</label>
+              <input type="email" name="email" required class="w-full rounded-lg border border-sand bg-white px-4 py-3 outline-none focus:border-terra" placeholder="vous@email.com" />
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium text-ink/70">Téléphone</label>
+              <input name="phone" class="w-full rounded-lg border border-sand bg-white px-4 py-3 outline-none focus:border-terra" placeholder="+212…" />
+            </div>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-ink/70">Arrivée</label>
+              <input type="date" name="arrivee" class="w-full rounded-lg border border-sand bg-white px-4 py-3 outline-none focus:border-terra" />
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium text-ink/70">Départ</label>
+              <input type="date" name="depart" class="w-full rounded-lg border border-sand bg-white px-4 py-3 outline-none focus:border-terra" />
+            </div>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium text-ink/70">Votre message</label>
+            <textarea name="message" rows="4" class="w-full rounded-lg border border-sand bg-white px-4 py-3 outline-none focus:border-terra" placeholder="Nombre de personnes, chambre souhaitée, questions…"></textarea>
+          </div>
+          <button type="submit" class="rounded-full bg-olive py-3.5 font-medium text-cream transition hover:bg-olive-dark">Envoyer ma demande</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="bg-olive-dark text-cream">
+    <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-3">
+      <div>
+        <p class="font-title text-2xl">Dar El Baraka</p>
+        <p class="mt-3 max-w-xs text-sm text-cream/70">Maison d'hôtes rurale au cœur de la campagne marocaine. Le luxe du simple, le goût du vrai.</p>
+      </div>
+      <div>
+        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-gold">Explorer</p>
+        <ul class="space-y-2 text-sm text-cream/75">
+          <li><a href="#maison" class="link-underline">La maison</a></li>
+          <li><a href="#chambres" class="link-underline">Chambres</a></li>
+          <li><a href="#experiences" class="link-underline">Expériences</a></li>
+          <li><a href="#tarifs" class="link-underline">Tarifs</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-gold">Nous suivre</p>
+        <div class="flex gap-4">
+          <a href="#" class="rounded-full border border-cream/30 p-2 transition hover:bg-cream/10" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="4"/><circle cx="10" cy="10" r="3.2"/><circle cx="14.2" cy="5.8" r=".9" fill="currentColor"/></svg>
+          </a>
+          <a href="#" class="rounded-full border border-cream/30 p-2 transition hover:bg-cream/10" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M13 22v-8h2.7l.4-3.1H13V8.9c0-.9.3-1.5 1.6-1.5H16V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.2V14H10v8h3z"/></svg>
+          </a>
+        </div>
+        <p class="mt-6 text-xs text-cream/50">© 2026 Dar El Baraka · Maquette — Voyages21 / Agence Web IA</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flottant -->
+  <a href="https://wa.me/212600000000" target="_blank" rel="noopener"
+     class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
+     aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.489-.955z"/></svg>
+  </a>
+
+  <script>
+    // Navbar : fond au scroll
+    const nav = document.querySelector('[data-nav]');
+    const logo = document.querySelector('[data-logo]');
+    const menuLinks = document.querySelectorAll('[data-menu] a:not(.bg-terra)');
+    function onScroll() {
+      const scrolled = window.scrollY > 40;
+      nav.classList.toggle('bg-cream/95', scrolled);
+      nav.classList.toggle('backdrop-blur', scrolled);
+      nav.classList.toggle('shadow-sm', scrolled);
+      logo.classList.toggle('text-olive', scrolled);
+      logo.classList.toggle('text-cream', !scrolled);
+      menuLinks.forEach(a => {
+        a.classList.toggle('text-ink', scrolled);
+        a.classList.toggle('text-cream', !scrolled);
+      });
+    }
+    window.addEventListener('scroll', onScroll); onScroll();
+
+    // Menu mobile
+    const burger = document.querySelector('[data-burger]');
+    const mobile = document.querySelector('[data-mobile]');
+    burger.addEventListener('click', () => mobile.classList.toggle('hidden'));
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobile.classList.add('hidden')));
+
+    // Apparition au scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
