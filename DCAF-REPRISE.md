@@ -18,6 +18,25 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v60 (15/07/2026) — IdSAB max (188/218) + slide « Par groupe » dans la présentation
+- **✅ Demande Karim** : « tous les ID doivent figurer » + « rafraîchir la présentation avec les données
+  des groupes et par groupe ».
+- **IdSAB** : porté de 177 → **188/218** en fusionnant TOUTES les sources (répertoire scan +
+  objet IDS interne + tableau LOOKUP de la recherche). `scratchpad/gvue3.json`. **Les 30 restants
+  n'ont AUCUN IdSAB dans aucune source fournie** (répertoire, IDS, LOOKUP tous vides) → affichés « — »
+  (hors répertoire officiel). **Non inventés** (règle confidentialité). Liste des 30 à compléter par
+  Karim depuis la colonne « id SAB » de l'Excel PNB : SUEZ INTERNATIONAL, SNL BITUME, SL PARTICIPATIONS,
+  LE PALAIS BERBERE, ATLAS SAHARA TREKS, SOCIETE D'INVESTISSEMENT MEKKA, ATLAS MAREE, STE INTERCONTINENTALE,
+  SONASTRAVO, PLACE DU MARCHE PRODUCTIONS, SOMITRA, FIOSEM SYSTEMS, LES DEUX TOURS, LES HOTELS NOUVELLE
+  GENERATION, ST MECAGRI ET TRAVAUX P, PROTEBAT, LE GROUPEMENT SOGECTA, NABAD, CITY TILES, IJIOUI TRAVAUX,
+  INGRE-HOSPITALITY, SOCIETE COMPLEXE SPORTIF, PERFECT WALLS, OUSNI RACHID, OURIKA PRESTIGE, APPLE GARDENS
+  TRAVEL, GROUPEMENT MOJAZINE, ACIERS ET MATERIAUX, DEPOMETAL, IMMOBILIERE MILANO.
+- **Présentation** : nouvelle **slide « Vue par groupe d'affaires »** (après « Risque de concentration »,
+  slide 16/19) : tableau top 7 groupes (Sociétés · CA consolidé · PNB · Engagement · Tx util.) — ZAHID,
+  ALSA, ROUANDI, PB/YSL, EL BAROUDI, SADEQ, CARTIER — + encarts « À retenir » (ALSA modèle 91 % captation ;
+  ZAHID 1er CA mais PNB négatif ; top 3 groupes = 34 % du PNB) et « Marges d'activation » (ROUANDI 36 %,
+  EL HARDA 55 %). Validé headless chiffré (0 err JS).
+
 ## L'appli — état v59 (15/07/2026) — 📋 Liste triable (IdSAB) dans la Vue 360
 - **✅ Demande Karim** : « rajoute l'IdSAB et fais une SEULE liste pour pouvoir classer par ordre
   décroissant le CA, le PNB, l'engagement, etc. ». Ajout d'une **bascule de vue** dans l'onglet
