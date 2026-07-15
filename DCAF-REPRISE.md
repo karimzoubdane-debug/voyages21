@@ -18,6 +18,24 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v64 (15/07/2026) — Onglet « Top 50/80 par rubrique » (noms + groupes) + Top 10 groupes
+- **✅ Demande Karim** : « coter le nom de la société ET son groupe dans le top 50/80 de chaque rubrique +
+  une vision sur le Top 10 des groupes ».
+- **Nouvel onglet `🏅 Top 50/80 & Groupes`** (menu Réviser, `p-top`) : pour **6 rubriques** (PNB, Engagements
+  autorisés, CA, Flux confiés, DAV, CMT), composition **nominative** jusqu'au seuil 80 % : # · Société · **Groupe** ·
+  Valeur · % · % cumulé. Bloc 50 % surligné, repères 50%/80%. Rubriques en `<details>` (impression : ouvrir).
+  Seuils : PNB 8/22 · ENG 5/16 · CA 8/18 · FLUX 8/20 · DAV 5/19 · CMT 1/3.
+- **Top 10 groupes** (par PNB) : ALSA, PB/YSL, EL BAROUDI, LAKHMIRI, CARTIER, SBAI, EL HARDA, ROUANDI, KABBADJ,
+  ROBBEZ MASSON — colonnes PNB · CA · Engagement · Flux · Captation.
+- **Cohérence des bases** : PNB Pareto & concentration réalignés sur la **base PNB net** (8 329 580) dans
+  Présentation dossier + Note de synthèse : Pareto **8/22** (au lieu de 9/26) ; concentration **top1 11,9 % ·
+  top3 30,8 % · top5 39,6 % · top10 57,1 %** (au lieu de 11,2/29,0/37,3/53,9 en base PNB positif). Tout est
+  désormais sur la même base nette.
+- Données : `scratchpad/pareto.json` (6 rubriques + top10, DAV/CMT extraits des tableaux de l'appli).
+- Validé headless chiffré : onglet OK, 22 lignes PNB, Top 10 OK, PDF 6 pages non vide, 0 err JS.
+- ⚠️ **Reste** : l'onglet **Concentration** (historique) affiche encore 10,6/27,5/37,4/53,5 (ancienne base
+  9,33 M) → à rafraîchir pour coller à 11,9/30,8/39,6/57,1.
+
 ## L'appli — état v63 (15/07/2026) — Présentation & Note de synthèse ENTIÈREMENT CHIFFRÉES
 - **✅ Demande Karim** : « il faut chiffrer TOUT propos, pas des expressions comme "quelque…" ; dire que le
   FDC est fait de CO1/CO2 tout le monde le sait — il faut les chiffres ». Réécriture des 2 onglets (Présentation
