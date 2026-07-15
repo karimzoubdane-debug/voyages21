@@ -18,6 +18,16 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v65 (15/07/2026) — Tout intégré dans la Présentation dossier (une seule page)
+- **✅ Demande Karim** : « une seule page, une seule vue, un seul endroit ». Le détail nominatif du top 50/80
+  (v64, onglet séparé `p-top`) est **intégré directement dans la Présentation dossier** (`p-pdos`), sous chaque
+  rubrique, via des volets `<details>` « ▸ Composition nominative (société + groupe) ». **Onglet séparé
+  « 🏅 Top 50/80 & Groupes » SUPPRIMÉ** (plus de doublon).
+- Rubriques avec détail nominatif intégré : **PNB (22 lignes), Engagements (16), CA (18), Flux (20), DAV (19),
+  CMT (3)** — chacune Société · Groupe · Valeur · % cumulé, bloc 50 % surligné. **Top 10 groupes** intégré en
+  bas de la section ① (PNB/CA/engagement/flux/captation).
+- Validé headless chiffré : 6 volets, Top 10, PDF 7 pages non vide, 0 err JS.
+
 ## L'appli — état v64 (15/07/2026) — Onglet « Top 50/80 par rubrique » (noms + groupes) + Top 10 groupes
 - **✅ Demande Karim** : « coter le nom de la société ET son groupe dans le top 50/80 de chaque rubrique +
   une vision sur le Top 10 des groupes ».
