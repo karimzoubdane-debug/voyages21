@@ -18,6 +18,19 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v61 (15/07/2026) — 2 onglets « Réviser » : Présentation dossier + Note de synthèse (plan-cible)
+- **✅ Demande Karim** : après validation du plan-cible (livré en Word `Plan-cible_DCAF_entretien.docx`),
+  intégrer dans le menu **Réviser** deux onglets dédiés reprenant le plan **sauf la Partie 4** (projet de
+  directeur, réservée à l'oral) : **📊 Présentation dossier** (`p-pdos`) et **📝 Note de synthèse** (`p-ndos`).
+- **Présentation dossier** : 3 sections (① Photographie — KPIs 218 clients/30 groupes/PNB 8,33 M/CA 10 443 M/
+  engagement 1 591 M util. 66 %/flux 3 756 M capt. 36 % + FDC, PNB, engagements, flux, vue groupe ;
+  ② Situation — scorecard 67,1 %, TRO, stock vs production, qualité risque, rendement ; ③ Diagnostic —
+  concentration −10,6/−27,5/−37,4/−53,5 %, opportunités, menaces). Bouton Imprimer/PDF.
+- **Note de synthèse** : même périmètre en prose (3 parties). Partie 4 explicitement exclue (oral).
+- **Plan-cible Word** = document de méthode SANS donnée client nominative (structure 4 temps + Annexe A
+  correspondance plan↔appli + Annexe B rappels fond & ton). Livré à Karim pour validation.
+- Validé headless chiffré (2 onglets ouvrent, chiffres présents, 0 err JS).
+
 ## L'appli — état v60 (15/07/2026) — IdSAB max (188/218) + slide « Par groupe » dans la présentation
 - **✅ Demande Karim** : « tous les ID doivent figurer » + « rafraîchir la présentation avec les données
   des groupes et par groupe ».
