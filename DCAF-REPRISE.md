@@ -18,6 +18,12 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v57 (14/07/2026) — Recherche société → groupe (N/C explicite)
+- **✅ Demande Karim** : « insérer le nom d'une société et avoir le groupe auquel elle appartient,
+  sinon N/C ». La recherche (en tête de 🏭 Par secteur) le faisait déjà (colonne Groupe) ; ajusté pour
+  afficher **« N/C » en clair** (au lieu de « — ») quand la société n'a aucun groupe, + libellé mis à jour.
+  Ex. Menara Real Estate → ZAHID ; Dushow Maroc → N/C. Validé headless (0 err JS).
+
 ## L'appli — état v56 (14/07/2026) — 🔴 Recontrôle complet des groupes (répertoire scan CamScanner) + IdSAB
 - **Karim a détecté des erreurs de rattachement** (« je trouve Jardin Majorelle dans le groupe de
   Jakubowicz »). Il a envoyé le **répertoire scanné (PDF CamScanner, 4 pages, net)** = source de vérité.
