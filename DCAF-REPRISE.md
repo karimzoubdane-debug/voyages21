@@ -18,6 +18,25 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v63 (15/07/2026) — Présentation & Note de synthèse ENTIÈREMENT CHIFFRÉES
+- **✅ Demande Karim** : « il faut chiffrer TOUT propos, pas des expressions comme "quelque…" ; dire que le
+  FDC est fait de CO1/CO2 tout le monde le sait — il faut les chiffres ». Réécriture des 2 onglets (Présentation
+  dossier + Note de synthèse) : chaque affirmation porte désormais un chiffre. Zéro « quelque / minorité / essentiel ».
+- **Chiffres injectés (calculés sur gvue3 + LOOKUP)** :
+  - Segments : CO2 41 cl./43,8 % · CO1 36/20,7 % · MC1 9/17,1 % · II 2/13,0 % → **4 segments = 94,6 % du PNB** (98 segmentés, 120 n.r.).
+  - RM : Elantry 88 cl./61,0 % PNB/eng 986 M/util 70 % · Talbi 67/26,6 %/447 M/61 % · Hajjani 61/12,4 %/158 M/47 %.
+  - Secteurs : Travaux publics 19,2 % · Transports 17,6 % · Ind. alim. 17,1 % · Services 15,1 % · Tourisme 9,1 % ·
+    **Promotion immo −5,6 % (−464 k, seul secteur négatif)**.
+  - PNB net 8,33 M · Pareto TOP50 = 9 cl., TOP80 = 26 cl. · 1 seul PNB négatif (Menara −502 259).
+  - Concentration (base PNB positif) : top1 11,2 % · top3 29,0 % · top5 37,3 % · top10 53,9 %.
+  - Engagements : 63 cl. engagés · aut 1 591 M · util 1 043 M (66 %) · **marge dormante 548 M (34 %)**.
+  - Captation 36 % · **sous-captés <50 % : 26 cl. = 6 951 M de CA** ; captation nulle 3 cl. = 650 M.
+  - Rendement apparent des emplois ≈ 0,80 % (8,33 M PNB / 1 043 M encours).
+- ⚠️ **À noter** : la concentration ici (11,2/29,0/37,3/53,9, base PNB positif corrigé) diffère de l'onglet
+  **Concentration** existant (10,6/27,5/37,4/53,5, base ANCIENNE 9,33 M pré-fix Menara) → **onglet Concentration
+  à rafraîchir** (proposé à Karim).
+- Validé headless chiffré : 0 terme vague, 405 chiffres (pdos), PDF 3 pages non vide, 0 err JS.
+
 ## L'appli — état v62 (15/07/2026) — Fix impression PDF vide (Présentation dossier + Note de synthèse)
 - **🐞 Bug signalé Karim** : « quand je veux imprimer le PDF est vide » sur les 2 nouveaux onglets.
 - **Cause** : la règle `@media print` globale de l'appli (pour le Mémo oral) masque TOUT sauf `#p-memo`
