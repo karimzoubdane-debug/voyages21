@@ -18,6 +18,21 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v66 (15/07/2026) — Présentation dossier : scorecard complet en ② + note PNB
+- **✅ Demande Karim** : que la Présentation traite TOUS les points du scorecard, en gardant la liste 50/80
+  déroulante au clic du titre.
+- **Section ② reconstruite en « Situation actuelle — Scorecard »** : tableaux **Ressources** (DAV 113 %,
+  DAT 158 % → Total 129 %), **Emplois** (Overdraft 103 %, Autre CT **85 % 🔴**, Factoring 114 % → Total CT 93 %,
+  CMT 169 %*, CPI 159 %*) et **Scorecard par segment** (CO2 50 %/MC1 22 %/CO1 15 %/II 10 %/MC2 2 %), avec
+  Objectif · Réalisé · TRO · vs N‑1. Lecture : **seul poste en retrait = Autre court terme (85 %)**.
+- **Dropdowns 50/80 (société + groupe) par rubrique scorecard** : DAV, Overdraft, Autre CT, Factoring, CMT
+  (données par client dispo). **DAT et CPI** : pas de détail client → mention. **DAV/CMT déplacés de ① vers ②**
+  (leur place scorecard, plus de doublon).
+- **Note PNB** (demande Karim) : écart PNB **scorecard 9,3 M vs net 8,33 M = prise en charge d'un PNB négatif**
+  (Menara Real Estate, −502 k).
+- Données OVD/CCT/FACT ajoutées à `scratchpad/pareto.json`. Validé headless chiffré : 9 dropdowns (4 en ① +
+  5 en ②), scorecard OK, PDF 8 pages non vide, 0 err JS.
+
 ## L'appli — état v65 (15/07/2026) — Tout intégré dans la Présentation dossier (une seule page)
 - **✅ Demande Karim** : « une seule page, une seule vue, un seul endroit ». Le détail nominatif du top 50/80
   (v64, onglet séparé `p-top`) est **intégré directement dans la Présentation dossier** (`p-pdos`), sous chaque
