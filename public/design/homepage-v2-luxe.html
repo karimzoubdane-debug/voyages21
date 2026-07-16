@@ -5823,19 +5823,39 @@
       const PROMO_KEY="v21_promo_omra_sept_seen";
       const overlay=document.getElementById("promoOverlay"),closeBtn=document.getElementById("promoClose");
       if(!overlay||sessionStorage.getItem(PROMO_KEY))return;
-      let armed=false,shown=false,scrollTimer=null,dismissArmed=false,dismissTimer=null;
+      let armed=false,shown=false,scrollTimer=null,lockY=0;
+      function lockPage(){
+        lockY=window.scrollY||window.pageYOffset||0;
+        document.documentElement.style.overflow="hidden";
+        document.body.style.overflow="hidden";
+        document.body.style.position="fixed";
+        document.body.style.top=(-lockY)+"px";
+        document.body.style.left="0";
+        document.body.style.right="0";
+        document.body.style.width="100%";
+      }
+      function unlockPage(){
+        document.documentElement.style.overflow="";
+        document.body.style.overflow="";
+        document.body.style.position="";
+        document.body.style.top="";
+        document.body.style.left="";
+        document.body.style.right="";
+        document.body.style.width="";
+        window.scrollTo(0,lockY);
+      }
       function openPromo(){
         if(shown)return;
         shown=true;
         detach();
+        lockPage();
         overlay.classList.add("show");
         requestAnimationFrame(()=>requestAnimationFrame(()=>overlay.classList.add("in")));
-        dismissTimer=setTimeout(armDismissOnScroll,400);
       }
       function closePromo(){
-        disarmDismissOnScroll();
         overlay.classList.remove("in");
         try{sessionStorage.setItem(PROMO_KEY,"1")}catch(e){}
+        unlockPage();
         setTimeout(()=>overlay.classList.remove("show"),300);
       }
       function onScrollStart(){
@@ -5856,22 +5876,7 @@
         window.removeEventListener("wheel",onScrollStart);
         window.removeEventListener("touchmove",onScrollStart);
       }
-      function armDismissOnScroll(){
-        if(dismissArmed)return;
-        dismissArmed=true;
-        window.addEventListener("scroll",closePromo,{passive:true});
-        window.addEventListener("wheel",closePromo,{passive:true});
-        window.addEventListener("touchmove",closePromo,{passive:true});
-      }
-      function disarmDismissOnScroll(){
-        dismissArmed=false;
-        clearTimeout(dismissTimer);
-        window.removeEventListener("scroll",closePromo);
-        window.removeEventListener("wheel",closePromo);
-        window.removeEventListener("touchmove",closePromo);
-      }
       closeBtn.addEventListener("click",closePromo);
-      overlay.addEventListener("click",e=>{if(e.target===overlay)closePromo()});
       attach();
     })();
   </script>
