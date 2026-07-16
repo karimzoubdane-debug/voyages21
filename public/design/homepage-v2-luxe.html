@@ -5823,15 +5823,17 @@
       const PROMO_KEY="v21_promo_omra_sept_seen";
       const overlay=document.getElementById("promoOverlay"),closeBtn=document.getElementById("promoClose");
       if(!overlay||sessionStorage.getItem(PROMO_KEY))return;
-      let armed=false,shown=false,scrollTimer=null;
+      let armed=false,shown=false,scrollTimer=null,dismissArmed=false,dismissTimer=null;
       function openPromo(){
         if(shown)return;
         shown=true;
         detach();
         overlay.classList.add("show");
         requestAnimationFrame(()=>requestAnimationFrame(()=>overlay.classList.add("in")));
+        dismissTimer=setTimeout(armDismissOnScroll,400);
       }
       function closePromo(){
+        disarmDismissOnScroll();
         overlay.classList.remove("in");
         try{sessionStorage.setItem(PROMO_KEY,"1")}catch(e){}
         setTimeout(()=>overlay.classList.remove("show"),300);
@@ -5853,6 +5855,20 @@
         window.removeEventListener("scroll",onScrollStart);
         window.removeEventListener("wheel",onScrollStart);
         window.removeEventListener("touchmove",onScrollStart);
+      }
+      function armDismissOnScroll(){
+        if(dismissArmed)return;
+        dismissArmed=true;
+        window.addEventListener("scroll",closePromo,{passive:true});
+        window.addEventListener("wheel",closePromo,{passive:true});
+        window.addEventListener("touchmove",closePromo,{passive:true});
+      }
+      function disarmDismissOnScroll(){
+        dismissArmed=false;
+        clearTimeout(dismissTimer);
+        window.removeEventListener("scroll",closePromo);
+        window.removeEventListener("wheel",closePromo);
+        window.removeEventListener("touchmove",closePromo);
       }
       closeBtn.addEventListener("click",closePromo);
       overlay.addEventListener("click",e=>{if(e.target===overlay)closePromo()});
