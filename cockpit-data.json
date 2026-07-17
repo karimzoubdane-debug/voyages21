@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "5.5",
-    "last_updated": "2026-07-06",
+    "last_updated": "2026-07-17",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
@@ -2392,6 +2392,85 @@
             "Fiche ajoutee",
             "Verifier affichage + mot-cle",
             "Supprimer apres validation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "cat": "marketing",
+      "status": "en_cours",
+      "title": "Studio Remotion (animations video par le code)",
+      "keyword": "VIDEO REMOTION",
+      "aliases": [
+        "REMOTION",
+        "REMOTION STUDIO",
+        "STUDIO VIDEO"
+      ],
+      "desc": "Depot dedie et isole du site : v21-remotion-studio. Studio d'animations video par le code avec Remotion (framework React pour la video). Sert a produire des intros de marque, des reels/shorts (9:16) et des videos web (16:9) sous forme de modeles reutilisables (on ne change que le texte/la photo). Contient un skill Claude Code 'remotion' qui se charge tout seul dans ce depot.",
+      "url": "https://github.com/karimzoubdane-debug/v21-remotion-studio",
+      "nextStep": "Coder le 1er modele social : Reel 'Destination du jour' (9:16, photo + zoom Ken Burns + nom destination + accroche), declinable en serie.",
+      "lastActions": [
+        {
+          "date": "2026-07-17",
+          "text": "Creation du depot dedie prive v21-remotion-studio + scaffold Remotion complet (React 19, TypeScript) : 3 compositions (HelloWorld, Voyages21Intro 16:9, Voyages21Intro-Vertical 9:16 aux couleurs V21)"
+        },
+        {
+          "date": "2026-07-17",
+          "text": "Ajout du skill Claude Code 'remotion' (.claude/skills/remotion/SKILL.md) + README ; rendu MP4 (180 frames) et PNG valides de bout en bout"
+        },
+        {
+          "date": "2026-07-17",
+          "text": "Fiche Cockpit creee avec mot-cle VIDEO REMOTION (reprise instantanee dans toute conversation)"
+        }
+      ],
+      "pending": [
+        "Par quel modele social commencer (Reel Destination / Carrousel 3 raisons / Avis client / Intro-outro) ?",
+        "Importer v21-remotion-studio dans Vercel/hebergement si diffusion web souhaitee ?",
+        "Rythme de production et qui publie (lien avec le projet VIDEO / Content Studio) ?"
+      ],
+      "lastReview": "2026-07-17",
+      "stack": "Remotion 4.0.490 · React 19 · TypeScript · Node 22 · depot v21-remotion-studio",
+      "livrables": [
+        {
+          "name": "Depot v21-remotion-studio (GitHub)",
+          "type": "GitHub",
+          "url": "https://github.com/karimzoubdane-debug/v21-remotion-studio"
+        },
+        {
+          "name": "Skill Remotion",
+          "type": "GitHub",
+          "url": "https://github.com/karimzoubdane-debug/v21-remotion-studio/blob/main/.claude/skills/remotion/SKILL.md"
+        }
+      ],
+      "phases": [
+        {
+          "name": "Mise en place",
+          "state": "done",
+          "items": [
+            "Depot dedie cree",
+            "Scaffold Remotion + 3 compositions",
+            "Skill remotion + README",
+            "Rendu MP4/PNG valide"
+          ]
+        },
+        {
+          "name": "Modeles sociaux",
+          "state": "in_progress",
+          "items": [
+            "Reel Destination du jour (9:16)",
+            "Carrousel 3 raisons",
+            "Video avis client",
+            "Intro/outro de marque"
+          ]
+        },
+        {
+          "name": "Production en serie",
+          "state": "todo",
+          "items": [
+            "Declinaisons quotidiennes",
+            "Diffusion Instagram/TikTok/YouTube",
+            "Mesure performance"
           ]
         }
       ]
