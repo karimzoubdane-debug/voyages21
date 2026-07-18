@@ -2412,7 +2412,7 @@
         "RELAIS CHINE",
         "CHENGDU"
       ],
-      "desc": "Pole dedie au marche chinois (Chine -> Maroc), dans un depot GitHub ISOLE (karimzoubdane-debug/v21-chine). Regroupe 3 sous-projets : (1) Site vitrine Hello China, (2) Relais Maroc / partenariat Chengdu News Travel (formulaire de succursale), (3) 3e projet a venir. La memoire detaillee vit dans v21-chine (REPRISE.md + cockpit-data.json).",
+      "desc": "Pole dedie au marche chinois (Chine -> Maroc), dans un depot GitHub ISOLE (karimzoubdane-debug/v21-chine). Regroupe : (1) Site vitrine Hello China, (2) Relais Maroc / partenariat Chengdu News Travel (formulaire de succursale), (3) Paiement / Encaissement Chine (fintech PingPong/XTransfer, Alipay+/WeChat via CMI, Office des Changes), (4) projet a venir. La memoire detaillee vit dans v21-chine (REPRISE.md + cockpit-data.json).",
       "url": "https://github.com/karimzoubdane-debug/v21-chine",
       "nextStep": "Deployer le site Hello China sur Vercel (import du repo v21-chine) + remplir le formulaire Chengdu (infos entite)",
       "lastActions": [
