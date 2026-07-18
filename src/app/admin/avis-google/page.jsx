@@ -46,6 +46,12 @@ export default function AvisGooglePage() {
   const [loginError, setLoginError] = useState('');
   const [busyLogin, setBusyLogin] = useState(false);
 
+  // Réinitialisation par code de secours (même mécanisme que /admin)
+  const [showReset, setShowReset] = useState(false);
+  const [recoveryCode, setRecoveryCode] = useState('');
+  const [resetPw, setResetPw] = useState('');
+  const [resetMsg, setResetMsg] = useState('');
+
   const [reviews, setReviews] = useState([]);
   const [counts, setCounts] = useState({});
   const [meta, setMeta] = useState({});
@@ -106,6 +112,29 @@ export default function AvisGooglePage() {
       setLoginError('Erreur réseau');
     } finally {
       setBusyLogin(false);
+    }
+  }
+
+  async function submitReset(e) {
+    e.preventDefault();
+    setResetMsg('Vérification…');
+    try {
+      const r = await fetch('/api/admin-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reset: true, recoveryCode, newPassword: resetPw }),
+      });
+      const d = await r.json();
+      if (d.ok) {
+        setResetMsg('✅ Mot de passe changé. Connectez-vous avec le nouveau.');
+        setRecoveryCode('');
+        setResetPw('');
+        setTimeout(() => { setShowReset(false); setResetMsg(''); }, 2500);
+      } else {
+        setResetMsg('❌ ' + (d.error || 'Échec'));
+      }
+    } catch {
+      setResetMsg('❌ Erreur réseau');
     }
   }
 
@@ -185,6 +214,42 @@ export default function AvisGooglePage() {
               {busyLogin ? '…' : 'Entrer'}
             </button>
           </form>
+
+          {!showReset ? (
+            <button
+              type="button"
+              onClick={() => { setShowReset(true); setLoginError(''); }}
+              style={{ background: 'none', border: 0, color: COLORS.gold, fontSize: '.82rem', marginTop: '.9rem', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
+            >
+              Mot de passe oublié ?
+            </button>
+          ) : (
+            <form onSubmit={submitReset} style={{ marginTop: '1.1rem', borderTop: `1px solid ${COLORS.line}`, paddingTop: '1rem' }}>
+              <div style={{ fontWeight: 700, color: COLORS.forest, fontSize: '.92rem', marginBottom: '.5rem' }}>Réinitialiser le mot de passe</div>
+              <input
+                type="text"
+                value={recoveryCode}
+                onChange={(e) => setRecoveryCode(e.target.value)}
+                placeholder="Code de secours"
+                style={input}
+              />
+              <input
+                type="password"
+                value={resetPw}
+                onChange={(e) => setResetPw(e.target.value)}
+                placeholder="Nouveau mot de passe"
+                style={{ ...input, marginTop: '.6rem' }}
+              />
+              {resetMsg ? <div style={{ fontSize: '.85rem', marginTop: '.6rem', color: COLORS.forest }}>{resetMsg}</div> : null}
+              <div style={{ display: 'flex', gap: '.5rem', marginTop: '.9rem' }}>
+                <button type="submit" style={{ ...btn, flex: 1 }}>Changer</button>
+                <button type="button" onClick={() => { setShowReset(false); setResetMsg(''); }} style={{ ...btn, background: 'transparent', color: COLORS.ink, border: `1px solid ${COLORS.line}` }}>Annuler</button>
+              </div>
+              <div style={{ fontSize: '.78rem', color: COLORS.muted, marginTop: '.7rem' }}>
+                Le code de secours est la valeur <code>V21_RECOVERY_CODE</code> définie dans Vercel.
+              </div>
+            </form>
+          )}
         </div>
       </Shell>
     );
