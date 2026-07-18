@@ -22,14 +22,13 @@ fiches `cockpit.html`, données `cockpit-data.json`, consignes `COCKPIT-INBOX.md
 HelloMorroco branche `codex/welcomechina-maroc-circuits`) — jamais y toucher depuis là-bas.
 
 ## 🎛️ Cockpit Projets — mémoire centrale (mot-clé « REVUE COCKPIT » / « COCKPIT »)
-Le **Cockpit** (appli PWA `public/cockpit.html`, en ligne sur
-`https://voyages21.vercel.app/cockpit.html`, données `cockpit-data.json` racine ;
-`cockpit-v4.html` = redirection) est la **mémoire de TOUS les projets de Karim** (site, Hajj, avis, B2B, HAYDEN 21, agence
+Le **Cockpit** (appli en ligne sur **`https://v21-cockpit.vercel.app`**, données
+`cockpit-data.json` du dépôt **`v21-cockpit`** ; toutes les anciennes adresses redirigent) est la **mémoire de TOUS les projets de Karim** (site, Hajj, avis, B2B, HAYDEN 21, agence
 web IA, devis, content-studio, V21 USA, ReelsApp, YouTube Monitor, sauvegarde…),
 360° par **catégorie** et par **statut** (publié / en cours / en suspens / planifié /
 terminé / abandonné), avec pour chaque projet son URL, ses **3 dernières actions** et
-ses **questions/décisions en attente**. Un cron (`.github/workflows/revue-cockpit.yml`)
-ouvre chaque soir (20:00 Maroc) une **Issue de rappel**. Dès que Karim écrit
+ses **questions/décisions en attente**. Un cron du dépôt **v21-cockpit**
+ouvre chaque soir (20:00 Maroc) une **Issue de rappel** là-bas. Dès que Karim écrit
 **« REVUE COCKPIT »** (ou « COCKPIT » seul), exécuter la procédure de `REVUE-COCKPIT.md`
 (collecter les évolutions du jour → mettre à jour `cockpit-data.json` → commit + PR →
 remonter les questions en attente). **Karim ne doit jamais réexpliquer ses projets :
@@ -70,7 +69,7 @@ Dès que Karim écrit **un de ces mots-clés** (même seul, au début d'une conv
 5. **Après chaque avancée**, mettre à jour la fiche (`lastActions`→garder les 3 plus récentes,
    `pending`, `status`, `nextStep`, `lastReview`) dans `cockpit-data.json` + PR.
 
-Table de correspondance (mot-clé → projet) — la **source de vérité** reste `cockpit-data.json` :
+Table de correspondance (mot-clé → projet) — la **source de vérité** reste `cockpit-data.json` **du dépôt v21-cockpit** (celui d'ici n'est qu'un pointeur) :
 
 | Mot-clé | Projet | | Mot-clé | Projet |
 |---|---|---|---|---|

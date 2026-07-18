@@ -18,6 +18,142 @@ d'affaires bancaire, ~60 candidats, contexte de fusion). Deux volets :
    DÉFINITION EXACTE d'un terme avant de dérouler — le corriger net là-dessus.
 2. **Appli d'analyse de portefeuille** (v39 en production) : page unique chiffrée.
 
+## L'appli — état v66 (15/07/2026) — Présentation dossier : scorecard complet en ② + note PNB
+- **✅ Demande Karim** : que la Présentation traite TOUS les points du scorecard, en gardant la liste 50/80
+  déroulante au clic du titre.
+- **Section ② reconstruite en « Situation actuelle — Scorecard »** : tableaux **Ressources** (DAV 113 %,
+  DAT 158 % → Total 129 %), **Emplois** (Overdraft 103 %, Autre CT **85 % 🔴**, Factoring 114 % → Total CT 93 %,
+  CMT 169 %*, CPI 159 %*) et **Scorecard par segment** (CO2 50 %/MC1 22 %/CO1 15 %/II 10 %/MC2 2 %), avec
+  Objectif · Réalisé · TRO · vs N‑1. Lecture : **seul poste en retrait = Autre court terme (85 %)**.
+- **Dropdowns 50/80 (société + groupe) par rubrique scorecard** : DAV, Overdraft, Autre CT, Factoring, CMT
+  (données par client dispo). **DAT et CPI** : pas de détail client → mention. **DAV/CMT déplacés de ① vers ②**
+  (leur place scorecard, plus de doublon).
+- **Note PNB** (demande Karim) : écart PNB **scorecard 9,3 M vs net 8,33 M = prise en charge d'un PNB négatif**
+  (Menara Real Estate, −502 k).
+- Données OVD/CCT/FACT ajoutées à `scratchpad/pareto.json`. Validé headless chiffré : 9 dropdowns (4 en ① +
+  5 en ②), scorecard OK, PDF 8 pages non vide, 0 err JS.
+
+## L'appli — état v65 (15/07/2026) — Tout intégré dans la Présentation dossier (une seule page)
+- **✅ Demande Karim** : « une seule page, une seule vue, un seul endroit ». Le détail nominatif du top 50/80
+  (v64, onglet séparé `p-top`) est **intégré directement dans la Présentation dossier** (`p-pdos`), sous chaque
+  rubrique, via des volets `<details>` « ▸ Composition nominative (société + groupe) ». **Onglet séparé
+  « 🏅 Top 50/80 & Groupes » SUPPRIMÉ** (plus de doublon).
+- Rubriques avec détail nominatif intégré : **PNB (22 lignes), Engagements (16), CA (18), Flux (20), DAV (19),
+  CMT (3)** — chacune Société · Groupe · Valeur · % cumulé, bloc 50 % surligné. **Top 10 groupes** intégré en
+  bas de la section ① (PNB/CA/engagement/flux/captation).
+- Validé headless chiffré : 6 volets, Top 10, PDF 7 pages non vide, 0 err JS.
+
+## L'appli — état v64 (15/07/2026) — Onglet « Top 50/80 par rubrique » (noms + groupes) + Top 10 groupes
+- **✅ Demande Karim** : « coter le nom de la société ET son groupe dans le top 50/80 de chaque rubrique +
+  une vision sur le Top 10 des groupes ».
+- **Nouvel onglet `🏅 Top 50/80 & Groupes`** (menu Réviser, `p-top`) : pour **6 rubriques** (PNB, Engagements
+  autorisés, CA, Flux confiés, DAV, CMT), composition **nominative** jusqu'au seuil 80 % : # · Société · **Groupe** ·
+  Valeur · % · % cumulé. Bloc 50 % surligné, repères 50%/80%. Rubriques en `<details>` (impression : ouvrir).
+  Seuils : PNB 8/22 · ENG 5/16 · CA 8/18 · FLUX 8/20 · DAV 5/19 · CMT 1/3.
+- **Top 10 groupes** (par PNB) : ALSA, PB/YSL, EL BAROUDI, LAKHMIRI, CARTIER, SBAI, EL HARDA, ROUANDI, KABBADJ,
+  ROBBEZ MASSON — colonnes PNB · CA · Engagement · Flux · Captation.
+- **Cohérence des bases** : PNB Pareto & concentration réalignés sur la **base PNB net** (8 329 580) dans
+  Présentation dossier + Note de synthèse : Pareto **8/22** (au lieu de 9/26) ; concentration **top1 11,9 % ·
+  top3 30,8 % · top5 39,6 % · top10 57,1 %** (au lieu de 11,2/29,0/37,3/53,9 en base PNB positif). Tout est
+  désormais sur la même base nette.
+- Données : `scratchpad/pareto.json` (6 rubriques + top10, DAV/CMT extraits des tableaux de l'appli).
+- Validé headless chiffré : onglet OK, 22 lignes PNB, Top 10 OK, PDF 6 pages non vide, 0 err JS.
+- ⚠️ **Reste** : l'onglet **Concentration** (historique) affiche encore 10,6/27,5/37,4/53,5 (ancienne base
+  9,33 M) → à rafraîchir pour coller à 11,9/30,8/39,6/57,1.
+
+## L'appli — état v63 (15/07/2026) — Présentation & Note de synthèse ENTIÈREMENT CHIFFRÉES
+- **✅ Demande Karim** : « il faut chiffrer TOUT propos, pas des expressions comme "quelque…" ; dire que le
+  FDC est fait de CO1/CO2 tout le monde le sait — il faut les chiffres ». Réécriture des 2 onglets (Présentation
+  dossier + Note de synthèse) : chaque affirmation porte désormais un chiffre. Zéro « quelque / minorité / essentiel ».
+- **Chiffres injectés (calculés sur gvue3 + LOOKUP)** :
+  - Segments : CO2 41 cl./43,8 % · CO1 36/20,7 % · MC1 9/17,1 % · II 2/13,0 % → **4 segments = 94,6 % du PNB** (98 segmentés, 120 n.r.).
+  - RM : Elantry 88 cl./61,0 % PNB/eng 986 M/util 70 % · Talbi 67/26,6 %/447 M/61 % · Hajjani 61/12,4 %/158 M/47 %.
+  - Secteurs : Travaux publics 19,2 % · Transports 17,6 % · Ind. alim. 17,1 % · Services 15,1 % · Tourisme 9,1 % ·
+    **Promotion immo −5,6 % (−464 k, seul secteur négatif)**.
+  - PNB net 8,33 M · Pareto TOP50 = 9 cl., TOP80 = 26 cl. · 1 seul PNB négatif (Menara −502 259).
+  - Concentration (base PNB positif) : top1 11,2 % · top3 29,0 % · top5 37,3 % · top10 53,9 %.
+  - Engagements : 63 cl. engagés · aut 1 591 M · util 1 043 M (66 %) · **marge dormante 548 M (34 %)**.
+  - Captation 36 % · **sous-captés <50 % : 26 cl. = 6 951 M de CA** ; captation nulle 3 cl. = 650 M.
+  - Rendement apparent des emplois ≈ 0,80 % (8,33 M PNB / 1 043 M encours).
+- ⚠️ **À noter** : la concentration ici (11,2/29,0/37,3/53,9, base PNB positif corrigé) diffère de l'onglet
+  **Concentration** existant (10,6/27,5/37,4/53,5, base ANCIENNE 9,33 M pré-fix Menara) → **onglet Concentration
+  à rafraîchir** (proposé à Karim).
+- Validé headless chiffré : 0 terme vague, 405 chiffres (pdos), PDF 3 pages non vide, 0 err JS.
+
+## L'appli — état v62 (15/07/2026) — Fix impression PDF vide (Présentation dossier + Note de synthèse)
+- **🐞 Bug signalé Karim** : « quand je veux imprimer le PDF est vide » sur les 2 nouveaux onglets.
+- **Cause** : la règle `@media print` globale de l'appli (pour le Mémo oral) masque TOUT sauf `#p-memo`
+  (`body *{visibility:hidden!important} #p-memo{visible}`) → impression blanche depuis tout autre onglet.
+- **Fix** : fonction `dcafPrint(id)` (ajoute une classe `pr-pdos`/`pr-ndos` sur `body`, imprime, retire au
+  `afterprint`) + règles `@media print` dédiées (guardées par la classe, `!important`, placées après la règle
+  globale pour gagner la cascade) qui révèlent le panneau ciblé, masquent le reste, cassent les ombres/bordures
+  et gèrent les sauts de page. Boutons « Imprimer / PDF » recâblés sur `dcafPrint`.
+- **Validé** : PDF généré headless (page chiffrée) = **2 pages, 2540 caractères, chiffres présents** (plus vide).
+- NB : les onglets Présentation/Note **du portefeuille** (existants) gardent l'ancien comportement d'impression
+  (hors périmètre de la demande) — à harmoniser plus tard si besoin.
+
+## L'appli — état v61 (15/07/2026) — 2 onglets « Réviser » : Présentation dossier + Note de synthèse (plan-cible)
+- **✅ Demande Karim** : après validation du plan-cible (livré en Word `Plan-cible_DCAF_entretien.docx`),
+  intégrer dans le menu **Réviser** deux onglets dédiés reprenant le plan **sauf la Partie 4** (projet de
+  directeur, réservée à l'oral) : **📊 Présentation dossier** (`p-pdos`) et **📝 Note de synthèse** (`p-ndos`).
+- **Présentation dossier** : 3 sections (① Photographie — KPIs 218 clients/30 groupes/PNB 8,33 M/CA 10 443 M/
+  engagement 1 591 M util. 66 %/flux 3 756 M capt. 36 % + FDC, PNB, engagements, flux, vue groupe ;
+  ② Situation — scorecard 67,1 %, TRO, stock vs production, qualité risque, rendement ; ③ Diagnostic —
+  concentration −10,6/−27,5/−37,4/−53,5 %, opportunités, menaces). Bouton Imprimer/PDF.
+- **Note de synthèse** : même périmètre en prose (3 parties). Partie 4 explicitement exclue (oral).
+- **Plan-cible Word** = document de méthode SANS donnée client nominative (structure 4 temps + Annexe A
+  correspondance plan↔appli + Annexe B rappels fond & ton). Livré à Karim pour validation.
+- Validé headless chiffré (2 onglets ouvrent, chiffres présents, 0 err JS).
+
+## L'appli — état v60 (15/07/2026) — IdSAB max (188/218) + slide « Par groupe » dans la présentation
+- **✅ Demande Karim** : « tous les ID doivent figurer » + « rafraîchir la présentation avec les données
+  des groupes et par groupe ».
+- **IdSAB** : porté de 177 → **188/218** en fusionnant TOUTES les sources (répertoire scan +
+  objet IDS interne + tableau LOOKUP de la recherche). `scratchpad/gvue3.json`. **Les 30 restants
+  n'ont AUCUN IdSAB dans aucune source fournie** (répertoire, IDS, LOOKUP tous vides) → affichés « — »
+  (hors répertoire officiel). **Non inventés** (règle confidentialité). Liste des 30 à compléter par
+  Karim depuis la colonne « id SAB » de l'Excel PNB : SUEZ INTERNATIONAL, SNL BITUME, SL PARTICIPATIONS,
+  LE PALAIS BERBERE, ATLAS SAHARA TREKS, SOCIETE D'INVESTISSEMENT MEKKA, ATLAS MAREE, STE INTERCONTINENTALE,
+  SONASTRAVO, PLACE DU MARCHE PRODUCTIONS, SOMITRA, FIOSEM SYSTEMS, LES DEUX TOURS, LES HOTELS NOUVELLE
+  GENERATION, ST MECAGRI ET TRAVAUX P, PROTEBAT, LE GROUPEMENT SOGECTA, NABAD, CITY TILES, IJIOUI TRAVAUX,
+  INGRE-HOSPITALITY, SOCIETE COMPLEXE SPORTIF, PERFECT WALLS, OUSNI RACHID, OURIKA PRESTIGE, APPLE GARDENS
+  TRAVEL, GROUPEMENT MOJAZINE, ACIERS ET MATERIAUX, DEPOMETAL, IMMOBILIERE MILANO.
+- **Présentation** : nouvelle **slide « Vue par groupe d'affaires »** (après « Risque de concentration »,
+  slide 16/19) : tableau top 7 groupes (Sociétés · CA consolidé · PNB · Engagement · Tx util.) — ZAHID,
+  ALSA, ROUANDI, PB/YSL, EL BAROUDI, SADEQ, CARTIER — + encarts « À retenir » (ALSA modèle 91 % captation ;
+  ZAHID 1er CA mais PNB négatif ; top 3 groupes = 34 % du PNB) et « Marges d'activation » (ROUANDI 36 %,
+  EL HARDA 55 %). Validé headless chiffré (0 err JS).
+
+## L'appli — état v59 (15/07/2026) — 📋 Liste triable (IdSAB) dans la Vue 360
+- **✅ Demande Karim** : « rajoute l'IdSAB et fais une SEULE liste pour pouvoir classer par ordre
+  décroissant le CA, le PNB, l'engagement, etc. ». Ajout d'une **bascule de vue** dans l'onglet
+  🧭 360 Groupe/Client : **🏢 Par groupe** (v58) / **📋 Liste triable**.
+- **Liste triable** = une seule liste plate de 218 clients, colonnes **IdSAB · Société · Groupe · Seg ·
+  RM · PNB · Engagement · Utilisation · CA · Flux confié · Capt. %**. **Clic sur un entête = tri
+  décroissant** (2ᵉ clic = croissant, flèche ▼/▲). Ligne TOTAL en pied (sticky). Nom + engagement
+  cliquables → détail des lignes de crédit (eng360).
+- **IdSAB** : 177/218 renseignés depuis le répertoire scanné (`scratchpad/gvue2.json`, jointure par
+  nom normalisé) ; « — » = société hors répertoire officiel. (Meilleure couverture que l'objet IDS
+  interne qui n'en couvrait que 90.)
+- Validé headless **chiffré** : 218 lignes, tri CA/PNB/IdSAB OK, totaux OK (PNB 8 329 580 · CA 10 443 M ·
+  Flux 3 756 M = 36 %), popups OK, **0 erreur JS**.
+
+## L'appli — état v58 (15/07/2026) — 🧭 Vue 360° Groupe / Client (CA consolidé · Flux confié)
+- **✅ Demande Karim** : « catégoriser les clients par groupe pour connaître le CA consolidé du groupe ;
+  un visuel groupé/client avec PNB, Engagement, CA, Flux confié (chiffres + %), Seg, RM ; clic sur
+  l'engagement total → popup détaillant les engagements ».
+- **Nouvel onglet** `🧭 360 Groupe/Client` (menu Analyse, à côté de Flux vs CA). Pour chaque groupe :
+  entête consolidé **CA · PNB · Engagement · Flux confié (valeur + %)**, triable (CA / Flux / PNB / Engagement),
+  N/C en fin de liste. Par société : **Seg · RM (chargé) · PNB · Engagement (clic → lignes de crédit via eng360)
+  · CA · Flux confié (valeur + %)**. Ligne CONSOLIDÉ en pied de tableau.
+- **Clic sur l'engagement total d'un groupe** (🔎) → popup : total autorisé / utilisation / taux + tableau
+  société par société (autorisé, utilisé, taux), chaque société cliquable vers le détail des lignes.
+- **Convention** : Flux confié société = captation crédit × CA ; Flux confié groupe = Σ flux ÷ Σ CA.
+  KPIs globaux : **30 groupes · CA consolidé 10 443 M · PNB 8 329 580 · Engagement 1 591 M · Flux confié 3 756 M (36 % du CA)**.
+  CA/flux affichés seulement pour les 55 sociétés dont le CA figure au dossier (« — » sinon).
+- Données : `scratchpad/gvue.json` (218 clients : nom, grp, seg, rm, pnb, aut, util, ca, capt, flux).
+  Validé headless **chiffré** (déverrouillage OK, 31 details = 30 groupes + N/C, popups OK, **0 erreur JS**).
+
 ## L'appli — état v57 (14/07/2026) — Recherche société → groupe (N/C explicite)
 - **✅ Demande Karim** : « insérer le nom d'une société et avoir le groupe auquel elle appartient,
   sinon N/C ». La recherche (en tête de 🏭 Par secteur) le faisait déjà (colonne Groupe) ; ajusté pour
