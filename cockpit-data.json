@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "5.5",
-    "last_updated": "2026-07-06",
+    "last_updated": "2026-07-18",
     "updated_by": "claude",
     "last_review": "2026-07-01",
     "review_time": "20:00 (Maroc)",
@@ -32,6 +32,10 @@
       {
         "key": "incoming",
         "label": "Incoming USA -> Maroc"
+      },
+      {
+        "key": "chine",
+        "label": "Chine -> Maroc"
       },
       {
         "key": "outils",
@@ -2392,6 +2396,70 @@
             "Fiche ajoutee",
             "Verifier affichage + mot-cle",
             "Supprimer apres validation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "cat": "chine",
+      "status": "en_cours",
+      "title": "Pole Chine (Chine -> Maroc)",
+      "keyword": "POLE CHINE",
+      "aliases": [
+        "CHINE",
+        "HELLO CHINA",
+        "RELAIS CHINE",
+        "CHENGDU"
+      ],
+      "desc": "Pole dedie au marche chinois (Chine -> Maroc), dans un depot GitHub ISOLE (karimzoubdane-debug/v21-chine). Regroupe 3 sous-projets : (1) Site vitrine Hello China, (2) Relais Maroc / partenariat Chengdu News Travel (formulaire de succursale), (3) 3e projet a venir. La memoire detaillee vit dans v21-chine (REPRISE.md + cockpit-data.json).",
+      "url": "https://github.com/karimzoubdane-debug/v21-chine",
+      "nextStep": "Deployer le site Hello China sur Vercel (import du repo v21-chine) + remplir le formulaire Chengdu (infos entite)",
+      "lastActions": [
+        {
+          "date": "2026-07-18",
+          "text": "Depot isole v21-chine cree et pousse (site Hello China + projet Chengdu + memoire du pole)"
+        },
+        {
+          "date": "2026-07-18",
+          "text": "Site Hello China verifie pret a deployer (asset WelcomeChina recupere, chemins corriges, WeChat conserve)"
+        },
+        {
+          "date": "2026-07-18",
+          "text": "Formulaire Chengdu traduit + liste des pieces a fournir etablie"
+        }
+      ],
+      "pending": [
+        "Deployer le site sur Vercel (manip cote Karim) ?",
+        "Rassembler les infos entite pour le formulaire Chengdu (ICE/RC, CIN, bilans 3 ans) ?",
+        "Definir l'objet du 3e projet du pole ?"
+      ],
+      "lastReview": "2026-07-18",
+      "stack": "Depot isole v21-chine - Site statique (HTML/JS/CSS) + Vercel - Partenariat B2B",
+      "livrables": [
+        {
+          "name": "Depot v21-chine (site Hello China + projet Chengdu + memoire)",
+          "state": "done"
+        }
+      ],
+      "phases": [
+        {
+          "name": "Mise en place du pole",
+          "state": "done",
+          "items": [
+            "Depot isole cree",
+            "Site Hello China recupere",
+            "Projet Chengdu ouvert",
+            "Memoire du pole (REPRISE + cockpit-data)"
+          ]
+        },
+        {
+          "name": "Mise en ligne & remplissage",
+          "state": "in_progress",
+          "items": [
+            "Deploiement Vercel Hello China",
+            "Remplissage formulaire Chengdu",
+            "Definition du 3e projet"
           ]
         }
       ]
