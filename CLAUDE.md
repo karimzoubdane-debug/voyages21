@@ -93,9 +93,11 @@ Table de correspondance (mot-clé → projet) — la **source de vérité** rest
 | `AVIS` / `GOOGLE MY BUSINESS` | Avis Google | | `SOCIAL SELLING` | Social selling |
 | `VEILLE CONCURRENTS` | Veille concurrents | | `VEILLE VIRALE` | Veille virale |
 | `CALENDRIER` | Calendrier éditorial | | `AUTOMATISATION` | Automatisation contenu + Chatbot |
+| `PÔLE CHINE` / `CHINE` | Pôle Chine → dépôt isolé `v21-chine` | | `HELLO CHINA` / `RELAIS CHINE` | Sous-projets du pôle Chine (`v21-chine`) |
 
 > Note : `www.voyages21.com` / `V21 USA` / `V21 STUDIO` gardent leurs procédures dédiées ci-dessous
 > (fichiers REPRISE), en plus de la fiche Cockpit. `REVUE COCKPIT` / `COCKPIT` seul = revue globale.
+> `PÔLE CHINE` / `CHINE` / `HELLO CHINA` / `RELAIS CHINE` / `CHENGDU` → dépôt **isolé** `v21-chine`.
 
 ## 🏦 Reprise « DCAF » (préparation entretien + appli portefeuille) — PROJET CLOISONNÉ & CONFIDENTIEL
 Dès que Karim écrit **« DCAF »** (même seul, ou « CAF MARRAKECH », ou « ENTRETIEN DCAF ») :
@@ -141,6 +143,25 @@ de Karim** avant d'agir. Mettre à jour `v21-usa/REPRISE.md` après chaque avanc
   contexte du site (`REPRISE-SITE.md` / « www.voyages21.com ») ni de l'outgoing
   (`content-studio/REPRISE.md` / « V21 STUDIO »). Aucune interférence entre les
   trois projets. Si Karim n'a pas tapé « V21 USA », ne pas ouvrir ce dossier.
+
+## 🇨🇳 Pôle CHINE (Chine → Maroc) — DÉPÔT ISOLÉ `karimzoubdane-debug/v21-chine`
+Dès que Karim écrit **« PÔLE CHINE »** (ou **« CHINE »**, **« HELLO CHINA »**,
+**« RELAIS CHINE »**, **« CHENGDU »**, même seul) : le pôle Chine vit dans son **dépôt
+GitHub isolé `v21-chine`** (déploiement Vercel dédié), PAS dans ce dépôt.
+1. Lire la mémoire du pôle dans **v21-chine** : `REPRISE.md` + `cockpit-data.json`
+   (et le dossier du projet concerné, ex. `projets/relais-chine-chengdu/`).
+2. Résumer en **3 lignes** (statut + dernière action + prochaine étape + en attente),
+   proposer la suite, **attendre le go**.
+3. Après chaque avancée : mettre à jour `v21-chine/REPRISE.md` + `cockpit-data.json`
+   (du dépôt v21-chine) + PR. Jamais de push direct sur `main`.
+- **Sous-projets** : ① Site **Hello China** (`hello-china/`, mot-clé `HELLO CHINA`) ·
+  ② **Relais Maroc / partenariat Chengdu News Travel** (`projets/relais-chine-chengdu/`,
+  mot-clé `RELAIS CHINE` / `CHENGDU`) · ③ 3ᵉ projet à venir.
+- **CLOISONNEMENT STRICT** : SÉPARÉ du site (`www.voyages21.com`), de l'incoming USA
+  (`V21 USA`) et du Studio (`V21 STUDIO`). Ne pas mélanger les contextes.
+- 🔎 Le Cockpit global de CE dépôt garde une **carte de suivi « Pôle Chine » (id 42,
+  catégorie `chine`)** qui pointe vers `v21-chine` — mais la **source de vérité** du
+  pôle reste le dépôt `v21-chine`.
 
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
