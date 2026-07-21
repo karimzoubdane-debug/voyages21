@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devis — Services digitaux agence</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #F6F7F4;
+    --sheet: #FFFFFF;
+    --ink: #20282B;
+    --muted: #64716F;
+    --faint: #8B9694;
+    --line: #E3E7E2;
+    --line-strong: #C9D0CA;
+    --accent: #0E6E63;
+    --accent-ink: #0A5049;
+    --accent-soft: #E9F3F0;
+    --ok: #2E7D46;
+    --ok-bg: #E8F3EA;
+    --pending: #A8690A;
+    --pending-bg: #FBF1DD;
+    --partial: #7A5EA8;
+    --partial-bg: #F0EBF8;
+    --input-bg: #F4F8F6;
+    --input-line: #9DBBB4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #131719;
+      --sheet: #1B2124;
+      --ink: #E8ECEA;
+      --muted: #97A4A1;
+      --faint: #77827F;
+      --line: #2C3437;
+      --line-strong: #3D4649;
+      --accent: #4FB8A9;
+      --accent-ink: #7ACCBF;
+      --accent-soft: #1E2E2B;
+      --ok: #6FBF85;
+      --ok-bg: #1E2F23;
+      --pending: #D9A050;
+      --pending-bg: #322817;
+      --partial: #AC96D6;
+      --partial-bg: #292234;
+      --input-bg: #212B2C;
+      --input-line: #4E6B65;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F6F7F4;
+    --sheet: #FFFFFF;
+    --ink: #20282B;
+    --muted: #64716F;
+    --faint: #8B9694;
+    --line: #E3E7E2;
+    --line-strong: #C9D0CA;
+    --accent: #0E6E63;
+    --accent-ink: #0A5049;
+    --accent-soft: #E9F3F0;
+    --ok: #2E7D46;
+    --ok-bg: #E8F3EA;
+    --pending: #A8690A;
+    --pending-bg: #FBF1DD;
+    --partial: #7A5EA8;
+    --partial-bg: #F0EBF8;
+    --input-bg: #F4F8F6;
+    --input-line: #9DBBB4;
+  }
+  :root[data-theme="dark"] {
+    --paper: #131719;
+    --sheet: #1B2124;
+    --ink: #E8ECEA;
+    --muted: #97A4A1;
+    --faint: #77827F;
+    --line: #2C3437;
+    --line-strong: #3D4649;
+    --accent: #4FB8A9;
+    --accent-ink: #7ACCBF;
+    --accent-soft: #1E2E2B;
+    --ok: #6FBF85;
+    --ok-bg: #1E2F23;
+    --pending: #D9A050;
+    --pending-bg: #322817;
+    --partial: #AC96D6;
+    --partial-bg: #292234;
+    --input-bg: #212B2C;
+    --input-line: #4E6B65;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 15px/1.55 "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── Toolbar (screen only) ─────────────────────────── */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .toolbar .hint { color: var(--muted); font-size: 13px; flex: 1 1 240px; }
+  .toolbar label { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .toolbar input[type="text"] {
+    width: 58px;
+    padding: 5px 7px;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--ink);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  button {
+    font: inherit;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    background: var(--sheet);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  :root[data-theme="dark"] button.primary, .dark-btn-fix { color: #fff; }
+  button:focus-visible, input:focus-visible, [contenteditable]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  /* ── Sheet ─────────────────────────────────────────── */
+  .sheet {
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 44px 48px 40px;
+  }
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 22px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .doc-title {
+    font-size: 34px;
+    font-weight: 300;
+    letter-spacing: 0.32em;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--accent-ink);
+  }
+  .doc-meta { margin-top: 10px; font-size: 13.5px; color: var(--muted); display: grid; gap: 2px; }
+  .doc-meta b { color: var(--ink); font-weight: 600; }
+
+  .party { font-size: 13.5px; max-width: 300px; }
+  .party .role {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .party .name { font-weight: 700; font-size: 15px; }
+  .parties {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 0 6px;
+  }
+
+  [contenteditable] {
+    border-bottom: 1px dashed var(--input-line);
+    min-width: 40px;
+    display: inline-block;
+    padding: 0 2px;
+  }
+  [contenteditable]:empty::before { content: attr(data-ph); color: var(--faint); }
+
+  /* ── Table ─────────────────────────────────────────── */
+  .table-scroll { overflow-x: auto; margin-top: 12px; }
+  table { border-collapse: collapse; width: 100%; min-width: 720px; }
+  thead th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1.5px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  thead th.num, tbody td.num { text-align: right; }
+  tbody td {
+    padding: 11px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    font-size: 14px;
+  }
+  td.idx { color: var(--faint); font-variant-numeric: tabular-nums; width: 26px; }
+  td.desig .t { font-weight: 600; }
+  td.desig .d { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 2px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge.ok { color: var(--ok); background: var(--ok-bg); }
+  .badge.pending { color: var(--pending); background: var(--pending-bg); }
+  .badge.partial { color: var(--partial); background: var(--partial-bg); }
+  .badge.new { color: var(--accent); background: var(--accent-soft); }
+
+  input.price {
+    width: 108px;
+    padding: 6px 8px;
+    border: none;
+    border-bottom: 1.5px dashed var(--input-line);
+    border-radius: 4px 4px 0 0;
+    background: var(--input-bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  input.price::placeholder { color: var(--faint); }
+
+  /* ── Totals ────────────────────────────────────────── */
+  .totals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 26px;
+  }
+  .total-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .total-card.accent { background: var(--accent-soft); border-color: transparent; }
+  .total-card h3 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .total-card .sub { font-size: 11px; color: var(--muted); text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .trow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    padding: 3px 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .trow .lbl { color: var(--muted); }
+  .trow.grand {
+    margin-top: 8px;
+    padding-top: 9px;
+    border-top: 1.5px solid var(--line-strong);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .trow.grand .lbl { color: var(--ink); }
+
+  /* ── Footer ────────────────────────────────────────── */
+  .conditions { margin-top: 30px; font-size: 12.5px; color: var(--muted); }
+  .conditions h4 {
+    margin: 0 0 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .signatures {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 34px;
+  }
+  .sig { flex: 1; font-size: 12.5px; color: var(--muted); }
+  .sig .line { border-bottom: 1px solid var(--line-strong); height: 58px; margin-top: 8px; }
+
+  /* ── Print ─────────────────────────────────────────── */
+  @media print {
+    :root, :root[data-theme="dark"] {
+      --paper: #fff; --sheet: #fff; --ink: #111;
+      --muted: #555; --faint: #888;
+      --line: #ddd; --line-strong: #aaa;
+      --accent: #0E6E63; --accent-ink: #0A5049; --accent-soft: #f0f5f3;
+      --ok: #2E7D46; --ok-bg: #eef5ef;
+      --pending: #A8690A; --pending-bg: #faf3e3;
+      --partial: #7A5EA8; --partial-bg: #f2eefa;
+      --input-bg: transparent; --input-line: transparent;
+    }
+    .toolbar { display: none; }
+    .wrap { padding: 0; max-width: none; }
+    .sheet { border: none; border-radius: 0; padding: 0; }
+    input.price { border-bottom-color: #bbb; }
+    [contenteditable] { border-bottom: none; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="toolbar" role="toolbar" aria-label="Outils du devis">
+    <span class="hint">Saisissez vos prix HT — la TVA, le TTC et les totaux se calculent automatiquement. Vos saisies sont enregistrées dans ce navigateur.</span>
+    <label>TVA&nbsp;% <input type="text" id="tva-rate" value="20" inputmode="decimal" aria-label="Taux de TVA en pourcentage"></label>
+    <button type="button" id="btn-reset">Effacer les prix</button>
+    <button type="button" class="primary" id="btn-print">Imprimer / PDF</button>
+  </div>
+
+  <div class="sheet">
+    <header class="masthead">
+      <div class="party">
+        <div class="role">Prestataire</div>
+        <div class="name" contenteditable="true" data-key="p-name" data-ph="Nom de votre société"></div>
+        <div contenteditable="true" data-key="p-addr" data-ph="Adresse"></div>
+        <div contenteditable="true" data-key="p-ice" data-ph="ICE / IF / RC"></div>
+        <div contenteditable="true" data-key="p-tel" data-ph="Tél. / e-mail"></div>
+      </div>
+      <div style="text-align:right">
+        <h1 class="doc-title">DEVIS</h1>
+        <div class="doc-meta">
+          <span><b>N°</b> <span contenteditable="true" data-key="num" data-ph="DEV-2026-001">DEV-2026-001</span></span>
+          <span><b>Date</b> <span contenteditable="true" data-key="date">20/07/2026</span></span>
+          <span><b>Validité</b> <span contenteditable="true" data-key="valid">30 jours</span></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="parties">
+      <div class="party">
+        <div class="role">Client</div>
+        <div class="name" contenteditable="true" data-key="c-name" data-ph="Agence de voyages — nom"></div>
+        <div contenteditable="true" data-key="c-addr" data-ph="Adresse"></div>
+        <div contenteditable="true" data-key="c-ice" data-ph="ICE / IF / RC"></div>
+      </div>
+      <div class="party" style="text-align:right">
+        <div class="role">Objet</div>
+        <div>Développement du site, services digitaux,<br>community management &amp; outils métier</div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table aria-label="Détail des prestations">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Désignation</th>
+            <th>Statut</th>
+            <th class="num">Forfait HT (unique)</th>
+            <th class="num">SAV mensuel HT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="idx">1</td>
+            <td class="desig">
+              <div class="t">Développement du site web — forfait complet, toutes options</div>
+              <div class="d">Développement et livraison du site (démarré il y a 2 mois) + SAV</div>
+            </td>
+            <td><span class="badge ok">Livré</span></td>
+            <td class="num"><input class="price" data-key="f1" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 1"></td>
+            <td class="num"><input class="price" data-key="s1" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 1"></td>
+          </tr>
+          <tr>
+            <td class="idx">2</td>
+            <td class="desig">
+              <div class="t">Administration de la médiathèque du site</div>
+              <div class="d">Gestion et organisation de la médiathèque + SAV</div>
+            </td>
+            <td><span class="badge ok">Livré</span></td>
+            <td class="num"><input class="price" data-key="f2" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 2"></td>
+            <td class="num"><input class="price" data-key="s2" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 2"></td>
+          </tr>
+          <tr>
+            <td class="idx">3</td>
+            <td class="desig">
+              <div class="t">Questionnaire &amp; gestionnaire d'avis Google</div>
+              <div class="d">Mise en place du questionnaire et de l'outil de gestion des avis</div>
+            </td>
+            <td><span class="badge ok">Livré</span></td>
+            <td class="num"><input class="price" data-key="f3" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 3"></td>
+            <td class="num"><input class="price" data-key="s3" inputmode="decimal" placeholder="—" aria-label="SAV mensuel HT ligne 3"></td>
+          </tr>
+          <tr>
+            <td class="idx">4</td>
+            <td class="desig">
+              <div class="t">Répondeur automatique des avis</div>
+              <div class="d">Réponses automatiques aux avis clients + SAV</div>
+            </td>
+            <td><span class="badge pending">En cours</span></td>
+            <td class="num"><input class="price" data-key="f4" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 4"></td>
+            <td class="num"><input class="price" data-key="s4" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 4"></td>
+          </tr>
+          <tr>
+            <td class="idx">5</td>
+            <td class="desig">
+              <div class="t">Création de réels — Meta, TikTok, Snapchat</div>
+              <div class="d">1ᵉʳ réel « Haj » livré — prix forfaitaire ou par réel à préciser</div>
+            </td>
+            <td><span class="badge partial">1ᵉʳ réel livré</span></td>
+            <td class="num"><input class="price" data-key="f5" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 5"></td>
+            <td class="num"><input class="price" data-key="s5" inputmode="decimal" placeholder="—" aria-label="SAV mensuel HT ligne 5"></td>
+          </tr>
+          <tr>
+            <td class="idx">6</td>
+            <td class="desig">
+              <div class="t">Planning éditorial &amp; gestion des Ads</div>
+              <div class="d">Planning des publications 15 jours à l'avance, gestion des ads Google Reviews &amp; Meta, suivi du diagnostic</div>
+            </td>
+            <td><span class="badge ok">Livré</span></td>
+            <td class="num"><input class="price" data-key="f6" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 6"></td>
+            <td class="num"><input class="price" data-key="s6" inputmode="decimal" placeholder="—" aria-label="SAV mensuel HT ligne 6"></td>
+          </tr>
+          <tr>
+            <td class="idx">7</td>
+            <td class="desig">
+              <div class="t">Génération d'avatars + animation</div>
+              <div class="d">Création d'avatars (forfait) + SAV animation</div>
+            </td>
+            <td><span class="badge pending">En cours</span></td>
+            <td class="num"><input class="price" data-key="f7" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 7"></td>
+            <td class="num"><input class="price" data-key="s7" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 7"></td>
+          </tr>
+          <tr>
+            <td class="idx">8</td>
+            <td class="desig">
+              <div class="t">Application de veille concurrence &amp; tendances</div>
+              <div class="d">Veille concurrentielle et nouvelles tendances (forfait livré) + SAV avec rapports et propositions</div>
+            </td>
+            <td><span class="badge partial">Forfait livré</span></td>
+            <td class="num"><input class="price" data-key="f8" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 8"></td>
+            <td class="num"><input class="price" data-key="s8" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 8"></td>
+          </tr>
+          <tr>
+            <td class="idx">9</td>
+            <td class="desig">
+              <div class="t">Contacts, publications directes clients, scraping &amp; CRM</div>
+              <div class="d">Configuration des contacts téléphoniques des salariés de l'agence, gestion des publications directes aux clients, scraping web, WhatsApp, CRM</div>
+            </td>
+            <td><span class="badge pending">En cours</span></td>
+            <td class="num"><input class="price" data-key="f9" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 9"></td>
+            <td class="num"><input class="price" data-key="s9" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 9"></td>
+          </tr>
+          <tr>
+            <td class="idx">10</td>
+            <td class="desig">
+              <div class="t">Création de brochures</div>
+              <div class="d">Conception et création de brochures commerciales pour l'agence (print et digital)</div>
+            </td>
+            <td><span class="badge new">Nouveau</span></td>
+            <td class="num"><input class="price" data-key="f10" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 10"></td>
+            <td class="num"><input class="price" data-key="s10" inputmode="decimal" placeholder="—" aria-label="SAV mensuel HT ligne 10"></td>
+          </tr>
+          <tr>
+            <td class="idx">11</td>
+            <td class="desig">
+              <div class="t">Projet site type « GetYourGuide »</div>
+              <div class="d">Plateforme de réservation d'activités et d'excursions similaire à GetYourGuide — projet mené avec Nrdine</div>
+            </td>
+            <td><span class="badge new">Projet</span></td>
+            <td class="num"><input class="price" data-key="f11" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 11"></td>
+            <td class="num"><input class="price" data-key="s11" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 11"></td>
+          </tr>
+          <tr>
+            <td class="idx">12</td>
+            <td class="desig">
+              <div class="t">Comptabilité experte et autonome</div>
+              <div class="d">Mise en place d'une tenue de comptabilité experte et autonome (forfait) + SAV mensuel</div>
+            </td>
+            <td><span class="badge new">Nouveau</span></td>
+            <td class="num"><input class="price" data-key="f12" inputmode="decimal" placeholder="0,00" aria-label="Forfait HT ligne 12"></td>
+            <td class="num"><input class="price" data-key="s12" inputmode="decimal" placeholder="0,00" aria-label="SAV mensuel HT ligne 12"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="totals">
+      <div class="total-card">
+        <h3>Forfaits <span class="sub">— paiement unique</span></h3>
+        <div class="trow"><span class="lbl">Total HT</span><span id="tf-ht">0,00 DH</span></div>
+        <div class="trow"><span class="lbl">TVA (<span class="tva-lbl">20</span>&nbsp;%)</span><span id="tf-tva">0,00 DH</span></div>
+        <div class="trow grand"><span class="lbl">Total TTC</span><span id="tf-ttc">0,00 DH</span></div>
+      </div>
+      <div class="total-card accent">
+        <h3>SAV / Abonnement <span class="sub">— par mois</span></h3>
+        <div class="trow"><span class="lbl">Total HT</span><span id="ts-ht">0,00 DH</span></div>
+        <div class="trow"><span class="lbl">TVA (<span class="tva-lbl">20</span>&nbsp;%)</span><span id="ts-tva">0,00 DH</span></div>
+        <div class="trow grand"><span class="lbl">Total TTC / mois</span><span id="ts-ttc">0,00 DH</span></div>
+      </div>
+    </div>
+
+    <div class="conditions">
+      <h4>Conditions</h4>
+      <div contenteditable="true" data-key="cond">Devis valable 30 jours. Prix exprimés en dirhams (DH), TVA 20&nbsp;%. Le SAV mensuel est facturé au début de chaque mois. Modalités de paiement à convenir&nbsp;: acompte à la commande, solde à la livraison.</div>
+    </div>
+
+    <div class="signatures">
+      <div class="sig">Le prestataire<div class="line"></div></div>
+      <div class="sig">Le client — « Bon pour accord »<div class="line"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var STORE = 'devis-agence-v1';
+  var fmt = new Intl.NumberFormat('fr-MA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function parseNum(v) {
+    if (!v) return 0;
+    var s = String(v).replace(/[\s\u00A0\u202F]/g, '');
+    var lastComma = s.lastIndexOf(',');
+    var lastDot = s.lastIndexOf('.');
+    if (lastComma > -1 && lastDot > -1) {
+      // Les deux separateurs presents : le dernier est la decimale
+      if (lastComma > lastDot) {
+        s = s.replace(/\./g, '').replace(/,/g, '.');
+      } else {
+        s = s.replace(/,/g, '');
+      }
+    } else if (lastComma > -1 || lastDot > -1) {
+      var sep = lastComma > -1 ? ',' : '.';
+      var pos = lastComma > -1 ? lastComma : lastDot;
+      var digitsAfter = s.length - pos - 1;
+      var count = s.split(sep).length - 1;
+      if (count > 1 || digitsAfter === 3) {
+        // "10.000", "10,000", "1.234.567" : separateur de milliers
+        s = s.split(sep).join('');
+      } else {
+        s = s.replace(sep, '.');
+      }
+    }
+    var n = parseFloat(s);
+    return isNaN(n) ? 0 : n;
+  }
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
+  }
+  function save(data) {
+    try { localStorage.setItem(STORE, JSON.stringify(data)); } catch (e) {}
+  }
+
+  var data = load();
+  var prices = Array.prototype.slice.call(document.querySelectorAll('input.price'));
+  var editables = Array.prototype.slice.call(document.querySelectorAll('[contenteditable][data-key]'));
+  var tvaInput = document.getElementById('tva-rate');
+
+  prices.forEach(function (inp) {
+    if (data[inp.dataset.key] != null) inp.value = data[inp.dataset.key];
+  });
+  editables.forEach(function (el) {
+    if (data[el.dataset.key] != null) el.textContent = data[el.dataset.key];
+  });
+  if (data['tva'] != null) tvaInput.value = data['tva'];
+
+  function compute() {
+    var rate = parseNum(tvaInput.value) / 100;
+    var sumF = 0, sumS = 0;
+    prices.forEach(function (inp) {
+      var n = parseNum(inp.value);
+      if (inp.dataset.key.charAt(0) === 'f') sumF += n; else sumS += n;
+    });
+    document.getElementById('tf-ht').textContent = fmt.format(sumF) + ' DH';
+    document.getElementById('tf-tva').textContent = fmt.format(sumF * rate) + ' DH';
+    document.getElementById('tf-ttc').textContent = fmt.format(sumF * (1 + rate)) + ' DH';
+    document.getElementById('ts-ht').textContent = fmt.format(sumS) + ' DH';
+    document.getElementById('ts-tva').textContent = fmt.format(sumS * rate) + ' DH';
+    document.getElementById('ts-ttc').textContent = fmt.format(sumS * (1 + rate)) + ' DH';
+    Array.prototype.forEach.call(document.querySelectorAll('.tva-lbl'), function (el) {
+      el.textContent = tvaInput.value;
+    });
+  }
+
+  function persist() {
+    var d = {};
+    prices.forEach(function (inp) { if (inp.value) d[inp.dataset.key] = inp.value; });
+    editables.forEach(function (el) {
+      var t = el.textContent.trim();
+      if (t) d[el.dataset.key] = t;
+    });
+    d['tva'] = tvaInput.value;
+    save(d);
+  }
+
+  prices.forEach(function (inp) {
+    inp.addEventListener('input', function () { compute(); persist(); });
+    inp.addEventListener('blur', function () {
+      var n = parseNum(inp.value);
+      if (inp.value.trim() !== '') inp.value = fmt.format(n);
+      compute(); persist();
+    });
+  });
+  tvaInput.addEventListener('input', function () { compute(); persist(); });
+  editables.forEach(function (el) {
+    el.addEventListener('input', persist);
+  });
+
+  document.getElementById('btn-print').addEventListener('click', function () { window.print(); });
+  document.getElementById('btn-reset').addEventListener('click', function () {
+    prices.forEach(function (inp) { inp.value = ''; });
+    compute(); persist();
+  });
+
+  compute();
+})();
+</script>
+</body>
+</html>
