@@ -163,6 +163,13 @@ GitHub isolé `v21-chine`** (déploiement Vercel dédié), PAS dans ce dépôt.
   catégorie `chine`)** qui pointe vers `v21-chine` — mais la **source de vérité** du
   pôle reste le dépôt `v21-chine`.
 
+## 🥇 Règle d'or des installations (règle permanente)
+Quand Claude installe ou met en place quelque chose pour Karim (outil, skill,
+dépendance, connecteur, configuration…) : **TOUJOURS procéder étape par étape** —
+une étape = **une seule ligne** en langage simple, exécuter l'étape, montrer le
+résultat, puis **ATTENDRE le « go » de Karim** avant de passer à l'étape suivante.
+Jamais plusieurs étapes d'un coup, jamais de jargon, jamais sans son accord.
+
 ## Identité
 - **Projet** : Site web Voyages21 — agence de voyages sur mesure au Maroc depuis 2000
 - **Fondateur** : Karim Zoubdane
