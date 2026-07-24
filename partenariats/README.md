@@ -11,6 +11,9 @@
 > comptable** au Maroc (licence agence de voyages, régime des commissions, TVA,
 > Office des Changes si flux internationaux).
 
+> 🗺️ **Feuille de route & état d'avancement** : `partenariats/FEUILLE-DE-ROUTE.md`
+> (plan d'action par phases + cases à cocher + barre d'avancement).
+
 Ce dossier réunit **deux volets complémentaires** :
 
 ## 🅰️ Volet A — Dossier stratégique « Apporteur d'affaires »
