@@ -22,6 +22,7 @@ Ce dossier réunit **deux volets complémentaires** :
 | Document | Adresse | Objet |
 |---|---|---|
 | Dossier stratégique apporteur | `partenariats/dossier/DOSSIER-STRATEGIQUE-APPORTEUR.md` | Modèle, flux d'argent, facturation, contrôle des clients apportés |
+| Animation commerciale & avantages | `partenariats/dossier/ANIMATION-COMMERCIALE.md` | Avantages par gamme (catalogue), clause données conforme, code DA21, qui signe, outils de suivi/relance |
 
 **Question clé traitée** : qui encaisse, qui facture quoi, comment fixer et sécuriser
 vos commissions, comment tracer les clients que vous apportez.
