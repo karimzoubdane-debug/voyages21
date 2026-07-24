@@ -1,0 +1,28 @@
+# 🔁 REPRISE — Dossier Partenariats & Apport d'affaires
+
+> Tapez **`PARTENAIRES`** pour reprendre. Mettre à jour ce fichier après chaque avancée.
+
+## Où on en est (dernière mise à jour : 2026-07-24)
+- **Dernière action** : création du dossier `partenariats/` (2 volets) + 6 documents
+  (dossier stratégique apporteur + 4 modèles de contrats/conventions + grilles) — PR ouverte.
+- **Décidé** : modèle « l'agence encaisse et commissionne l'apporteur » (l'apporteur
+  n'encaisse pas les ventes de voyage — pas de licence agence). Contrat = *apporteur
+  d'affaires* (pas agent commercial). Commission sur **marge** (sur-mesure) ou **CA** (volume).
+- **Prochaine étape proposée** : (1) choisir la base de commission (marge vs CA) et les
+  taux réels ; (2) convertir les modèles en Word/PDF signables aux couleurs Voyages21 ;
+  (3) brancher le suivi des apports (Rewardful / HubSpot déjà dans le stack B2B).
+
+## En attente / décisions
+- [ ] Base de commission retenue : **% marge nette** ou **% CA** ? Taux ?
+- [ ] Durée de rattachement d'un client apporté (12 / 24 / 36 mois ?)
+- [ ] Statut de Karim pour facturer l'agence (auto-entrepreneur / société ?)
+- [ ] Validation avocat + comptable (licence, TVA, Office des Changes)
+- [ ] Générer les versions Word/PDF signables
+
+## Structure du dossier
+- `README.md` — index + adresses
+- `dossier/DOSSIER-STRATEGIQUE-APPORTEUR.md` — Volet A
+- `contrats/CONTRAT-APPORTEUR-AFFAIRES.md` — Volet B
+- `contrats/CONVENTION-PARTENARIAT.md` — Volet B
+- `contrats/CONTRAT-CADRE.md` — Volet B
+- `contrats/GRILLE-COMMISSIONS-ET-AVANTAGES.md` — Volet B
