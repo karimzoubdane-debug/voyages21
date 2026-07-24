@@ -3,8 +3,11 @@
 > Tapez **`PARTENAIRES`** pour reprendre. Mettre à jour ce fichier après chaque avancée.
 
 ## Où on en est (dernière mise à jour : 2026-07-24)
-- **Dernière action** : création du dossier `partenariats/` (2 volets) + 6 documents
-  (dossier stratégique apporteur + 4 modèles de contrats/conventions + grilles) — PR ouverte.
+- **Dernière action** : dossier `partenariats/` créé et **fusionné sur main** (PR #227) ;
+  fiche Cockpit #21 mise à jour (PR #74 fusionnée). Puis **consolidation** : la grille de
+  commissions est désormais **intégrée en Annexe 1 du contrat d'apporteur** (self-contained) ;
+  le fichier grille restant ne couvre plus que les **avantages** des conventions
+  (`GRILLE-AVANTAGES-PARTENAIRES.md`).
 - **Décidé** : modèle « l'agence encaisse et commissionne l'apporteur » (l'apporteur
   n'encaisse pas les ventes de voyage — pas de licence agence). Contrat = *apporteur
   d'affaires* (pas agent commercial). Commission sur **marge** (sur-mesure) ou **CA** (volume).
@@ -22,7 +25,7 @@
 ## Structure du dossier
 - `README.md` — index + adresses
 - `dossier/DOSSIER-STRATEGIQUE-APPORTEUR.md` — Volet A
-- `contrats/CONTRAT-APPORTEUR-AFFAIRES.md` — Volet B
+- `contrats/CONTRAT-APPORTEUR-AFFAIRES.md` — Volet B (grille commissions en Annexe 1)
 - `contrats/CONVENTION-PARTENARIAT.md` — Volet B
 - `contrats/CONTRAT-CADRE.md` — Volet B
-- `contrats/GRILLE-COMMISSIONS-ET-AVANTAGES.md` — Volet B
+- `contrats/GRILLE-AVANTAGES-PARTENAIRES.md` — Volet B (avantages membres + contrepartie)

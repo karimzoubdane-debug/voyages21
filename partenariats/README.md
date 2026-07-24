@@ -25,10 +25,10 @@ vos commissions, comment tracer les clients que vous apportez.
 
 | Document | Adresse | Sert à |
 |---|---|---|
-| Contrat d'apporteur d'affaires | `partenariats/contrats/CONTRAT-APPORTEUR-AFFAIRES.md` | Vous lier à l'agence (rémunération + protection) |
+| Contrat d'apporteur d'affaires | `partenariats/contrats/CONTRAT-APPORTEUR-AFFAIRES.md` | Vous lier à l'agence (rémunération + protection) — **grille de commissions intégrée en Annexe 1** |
 | Convention de partenariat | `partenariats/contrats/CONVENTION-PARTENARIAT.md` | Lier l'agence à une entreprise / association |
 | Contrat-cadre B2B | `partenariats/contrats/CONTRAT-CADRE.md` | Relation récurrente / pluriannuelle (volume, MICE) |
-| Grille commissions & avantages | `partenariats/contrats/GRILLE-COMMISSIONS-ET-AVANTAGES.md` | Barèmes chiffrés (vos commissions + avantages membres) |
+| Grille d'avantages partenaires | `partenariats/contrats/GRILLE-AVANTAGES-PARTENAIRES.md` | Barèmes des avantages membres + contrepartie (annexe des conventions) |
 
 ## 🔗 Adresses en ligne (après fusion de la PR)
 - Site — page Partenaires : https://www.voyages21.com/partenaires
