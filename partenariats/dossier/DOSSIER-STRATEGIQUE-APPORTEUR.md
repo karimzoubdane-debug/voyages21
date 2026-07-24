@@ -69,7 +69,7 @@ Simple à calculer, adapté aux produits packagés à marge stable.
 - **Annulation / remboursement client** : la commission suit le sort de la vente
   (au prorata de ce qui reste effectivement encaissé).
 
-*(Barèmes chiffrés détaillés : `../contrats/GRILLE-COMMISSIONS-ET-AVANTAGES.md`)*
+*(Barèmes chiffrés détaillés : Annexe 1 du `../contrats/CONTRAT-APPORTEUR-AFFAIRES.md`)*
 
 ---
 

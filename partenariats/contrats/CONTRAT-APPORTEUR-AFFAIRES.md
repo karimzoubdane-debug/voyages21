@@ -115,5 +115,37 @@ tout litige relève des tribunaux compétents de **`[ville]`**.
 | Signature + cachet | Signature |
 
 ---
-**Annexe 1** — Grille de commissions (voir `GRILLE-COMMISSIONS-ET-AVANTAGES.md`).
-**Annexe 2** — Modèle de fiche d'apport (nom du client, date, code apporteur).
+
+## Annexe 1 — Grille de commissions de l'Apporteur
+> Valeurs indicatives à valider (Karim + comptable). Retenir **une seule** base (4.1).
+
+### Option 1 — % de la **marge nette** du dossier *(recommandé pour le sur-mesure)*
+| Marge nette du dossier | Commission apporteur |
+|---|---|
+| Standard | **`[25] %`** de la marge nette |
+| Gros dossier / groupe (> `[__]` MAD) | **`[30] %`** |
+| Dossier stratégique / récurrent | **`[35-40] %`** (à négocier) |
+
+### Option 2 — % du **chiffre d'affaires HT** *(recommandé pour le volume / forfaits)*
+| CA HT annuel apporté | Commission apporteur |
+|---|---|
+| Jusqu'à `[__]` MAD | **`[8] %`** |
+| De `[__]` à `[__]` MAD | **`[10] %`** |
+| Au-delà de `[__]` MAD | **`[12-15] %`** |
+
+### Règles communes
+- **Fait générateur** : encaissement effectif du Client par l'Agence (prorata si paiements échelonnés).
+- **Règlement** : sous **`[15]` jours** après chaque encaissement.
+- **Rattachement client** : commandes répétées commissionnées pendant **`[24]` mois** (Art. 6.3).
+- **Annulation** : commission au prorata des sommes définitivement conservées.
+
+---
+
+## Annexe 2 — Modèle de fiche d'apport
+| Champ | Valeur |
+|---|---|
+| Nom / société du Client Apporté | `[…]` |
+| Date de présentation | `[jj/mm/aaaa]` |
+| Code apporteur | `[CODE-APPORTEUR]` |
+| Canal (email / WhatsApp / réunion) | `[…]` |
+| Accusé de réception Agence (date) | `[…]` |

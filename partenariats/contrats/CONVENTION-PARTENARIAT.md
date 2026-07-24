@@ -90,5 +90,5 @@ tribunaux de **`[ville]`**.
 | Signature + cachet | Signature + cachet |
 
 ---
-**Annexe 1** — Grille d'avantages Bénéficiaires (voir `GRILLE-COMMISSIONS-ET-AVANTAGES.md`).
+**Annexe 1** — Grille d'avantages Bénéficiaires (voir `GRILLE-AVANTAGES-PARTENAIRES.md`).
 **Annexe 2** — Catalogue / brochure des services de l'Agence.
