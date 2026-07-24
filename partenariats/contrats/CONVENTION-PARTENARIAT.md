@@ -43,17 +43,27 @@ grille en annexe)* :
 - une **offre exclusive** annuelle réservée aux Bénéficiaires.
 Le détail chiffré figure en **Annexe 1** (grille d'avantages).
 
-## Article 4 — Identification des Bénéficiaires
-L'éligibilité est vérifiée par `[carte de membre / email professionnel / attestation
-d'appartenance / code partenaire]`. L'Agence peut demander un justificatif au moment de
-la réservation.
+## Article 4 — Identification des Bénéficiaires & code apporteur
+4.1. L'éligibilité est vérifiée par `[carte de membre / email professionnel / attestation
+d'appartenance]`. L'Agence peut demander un justificatif au moment de la réservation.
+4.2. **Code apporteur** : tout dossier issu de la présente convention porte le code
+**`DA21-[PARTENAIRE]`** (ex. via une page dédiée `voyages21.com/p/da21-[partenaire]`, un
+QR code ou la mention du code au devis), afin de tracer les clients apportés par
+l'apporteur d'affaires **DA21**.
 
 ## Article 5 — Engagements réciproques
 5.1. **L'Agence s'engage à** : qualité et réactivité du service, respect des avantages
 convenus, conseiller dédié, couverture assurance et conformité à sa licence.
 5.2. **Le Partenaire s'engage à** : relayer les offres de l'Agence auprès des
-Bénéficiaires *(intranet, newsletter, affichage, événements)* et à désigner un
+Bénéficiaires *(intranet, newsletter, affichage, événements, QR code)* et à désigner un
 interlocuteur référent.
+5.3. **Données des adhérents (RGPD / loi 09-08)** : le Partenaire privilégie le **relais**
+des offres via ses propres canaux, les Bénéficiaires intéressés s'inscrivant eux-mêmes
+(opt-in). Toute **transmission de données** d'adhérents à l'Agence est limitée aux adhérents
+ayant **expressément consenti** à recevoir les offres de l'Agence ; le Partenaire garantit
+avoir recueilli ce consentement. Chaque adhérent dispose d'un droit d'accès, de
+rectification et de **désinscription** à tout moment. *(Pas de transmission de liste sans
+consentement — voir `dossier/ANIMATION-COMMERCIALE.md`, §2.)*
 
 ## Article 6 — Contrepartie *(optionnel — selon le type de partenaire)*
 *(Ex. CSE / comité d'entreprise / apporteur)* : l'Agence peut reverser au Partenaire, ou
@@ -87,7 +97,14 @@ tribunaux de **`[ville]`**.
 | Pour l'Agence (Voyages21) | Pour le Partenaire |
 |---|---|
 | Nom : `[…]` — Qualité : `[…]` | Nom : `[…]` — Qualité : `[…]` |
-| Signature + cachet | Signature + cachet |
+| *(signée par l'apporteur DA21 pour V21, par mandat)* | Signature + cachet |
+| Signature + cachet | |
+
+> ℹ️ **Qui signe ?** La convention est **bipartite** (V21 ↔ Partenaire) ; l'apporteur **DA21**
+> la négocie et la signe **pour le compte de V21 par mandat écrit**. Les **ventes** se font
+> ensuite entre **V21 et chaque client** (DA21 ne signe aucun contrat de vente). Les
+> **commissions de DA21** sont réglées à part par le **contrat d'apporteur confidentiel**
+> (non communiqué au Partenaire). Détail : `dossier/ANIMATION-COMMERCIALE.md`, §4.
 
 ---
 **Annexe 1** — Grille d'avantages Bénéficiaires (voir `GRILLE-AVANTAGES-PARTENAIRES.md`).
