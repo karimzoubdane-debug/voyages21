@@ -21,10 +21,11 @@
 ---
 
 ## Phase 0 — Cadrage & structure ✅ *(fait)*
-- [x] Dossier `partenariats/` créé (2 volets)
+- [x] Dossier `partenariats/` créé (3 volets : A stratégie · B contrats · C suivi)
 - [x] Dossier stratégique apporteur (modèle d'encaissement, facturation, contrôle)
 - [x] 4 modèles rédigés (apporteur, convention, contrat-cadre, grille avantages)
 - [x] Grille de commissions intégrée en Annexe 1 du contrat apporteur
+- [x] **Volet C — outil de suivi clients & contrôle des commissions** (registre, contrôle mensuel, modèles)
 - [x] Fiche Cockpit dédiée #51 (mot-clé `APPORTEUR`)
 
 ## Phase 1 — Décisions de cadrage 🟡 *(en cours — bloque la suite)*
@@ -45,7 +46,7 @@
 
 ## Phase 4 — Mise en œuvre opérationnelle ⏳
 - [ ] **Signer** le contrat d'apporteur avec l'agence
-- [ ] Mettre en place le **suivi des apports** : code apporteur + Rewardful / HubSpot + fiche d'apport
+- [ ] Mettre en place le **suivi des apports** : appliquer le Volet C (registre + code apporteur + fiche d'apport ; Rewardful/HubSpot au besoin)
 - [ ] Démarrer le **démarchage** (entreprises / associations / CSE)
 - [ ] Signer les **premières conventions de partenariat**
 
