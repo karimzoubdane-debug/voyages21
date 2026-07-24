@@ -27,4 +27,35 @@ Relié au **catalogue en direct** (data.js), dans le même style que la matrice.
 ## 3. Modes d'intéressement corpo à cataloguer *(recherche en cours)*
 Principe contractuel voulu : *les clients corpo ont TOUJOURS de meilleurs avantages que le site public.*
 Familles : remises 5-20 % (selon programme/saison), gratuités (1 pour X, seuils groupes), cadeaux/extras (dîner, excursion, surclassement, transfert VIP…), facilités de paiement, fidélité/statut, exclusivités (last-minute réservé, préventes), co-marketing/cagnotte CSE, parrainage.
-➡️ Deux agents de recherche compilent le catalogue complet + le modèle de calcul du simulateur ; synthèse à intégrer ici.
+➡️ Fait : `MODES-INTERESSEMENT-CORPO.md` (catalogue + 6 mécaniques prioritaires) et le simulateur en ligne.
+
+## 4. Option C — Mini-site partenaire co-brandé *(nouvelle piste, à décider)*
+URL par partenaire (ex. `voyages21.com/p/cimr`) : espace co-brandé (logo partenaire + V21),
+son catalogue, ses avantages, CTA devis. Version « site à lui » de l'offre. Le plus premium.
+
+## 5. Tombola « voyage pour deux » *(à construire sur go)*
+Gagner un voyage pour 2 / à offrir à son conjoint. Lot = 1 place au prix d'achat. Collecte
+d'opt-in conforme (anime la convention, qualifie les contacts). Lot de consolation (-500 DH).
+
+## 6. Calendrier des occasions de voyage + reminder mensuel *(à construire sur go)*
+Outil qui **rappelle ~1 mois à l'avance** chaque occasion qui pousse au voyage — pour
+« bombarder » les partenaires d'offres : week-ends prolongés, ponts (jeudi férié), Aïd,
+Saint-Sylvestre, jours fériés, été, fin d'année, rentrée, Saint-Valentin, etc. Chaque
+occasion → un angle d'offre + segment cible. Alerte J-30. + une **Routine mensuelle** qui
+prévient Karim des occasions du mois suivant.
+
+## 7. RÉCAP DES DÉCISIONS EN ATTENTE (à trancher par Karim)
+- Option d'accès partenaire : **A** (en ligne) / **A+login** / **B** / **C (mini-site)**
+- Simulateur : version **simplifiée** (3 chiffres) ou **colonne commission** dans la matrice
+- Contrat apporteur : base de commission (**% marge** ou **% CA**) + **taux** ; **durée de
+  rattachement** (12/24/36 mois) ; **statut** (auto-entrepreneur/société) ; **exclusivité** oui/non
+- Données adhérents : acter le montage **« relais + opt-in »** (conforme 09-08/RGPD)
+- Format code apporteur : **DA21-[PARTENAIRE]** (à confirmer)
+- Valider la **grille d'avantages par gamme** + remplir le **tableur** (taux par produit)
+- Valider les **6 mécaniques d'intéressement** à mettre dans les conventions
+- **Validation juridique** (avocat + comptable) avant signature
+
+### Actions en attente (moi, sur go)
+Tombola · mini-site partenaire (si C) · simulateur simplifié / colonne commission ·
+**registre des ventes par partenaire × produit** · **calendrier des occasions + reminder** ·
+PDF signable des contrats · pré-remplissage du tableur.
