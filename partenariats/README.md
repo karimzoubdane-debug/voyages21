@@ -1,7 +1,10 @@
 # 📁 Dossier Partenariats & Apport d'affaires — Voyages21
 
 > Dossier créé le 2026-07-24. Mémoire de reprise : `REPRISE.md`.
-> Fiche Cockpit rattachée : **#21 PARTENAIRES** (mot-clé `PARTENAIRES`) + **#2 B2B**.
+> Fiche Cockpit dédiée : **#51 « Apporteur d'affaires & Conventions »** (mot-clé `APPORTEUR`).
+> ⚠️ À ne pas confondre avec la fiche **#21** (page publique `voyages21.com/partenaires`,
+> où Voyages21 recrute des partenaires) : ce dossier-ci est votre positionnement
+> **personnel d'apporteur d'affaires** + les modèles de contrats. Son adresse = ce dossier GitHub.
 >
 > ⚠️ **Avertissement juridique** : les modèles de ce dossier sont des **trames de
 > travail** à personnaliser. Avant signature, faire **valider par un avocat et un
@@ -30,10 +33,10 @@ vos commissions, comment tracer les clients que vous apportez.
 | Contrat-cadre B2B | `partenariats/contrats/CONTRAT-CADRE.md` | Relation récurrente / pluriannuelle (volume, MICE) |
 | Grille d'avantages partenaires | `partenariats/contrats/GRILLE-AVANTAGES-PARTENAIRES.md` | Barèmes des avantages membres + contrepartie (annexe des conventions) |
 
-## 🔗 Adresses en ligne (après fusion de la PR)
-- Site — page Partenaires : https://www.voyages21.com/partenaires
-- Cockpit (suivi) : https://v21-cockpit.vercel.app → fiche #21 PARTENAIRES
-- Dossier B2B (Drive) : voir fiche Cockpit #2 (78 slides + catalogue 108 activités)
+## 🔗 Adresses
+- **Adresse de ce dossier** : https://github.com/karimzoubdane-debug/voyages21/tree/main/partenariats
+- Suivi Cockpit : https://v21-cockpit.vercel.app → fiche **#51 APPORTEUR**
+- *(Pour info, à ne pas confondre)* Page publique Partenaires de Voyages21 : https://www.voyages21.com/partenaires → fiche Cockpit #21, projet distinct.
 
 ## Reprise rapide
-Tapez **`PARTENAIRES`** dans une conversation → reprise automatique de ce dossier.
+Tapez **`APPORTEUR`** dans une conversation → reprise automatique de ce dossier.

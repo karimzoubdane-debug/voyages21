@@ -1,6 +1,7 @@
 # 🔁 REPRISE — Dossier Partenariats & Apport d'affaires
 
-> Tapez **`PARTENAIRES`** pour reprendre. Mettre à jour ce fichier après chaque avancée.
+> Tapez **`APPORTEUR`** pour reprendre (fiche Cockpit dédiée #51). Mettre à jour ce fichier
+> après chaque avancée. À ne pas confondre avec la fiche #21 (page publique /partenaires).
 
 ## Où on en est (dernière mise à jour : 2026-07-24)
 - **Dernière action** : dossier `partenariats/` créé et **fusionné sur main** (PR #227) ;
