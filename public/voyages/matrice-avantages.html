@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Voyages21 — Matrice des avantages (reliée au catalogue)</title>
+<title>Voyages21 — Matrice des avantages (multi-partenaires)</title>
 <style>
   :root{
     --green:#1B3A28;--green-deep:#152E1F;--gold:#C8A440;--gold-soft:#E4CE93;
@@ -20,34 +20,35 @@
     --cream:#121A14;--ground:#0C120D;--card:#141E16;--ink:#E9EEE6;--muted:#9AA394;
     --line:#243026;--chip:#1C271E;}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4;-webkit-text-size-adjust:100%}
   .wrap{max-width:760px;margin:0 auto;padding:0 14px 90px}
   header.top{background:var(--green-deep);color:#fff;margin:0 -14px;padding:16px 16px 13px;border-bottom:2px solid var(--gold)}
   .brand{font-family:Georgia,serif;font-size:14px;letter-spacing:.5px;color:var(--gold-soft);text-transform:uppercase}
   .brand b{color:#fff}
   h1{font-family:Georgia,serif;font-size:20px;margin:3px 0 0;font-weight:600;color:#fff;text-wrap:balance}
   .sub{font-size:12px;color:#C9D3C5;margin-top:4px}
-  .live{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:11.5px;color:#CFE8D6;
-    background:rgba(255,255,255,.08);padding:3px 9px;border-radius:999px}
-  .live .d{width:7px;height:7px;border-radius:50%;background:#54d17a;box-shadow:0 0 0 0 rgba(84,209,122,.6);animation:pulse 2s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(84,209,122,.5)}70%{box-shadow:0 0 0 7px rgba(84,209,122,0)}100%{box-shadow:0 0 0 0 rgba(84,209,122,0)}}
-  @media (prefers-reduced-motion:reduce){.live .d{animation:none}}
+
+  .pbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:10px 12px;margin-top:12px;box-shadow:var(--shadow)}
+  .pbar label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  select,.pbar input{font:inherit;font-size:14px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:var(--ground);color:var(--ink)}
+  select{font-weight:700;color:var(--green);min-width:150px;flex:1}
+  .pbar .grow{flex:1;min-width:120px}
 
   .bar{position:sticky;top:0;z-index:15;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:11px 0;background:var(--ground)}
-  .stat{display:flex;gap:14px;flex:1;min-width:150px}
+  .stat{display:flex;gap:14px;flex:1;min-width:130px}
   .stat .n{font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums;line-height:1}
   .stat .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
   .cell{display:flex;flex-direction:column;gap:2px}
-  .actions{display:flex;gap:8px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
   button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);padding:9px 13px;background:var(--card);color:var(--ink);font-size:13px;font-weight:600;transition:transform .06s}
   button:active{transform:scale(.97)}
   button.primary{background:var(--gold);border-color:var(--gold);color:#20271F}
+  button.ghost{background:transparent}
   button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-  .chips{display:flex;gap:7px;overflow-x:auto;padding:4px 0 10px;-webkit-overflow-scrolling:touch}
-  .chips a{white-space:nowrap;font-size:12px;font-weight:600;text-decoration:none;color:var(--green);
-    border:1px solid var(--line);background:var(--card);padding:6px 11px;border-radius:999px}
+  .chips{display:flex;gap:7px;overflow-x:auto;padding:4px 0 10px}
+  .chips a{white-space:nowrap;font-size:12px;font-weight:600;text-decoration:none;color:var(--green);border:1px solid var(--line);background:var(--card);padding:6px 11px;border-radius:999px}
 
   section.cat{margin-top:16px;scroll-margin-top:64px}
   .chead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 4px 8px;border-bottom:1px solid var(--line)}
@@ -65,7 +66,7 @@
   .adv input:focus{outline:none;border-color:var(--gold);background:var(--card)}
   .row.custom{border-color:var(--gold-soft)}.row.custom .adv input{border-color:var(--gold)}
   .foot{margin-top:26px;font-size:11px;color:var(--muted);text-align:center;line-height:1.7}
-  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow);z-index:40}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow);z-index:40;max-width:90vw;text-align:center}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   :root[data-theme="dark"] .toast{color:#0E1A13}
   @media (max-width:440px){.row{flex-direction:column;align-items:stretch;gap:10px}.adv{flex-direction:row;align-items:center;justify-content:space-between;width:100%}.adv input{width:130px}}
@@ -74,20 +75,28 @@
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand"><b>VOYAGES</b>21 · Apporteur DA21</div>
-    <h1>Matrice des avantages par produit</h1>
-    <div class="sub">Reliée au catalogue du site — organisée par les catégories du site.</div>
-    <span class="live"><span class="d"></span><span id="liveTxt">Chargement du catalogue…</span></span>
+    <div class="brand"><b>VOYAGES</b>21 · Apporteur DA21 — outil interne</div>
+    <h1>Matrice des avantages par partenaire</h1>
+    <div class="sub">Reliée au catalogue du site · avantages enregistrés séparément pour chaque partenaire.</div>
   </header>
+
+  <div class="pbar">
+    <label for="psel">Partenaire</label>
+    <select id="psel" aria-label="Partenaire"></select>
+    <button id="pnew" class="ghost">+ Nouveau</button>
+    <button id="pren" class="ghost">Renommer</button>
+    <button id="pdel" class="ghost">Supprimer</button>
+  </div>
 
   <div class="bar">
     <div class="stat">
       <div class="cell"><span class="n" id="nTotal">0</span><span class="l">produits</span></div>
-      <div class="cell"><span class="n" id="nCustom">0</span><span class="l">personnalisés</span></div>
+      <div class="cell"><span class="n" id="nCustom">0</span><span class="l">sur-mesure</span></div>
     </div>
     <div class="actions">
       <button id="reset">Réinitialiser</button>
-      <button id="export" class="primary">Exporter Excel</button>
+      <button id="export">Excel</button>
+      <button id="share" class="primary">Lien partenaire</button>
     </div>
   </div>
 
@@ -95,106 +104,131 @@
   <div id="list"></div>
 
   <div class="foot">
-    💾 Sauvegarde automatique sur cet appareil · 🔗 Prix &amp; produits synchronisés en direct avec le catalogue du site<br>
-    Un produit ajouté / retiré / repricé sur voyages21.com apparaît ici automatiquement. Défauts par gamme — vous gardez la main sur chaque ligne.
+    💾 Sauvegarde locale (cet appareil), par partenaire · 🔗 Catalogue &amp; prix synchronisés en direct avec le site<br>
+    « Lien partenaire » génère une <b>offre propre</b> à envoyer (WhatsApp/email) montrant <b>uniquement</b> les avantages de ce partenaire — sans vos marges.
   </div>
 </div>
 <div class="toast" id="toast">Enregistré ✓</div>
 
-<!-- Source unique de vérité : le même fichier que le catalogue du site -->
 <script src="./data.js"></script>
 <script>
 (function(){
-  var KEY='v21_avantages_v2';
+  var SK='v21_matrix_v3';
   var V=(window.VOYAGES)||{};
-  var liveTxt=document.getElementById('liveTxt');
-  if(!V||!Object.keys(V).length){ liveTxt.textContent='Catalogue introuvable'; return; }
+  if(!V||!Object.keys(V).length){ document.getElementById('list').innerHTML='<p style="padding:20px;color:#b00">Catalogue introuvable.</p>'; return; }
 
-  function priceNum(p){ var m=String(p||'').match(/[\d\s ]+/); if(!m) return 0;
-    var n=m[0].replace(/[\s ]/g,''); return /^\d+$/.test(n)?parseInt(n,10):0; }
+  function priceNum(p){ var m=String(p||'').match(/[\d\s ]+/); if(!m) return 0; var n=m[0].replace(/[\s ]/g,''); return /^\d+$/.test(n)?parseInt(n,10):0; }
   function dev(p){ return /USD/.test(p)?'USD':'DH'; }
-  function priceDisplay(p){ return String(p||'').replace('درهم','DH'); }
-  function classify(tag,p){
-    var n=priceNum(p), d=dev(p);
+  function pDisp(p){ return String(p||'').replace('درهم','DH'); }
+  function classify(tag,p){ var n=priceNum(p),d=dev(p);
     if(tag==='عمرة') return ['Omra / Hajj','-2%'];
     if(tag==='Maroc') return ['Maroc','value-add'];
     if(/roisi/i.test(tag)) return ['Croisières','-8%'];
     if(d==='USD') n*=10;
     if(n<12000) return ['Séjours','-5%'];
     if(n<=28000) return ['Circuits internationaux','-7%'];
-    return ['Premium / long-courrier','-9%'];
-  }
-  var store={}; try{ store=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ store={}; }
+    return ['Premium / long-courrier','-9%']; }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function b64e(o){ return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
 
-  // build ordered list of products, grouped by tag in catalogue order
-  var order=[], groups={}, items=[];
-  Object.keys(V).forEach(function(key){
-    var v=V[key]||{}; var tag=(v.tag||'—').trim();
-    var cg=classify(tag,v.price);
-    var it={key:key,tag:tag,nom:v.title||key,duree:v.duration||'',prix:priceDisplay(v.price),
-            dev:dev(v.price),gamme:cg[0],defaut:cg[1],pn:priceNum(v.price)};
-    items.push(it);
-    if(!groups[tag]){groups[tag]=[];order.push(tag);} groups[tag].push(it);
-  });
+  // items from live catalogue
+  var order=[],groups={},items=[];
+  Object.keys(V).forEach(function(key){ var v=V[key]||{}; var tag=(v.tag||'—').trim(); var cg=classify(tag,v.price);
+    var it={key:key,tag:tag,nom:v.title||key,duree:v.duration||'',prix:pDisp(v.price),dev:dev(v.price),gamme:cg[0],defaut:cg[1]};
+    items.push(it); if(!groups[tag]){groups[tag]=[];order.push(tag);} groups[tag].push(it); });
 
-  var list=document.getElementById('list'), chips=document.getElementById('chips');
+  // storage: { current:"Nom", partners:{ "Nom":{ov:{key:val}} } }
+  var db; try{ db=JSON.parse(localStorage.getItem(SK)||'null'); }catch(e){ db=null; }
+  if(!db||!db.partners){ db={current:'Général',partners:{'Général':{ov:{}}}}; }
+  function persist(){ try{ localStorage.setItem(SK,JSON.stringify(db)); }catch(e){} }
+  function cur(){ return db.partners[db.current]||(db.partners[db.current]={ov:{}}); }
+  function advOf(it){ var ov=cur().ov; return (it.key in ov)?ov[it.key]:it.defaut; }
+
+  var list=document.getElementById('list'), chips=document.getElementById('chips'), psel=document.getElementById('psel');
   function slug(t){ return 't'+t.replace(/[^a-zA-Z0-9]/g,''); }
 
+  // build sections once
   order.forEach(function(tag){
     var a=document.createElement('a'); a.href='#'+slug(tag); a.textContent=tag; chips.appendChild(a);
     var sec=document.createElement('section'); sec.className='cat'; sec.id=slug(tag);
-    var gm=groups[tag][0].gamme;
-    sec.innerHTML='<div class="chead"><span class="cname">'+esc(tag)+'</span>'+
-      '<span class="cmeta"><b>'+groups[tag].length+'</b> · gamme : '+esc(gm)+'</span></div>';
+    sec.innerHTML='<div class="chead"><span class="cname">'+esc(tag)+'</span><span class="cmeta"><b>'+groups[tag].length+'</b> · '+esc(groups[tag][0].gamme)+'</span></div>';
     groups[tag].forEach(function(it){
-      var val=(it.key in store)?store[it.key]:it.defaut;
-      var row=document.createElement('div'); row.className='row';
+      var row=document.createElement('div'); row.className='row'; row.dataset.key=it.key;
       row.innerHTML='<div class="info"><div class="nom" dir="auto">'+esc(it.nom)+'</div>'+
-        '<div class="meta"><span class="badge">'+esc(it.gamme)+'</span>'+
-        (it.duree?'<span>'+esc(it.duree)+'</span>':'')+
+        '<div class="meta"><span class="badge">'+esc(it.gamme)+'</span>'+(it.duree?'<span>'+esc(it.duree)+'</span>':'')+
         '<span class="price">'+esc(it.prix)+'</span></div></div>'+
-        '<div class="adv"><label>Avantage</label>'+
-        '<input type="text" value="'+esc(val)+'" aria-label="Avantage '+esc(it.nom)+'"></div>';
+        '<div class="adv"><label>Avantage</label><input type="text" aria-label="Avantage '+esc(it.nom)+'"></div>';
       var input=row.querySelector('input');
-      function mark(){ row.classList.toggle('custom', input.value.trim()!==it.defaut); }
-      mark();
-      input.addEventListener('input',function(){ store[it.key]=input.value; saveNow(); mark(); refresh(); });
+      input.addEventListener('input',function(){
+        var v=input.value; var ov=cur().ov;
+        if(v.trim()===it.defaut){ delete ov[it.key]; } else { ov[it.key]=v; }
+        persist(); row.classList.toggle('custom', v.trim()!==it.defaut); refresh(); ping();
+      });
       sec.appendChild(row);
     });
     list.appendChild(sec);
   });
 
-  var toast=document.getElementById('toast'), tT;
-  function ping(m){ toast.textContent=m||'Enregistré ✓'; toast.classList.add('show'); clearTimeout(tT); tT=setTimeout(function(){toast.classList.remove('show');},1100); }
-  function saveNow(){ try{ localStorage.setItem(KEY,JSON.stringify(store)); ping(); }catch(e){ ping('Sauvegarde impossible'); } }
+  function hydrate(){
+    document.querySelectorAll('.row').forEach(function(row){
+      var it=items.find(function(x){return x.key===row.dataset.key;});
+      var inp=row.querySelector('input'); var v=advOf(it);
+      inp.value=v; row.classList.toggle('custom', String(v).trim()!==it.defaut);
+    });
+    refresh();
+  }
   function refresh(){
     document.getElementById('nTotal').textContent=items.length;
-    var c=0; items.forEach(function(it){ var v=(it.key in store)?store[it.key]:it.defaut; if(String(v).trim()!==it.defaut) c++; });
+    var ov=cur().ov, c=0; items.forEach(function(it){ if(it.key in ov && String(ov[it.key]).trim()!==it.defaut) c++; });
     document.getElementById('nCustom').textContent=c;
   }
-  liveTxt.textContent=items.length+' produits synchronisés depuis le catalogue';
-  refresh();
+  function fillSelect(){ psel.innerHTML=''; Object.keys(db.partners).forEach(function(name){
+    var o=document.createElement('option'); o.value=name; o.textContent=name; if(name===db.current)o.selected=true; psel.appendChild(o); }); }
+
+  fillSelect(); hydrate();
+
+  psel.addEventListener('change',function(){ db.current=psel.value; persist(); hydrate(); });
+  document.getElementById('pnew').addEventListener('click',function(){
+    var n=(prompt('Nom du partenaire (ex. CIMR, OCP, CNSS) :')||'').trim(); if(!n) return;
+    if(db.partners[n]){ db.current=n; } else { db.partners[n]={ov:{}}; db.current=n; }
+    persist(); fillSelect(); hydrate(); ping('Partenaire « '+n+' »');
+  });
+  document.getElementById('pren').addEventListener('click',function(){
+    var old=db.current; var n=(prompt('Renommer « '+old+' » en :',old)||'').trim(); if(!n||n===old) return;
+    db.partners[n]=db.partners[old]; delete db.partners[old]; db.current=n; persist(); fillSelect(); hydrate(); ping('Renommé');
+  });
+  document.getElementById('pdel').addEventListener('click',function(){
+    if(Object.keys(db.partners).length<=1){ ping('Au moins un partenaire requis'); return; }
+    if(!confirm('Supprimer le partenaire « '+db.current+' » ?')) return;
+    delete db.partners[db.current]; db.current=Object.keys(db.partners)[0]; persist(); fillSelect(); hydrate(); ping('Supprimé');
+  });
+
+  var toast=document.getElementById('toast'),tT;
+  function ping(m){ toast.textContent=m||'Enregistré ✓'; toast.classList.add('show'); clearTimeout(tT); tT=setTimeout(function(){toast.classList.remove('show');},1300); }
 
   document.getElementById('reset').addEventListener('click',function(){
-    if(!confirm('Remettre tous les avantages aux valeurs par défaut ?')) return;
-    store={}; localStorage.removeItem(KEY);
-    var inputs=document.querySelectorAll('.row'); var idx=0;
-    order.forEach(function(tag){ groups[tag].forEach(function(it){
-      var row=inputs[idx++]; var inp=row.querySelector('input'); inp.value=it.defaut; row.classList.remove('custom'); }); });
-    refresh(); ping('Réinitialisé');
+    if(!confirm('Remettre les avantages de « '+db.current+' » aux valeurs par défaut ?')) return;
+    cur().ov={}; persist(); hydrate(); ping('Réinitialisé');
   });
 
   document.getElementById('export').addEventListener('click',function(){
-    var head=['Categorie','Nom du voyage','Duree','Prix','Devise','Gamme','Avantage accorde'];
+    var head=['Categorie','Nom du voyage','Duree','Prix','Devise','Gamme','Avantage ('+db.current+')'];
     var q=function(s){ return '"'+String(s).replace(/"/g,'""')+'"'; };
     var lines=[head.map(q).join(';')];
-    items.forEach(function(it){ var v=(it.key in store)?store[it.key]:it.defaut;
-      lines.push([it.tag,it.nom,it.duree,it.prix,it.dev,it.gamme,v].map(q).join(';')); });
+    items.forEach(function(it){ lines.push([it.tag,it.nom,it.duree,it.prix,it.dev,it.gamme,advOf(it)].map(q).join(';')); });
     var blob=new Blob(['﻿'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
-    var url=URL.createObjectURL(blob); var a=document.createElement('a');
-    a.href=url; a.download='voyages21-avantages.csv'; document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },500); ping('Fichier Excel prêt ✓');
+    var url=URL.createObjectURL(blob),a=document.createElement('a'); a.href=url; a.download='avantages-'+db.current+'.csv';
+    document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(url);a.remove();},500); ping('Excel « '+db.current+' » prêt ✓');
+  });
+
+  document.getElementById('share').addEventListener('click',function(){
+    var payload={n:db.current, o:cur().ov};
+    var base=location.href.replace(/matrice-avantages\.html.*$/,'offre.html');
+    var link=base+'#o='+encodeURIComponent(b64e(payload));
+    var msg='Offre Voyages21 pour '+db.current+' :\n'+link;
+    if(navigator.share){ navigator.share({title:'Offre Voyages21 — '+db.current,text:'Vos avantages Voyages21',url:link}).then(function(){ping('Lien partagé ✓');}).catch(function(){copy(link);}); }
+    else copy(link);
+    function copy(t){ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){ping('Lien « '+db.current+' » copié ✓');},function(){prompt('Copiez le lien :',t);}); } else prompt('Copiez le lien :',t); }
   });
 })();
 </script>
