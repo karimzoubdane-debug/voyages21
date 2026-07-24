@@ -1,0 +1,241 @@
+<title>Voyages21 — Avantages par produit</title>
+<style>
+  :root{
+    --green:#1B3A28; --green-deep:#152E1F; --gold:#C8A440; --gold-soft:#E4CE93;
+    --cream:#F5F0E8; --ground:#FBF9F4; --card:#FFFFFF; --ink:#20271F; --muted:#6B7268;
+    --line:#E6DFD1; --chip:#EFE9DB; --ok:#2F7D4F;
+    --shadow:0 1px 2px rgba(21,46,31,.06),0 8px 24px rgba(21,46,31,.06);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --green:#E6C765; --green-deep:#0E1A13; --gold:#D9B45A; --gold-soft:#7A6428;
+      --cream:#121A14; --ground:#0C120D; --card:#141E16; --ink:#E9EEE6; --muted:#9AA394;
+      --line:#243026; --chip:#1C271E; --ok:#5FBE86;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --green:#E6C765; --green-deep:#0E1A13; --gold:#D9B45A; --gold-soft:#7A6428;
+    --cream:#121A14; --ground:#0C120D; --card:#141E16; --ink:#E9EEE6; --muted:#9AA394;
+    --line:#243026; --chip:#1C271E; --ok:#5FBE86;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --green:#1B3A28; --green-deep:#152E1F; --gold:#C8A440; --gold-soft:#E4CE93;
+    --cream:#F5F0E8; --ground:#FBF9F4; --card:#FFFFFF; --ink:#20271F; --muted:#6B7268;
+    --line:#E6DFD1; --chip:#EFE9DB; --ok:#2F7D4F;
+    --shadow:0 1px 2px rgba(21,46,31,.06),0 8px 24px rgba(21,46,31,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-text-size-adjust:100%;line-height:1.4}
+  .wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+
+  header.top{position:sticky;top:0;z-index:20;background:var(--green-deep);
+    color:#fff;margin:0 -14px 0;padding:14px 16px 12px;border-bottom:2px solid var(--gold)}
+  :root[data-theme="dark"] header.top,
+  @media (prefers-color-scheme:dark){}
+  .brand{font-family:Georgia,"Times New Roman",serif;font-size:15px;letter-spacing:.5px;
+    color:var(--gold-soft);text-transform:uppercase}
+  .brand b{color:#fff}
+  h1{font-family:Georgia,serif;font-size:21px;margin:2px 0 0;font-weight:600;color:#fff;
+    text-wrap:balance}
+  .sub{font-size:12.5px;color:#C9D3C5;margin-top:3px}
+
+  .bar{position:sticky;top:0;z-index:15;display:flex;gap:8px;align-items:center;
+    flex-wrap:wrap;padding:12px 0;background:var(--ground)}
+  .stat{display:flex;gap:14px;flex:1;min-width:150px}
+  .stat .n{font-family:Georgia,serif;font-size:20px;font-weight:700;color:var(--green);
+    font-variant-numeric:tabular-nums;line-height:1}
+  .stat .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .cell{display:flex;flex-direction:column;gap:2px}
+  .actions{display:flex;gap:8px}
+  button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);
+    padding:9px 13px;background:var(--card);color:var(--ink);font-size:13px;font-weight:600;
+    transition:transform .06s ease, background .15s}
+  button:active{transform:scale(.97)}
+  button.primary{background:var(--gold);border-color:var(--gold);color:#20271F}
+  button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);
+    background:var(--green);color:#fff;padding:9px 16px;border-radius:999px;font-size:13px;
+    font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
+    box-shadow:var(--shadow);z-index:40}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  :root[data-theme="dark"] .toast{color:#0E1A13}
+
+  section.gamme{margin-top:18px}
+  .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+    padding:0 4px 8px;border-bottom:1px solid var(--line)}
+  .gname{font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--green)}
+  .gmeta{font-size:11.5px;color:var(--muted)}
+  .gmeta b{color:var(--gold);font-weight:700}
+
+  .row{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:12px 13px;margin-top:10px;box-shadow:var(--shadow);
+    display:flex;gap:12px;align-items:center;justify-content:space-between}
+  .info{min-width:0;flex:1}
+  .nom{font-size:14.5px;font-weight:600;line-height:1.25;word-break:break-word}
+  .meta{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+  .price{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+  .chip{background:var(--chip);border-radius:6px;padding:1px 7px;font-size:10.5px;
+    color:var(--muted);white-space:nowrap}
+  .adv{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+  .adv label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .adv input{width:110px;text-align:center;font:inherit;font-weight:700;font-size:14px;
+    color:var(--green);padding:9px 8px;border-radius:10px;border:1.5px solid var(--line);
+    background:var(--ground)}
+  .adv input:focus{outline:none;border-color:var(--gold);background:var(--card)}
+  .row.custom{border-color:var(--gold-soft)}
+  .row.custom .adv input{border-color:var(--gold);color:var(--green)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none;
+    visibility:hidden}
+  .row.custom .dot{visibility:visible}
+
+  .foot{margin-top:26px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
+  .foot a{color:var(--green)}
+  @media (max-width:440px){
+    .row{flex-direction:column;align-items:stretch;gap:10px}
+    .adv{flex-direction:row;align-items:center;justify-content:space-between;width:100%}
+    .adv input{width:130px}
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>VOYAGES</b>21 · Apporteur DA21</div>
+    <h1>Avantages accordés par produit</h1>
+    <div class="sub">Catalogue complet — fixez l'avantage produit par produit selon votre marge.</div>
+  </header>
+
+  <div class="bar">
+    <div class="stat">
+      <div class="cell"><span class="n" id="nTotal">0</span><span class="l">produits</span></div>
+      <div class="cell"><span class="n" id="nCustom">0</span><span class="l">personnalisés</span></div>
+    </div>
+    <div class="actions">
+      <button id="reset">Réinitialiser</button>
+      <button id="export" class="primary">Exporter Excel</button>
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="foot">
+    Sauvegarde automatique sur cet appareil · Prix du catalogue au 24/07/2026<br>
+    Source : voyages21.com · Défauts par gamme — vous gardez la main sur chaque ligne.
+  </div>
+</div>
+
+<div class="toast" id="toast">Enregistré ✓</div>
+
+<script>
+const PRODUCTS = [{"cat":"عمرة","nom":"عمرتين في عمرة واحدة","duree":"19 ليلة","prix":"12 900 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة مباشرة مع الخطوط السعودية","duree":"11 ليلة","prix":"13 500 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة مباشرة مع الخطوط المغربية","duree":"14 ليلة","prix":"14 900 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة 01 يوليوز","duree":"12 ليلة","prix":"15 900 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة 08 يوليوز","duree":"10 ليالٍ","prix":"16 850 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة محرّم 1448","duree":"14 ليلة","prix":"17 200 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة مع إسطنبول","duree":"14 ليلة","prix":"20 000 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"عمرة","nom":"عمرة 06 يوليوز","duree":"12 ليلة","prix":"21 500 DH","dev":"DH","gamme":"Omra / Hajj","defaut":"-2%"},{"cat":"Maroc","nom":"Bin El Ouidane — La beauté divine de la nature","duree":"2 jours / 1 nuit","prix":"1 100 DH","dev":"DH","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Imperial Cities Tour","duree":"8 jours / 7 nuits","prix":"1 116 USD","dev":"USD","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Imperial Cities & Southern Morocco","duree":"8 jours / 7 nuits","prix":"1 117 USD","dev":"USD","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Merzouga — Marrakech · Ouarzazate · Dadès","duree":"Circuit","prix":"1 200 DH","dev":"DH","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Best of Morocco — Cities, Heritage & Sahara","duree":"10 jours / 9 nuits","prix":"1 250 USD","dev":"USD","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Discover the Kingdom","duree":"12 jours / 11 nuits","prix":"1 474 USD","dev":"USD","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Splendid Morocco — Grand Discovery","duree":"15 jours / 14 nuits","prix":"1 907 USD","dev":"USD","gamme":"Maroc","defaut":"value-add"},{"cat":"Maroc","nom":"Dakhla — Wini Bik","duree":"4 jours / 3 nuits","prix":"5 500 DH","dev":"DH","gamme":"Maroc","defaut":"value-add"},{"cat":"Espagne","nom":"Séjour à Las Palmas","duree":"8 jours","prix":"6 900 DH","dev":"DH","gamme":"Séjours","defaut":"-5%"},{"cat":"Turquie","nom":"Séjour à Istanbul","duree":"8 jours","prix":"9 700 DH","dev":"DH","gamme":"Séjours","defaut":"-5%"},{"cat":"Tunisie","nom":"Combiné Tunis & Hammamet","duree":"8 jours","prix":"10 400 DH","dev":"DH","gamme":"Séjours","defaut":"-5%"},{"cat":"Europe","nom":"Albanie — Mer & Galets, Côte Ionienne","duree":"8 jours","prix":"13 500 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Europe","nom":"Capitales impériales — Vienne, Budapest, Prague","duree":"6 jours","prix":"13 600 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Espagne","nom":"Al-Andalus — Madrid, Grenade, Séville","duree":"7 jours","prix":"14 900 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Grèce","nom":"Athènes, Rhodes & Kos","duree":"8 jours","prix":"14 900 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Égypte","nom":"Le Caire & Hurghada","duree":"12 jours","prix":"15 600 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Asie","nom":"Ouzbékistan — Route de la Soie","duree":"10 jours","prix":"15 700 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Turquie","nom":"Istanbul & Antalya","duree":"8 jours","prix":"16 300 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Grèce","nom":"Athènes — Grèce classique","duree":"7 jours","prix":"16 700 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Asie","nom":"Combiné Azerbaïdjan & Turquie","duree":"12 jours","prix":"16 750 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Turquie","nom":"Istanbul & Bodrum","duree":"8 jours","prix":"16 900 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Cuba","nom":"Cuba — La Havane & Varadero","duree":"9 jours","prix":"17 000 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Égypte","nom":"Le Caire & Sharm El Sheikh","duree":"11 jours","prix":"17 700 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Zanzibar","nom":"Séjour à Zanzibar — Détente & Loisirs","duree":"8 jours","prix":"18 500 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Pérou","nom":"Pérou — Les merveilles Incas","duree":"11 jours","prix":"18 700 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Égypte","nom":"Le Caire, Croisière du Nil & Hurghada","duree":"12 jours","prix":"19 300 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Espagne & Portugal","nom":"Circuit Espagne & Portugal","duree":"10 jours","prix":"19 500 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Turquie","nom":"Istanbul & Antalya","duree":"11 jours","prix":"19 900 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Canada & USA","nom":"Les joyaux du Canada et des USA","duree":"11 jours","prix":"20 550 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"États-Unis","nom":"L'Ouest Complet — USA","duree":"13 jours","prix":"21 250 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Italie","nom":"Circuit Italie","duree":"8 jours","prix":"21 500 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"France & Suisse","nom":"France & Suisse","duree":"8 jours","prix":"22 400 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Turquie","nom":"Istanbul, Marmaris & Bodrum","duree":"11 jours","prix":"23 500 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Thaïlande","nom":"Exotic Thailand — Bangkok, Krabi & Phuket","duree":"14 jours","prix":"26 900 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Royaume-Uni","nom":"Angleterre & Écosse","duree":"10 jours","prix":"27 000 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Combiné","nom":"Malaisie & Singapour — Kuala Lumpur, Penang & Singapour","duree":"14 jours","prix":"27 500 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Combiné","nom":"Malaisie & Indonésie — Kuala Lumpur, Bali & Jakarta","duree":"15 jours","prix":"27 800 DH","dev":"DH","gamme":"Circuits internationaux","defaut":"-7%"},{"cat":"Croisières","nom":"Croisière Turquie & Grèce","duree":"8 jours","prix":"13 900 DH","dev":"DH","gamme":"Croisières","defaut":"-8%"},{"cat":"Croisières","nom":"Croisière Turquie & Égypte","duree":"8 jours","prix":"15 500 DH","dev":"DH","gamme":"Croisières","defaut":"-8%"},{"cat":"Croisière","nom":"Croisière Méditerranée — Espagne & Italie","duree":"10 jours","prix":"19 800 DH","dev":"DH","gamme":"Croisières","defaut":"-8%"},{"cat":"Croisière","nom":"Croisière Méditerranée Premium","duree":"10 jours","prix":"21 800 DH","dev":"DH","gamme":"Croisières","defaut":"-8%"},{"cat":"Asie","nom":"Malaisie & Thaïlande — KL, Krabi & Phuket","duree":"14 jours","prix":"28 500 DH","dev":"DH","gamme":"Premium / long-courrier","defaut":"-9%"},{"cat":"Chine","nom":"Circuit Chine — Pékin, Shanghai & Merveilles","duree":"14 jours","prix":"29 900 DH","dev":"DH","gamme":"Premium / long-courrier","defaut":"-9%"},{"cat":"Combiné","nom":"Indonésie & Thaïlande — Jakarta, Bali & Phuket","duree":"14 jours","prix":"31 500 DH","dev":"DH","gamme":"Premium / long-courrier","defaut":"-9%"},{"cat":"États-Unis","nom":"Les Rocheuses et l'Ouest classique — USA","duree":"17 jours","prix":"32 000 DH","dev":"DH","gamme":"Premium / long-courrier","defaut":"-9%"},{"cat":"Vietnam","nom":"Découverte du Vietnam — Hanoi à Saigon","duree":"14 jours","prix":"33 900 DH","dev":"DH","gamme":"Premium / long-courrier","defaut":"-9%"},{"cat":"Chine","nom":"Chine impériale & paysages du Sud — Pékin, Xi'an, Guilin & Shanghai","duree":"15 jours","prix":"39 000 DH","dev":"DH","gamme":"Premium / long-courrier","defaut":"-9%"}];
+
+const KEY='v21_avantages_v1';
+const GAMME_HINT={
+  "Omra / Hajj":"défaut -2 % ou un plus offert",
+  "Maroc":"défaut value-add / -3 %",
+  "Séjours":"défaut -5 %",
+  "Circuits internationaux":"défaut -6 à -8 %",
+  "Croisières":"défaut -8 %",
+  "Premium / long-courrier":"défaut -8 à -10 %"
+};
+const pid = p => p.gamme+'|'+p.nom+'|'+p.prix;
+let store = {};
+try{ store = JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ store={}; }
+
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const list = document.getElementById('list');
+
+// group by gamme (preserve order of first appearance)
+const order=[]; const groups={};
+PRODUCTS.forEach(p=>{ if(!groups[p.gamme]){groups[p.gamme]=[];order.push(p.gamme);} groups[p.gamme].push(p); });
+
+order.forEach(g=>{
+  const sec=document.createElement('section'); sec.className='gamme';
+  sec.innerHTML=`<div class="ghead"><span class="gname">${esc(g)}</span>
+    <span class="gmeta"><b>${groups[g].length}</b> · ${esc(GAMME_HINT[g]||'')}</span></div>`;
+  groups[g].forEach(p=>{
+    const id=pid(p);
+    const val = (id in store)? store[id] : p.defaut;
+    const row=document.createElement('div'); row.className='row';
+    row.innerHTML=`
+      <span class="dot"></span>
+      <div class="info">
+        <div class="nom" dir="auto">${esc(p.nom)}</div>
+        <div class="meta"><span class="chip">${esc(p.cat)}</span>
+          <span>${esc(p.duree)}</span><span class="price">${esc(p.prix)}</span></div>
+      </div>
+      <div class="adv">
+        <label>Avantage</label>
+        <input type="text" inputmode="text" value="${esc(val)}"
+          aria-label="Avantage pour ${esc(p.nom)}">
+      </div>`;
+    const input=row.querySelector('input');
+    const mark=()=>{ row.classList.toggle('custom', (input.value.trim()!==p.defaut)); };
+    mark();
+    input.addEventListener('input',()=>{
+      store[id]=input.value;
+      save(); mark(); refresh();
+    });
+    sec.appendChild(row);
+  });
+  list.appendChild(sec);
+});
+
+let toastT;
+const toast=document.getElementById('toast');
+function ping(msg){ toast.textContent=msg||'Enregistré ✓'; toast.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>toast.classList.remove('show'),1100); }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(store)); ping(); }
+  catch(e){ ping('Sauvegarde impossible'); } }
+
+function refresh(){
+  document.getElementById('nTotal').textContent=PRODUCTS.length;
+  let c=0; PRODUCTS.forEach(p=>{ const id=pid(p);
+    const v=(id in store)?store[id]:p.defaut; if(String(v).trim()!==p.defaut) c++; });
+  document.getElementById('nCustom').textContent=c;
+}
+refresh();
+
+document.getElementById('reset').addEventListener('click',()=>{
+  if(!confirm('Remettre tous les avantages aux valeurs par défaut ?')) return;
+  store={}; localStorage.removeItem(KEY);
+  document.querySelectorAll('.row').forEach((row,i)=>{
+    const p=PRODUCTS[i]; const inp=row.querySelector('input');
+    inp.value=p.defaut; row.classList.remove('custom');
+  });
+  refresh(); ping('Réinitialisé');
+});
+
+function csv(){
+  const head=['Categorie','Nom du voyage','Duree','Prix','Devise','Gamme','Avantage accorde'];
+  const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
+  const lines=[head.map(q).join(';')];
+  PRODUCTS.forEach(p=>{ const id=pid(p); const v=(id in store)?store[id]:p.defaut;
+    lines.push([p.cat,p.nom,p.duree,p.prix,p.dev,p.gamme,v].map(q).join(';')); });
+  return '﻿'+lines.join('\r\n');
+}
+
+document.getElementById('export').addEventListener('click',async()=>{
+  const data=csv();
+  if(!(window.claude&&window.claude.downloads)){ ping('Export indisponible ici'); return; }
+  try{
+    await window.claude.downloads.save({filename:'voyages21-avantages.csv',data});
+    ping('Fichier Excel prêt ✓');
+  }catch(err){
+    const code=err&&err.code;
+    if(code==='declined'){ ping('Export annulé'); return; }
+    if(code==='extension_not_enabled'||code==='rejected_extension'){
+      try{ await window.claude.downloads.save({filename:'voyages21-avantages.txt',data});
+        ping('Fichier prêt (.txt) ✓'); }
+      catch(e2){ ping('Export refusé'); }
+      return;
+    }
+    ping('Export impossible');
+  }
+});
+</script>
