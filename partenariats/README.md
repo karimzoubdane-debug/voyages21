@@ -43,6 +43,12 @@ vos commissions, comment tracer les clients que vous apportez.
 |---|---|---|
 | Suivi clients & commissions | `partenariats/suivi/SUIVI-CLIENTS-ET-COMMISSIONS.md` | Registre des apports, contrôle mensuel, fiches d'apport & factures, KPIs |
 
+## 📄 Versions Word (`partenariats/word/`)
+1ʳᵉ version .docx signable (mise en forme Voyages21) — à personnaliser puis valider juridiquement :
+- `word/CONTRAT-APPORTEUR-AFFAIRES.docx`
+- `word/CONVENTION-PARTENARIAT.docx`
+- `word/CONTRAT-CADRE.docx`
+
 ## 🔗 Adresses
 - **Adresse de ce dossier** : https://github.com/karimzoubdane-debug/voyages21/tree/main/partenariats
 - Suivi Cockpit : https://v21-cockpit.vercel.app → fiche **#51 APPORTEUR**

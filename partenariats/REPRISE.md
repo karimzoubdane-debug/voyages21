@@ -3,6 +3,11 @@
 > Tapez **`APPORTEUR`** pour reprendre (fiche Cockpit dédiée #51). Mettre à jour ce fichier
 > après chaque avancée. À ne pas confondre avec la fiche #21 (page publique /partenaires).
 
+## Dernière avancée (2026-07-24) : 1ʳᵉ version Word des contrats
+- Générés dans `partenariats/word/` : contrat apporteur, convention, contrat-cadre (.docx aux couleurs V21).
+- **En attente (suspens gardés)** : décisions Phase 1 (base commission + taux, rattachement, statut, exclusivité) ;
+  génération du **tableur Excel** du registre de suivi (Volet C) ; PDF signable final après validation juridique.
+
 ## Où on en est (dernière mise à jour : 2026-07-24)
 - **Dernière action** : dossier `partenariats/` créé et **fusionné sur main** (PR #227) ;
   fiche Cockpit #21 mise à jour (PR #74 fusionnée). Puis **consolidation** : la grille de

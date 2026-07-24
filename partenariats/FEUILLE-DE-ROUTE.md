@@ -1,7 +1,7 @@
 # 🗺️ Feuille de route & plan d'action — Apporteur d'affaires & Conventions
 
 > Projet Cockpit **#51** (mot-clé `APPORTEUR`). Dernière mise à jour : **2026-07-24**.
-> **Avancement global : ~35 %** (cadrage + modèles rédigés ; reste : chiffres, juridique, mise en œuvre).
+> **Avancement global : ~45 %** (cadrage + modèles rédigés + 1ʳᵉ version Word ; reste : chiffres, juridique, mise en œuvre).
 >
 > **Où suivre l'avancement ?** ①  ce fichier · ②  Cockpit #51 → https://v21-cockpit.vercel.app
 > (bouton « Dernière action & suspens ») · ③  `REPRISE.md` (reprise rapide).
@@ -13,7 +13,7 @@
 |---|---|---|---|
 | 0 | Cadrage & structure du dossier | ✅ Fait | 100 % |
 | 1 | Décisions de cadrage *(bloquant)* | 🟡 En cours | 0 % |
-| 2 | Finalisation des contrats | ⏳ À venir | 20 % |
+| 2 | Finalisation des contrats | 🟡 En cours | 40 % |
 | 3 | Validation juridique | ⏳ À venir | 0 % |
 | 4 | Mise en œuvre opérationnelle | ⏳ À venir | 0 % |
 | 5 | Pilotage & suivi | ⏳ À venir | 0 % |
@@ -35,10 +35,12 @@
 - [ ] **Statut de Karim** pour facturer l'agence : auto-entrepreneur / société ?
 - [ ] **Exclusivité** avec l'agence : oui / non ?
 
-## Phase 2 — Finalisation des contrats ⏳
+## Phase 2 — Finalisation des contrats 🟡 *(en cours)*
+- [x] **Générer une 1ʳᵉ version Word** des 3 contrats (dossier `partenariats/word/`)
 - [ ] Remplir le **contrat apporteur** avec les vrais chiffres (Phase 1)
-- [ ] Personnaliser les 3 autres modèles (nom de l'agence, mentions, licence, ICE/RC)
-- [ ] Générer les **versions Word/PDF signables** aux couleurs Voyages21
+- [ ] Personnaliser les 3 modèles (nom de l'agence, mentions, licence, ICE/RC)
+- [ ] Version **PDF signable** finale (après validation juridique)
+- [ ] *(en attente)* Générer le **tableur Excel** du registre de suivi (Volet C) avec formules auto
 
 ## Phase 3 — Validation juridique ⏳
 - [ ] Relecture **avocat** (licence, encaissement, non-concurrence, non-contournement)
