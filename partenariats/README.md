@@ -36,6 +36,13 @@ vos commissions, comment tracer les clients que vous apportez.
 | Contrat-cadre B2B | `partenariats/contrats/CONTRAT-CADRE.md` | Relation récurrente / pluriannuelle (volume, MICE) |
 | Grille d'avantages partenaires | `partenariats/contrats/GRILLE-AVANTAGES-PARTENAIRES.md` | Barèmes des avantages membres + contrepartie (annexe des conventions) |
 
+## 🅲 Volet C — Suivi des clients & contrôle des commissions
+*(l'outil opérationnel : ne perdre aucun client apporté, encaisser chaque commission)*
+
+| Document | Adresse | Sert à |
+|---|---|---|
+| Suivi clients & commissions | `partenariats/suivi/SUIVI-CLIENTS-ET-COMMISSIONS.md` | Registre des apports, contrôle mensuel, fiches d'apport & factures, KPIs |
+
 ## 🔗 Adresses
 - **Adresse de ce dossier** : https://github.com/karimzoubdane-debug/voyages21/tree/main/partenariats
 - Suivi Cockpit : https://v21-cockpit.vercel.app → fiche **#51 APPORTEUR**
