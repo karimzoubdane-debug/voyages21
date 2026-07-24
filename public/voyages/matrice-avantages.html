@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Voyages21 — Matrice des avantages (reliée au catalogue)</title>
+<style>
+  :root{
+    --green:#1B3A28;--green-deep:#152E1F;--gold:#C8A440;--gold-soft:#E4CE93;
+    --cream:#F5F0E8;--ground:#FBF9F4;--card:#FFFFFF;--ink:#20271F;--muted:#6B7268;
+    --line:#E6DFD1;--chip:#EFE9DB;--shadow:0 1px 2px rgba(21,46,31,.06),0 8px 24px rgba(21,46,31,.06);--radius:14px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --green:#E6C765;--green-deep:#0E1A13;--gold:#D9B45A;--gold-soft:#7A6428;
+    --cream:#121A14;--ground:#0C120D;--card:#141E16;--ink:#E9EEE6;--muted:#9AA394;
+    --line:#243026;--chip:#1C271E;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);}}
+  :root[data-theme="dark"]{
+    --green:#E6C765;--green-deep:#0E1A13;--gold:#D9B45A;--gold-soft:#7A6428;
+    --cream:#121A14;--ground:#0C120D;--card:#141E16;--ink:#E9EEE6;--muted:#9AA394;
+    --line:#243026;--chip:#1C271E;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4;-webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:0 14px 90px}
+  header.top{background:var(--green-deep);color:#fff;margin:0 -14px;padding:16px 16px 13px;border-bottom:2px solid var(--gold)}
+  .brand{font-family:Georgia,serif;font-size:14px;letter-spacing:.5px;color:var(--gold-soft);text-transform:uppercase}
+  .brand b{color:#fff}
+  h1{font-family:Georgia,serif;font-size:20px;margin:3px 0 0;font-weight:600;color:#fff;text-wrap:balance}
+  .sub{font-size:12px;color:#C9D3C5;margin-top:4px}
+  .live{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:11.5px;color:#CFE8D6;
+    background:rgba(255,255,255,.08);padding:3px 9px;border-radius:999px}
+  .live .d{width:7px;height:7px;border-radius:50%;background:#54d17a;box-shadow:0 0 0 0 rgba(84,209,122,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(84,209,122,.5)}70%{box-shadow:0 0 0 7px rgba(84,209,122,0)}100%{box-shadow:0 0 0 0 rgba(84,209,122,0)}}
+  @media (prefers-reduced-motion:reduce){.live .d{animation:none}}
+
+  .bar{position:sticky;top:0;z-index:15;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:11px 0;background:var(--ground)}
+  .stat{display:flex;gap:14px;flex:1;min-width:150px}
+  .stat .n{font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .cell{display:flex;flex-direction:column;gap:2px}
+  .actions{display:flex;gap:8px}
+  button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);padding:9px 13px;background:var(--card);color:var(--ink);font-size:13px;font-weight:600;transition:transform .06s}
+  button:active{transform:scale(.97)}
+  button.primary{background:var(--gold);border-color:var(--gold);color:#20271F}
+  button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  .chips{display:flex;gap:7px;overflow-x:auto;padding:4px 0 10px;-webkit-overflow-scrolling:touch}
+  .chips a{white-space:nowrap;font-size:12px;font-weight:600;text-decoration:none;color:var(--green);
+    border:1px solid var(--line);background:var(--card);padding:6px 11px;border-radius:999px}
+
+  section.cat{margin-top:16px;scroll-margin-top:64px}
+  .chead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 4px 8px;border-bottom:1px solid var(--line)}
+  .cname{font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--green)}
+  .cmeta{font-size:11px;color:var(--muted)}.cmeta b{color:var(--gold)}
+  .row{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 13px;margin-top:10px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;justify-content:space-between}
+  .info{min-width:0;flex:1}
+  .nom{font-size:14px;font-weight:600;line-height:1.25;word-break:break-word}
+  .meta{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .price{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:700}
+  .badge{background:var(--chip);border-radius:6px;padding:1px 7px;font-size:10px;color:var(--muted);white-space:nowrap}
+  .adv{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+  .adv label{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .adv input{width:112px;text-align:center;font:inherit;font-weight:700;font-size:14px;color:var(--green);padding:9px 8px;border-radius:10px;border:1.5px solid var(--line);background:var(--ground)}
+  .adv input:focus{outline:none;border-color:var(--gold);background:var(--card)}
+  .row.custom{border-color:var(--gold-soft)}.row.custom .adv input{border-color:var(--gold)}
+  .foot{margin-top:26px;font-size:11px;color:var(--muted);text-align:center;line-height:1.7}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow);z-index:40}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  :root[data-theme="dark"] .toast{color:#0E1A13}
+  @media (max-width:440px){.row{flex-direction:column;align-items:stretch;gap:10px}.adv{flex-direction:row;align-items:center;justify-content:space-between;width:100%}.adv input{width:130px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>VOYAGES</b>21 · Apporteur DA21</div>
+    <h1>Matrice des avantages par produit</h1>
+    <div class="sub">Reliée au catalogue du site — organisée par les catégories du site.</div>
+    <span class="live"><span class="d"></span><span id="liveTxt">Chargement du catalogue…</span></span>
+  </header>
+
+  <div class="bar">
+    <div class="stat">
+      <div class="cell"><span class="n" id="nTotal">0</span><span class="l">produits</span></div>
+      <div class="cell"><span class="n" id="nCustom">0</span><span class="l">personnalisés</span></div>
+    </div>
+    <div class="actions">
+      <button id="reset">Réinitialiser</button>
+      <button id="export" class="primary">Exporter Excel</button>
+    </div>
+  </div>
+
+  <nav class="chips" id="chips" aria-label="Catégories"></nav>
+  <div id="list"></div>
+
+  <div class="foot">
+    💾 Sauvegarde automatique sur cet appareil · 🔗 Prix &amp; produits synchronisés en direct avec le catalogue du site<br>
+    Un produit ajouté / retiré / repricé sur voyages21.com apparaît ici automatiquement. Défauts par gamme — vous gardez la main sur chaque ligne.
+  </div>
+</div>
+<div class="toast" id="toast">Enregistré ✓</div>
+
+<!-- Source unique de vérité : le même fichier que le catalogue du site -->
+<script src="./data.js"></script>
+<script>
+(function(){
+  var KEY='v21_avantages_v2';
+  var V=(window.VOYAGES)||{};
+  var liveTxt=document.getElementById('liveTxt');
+  if(!V||!Object.keys(V).length){ liveTxt.textContent='Catalogue introuvable'; return; }
+
+  function priceNum(p){ var m=String(p||'').match(/[\d\s ]+/); if(!m) return 0;
+    var n=m[0].replace(/[\s ]/g,''); return /^\d+$/.test(n)?parseInt(n,10):0; }
+  function dev(p){ return /USD/.test(p)?'USD':'DH'; }
+  function priceDisplay(p){ return String(p||'').replace('درهم','DH'); }
+  function classify(tag,p){
+    var n=priceNum(p), d=dev(p);
+    if(tag==='عمرة') return ['Omra / Hajj','-2%'];
+    if(tag==='Maroc') return ['Maroc','value-add'];
+    if(/roisi/i.test(tag)) return ['Croisières','-8%'];
+    if(d==='USD') n*=10;
+    if(n<12000) return ['Séjours','-5%'];
+    if(n<=28000) return ['Circuits internationaux','-7%'];
+    return ['Premium / long-courrier','-9%'];
+  }
+  var store={}; try{ store=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ store={}; }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+  // build ordered list of products, grouped by tag in catalogue order
+  var order=[], groups={}, items=[];
+  Object.keys(V).forEach(function(key){
+    var v=V[key]||{}; var tag=(v.tag||'—').trim();
+    var cg=classify(tag,v.price);
+    var it={key:key,tag:tag,nom:v.title||key,duree:v.duration||'',prix:priceDisplay(v.price),
+            dev:dev(v.price),gamme:cg[0],defaut:cg[1],pn:priceNum(v.price)};
+    items.push(it);
+    if(!groups[tag]){groups[tag]=[];order.push(tag);} groups[tag].push(it);
+  });
+
+  var list=document.getElementById('list'), chips=document.getElementById('chips');
+  function slug(t){ return 't'+t.replace(/[^a-zA-Z0-9]/g,''); }
+
+  order.forEach(function(tag){
+    var a=document.createElement('a'); a.href='#'+slug(tag); a.textContent=tag; chips.appendChild(a);
+    var sec=document.createElement('section'); sec.className='cat'; sec.id=slug(tag);
+    var gm=groups[tag][0].gamme;
+    sec.innerHTML='<div class="chead"><span class="cname">'+esc(tag)+'</span>'+
+      '<span class="cmeta"><b>'+groups[tag].length+'</b> · gamme : '+esc(gm)+'</span></div>';
+    groups[tag].forEach(function(it){
+      var val=(it.key in store)?store[it.key]:it.defaut;
+      var row=document.createElement('div'); row.className='row';
+      row.innerHTML='<div class="info"><div class="nom" dir="auto">'+esc(it.nom)+'</div>'+
+        '<div class="meta"><span class="badge">'+esc(it.gamme)+'</span>'+
+        (it.duree?'<span>'+esc(it.duree)+'</span>':'')+
+        '<span class="price">'+esc(it.prix)+'</span></div></div>'+
+        '<div class="adv"><label>Avantage</label>'+
+        '<input type="text" value="'+esc(val)+'" aria-label="Avantage '+esc(it.nom)+'"></div>';
+      var input=row.querySelector('input');
+      function mark(){ row.classList.toggle('custom', input.value.trim()!==it.defaut); }
+      mark();
+      input.addEventListener('input',function(){ store[it.key]=input.value; saveNow(); mark(); refresh(); });
+      sec.appendChild(row);
+    });
+    list.appendChild(sec);
+  });
+
+  var toast=document.getElementById('toast'), tT;
+  function ping(m){ toast.textContent=m||'Enregistré ✓'; toast.classList.add('show'); clearTimeout(tT); tT=setTimeout(function(){toast.classList.remove('show');},1100); }
+  function saveNow(){ try{ localStorage.setItem(KEY,JSON.stringify(store)); ping(); }catch(e){ ping('Sauvegarde impossible'); } }
+  function refresh(){
+    document.getElementById('nTotal').textContent=items.length;
+    var c=0; items.forEach(function(it){ var v=(it.key in store)?store[it.key]:it.defaut; if(String(v).trim()!==it.defaut) c++; });
+    document.getElementById('nCustom').textContent=c;
+  }
+  liveTxt.textContent=items.length+' produits synchronisés depuis le catalogue';
+  refresh();
+
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Remettre tous les avantages aux valeurs par défaut ?')) return;
+    store={}; localStorage.removeItem(KEY);
+    var inputs=document.querySelectorAll('.row'); var idx=0;
+    order.forEach(function(tag){ groups[tag].forEach(function(it){
+      var row=inputs[idx++]; var inp=row.querySelector('input'); inp.value=it.defaut; row.classList.remove('custom'); }); });
+    refresh(); ping('Réinitialisé');
+  });
+
+  document.getElementById('export').addEventListener('click',function(){
+    var head=['Categorie','Nom du voyage','Duree','Prix','Devise','Gamme','Avantage accorde'];
+    var q=function(s){ return '"'+String(s).replace(/"/g,'""')+'"'; };
+    var lines=[head.map(q).join(';')];
+    items.forEach(function(it){ var v=(it.key in store)?store[it.key]:it.defaut;
+      lines.push([it.tag,it.nom,it.duree,it.prix,it.dev,it.gamme,v].map(q).join(';')); });
+    var blob=new Blob(['﻿'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+    var url=URL.createObjectURL(blob); var a=document.createElement('a');
+    a.href=url; a.download='voyages21-avantages.csv'; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },500); ping('Fichier Excel prêt ✓');
+  });
+})();
+</script>
+</body>
+</html>
