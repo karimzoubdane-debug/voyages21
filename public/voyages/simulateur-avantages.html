@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Voyages21 — Simulateur d'avantage & commission</title>
+<style>
+  :root{
+    --green:#1B3A28;--green-deep:#152E1F;--gold:#C8A440;--gold-soft:#E4CE93;
+    --ground:#FBF9F4;--card:#FFFFFF;--ink:#20271F;--muted:#6B7268;--line:#E6DFD1;--chip:#EFE9DB;
+    --ok:#2F7D4F;--warn:#B8860B;--bad:#B23B3B;
+    --shadow:0 1px 2px rgba(21,46,31,.06),0 8px 24px rgba(21,46,31,.06);--radius:14px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --green:#E6C765;--green-deep:#0E1A13;--gold:#D9B45A;--gold-soft:#7A6428;
+    --ground:#0C120D;--card:#141E16;--ink:#E9EEE6;--muted:#9AA394;--line:#243026;--chip:#1C271E;
+    --ok:#5FBE86;--warn:#E0B44B;--bad:#E07A7A;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);}}
+  :root[data-theme="dark"]{--green:#E6C765;--green-deep:#0E1A13;--gold:#D9B45A;--gold-soft:#7A6428;--ground:#0C120D;--card:#141E16;--ink:#E9EEE6;--muted:#9AA394;--line:#243026;--chip:#1C271E;--ok:#5FBE86;--warn:#E0B44B;--bad:#E07A7A;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4;-webkit-text-size-adjust:100%}
+  .wrap{max-width:640px;margin:0 auto;padding:0 14px 80px}
+  header.top{background:var(--green-deep);color:#fff;margin:0 -14px;padding:16px 16px 13px;border-bottom:2px solid var(--gold)}
+  .brand{font-family:Georgia,serif;font-size:14px;letter-spacing:.5px;color:var(--gold-soft);text-transform:uppercase}
+  .brand b{color:#fff}
+  h1{font-family:Georgia,serif;font-size:20px;margin:3px 0 0;font-weight:600;color:#fff}
+  .sub{font-size:12px;color:#C9D3C5;margin-top:4px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-top:14px}
+  label.f{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+  select,input[type=number]{width:100%;font:inherit;font-size:15px;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--ground);color:var(--ink)}
+  select{font-weight:700;color:var(--green)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .rangerow{display:flex;align-items:center;gap:10px}
+  input[type=range]{flex:1;accent-color:var(--gold)}
+  .val{font-variant-numeric:tabular-nums;font-weight:700;color:var(--green);min-width:52px;text-align:right}
+  .price{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+
+  .result{background:linear-gradient(180deg,var(--card),var(--ground));border:1.5px solid var(--gold-soft)}
+  .big{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+  .kpi{flex:1;min-width:120px}
+  .kpi .n{font-family:Georgia,serif;font-size:26px;font-weight:800;color:var(--green);line-height:1;font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+  .kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:8px}
+  .badge.lm{background:var(--bad);color:#fff}
+  .badge.cap{background:var(--warn);color:#20271F}
+  :root[data-theme="dark"] .badge.lm{color:#0E1A13}
+
+  .bar{display:flex;height:26px;border-radius:8px;overflow:hidden;margin-top:12px;border:1px solid var(--line);font-size:10.5px;font-weight:700;color:#fff}
+  .bar span{display:flex;align-items:center;justify-content:center;white-space:nowrap;min-width:0;overflow:hidden}
+  .seg-av{background:#C8A440;color:#20271F}
+  .seg-com{background:#7a94c8}
+  .seg-net{background:var(--green);color:#fff}
+  :root[data-theme="dark"] .seg-net{color:#0E1A13}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:8px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+  .marge{font-weight:800}
+  .marge.ok{color:var(--ok)} .marge.warn{color:var(--warn)} .marge.bad{color:var(--bad)}
+  details{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0 12px}
+  summary{cursor:pointer;padding:12px 0;font-weight:700;font-size:13px;color:var(--green)}
+  .cfg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:14px}
+  .cfg label{font-size:11px;color:var(--muted)}
+  .foot{margin-top:22px;font-size:11px;color:var(--muted);text-align:center;line-height:1.7}
+  @media (max-width:420px){.kpi .n{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>VOYAGES</b>21 · Apporteur DA21 — outil interne</div>
+    <h1>Simulateur d'avantage &amp; commission</h1>
+    <div class="sub">Combien accorder par produit selon votre marge, le remplissage et le last-minute — sans jamais vendre à perte.</div>
+  </header>
+
+  <div class="card">
+    <label class="f" for="prod">Produit (catalogue en direct)</label>
+    <select id="prod"></select>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+      <span class="f" style="margin:0">Prix public</span>
+      <span class="price" id="pprice">—</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label class="f">Ma marge</label>
+        <div class="rangerow"><input type="range" id="m" min="3" max="45" step="1" value="20"><span class="val"><span id="mv">20</span> %</span></div>
+      </div>
+      <div>
+        <label class="f">Saison</label>
+        <select id="saison"><option value="haute">Haute</option><option value="moyenne" selected>Moyenne</option><option value="basse">Basse</option></select>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:12px">
+      <div><label class="f">Capacité</label><input type="number" id="C" value="20" min="1"></div>
+      <div><label class="f">Places vendues</label><input type="number" id="V" value="8" min="0"></div>
+      <div><label class="f">Jours avant départ</label><input type="number" id="J" value="60" min="0"></div>
+    </div>
+    <div class="grid" style="margin-top:12px">
+      <div><label class="f">Taille du groupe</label><input type="number" id="G" value="1" min="1"></div>
+      <div style="display:flex;align-items:flex-end"><div class="s" id="fillinfo" style="font-size:12px;color:var(--muted)"></div></div>
+    </div>
+  </div>
+
+  <div class="card result">
+    <div class="big">
+      <div class="kpi"><div class="n"><span id="rRem">0</span> %</div><div class="l">Avantage à accorder</div><div class="s" id="rRemDh">—</div></div>
+      <div class="kpi"><div class="n"><span id="rCom">0</span> %</div><div class="l">Votre commission DA21</div><div class="s" id="rComDh">—</div></div>
+      <div class="kpi"><div class="n marge" id="rMarge">0 %</div><div class="l">Marge restante agence</div><div class="s" id="rMargeDh">—</div></div>
+    </div>
+    <div id="badges"></div>
+    <div class="bar" id="bar"></div>
+    <div class="legend">
+      <span><span class="dot" style="background:#C8A440"></span>Avantage client</span>
+      <span><span class="dot" style="background:#7a94c8"></span>Commission DA21</span>
+      <span><span class="dot" style="background:#1B3A28"></span>Marge nette</span>
+    </div>
+    <div class="s" id="netline" style="font-size:13px;color:var(--ink);margin-top:12px;font-weight:600"></div>
+  </div>
+
+  <details>
+    <summary>⚙️ Réglages avancés (coefficients) — pour affiner à votre ressenti terrain</summary>
+    <div class="cfg">
+      <label>Part de marge partageable (k_marge)<input type="number" id="c_kmarge" step="0.05" value="0.35"></label>
+      <label>Marge plancher (jamais en dessous)<input type="number" id="c_floor" step="0.01" value="0.05"></label>
+      <label>Poids remplissage (k_remp)<input type="number" id="c_kremp" step="0.01" value="0.10"></label>
+      <label>Poids urgence J- (k_urg)<input type="number" id="c_kurg" step="0.01" value="0.05"></label>
+      <label>Commission max (com_max)<input type="number" id="c_commax" step="0.01" value="0.07"></label>
+      <label>Places restantes ≤ (last-minute)<input type="number" id="c_rseuil" step="1" value="5"></label>
+      <label>Jours ≤ (last-minute)<input type="number" id="c_jbrade" step="1" value="10"></label>
+      <label>Seuil rentabilité (% capacité)<input type="number" id="c_be" step="0.05" value="0.60"></label>
+    </div>
+  </details>
+
+  <div class="foot">Modèle yield management borné · avantage + commission puisent dans la même marge · garde-fou anti-perte.<br>Prix issus du catalogue voyages21.com en direct. Outil interne — ne pas diffuser.</div>
+</div>
+
+<script src="./data.js"></script>
+<script>
+(function(){
+  var V=(window.VOYAGES)||{};
+  function priceNum(p){ var mm=String(p||'').match(/[\d\s ]+/); if(!mm) return 0; var n=mm[0].replace(/[\s ]/g,''); return /^\d+$/.test(n)?parseInt(n,10):0; }
+  function dev(p){ return /USD/.test(p)?'USD':'DH'; }
+  function pDisp(p){ return String(p||'').replace('درهم','DH'); }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function clamp(x,lo,hi){ return Math.max(lo,Math.min(hi,x)); }
+  function fmt(n){ return Math.round(n).toLocaleString('fr-FR').replace(/ /g,' '); }
+
+  // build product select grouped by tag
+  var sel=document.getElementById('prod');
+  var byTag={},order=[];
+  Object.keys(V).forEach(function(k){ var v=V[k]||{}; var t=(v.tag||'—').trim(); if(!byTag[t]){byTag[t]=[];order.push(t);} byTag[t].push({key:k,nom:v.title||k,prix:v.price}); });
+  order.forEach(function(t){ var og=document.createElement('optgroup'); og.label=t;
+    byTag[t].forEach(function(it){ var o=document.createElement('option'); o.value=it.key; o.textContent=it.nom+' — '+pDisp(it.prix); og.appendChild(o); });
+    sel.appendChild(og); });
+
+  function cfg(){ return {
+    k_marge:+v('c_kmarge'), MARGE_PLANCHER:+v('c_floor'), k_remp:+v('c_kremp'), k_urg:+v('c_kurg'),
+    J_loin:120, J_proche:15, com_min:0.02, com_max:+v('c_commax'), k_com:0.22,
+    R_seuil:+v('c_rseuil'), J_brade:+v('c_jbrade'), taux_breakeven:+v('c_be'), bradage_floor:0.60,
+    saison:{haute:-0.02,moyenne:0,basse:0.03},
+    paliers:[{min:40,d:0.07},{min:20,d:0.05},{min:10,d:0.03},{min:4,d:0.015},{min:1,d:0}]
+  };}
+  function v(id){ return document.getElementById(id).value; }
+
+  function simuler(inp,c){
+    var P=inp.P,m=inp.m,C=inp.C,Vv=inp.V,J=inp.J,G=inp.G,saison=inp.saison;
+    var R=C-Vv, f=C>0?Vv/C:0;
+    var poids=clamp((c.J_loin-J)/(c.J_loin-c.J_proche),0,1);
+    var commission=clamp(c.k_com*m,c.com_min,c.com_max);
+    var remiseMax=Math.max(0,m-c.MARGE_PLANCHER-commission);
+    var Vseuil=Math.ceil(c.taux_breakeven*C);
+    var bradage=(R<=c.R_seuil)&&(J<=c.J_brade)&&(Vv>=Vseuil);
+    var remise;
+    if(bradage){ var intensite=poids*clamp(R/c.R_seuil,0,1); remise=remiseMax*(c.bradage_floor+(1-c.bradage_floor)*intensite); }
+    else{
+      var base=c.k_marge*m;
+      var dRemp=c.k_remp*(1-f)*poids;
+      var dUrg=c.k_urg*poids;
+      var pal=c.paliers.find(function(p){return G>=p.min;})||{d:0};
+      var dSais=c.saison[saison]||0;
+      remise=base+dRemp+dUrg+pal.d+dSais;
+    }
+    remise=clamp(remise,0,remiseMax);
+    remise=Math.round(remise*200)/200; // arrondi 0,5%
+    var margeFinale=m-remise-commission;
+    return {remise:remise,commission:commission,margeFinale:margeFinale,
+      prixNet:P*(1-remise),gainAgence:P*margeFinale,gainApp:P*commission,
+      bradage:bradage,plafonne:remise>=remiseMax-1e-9,R:R,Vseuil:Vseuil};
+  }
+
+  function run(){
+    var opt=sel.options[sel.selectedIndex]; if(!opt) return;
+    var prod=V[opt.value]||{}; var P=priceNum(prod.price); var d=dev(prod.price);
+    document.getElementById('pprice').textContent=pDisp(prod.price);
+    var m=+v('m')/100;
+    document.getElementById('mv').textContent=v('m');
+    var C=Math.max(1,+v('C')||1), Vv=clamp(+v('V')||0,0,C), J=Math.max(0,+v('J')||0), G=Math.max(1,+v('G')||1);
+    document.getElementById('V').max=C;
+    var saison=v('saison');
+    var c=cfg();
+    var r=simuler({P:P,m:m,C:C,V:Vv,J:J,G:G,saison:saison},c);
+    var cur=d;
+    document.getElementById('fillinfo').textContent='Remplissage '+Math.round(C>0?Vv/C*100:0)+'% · '+(C-Vv)+' places restantes · rentabilité ≥ '+r.Vseuil+' vendues';
+
+    document.getElementById('rRem').textContent=(r.remise*100).toFixed(1);
+    document.getElementById('rRemDh').textContent='soit '+fmt(P*r.remise)+' '+cur+' · prix net '+fmt(r.prixNet)+' '+cur;
+    document.getElementById('rCom').textContent=(r.commission*100).toFixed(1);
+    document.getElementById('rComDh').textContent=fmt(r.gainApp)+' '+cur+' / vente';
+    var mp=document.getElementById('rMarge'); mp.textContent=(r.margeFinale*100).toFixed(1)+' %';
+    mp.className='marge '+(r.margeFinale>0.10?'ok':(r.margeFinale>=c.MARGE_PLANCHER-1e-9?'warn':'bad'));
+    document.getElementById('rMargeDh').textContent=fmt(r.gainAgence)+' '+cur+' / vente';
+
+    var badges=''; if(r.bradage) badges+='<span class="badge lm">🔥 LAST-MINUTE — rentabilité atteinte, dernières places</span> ';
+    if(r.plafonne) badges+='<span class="badge cap">⚠️ Plafonné par la marge plancher</span>';
+    document.getElementById('badges').innerHTML=badges;
+
+    var av=r.remise*100, com=r.commission*100, net=Math.max(0,r.margeFinale*100), tot=av+com+net||1;
+    var bar='';
+    if(av>0) bar+='<span class="seg-av" style="width:'+(av/tot*100)+'%">'+(av>=6?av.toFixed(0)+'%':'')+'</span>';
+    if(com>0) bar+='<span class="seg-com" style="width:'+(com/tot*100)+'%">'+(com>=6?com.toFixed(0)+'%':'')+'</span>';
+    bar+='<span class="seg-net" style="width:'+(net/tot*100)+'%">'+(net>=6?net.toFixed(0)+'%':'')+'</span>';
+    document.getElementById('bar').innerHTML=bar;
+    document.getElementById('netline').innerHTML='Sur ce produit : le client paie <b>'+fmt(r.prixNet)+' '+cur+'</b>, vous touchez <b>'+fmt(r.gainApp)+' '+cur+'</b> de commission, l\'agence garde <b>'+fmt(r.gainAgence)+' '+cur+'</b> de marge nette.';
+  }
+
+  ['prod','m','saison','C','V','J','G','c_kmarge','c_floor','c_kremp','c_kurg','c_commax','c_rseuil','c_jbrade','c_be'].forEach(function(id){
+    var el=document.getElementById(id); el.addEventListener('input',run); el.addEventListener('change',run);
+  });
+  run();
+})();
+</script>
+</body>
+</html>
