@@ -4,7 +4,23 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-06-27_
+_Dernière mise à jour : 2026-07-29_
+
+## 🆕 En cours — Audit UX/SEO + correctifs SEO (PR #243, DRAFT, 2026-07-29)
+Branche `claude/voyages21-ux-seo-audit-gfyw9w`. Audit de conformité du site au plan
+SEO (`src/app/seo-voyages21-SKILL.md`) : **UX ≈ 75 %, SEO ≈ 30 %**.
+**Correctifs livrés (lot 1, sans toucher au design)** :
+- `src/app/sitemap.js` (routes + scan `public/voyages/*.html`, **94 URLs**) et
+  `src/app/robots.js` (blocage admin/account/api/studio + déclaration sitemap).
+- `layout.jsx` : `metadataBase`, image OG par défaut, Twitter card, canonical,
+  JSON-LD **`TravelAgency`**.
+- FAQ : données extraites dans `faq/faqData.js` (source unique) + JSON-LD
+  **`FAQPage`** rendu côté serveur.
+- ✅ `npm run build` OK (`/robots.txt` + `/sitemap.xml` générés, JSON-LD dans le HTML).
+- ⏭️ Attendre le **« go #243 »** de Karim après test preview → squash-merge sur main.
+- 🔴 **Reste (non conforme, chantiers séparés)** : (1) home `/` en `redirect()` vers
+  HTML statique **non indexable**, (2) i18n FR/EN/ES/DE + hreflang, (3) bannière RGPD
+  Cookieyes (placeholder `VOTRE_CLE_COOKIEYES`).
 
 ## ✅ Hajj 2027 — Hôtel Médine « Baltimore 5★ » (PR #103) — FUSIONNÉ le 2026-06-27 (squash `283e16a`)
 Correction du tableau des prix dans `public/voyages/destinations/hajj-2027.html`,
