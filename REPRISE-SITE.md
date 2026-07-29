@@ -6,7 +6,23 @@
 
 _Dernière mise à jour : 2026-07-29_
 
-## 🆕 En cours — Audit UX/SEO + correctifs SEO (PR #243, DRAFT, 2026-07-29)
+## 🆕 En cours — Page d'accueil indexable à la racine (PR #245, DRAFT, 2026-07-29)
+Branche `claude/voyages21-ux-seo-audit-gfyw9w` (repartie de `main` après merge #243).
+2ᵉ chantier de l'audit, validé par Karim.
+- **Avant** : `/` = redirect 307 vers le splash vidéo `cover-ete-2026.html` (non indexable).
+- **Maintenant** : rewrite `/` → `public/design/homepage-v2-luxe.html` (l'URL reste `/`,
+  pas de redirection). La homepage a **déjà sa propre vidéo hero** → parcours visiteur
+  inchangé. Suppression de `src/app/page.jsx`.
+- `<head>` homepage : title/description/canonical/OG/Twitter — **positionnement corrigé**
+  = agence généraliste Maroc + monde + Omra/Hajj + billetterie IATA (⚠️ PAS 4x4/circuits,
+  qui relève du site **incoming**, projet séparé). `<h1>` rendu crawlable. Schéma
+  `TravelAgency` : URL vercel.app → www.voyages21.com, doublon retiré.
+- ✅ Build OK, `GET /` = 200 (plus 307), un seul schéma TravelAgency.
+- ⏳ **À confirmer par Karim** : les avis + note 4,9/147 du schéma existant sont-ils de
+  **vrais avis** ? (avis fictifs = interdit par Google).
+- ⏭️ Attendre le **« go #245 »** après test preview → squash-merge.
+
+## ✅ Audit UX/SEO + correctifs SEO lot 1 (PR #243) — FUSIONNÉ le 2026-07-29 (squash `701a337`)
 Branche `claude/voyages21-ux-seo-audit-gfyw9w`. Audit de conformité du site au plan
 SEO (`src/app/seo-voyages21-SKILL.md`) : **UX ≈ 75 %, SEO ≈ 30 %**.
 **Correctifs livrés (lot 1, sans toucher au design)** :
