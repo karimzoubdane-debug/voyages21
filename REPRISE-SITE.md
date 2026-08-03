@@ -4,9 +4,31 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-07-29_
+_Dernière mise à jour : 2026-08-03_
 
-## 🆕 En cours — Audit UX/SEO + correctifs SEO (PR #243, DRAFT, 2026-07-29)
+## ▶️ Prochaine étape — Chantiers SEO restants (audit UX/SEO)
+Les lots 1 & 2 de l'audit sont **fusionnés et en ligne** (voir ci-dessous). Restent
+**2 chantiers séparés** (branche dédiée + PR draft chacun) :
+1. **i18n FR/EN/ES/DE + hreflang** (`next-intl`) — le plus gros morceau.
+2. **Bannière RGPD Cookieyes** (remplacer le placeholder `VOTRE_CLE_COOKIEYES`).
+En parallèle (hors code) : **décision connexion domaine `voyages21.com`** (Valablue →
+Vercel, migrer les emails AVANT) + choix hébergement vidéo header (fichier `2964957128`).
+
+## ✅ Audit SEO lot 2 — Page d'accueil indexable à la racine (PR #245) — FUSIONNÉ le 2026-07-31
+Branche `claude/voyages21-ux-seo-audit-gfyw9w` (repartie de `main` après #243).
+- **Avant** : `/` = redirect 307 vers le splash vidéo `cover-ete-2026.html` (non indexable).
+- **Maintenant** : rewrite `/` → `public/design/homepage-v2-luxe.html` (l'URL reste `/`,
+  pas de redirection). La homepage a **déjà sa propre vidéo hero** → parcours visiteur
+  inchangé. Suppression de `src/app/page.jsx`.
+- `<head>` homepage : title/description/canonical/OG/Twitter — **positionnement corrigé**
+  = agence généraliste Maroc + monde + Omra/Hajj + billetterie IATA (⚠️ PAS 4x4/circuits,
+  qui relève du site **incoming**). `<h1>` rendu crawlable + `DEFAULTS.title`.
+- ✅ **Avis Google RÉELS intégrés** au schéma `TravelAgency` **et** au carrousel : note
+  **4,8 / 78 avis** (scraping Google Maps, Place ID `ChIJPaMFhYzurw0R50-J4mRz7oc`,
+  état 2026-07-30) — les anciens avis fictifs (4,9/147, noms « Meryem A. », etc.) ont été
+  **remplacés**. ➡️ La question « vrais avis ? » est donc **résolue**.
+
+## ✅ Audit UX/SEO + correctifs SEO lot 1 (PR #243) — FUSIONNÉ le 2026-07-29 (squash `701a337`)
 Branche `claude/voyages21-ux-seo-audit-gfyw9w`. Audit de conformité du site au plan
 SEO (`src/app/seo-voyages21-SKILL.md`) : **UX ≈ 75 %, SEO ≈ 30 %**.
 **Correctifs livrés (lot 1, sans toucher au design)** :
@@ -17,10 +39,6 @@ SEO (`src/app/seo-voyages21-SKILL.md`) : **UX ≈ 75 %, SEO ≈ 30 %**.
 - FAQ : données extraites dans `faq/faqData.js` (source unique) + JSON-LD
   **`FAQPage`** rendu côté serveur.
 - ✅ `npm run build` OK (`/robots.txt` + `/sitemap.xml` générés, JSON-LD dans le HTML).
-- ⏭️ Attendre le **« go #243 »** de Karim après test preview → squash-merge sur main.
-- 🔴 **Reste (non conforme, chantiers séparés)** : (1) home `/` en `redirect()` vers
-  HTML statique **non indexable**, (2) i18n FR/EN/ES/DE + hreflang, (3) bannière RGPD
-  Cookieyes (placeholder `VOTRE_CLE_COOKIEYES`).
 
 ## ✅ Hajj 2027 — Hôtel Médine « Baltimore 5★ » (PR #103) — FUSIONNÉ le 2026-06-27 (squash `283e16a`)
 Correction du tableau des prix dans `public/voyages/destinations/hajj-2027.html`,
