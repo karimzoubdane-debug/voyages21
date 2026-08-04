@@ -48,10 +48,10 @@
     + '<a class="v21-contact-link v21-wa" href="https://wa.me/' + WHATSAPP + '?text=' + MESSAGE + '" target="_blank" rel="noopener" aria-label="WhatsApp">' + ICONS.wa + '</a>'
     + '<a class="v21-contact-link v21-tel" href="tel:' + PHONE + '" aria-label="Téléphone">' + ICONS.tel + '</a>'
     + '<a class="v21-contact-link v21-ig" href="https://www.instagram.com/voyages21maroc" target="_blank" rel="noopener" aria-label="Instagram">' + ICONS.ig + '</a>'
-    + '<a class="v21-contact-link v21-fb" href="https://www.facebook.com/Voyages21" target="_blank" rel="noopener" aria-label="Facebook">' + ICONS.fb + '</a>'
-    + '<span class="v21-contact-link v21-tiktok" role="img" aria-label="TikTok bientôt disponible" aria-disabled="true" title="TikTok bientôt disponible"><img src="/social-icons/tiktok.svg" alt=""></span>'
-    + '<span class="v21-contact-link v21-snapchat" role="img" aria-label="Snapchat bientôt disponible" aria-disabled="true" title="Snapchat bientôt disponible"><img src="/social-icons/snapchat.svg" alt=""></span>'
-    + '<span class="v21-contact-link v21-youtube" role="img" aria-label="YouTube bientôt disponible" aria-disabled="true" title="YouTube bientôt disponible"><img src="/social-icons/youtube.svg" alt=""></span>';
+    + '<a class="v21-contact-link v21-fb" href="https://www.facebook.com/Voyages21" target="_blank" rel="noopener" aria-label="Facebook">' + ICONS.fb + '</a>';
+  // TikTok / Snapchat / YouTube masqués jusqu'à nouvel ordre (demande Karim, 2026-08-04).
+  // Pour les réafficher, restaurer les 3 <span> v21-tiktok / v21-snapchat / v21-youtube
+  // (icônes dans /social-icons/, styles déjà présents dans le bloc CSS ci-dessus).
   document.body.appendChild(bar);
   document.body.classList.add('v21-social-ready');
 
