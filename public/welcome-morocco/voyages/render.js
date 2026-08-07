@@ -9,7 +9,12 @@
     if (!baseVoyage) { app.innerHTML = '<p style="padding:2rem;text-align:center">Trip not found.</p>'; return; }
 
     function preferredLang() {
-        // Hello Morocco — international site: English only (China market is a separate site).
+        var q = new URLSearchParams(window.location.search).get("lang");
+        if (q === "zh" || q === "en") return q;
+        try {
+            var stored = localStorage.getItem("welcomeChinaLang");
+            if (stored === "zh" || stored === "en") return stored;
+        } catch (e) {}
         return "en";
     }
 
@@ -288,12 +293,12 @@
     var TITLE = v.title;
     document.documentElement.lang = currentLang === "zh" ? "zh-CN" : "en";
     document.documentElement.dir = "ltr";
-    document.title = TITLE + " — Hello Morocco";
+    document.title = TITLE + " — WelcomeChina";
 
     var LABELS = {
         fr: {
             back: "‹ Retour à la brochure", soundOn: "Activer le son", soundOff: "Couper le son",
-            from: "À partir de", quote: "Demander un devis", quoteWa: "Demander un devis",
+            from: "À partir de", quote: "Contact WeChat", quoteWa: "Contact WeChat",
             seeVideo: "Voir la vidéo", trust: "Sur mesure · Voyages 21, depuis 2000",
             why: "Pourquoi vous allez adorer ce voyage", itinDays: "Itinéraire jour par jour", itin: "Itinéraire",
             included: "Ce qui est inclus", includes: "Notre tarif comprend", excludes: "Notre tarif ne comprend pas",
@@ -304,7 +309,7 @@
         },
         en: {
             back: "‹ Back to brochure", soundOn: "Enable sound", soundOff: "Mute",
-            from: "From", quote: "Request a quote", quoteWa: "Request a quote",
+            from: "From", quote: "Contact WeChat", quoteWa: "Contact WeChat",
             seeVideo: "Watch the video", trust: "Tailor-made travel · Voyages 21, since 2000",
             why: "Why you will love this trip", itinDays: "Day-by-day itinerary", itin: "Itinerary",
             included: "What is included", includes: "Our price includes", excludes: "Our price does not include",
@@ -315,7 +320,7 @@
         },
         zh: {
             back: "‹ 返回手册", soundOn: "开启声音", soundOff: "静音",
-            from: "起价", quote: "获取报价", quoteWa: "获取报价",
+            from: "起价", quote: "微信联系", quoteWa: "微信联系",
             seeVideo: "观看视频", trust: "定制旅行 · Voyages 21，自 2000 年起",
             why: "为什么选择这条线路", itinDays: "每日行程", itin: "行程",
             included: "费用包含", includes: "报价包含", excludes: "报价不含",
@@ -326,7 +331,7 @@
         },
         ar: {
             back: "‹ العودة إلى الكتيّب", soundOn: "تشغيل الصوت", soundOff: "كتم الصوت",
-            from: "ابتداءً من", quote: "اطلب عرض سعر", quoteWa: "اطلب عرض سعر",
+            from: "ابتداءً من", quote: "WeChat", quoteWa: "WeChat",
             seeVideo: "شاهد الفيديو", trust: "رحلة على المقاس · Voyages 21 منذ 2000",
             why: "لماذا ستحبّون هذه الرحلة", itinDays: "البرنامج يوماً بيوم", itin: "البرنامج",
             included: "ما يشمله العرض", includes: "يشمل سعرنا", excludes: "لا يشمل سعرنا",
@@ -337,12 +342,6 @@
         }
     };
     var L = LABELS[currentLang] || LABELS.en;
-
-    // Build a WhatsApp deep link pre-filled with an enquiry message for this trip.
-    function waLink(label) {
-        var msg = L.askText(TITLE, label);
-        return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
-    }
 
     // En arabe (RTL), un nombre composé "17 200" est réordonné en "200 17" par l'algorithme
     // bidirectionnel. On isole chaque suite de chiffres dans un span LTR pour la lire correctement.
@@ -400,7 +399,7 @@
         : ((v.programme && v.programme.length) ? '<ol class="steps">' + v.programme.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" : "");
 
     app.innerHTML =
-        '<div class="topbar"><div class="topbar-inner"><a href="/welcome-morocco/">' + L.back + '</a><span class="brand">Hello Morocco</span><a class="btn-wa-top" href="' + waLink("") + '" target="_blank" rel="noopener">WhatsApp</a></div></div>'
+        '<div class="topbar"><div class="topbar-inner"><a href="/welcome-morocco/">' + L.back + '</a><span class="brand">WelcomeChina</span><div class="lang-switch" role="group" aria-label="Language"><button class="lang-btn' + (currentLang === "en" ? " active" : "") + '" onclick="setVoyageLang(\'en\')">English</button><button class="lang-btn' + (currentLang === "zh" ? " active" : "") + '" onclick="setVoyageLang(\'zh\')">中文</button></div></div></div>'
         + '<div class="page">'
         + (v.eyebrow ? '<div class="eyebrow">' + v.eyebrow + "</div>" : "")
         + '<h1 class="voyage-title">' + v.title + (v.duration ? ' <span class="dur-badge">' + v.duration + "</span>" : "") + "</h1>"
@@ -426,6 +425,7 @@
         + '<div class="cta-final"><h3>' + (cta.title || "") + "</h3><p>" + (cta.text || "") + '</p><button class="btn btn-gold" onclick="ask(\'\')">' + L.quoteWa + '</button></div>'
         + "</div>"
         + '<div class="vmodal" id="vmodal" onclick="if(event.target===this)closeVideo()"><div class="box"><button class="close" onclick="closeVideo()">×</button><div class="ratio" id="vframe"></div></div></div>'
+        + '<div class="wechat-modal" id="wechatModal" onclick="if(event.target===this)closeWechat()"><div class="wechat-box"><button class="wechat-close" onclick="closeWechat()">×</button><img src="/welcome-morocco/assets/wechat-qr.jpeg" alt="Voyages 21 WeChat QR code"></div></div>'
         + '<div class="gallery" id="gallery" onclick="if(event.target===this)closeGallery()"><div class="gbox"><button class="gallery-close" onclick="closeGallery()">×</button><div class="gallery-inner" id="galleryInner"></div></div></div>';
 
     // ===== Médias en ligne + comportements =====
@@ -551,8 +551,21 @@
         document.getElementById("galleryInner").innerHTML = "";
         document.body.style.overflow = "";
     };
+    window.openWechat = function () {
+        document.getElementById("wechatModal").classList.add("active");
+        document.body.style.overflow = "hidden";
+    };
+    window.closeWechat = function () {
+        document.getElementById("wechatModal").classList.remove("active");
+        document.body.style.overflow = "";
+    };
+    window.setVoyageLang = function (lang) {
+        try { localStorage.setItem("welcomeChinaLang", lang); } catch (e) {}
+        var url = new URL(window.location.href);
+        url.searchParams.set("lang", lang);
+        window.location.href = url.toString();
+    };
     window.ask = function (label) {
-        // Open WhatsApp with a pre-filled enquiry for this trip.
-        window.open(waLink(label || ""), "_blank", "noopener");
+        window.openWechat();
     };
 })();

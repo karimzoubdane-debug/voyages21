@@ -1,6 +1,6 @@
 "use client";
 
-export default function WelcomeMoroccoCover() {
+export default function HelloMorrocoCover() {
   return (
     <main className="cover" aria-label="Hello Morocco">
       <video
@@ -18,8 +18,8 @@ export default function WelcomeMoroccoCover() {
         x5-video-player-fullscreen="false"
       />
 
-      <a className="magicButton" href="/welcome-morocco/" aria-label="Enter the Hello Morocco site">
-        Enter · Discover Morocco
+      <a className="magicButton" href="/welcome-morocco/" aria-label="Open WelcomeChina brochure">
+        Click me to start the magic
       </a>
 
       <style jsx>{`
@@ -60,7 +60,7 @@ export default function WelcomeMoroccoCover() {
           display: block;
           object-fit: cover;
           object-position: center center;
-          background: #152e1f;
+          background: #a80f18;
         }
 
         .magicButton {
@@ -77,7 +77,7 @@ export default function WelcomeMoroccoCover() {
           padding: 0 1.45rem;
           border: 1px solid rgba(216, 173, 63, 0.86);
           border-radius: 999px;
-          background: linear-gradient(135deg, rgba(27, 58, 40, 0.92), rgba(18, 56, 47, 0.88));
+          background: linear-gradient(135deg, rgba(168, 15, 24, 0.92), rgba(18, 56, 47, 0.88));
           color: #fff8ea;
           box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
           font-family: Georgia, "Times New Roman", serif;
@@ -90,7 +90,7 @@ export default function WelcomeMoroccoCover() {
         }
 
         .magicButton:hover {
-          background: linear-gradient(135deg, rgba(200, 164, 64, 0.96), rgba(18, 70, 56, 0.92));
+          background: linear-gradient(135deg, rgba(186, 25, 33, 0.96), rgba(18, 70, 56, 0.92));
         }
 
         @media (max-width: 640px) {
