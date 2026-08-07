@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello Morocco — Tailor-made journeys with a trusted local agency since 2000</title>
+<meta name="description" content="Discover Morocco with Voyages 21, a trusted local travel agency since 2000. Imperial cities, the Sahara, the Atlas mountains and the Atlantic coast — tailor-made tours for international travellers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#1B3A28; --forest2:#152E1F; --gold:#C8A440; --gold-soft:#d8ad3f;
+    --cream:#F5F0E8; --ink:#20241f; --muted:#5c6357; --line:rgba(27,58,40,.14);
+    --wa:#25D366;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"DM Sans",system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:700;line-height:1.15;margin:0}
+  a{color:inherit;text-decoration:none}
+  img,video{max-width:100%;display:block}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 1.25rem}
+  .eyebrow{font-family:"DM Sans";text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:700;color:var(--gold);margin-bottom:.9rem}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.85rem 1.6rem;font-weight:700;font-size:.95rem;cursor:pointer;border:1px solid transparent;transition:transform .15s ease,opacity .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-gold{background:var(--gold);color:#1a1408}
+  .btn-wa{background:var(--wa);color:#04310f}
+  .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+  .btn-outline{background:transparent;color:var(--forest);border-color:var(--gold)}
+
+  /* Header */
+  header.site{position:sticky;top:0;z-index:50;background:rgba(21,46,31,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(200,164,64,.25)}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem 1.25rem;max-width:1200px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:.6rem;color:#fff}
+  .brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)}
+  .brand b{font-family:"Playfair Display";font-size:1.05rem;letter-spacing:.02em}
+  .brand span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:block;margin-top:-2px}
+  .site-cta{display:flex;gap:.5rem}
+  .site-cta .btn{padding:.55rem 1.05rem;font-size:.85rem}
+
+  /* Hero */
+  .hero{position:relative;min-height:92vh;min-height:92svh;display:flex;align-items:center;overflow:hidden;background:#0d1a12}
+  .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(13,26,18,.55) 0%,rgba(13,26,18,.35) 40%,rgba(13,26,18,.82) 100%)}
+  .hero-content{position:relative;z-index:2;color:#fff;max-width:780px;padding:4rem 1.25rem}
+  .hero h1{font-size:clamp(2.3rem,6vw,4.2rem);color:#fff;letter-spacing:-.01em}
+  .hero h1 i{color:var(--gold);font-style:italic}
+  .hero p.lead{font-size:clamp(1.05rem,2.2vw,1.35rem);margin:1.2rem 0 2rem;max-width:620px;color:rgba(255,255,255,.92)}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:.8rem}
+  .hero-trust{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:1.4rem;font-size:.85rem;color:rgba(255,255,255,.85)}
+  .hero-trust b{color:var(--gold);font-family:"Playfair Display";font-size:1.15rem;display:block}
+
+  /* Sections */
+  section{padding:4.5rem 0}
+  .section-head{max-width:720px;margin:0 auto 2.6rem;text-align:center}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--forest)}
+  .section-head p{color:var(--muted);margin-top:.8rem;font-size:1.05rem}
+
+  /* Why */
+  .why{background:#fff}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+  .why-card{text-align:center;padding:1.4rem 1rem}
+  .why-card .ico{font-size:1.9rem;margin-bottom:.6rem}
+  .why-card h3{font-size:1.15rem;color:var(--forest);margin-bottom:.4rem}
+  .why-card p{font-size:.92rem;color:var(--muted);margin:0}
+
+  /* Journeys */
+  .journeys{background:var(--cream)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+  .card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(21,46,31,.14)}
+  .card-media{position:relative;aspect-ratio:16/10;overflow:hidden}
+  .card-media img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .card:hover .card-media img{transform:scale(1.05)}
+  .card-dur{position:absolute;top:.8rem;left:.8rem;background:rgba(21,46,31,.88);color:#fff;font-size:.75rem;font-weight:600;padding:.3rem .7rem;border-radius:999px}
+  .card-body{padding:1.2rem 1.25rem 1.4rem;display:flex;flex-direction:column;flex:1}
+  .card-body h3{font-size:1.25rem;color:var(--forest);margin-bottom:.4rem}
+  .card-route{font-size:.85rem;color:var(--muted);margin-bottom:1rem;flex:1}
+  .card-route .sep{color:var(--gold);margin:0 .3rem}
+  .card .btn{width:100%}
+
+  /* Experiences */
+  .experiences{background:var(--forest);color:#fff}
+  .experiences .section-head h2{color:#fff}
+  .experiences .section-head p{color:rgba(255,255,255,.8)}
+  .exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+  .exp{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:3/4}
+  .exp img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .exp:hover img{transform:scale(1.06)}
+  .exp::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(13,26,18,.85))}
+  .exp span{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1rem;font-family:"Playfair Display";font-size:1.15rem;font-weight:600}
+
+  /* Steps */
+  .steps{background:#fff}
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;counter-reset:step}
+  .step{text-align:center;padding:1rem}
+  .step .num{counter-increment:step;width:52px;height:52px;border-radius:50%;background:var(--forest);color:var(--gold);font-family:"Playfair Display";font-size:1.4rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-weight:700}
+  .step .num::before{content:counter(step)}
+  .step h3{font-size:1.2rem;color:var(--forest);margin-bottom:.4rem}
+  .step p{color:var(--muted);font-size:.95rem;margin:0}
+
+  /* Enquiry */
+  .enquiry{background:var(--forest2);color:#fff}
+  .enquiry-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;align-items:start}
+  .enquiry h2{color:#fff;font-size:clamp(1.8rem,4vw,2.6rem)}
+  .enquiry .lead{color:rgba(255,255,255,.82);margin:1rem 0 1.6rem}
+  .enquiry-contact{display:flex;flex-direction:column;gap:.8rem;margin-top:1.4rem}
+  .enquiry-contact a{display:inline-flex;align-items:center;gap:.6rem;color:#fff;font-weight:600}
+  .enquiry-contact .btn{align-self:flex-start}
+  form.eform{background:rgba(255,255,255,.06);border:1px solid rgba(200,164,64,.3);border-radius:16px;padding:1.6rem}
+  .eform label{display:block;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);margin:.9rem 0 .35rem;font-weight:600}
+  .eform label:first-child{margin-top:0}
+  .eform input,.eform select,.eform textarea{width:100%;padding:.7rem .8rem;border-radius:9px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.95);color:var(--ink);font-family:inherit;font-size:.95rem}
+  .eform textarea{resize:vertical;min-height:70px}
+  .eform .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .eform button{width:100%;margin-top:1.3rem}
+  .eform .fineprint{font-size:.78rem;color:rgba(255,255,255,.6);margin:.8rem 0 0;text-align:center}
+
+  /* Footer */
+  footer.site{background:#0d1a12;color:rgba(255,255,255,.7);padding:2.6rem 0;font-size:.88rem}
+  .foot-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1.2rem;align-items:center}
+  .foot-inner a{color:var(--gold)}
+  .foot-lang{font-size:.8rem;color:rgba(255,255,255,.45)}
+
+  /* Floating WhatsApp */
+  .wa-float{position:fixed;right:18px;bottom:18px;z-index:60;background:var(--wa);color:#04310f;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:1.6rem}
+
+  @media(max-width:900px){
+    .why-grid{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .exp-grid{grid-template-columns:repeat(2,1fr)}
+    .steps-grid{grid-template-columns:1fr}
+    .enquiry-grid{grid-template-columns:1fr;gap:1.8rem}
+  }
+  @media(max-width:560px){
+    .why-grid,.cards,.exp-grid{grid-template-columns:1fr}
+    .eform .row{grid-template-columns:1fr}
+    .brand span{display:none}
+    .site-cta .btn:not(.btn-wa){display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="/welcome-morocco/">
+      <img src="/welcome-morocco/assets/voyages21-logo.jpg" alt="Voyages 21">
+      <span style="display:flex;flex-direction:column"><b>Hello Morocco</b><span>by Voyages 21</span></span>
+    </a>
+    <div class="site-cta">
+      <a class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.5)" href="#journeys">Our journeys</a>
+      <a class="btn btn-wa" href="https://wa.me/212673280009?text=Hello%2C%20I%27d%20like%20to%20plan%20a%20trip%20to%20Morocco." target="_blank" rel="noopener">WhatsApp us</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <video src="/welcome-morocco/assets/hello-morocco-cover.mp4" autoplay muted loop playsinline preload="metadata"></video>
+  <div class="hero-content">
+    <div class="eyebrow">A trusted local travel agency · since 2000</div>
+    <h1>Discover <i>Morocco</i>, crafted just for you.</h1>
+    <p class="lead">Imperial cities, the golden Sahara, the High Atlas and the Atlantic coast — tailor-made journeys designed on the ground by a Moroccan agency that has welcomed travellers from around the world for 25 years.</p>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="#enquiry">Plan my trip</a>
+      <a class="btn btn-ghost" href="#journeys">Explore our tours</a>
+    </div>
+    <div class="hero-trust">
+      <div><b>25 years</b> welcoming travellers</div>
+      <div><b>Local</b> teams across Morocco</div>
+      <div><b>Tailor-made</b> for groups & individuals</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why travel with us</div>
+      <h2>A local agency, not a distant booking site</h2>
+      <p>We live here. We design every journey ourselves and accompany you from the first message to your last sunset in the desert.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="ico">🕌</div><h3>Since 2000</h3><p>A quarter of a century crafting journeys across the Kingdom of Morocco.</p></div>
+      <div class="why-card"><div class="ico">✋</div><h3>Truly tailor-made</h3><p>Private or small-group, every itinerary is built around you — your pace, your budget.</p></div>
+      <div class="why-card"><div class="ico">🗺️</div><h3>On-the-ground teams</h3><p>Local guides and drivers who know each medina, valley and dune road.</p></div>
+      <div class="why-card"><div class="ico">💬</div><h3>English & French</h3><p>One dedicated contact, quick answers on WhatsApp, no call centre.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEYS -->
+<section class="journeys" id="journeys">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Signature journeys</div>
+      <h2>Morocco tours for 2026</h2>
+      <p>Ready-made routes you can follow as they are — or use as a starting point for your own custom trip.</p>
+    </div>
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-media"><span class="card-dur">8 days / 7 nights</span><img src="/welcome-morocco/assets/discover-kingdom/fez.jpg" alt="Fez, Morocco" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Imperial Cities Tour</h3>
+          <div class="card-route">Casablanca<span class="sep">·</span>Rabat<span class="sep">·</span>Tangier<span class="sep">·</span>Meknes<span class="sep">·</span>Fez<span class="sep">·</span>Marrakech</div>
+          <a class="btn btn-outline" href="/welcome-morocco/voyages/maroc-circuit-imperial-cities.html">View itinerary</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media"><span class="card-dur">10 days / 9 nights</span><img src="/welcome-morocco/assets/discover-kingdom/marrakech.jpg" alt="Marrakech, Morocco" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Best of Morocco</h3>
+          <div class="card-route">Cities, heritage &amp; the Sahara — the complete Morocco in ten days.</div>
+          <a class="btn btn-outline" href="/welcome-morocco/voyages/maroc-circuit-best-morocco.html">View itinerary</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media"><span class="card-dur">12 days / 11 nights</span><img src="/welcome-morocco/assets/discover-kingdom/merzouga.jpg" alt="Merzouga desert, Morocco" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Discover the Kingdom</h3>
+          <div class="card-route">A deeper loop from Marrakech through the desert, kasbahs and imperial cities.</div>
+          <a class="btn btn-outline" href="/welcome-morocco/voyages/maroc-circuit-discover-kingdom.html">View itinerary</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media"><span class="card-dur">15 days / 14 nights</span><img src="/welcome-morocco/assets/discover-kingdom/ouarzazate.jpg" alt="Ouarzazate, Morocco" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Splendid Morocco — Grand Discovery</h3>
+          <div class="card-route">From imperial cities to the Atlantic, through the Sahara — the grand tour.</div>
+          <a class="btn btn-outline" href="/welcome-morocco/voyages/maroc-circuit-grand-discovery.html">View itinerary</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media"><span class="card-dur">8 days / 7 nights</span><img src="/welcome-morocco/assets/discover-kingdom/casablanca.jpg" alt="Casablanca, Morocco" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Imperial Cities &amp; Southern Morocco</h3>
+          <div class="card-route">Casablanca<span class="sep">·</span>Chefchaouen<span class="sep">·</span>Fez<span class="sep">·</span>Merzouga<span class="sep">·</span>Marrakech</div>
+          <a class="btn btn-outline" href="/welcome-morocco/voyages/maroc-circuit-imperial-south.html">View itinerary</a>
+        </div>
+      </article>
+
+      <article class="card" style="justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,var(--forest),var(--forest2));color:#fff;border:none">
+        <div class="card-body" style="justify-content:center">
+          <h3 style="color:#fff">Something different?</h3>
+          <div class="card-route" style="color:rgba(255,255,255,.8)">Tell us your dates and dreams — we design a private itinerary from scratch.</div>
+          <a class="btn btn-gold" href="#enquiry">Design my trip</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="experiences" id="experiences">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Experiences</div>
+      <h2>Every side of Morocco</h2>
+      <p>From Saharan nights under the stars to the buzz of the imperial medinas.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp"><img src="/welcome-morocco/assets/discover-kingdom/merzouga.jpg" alt="Sahara desert" loading="lazy"><span>Sahara &amp; dunes</span></div>
+      <div class="exp"><img src="/welcome-morocco/assets/discover-kingdom/marrakech.jpg" alt="Imperial cities" loading="lazy"><span>Imperial cities</span></div>
+      <div class="exp"><img src="/welcome-morocco/assets/discover-kingdom/ouarzazate.jpg" alt="Atlas & kasbahs" loading="lazy"><span>Atlas &amp; kasbahs</span></div>
+      <div class="exp"><img src="/welcome-morocco/assets/discover-kingdom/agadir.jpg" alt="Atlantic coast" loading="lazy"><span>Atlantic coast</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>From first message to first sunset</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step"><div class="num"></div><h3>Enquire</h3><p>Tell us your dates, party size and what you'd love to see. One message is enough.</p></div>
+      <div class="step"><div class="num"></div><h3>Tailor-made proposal</h3><p>We design an itinerary with hotels, guides and prices — refined until it's exactly right.</p></div>
+      <div class="step"><div class="num"></div><h3>Travel</h3><p>You arrive; we take care of everything on the ground, with local teams by your side.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRY -->
+<section class="enquiry" id="enquiry">
+  <div class="wrap">
+    <div class="enquiry-grid">
+      <div>
+        <div class="eyebrow">Plan your journey</div>
+        <h2>Let's design your Morocco</h2>
+        <p class="lead">Send us a few details and our team will come back with a tailor-made proposal. No obligation — just the start of a beautiful trip.</p>
+        <div class="enquiry-contact">
+          <a class="btn btn-wa" href="https://wa.me/212673280009?text=Hello%2C%20I%27d%20like%20to%20plan%20a%20trip%20to%20Morocco." target="_blank" rel="noopener">💬 Chat with us on WhatsApp</a>
+          <a href="https://www.voyages21.com" target="_blank" rel="noopener">🌐 voyages21.com</a>
+        </div>
+      </div>
+      <form class="eform" id="eform" onsubmit="return sendEnquiry(event)">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" required placeholder="Full name">
+        <div class="row">
+          <div><label for="f-country">Country</label><input id="f-country" name="country" placeholder="e.g. United States"></div>
+          <div><label for="f-people">Travellers</label><input id="f-people" name="people" type="number" min="1" placeholder="2"></div>
+        </div>
+        <div class="row">
+          <div><label for="f-dates">Travel dates</label><input id="f-dates" name="dates" placeholder="e.g. May 2026"></div>
+          <div><label for="f-interest">Interests</label>
+            <select id="f-interest" name="interest">
+              <option value="">Choose…</option>
+              <option>Imperial cities</option>
+              <option>Sahara desert</option>
+              <option>Atlas &amp; kasbahs</option>
+              <option>Atlantic coast</option>
+              <option>Honeymoon</option>
+              <option>Family trip</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <label for="f-msg">Anything else?</label>
+        <textarea id="f-msg" name="message" placeholder="Tell us about your dream trip…"></textarea>
+        <button class="btn btn-wa" type="submit">Send my enquiry via WhatsApp</button>
+        <p class="fineprint">Opens WhatsApp with your details pre-filled — you send the final message.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap foot-inner">
+    <div>© 2000–2026 <a href="https://www.voyages21.com" target="_blank" rel="noopener">Voyages 21</a> — Morocco travel, tailor-made.</div>
+    <div class="foot-lang">English · More languages coming soon</div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/212673280009?text=Hello%2C%20I%27d%20like%20to%20plan%20a%20trip%20to%20Morocco." target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<script>
+  function sendEnquiry(e){
+    e.preventDefault();
+    var f=e.target;
+    var g=function(id){return (f.querySelector(id)||{}).value||"";};
+    var msg="Hello Voyages 21, I'd like to plan a trip to Morocco.\n"
+      +"\n• Name: "+g("#f-name")
+      +"\n• Country: "+(g("#f-country")||"—")
+      +"\n• Travellers: "+(g("#f-people")||"—")
+      +"\n• Dates: "+(g("#f-dates")||"—")
+      +"\n• Interest: "+(g("#f-interest")||"—");
+    var extra=g("#f-msg"); if(extra) msg+="\n• Notes: "+extra;
+    window.open("https://wa.me/212673280009?text="+encodeURIComponent(msg),"_blank","noopener");
+    return false;
+  }
+</script>
+</body>
+</html>
