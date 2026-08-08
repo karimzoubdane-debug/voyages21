@@ -71,6 +71,11 @@ function goBrochure(){loadBrochure();if(!audio.paused)toggleSound();document.bod
 function goCover(){document.body.classList.remove("show-brochure");window.scrollTo(0,0);history.replaceState(null,"","#cover")}
 async function toggleSound(){if(!audioReady)return;if(audio.paused){try{await audio.play();soundButton.textContent="ON";soundButton.classList.add("on");soundButton.setAttribute("aria-label","Couper le son");soundButton.title="Couper le son"}catch(e){}}else{audio.pause();soundButton.textContent="OFF";soundButton.classList.remove("on");soundButton.setAttribute("aria-label","Activer le son");soundButton.title="Activer le son"}}
 soundButton.addEventListener("click",toggleSound);
+// Mode "rideau" (intro affichée par-dessus l'accueil via ?embed=1) :
+// le bouton "Votre bonheur commence ici" et le logo lèvent le rideau
+// (message au parent) au lieu de recharger une page — parcours instantané.
+const EMBED=new URLSearchParams(location.search).has("embed");
+if(EMBED){document.documentElement.classList.add("is-embed");const liftIntro=e=>{e.preventDefault();try{window.parent.postMessage("v21-intro-close","*")}catch(_){}} ;magicButton.addEventListener("click",liftIntro,true);const brandLink=document.querySelector(".brand");if(brandLink)brandLink.addEventListener("click",liftIntro,true);}
 magicButton.addEventListener("click",e=>{if(magicButton.getAttribute("href")==="#brochure"){e.preventDefault();goBrochure()}});
 backCover.addEventListener("click",e=>{e.preventDefault();goCover()});
 getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")location.replace(DEFAULT_COVER.buttonUrl)});
