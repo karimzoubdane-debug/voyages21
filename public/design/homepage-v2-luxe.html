@@ -3103,6 +3103,45 @@
 <body>
 
   <!-- ══════════════════════════════════════════
+       INTRO EN RIDEAU (SEO-safe)
+       L'accueil ci-dessous reste servi tel quel à la racine "/" (indexable,
+       aucune redirection). L'intro est un simple calque client-side qui
+       recouvre l'accueil à chaque arrivée et se lève au clic sur
+       « Votre bonheur commence ici ». Google indexe l'accueil dessous ;
+       le calque, purement JS, n'enlève aucun contenu du DOM.
+       ══════════════════════════════════════════ -->
+  <style>
+    #v21-intro{position:fixed;inset:0;z-index:2147483000;background:#080806;opacity:1;transition:opacity .55s ease}
+    #v21-intro.is-closing{opacity:0;pointer-events:none}
+    #v21-intro iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+    html.v21-intro-lock,html.v21-intro-lock body{overflow:hidden!important}
+  </style>
+  <div id="v21-intro"></div>
+  <script>
+    (function(){
+      try{
+        var host=document.getElementById("v21-intro");
+        if(!host)return;
+        document.documentElement.classList.add("v21-intro-lock");
+        var frame=document.createElement("iframe");
+        frame.title="Introduction Voyages 21";
+        frame.setAttribute("aria-label","Introduction Voyages 21");
+        frame.src="/cover-ete-2026.html?embed=1";
+        host.appendChild(frame);
+        function closeIntro(){
+          if(!host)return;
+          host.classList.add("is-closing");
+          document.documentElement.classList.remove("v21-intro-lock");
+          setTimeout(function(){ if(host&&host.parentNode)host.parentNode.removeChild(host); },600);
+        }
+        window.addEventListener("message",function(e){
+          if(e&&e.data==="v21-intro-close")closeIntro();
+        });
+      }catch(e){}
+    })();
+  </script>
+
+  <!-- ══════════════════════════════════════════
        NAV FIXE
   ══════════════════════════════════════════ -->
   <nav id="nav">
