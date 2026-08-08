@@ -177,6 +177,58 @@
       white-space: nowrap;
     }
     .nav-cta:hover { background: var(--gold); color: #0C0C0C; }
+
+    /* Bouton rond « Voir la vidéo » : petit ▶ au repos, s'allonge au survol */
+    .nav-videobtn {
+      display: inline-flex;
+      align-items: center;
+      height: 38px;
+      padding: 0 3px;
+      border: 1px solid rgba(196,154,60,.6);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .nav-videobtn-icon {
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .68rem;
+      line-height: 1;
+    }
+    .nav-videobtn-label {
+      display: inline-block;
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      font-size: .66rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: max-width .3s ease, opacity .2s ease, margin .3s ease;
+    }
+    .nav-videobtn:hover {
+      background: var(--gold);
+      color: #0C0C0C;
+      border-color: var(--gold);
+    }
+    .nav-videobtn:hover .nav-videobtn-label,
+    .nav-videobtn:focus-visible .nav-videobtn-label {
+      max-width: 160px;
+      opacity: 1;
+      margin-right: 12px;
+      margin-left: 2px;
+    }
+    .nav-videobtn:focus-visible {
+      background: var(--gold);
+      color: #0C0C0C;
+      outline: none;
+    }
     .nav-burger { display: none; }
     .nav-mobile-panel { display: none; }
 
@@ -3114,27 +3166,38 @@
     #v21-intro iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
     html.v21-intro-lock,html.v21-intro-lock body{overflow:hidden!important}
   </style>
-  <div id="v21-intro"></div>
+  <div id="v21-intro" hidden></div>
   <script>
     (function(){
       try{
         var host=document.getElementById("v21-intro");
         if(!host)return;
-        document.documentElement.classList.add("v21-intro-lock");
-        var frame=document.createElement("iframe");
-        frame.title="Introduction Voyages 21";
-        frame.setAttribute("aria-label","Introduction Voyages 21");
-        frame.src="/cover-ete-2026.html?embed=1";
-        host.appendChild(frame);
+        var open=false;
+        function openIntro(){
+          if(open)return; open=true;
+          host.hidden=false;
+          host.classList.remove("is-closing");
+          host.innerHTML="";
+          var frame=document.createElement("iframe");
+          frame.title="Introduction Voyages 21";
+          frame.setAttribute("aria-label","Introduction Voyages 21");
+          frame.src="/cover-ete-2026.html?embed=1";
+          host.appendChild(frame);
+          document.documentElement.classList.add("v21-intro-lock");
+        }
         function closeIntro(){
-          if(!host)return;
+          if(!open)return; open=false;
           host.classList.add("is-closing");
           document.documentElement.classList.remove("v21-intro-lock");
-          setTimeout(function(){ if(host&&host.parentNode)host.parentNode.removeChild(host); },600);
+          setTimeout(function(){ host.hidden=true; host.innerHTML=""; host.classList.remove("is-closing"); },600);
         }
         window.addEventListener("message",function(e){
           if(e&&e.data==="v21-intro-close")closeIntro();
         });
+        // Exposé pour le bouton « Voir la vidéo » (relance de l'intro)
+        window.V21openIntro=openIntro;
+        // Auto à chaque arrivée sur l'accueil
+        openIntro();
       }catch(e){}
     })();
   </script>
@@ -3224,6 +3287,10 @@
     </div>
 
     <div class="nav-right">
+      <button type="button" class="nav-videobtn" id="navVideoBtn" aria-label="Voir la vidéo" title="Voir la vidéo" onclick="if(window.V21openIntro)V21openIntro()">
+        <span class="nav-videobtn-icon" aria-hidden="true">▶</span>
+        <span class="nav-videobtn-label">Voir la vidéo</span>
+      </button>
       <a href="tel:+212614152686" class="nav-tel">+212 6 14 15 26 86</a>
       <button class="nav-burger" id="navBurger" aria-label="Menu" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
