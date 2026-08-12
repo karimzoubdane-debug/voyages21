@@ -29,7 +29,88 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
-## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
+## 📍 Dernier point (03/07/2026) — 🎬 REEL HAJJ 2027 — MOTION DESIGN
+- Départ : 5 maquettes ChatGPT (commit `4dbda78`) → `content-studio/hajj-2027/01_cover…05_cta.png`.
+- Le style « Ken Burns » (zoom sur images fixes) a été **abandonné** (trop statique).
+- ✅ **Reels en MOTION DESIGN** (typographie cinétique) : moteur HTML/CSS animé →
+  capturé image par image (**Playwright/Chromium**) → assemblé en mp4 (**ffmpeg**).
+  Moteur **sauvegardé dans le dépôt** : `content-studio/hajj-2027/reel-engine/`
+  (`reel_full.html` + `capture.js` + 3 fonds + `README.md` de rebuild).
+- **3 formats** (param version) : `full` ~41 s · `short` ~24 s · `hookprix` ~41 s.
+  Aperçus web déployés → `public/reels/` + page `public/reels/hajj.html` (URL preview
+  Vercel de la branche). Masters HD livrés dans le chat.
+- Validé par Karim (v6) : plein couleur (fonds La Mecque **animés**), cadrans **dorés**
+  (montée douce) **2 par 2**, prix visibles (67 500 / 95 000), scène **Options**
+  (Kidana +23 000 / train +2 000), scène **avis Google** (atterrissage + ★★★★★),
+  fin **« زوروا موقعنا » + site tapé lettre par lettre**, rayons obliques **supprimés**,
+  petits textes **agrandis**.
+- ✅ **v7 LIVRÉE (03/07 soir) — 3 formats rendus, envoyés dans le chat, poussés** :
+  1. **Avis Google** (cadran pw5) : atterrit doucement **puis grandit** (~×1,5) — occupe
+     les 3/4 de l'écran, avec « Nos avis Google ★★★★★ ».
+  2. **Prix** : **une formule par écran** (Confort 67 500 apparaît → disparaît → Premium
+     95 000), les deux centrées.
+  3. **Fin figée** : sur les ~1,3 dernières s tout se fige (fonds, particules, curseur)
+     → image statique avec **WhatsApp Wafaa/Fouad + www.voyages21.com** visibles et fixes.
+  Aperçus : `public/reels/reel_30s.mp4` (e98bbdf) · `reel_15s.mp4` (cc029dd) ·
+  `reel_hookprix.mp4` (6870c80). PR #111 (branche `claude/adoring-goodall-ulziw4`).
+- 🎥 **VRAI FOND VIDÉO — DÉBLOQUÉ CÔTÉ GÉNÉRATION (03/07 soir)** :
+  - La génération Higgsfield **fonctionne maintenant** (plus de « permission stream
+    closed »). Testé : `kling3_0_turbo`, 9:16, 5 s, **7,5 crédits/clip** (reste ~429).
+  - **5 clips cinématiques réels générés** (dans le compte Higgsfield de Karim, ré-affichables
+    via `job_display`) :
+    - `kaaba_day`  = `b05cf88a-faba-4953-b63c-15a33ae59610` (Kaaba jour, tawaf)
+    - `kaaba_dusk` = `92207f9f-0e65-4bd7-a680-9410673e1105` (Kaaba dorée, blue hour)
+    - `mina`       = `26af6b9d-45ae-4a85-a0a6-9ea97da75565` (Mina, tentes, drone)
+    - `medina`     = `c72be85f-8472-41c6-9640-956acc1098a8` (Médine, dôme vert)
+    - `hotel`      = `410ab0d2-d328-4893-bb1d-e79bbfa525ee` (chambre vue Kaaba)
+  - ✅ **VERROU TÉLÉCHARGEMENT RÉSOLU (03/07 soir)** : Karim a créé un environnement
+    **`DA21-VIDEO`** (Accès réseau = Personnalisé + `*.cloudfront.net` + `*.higgsfield.ai`
+    + liste par défaut incluse). ➡️ **La session vidéo DOIT tourner sur l'env `DA21-VIDEO`**
+    (pas DA21). Sur DA21-VIDEO, `curl` des liens ci-dessous fonctionne.
+  - **Liens directs des 5 clips** (publics, sans signature — `curl` OK sur DA21-VIDEO ;
+    si expirés, re-générer via `job_display` + les job-ids ci-dessus) :
+    ```bash
+    cd content-studio/hajj-2027/reel-engine && mkdir -p clips
+    B=https://d8j0ntlcm91z4.cloudfront.net/user_3DrnEP6MWcOADYof2iApd0HQrOD
+    curl -sSL -o clips/kaaba_day.mp4  "$B/hf_20260703_222617_b05cf88a-faba-4953-b63c-15a33ae59610.mp4"
+    curl -sSL -o clips/kaaba_dusk.mp4 "$B/hf_20260703_222834_92207f9f-0e65-4bd7-a680-9410673e1105.mp4"
+    curl -sSL -o clips/mina.mp4       "$B/hf_20260703_222901_26af6b9d-45ae-4a85-a0a6-9ea97da75565.mp4"
+    curl -sSL -o clips/medina.mp4     "$B/hf_20260703_222905_c72be85f-8472-41c6-9640-956acc1098a8.mp4"
+    curl -sSL -o clips/hotel.mp4      "$B/hf_20260703_222845_410ab0d2-d328-4893-bb1d-e79bbfa525ee.mp4"
+    ```
+  - **Pipeline composite PRÊT et VALIDÉ** (dans `reel-engine/`) : `reel_composite.html`
+    (mode `__NOBG` transparent) + `capture_composite.js` (PNG alpha) + `composite.sh`
+    (xfade des clips + overlay du premier plan). Validé le 03/07 avec images fixes → graphe OK.
+  - ✅✅ **VRAI FOND VIDÉO LIVRÉ (03/07 soir, env DA21-VIDEO)** : les 5 clips CloudFront
+    téléchargés sans blocage (`curl` OK sur DA21-VIDEO), pipeline exécuté de bout en bout.
+    **3 masters HD rendus** (vrais plans filmés SOUS la typo cinétique) :
+    - `reel_VIDEO_full.mp4` (~38 Mo, 40,9 s) · `reel_VIDEO_short.mp4` (~25 Mo, 23,7 s) ·
+      `reel_VIDEO_hookprix.mp4` (~38 Mo, 40,9 s). Livrés dans le chat.
+    - QA visuelle OK : Kaaba (cover) · Mina tentes drone (programme) · Médine dôme vert (prix).
+    - Previews compressés poussés → `public/reels/reel_30s.mp4` / `reel_15s.mp4` /
+      `reel_hookprix.mp4` (mêmes noms, remplacent les versions fonds-images). Page `hajj.html`
+      mise à jour (« vrais fonds vidéo filmés »).
+    - Artefacts de build (`clips/`, `fg/`, masters) **gitignorés** (éphémères, régénérables).
+  - ▶️ **REBUILD (session DA21-VIDEO)** — turnkey, si besoin de re-rendre :
+    1. `git fetch origin claude/adoring-goodall-ulziw4 && git checkout claude/adoring-goodall-ulziw4`.
+    2. Outils : `apt-get update && apt-get install -y ffmpeg fonts-noto-core` + `npm i playwright-core`
+       (Chromium déjà préinstallé dans `/opt/pw-browsers`).
+    3. Télécharger les 5 clips (bloc `curl` ci-dessus ; si liens expirés → `job_display` + job-ids).
+    4. Pour chaque version (`full`/`short`/`hookprix`) : `node capture_composite.js chromium_path.txt
+       "$PWD/reel_composite.html" ./fg <version>` puis `bash composite.sh <version>`.
+  - 🔔 **RAPPEL À FAIRE À KARIM (il l'a demandé)** : lui **rappeler le « cas n°2 »** — quand il
+    aura un **ordinateur**, éditer **DA21** directement (survol → ⚙️ → ajouter les 2 domaines +
+    la liste par défaut) pour **tout regrouper sur un seul environnement** (site + studio + vidéo)
+    au lieu de garder DA21-VIDEO séparé.
+- ⏳ **RESTE (besoin de Karim)** :
+  - 🔊 **Son** (Talbiya + nappe) : env. bloque téléchargements audio → Karim **upload les
+    fichiers audio dans le chat** (comme une image) → mixage ffmpeg local (voix devant, nappe
+    atténuée, ducking, fondus). (Ou générer la nappe via Higgsfield `generate_audio`, à tester
+    maintenant que la génération est débloquée — mais même verrou de téléchargement CloudFront.)
+- ⚠️ Instabilité env. : le conteneur **redémarre** parfois (tue les jobs de fond) →
+  rendre **au premier plan**, une vidéo à la fois, frames **JPEG/24 i-s**.
+
+## 📍 Point (13/06/2026 — matin)
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
   sous-agents sonnet, puis vérification adversariale). Fonctionne.
 - ✅ **Veille concurrents livrée** → `content-studio/veille-concurrents.md` :

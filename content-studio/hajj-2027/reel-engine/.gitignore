@@ -1,0 +1,12 @@
+# Artefacts de build éphémères (régénérés à chaque session vidéo) — NE PAS committer.
+clips/
+fg/
+frames/
+_seg/
+_bg.mp4
+chromium_path.txt
+reel.mp4
+reel_VIDEO_*.mp4
+preview_*.mp4
+node_modules/
+package-lock.json
