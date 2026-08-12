@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Prof - Apprentissage interactif</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --g: #00cc88;
+            --gd: #009966;
+            --bl: #4488ff;
+            --bg: #0b0d12;
+            --b2: #111420;
+            --b3: #181c28;
+            --br: #242840;
+            --tx: #dde2f0;
+            --mu: #5c647e;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--tx);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app { display: flex; flex-direction: column; height: 100vh; }
+
+        /* Header */
+        .header {
+            background: var(--b2);
+            border-bottom: 1px solid var(--br);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo { font-size: 18px; font-weight: bold; color: var(--g); }
+
+        .api-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 6px;
+            padding: 0 8px;
+        }
+
+        .api-input {
+            background: transparent;
+            border: none;
+            color: var(--tx);
+            padding: 6px 0;
+            font-size: 12px;
+            width: 220px;
+            outline: none;
+        }
+
+        .eye-btn {
+            background: none;
+            border: none;
+            color: var(--mu);
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            transition: color 0.2s;
+            font-family: monospace;
+        }
+
+        .eye-btn:hover { color: var(--g); }
+
+        /* Layout */
+        .main-layout { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--b2);
+            border-right: 1px solid var(--br);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--mu);
+            margin: 15px 0 8px 0;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        .project-item {
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-item:hover { border-color: var(--g); transform: translateX(3px); }
+        .project-item.selected { border-color: var(--g); background: rgba(0,204,136,0.1); }
+
+        .project-name { font-size: 13px; font-weight: 500; }
+
+        .delete-project {
+            background: rgba(255,68,85,0.1);
+            border: 1px solid rgba(255,68,85,0.3);
+            color: #ff4455;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 1;
+            padding: 3px 7px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .delete-project:hover { background: rgba(255,68,85,0.3); }
+
+        /* Chat */
+        .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+        .messages { flex: 1; overflow-y: auto; padding: 20px; }
+
+        .message { margin-bottom: 15px; display: flex; gap: 10px; }
+        .message.user { flex-direction: row-reverse; }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--b3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message.user .avatar { background: linear-gradient(135deg, var(--bl), #2244bb); }
+        .message.assistant .avatar { background: linear-gradient(135deg, var(--g), #006644); }
+
+        .bubble {
+            max-width: 70%;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .message.user .bubble { background: rgba(68,136,255,0.1); }
+
+        pre {
+            background: #080a10;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-size: 12px;
+            border: 1px solid var(--br);
+        }
+
+        code { font-family: 'Courier New', monospace; }
+
+        /* Input */
+        .input-area {
+            border-top: 1px solid var(--br);
+            padding: 15px 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            color: var(--tx);
+            padding: 10px 15px;
+            border-radius: 10px;
+            resize: none;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input:focus { border-color: var(--g); }
+
+        .send-btn {
+            background: var(--g);
+            color: #000;
+            border: none;
+            padding: 0 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover { background: var(--gd); }
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Action buttons */
+        .action-btn {
+            background: var(--b3);
+            border: 1px solid var(--br);
+            color: var(--tx);
+            padding: 7px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            width: 100%;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .action-btn:hover { border-color: var(--g); color: var(--g); }
+        .action-btn.primary { background: rgba(0,204,136,0.15); }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--b2);
+            border: 1px solid var(--br);
+            border-radius: 12px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--br);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--tx);
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Execution */
+        .execution-area {
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 8px;
+            margin-top: 15px;
+            padding: 10px;
+        }
+
+        .execution-output {
+            background: #080a10;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            min-height: 60px;
+        }
+
+        /* Quiz */
+        .quiz-question {
+            background: var(--b3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover { background: var(--br); }
+
+        /* Function block */
+        .function-block {
+            background: var(--b3);
+            border-left: 3px solid var(--g);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        .function-name { color: var(--g); font-weight: bold; font-family: monospace; margin-bottom: 5px; }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--br);
+            border-top-color: var(--g);
+            border-radius: 50%;
+            animation: spin 0.5s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .status-bar {
+            font-size: 11px;
+            color: var(--mu);
+            padding: 4px 20px;
+            background: var(--b2);
+            border-top: 1px solid var(--br);
+        }
+
+        .status-bar.ok { color: var(--g); }
+        .status-bar.err { color: #ff4455; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const HANGMAN_CODE = `import random
+
+def choisir_mot():
+    mots = ["PYTHON", "PROGRAMMATION", "ORDINATEUR", "DEVELOPPEMENT"]
+    return random.choice(mots)
+
+def afficher_pendu(erreurs):
+    etapes = [
+        "",
+        "O",
+        "O|",
+        "O|/",
+        "O|/|",
+        "O|/|\\\\",
+        "O|/|\\\\\\n |"
+    ]
+    return etapes[min(erreurs, len(etapes) - 1)]
+
+def jouer():
+    mot = choisir_mot()
+    lettres_trouvees = set()
+    erreurs = 0
+    max_erreurs = 6
+
+    print("=== JEU DU PENDU ===")
+
+    while erreurs < max_erreurs:
+        mot_cache = " ".join(l if l in lettres_trouvees else "_" for l in mot)
+        print(f"\\nMot: {mot_cache}")
+        print(afficher_pendu(erreurs))
+        print(f"Erreurs: {erreurs}/{max_erreurs}")
+
+        if "_" not in mot_cache:
+            print(f"\\nBRAVO! Tu as trouve le mot: {mot}")
+            return
+
+        proposition = input("Propose une lettre: ").upper()
+
+        if len(proposition) != 1 or not proposition.isalpha():
+            print("Lettre invalide!")
+            continue
+
+        if proposition in lettres_trouvees:
+            print("Deja proposee!")
+        elif proposition in mot:
+            lettres_trouvees.add(proposition)
+            print("Bonne lettre!")
+        else:
+            lettres_trouvees.add(proposition)
+            erreurs += 1
+            print("Mauvaise lettre!")
+
+    print(f"\\nPERDU! Le mot etait: {mot}")
+
+if __name__ == "__main__":
+    jouer()`;
+
+        const CALCULATOR_CODE = `def calculatrice():
+    print("=== CALCULATRICE ===")
+    print("Operations: +, -, *, /")
+
+    try:
+        a = float(input("Premier nombre: "))
+        op = input("Operation (+, -, *, /): ")
+        b = float(input("Deuxieme nombre: "))
+
+        if op == '+':
+            resultat = a + b
+        elif op == '-':
+            resultat = a - b
+        elif op == '*':
+            resultat = a * b
+        elif op == '/':
+            if b != 0:
+                resultat = a / b
+            else:
+                print("Erreur: Division par zero!")
+                return
+        else:
+            print("Operation invalide!")
+            return
+
+        print(f"Resultat: {a} {op} {b} = {resultat}")
+
+    except ValueError:
+        print("Erreur: Veuillez entrer des nombres valides!")
+
+if __name__ == "__main__":
+    calculatrice()`;
+
+        const DEFAULT_PROJECTS = {
+            "Jeu du Pendu": { code: HANGMAN_CODE, description: "Devine le mot lettre par lettre" },
+            "Calculatrice":  { code: CALCULATOR_CODE, description: "Calculatrice simple avec les 4 operations" }
+        };
+
+        /* ── Simulation de génération de code ── */
+        const simulateGenerate = (request) => {
+            const r = request.toLowerCase();
+            if (r.includes("pendu")) return { name: "Jeu du Pendu", code: HANGMAN_CODE };
+            if (r.includes("calculatrice") || r.includes("calcul")) return { name: "Calculatrice", code: CALCULATOR_CODE };
+
+            const name = request.slice(0, 40).trim();
+            const code = `# Programme: ${name}
+
+def main():
+    print("=== ${name.toUpperCase()} ===")
+    # Votre logique ici
+    print("Programme termine.")
+
+if __name__ == "__main__":
+    main()`;
+            return { name, code };
+        };
+
+        /* ── Appel API Claude (si clé fournie) ── */
+        const callClaude = async (userRequest) => {
+            const res = await fetch("/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    system: "Tu es un professeur Python. Quand l'utilisateur demande un programme, reponds avec une explication courte puis le code complet dans un bloc ```python ... ```. Code propre, commente en francais, sans input() si possible.",
+                    messages: [{ role: "user", content: userRequest }]
+                })
+            });
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error?.message || `HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            return data.content[0].text;
+        };
+
+        /* ── Rendu du contenu avec blocs de code + bouton copier ── */
+        const CodeBlock = ({ code }) => {
+            const [copied, setCopied] = React.useState(false);
+            const copy = () => {
+                navigator.clipboard.writeText(code).then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                });
+            };
+            return (
+                <div style={{ position: "relative", margin: "10px 0" }}>
+                    <button onClick={copy} style={{
+                        position: "absolute", top: 6, right: 6,
+                        background: copied ? "var(--g)" : "var(--br)",
+                        color: copied ? "#000" : "var(--tx)",
+                        border: "none", borderRadius: 4, padding: "3px 10px",
+                        fontSize: 11, cursor: "pointer", fontFamily: "inherit"
+                    }}>
+                        {copied ? "Copie !" : "Copier"}
+                    </button>
+                    <pre style={{ paddingTop: 30 }}><code>{code}</code></pre>
+                </div>
+            );
+        };
+
+        const renderContent = (content) => {
+            const parts = content.split(/(```python[\s\S]*?```|```[\s\S]*?```)/g);
+            return parts.map((part, i) => {
+                if (part.startsWith("```")) {
+                    const code = part.replace(/^```(?:python)?\n?/, "").replace(/```$/, "");
+                    return <CodeBlock key={i} code={code} />;
+                }
+                return <span key={i} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
+            });
+        };
+
+        /* ── Extraction de code depuis une réponse Claude ── */
+        const extractCode = (text) => {
+            const m = text.match(/```python\n([\s\S]*?)```/);
+            return m ? m[1] : null;
+        };
+
+        /* ══════════════════════════════════════════════════════
+           Composant principal
+        ══════════════════════════════════════════════════════ */
+        const App = () => {
+            const [messages, setMessages]           = useState([]);
+            const [input, setInput]                 = useState("");
+            const [loading, setLoading]             = useState(false);
+            const [pyodide, setPyodide]             = useState(null);
+            const [pyStatus, setPyStatus]           = useState("Pyodide: chargement...");
+
+            const [projects, setProjects] = useState(() => {
+                try {
+                    const saved = localStorage.getItem("python_projects");
+                    return saved ? JSON.parse(saved) : DEFAULT_PROJECTS;
+                } catch { return DEFAULT_PROJECTS; }
+            });
+
+            const [selectedProject, setSelectedProject] = useState(
+                () => Object.keys(DEFAULT_PROJECTS)[0]
+            );
+
+            const [modal, setModal]                 = useState(null); // null | "explain" | "quiz" | "exec"
+            const [explanation, setExplanation]     = useState([]);
+            const [quizQuestions, setQuizQuestions] = useState([]);
+            const [quizAnswers, setQuizAnswers]     = useState({});
+            const [execOutput, setExecOutput]       = useState("");
+            const [executing, setExecuting]         = useState(false);
+
+            const messagesEndRef = useRef(null);
+
+            /* scroll to bottom */
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            }, [messages]);
+
+            /* load Pyodide */
+            useEffect(() => {
+                (async () => {
+                    try {
+                        const py = await window.loadPyodide({
+                            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"
+                        });
+                        setPyodide(py);
+                        setPyStatus("Pyodide: pret");
+                    } catch {
+                        setPyStatus("Pyodide: echec du chargement");
+                    }
+                })();
+            }, []);
+
+            /* persist projects */
+            useEffect(() => {
+                try { localStorage.setItem("python_projects", JSON.stringify(projects)); }
+                catch {}
+            }, [projects]);
+
+            /* ── Envoyer un message ── */
+            const sendMessage = async () => {
+                const text = input.trim();
+                if (!text || loading) return;
+
+                setInput("");
+                setMessages(prev => [...prev, { role: "user", content: text }]);
+                setLoading(true);
+
+                try {
+                    let assistantText;
+                    let codeForLibrary = null;
+                    let projectName = text.slice(0, 40).trim();
+
+                    try {
+                        assistantText = await callClaude(text);
+                        const extracted = extractCode(assistantText);
+                        if (extracted) codeForLibrary = extracted;
+                    } catch {
+                        /* Fallback simulation si /api/chat echoue */
+                        await new Promise(r => setTimeout(r, 900));
+                        const result = simulateGenerate(text);
+                        projectName = result.name;
+                        codeForLibrary = result.code;
+                        assistantText = `Voici le code Python pour "${result.name}" :\n\n\`\`\`python\n${result.code}\n\`\`\`\n\nTu peux l'executer directement via le bouton "Executer en direct".`;
+                    }
+
+                    setMessages(prev => [...prev, { role: "assistant", content: assistantText }]);
+
+                    if (codeForLibrary) {
+                        setProjects(prev => ({
+                            ...prev,
+                            [projectName]: { code: codeForLibrary, description: `Projet: ${projectName}` }
+                        }));
+                        setSelectedProject(projectName);
+                    }
+
+                } catch (err) {
+                    setMessages(prev => [...prev, {
+                        role: "assistant",
+                        content: `Erreur: ${err.message}`
+                    }]);
+                }
+
+                setLoading(false);
+            };
+
+            /* ── Expliquer le code ── */
+            const explainCode = () => {
+                const project = projects[selectedProject];
+                if (!project) return;
+
+                const funcs = [];
+                const re = /def\s+(\w+)\s*\(([^)]*)\)\s*:/g;
+                let m;
+                while ((m = re.exec(project.code)) !== null) {
+                    const name = m[1];
+                    const params = m[2];
+                    const purposes = {
+                        choisir_mot:    "Choisit un mot aleatoire dans une liste predefined",
+                        afficher_pendu: "Affiche le visuel ASCII du pendu selon le nombre d'erreurs",
+                        jouer:          "Gere toute la logique du jeu : boucle, saisie, victoire/defaite",
+                        calculatrice:   "Gere la saisie des nombres et effectue l'operation choisie",
+                        main:           "Point d'entree principal du programme"
+                    };
+                    funcs.push({
+                        name,
+                        params,
+                        purpose: purposes[name] || `Fonction personnalisee "${name}"`
+                    });
+                }
+
+                setExplanation(funcs.length ? funcs : [{ name: "main", params: "", purpose: "Point d'entree du programme" }]);
+                setModal("explain");
+            };
+
+            /* ── Quiz ── */
+            const generateQuiz = () => {
+                const project = projects[selectedProject];
+                if (!project) return;
+
+                const questions = [
+                    {
+                        q: `Dans "${selectedProject}", quel est le role de la premiere fonction definie ?`,
+                        opts: [
+                            "Afficher le menu principal",
+                            "Initialiser les donnees ou choisir un element de depart",
+                            "Sauvegarder le score",
+                            "Quitter le programme"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        q: "Comment appelle-t-on une fonction en Python ?",
+                        opts: ["call nom_fonction()", "run nom_fonction()", "nom_fonction()", "execute nom_fonction()"],
+                        correct: 2
+                    },
+                    {
+                        q: `Que signifie la condition if __name__ == "__main__": ?`,
+                        opts: [
+                            "Le fichier est importe depuis un autre module",
+                            "Le programme est execute directement (pas importe)",
+                            "La fonction principale est definie ici",
+                            "Le programme s'arrete"
+                        ],
+                        correct: 1
+                    }
+                ];
+
+                setQuizQuestions(questions);
+                setQuizAnswers({});
+                setModal("quiz");
+            };
+
+            /* ── Exécuter en direct ── */
+            const executeCode = async () => {
+                const project = projects[selectedProject];
+                if (!project) return;
+
+                setModal("exec");
+                setExecOutput("");
+                setExecuting(true);
+
+                if (!pyodide) {
+                    setExecOutput("Pyodide n'est pas encore charge. Patientez et reessayez.");
+                    setExecuting(false);
+                    return;
+                }
+
+                try {
+                    const setupCode = `
+import sys
+import builtins
+from io import StringIO
+
+_captured = StringIO()
+sys.stdout = _captured
+_input_count = 0
+_input_letters = list("aeioubcdflmnprstvy")
+_input_numbers = ["1", "2", "3", "4", "5"]
+_letter_idx = 0
+_number_idx = 0
+
+def _mock_input(prompt=""):
+    global _input_count, _letter_idx, _number_idx
+    _input_count += 1
+    if _input_count > 60:
+        raise RuntimeError("Limite d'appels a input() atteinte — execution arretee")
+    p = str(prompt)
+    _captured.write(p + "\\n")
+    pl = p.lower()
+    if "lettre" in pl or "letter" in pl or "caractere" in pl:
+        val = _input_letters[_letter_idx % len(_input_letters)]
+        _letter_idx += 1
+        return val
+    else:
+        val = _input_numbers[_number_idx % len(_input_numbers)]
+        _number_idx += 1
+        return val
+
+builtins.input = _mock_input
+`;
+                    pyodide.runPython(setupCode);
+
+                    let execError = null;
+                    try {
+                        await pyodide.runPythonAsync(project.code);
+                    } catch (e) {
+                        execError = e;
+                    }
+
+                    const output = pyodide.runPython("_captured.getvalue()");
+                    const inputCount = pyodide.runPython("_input_count");
+                    let result = output.trim() || "(Aucune sortie)";
+                    if (inputCount > 0) {
+                        result += `\n\n[Note: ${inputCount} appel(s) a input() simules — saisies vides]`;
+                    }
+                    if (execError && !execError.message.includes("Trop d'appels")) {
+                        result += `\n\nErreur: ${execError.message}`;
+                    }
+                    setExecOutput(result);
+                } catch (err) {
+                    setExecOutput(`Erreur: ${err.message}`);
+                } finally {
+                    try {
+                        pyodide.runPython(`
+import sys, builtins
+sys.stdout = sys.__stdout__
+builtins.input = input
+`);
+                    } catch {}
+                    setExecuting(false);
+                }
+            };
+
+            /* ── Supprimer un projet ── */
+            const deleteProject = (name) => {
+                if (!confirm(`Supprimer le projet "${name}" ?`)) return;
+                setProjects(prev => {
+                    const next = { ...prev };
+                    delete next[name];
+                    return next;
+                });
+                if (selectedProject === name) {
+                    const remaining = Object.keys(projects).filter(k => k !== name);
+                    if (remaining.length) setSelectedProject(remaining[0]);
+                }
+            };
+
+            /* ── Render ── */
+            return (
+                <div className="app">
+                    {/* Header */}
+                    <div className="header">
+                        <div className="logo">Python Prof</div>
+                        <div style={{ flex: 1 }} />
+                        <div style={{ fontSize: 11, color: "var(--mu)" }}>claude-haiku · simulation fallback</div>
+                    </div>
+
+                    <div className="main-layout">
+                        {/* Sidebar */}
+                        <div className="sidebar">
+                            <div className="section-title">Bibliotheque de projets</div>
+                            {Object.keys(projects).length === 0 && (
+                                <div style={{ color: "var(--mu)", fontSize: 12 }}>Aucun projet</div>
+                            )}
+                            {Object.keys(projects).map(name => (
+                                <div
+                                    key={name}
+                                    className={`project-item${selectedProject === name ? " selected" : ""}`}
+                                >
+                                    <div onClick={() => setSelectedProject(name)} style={{ flex: 1 }}>
+                                        <div className="project-name">{name}</div>
+                                        <div style={{ fontSize: 10, color: "var(--mu)", marginTop: 2 }}>
+                                            {projects[name].code.slice(0, 50)}...
+                                        </div>
+                                    </div>
+                                    <button className="delete-project" onClick={() => deleteProject(name)}>x</button>
+                                </div>
+                            ))}
+
+                            <div className="section-title" style={{ marginTop: 20 }}>Actions</div>
+                            <button className="action-btn" onClick={explainCode}>
+                                Expliquer le code
+                            </button>
+                            <button className="action-btn" onClick={generateQuiz}>
+                                Quiz Python
+                            </button>
+                            <button className="action-btn primary" onClick={executeCode}>
+                                Executer en direct
+                            </button>
+                        </div>
+
+                        {/* Chat */}
+                        <div className="chat-area">
+                            <div className="messages">
+                                {messages.length === 0 && (
+                                    <div style={{ textAlign: "center", marginTop: 60, color: "var(--mu)" }}>
+                                        <h2 style={{ color: "var(--g)", marginBottom: 10 }}>Bienvenue</h2>
+                                        <p>Demande-moi de creer un programme Python.</p>
+                                        <p style={{ marginTop: 6, fontSize: 12 }}>
+                                            Exemple : "cree un jeu du pendu" ou "cree une calculatrice"
+                                        </p>
+                                    </div>
+                                )}
+                                {messages.map((msg, idx) => (
+                                    <div key={idx} className={`message ${msg.role}`}>
+                                        <div className="avatar">
+                                            {msg.role === "user" ? "U" : "AI"}
+                                        </div>
+                                        <div className="bubble">
+                                            {renderContent(msg.content)}
+                                        </div>
+                                    </div>
+                                ))}
+                                {loading && (
+                                    <div className="message assistant">
+                                        <div className="avatar">AI</div>
+                                        <div className="bubble">
+                                            <span className="loading" />Generation en cours...
+                                        </div>
+                                    </div>
+                                )}
+                                <div ref={messagesEndRef} />
+                            </div>
+
+                            <div className="input-area">
+                                <textarea
+                                    className="chat-input"
+                                    rows={2}
+                                    placeholder="Decris le programme Python que tu veux creer..."
+                                    value={input}
+                                    onChange={e => setInput(e.target.value)}
+                                    onKeyDown={e => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            sendMessage();
+                                        }
+                                    }}
+                                />
+                                <button className="send-btn" onClick={sendMessage} disabled={loading}>
+                                    Envoyer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={`status-bar${pyodide ? " ok" : ""}`}>{pyStatus}</div>
+
+                    {/* Modal Explication */}
+                    {modal === "explain" && (
+                        <div className="modal" onClick={() => setModal(null)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h3>Explication — {selectedProject}</h3>
+                                    <button className="modal-close" onClick={() => setModal(null)}>x</button>
+                                </div>
+                                {explanation.length === 0 && (
+                                    <p style={{ color: "var(--mu)" }}>Aucune fonction trouvee dans ce code.</p>
+                                )}
+                                {explanation.map((fn, i) => (
+                                    <div key={i} className="function-block">
+                                        <div className="function-name">def {fn.name}({fn.params})</div>
+                                        <div style={{ fontSize: 13 }}>{fn.purpose}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Modal Quiz */}
+                    {modal === "quiz" && (
+                        <div className="modal" onClick={() => setModal(null)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h3>Quiz — {selectedProject}</h3>
+                                    <button className="modal-close" onClick={() => setModal(null)}>x</button>
+                                </div>
+                                {quizQuestions.map((q, qi) => (
+                                    <div key={qi} className="quiz-question">
+                                        <div style={{ fontWeight: "bold", marginBottom: 10 }}>
+                                            {qi + 1}. {q.q}
+                                        </div>
+                                        {q.opts.map((opt, oi) => (
+                                            <label key={oi} className="quiz-option">
+                                                <input
+                                                    type="radio"
+                                                    name={`q${qi}`}
+                                                    checked={quizAnswers[qi] === oi}
+                                                    onChange={() => setQuizAnswers(prev => ({ ...prev, [qi]: oi }))}
+                                                />
+                                                {opt}
+                                            </label>
+                                        ))}
+                                                        {quizAnswers[qi] !== undefined && (
+                                            <div style={{
+                                                marginTop: 8,
+                                                fontSize: 12,
+                                                padding: "6px 10px",
+                                                borderRadius: 6,
+                                                background: quizAnswers[qi] === q.correct ? "rgba(0,204,136,0.15)" : "rgba(255,68,85,0.15)",
+                                                color: quizAnswers[qi] === q.correct ? "var(--g)" : "#ff4455"
+                                            }}>
+                                                {quizAnswers[qi] === q.correct
+                                                    ? "Correct !"
+                                                    : `Incorrect — bonne reponse : ${q.opts[q.correct]}`}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Modal Execution */}
+                    {modal === "exec" && (
+                        <div className="modal" onClick={() => setModal(null)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h3>Execution — {selectedProject}</h3>
+                                    <button className="modal-close" onClick={() => setModal(null)}>x</button>
+                                </div>
+                                <div className="execution-area">
+                                    <div style={{ marginBottom: 8, fontSize: 12, color: "var(--mu)" }}>
+                                        Sortie du programme :
+                                    </div>
+                                    <div className="execution-output">
+                                        {executing
+                                            ? <span><span className="loading" /> Execution...</span>
+                                            : (execOutput || "En attente d'execution...")}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+</body>
+</html>
