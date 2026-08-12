@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analyseur Crédit — Étude de faisabilité</title>
+<meta name="description" content="Analyse crédit à partir des bilans : ratios, interprétation, synthèse et éligibilité CMT/CLT, facilité de caisse, leasing, affacturage.">
+<link rel="stylesheet" href="/credit-analyzer/assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="inner">
+    <div class="brand">
+      <span class="k">ÉTUDE DE FAISABILITÉ — VUE BANQUE</span>
+      <span class="t">Analyseur Crédit</span>
+    </div>
+    <input id="societe" class="soc-input" placeholder="Nom de la société…" autocomplete="off">
+    <div class="spacer"></div>
+    <div class="score-badge" id="scoreBadge" title="Solidité structurelle (bilan)">
+      <span class="n" id="scoreNum">—</span>
+      <span class="l">Solidité<br>structurelle</span>
+    </div>
+    <button class="btn ghost sm" id="btnExample" title="Charger l'exemple Voyages 21">Ex. V21</button>
+    <button class="btn ghost sm" id="btnExample2" title="Charger l'exemple La Maison du Fil (modèle banque)">Ex. Maison du Fil</button>
+    <button class="btn ghost sm" id="btnNew">Nouveau</button>
+    <button class="btn gold sm" id="btnExport" title="Exporter toute l'analyse en Word (.doc)">⬇ Exporter Word</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="dossier">1 · Dossier &amp; bilans</button>
+  <button class="tab" data-tab="analyse">2 · Analyse &amp; ratios</button>
+  <button class="tab" data-tab="note">3 · Note d'analyse</button>
+  <button class="tab" data-tab="eligibilite">4 · Éligibilité crédit</button>
+  <button class="tab" data-tab="documents">5 · Documents &amp; notes</button>
+  <button class="tab" data-tab="assistant">6 · Assistant</button>
+  <button class="tab" data-tab="veille">7 · Veille &amp; marché</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- 1. DOSSIER -->
+  <section class="panel active" id="panel-dossier">
+    <div class="banner">
+      Saisis (ou importe) les <b>bilans de la même société</b> sur plusieurs exercices. Les chiffres viennent de la liasse :
+      bilan (masses) + CPC / ESG (CAF, EBE…). Tout se calcule automatiquement. <b>Données privées</b> : rien n'est envoyé à un serveur.
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div><h3>Bilans &amp; comptes de résultat</h3><div class="sub">Une colonne par exercice. Champs en dirhams (DH).</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" id="btnAddExercice">+ Ajouter un exercice</button>
+          <label class="btn sm" style="position:relative;overflow:hidden">
+            Importer un bilan (PDF)
+            <input type="file" id="pdfInput" accept="application/pdf" style="position:absolute;inset:0;opacity:0;cursor:pointer">
+          </label>
+        </div>
+      </div>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="io-table" id="ioTable"></table>
+      </div>
+      <div id="importMsg" class="small muted" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <details class="params">
+        <summary>Paramètres des normes bancaires (avancé)</summary>
+        <div class="params-grid" id="paramsGrid"></div>
+        <div class="small muted" style="margin-top:8px">Ces seuils pilotent l'interprétation et les verdicts. Valeurs par défaut = pratique bancaire courante (Maroc).</div>
+      </details>
+    </div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question sur la saisie ou le dossier ? Réponse immédiate, historisée dans l'onglet Assistant.</div>
+      <div class="discuss-ans" id="discussAns-dossier"></div>
+      <div class="chat-in"><input id="discussIn-dossier" placeholder="Votre question…" autocomplete="off"><button class="btn gold" data-discuss="dossier">Envoyer</button></div>
+    </div>
+  </section>
+
+  <!-- 2. ANALYSE -->
+  <section class="panel" id="panel-analyse">
+    <div class="grid cols-4" id="kpiRow" style="margin-bottom:6px"></div>
+    <div class="card"><h3>Synthèse — santé financière</h3><div class="sub" id="synthSub"></div><div class="synth" id="synthBox"></div></div>
+    <div class="card"><h3>Batterie de ratios</h3><div class="sub">Comparaison sur 2 exercices, position vs norme bancaire, et lecture.</div><div id="ratiosWrap"></div></div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question sur un ratio ou la synthèse ?</div>
+      <div class="discuss-ans" id="discussAns-analyse"></div>
+      <div class="chat-in"><input id="discussIn-analyse" placeholder="Ex : explique le DSCR…" autocomplete="off"><button class="btn gold" data-discuss="analyse">Envoyer</button></div>
+    </div>
+  </section>
+
+  <!-- 3. NOTE D'ANALYSE -->
+  <section class="panel" id="panel-note">
+    <div class="banner">
+      <b>Note d'analyse &amp; décision.</b> Une note <b>rédigée, lisible et exportable en Word</b>, générée à partir de tes bilans.
+      Renseigne les champs ci-dessous (<b>facultatifs — rien ne bloque</b>) pour l'enrichir, puis génère la <b>décision</b> à part.
+    </div>
+    <div class="card">
+      <details class="params" open>
+        <summary>Renseignements sur la société (facultatifs)</summary>
+        <div class="params-grid" id="renseignGrid"></div>
+        <div class="small muted" style="margin-top:8px">Tout est optionnel : un champ vide (ou une date absente) n'empêche jamais l'analyse.</div>
+      </details>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>Note d'analyse</h3><div class="sub">Analyse rédigée en 4 blocs + synthèse, avec une phrase d'explication sous chaque indicateur.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" id="btnNoteRefresh">↻ Actualiser</button>
+          <button class="btn sm" id="btnNoteSave">💾 Enregistrer</button>
+          <button class="btn gold sm" id="btnNoteWord">⬇ Exporter la note (Word)</button>
+        </div>
+      </div>
+      <div class="feuille" id="noteSheet"></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>💬 Commentaire de l'analyste</h3><div class="sub">Optionnel : l'IA rédige un commentaire d'analyste sur le dossier (inclus dans l'export de la note si généré).</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" id="btnCommentaire">Générer le commentaire</button>
+          <button class="btn ghost sm" id="btnCommentaireWord">⬇ Word</button>
+        </div>
+      </div>
+      <div id="noteComment" class="interp" style="margin-top:10px;white-space:pre-wrap"></div>
+    </div>
+    <div class="card">
+      <h3>❓ Demander une explication</h3>
+      <div class="sub">Tape un terme ou un ratio (ex. « gearing », « BFR », « DSCR ») → l'IA l'explique <b>dans le contexte de cette société</b>, avec ses chiffres.</div>
+      <div class="chat-in">
+        <input id="explainIn" placeholder="Ex : explique le gearing pour cette société" autocomplete="off">
+        <button class="btn gold" id="explainBtn">Expliquer</button>
+      </div>
+      <div id="explainOut" class="interp" style="margin-top:10px;white-space:pre-wrap"></div>
+      <div style="margin-top:8px"><button class="btn ghost sm" id="explainWord">⬇ Télécharger en Word</button></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>⚖ Décision / Recommandation</h3><div class="sub">Bouton séparé : avis motivé + lignes de crédit recommandées + covenants + charge au gestionnaire.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn gold sm" id="btnDecision">Générer la décision</button>
+          <button class="btn sm" id="btnDecisionWord">⬇ Exporter la décision (Word)</button>
+        </div>
+      </div>
+      <div class="feuille" id="decisionOut" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>🗂 Historique (traces conservées)</h3><div class="sub">Notes, décisions et commentaires générés/enregistrés — <b>conservés jusqu'à suppression</b>. Chaque trace est ré-ouvrable et exportable en Word.</div></div>
+        <button class="btn sm danger" id="btnTracesClear">Tout effacer</button>
+      </div>
+      <div id="tracesList" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+  </section>
+
+  <!-- 4. ELIGIBILITE -->
+  <section class="panel" id="panel-eligibilite">
+    <div class="card">
+      <h3>Verdict par ligne de crédit</h3>
+      <div class="sub">Étude de <b>faisabilité financière</b> (garanties supposées déjà prises). Sur le dernier exercice.</div>
+      <div id="verdicts"></div>
+    </div>
+    <div class="card">
+      <h3>Simulateur CMT / CLT</h3>
+      <div class="sub">Teste un financement à terme : montant, durée, différé, taux.</div>
+      <div class="grid cols-4" id="simInputs">
+        <div class="field"><label>Montant (DH)</label><input id="simMontant" type="number" value="600000"></div>
+        <div class="field"><label>Durée (ans)</label><input id="simDuree" type="number" value="7"></div>
+        <div class="field"><label>Différé (ans)</label><input id="simDiffere" type="number" value="1"></div>
+        <div class="field"><label>Taux (%)</label><input id="simTaux" type="number" step="0.1" value="6"></div>
+      </div>
+      <div id="simResult" style="margin-top:14px"></div>
+      <div style="overflow-x:auto;margin-top:8px"><table id="maxParDuree"></table></div>
+    </div>
+    <div class="card">
+      <h3>Capacité d'endettement — méthode banque</h3>
+      <div class="sub">Cash disponible pour le service de la dette (CDSD) projeté puis <b>actualisé</b> : <code>EBE − Investissement − Variation BFR − IS − Dividendes</code>, sur la durée. (Inspiré du modèle bancaire fourni.)</div>
+      <div class="grid cols-4" id="cdsdInputs">
+        <div class="field"><label>Durée (ans)</label><input id="cdDuree" type="number" value="7"></div>
+        <div class="field"><label>Taux (%)</label><input id="cdTaux" type="number" step="0.1" value="6.5"></div>
+        <div class="field"><label>Taux IS (%)</label><input id="cdIS" type="number" step="0.1" value="31"></div>
+        <div class="field"><label>Croissance CA /an (%)</label><input id="cdCroissance" type="number" step="0.1" value="5"></div>
+        <div class="field"><label>Marge EBE (% du CA)</label><input id="cdMarge" type="number" step="0.1" placeholder="auto"></div>
+        <div class="field"><label>Investissement /an (DH)</label><input id="cdInvest" type="number" value="0"></div>
+        <div class="field"><label>Dividendes /an (DH)</label><input id="cdDiv" type="number" value="0"></div>
+      </div>
+      <div id="cdsdResult" style="margin-top:14px"></div>
+      <div style="overflow-x:auto;margin-top:8px"><table id="cdsdTable"></table></div>
+    </div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question d'éligibilité ? Ex : « CMT 800 000 sur 7 ans à 6 % ? »</div>
+      <div class="discuss-ans" id="discussAns-eligibilite"></div>
+      <div class="chat-in"><input id="discussIn-eligibilite" placeholder="Votre question d'éligibilité…" autocomplete="off"><button class="btn gold" data-discuss="eligibilite">Envoyer</button></div>
+    </div>
+  </section>
+
+  <!-- 4. DOCUMENTS -->
+  <section class="panel" id="panel-documents">
+    <div class="card">
+      <h3>Documents du dossier</h3>
+      <div class="sub">Exposé d'activité, historique, réalisations, clients/fournisseurs, relevés… Ajoute tout document utile à l'étude.</div>
+      <div class="dropzone" id="dropzone">
+        Glisse des fichiers ici, ou <label style="color:var(--gold-d);font-weight:700;cursor:pointer">parcourir<input type="file" id="docInput" multiple style="display:none"></label>.
+        <div class="small" style="margin-top:6px">Conservés uniquement dans ce navigateur (session privée).</div>
+      </div>
+      <ul class="doc-list" id="docList"></ul>
+    </div>
+    <div class="card">
+      <h3>Notes pour l'analyse</h3>
+      <div class="sub">Donne-moi des informations utiles : contexte, projet de financement, particularités du secteur, qualité des clients/fournisseurs…</div>
+      <textarea class="notes" id="notes" placeholder="Ex : la société prépare l'achat d'un local (2,5 M DH). Clientèle MICE corporate à 60 jours. Saisonnalité forte en été…"></textarea>
+    </div>
+    <div class="card discuss-card">
+      <h3>💬 Discuter avec l'assistant</h3>
+      <div class="sub">Une question à partir des documents ou des notes ?</div>
+      <div class="discuss-ans" id="discussAns-documents"></div>
+      <div class="chat-in"><input id="discussIn-documents" placeholder="Votre question…" autocomplete="off"><button class="btn gold" data-discuss="documents">Envoyer</button></div>
+    </div>
+  </section>
+
+  <!-- 5. ASSISTANT -->
+  <section class="panel" id="panel-assistant">
+    <div class="card">
+      <h3>Assistant crédit — analyste senior</h3>
+      <div class="sub">Discute la décision : l'assistant raisonne comme un <b>analyste crédit senior</b>, pose les questions d'instruction et rend un avis motivé. Ex : « Éligible à un CMT 7 ans, différé 1 an, taux 6 % ? »</div>
+      <div class="banner" id="aiBanner">L'assistant tente d'abord l'<b>IA (analyste senior)</b> ; si la clé API n'est pas configurée côté serveur, il répond via le <b>moteur de règles</b> déterministe.</div>
+      <div class="chat-in" style="margin-bottom:10px">
+        <label class="small" style="align-self:center;color:var(--green);font-weight:700;white-space:nowrap">Modèle&nbsp;IA</label>
+        <select id="aiModel" style="flex:1;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-size:13.5px">
+          <option value="claude-sonnet-4-6">Sonnet 4.6 — équilibré (recommandé · ~1,7× moins cher)</option>
+          <option value="claude-opus-4-8">Opus 4.8 — qualité maximale (plus cher)</option>
+          <option value="claude-haiku-4-5">Haiku 4.5 — économique (~5× moins cher)</option>
+        </select>
+      </div>
+      <div class="chat">
+        <div class="chat-log" id="chatLog"></div>
+        <div class="suggest" id="suggest"></div>
+        <div class="chat-in">
+          <input id="chatInput" placeholder="Votre question…" autocomplete="off">
+          <button class="btn gold" id="chatSend">Envoyer</button>
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn ghost sm" id="chatDl" title="Télécharger toute la discussion en Word">⬇ Télécharger la discussion en Word</button></div>
+    </div>
+  </section>
+
+  <!-- 6. VEILLE & MARCHÉ (Bloc 2) -->
+  <section class="panel" id="panel-veille">
+    <div class="banner">
+      <b>Bloc 2 — Veille & marché (IA).</b> Brief d'actualité éco/finance, recherche web sur <b>sources publiques</b>, et
+      résumé de documents. Nécessite la clé API configurée côté serveur. Pour un article auquel tu es abonné : colle son texte
+      dans « Résumé de document ».
+    </div>
+    <div class="card">
+      <h3>📰 Brief du jour — actualité éco &amp; finance</h3>
+      <div class="sub">Titres + descriptions (≤ 5 phrases), Maroc &amp; international, à partir de sources publiques.</div>
+      <div class="chat-in">
+        <input id="briefFocus" placeholder="Focus optionnel (ex : taux Bank Al-Maghrib, tourisme, change…)" autocomplete="off">
+        <button class="btn gold" id="briefBtn">Générer le brief</button>
+      </div>
+      <div id="briefOut" style="margin-top:12px"></div>
+      <div style="margin-top:10px"><button class="btn ghost sm" id="briefDl" title="Télécharger ce brief en Word">⬇ Télécharger en Word</button></div>
+    </div>
+    <div class="card">
+      <h3>🔎 Recherche web</h3>
+      <div class="sub">Question marché / secteur / entreprise → synthèse sourcée.</div>
+      <div class="chat-in">
+        <input id="researchIn" placeholder="Ex : situation du secteur du tourisme au Maroc" autocomplete="off">
+        <button class="btn gold" id="researchBtn">Rechercher</button>
+      </div>
+      <div id="researchOut" class="interp" style="margin-top:12px"></div>
+      <div style="margin-top:10px"><button class="btn ghost sm" id="researchDl" title="Télécharger cette recherche en Word">⬇ Télécharger en Word</button></div>
+    </div>
+    <div class="card">
+      <h3>📄 Résumé de document</h3>
+      <div class="sub">Choisis un document importé (onglet Documents) ou colle un texte (ex : article de presse).</div>
+      <select id="docPick" style="width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-size:14px;margin-bottom:8px"></select>
+      <textarea class="notes" id="docPaste" placeholder="…ou colle ici le texte d'un article / document à résumer"></textarea>
+      <div style="margin-top:8px"><button class="btn gold" id="summarizeBtn">Résumer</button></div>
+      <div id="summarizeOut" style="margin-top:12px"></div>
+      <div style="margin-top:10px"><button class="btn ghost sm" id="summarizeDl" title="Télécharger ce résumé en Word">⬇ Télécharger en Word</button></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  Analyseur Crédit — outil d'aide à la décision. Les montants dépendent des hypothèses (durée, taux) et des normes paramétrées ;
+  ils ne constituent pas un engagement bancaire. Méthode CGNC (modèle normal) + CPC / ESG.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="/credit-analyzer/assets/engine.js"></script>
+<script src="/credit-analyzer/assets/samples.js"></script>
+<script src="/credit-analyzer/assets/app.js"></script>
+</body>
+</html>
