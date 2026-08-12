@@ -1,0 +1,5 @@
+# RGPD : ne JAMAIS committer de données clients (téléphones, emails).
+# Ce dossier reçoit les fichiers sources et les exports nettoyés, qui
+# restent locaux et ne doivent pas entrer dans l'historique git public.
+*
+!.gitignore

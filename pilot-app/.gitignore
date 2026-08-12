@@ -1,0 +1,6 @@
+/node_modules
+/.next
+/out
+# secrets — ne jamais committer les clés
+.env
+.env.local
