@@ -242,6 +242,32 @@ gtag('config', 'G-S6KCFFBSFW');
     .circles .dots { display: flex; gap: 7px; justify-content: center; }
     .circles .dots i { width: 8px; height: 8px; border-radius: 999px; background: rgba(23,38,63,.3); cursor: pointer; }
     .circles .dots i.on { background: var(--forest); width: 20px; }
+    /* ── Avis Google EN DIRECT (à côté du cercle) ── */
+    .avis-live-col { width: 400px; max-width: 100%; display: flex; flex-direction: column; gap: .8rem; }
+    .avis-live-col[hidden] { display: none; }
+    .avis-live-head { display: flex; align-items: center; gap: .9rem; background: #0a0a0a; border: 3px solid #E6B42E; border-radius: 16px; padding: .8rem 1.1rem; color: #F5D36A; }
+    .avis-live-score { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .avis-live-stars { color: #F5D36A; font-size: 1rem; letter-spacing: .08em; margin-top: .15rem; }
+    .avis-live-count { font-size: .8rem; opacity: .82; font-family: 'Noto Naskh Arabic', serif; margin-top: .15rem; }
+    .avis-live-head .g { margin-inline-start: auto; }
+    .avis-live-card { display: none; background: #0d0d0d; border: 1px solid rgba(230,180,46,.4); border-radius: 16px; padding: 1rem 1.15rem; direction: rtl; text-align: right; animation: avisFade .5s ease; }
+    .avis-live-card .rv-text { font-family: 'Noto Naskh Arabic', serif; }
+    .avis-live-card.on { display: block; }
+    @keyframes avisFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .avis-live-card .rv-stars { color: #E6B42E; font-size: .92rem; letter-spacing: .06em; margin-bottom: .45rem; }
+    .avis-live-card .rv-text { font-size: .92rem; line-height: 1.55; color: #efe6cf; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+    .avis-live-card .rv-foot { display: flex; align-items: center; gap: .55rem; margin-top: .8rem; }
+    .avis-live-card .rv-av { width: 36px; height: 36px; border-radius: 50%; background: #E6B42E; color: #0a0a0a; display: flex; align-items: center; justify-content: center; font-weight: 800; overflow: hidden; flex: 0 0 auto; }
+    .avis-live-card .rv-av img { width: 100%; height: 100%; object-fit: cover; }
+    .avis-live-card .rv-name { font-weight: 700; font-size: .88rem; color: #F5D36A; }
+    .avis-live-card .rv-when { font-size: .74rem; color: rgba(245,211,106,.7); }
+    .avis-live-dots { display: flex; gap: 6px; justify-content: center; }
+    .avis-live-dots i { width: 7px; height: 7px; border-radius: 999px; background: rgba(230,180,46,.35); cursor: pointer; }
+    .avis-live-dots i.on { background: #E6B42E; width: 18px; }
+    .avis-live-cta { text-align: center; }
+    .avis-live-cta a { color: #E6B42E; text-decoration: none; font-weight: 700; font-size: .82rem; }
+    .avis-live-cta a:hover { text-decoration: underline; }
+    @media (max-width: 760px) { .avis-live-col { width: 300px; } }
     @media (max-width: 760px) { .circle { width: 300px; height: 300px; } }
     .carousel { position: relative; max-width: 680px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 32px rgba(21,46,31,.12); background: #0d1f15; direction: ltr; }
     .carousel .track { display: flex; transition: transform .45s ease; }
@@ -606,11 +632,11 @@ gtag('config', 'G-S6KCFFBSFW');
 
 </div>
 
-<!-- Avis + Galerie : deux cercles côte à côte (carrousel circulaire à droite) -->
+<!-- Avis : cercle "lire les avis" + avis Google EN DIRECT à côté -->
 <section class="circles" id="galleryWrap">
     <div class="circles-row">
 
-        <!-- Cercle AVIS -->
+        <!-- Cercle AVIS (lien Google) -->
         <div class="circle-col">
             <a class="circle circle-avis" href="https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc" target="_blank" rel="noopener">
                 <span class="ci-stars">★★★★★</span>
@@ -621,7 +647,15 @@ gtag('config', 'G-S6KCFFBSFW');
             <div class="circle-cap">آراء حجّاجنا… خيرُ شاهد</div>
         </div>
 
-        <!-- Cercle GALERIE (carrousel circulaire) -->
+        <!-- Avis Google EN DIRECT (rempli par JS ; masqué si l'API ne répond pas) -->
+        <div class="avis-live-col" id="hajjAvisLive" hidden></div>
+
+    </div>
+</section>
+
+<!-- Galerie : carrousel d'images (déplacé en section, sous les avis) -->
+<section class="circles" id="galerieWrap">
+    <div class="circles-row">
         <div class="circle-col">
             <div class="circle circle-gallery">
                 <div class="carousel" id="carousel">
@@ -635,7 +669,6 @@ gtag('config', 'G-S6KCFFBSFW');
             <div class="dots" id="carDots"></div>
             <div class="circle-cap">لحظات من رحلاتنا</div>
         </div>
-
     </div>
 </section>
 
@@ -875,6 +908,72 @@ gtag('config', 'G-S6KCFFBSFW');
             if (n > 1) setInterval(function () { go(idx + 1); }, 5000);
         })
         .catch(function () {});
+})();
+</script>
+
+<!-- Avis Google EN DIRECT (page Hajj) — même source que l'accueil : /api/avis-google -->
+<script>
+(function () {
+    var col = document.getElementById('hajjAvisLive');
+    if (!col) return;
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+    function stars(n) { n = Math.round(n || 5); if (n < 1) n = 5; if (n > 5) n = 5; var s = ''; for (var i = 0; i < 5; i++) { s += (i < n ? '★' : '☆'); } return s; }
+    var G = '<svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>';
+
+    fetch('/api/avis-google?lang=ar').then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || !d.ok) return;
+        // Uniquement les avis 5★, puis ordre ALÉATOIRE (mélange Fisher-Yates).
+        var list = (d.reviews || []).filter(function (r) { return r && r.text && r.text.trim() && Math.round(r.rating || 0) === 5; });
+        for (var s = list.length - 1; s > 0; s--) { var q = Math.floor(Math.random() * (s + 1)); var tmp = list[s]; list[s] = list[q]; list[q] = tmp; }
+        if (!list.length) return;
+        var rating = (d.rating != null) ? Number(d.rating).toFixed(1).replace('.', ',') : '';
+        var total = (d.total != null) ? d.total : null;
+        var mapsUrl = d.mapsUrl || 'https://search.google.com/local/reviews?placeid=ChIJPaMFhYzurw0R50-J4mRz7oc';
+
+        var head = '<div class="avis-live-head">'
+            + '<div><div class="avis-live-score">' + rating + '</div>'
+            + '<div class="avis-live-stars">' + stars(d.rating) + '</div>'
+            + (total != null ? '<div class="avis-live-count">' + total + ' تقييم على Google</div>' : '')
+            + '</div><span class="g">' + G + '</span></div>';
+
+        var cards = list.map(function (rv, i) {
+            var name = esc(rv.author || 'Client');
+            var initial = esc(((name.trim()[0]) || 'C').toUpperCase());
+            var av = rv.photo ? ('<img src="' + esc(rv.photo) + '" alt="" referrerpolicy="no-referrer">') : initial;
+            return '<div class="avis-live-card' + (i === 0 ? ' on' : '') + '">'
+                + '<div class="rv-stars">' + stars(rv.rating) + '</div>'
+                + '<div class="rv-text">' + esc(rv.text) + '</div>'
+                + '<div class="rv-foot"><div class="rv-av">' + av + '</div>'
+                + '<div><div class="rv-name">' + name + '</div>'
+                + '<div class="rv-when">' + esc(rv.when || '') + ' · Google</div></div></div>'
+                + '</div>';
+        }).join('');
+
+        var dots = list.length > 1
+            ? '<div class="avis-live-dots">' + list.map(function (_, i) { return '<i' + (i === 0 ? ' class="on"' : '') + '></i>'; }).join('') + '</div>'
+            : '';
+
+        col.innerHTML = head + '<div class="avis-live-cards">' + cards + '</div>' + dots
+            + '<div class="avis-live-cta"><a href="' + esc(mapsUrl) + '" target="_blank" rel="noopener">اقرؤوا كل الآراء على Google ›</a></div>';
+        col.hidden = false;
+
+        var cardEls = col.querySelectorAll('.avis-live-card');
+        var dotEls = col.querySelectorAll('.avis-live-dots i');
+        if (cardEls.length > 1) {
+            var cur = 0, timer = null;
+            var show = function (i) {
+                cur = (i + cardEls.length) % cardEls.length;
+                for (var k = 0; k < cardEls.length; k++) { cardEls[k].classList.toggle('on', k === cur); }
+                for (var j = 0; j < dotEls.length; j++) { dotEls[j].classList.toggle('on', j === cur); }
+            };
+            var auto = function () { timer = setInterval(function () { show(cur + 1); }, 5000); };
+            for (var j = 0; j < dotEls.length; j++) {
+                (function (j) { dotEls[j].addEventListener('click', function () { show(j); clearInterval(timer); auto(); }); })(j);
+            }
+            auto();
+        }
+    }).catch(function () {});
 })();
 </script>
 
