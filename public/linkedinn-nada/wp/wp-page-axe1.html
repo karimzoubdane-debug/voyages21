@@ -1,0 +1,198 @@
+<!--
+  PAGE WORDPRESS : AXE 01 - PROFIL ET CONFIGURATION
+  -----------------------------------------------------
+  A coller dans un bloc "HTML personnalise" (Gutenberg) ou en mode HTML (Classic).
+  Remplacer [URL_DIAGNOSTIC] et [URL_AXE_2] par les URLs des pages WP correspondantes.
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+.nl-page {
+  --bg: #FAF3E7;
+  --bg-card: #FEFAF2;
+  --bg-soft: #F2E4CC;
+  --terracotta: #B8553A;
+  --terracotta-deep: #8E3E29;
+  --text: #3D2817;
+  --text-medium: #6B4A38;
+  --text-muted: #9B8270;
+  --border: #E5D3B8;
+  --border-strong: #D4BB95;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  padding: 4rem 1.8rem 6rem;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.nl-page *, .nl-page *::before, .nl-page *::after { box-sizing: border-box; }
+
+.nl-page .breadcrumb { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+.nl-page .breadcrumb a { color: var(--terracotta); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+.nl-page .breadcrumb a:hover { border-bottom-color: var(--terracotta); }
+
+.nl-page .top { border-bottom: 1px solid var(--border); padding-bottom: 2.5rem; margin-bottom: 4.5rem; }
+.nl-page .eyebrow { font-size: 0.78rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.nl-page h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 600; color: var(--text); line-height: 1.15; margin: 0 0 1.2rem; letter-spacing: -0.01em; }
+.nl-page .lede { font-size: 1.05rem; color: var(--text-medium); max-width: 600px; margin: 0; }
+
+.nl-page section { margin-bottom: 4.5rem; }
+.nl-page h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--text); margin: 0 0 1.4rem; letter-spacing: -0.005em; }
+.nl-page h2::before { content: attr(data-num); font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.2em; display: block; margin-bottom: 0.6rem; text-transform: uppercase; }
+
+.nl-page p { margin: 0 0 1.2rem; color: var(--text); }
+.nl-page p:last-child { margin-bottom: 0; }
+.nl-page strong { font-weight: 600; }
+
+.nl-page .action { margin-bottom: 3.5rem; }
+.nl-page .action-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 500; color: var(--terracotta); line-height: 1; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+.nl-page .action-title { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.3; }
+.nl-page .action p { font-size: 1rem; }
+
+.nl-page .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.6rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-strong); }
+@media (max-width: 600px) { .nl-page .roles { grid-template-columns: 1fr; gap: 0.6rem; } }
+.nl-page .role-item { font-size: 0.92rem; line-height: 1.6; }
+.nl-page .role-label { font-size: 0.72rem; font-weight: 600; color: var(--terracotta-deep); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.nl-page .role-text { color: var(--text-medium); }
+
+.nl-page .roadmap { border-top: 1px solid var(--border); padding-top: 3rem; margin-top: 4rem; }
+.nl-page .timeline { position: relative; padding-left: 2rem; margin-top: 2rem; }
+.nl-page .timeline::before { content: ''; position: absolute; left: 0.4rem; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--border-strong); }
+.nl-page .milestone { position: relative; padding-bottom: 2rem; }
+.nl-page .milestone:last-child { padding-bottom: 0; }
+.nl-page .milestone::before { content: ''; position: absolute; left: -2rem; top: 0.5rem; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--terracotta); }
+.nl-page .milestone-when { font-size: 0.78rem; font-weight: 500; color: var(--terracotta); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.nl-page .milestone-what { font-size: 1rem; color: var(--text); line-height: 1.6; }
+
+.nl-page .foot-nav { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.nl-page .foot-link { color: var(--terracotta); text-decoration: none; font-size: 0.92rem; font-weight: 500; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+.nl-page .foot-link:hover { border-bottom-color: var(--terracotta); }
+.nl-page .foot-link-prev::before { content: '\\2190  '; }
+.nl-page .foot-link-next::after { content: '  \\2192'; }
+.nl-page .foot-link-home { color: var(--text-muted); }
+</style>
+
+<div class="nl-page">
+
+  <div class="breadcrumb">
+    <a href="[URL_DIAGNOSTIC]">État actuel</a> &nbsp;&middot;&nbsp; Axe 01
+  </div>
+
+  <header class="top">
+    <div class="eyebrow">Axe 01 &middot; Semaine 1</div>
+    <h1>Profil et configuration</h1>
+    <p class="lede">Reconstruction des éléments structurants du profil pour le positionnement Medical Science Liaison. Sept actions enchaînées sur sept jours, principalement portées par Karim, validées par Nada à chaque étape.</p>
+  </header>
+
+  <section>
+    <h2 data-num="Méthode">Comment on travaille</h2>
+    <p>Karim prend en charge la rédaction, la mise en forme et la mise en ligne de chaque élément du profil. Nada lit chaque proposition avant publication. Elle peut valider en l'état, demander un ajustement de formulation, signaler une nuance qu'elle veut préserver. Une fois son retour donné, l'élément est mis en ligne dans la foulée.</p>
+    <p>L'objectif de l'axe est de tenir l'ensemble en une seule semaine, de manière à présenter un profil entièrement aligné avant que les deux autres axes ne soient déclenchés.</p>
+  </section>
+
+  <section>
+
+    <div class="action">
+      <div class="action-num">01</div>
+      <div class="action-title">Le titre</div>
+      <p>Le titre actuel est rédigé en langage académique. Karim en prépare trois variantes orientées Medical Science Liaison, chacune intégrant les termes recherchés par les recruteurs des laboratoires pharmaceutiques. Les trois propositions sont soumises à Nada le même jour.</p>
+      <p>Nada choisit la formulation qui lui correspond le mieux. Elle peut remplacer un terme, raccourcir, demander une autre version. Le titre validé est mis en ligne dès l'accord obtenu.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Rédige les variantes, met en ligne la version retenue.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Choisit, ajuste si nécessaire, valide.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">02</div>
+      <div class="action-title">Le bloc À propos</div>
+      <p>Karim rédige le bloc À propos en suivant la trame réelle du parcours de Nada. Le texte raconte d'abord la formation scientifique, le doctorat en physiologie cardiovasculaire et le travail de recherche. Il enchaîne sur la décision d'orienter cette expertise vers l'industrie pharmaceutique, en explicitant ce que les fonctions de Medical Science Liaison permettent et pourquoi elles correspondent au profil. Il se termine par une indication claire du type de rôle visé et du territoire géographique concerné.</p>
+      <p>Nada relit le texte intégralement, corrige les points où la formulation s'écarte de la réalité de son parcours, valide le résultat. La mise en ligne suit immédiatement.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Rédige le texte complet, intègre les corrections, met en ligne.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Relit, ajuste les nuances, valide.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">03</div>
+      <div class="action-title">La bannière</div>
+      <p>La bannière haute du profil reste à configurer. Karim prépare une version graphique sobre reprenant le positionnement retenu en quelques mots. Le rendu est volontairement épuré, sans fioriture, en cohérence avec les codes visuels du secteur pharmaceutique.</p>
+      <p>Nada valide la version finale ou demande un ajustement avant la mise en place.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Conçoit la bannière, la met en place.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Valide la version finale.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">04</div>
+      <div class="action-title">La photo</div>
+      <p>Une photo professionnelle, fond neutre, tenue cohérente avec un environnement médical et corporate. Si la photo actuelle remplit ces critères, elle est conservée. Sinon, Nada fournit une nouvelle prise. Karim cale le cadrage et la mise en page sur le profil.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Cale le cadrage et la mise en page.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Fournit la photo si une nouvelle prise est requise.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">05</div>
+      <div class="action-title">La version anglaise du profil</div>
+      <p>Une version anglaise complète du profil est créée en parallèle de la version française. Le titre, le bloc À propos, les expériences et la formation sont traduits en respectant les terminologies métier utilisées dans l'industrie pharmaceutique anglophone. Karim prépare l'ensemble. Nada relit les termes techniques, en particulier ceux qui touchent à l'imagerie cardiaque et à l'écosystème Medical Affairs, pour s'assurer qu'ils correspondent à l'usage du secteur.</p>
+      <p>Cette version anglaise rend le profil visible des recruteurs des laboratoires implantés à Montréal qui opèrent majoritairement en anglais.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Traduit et met en ligne la version anglaise complète.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Valide les terminologies techniques propres à son domaine.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">06</div>
+      <div class="action-title">Les compétences épinglées</div>
+      <p>Cinquante-neuf compétences sont déjà déclarées sur le profil. Karim n'en ajoute pas. Il en sélectionne trois pour les épingler en tête de la section : Medical Affairs, Scientific Communication, Clinical Research. Ces trois compétences correspondent aux entrées que les recruteurs filtrent en priorité.</p>
+      <p>Nada confirme la sélection. Les trois compétences passent en première position.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Sélectionne et épingle les trois compétences en tête.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Confirme la sélection.</div></div>
+      </div>
+    </div>
+
+    <div class="action">
+      <div class="action-num">07</div>
+      <div class="action-title">La géolocalisation</div>
+      <p>Le profil est aujourd'hui paramétré sur Sherbrooke. Karim le repositionne sur le Grand Montréal, conformément à la zone où se concentrent les laboratoires pharmaceutiques et la majorité des postes Medical Affairs au Québec. Ce simple paramétrage fait remonter le profil dans les recherches géographiques que les recruteurs effectuent sur cette zone.</p>
+      <div class="roles">
+        <div class="role-item"><div class="role-label">Karim</div><div class="role-text">Modifie le paramétrage géographique du profil.</div></div>
+        <div class="role-item"><div class="role-label">Nada</div><div class="role-text">Valide le changement.</div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="roadmap">
+    <h2 data-num="Calendrier">Feuille de route — Semaine 1</h2>
+    <p>L'axe se déroule sur sept jours calendaires. La séquence est conçue pour que chaque action s'enchaîne sans temps mort, tout en laissant à Nada une fenêtre raisonnable pour relire et valider.</p>
+
+    <div class="timeline">
+      <div class="milestone"><div class="milestone-when">Jour 1</div><div class="milestone-what">Préparation des trois variantes de titre. Soumission à Nada.</div></div>
+      <div class="milestone"><div class="milestone-when">Jour 2</div><div class="milestone-what">Validation du titre et mise en ligne. Rédaction du bloc À propos.</div></div>
+      <div class="milestone"><div class="milestone-when">Jour 3</div><div class="milestone-what">Validation et publication du bloc À propos. Conception de la bannière.</div></div>
+      <div class="milestone"><div class="milestone-when">Jour 4</div><div class="milestone-what">Mise en place de la bannière et de la photo. Lancement de la traduction anglaise.</div></div>
+      <div class="milestone"><div class="milestone-when">Jour 5</div><div class="milestone-what">Relecture des terminologies anglaises par Nada. Mise en ligne de la version anglaise.</div></div>
+      <div class="milestone"><div class="milestone-when">Jour 6</div><div class="milestone-what">Épinglage des trois compétences prioritaires. Repositionnement géographique sur Grand Montréal.</div></div>
+      <div class="milestone"><div class="milestone-when">Jour 7</div><div class="milestone-what">Relecture finale conjointe du profil dans son ensemble. Profil considéré comme prêt pour le déclenchement des axes deux et trois.</div></div>
+    </div>
+  </section>
+
+  <nav class="foot-nav">
+    <a class="foot-link foot-link-home" href="[URL_DIAGNOSTIC]">État actuel</a>
+    <a class="foot-link foot-link-next" href="[URL_AXE_2]">Axe 02 — Publications</a>
+  </nav>
+
+</div>
