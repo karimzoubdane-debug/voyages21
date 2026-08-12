@@ -29,7 +29,69 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
-## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
+## 📍 Dernier point (mis à jour le 14/06/2026 — matin, lot ASIE + viral 6+3)
+- ✅ **Viral 6+3 par voyage** : 9 exemples (3 UGC + 3 reels + 3 internationaux),
+  tags couleur + drapeau origine. Scrapes intl réels (cznburak 26,5 M, omradusavoir,
+  sabah_adeem/rena_callist Zanzibar, etc.).
+- ✅ **Benchmark** : ligne V21 en couleur + **cadran d'analyse « data-only »**
+  (où se situe V21, écart, origine probable d'après la SEULE data scrapée).
+- ✅ **ASIE pays par pays AJOUTÉE** (data.js réel) : Vietnam (33 900), Thaïlande
+  (26 900), Malaisie+Thaïlande (28 500), Chine (29 900), Ouzbékistan (15 700 ⚠️
+  hors vols). studio-data.js **v4 = 9 produits**.
+- ⚠️ **Limite honnête** : le hashtag scraper ramène du contenu RÉCENT peu viral
+  (vues souvent non captées). Les exemples internationaux Asie sont donc réels mais
+  modestes → un **scrape d'influenceurs ciblé (desktop)** enrichirait fortement.
+  Fort : reels MA (terratour Vietnam 40k, Croatie 71k) + cznburak (Turquie 26,5 M).
+- ⚠️ **Prix concurrents** : peu d'agences MA affichent leurs prix en post (Asie,
+  Omra spécialistes, Zanzibar) → benchmarks souvent « à demander » (honnête).
+
+## 📍 Point du 14/06/2026 — nuit
+- ✅ **Apify 100 % autonome confirmé** en session web (API REST + `APIFY_TOKEN`,
+  curl) — plus de gate à approuver. Test `users/me` OK.
+- ✅ **CHANTIER 1 du cahier des charges LIVRÉ — Veille élargie + engagement réel** :
+  scrape Apify de 8 concurrents (run `xX5xp5YSctnvvqkhE`, 85 posts) + scrape
+  @voyages21maroc (run `jH5WMU4rjZ66G8evx`, 12 posts). Intégré dans
+  `public/v21-studio/studio-data.js` (Égypte + Turquie : comptes, benchmark prix
+  AVEC V21, table engagement réel AVEC V21, learnings) + `veille-concurrents.md` §5
+  (tableau engagement + posts marquants avec liens cliquables).
+- 🔑 **Constats clés** : Vacancia scale via reels+audio (95k vues, caption vide) ;
+  Terratour = meilleur engagement (modèle à copier) ; AjiNsafro vend le MÊME
+  Caire & Sharm mais plafonne à ~120 vues → **fenêtre contenu Égypte ouverte** ;
+  Transatour casse le prix Istanbul (6 547 DH) ; **V21 part de ~50-150 vues**.
+- ✅ **CHANTIERS 2→5 LIVRÉS** (même PR #49) dans `studio-data.js` + `index.html` :
+  - **2. Inspiration virale** : bloc `viralExamples` avec **liens cliquables réels**
+    (posts concurrents scrapés) pour Égypte ET Turquie.
+  - **3. Stratégie réseaux** : objet `reseaux` partagé = **5 plateformes**
+    (Instagram, Facebook, TikTok, Snapchat, Pinterest), chacune avec rôle/codes/
+    cadence/KPI. Rendu en section dédiée.
+  - **4. Style audio** : `audio` passé en objets avec **liens d'écoute réels**
+    (Pixabay tracks + Uppbeat collections + onglet audios tendance IG).
+  - **5. Posts clés en main** : enrichis (script, langues FR/darija, direction
+    visuelle, brief casting, plan de tournage, CTA, **KPIs cibles**) + **1 post
+    UGC avec acteur** par destination + **lien-cible réel** sur chaque post.
+  - `index.html` : rendu étendu (liens, audio cliquable, posts riches, réseaux),
+    garde-fous `if` par bloc. Validé : parse OK + simulation rendu 3 produits sans erreur.
+- ✅ **OMRA + ZANZIBAR ajoutés** (même PR #49) — même étude complète :
+  - **Omra** (juil.–août 2026) : 6 offres réelles tirées de `public/voyages/data.js`
+    (éco 15 900 · « 2 omras en 1 » Etihad 12 900 · premium 5★ 21 500 · Mouharram ·
+    +Istanbul). Scrape concurrents (voyage.or, qafilat.tayba, sabilevoyages +
+    transatour/msm). **Constat clé** : le CONCOURS « gagne une Omra » est le levier
+    viral n°1 (voyage.or 22k vues / 4 283 ❤️ / 2 244 comm). Prix concurrents
+    vérifiés : Transatour 10 990 + Kabdani 15 900. Audio = nasheed sobre (jamais
+    d'instrumental). Différenciateur V21 : VOL DIRECT RAM Médine.
+  - **Zanzibar** (juin–août 2026) : 2 offres réelles (Fun Beach 3★ dès 18 500 /
+    Breeze's 4★ dès 22 500, vol Turkish). Scrape (kabdani + hashtag + olevoyages KO).
+    **Constat clé** : WHITE SPACE — aucun reel Zanzibar marocain viral → niche à
+    prendre, mais demande à CRÉER (contenu aspirationnel).
+  - `studio-data.js` v3 : 4 produits (egypte/turquie/omra/zanzibar) + `benchmarkTitre`
+    par produit. `index.html` : titre benchmark dynamique. Validé : 4 produits
+    rendus sans erreur.
+- ⏭️ Reste à faire ensuite : générer les VISUELS Higgsfield (desktop, gate web),
+  décision prix Caire & Sharm (en pause à la demande de Karim), horaires vols réels.
+  Pour Omra : scraper les prix concurrents sur fiches (peu affichés en post).
+  Pour Zanzibar : confirmer si on lance le créneau (demande à créer).
+
+## 📍 Point du 13/06/2026 — matin
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
   sous-agents sonnet, puis vérification adversariale). Fonctionne.
 - ✅ **Veille concurrents livrée** → `content-studio/veille-concurrents.md` :
