@@ -1,0 +1,6 @@
+# Artefacts de rendu (dérivés, reproductibles) — pas versionnés
+sources/scene*.png
+v2-sources/scene*.png
+out/
+qa/
+*.mp4

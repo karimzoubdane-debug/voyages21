@@ -29,6 +29,21 @@ court-circuiter et aller droit au but).
   propositions contenu (posts/hooks/audio) · inspiration virale · questions Claude.
 - Règle : à chaque avancée contenu, mettre à jour `studio-data.js` + commit/push.
 
+## 📍 Dernier point (mis à jour le 26/06/2026)
+- ✅ **Reel Hajj 2027** (vidéo promo IG 9:16, 1080×1920, 24 s) — version **MUETTE
+  livrée à Karim** (en attente de sa validation image). Méthode cinématique
+  fidèle : Ken Burns + particules d'or + halo + transitions noir/or, **textes
+  arabes & numéros 100 % intacts** (aucun pixel régénéré). Pipeline déterministe
+  `content-studio/hajj/render_reel.py` (ffmpeg + Pillow) ; maquettes dans
+  `content-studio/hajj/sources/`. **PR brouillon #95**.
+- ⏳ **Prochaine étape** : Karim fournit la **piste musicale** (dépôt dans
+  `content-studio/hajj/sources/`) → je la mixe ; puis **voix off arabe homme**
+  (script dans `content-studio/hajj/README.md`). Livraison 2 versions.
+- ⚠️ **Contrainte env Claude web** : réseau restreint à GitHub (Drive + CDN
+  Higgsfield bloqués en download direct). Transfert des fichiers via le repo
+  GitHub ; sortie renvoyée à Karim dans le chat. Higgsfield TTS non récupérable
+  ici (CDN bloqué) → voix off à fournir/générer hors session web si besoin.
+
 ## 📍 Dernier point (mis à jour le 13/06/2026 — matin)
 - ✅ **Skill tour-de-contrôle TESTÉ** sur la veille concurrents (3 lots //,
   sous-agents sonnet, puis vérification adversariale). Fonctionne.
