@@ -181,7 +181,8 @@ PR #88 sur main, (3) **vidéo réseaux** (prompt Higgsfield déjà rédigé : ro
 ou route B 100 % générée, format 9:16 + 1:1, textes « مناسك الحج 2027 », sans prix).
 
 ## ▶️ Prochaines étapes (feux verts attendus)
-- **« go #75 »** → fusionner l'accueil (n° tél + WhatsApp + hero sans décalage).
+- ✅ **#75 fusionnée le 2026-06-24** : accueil (n° 0614-152686 tél+WhatsApp,
+  bouton « Voir l'introduction » dans la barre du haut, hero sans décalage prix/vidéo).
 - **« go #77 »** → activer le dépôt auto de la sauvegarde sur Drive (nécessite
   le secret `GDRIVE_SA_JSON`).
 - **#73** (Codex, obsolète/conflictuelle) → **à fermer** (rien à fusionner).
