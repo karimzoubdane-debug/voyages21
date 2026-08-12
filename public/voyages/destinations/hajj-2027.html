@@ -148,9 +148,12 @@ gtag('config', 'G-S6KCFFBSFW');
     .hotel-lightbox .glb-head h4 { margin: 0; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--forest); }
     .hotel-lightbox .glb-close { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 1px solid var(--line, #e4ddcf); color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; }
     .hotel-lightbox .glb-inner { overflow-y: auto; padding: 16px; }
-    .hotel-lightbox .glb-inner img { width: 100%; border-radius: 12px; margin-bottom: 12px; display: block; }
+    .hotel-lightbox .glb-inner img { width: 100%; border-radius: 12px; margin-bottom: 12px; display: block; background: #f1ece1; opacity: 0; transition: opacity .35s ease; }
+    .hotel-lightbox .glb-inner img.loaded { opacity: 1; }
     .hotel-lightbox .glb-inner img:last-child { margin-bottom: 0; }
-    .hotel-lightbox .glb-empty { padding: 1.4rem; text-align: center; color: var(--muted); font-weight: 600; }
+    .hotel-lightbox .glb-empty, .hotel-lightbox .glb-loading { padding: 1.4rem; text-align: center; color: var(--muted); font-weight: 600; }
+    .hotel-lightbox .glb-loading::before { content: ''; display: inline-block; width: 22px; height: 22px; margin-inline-end: .5rem; vertical-align: -.35rem; border: 3px solid rgba(200,164,64,.3); border-top-color: var(--gold, #C8A440); border-radius: 50%; animation: glbSpin .8s linear infinite; }
+    @keyframes glbSpin { to { transform: rotate(360deg); } }
     .price-table td.hotel small { color: var(--muted); font-weight: 600; }
     .price-table tbody tr:hover { background: #faf8f2; }
     .price-table .price { font-weight: 700; color: var(--ink); white-space: nowrap; }
@@ -328,6 +331,8 @@ gtag('config', 'G-S6KCFFBSFW');
     @media (prefers-reduced-motion: reduce) {
         .why-card.is-center, .blink, .formule-top::after, .formule-top .dates span, .reviews-ref .gbtn, .incl::before { animation: none; }
         .reveal, .formule .price { opacity: 1; transform: none; transition: none; }
+        .hotel-lightbox .glb-inner img { opacity: 1; transition: none; }
+        .hotel-lightbox .glb-loading::before { animation: none; }
     }
 
     @media (max-width: 760px) {
@@ -337,6 +342,8 @@ gtag('config', 'G-S6KCFFBSFW');
         .price-table { font-size: .82rem; }
         .price-table th, .price-table td { padding: .6rem .4rem; }
         .carousel .slide { aspect-ratio: 4/3; }
+        /* Zone tactile plus large pour les icônes 📷 (≥ 38px de haut) */
+        .hotel-gal { padding: .4rem .6rem; font-size: 1.1rem; min-height: 38px; }
     }
 
     /* ====== Thème — fond vert fluo + texte bleu nuit ====== */
@@ -726,10 +733,76 @@ gtag('config', 'G-S6KCFFBSFW');
         Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('in'); });
     }
 
+    // ── Galeries photos par hôtel : icône 📷 → lightbox réactive AVANT même /api/media ──
+    // Les clics sont attachés dès que le DOM est prêt ; les photos se remplissent
+    // dès que /api/media répond (avec un voyant « chargement » entre-temps).
+    var hajjMedia = null; // null = médias pas encore chargés ; objet = chargés
+    var hlb = null, hlbInner = null, hlbTitle = null;
+    var pendingGal = null; // { name, key } d'un hôtel ouvert pendant le chargement
+    function imgsForKey(key) {
+        var rec = (hajjMedia && hajjMedia[key]) || {};
+        return (rec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
+    }
+    function renderHotelShots(urls, name) {
+        if (!hlbInner) return;
+        hlbInner.innerHTML = '';
+        if (urls && urls.length) {
+            urls.forEach(function (u, i) {
+                var im = document.createElement('img');
+                im.src = u;
+                im.alt = name || '';
+                im.loading = i === 0 ? 'eager' : 'lazy';
+                im.decoding = 'async';
+                if (im.complete) im.classList.add('loaded');
+                else im.addEventListener('load', function () { im.classList.add('loaded'); });
+                hlbInner.appendChild(im);
+            });
+        } else if (hajjMedia === null) {
+            hlbInner.innerHTML = '<div class="glb-loading">جارٍ تحميل الصور… · Chargement des photos…</div>';
+        } else {
+            hlbInner.innerHTML = '<div class="glb-empty">📷 الصور قريبًا · Photos bientôt disponibles</div>';
+        }
+    }
+    function openHotelGallery(name, key) {
+        if (!hlb) return;
+        hlbTitle.textContent = name || '';
+        pendingGal = { name: name, key: key };
+        renderHotelShots(imgsForKey(key), name);
+        hlb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeHotelGallery() {
+        if (!hlb) return;
+        hlb.classList.remove('active');
+        hlbInner.innerHTML = '';
+        pendingGal = null;
+        document.body.style.overflow = '';
+    }
+    function initHotelGalleries() {
+        hlb = document.getElementById('hotelLightbox');
+        hlbInner = document.getElementById('hotelLightboxInner');
+        hlbTitle = document.getElementById('hotelLightboxTitle');
+        if (!hlb) return;
+        hlb.addEventListener('click', function (e) { if (e.target === hlb) closeHotelGallery(); });
+        var hlbClose = document.getElementById('hotelLightboxClose');
+        if (hlbClose) hlbClose.addEventListener('click', closeHotelGallery);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeHotelGallery(); });
+        Array.prototype.forEach.call(document.querySelectorAll('.hotel-gal[data-gal]'), function (btn) {
+            var nm = btn.parentNode && btn.parentNode.querySelector('.hotel-name');
+            var name = nm ? nm.textContent : '';
+            btn.addEventListener('click', function () { openHotelGallery(name, btn.getAttribute('data-gal')); });
+            // si les médias sont déjà arrivés, activer tout de suite le bouton
+            if (imgsForKey(btn.getAttribute('data-gal')).length) btn.classList.remove('is-empty');
+        });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initHotelGalleries);
+    else initHotelGalleries();
+
     // Galerie + photo hero depuis l'admin médias (clé "galerie-hajj")
     fetch('/api/media', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : {}; })
         .then(function (media) {
+            hajjMedia = media || {};
             // Logo piloté par l'admin médias (clé "logo-hajj")
             var logoRec = (media && media['logo-hajj']) || {};
             var logoUrl = logoRec.images && logoRec.images[0] && logoRec.images[0].url;
@@ -738,41 +811,13 @@ gtag('config', 'G-S6KCFFBSFW');
                 if (lg) { lg.src = logoUrl; lg.style.display = 'block'; }
             }
 
-            // ── Galeries photos par hôtel : icône 📷 → lightbox « sur place » (une clé média par hôtel) ──
-            var hlb = document.getElementById('hotelLightbox');
-            var hlbInner = document.getElementById('hotelLightboxInner');
-            var hlbTitle = document.getElementById('hotelLightboxTitle');
-            function openHotelGallery(name, urls) {
-                hlbTitle.textContent = name || '';
-                if (urls && urls.length) {
-                    hlbInner.innerHTML = urls.map(function (u) {
-                        return '<img src="' + u + '" alt="' + (name || '') + '" loading="lazy">';
-                    }).join('');
-                } else {
-                    hlbInner.innerHTML = '<div class="glb-empty">📷 الصور قريبًا · Photos bientôt disponibles</div>';
-                }
-                hlb.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            function closeHotelGallery() {
-                hlb.classList.remove('active');
-                hlbInner.innerHTML = '';
-                document.body.style.overflow = '';
-            }
-            if (hlb) {
-                hlb.addEventListener('click', function (e) { if (e.target === hlb) closeHotelGallery(); });
-                var hlbClose = document.getElementById('hotelLightboxClose');
-                if (hlbClose) hlbClose.addEventListener('click', closeHotelGallery);
-                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeHotelGallery(); });
-                Array.prototype.forEach.call(document.querySelectorAll('.hotel-gal[data-gal]'), function (btn) {
-                    var key = btn.getAttribute('data-gal');
-                    var hrec = (media && media[key]) || {};
-                    var himgs = (hrec.images || []).map(function (x) { return x && x.url; }).filter(Boolean);
-                    var nm = btn.parentNode && btn.parentNode.querySelector('.hotel-name');
-                    var name = nm ? nm.textContent : '';
-                    if (himgs.length) btn.classList.remove('is-empty');
-                    btn.addEventListener('click', function () { openHotelGallery(name, himgs); });
-                });
+            // Activer (retirer is-empty) les 📷 des hôtels qui ont des photos
+            Array.prototype.forEach.call(document.querySelectorAll('.hotel-gal[data-gal]'), function (btn) {
+                if (imgsForKey(btn.getAttribute('data-gal')).length) btn.classList.remove('is-empty');
+            });
+            // Si une galerie a été ouverte pendant le chargement, on la remplit maintenant
+            if (pendingGal && hlb && hlb.classList.contains('active')) {
+                renderHotelShots(imgsForKey(pendingGal.key), pendingGal.name);
             }
 
             var rec = (media && media['galerie-hajj']) || {};
