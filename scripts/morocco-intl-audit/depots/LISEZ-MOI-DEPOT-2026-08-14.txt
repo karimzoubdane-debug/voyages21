@@ -1,0 +1,141 @@
+==============================================================================
+  MOROCCO VOYAGES 21 — dépôt du 14/08/2026
+  Actions 1 à 8 (personnalisation internationale) + Action A (4 urgences photo)
+==============================================================================
+
+CE QUE CONTIENT CE ZIP
+----------------------
+  WelcomeChina/index.html          la brochure          228 Ko  →  142 Ko
+  WelcomeChina/voyages/render.js   les pages voyage     129 Ko  →  129 Ko
+  WelcomeChina/voyages/data.js     les données          138 Ko  →  139 Ko
+
+Trois fichiers, rien d'autre. Aucune photo à téléverser, aucun dossier à créer.
+
+
+OÙ LES DÉPOSER
+--------------
+  StackCP  →  Gestionnaire de fichiers  →
+
+      public_html/morocco-intl/WelcomeChina/
+
+  index.html se dépose à cet endroit.
+  render.js et data.js se déposent dans le sous-dossier voyages/.
+
+  ⚠ C'est bien morocco-intl.  PAS HelloMorroco : ce dossier-là, c'est le site
+    chinois morocco21.cn, on n'y touche jamais.
+
+
+AVANT DE DÉPOSER — la sauvegarde (2 minutes)
+--------------------------------------------
+  Télécharger les 3 fichiers actuellement en place et les garder de côté.
+  Si quoi que ce soit cloche, on les remet et le site revient à l'état d'avant.
+
+
+APRÈS LE DÉPÔT — ce qu'il faut vérifier
+---------------------------------------
+  Ouvrir https://morocco.voyages21.com en navigation privée (pour ne pas voir
+  une vieille version en cache), puis contrôler dans l'ordre :
+
+   1. En haut : le choix de langue propose English et Français. Plus de 中文.
+   2. Le nom affiché est « Morocco Voyages 21 », plus « WelcomeChina ».
+   3. En bas à droite : le bouton vert WhatsApp. Un clic ouvre une conversation
+      avec le +212 673 280 009. Plus aucun QR code WeChat.
+   4. Le menu ☰ sous l'en-tête déroule les 5 circuits Maroc + le contact, et se
+      termine par les icônes WhatsApp / Instagram / Facebook.
+   5. La brochure n'affiche QUE le Maroc. Plus de Turquie, Égypte, USA, Cuba,
+      Pérou, Europe, Chine, Malaisie, Bangkok, Vietnam, Zanzibar, croisières,
+      Omra.
+   6. Les prix sont en euros. Les 5 circuits doivent afficher :
+            Villes impériales & Sud ....  935 €
+            Villes impériales .........  930 €
+            Le meilleur du Maroc ...... 1 045 €
+            À la découverte du Royaume  1 230 €
+            Splendide Maroc ........... 1 590 €
+   7. Sous les circuits et sous les tableaux de prix : la mention « prix
+      indicatif, confirmé au devis / tarifs révisables ».
+   8. Ouvrir une page circuit : le guide est annoncé anglophone ou francophone,
+      plus arabophone.
+   9. Circuit des villes impériales → sa galerie ne contient plus la photo du
+      singe.
+  10. Circuit « À la découverte du Royaume » → sa vignette défile sur 5 images
+      (la vidéo + Marrakech, Fès, Merzouga, Ouarzazate). Plus de Casablanca
+      filigranée iStock, plus du faux « Meknès ».
+
+
+CE QUI A CHANGÉ, EN DÉTAIL
+--------------------------
+  1  Langues ......... 中文 retiré, français ajouté, anglais par défaut.
+  2  WhatsApp ........ remplace WeChat partout (bouton flottant, bulle, boutons
+                       de devis avec message pré-rempli au nom du circuit,
+                       popup vidéo). QR WeChat supprimé.
+  3  Menu ............ menu déroulant vertical sous l'en-tête : 5 circuits
+                       Maroc + contact, intitulés bilingues.
+  3b Nettoyage ....... 13 destinations dormantes supprimées pour de bon (elles
+                       étaient seulement masquées en CSS et alourdissaient la
+                       page). Séjours Maroc conservés, toujours masqués.
+  4  Réseaux ......... icônes WhatsApp / Instagram / Facebook en bas du menu.
+                       ⚠ Liens Instagram et Facebook PROVISOIRES.
+  5  Euros ........... 192 prix convertis au taux 1 € = 1,20 USD, arrondis à la
+                       hausse au multiple de 5 € (ex. 1 117 USD → 935 €).
+                       ⚠ Taux à confirmer.
+  6  Mentions ........ devise unique assumée + « prix indicatif, ferme au devis,
+                       révisable si variation des changes ou taxes », EN et FR.
+  7  Branding ........ le site devient « Morocco Voyages 21 » : nom, onglet,
+                       description Google, aperçu de partage WhatsApp/réseaux,
+                       bandeau des pages voyage, langue du document en « en ».
+                       Les chemins /WelcomeChina/... ne changent pas : c'est le
+                       nom du dossier sur le serveur.
+  8  Relecture ....... « Morocco crafted for Chinese travelers » → « Morocco,
+                       tailor-made ». Guides anglophone/francophone. 28 fenêtres
+                       de détail mortes supprimées.
+  1b Correctif ....... la version française affichait les durées en anglais
+                       (« 8 days / 7 nights » au lieu de « 8 jours / 7 nuits »).
+                       Cause : un caractère d'échappement resté tel quel dans
+                       le dictionnaire français. Corrigé.
+  A  Urgences ........ 4 photos retirées :
+                       · casablanca.jpg (filigrane iStock, image non achetée),
+                       · « surf dakhla » (filigrane Waterwind.it),
+                       · le singe magot du circuit des villes impériales,
+                       · meknes.jpg (montrait un lac de barrage, pas Meknès).
+
+
+CE QUI A ÉTÉ VÉRIFIÉ AVANT DE TE L'ENVOYER
+------------------------------------------
+  Le site a été monté et ouvert dans un vrai navigateur, en anglais puis en
+  français : aucune erreur JavaScript, le menu s'ouvre, les icônes des réseaux
+  sont là, les prix affichent bien 935 / 930 / 1 045 / 1 230 / 1 590 €, et le
+  choix de langue est conservé après rechargement de la page.
+  Les 14 fichiers locaux du site ont été testés un par un sur le serveur : tous
+  répondent.
+
+  Une limite connue, sans gravité : une adresse du type « …?lang=fr » n'ouvre
+  pas la brochure en français (elle fonctionne sur les pages circuit). C'est
+  ainsi depuis l'origine, ce n'est pas dû à ce dépôt. À corriger seulement si
+  tu veux partager des liens directement en français, par exemple dans une
+  publicité.
+
+
+CE QUI N'A PAS BOUGÉ
+--------------------
+  · La médiathèque intégrée en dur (mediafix3) est intacte : la correction des
+    photos de l'été n'est pas perdue.
+  · Les 14 fichiers locaux du site (vidéo, images, icônes) sont tous encore
+    référencés et tous présents sur le serveur — vérifié un par un.
+  · Aucun chemin /WelcomeChina/ renommé : aucun lien cassé.
+
+
+RESTE À FAIRE APRÈS CE DÉPÔT
+----------------------------
+  · Donner les vrais liens Instagram et Facebook (2 lignes à changer).
+  · Confirmer le taux 1 € = 1,20 USD, ou repartir des tarifs négociés réels.
+  · Constituer la photothèque : ~60 photos, 12 par circuit (voir le rapport de
+    curation). C'est le vrai chantier restant.
+  · Optionnel : purger le code mort laissé par le site chinois — le CSS de la
+    fenêtre WeChat et les dictionnaires de traduction chinois et arabe, devenus
+    inatteignables (le sélecteur de langue ne propose plus que EN et FR).
+    Environ 20 Ko à gagner. Sans effet visible : à faire ou non.
+  · Au branchement de moroccovoyages21.com : og:image en adresse absolue,
+    balise canonique vers le .com, et redirection 301 du sous-domaine vers le
+    .com — c'est la redirection qui évite le contenu dupliqué, pas un noindex :
+    les deux adresses servent le MÊME dossier, un noindex les cacherait toutes
+    les deux.

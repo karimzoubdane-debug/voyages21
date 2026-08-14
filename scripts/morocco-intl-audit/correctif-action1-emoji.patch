@@ -1,0 +1,17 @@
+--- /tmp/a1.orig	2026-08-14 18:20:56.697033949 +0000
++++ action1_langues.py	2026-08-14 18:20:56.719428453 +0000
+@@ -26,10 +26,10 @@
+             bubble: 'Contactez-nous',
+             close: 'Fermer',
+             meta: {
+-                '\\U0001F5D3 8 jours / 7 nuits': '8 jours / 7 nuits',
+-                '\\U0001F5D3 10 jours / 9 nuits': '10 jours / 9 nuits',
+-                '\\U0001F5D3 12 jours / 11 nuits': '12 jours / 11 nuits',
+-                '\\U0001F5D3 15 jours / 14 nuits': '15 jours / 14 nuits'
++                '🗓 8 jours / 7 nuits': '8 jours / 7 nuits',
++                '🗓 10 jours / 9 nuits': '10 jours / 9 nuits',
++                '🗓 12 jours / 11 nuits': '12 jours / 11 nuits',
++                '🗓 15 jours / 14 nuits': '15 jours / 14 nuits'
+             },
+             cards: {
+                 'Imperial Cities & Southern Morocco': {
