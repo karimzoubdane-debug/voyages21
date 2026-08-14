@@ -1,0 +1,598 @@
+{
+ "_note": "Descriptions et decisions ecrites a la main apres avoir REGARDE chaque photo. Le script audit_photos.py ne fait que mesurer : il rapproche par URL et signale les photos nouvelles, a decrire ici.",
+ "etabli_le": "2026-08-14",
+ "photos": [
+  {
+   "ref": "P00",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/_Explore%20the%20blue%20paradise%20of%20Chefchaouen%E2%80%A6-CQvmsJHK9WB6MxCT4RtmLqPxxOgkMd.jpg",
+   "description": "Ruelle en escalier de Chefchaouen, murs et marches peints en bleu, lanternes allumees.",
+   "inconvenients": "Portrait 736x1104 : rognee de 45 % dans un cadre 800x500. Bleu sursature, retouche visible. 797 Ko.",
+   "action": "REMPLACER. Garder le sujet, refaire en paysage non retouche.",
+   "vignette": "th/P00.jpg"
+  },
+  {
+   "ref": "P01",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Chefchaouen%20Maroc-kUZjHNdOOg92fdWHMng5v3QKjRpgea.jpg",
+   "description": "Panorama de Chefchaouen a flanc de montagne au coucher du soleil, ville bleue vue d'ensemble.",
+   "inconvenients": "Paysage mais seulement 735x456 : sous la definition minimale, flou a l'affichage. 333 Ko pour cette taille.",
+   "action": "RECHERCHER LA MEME EN HD. Cadrage excellent, c'est la version basse definition qui pose probleme.",
+   "vignette": "th/P01.jpg"
+  },
+  {
+   "ref": "P02",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Get%20lost%20in%20the%20maze-like%20streets%20of%20Fez%2C%20Morocco%E2%80%A6%20%281%29%20%281%29-Ww02vnDWHHd6QOrtp8LLUlFM84VSAP.jpg",
+   "description": "Vue aerienne de la medina de Fes : place, porte monumentale et minaret.",
+   "inconvenients": "Portrait 736x1349, 1014 Ko (photo la plus lourde du lot). DOUBLON exact de P23.",
+   "action": "REMPLACER et supprimer le doublon.",
+   "vignette": "th/P02.jpg"
+  },
+  {
+   "ref": "P03",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Experience%20camel%20rides%2C%20desert%20camps%2C%20and%20magical%E2%80%A6%20%281%29-oPXQJfujQqsGVIU8qPZQrwnjvqc1D0.jpg",
+   "description": "Dunes au coucher du soleil, caravane de dromadaires et campement de tentes.",
+   "inconvenients": "Portrait 735x1226, 467 Ko. DOUBLON de P20 (autre circuit).",
+   "action": "REMPLACER. Belle image mais recyclee sur deux circuits.",
+   "vignette": "th/P03.jpg"
+  },
+  {
+   "ref": "P04",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Experience%20the%20allure%20of%20Morocco%20with%20a%E2%80%A6-RVXz7UZkQFy2wsw3v0Os7hgRxfKynn.jpg",
+   "description": "Route de montagne en lacets serres dans un canyon rocheux (gorges du Dades).",
+   "inconvenients": "Portrait 736x1104, 509 Ko. Le sujet n'est pas au programme du circuit.",
+   "action": "SUPPRIMER de ce circuit.",
+   "vignette": "th/P04.jpg"
+  },
+  {
+   "ref": "P05",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Discover%20top%20things%20to%20do%20in%20Marrakech%20including%E2%80%A6-Bmx77dpFyHF0rPDLvU2AG630IMo8Qo.jpg",
+   "description": "Place Jemaa el-Fna au crepuscule, echoppes eclairees et minaret de la Koutoubia.",
+   "inconvenients": "Portrait 736x1318, 663 Ko. Grain visible, image degradee par recompression.",
+   "action": "REMPLACER par une version HD paysage : c'est l'image d'appel de Marrakech.",
+   "vignette": "th/P05.jpg"
+  },
+  {
+   "ref": "P06",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Went%20to%20the%20Atlas%20Mountains%20in%20Morocco%20and%20found%E2%80%A6-WjlYclTnDsycROP2EM2JqMepHIzH8q.jpg",
+   "description": "Un singe magot assis dans un arbre, mangeant un fruit.",
+   "inconvenients": "HORS SUJET TOTAL : c'est la 1re photo de la galerie d'un circuit Casablanca-Rabat-Tanger-Meknes-Fes-Marrakech. Portrait 736x1104, 530 Ko.",
+   "action": "SUPPRIMER IMMEDIATEMENT. Priorite absolue.",
+   "vignette": "th/P06.jpg"
+  },
+  {
+   "ref": "P07",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/%23FezMedina%20%23FezMorocco%20%23VisitFez%20%23MedinaOfFez%E2%80%A6-HnuYGRakKjCHyhzO3zNO2VcExugk3O.jpg",
+   "description": "Medina de Fes vue de haut, minaret a faience verte au premier plan.",
+   "inconvenients": "Portrait 736x1308, 920 Ko. Ciel brule, contraste pousse.",
+   "action": "REMPLACER par une HD paysage.",
+   "vignette": "th/P07.jpg"
+  },
+  {
+   "ref": "P08",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/morocco%20volubilis%20meknes%20ancient%20roman%20ruins-9g2hOihgYRZlN1Dhx9ydvoikx6JU04.jpg",
+   "description": "Ruines romaines de Volubilis : colonnes et arcades sous un ciel nuageux.",
+   "inconvenients": "Portrait 736x981, 644 Ko. Volubilis n'est pas une etape annoncee de ce circuit.",
+   "action": "DEPLACER vers Splendide Maroc, ou supprimer.",
+   "vignette": "th/P08.jpg"
+  },
+  {
+   "ref": "P09",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Grotte%20hercule%20Tanger_%20Maroc-ImocGwSM1YFLRxdIV7YLFB7TBHPkwT.jpg",
+   "description": "Grotte d'Hercule a Tanger, ouverture en forme de carte d'Afrique sur la mer.",
+   "inconvenients": "Tres sombre (contre-jour), 640x898 portrait, la plus petite du circuit.",
+   "action": "REMPLACER par une HD paysage : le sujet est fort, le fichier ne l'est pas.",
+   "vignette": "th/P09.jpg"
+  },
+  {
+   "ref": "P10",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Velvety%20sand%20dunes%20glowing%20at%20sunrise%2C%20a%20trail%20of%E2%80%A6-Cjn30znjm7adJmtqaXvsqFnylK23kI.jpg",
+   "description": "Dunes de sable a l'aube, traces de pas au premier plan, caravane au loin.",
+   "inconvenients": "Portrait 736x1311, 429 Ko.",
+   "action": "REMPLACER (meme sujet, format paysage).",
+   "vignette": "th/P10.jpg"
+  },
+  {
+   "ref": "P11",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Camp%20in%20the%20Desert%20set%20in%20the%20unforgettable%E2%80%A6-0M8j8mnT1ISHuTxNZ7t4ciMnxM3tbF.jpg",
+   "description": "Table dressee (theiere, patisseries, verres) devant les tentes d'un campement dans le desert.",
+   "inconvenients": "Format CARRE 736x736 : 27 % de l'image perdue en 800x500. 414 Ko.",
+   "action": "REMPLACER. Le sujet 'art de vivre' est excellent pour vendre, il merite une vraie photo.",
+   "vignette": "th/P11.jpg"
+  },
+  {
+   "ref": "P12",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/This%20Epic%20Morocco%20Roadtrip%20Guide%20is%20the%E2%80%A6-ZJlNSZblKzfQi2phqzinBbuQ8awmNm.jpg",
+   "description": "Route de montagne en lacets avec une voiture, roche ocre.",
+   "inconvenients": "Portrait 735x1103, 672 Ko. Deja quasi identique a P04 et P17.",
+   "action": "SUPPRIMER : 3 fois la meme route de montagne dans la mediatheque.",
+   "vignette": "th/P12.jpg"
+  },
+  {
+   "ref": "P13",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/The%20terracotta%20ramparts%20and%20hidden%20riads%20of%E2%80%A6-Wul5FWk3ZAwGdJf8m04vDLblwiLfCE.jpg",
+   "description": "Medina de Marrakech de nuit vue depuis la terrasse d'un riad, Koutoubia illuminee au fond.",
+   "inconvenients": "Portrait 736x1104, 614 Ko. Bruit numerique important en basse lumiere.",
+   "action": "REMPLACER par une HD : tres bonne idee de cadrage a reprendre.",
+   "vignette": "th/P13.jpg"
+  },
+  {
+   "ref": "P14",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Hassan%20II%20Mosque%20%28Mosqu%C3%A9e%20Hassan-II%29-OGkYvmInGnRYdtUJdZRL4i1vkJUcLA.jpg",
+   "description": "Mosquee Hassan II de Casablanca vue de face depuis le bord de mer, ciel bleu profond.",
+   "inconvenients": "Portrait 736x1311, 436 Ko.",
+   "action": "REMPLACER par une HD paysage. Monument incontournable, il doit etre impeccable.",
+   "vignette": "th/P14.jpg"
+  },
+  {
+   "ref": "P15",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Agadir%2C%20Morocco-u1orbFWYAK0uNDFrrk8EZKmAtaV0Iq.jfif",
+   "description": "Marina d'Agadir, bateaux amarres et colline portant l'inscription en arabe.",
+   "inconvenients": "Portrait 736x981, 87 Ko (tres compressee). Lumiere plate, ciel delave. DOUBLON de P37.",
+   "action": "REMPLACER.",
+   "vignette": "th/P15.jpg"
+  },
+  {
+   "ref": "P16",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Why%20Agadir%20is%20Morocco%27s%20best%20city%20for%20a%20beach%20holiday-D7vl25CVmaro6FtmaaG1pOkyTp4ov0.jfif",
+   "description": "Vue aerienne de la baie et de la grande plage d'Agadir.",
+   "inconvenients": "Portrait 736x1104, 145 Ko. Compression visible sur la mer.",
+   "action": "REMPLACER par une HD paysage.",
+   "vignette": "th/P16.jpg"
+  },
+  {
+   "ref": "P17",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Maroc-Tichka-Ouarzazate_%20Tizi%20n%27Tichka%20%28called%20Col%E2%80%A6%20-%20Copie-dqzmF828w1V4xt2WqQ7fbXZCiYTlsv.jfif",
+   "description": "Route en lacets dans les gorges du Dades, vue plongeante sur la roche rouge.",
+   "inconvenients": "MAL NOMMEE : le fichier annonce 'Tizi n'Tichka / Ouarzazate', c'est le Dades. Format CARRE 550x550, la plus petite definition du circuit.",
+   "action": "SUPPRIMER (doublon de sujet avec P04 et P12, et legende fausse).",
+   "vignette": "th/P17.jpg"
+  },
+  {
+   "ref": "P18",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/887701776521547495%20-%20Copie-MvPjZKboIpuixVVF5WIe0QoR1xBKVf.jfif",
+   "description": "Ksar en terre (Ait Ben Haddou) avec palmier au premier plan.",
+   "inconvenients": "Portrait 597x1078, definition faible. Mention de credit incrustee en bas de l'image.",
+   "action": "REMPLACER : une mention incrustee est un risque de droits.",
+   "vignette": "th/P18.jpg"
+  },
+  {
+   "ref": "P19",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Todgha%20Gorges%20Canyon%20-%20Copie-ZLSYyBfwQnrtCzkkL4Qa1XKDvpz5Qv.jfif",
+   "description": "Gorges du Todgha : falaises rouges resserrees, tapis exposes au sol.",
+   "inconvenients": "Portrait 736x920, 134 Ko. Les gorges ne sont pas au programme annonce du circuit.",
+   "action": "DEPLACER vers un circuit Sud, ou supprimer.",
+   "vignette": "th/P19.jpg"
+  },
+  {
+   "ref": "P20",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Sahara%20Desert%20%E2%80%93%20Adventure%20in%20the%20Golden%20Dunes%20-%20Copie-OQjafhKuTygZNy8k42wXybm2UwFaaY.jfif",
+   "description": "Dunes au coucher, caravane et campement (image identique a P03).",
+   "inconvenients": "DOUBLON exact de P03, sur un autre circuit. Portrait 735x1226.",
+   "action": "SUPPRIMER.",
+   "vignette": "th/P20.jpg"
+  },
+  {
+   "ref": "P21",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Ifrane%202023%20-%20Copie-ElJTcQiYbLzV72SP2u5Yw7f9i2oyIz.jfif",
+   "description": "Ifrane sous la neige, toits enneiges et montagnes de l'Atlas.",
+   "inconvenients": "518x640, la plus petite du circuit. Ifrane n'est pas une etape du programme.",
+   "action": "SUPPRIMER de ce circuit (a garder pour un futur produit Moyen Atlas).",
+   "vignette": "th/P21.jpg"
+  },
+  {
+   "ref": "P22",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Fes%20to%20Volubilis%2C%20Moulay%20Idriss%20and%20Meknes%20Private%20Day%20Trip%20-%20Copie-diI9iS0P6VvhCa8jEQ406fULgD9pom.jfif",
+   "description": "Arc de triomphe de Volubilis au milieu des champs verts.",
+   "inconvenients": "Format paysage (720x480) mais definition insuffisante, couleurs artificielles (vert electrique).",
+   "action": "REMPLACER par une HD.",
+   "vignette": "th/P22.jpg"
+  },
+  {
+   "ref": "P23",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Fez%2C%20Morocco_%20An%20Aerial%20View%20of%20the%20Medina%20-%20Copie-RYabRolSmaKgvuLkfemtseOG5d7i75.jfif",
+   "description": "Vue aerienne de la medina de Fes (image identique a P02).",
+   "inconvenients": "DOUBLON exact de P02. Portrait 736x1349.",
+   "action": "SUPPRIMER.",
+   "vignette": "th/P23.jpg"
+  },
+  {
+   "ref": "P24",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/M%C3%A8knes%20%28Arabic_%20%D9%85%D9%83%D9%86%D8%A7%D8%B3%29%20is%20one%20of%20the%20four%20Imperial%E2%80%A6%20%282%29%20-%20Copie-5SXaPE5cWYnqXbW7r79LoYKlQTsmjR.jfif",
+   "description": "Bab Mansour a Meknes, photographie depuis l'encadrement d'une porte ouvragee.",
+   "inconvenients": "Une voiture turquoise et une camionnette occupent tout le premier plan. Portrait 720x897.",
+   "action": "REMPLACER : le vehicule tue completement la carte postale.",
+   "vignette": "th/P24.jpg"
+  },
+  {
+   "ref": "P25",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Moscheea%20Hassan%20al%20II-lea%20situat%C4%83%20%C3%AEn%20Casablanca%2C%20Maroc%20-%20Copie-mPBjhuEJLq0AsQ3WAF56iMDZjSvwnM.jfif",
+   "description": "Mosquee Hassan II vue aerienne au coucher du soleil, avancee sur l'ocean.",
+   "inconvenients": "Portrait 735x1013, 167 Ko. DOUBLON de sujet avec P14 et P29.",
+   "action": "GARDER LE SUJET, une seule vue Hassan II par circuit.",
+   "vignette": "th/P25.jpg"
+  },
+  {
+   "ref": "P26",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Marrakech%2C%20quel%20souk%20%21%20-%20Copie-beX0TuoLweQJiskwW2km0FESiizUSS.jfif",
+   "description": "Jemaa el-Fna et la Koutoubia au crepuscule, vue de haut.",
+   "inconvenients": "Portrait 736x1412 (la plus etiree du lot). DOUBLON de sujet avec P05 et P28.",
+   "action": "REMPLACER.",
+   "vignette": "th/P26.jpg"
+  },
+  {
+   "ref": "P27",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Discover%20the%20magic%20of%20the%20dunes%20with%20our%20Morocco%E2%80%A6%20-%20Copie%20%282%29-pOMJm4CMukVFQMf1gGGTntkug76QSd.jpg",
+   "description": "Campement de luxe dans les dunes : lanternes allumees, table basse, tentes blanches, ciel rose.",
+   "inconvenients": "Portrait 736x1349, 714 Ko.",
+   "action": "REMPLACER PAR UNE HD - MAIS GARDER CE CADRAGE : c'est la meilleure image commerciale du lot.",
+   "vignette": "th/P27.jpg"
+  },
+  {
+   "ref": "P28",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/635289091220958477%20-%20Copie%20%282%29-yyoKjxbSEMxrkmivltsmo7vWf60QYp.jpg",
+   "description": "Jemaa el-Fna et la Koutoubia au crepuscule.",
+   "inconvenients": "474x908 : la plus petite largeur de tout le circuit. Quasi doublon de P26.",
+   "action": "SUPPRIMER.",
+   "vignette": "th/P28.jpg"
+  },
+  {
+   "ref": "P29",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/8303580556743984%20-%20Copie%20%282%29-NIfjqiAYklbkOOgV24LQoNGs5PkUVB.jpg",
+   "description": "Mosquee Hassan II vue depuis la corniche, rambarde en premier plan, vol d'oiseaux.",
+   "inconvenients": "Portrait 736x920, 330 Ko. 3e vue Hassan II de la mediatheque.",
+   "action": "GARDER LE SUJET en HD paysage, supprimer les deux autres.",
+   "vignette": "th/P29.jpg"
+  },
+  {
+   "ref": "P30",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Rabat%20%28%20Maroc%20%29-DnglDuyYDTZ2gXpSN8EuxNcUUzEMHj.jpg",
+   "description": "Tour Hassan a Rabat : minaret inacheve et colonnes alignees, sol reflechissant.",
+   "inconvenients": "Paysage (689x532) mais definition trop faible. Ciel visiblement remplace en retouche.",
+   "action": "REMPLACER par une HD non retouchee.",
+   "vignette": "th/P30.jpg"
+  },
+  {
+   "ref": "P31",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/The%20archaeological%20site%20of%20Volubilis%20is%20a%E2%80%A6-BrLg3wcmjprfVpJPtEXbWlGaMuR70c.jpg",
+   "description": "Arcades et colonnes du site archeologique de Volubilis.",
+   "inconvenients": "Portrait 736x1104, 909 Ko (2e plus lourde). DOUBLON de sujet avec P08 et P22.",
+   "action": "REMPLACER : une seule Volubilis, en paysage.",
+   "vignette": "th/P31.jpg"
+  },
+  {
+   "ref": "P32",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/CHAOUEN-SrhbanvBMCj4y3rzl4nZ7iKFDoquzi.jpg",
+   "description": "Ruelle de Chefchaouen : escaliers, murs bleus, pots de fleurs jaunes.",
+   "inconvenients": "Portrait 736x1158, 836 Ko. Bleu sursature. DOUBLON de sujet avec P00.",
+   "action": "REMPLACER.",
+   "vignette": "th/P32.jpg"
+  },
+  {
+   "ref": "P33",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Experience%20the%20breathtaking%20beauty%20of%20Morocco%E2%80%99s%E2%80%A6%20%281%29%20%281%29-qs8yFGylzZMBtHjrCQ6aATjiA3E2zv.jpg",
+   "description": "Silhouette d'un voyageur en cheche bleu a dos de dromadaire face au soleil couchant sur les dunes.",
+   "inconvenients": "Portrait 736x1349, 511 Ko.",
+   "action": "GARDER LE CADRAGE, refaire en HD paysage : image emotionnelle tres vendeuse.",
+   "vignette": "th/P33.jpg"
+  },
+  {
+   "ref": "P34",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Opodo_com%20Did%20you%20know_%20A%20lot%20of%20movies%20were%20shot%E2%80%A6-CybxqNaB0rGBYcyIHXgWI2DFfPtrtm.jpg",
+   "description": "Ait Ben Haddou au soleil couchant, le ksar se refletant dans une flaque d'eau.",
+   "inconvenients": "Format CARRE 736x736, 428 Ko.",
+   "action": "REMPLACER PAR LA MEME EN HD PAYSAGE : meilleure image du circuit.",
+   "vignette": "th/P34.jpg"
+  },
+  {
+   "ref": "P35",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Essaouira%20maroc-ZPJk2IcfoqgSSLXk3W6nHgG8wGDEzg.jpg",
+   "description": "Barques de peche bleues d'Essaouira au port, ciel rose au couchant.",
+   "inconvenients": "Portrait 736x920, 708 Ko. Couleurs poussees.",
+   "action": "REMPLACER par une HD paysage.",
+   "vignette": "th/P35.jpg"
+  },
+  {
+   "ref": "P36",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/%F0%9F%8C%8A%20Essaouira%2C%20Morocco%20%F0%9F%8C%8A%20%20Where%20the%20Atlantic%20meets%E2%80%A6-vQUb8cbGjvCLaG2mkLXE7gUPktFhfX.jpg",
+   "description": "Remparts et Skala d'Essaouira surplombant une eau turquoise.",
+   "inconvenients": "Portrait 736x899, 367 Ko. Turquoise visiblement force en retouche.",
+   "action": "REMPLACER par une HD naturelle.",
+   "vignette": "th/P36.jpg"
+  },
+  {
+   "ref": "P37",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/Agadir%20Marina-rFqKsS7maGTN8eW0Pm6b2Mx0QTkjh1.jpg",
+   "description": "Marina d'Agadir (image identique a P15).",
+   "inconvenients": "DOUBLON de P15. Portrait 736x981, lumiere plate.",
+   "action": "SUPPRIMER.",
+   "vignette": "th/P37.jpg"
+  },
+  {
+   "ref": "P38",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/gorges-SE6TjNvKB6cwmox1Dtii8hZkfrJRlb.jpg",
+   "description": "Gorges du Todgha, falaises verticales et groupe de visiteurs sur la route.",
+   "inconvenients": "Portrait 963x1280. Personnes de dos non identifiables mais premier plan encombre.",
+   "action": "REMPLACER par une vue plus large en paysage.",
+   "vignette": "th/P38.jpg"
+  },
+  {
+   "ref": "P39",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/desert-BOVxPOrTzWcXntJb6wiNVnlU6jn03s.jpg",
+   "description": "Caravane de dromadaires montes sur une grande dune orange, ciel clair.",
+   "inconvenients": "Portrait 962x1280, 92 Ko : compression forte, ciel en aplats.",
+   "action": "REMPLACER par une HD.",
+   "vignette": "th/P39.jpg"
+  },
+  {
+   "ref": "P40",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/DESERT-5zBDPtlXtMs0IY2LscqGmTKTp71Yck.jpg",
+   "description": "Auberge/ksar en bord de dunes, palmiers, dromadaires au repos.",
+   "inconvenients": "Paysage (700x465) mais definition trop faible.",
+   "action": "REMPLACER par une HD.",
+   "vignette": "th/P40.jpg"
+  },
+  {
+   "ref": "P41",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/ait%20benhaddou-3pvTAVFQ3pC01qO5YClPXpdPeRJRov.webp",
+   "description": "Ksar d'Ait Ben Haddou vu de pres, architecture en pise.",
+   "inconvenients": "451x318 seulement, 24 Ko : image de vignette, inexploitable en grand.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P41.jpg"
+  },
+  {
+   "ref": "P42",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/kasbah%20toifoultoute-8imkf5ZhINMOefiLq4hSBPVndUVJJF.webp",
+   "description": "Kasbah de Taourirt (Ouarzazate) et sa palmeraie.",
+   "inconvenients": "474x314, 35 Ko : image de vignette.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P42.jpg"
+  },
+  {
+   "ref": "P43",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/oasis-ZNqfEarJL4u0uS24w4fU5qc06fDf6A.webp",
+   "description": "Oasis vue du ciel : village et bassin vert cernes par les dunes.",
+   "inconvenients": "457x246, 13 Ko : la plus petite du circuit, floue des qu'elle est agrandie.",
+   "action": "REMPLACER imperativement. Le sujet est spectaculaire, la photo ne l'est pas.",
+   "vignette": "th/P43.jpg"
+  },
+  {
+   "ref": "P44",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/lac-bin-Ouidane-01-1-1024x685-LzpWrie3d88A3nB5etkbPNgRa6w4ke.jpg",
+   "description": "Lac de Bin El Ouidane et montagnes enneigees de l'Atlas en arriere-plan.",
+   "inconvenients": "Paysage 1024x685, 75 Ko : correcte mais sous les 1600 px recommandes.",
+   "action": "A GARDER PROVISOIREMENT, chercher la version HD.",
+   "vignette": "th/P44.jpg"
+  },
+  {
+   "ref": "P45",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/bin%20el%20ouidane%205-wV1omfkTifIQOPT2VPzReIwHGzVmPf.jpg",
+   "description": "Piscine d'hotel avec transats bleus donnant sur le lac de Bin El Ouidane.",
+   "inconvenients": "1600x622 : format tres panoramique, se recadre mal en 800x500.",
+   "action": "RECADRER ou remplacer.",
+   "vignette": "th/P45.jpg"
+  },
+  {
+   "ref": "P46",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/bin%20el%20ouidane%204-Ngix0oieH323hhpLL8doCD6ot8xMqI.jpg",
+   "description": "Lac turquoise entre les montagnes, une embarcation au centre.",
+   "inconvenients": "960x640, sous la definition cible.",
+   "action": "A GARDER PROVISOIREMENT, chercher la HD.",
+   "vignette": "th/P46.jpg"
+  },
+  {
+   "ref": "P47",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/bin%20el%20ouidane%203-4RjsDJEHDDH3lBPWktiKLrHLCpXeGJ.jpg",
+   "description": "Vue plongeante sur le lac et sa presqu'ile, collines ocres.",
+   "inconvenients": "1000x751, 114 Ko. Correcte, un peu terne.",
+   "action": "A GARDER PROVISOIREMENT.",
+   "vignette": "th/P47.jpg"
+  },
+  {
+   "ref": "P48",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/bin%20el%20ouidane-rJJgY1r0ECpCgHn5DneqY4pbxa6f1i.webp",
+   "description": "Kasbah-hotel en pise devant une piscine bleue et le lac.",
+   "inconvenients": "474x317, 12 Ko : image de vignette, inexploitable.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P48.jpg"
+  },
+  {
+   "ref": "P49",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/dakhla%203-J1EcXtN66OEkGQ0BAQ6WrmKaYf1w5C.webp",
+   "description": "Vue aerienne de la lagune de Dakhla : langue de sable et eau turquoise.",
+   "inconvenients": "240x240, 3 Ko : la plus petite image de tout le site. Illisible des qu'elle est affichee.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P49.jpg"
+  },
+  {
+   "ref": "P50",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/dakhla%202-IEd5JGALrVEozB0DaXbeDQ069rrsff.webp",
+   "description": "Kitesurf sur la lagune de Dakhla, voile en l'air.",
+   "inconvenients": "473x362, 5 Ko : inexploitable. Sujet minuscule dans le cadre.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P50.jpg"
+  },
+  {
+   "ref": "P51",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/surf%20dakhla-tf47tx0Erk9VUWaWT0619iREx0Y3jX.webp",
+   "description": "Deux veliplanchistes sur la lagune.",
+   "inconvenients": "FILIGRANE 'Waterwind.it' incruste en bas a droite : photo d'un tiers, publiee sans droit. 471x316, 7 Ko.",
+   "action": "SUPPRIMER IMMEDIATEMENT (risque juridique).",
+   "vignette": "th/P51.jpg"
+  },
+  {
+   "ref": "P52",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/dakhla-hRS4JwIwfyom2HvIrHETEfJ2Za3Q0i.webp",
+   "description": "Vue aerienne de la presqu'ile de Dakhla.",
+   "inconvenients": "368x315, 7 Ko : inexploitable.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P52.jpg"
+  },
+  {
+   "ref": "P53",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/altitude%20dakhla-ue5wVvPLhLJaptHkv17pXM1ht1M1nD.webp",
+   "description": "Camp de tentes-lodges vu du ciel, alignees sur le sable.",
+   "inconvenients": "395x355, 25 Ko : inexploitable.",
+   "action": "REMPLACER imperativement.",
+   "vignette": "th/P53.jpg"
+  },
+  {
+   "ref": "P54",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/dakhla%20hotel-sUBvOYVgpJdZVyNqMVUlQg5nRmpHsk.webp",
+   "description": "Terrasse d'hotel : piscine, parasols en paille, transats face au desert.",
+   "inconvenients": "474x266, 14 Ko : inexploitable.",
+   "action": "REMPLACER imperativement (photo d'etablissement : la demander a l'hotel).",
+   "vignette": "th/P54.jpg"
+  },
+  {
+   "ref": "P55",
+   "url": "https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/htl%20dakhla-iMfy7srbc5y2OEqJ51EKoU45oPEg7x.webp",
+   "description": "Bungalows d'un lodge alignes en bord de lagune.",
+   "inconvenients": "418x298, 16 Ko : inexploitable.",
+   "action": "REMPLACER imperativement (photo d'etablissement : la demander a l'hotel).",
+   "vignette": "th/P55.jpg"
+  },
+  {
+   "ref": "L07",
+   "url": "https://morocco.voyages21.com/WelcomeChina/assets/discover-kingdom/marrakech.jpg",
+   "description": "Souk couvert de Marrakech : boutiques, etals colores, passants.",
+   "inconvenients": "3648x4864 PORTRAIT et 2,62 Mo : rognee de moitie ET 9x trop lourde. Visages de passants identifiables au premier plan.",
+   "action": "RECADRER EN PAYSAGE + COMPRESSER a 1600x1000 / <300 Ko.",
+   "vignette": "th/L07.jpg"
+  },
+  {
+   "ref": "L08",
+   "url": "https://morocco.voyages21.com/WelcomeChina/assets/discover-kingdom/casablanca.jpg",
+   "description": "Mosquee Hassan II en contre-plongee depuis les arcades.",
+   "inconvenients": "FILIGRANE ISTOCK VISIBLE ('Credit: Sergi Formoso' + numero d'image) : c'est une image d'apercu non achetee, en ligne sur le site.",
+   "action": "SUPPRIMER IMMEDIATEMENT. Risque juridique et image de marque.",
+   "vignette": "th/L08.jpg"
+  },
+  {
+   "ref": "L09",
+   "url": "https://morocco.voyages21.com/WelcomeChina/assets/discover-kingdom/fez.jpg",
+   "description": "Tanneries de Fes : cuves de teinture et peaux etendues sur les toits.",
+   "inconvenients": "5184x3888 et 3,62 Mo : 12x le poids recommande, la page met plusieurs secondes a charger.",
+   "action": "REDIMENSIONNER a 1600x1000 / <300 Ko. Photo bonne, fichier a retraiter.",
+   "vignette": "th/L09.jpg"
+  },
+  {
+   "ref": "L10",
+   "url": "https://morocco.voyages21.com/WelcomeChina/assets/discover-kingdom/meknes.jpg",
+   "description": "Lac de barrage entoure de collines vertes et de terres ocres.",
+   "inconvenients": "LE FICHIER S'APPELLE 'meknes.jpg' MAIS CE N'EST PAS MEKNES. 5851x3906, 3,28 Mo.",
+   "action": "SUPPRIMER et fournir une vraie photo de Meknes (Bab Mansour, greniers de Moulay Ismail).",
+   "vignette": "th/L10.jpg"
+  },
+  {
+   "ref": "L11",
+   "url": "https://morocco.voyages21.com/WelcomeChina/assets/discover-kingdom/merzouga.jpg",
+   "description": "Dunes de l'erg Chebbi au crepuscule, ciel degrade bleu-orange.",
+   "inconvenients": "6000x4000 et 1,55 Mo : 5x trop lourde.",
+   "action": "REDIMENSIONNER a 1600x1000 / <300 Ko. Tres belle photo, a garder.",
+   "vignette": "th/L11.jpg"
+  },
+  {
+   "ref": "L12",
+   "url": "https://morocco.voyages21.com/WelcomeChina/assets/discover-kingdom/ouarzazate.jpg",
+   "description": "Ksar en pise (Ait Ben Haddou) vu de face, oliviers au premier plan.",
+   "inconvenients": "8192x5464 et 4,85 Mo : la plus lourde du site. Ciel blanc, lumiere de plein midi, sans relief.",
+   "action": "REDIMENSIONNER ET, SI POSSIBLE, REMPLACER par une prise en lumiere rasante.",
+   "vignette": "th/L12.jpg"
+  },
+  {
+   "ref": "U01",
+   "url": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 5 emplacement(s) : Villes impériales & Sud #1; Meilleur du Maroc #3; Splendide Maroc #3; Séjour Merzouga #1; Séjour Dakhla #3. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U02",
+   "url": "https://images.unsplash.com/photo-1570637422729-f4b3fca84bea?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 3 emplacement(s) : Villes impériales & Sud #2; Meilleur du Maroc #1; Splendide Maroc #2. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U03",
+   "url": "https://images.unsplash.com/photo-1553603229-5c1ead60e29e?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 3 emplacement(s) : Villes impériales & Sud #3; Villes impériales #1; Meilleur du Maroc #2. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U04",
+   "url": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 3 emplacement(s) : Villes impériales & Sud #4; Villes impériales #4; Splendide Maroc #1. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U05",
+   "url": "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 3 emplacement(s) : Splendide Maroc #4; Séjour Bin El Ouidane #3; Séjour Dakhla #1. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U06",
+   "url": "https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 2 emplacement(s) : Séjour Bin El Ouidane #2; Séjour Dakhla #2. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U07",
+   "url": "https://images.unsplash.com/photo-1539437829697-1b4ed5aebd86?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 1 emplacement(s) : Villes impériales #2. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U08",
+   "url": "https://images.unsplash.com/photo-1575468130797-aa950b68aeec?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 1 emplacement(s) : Villes impériales #3. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U09",
+   "url": "https://images.unsplash.com/photo-1597940610882-39d1a6d7e9c4?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 1 emplacement(s) : Meilleur du Maroc #4. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U10",
+   "url": "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 1 emplacement(s) : Séjour Merzouga #2. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U11",
+   "url": "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 1 emplacement(s) : Séjour Merzouga #3. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  },
+  {
+   "ref": "U12",
+   "url": "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop&q=80",
+   "description": "Photo de banque Unsplash, non inspectee (l'acces a images.unsplash.com est bloque depuis l'environnement d'audit).",
+   "inconvenients": "Hebergee chez un tiers : si l'adresse change, la carte du circuit devient blanche. Utilisee a 1 emplacement(s) : Séjour Bin El Ouidane #1. Image generique vue sur des centaines de sites de voyage.",
+   "action": "REMPLACER par une photo propre a l'agence, telechargee et hebergee sur le serveur.",
+   "vignette": null
+  }
+ ]
+}

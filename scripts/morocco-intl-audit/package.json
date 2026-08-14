@@ -1,0 +1,12 @@
+{
+  "name": "morocco-intl-audit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Audit et rapport de curation des photos du site international Morocco Voyages 21",
+  "scripts": {
+    "audit": "python3 audit_photos.py && node build_report.js"
+  },
+  "dependencies": {
+    "docx": "^9.0.0"
+  }
+}
