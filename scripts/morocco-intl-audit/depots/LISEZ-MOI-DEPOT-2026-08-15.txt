@@ -1,25 +1,35 @@
 ==============================================================================
-  MOROCCO VOYAGES 21 — dépôt du 14/08/2026
-  Actions 1 à 8 (personnalisation internationale) + Action A (4 urgences photo)
+  MOROCCO VOYAGES 21 — dépôt du 15/08/2026
+  Actions 1 à 9 (personnalisation internationale) + Action A (4 urgences photo)
 ==============================================================================
 
 CE QUE CONTIENT CE ZIP
 ----------------------
-  WelcomeChina/index.html          la brochure          228 Ko  →  142 Ko
-  WelcomeChina/voyages/render.js   les pages voyage     129 Ko  →  129 Ko
-  WelcomeChina/voyages/data.js     les données          138 Ko  →  139 Ko
+  index.html                        la COUVERTURE        2,9 Ko  →  3,5 Ko
+  WelcomeChina/index.html           la brochure          228 Ko  →  142 Ko
+  WelcomeChina/voyages/render.js    les pages voyage     129 Ko  →  129 Ko
+  WelcomeChina/voyages/data.js      les données          138 Ko  →  139 Ko
 
-Trois fichiers, rien d'autre. Aucune photo à téléverser, aucun dossier à créer.
+Quatre fichiers, rien d'autre. Aucune photo à téléverser, aucun dossier à créer.
+
+  ⚠ ATTENTION : il y a DEUX fichiers qui s'appellent index.html, et ils ne vont
+    PAS au même endroit. Le zip reproduit déjà la bonne arborescence : il suffit
+    de la recopier telle quelle.
 
 
 OÙ LES DÉPOSER
 --------------
   StackCP  →  Gestionnaire de fichiers  →
 
-      public_html/morocco-intl/WelcomeChina/
+      public_html/morocco-intl/
 
-  index.html se dépose à cet endroit.
-  render.js et data.js se déposent dans le sous-dossier voyages/.
+  Le dossier « A-DEPOSER-DANS-morocco-intl » du zip a exactement la forme du
+  dossier morocco-intl. Recopie son contenu par-dessus :
+
+      public_html/morocco-intl/index.html                     ← la couverture
+      public_html/morocco-intl/WelcomeChina/index.html         ← la brochure
+      public_html/morocco-intl/WelcomeChina/voyages/render.js
+      public_html/morocco-intl/WelcomeChina/voyages/data.js
 
   ⚠ C'est bien morocco-intl.  PAS HelloMorroco : ce dossier-là, c'est le site
     chinois morocco21.cn, on n'y touche jamais.
@@ -27,7 +37,7 @@ OÙ LES DÉPOSER
 
 AVANT DE DÉPOSER — la sauvegarde (2 minutes)
 --------------------------------------------
-  Télécharger les 3 fichiers actuellement en place et les garder de côté.
+  Télécharger les 4 fichiers actuellement en place et les garder de côté.
   Si quoi que ce soit cloche, on les remet et le site revient à l'état d'avant.
 
 
@@ -36,6 +46,10 @@ APRÈS LE DÉPÔT — ce qu'il faut vérifier
   Ouvrir https://morocco.voyages21.com en navigation privée (pour ne pas voir
   une vieille version en cache), puis contrôler dans l'ordre :
 
+   0. LA PAGE D'ENTRÉE : le bouton en bas dit « Discover Morocco / Découvrez le
+      Maroc ». Plus de bouton en chinois. L'onglet du navigateur affiche
+      « Morocco Voyages 21 », plus « Hello Morocco ».
+      Puis cliquer sur le bouton pour entrer dans la brochure.
    1. En haut : le choix de langue propose English et Français. Plus de 中文.
    2. Le nom affiché est « Morocco Voyages 21 », plus « WelcomeChina ».
    3. En bas à droite : le bouton vert WhatsApp. Un clic ouvre une conversation
@@ -92,6 +106,13 @@ CE QUI A CHANGÉ, EN DÉTAIL
                        (« 8 days / 7 nights » au lieu de « 8 jours / 7 nuits »).
                        Cause : un caractère d'échappement resté tel quel dans
                        le dictionnaire français. Corrigé.
+  9  Couverture ...... la page d'entrée (celle avec la vidéo et le bouton) était
+                       restée telle quelle depuis le clonage : onglet « Hello
+                       Morocco », bouton en mandarin. Les actions 1 à 8 ne la
+                       touchaient pas — elles travaillent dans WelcomeChina/,
+                       alors que la couverture est à la RACINE de morocco-intl.
+                       Titre, description Google, aperçu de partage et bouton
+                       refaits en anglais + français. Plus un caractère chinois.
   A  Urgences ........ 4 photos retirées :
                        · casablanca.jpg (filigrane iStock, image non achetée),
                        · « surf dakhla » (filigrane Waterwind.it),
@@ -130,6 +151,11 @@ RESTE À FAIRE APRÈS CE DÉPÔT
   · Confirmer le taux 1 € = 1,20 USD, ou repartir des tarifs négociés réels.
   · Constituer la photothèque : ~60 photos, 12 par circuit (voir le rapport de
     curation). C'est le vrai chantier restant.
+  · L'adresse /WelcomeChina/ reste dans la barre du navigateur : c'est le nom du
+    dossier sur le serveur, pas le site chinois (celui-ci est dans un autre
+    dossier, HelloMorroco, servi par morocco21.cn). Le renommer casserait toutes
+    les images et tous les liens, qui sont écrits en absolu. À faire au
+    branchement de moroccovoyages21.com, avec les redirections qui vont avec.
   · Optionnel : purger le code mort laissé par le site chinois — le CSS de la
     fenêtre WeChat et les dictionnaires de traduction chinois et arabe, devenus
     inatteignables (le sélecteur de langue ne propose plus que EN et FR).
