@@ -1,0 +1,427 @@
+<title>Modèle de commission — Prestation marketing agence de voyages</title>
+<style>
+  :root {
+    --forest: #1B3A28;
+    --forest-deep: #152E1F;
+    --gold: #C8A440;
+    --gold-soft: #b8963a;
+    --cream: #F5F0E8;
+    --paper: #ffffff;
+    --ink: #22201c;
+    --ink-soft: #55514a;
+    --line: #e4ddd0;
+    --band-text: #f3ecdd;
+    --card: #fbf8f2;
+    --accent-bg: #f3efe6;
+    --shadow: 0 1px 2px rgba(20,46,31,.06), 0 8px 30px rgba(20,46,31,.06);
+    --warn-bg: #fbf3df;
+    --warn-line: #e8c765;
+    --warn-ink: #6b5410;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --forest: #cbe0cf;
+      --forest-deep: #b7d0bb;
+      --gold: #d9b45a;
+      --gold-soft: #d9b45a;
+      --cream: #14171420;
+      --paper: #121513;
+      --ink: #e9e6df;
+      --ink-soft: #a7a399;
+      --line: #2b3129;
+      --band-text: #eef3e9;
+      --card: #171b17;
+      --accent-bg: #1a1f1a;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.35);
+      --warn-bg: #241f10;
+      --warn-line: #6b5410;
+      --warn-ink: #e3c979;
+    }
+  }
+  :root[data-theme="light"] {
+    --forest: #1B3A28; --forest-deep: #152E1F; --gold: #C8A440; --gold-soft: #b8963a;
+    --paper: #ffffff; --ink: #22201c; --ink-soft: #55514a; --line: #e4ddd0;
+    --band-text: #f3ecdd; --card: #fbf8f2; --accent-bg: #f3efe6;
+    --shadow: 0 1px 2px rgba(20,46,31,.06), 0 8px 30px rgba(20,46,31,.06);
+    --warn-bg: #fbf3df; --warn-line: #e8c765; --warn-ink: #6b5410;
+  }
+  :root[data-theme="dark"] {
+    --forest: #cbe0cf; --forest-deep: #b7d0bb; --gold: #d9b45a; --gold-soft: #d9b45a;
+    --paper: #121513; --ink: #e9e6df; --ink-soft: #a7a399; --line: #2b3129;
+    --band-text: #eef3e9; --card: #171b17; --accent-bg: #1a1f1a;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.35);
+    --warn-bg: #241f10; --warn-line: #6b5410; --warn-ink: #e3c979;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: Georgia, "Times New Roman", "Iowan Old Style", serif; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 22px 90px; }
+
+  /* Header band */
+  header.band {
+    background: linear-gradient(160deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color: var(--band-text);
+    padding: 54px 22px 46px;
+    border-bottom: 3px solid var(--gold);
+  }
+  @media (prefers-color-scheme: dark) {
+    header.band { background: linear-gradient(160deg, #10130f 0%, #0c0f0b 100%); color: #eef3e9; }
+  }
+  :root[data-theme="dark"] header.band { background: linear-gradient(160deg, #10130f 0%, #0c0f0b 100%); color: #eef3e9; }
+  :root[data-theme="light"] header.band { background: linear-gradient(160deg, #1B3A28 0%, #152E1F 100%); color: #f3ecdd; }
+  .band-inner { max-width: 820px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin: 0 0 14px;
+  }
+  header.band h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 600; font-style: italic;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.15; margin: 0 0 16px; text-wrap: balance;
+    color: #fff;
+  }
+  :root[data-theme="dark"] header.band h1 { color: #f4f9f1; }
+  @media (prefers-color-scheme: dark) { header.band h1 { color: #f4f9f1; } }
+  header.band p.lede {
+    margin: 0; font-size: 16px; max-width: 60ch; color: rgba(243,236,221,.86);
+  }
+  .meta-row {
+    margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px 26px;
+    font-size: 13px; color: rgba(243,236,221,.72);
+  }
+  .meta-row b { color: var(--gold); font-weight: 600; }
+
+  /* TOC */
+  nav.toc {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px 24px; margin: 38px 0 10px; box-shadow: var(--shadow);
+  }
+  nav.toc h2 {
+    font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-soft); margin: 0 0 12px; font-weight: 700;
+  }
+  nav.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+  nav.toc li { counter-increment: toc; margin: 7px 0; padding-left: 34px; position: relative; }
+  nav.toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    position: absolute; left: 0; top: 1px;
+    font-family: Georgia, serif; font-size: 13px; color: var(--gold-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+  nav.toc a:hover { border-bottom-color: var(--gold); }
+
+  section { margin-top: 46px; scroll-margin-top: 20px; }
+  h2.sec {
+    font-family: Georgia, serif; font-size: clamp(22px, 3.4vw, 28px);
+    font-weight: 600; margin: 0 0 6px; line-height: 1.22; text-wrap: balance;
+    color: var(--forest);
+  }
+  .sec-num {
+    display: inline-block; font-size: 13px; letter-spacing: .12em;
+    color: var(--gold-soft); font-weight: 700; margin-bottom: 8px;
+  }
+  .rule { height: 2px; width: 46px; background: var(--gold); border: 0; margin: 0 0 20px; }
+  h3 {
+    font-family: Georgia, serif; font-size: 18.5px; font-weight: 600;
+    margin: 28px 0 6px; color: var(--ink);
+  }
+  p { margin: 12px 0; }
+  a { color: var(--gold-soft); }
+  strong { font-weight: 650; }
+  ul, ol { margin: 12px 0; padding-left: 22px; }
+  li { margin: 7px 0; }
+  li::marker { color: var(--gold-soft); }
+
+  /* Tables */
+  .table-scroll { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid var(--line); }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; background: var(--card); }
+  thead th {
+    background: var(--forest); color: #f3ecdd; text-align: left;
+    font-weight: 600; padding: 11px 14px; font-size: 13px; letter-spacing: .02em;
+  }
+  :root[data-theme="dark"] thead th { background: #1c231c; color: #d7e6d9; }
+  @media (prefers-color-scheme: dark) { thead th { background: #1c231c; color: #d7e6d9; } }
+  tbody td { padding: 11px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+  tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--card) 60%, var(--accent-bg)); }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* Callouts */
+  .callout {
+    background: var(--warn-bg); border: 1px solid var(--warn-line);
+    border-left: 4px solid var(--gold); border-radius: 8px;
+    padding: 15px 18px; margin: 22px 0; color: var(--warn-ink); font-size: 15.5px;
+  }
+  .callout strong { color: var(--warn-ink); }
+  .note {
+    background: var(--accent-bg); border: 1px solid var(--line);
+    border-left: 4px solid var(--forest); border-radius: 8px;
+    padding: 15px 18px; margin: 22px 0; font-size: 15.5px; color: var(--ink-soft);
+  }
+  .layers { list-style: none; padding: 0; margin: 20px 0; counter-reset: layer; }
+  .layers > li {
+    counter-increment: layer; position: relative; padding: 14px 16px 14px 60px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    margin: 10px 0;
+  }
+  .layers > li::before {
+    content: counter(layer); position: absolute; left: 14px; top: 14px;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--forest); color: #f3ecdd;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-size: 15px; font-weight: 600;
+  }
+  :root[data-theme="dark"] .layers > li::before { background: #24402a; color: #cbe0cf; }
+  @media (prefers-color-scheme: dark) { .layers > li::before { background: #24402a; color: #cbe0cf; } }
+
+  footer.doc {
+    margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 13.5px; color: var(--ink-soft); font-style: italic;
+  }
+  .kw { font-variant-numeric: tabular-nums; }
+
+  @media print {
+    header.band { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    nav.toc { display: none; }
+    section { page-break-inside: avoid; }
+    body { font-size: 12pt; }
+  }
+</style>
+
+<header class="band">
+  <div class="band-inner">
+    <p class="eyebrow">Voyages21 · Note stratégique</p>
+    <h1>Modèle de collaboration &amp; de facturation pour une mission marketing &amp; ventes</h1>
+    <p class="lede">Forfait + fixe mensuel + commission : comment structurer la mission, identifier les ventes générées, appliquer les commissions et attribuer les ventes conclues <strong>physiquement en agence</strong> — sans paiement en ligne.</p>
+    <div class="meta-row">
+      <span>Préparé pour&nbsp;: <b>Karim Zoubdane</b></span>
+      <span>Statut&nbsp;: <b>base de négociation</b></span>
+      <span>Devise&nbsp;: <b>MAD</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="Sommaire">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#s1">La formule de travail &amp; de facturation (3 étages)</a></li>
+      <li><a href="#s2">Comment identifier « tes » ventes (l'attribution)</a></li>
+      <li><a href="#s3">Comment appliquer les commissions</a></li>
+      <li><a href="#s4">Le point dur&nbsp;: la vente conclue physiquement en agence</a></li>
+      <li><a href="#s5">Ce que je recommande de proposer à l'agence</a></li>
+      <li><a href="#a">Annexes&nbsp;: registre, clauses de contrat, exemple chiffré</a></li>
+    </ol>
+  </nav>
+
+  <section id="s1">
+    <span class="sec-num">ÉTAGE 01–03</span>
+    <h2 class="sec">1. La formule de travail &amp; de facturation</h2>
+    <hr class="rule">
+    <p>Modèle <strong>« Setup + Retainer + Performance »</strong> — le plus sain pour ce type de mission&nbsp;: il protège ton temps <em>et</em> aligne tes intérêts avec les ventes de l'agence.</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Étage</th><th>Ce que ça couvre</th><th>Nature</th><th>Ordre de grandeur</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Forfait initial</strong><br>(setup)</td>
+            <td>Audit, stratégie, création des assets&nbsp;: funnel, landing pages, calendrier éditorial, comptes ads, tunnel WhatsApp, tracking</td>
+            <td>One-shot — 50&nbsp;% commande / 50&nbsp;% livraison</td>
+            <td class="num">15 000 – 40 000 MAD</td>
+          </tr>
+          <tr>
+            <td><strong>2. Fixe mensuel</strong><br>(retainer)</td>
+            <td>Entretien&nbsp;: production de contenu, gestion des campagnes, community management, reporting, optimisation</td>
+            <td>Mensuel, facturé d'avance</td>
+            <td class="num">4 000 – 12 000 MAD/mois</td>
+          </tr>
+          <tr>
+            <td><strong>3. Commission</strong><br>sur ventes</td>
+            <td>% du CA (ou de la marge) des ventes que tu as générées</td>
+            <td>Mensuel, à terme échu</td>
+            <td class="num">voir §3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Pourquoi les trois étages, et pas seulement la commission</h3>
+    <ul>
+      <li><strong>Le setup</strong> te paie pour la valeur créée dès le jour 1 — une stratégie a de la valeur même sans vente immédiate.</li>
+      <li><strong>Le fixe</strong> couvre ton temps récurrent et ta trésorerie&nbsp;: tu ne travailles pas gratuitement les mois creux (le voyage est saisonnier).</li>
+      <li><strong>La commission</strong> capture l'<em>upside</em> et rassure l'agence («&nbsp;il n'est payé à fond que s'il performe&nbsp;»).</li>
+    </ul>
+    <div class="callout">
+      <strong>⚠️ Règle d'or.</strong> Plus la commission est élevée, plus le fixe est bas — et inversement. Ne brade jamais le fixe contre une «&nbsp;grosse commission plus tard&nbsp;» sans garanties d'attribution. C'est là que 90&nbsp;% de ces contrats tournent au conflit.
+    </div>
+  </section>
+
+  <section id="s2">
+    <span class="sec-num">ATTRIBUTION</span>
+    <h2 class="sec">2. Comment identifier « tes » ventes</h2>
+    <hr class="rule">
+    <p><strong>Principe&nbsp;:</strong> une vente t'est attribuée si le <strong>premier contact qualifiant</strong> provient d'un canal que tu contrôles. Il faut donc tracer l'origine de chaque lead <em>avant</em> qu'il n'arrive à l'agence. Trois familles de traceurs, à <strong>combiner</strong>.</p>
+
+    <h3>A. Le canal de contact dédié <span style="font-weight:400;color:var(--ink-soft)">(le plus important au Maroc)</span></h3>
+    <ul>
+      <li><strong>Un numéro WhatsApp Business dédié</strong> à tes campagnes (différent du numéro «&nbsp;historique&nbsp;» de l'agence). Tout lead qui écrit sur CE numéro = ton lead, horodaté et prouvable.</li>
+      <li>Idéalement un <strong>2ᵉ numéro de téléphone dédié</strong> (call tracking), affiché uniquement dans tes pubs. Chaque appel entrant = ton lead.</li>
+      <li>Un <strong>lien wa.me pré-rempli</strong> (<code>wa.me/212…?text=Bonjour, je viens de votre page Instagram</code>) — le message d'arrivée trahit déjà la source.</li>
+    </ul>
+
+    <h3>B. Le code / la référence unique</h3>
+    <ul>
+      <li><strong>Code promo ou code de réservation</strong> (ex. <span class="kw">V21-JUILLET</span>, <span class="kw">INSTA10</span>) que le client cite à l'agence pour obtenir un petit avantage (surclassement, −3&nbsp;%, guide offert…). <strong>Preuve d'attribution béton</strong>, même pour un achat 100&nbsp;% physique.</li>
+      <li>Chaque campagne son code → tu sais <em>quelle</em> action a converti.</li>
+    </ul>
+
+    <h3>C. Le formulaire / la landing page taguée</h3>
+    <ul>
+      <li>Toutes tes pubs pointent vers des <strong>landing pages dédiées avec UTM</strong> (<code>?utm_source=meta&amp;utm_campaign=omra</code>) + un <strong>formulaire de devis</strong> qui tombe dans un CRM / Google Sheet partagé.</li>
+      <li>Le lead entre dans le pipeline avec sa source <em>avant</em> même de parler à un vendeur.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Pièce maîtresse — le registre partagé (deal registration).</strong> Un Google Sheet / Notion / CRM léger partagé avec l'agence où <strong>chaque lead digital est enregistré dès son arrivée</strong> (date, nom, téléphone, source, code). Une vente ne t'est attribuée que si le client <strong>y figurait déjà avant la signature</strong>. Ça règle ~95&nbsp;% des litiges. <em>(Modèle de colonnes en Annexe A.)</em>
+    </div>
+  </section>
+
+  <section id="s3">
+    <span class="sec-num">COMMISSIONS</span>
+    <h2 class="sec">3. Comment appliquer les commissions</h2>
+    <hr class="rule">
+    <h3>Sur quelle base&nbsp;? <span style="font-weight:400;color:var(--ink-soft)">(choisir UNE option, l'écrire noir sur blanc)</span></h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Base de calcul</th><th>Taux indicatif</th><th>Remarque</th></tr></thead>
+        <tbody>
+          <tr><td><strong>% du CA</strong> (TTC encaissé)</td><td class="num">3 – 8 %</td><td>Simple, transparent, auditable. L'agence peut résister (marges voyage faibles&nbsp;: 8–15 %).</td></tr>
+          <tr><td><strong>% de la marge brute</strong></td><td class="num">15 – 30 %</td><td>Plus juste pour l'agence, mais suppose qu'elle t'ouvre ses marges (moins vérifiable pour toi).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>👉 Recommandation.</strong> Le <strong>% du CA est plus simple à auditer</strong> (le CA est prouvable, la marge est «&nbsp;déclarative&nbsp;»). Vise un <strong>% du CA modéré (4–6 %)</strong> plutôt qu'un gros % de marge invérifiable.
+    </div>
+    <h3>Les garde-fous à inscrire au contrat</h3>
+    <ul>
+      <li><strong>Fait générateur = encaissement, pas signature.</strong> Tu es payé quand l'agence a été payée (protège des impayés).</li>
+      <li><strong>Fenêtre d'attribution&nbsp;: 90 jours</strong> — à porter à <strong>180 j</strong> pour les cycles longs (Hajj / Omra, voyages de noces).</li>
+      <li><strong>Durée de vie du client&nbsp;:</strong> 1ʳᵉ vente uniquement, ou toutes ses ventes sur 12 mois. Reco&nbsp;: <strong>1ʳᵉ vente + réachats 12 mois, dégressif.</strong></li>
+      <li><strong>Exclusions&nbsp;:</strong> pas de commission sur les clients existants ni les leads hors de tes canaux → <strong>geler la base clients</strong> au démarrage.</li>
+      <li><strong>Paliers</strong> (option motivante)&nbsp;: ex. 4 % jusqu'à 100 000 MAD/mois, <strong>6 % au-delà</strong>.</li>
+      <li><strong>Clawback&nbsp;:</strong> commission reprise en cas d'annulation / remboursement.</li>
+      <li><strong>Cadence&nbsp;:</strong> calcul mois M → validation conjointe → paiement mois M+1.</li>
+    </ul>
+  </section>
+
+  <section id="s4">
+    <span class="sec-num">LE POINT DUR</span>
+    <h2 class="sec">4. Le lead digital qui achète physiquement à l'agence</h2>
+    <hr class="rule">
+    <p>C'est le vrai risque de ce contrat sans paiement en ligne. Le dispositif&nbsp;: <strong>empiler plusieurs couches</strong> — aucune n'est parfaite seule.</p>
+    <ol class="layers">
+      <li><strong>Le sas d'entrée unique.</strong> Le digital ne renvoie <strong>jamais</strong> vers le numéro générique de l'agence, mais toujours vers <em>ton</em> canal (WhatsApp dédié, formulaire, numéro tracké). Même si le client signe au comptoir, son <strong>premier contact est horodaté chez toi</strong>. «&nbsp;Physique&nbsp;» ne veut pas dire «&nbsp;intraçable&nbsp;»&nbsp;: seule la signature est au comptoir, pas le premier contact.</li>
+      <li><strong>Le code à citer en agence.</strong> «&nbsp;Mentionnez le code OMRA25 en agence pour votre avantage.&nbsp;» Le vendeur note le code sur le bon de commande&nbsp;: <strong>la preuve la plus solide pour un achat 100&nbsp;% offline</strong>, et l'avantage booste ta conversion.</li>
+      <li><strong>La question systématique à l'accueil.</strong> Former les vendeurs à demander (et <strong>noter dans le registre</strong>)&nbsp;: «&nbsp;Comment avez-vous connu Voyages21&nbsp;?&nbsp;» → champ obligatoire sur chaque fiche de vente.</li>
+      <li><strong>Le rapprochement mensuel.</strong> 20 min/mois&nbsp;: tu croises <strong>ton registre de leads</strong> avec le <strong>journal des ventes</strong>. Toute vente dont le client figure au registre (téléphone / nom / code) = commissionnable. La routine qui fait vivre le système.</li>
+      <li><strong>La preuve technique (bonus).</strong> <strong>QR code</strong> pubs/vitrine → landing → formulaire (scan tracé)&nbsp;; <strong>matching par numéro de téléphone</strong> (celui du formulaire = celui du bon de commande). Simple et fiable.</li>
+    </ol>
+    <div class="note">
+      <strong>En résumé (offline)&nbsp;:</strong> premier contact tracé sur ton canal + code cité en agence + question à l'accueil + rapprochement mensuel sur registre partagé. Ces 4 couches suffisent à commissionner une vente signée au comptoir, <strong>sans jamais avoir besoin de paiement en ligne</strong>.
+    </div>
+  </section>
+
+  <section id="s5">
+    <span class="sec-num">PLAN D'ACTION</span>
+    <h2 class="sec">5. Ce que je recommande de proposer à l'agence</h2>
+    <hr class="rule">
+    <ul>
+      <li><strong>Phase pilote de 3 mois</strong>&nbsp;: setup réduit + fixe + commission, pour <em>prouver</em> le modèle d'attribution avant tout engagement long. Rassure l'agence et sert de démonstration.</li>
+      <li><strong>Registre partagé obligatoire</strong> dès J1 (Google Sheet pour démarrer, CRM ensuite).</li>
+      <li><strong>Gel de la base clients existante</strong> en annexe (photo du fichier actuel → non commissionnable).</li>
+      <li><strong>Numéro WhatsApp Business dédié + codes promo par campagne</strong> dès le lancement.</li>
+      <li><strong>Clause de réconciliation mensuelle</strong> + fenêtre d'attribution 90–180 j.</li>
+      <li><strong>Clause de confidentialité + non-contournement</strong> (l'agence ne peut pas «&nbsp;sortir&nbsp;» un lead du registre pour éviter la commission).</li>
+    </ul>
+  </section>
+
+  <section id="a">
+    <span class="sec-num">ANNEXES</span>
+    <h2 class="sec">Annexes</h2>
+    <hr class="rule">
+
+    <h3>Annexe A — Modèle de registre partagé (deal registration)</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Colonne</th><th>Description</th><th>Exemple</th></tr></thead>
+        <tbody>
+          <tr><td><code>ID_lead</code></td><td>Identifiant unique</td><td>L-2026-0142</td></tr>
+          <tr><td><code>Date_contact</code></td><td>Date &amp; heure du 1ᵉʳ contact</td><td>03/07/2026 14:22</td></tr>
+          <tr><td><code>Nom</code></td><td>Nom du prospect</td><td>Fatima B.</td></tr>
+          <tr><td><code>Téléphone</code></td><td>Numéro (clé de matching)</td><td>06 12 34 56 78</td></tr>
+          <tr><td><code>Canal</code></td><td>WhatsApp / Appel tracké / Formulaire</td><td>WhatsApp</td></tr>
+          <tr><td><code>Source</code></td><td>Meta / Instagram / TikTok / SEO</td><td>Instagram</td></tr>
+          <tr><td><code>Campagne</code></td><td>Nom UTM</td><td>omra_juillet</td></tr>
+          <tr><td><code>Code_cité</code></td><td>Code promo mentionné</td><td>OMRA25</td></tr>
+          <tr><td><code>Produit</code></td><td>Type de voyage</td><td>Omra octobre</td></tr>
+          <tr><td><code>Statut</code></td><td>Nouveau / Devis / Négo / Gagné / Perdu</td><td>Devis</td></tr>
+          <tr><td><code>Date_vente</code></td><td>Signature / encaissement</td><td>—</td></tr>
+          <tr><td><code>Montant_CA</code></td><td>CA TTC encaissé</td><td>—</td></tr>
+          <tr><td><code>Commission_%</code></td><td>Taux appliqué</td><td>5 %</td></tr>
+          <tr><td><code>Commission_MAD</code></td><td>Montant dû</td><td>—</td></tr>
+          <tr><td><code>Vérifié_agence</code></td><td>Validation conjointe</td><td>☐</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Annexe B — Clauses-clés du contrat / lettre de mission</h3>
+    <ol>
+      <li><strong>Objet &amp; périmètre</strong> — stratégie, contenu, campagnes, mise en place &amp; tenue du dispositif d'attribution.</li>
+      <li><strong>Rémunération</strong> — (a) forfait de mise en place ; (b) honoraires fixes mensuels ; (c) commission de performance (§3).</li>
+      <li><strong>Définition d'une «&nbsp;vente générée&nbsp;»</strong> — lead au registre avant signature, dans la fenêtre d'attribution, via un canal contrôlé.</li>
+      <li><strong>Base &amp; taux</strong> — % du CA TTC encaissé (ou marge), paliers éventuels.</li>
+      <li><strong>Fait générateur &amp; paiement</strong> — dû à l'encaissement ; calcul M, paiement M+1.</li>
+      <li><strong>Fenêtre d'attribution</strong> — 90 j (180 j pour Hajj / Omra / gros dossiers).</li>
+      <li><strong>Gel de la base clients existante</strong> — annexe des clients historiques exclus.</li>
+      <li><strong>Clawback</strong> — reprise en cas d'annulation / remboursement.</li>
+      <li><strong>Réconciliation</strong> — réunion mensuelle registre ↔ ventes ; accès au journal des ventes concernées.</li>
+      <li><strong>Confidentialité &amp; non-contournement</strong> — interdiction de contourner le registre ; protection des données.</li>
+      <li><strong>Propriété des assets</strong> — sort des comptes ads, pages, contenus en fin de mission.</li>
+      <li><strong>Durée, préavis &amp; résiliation</strong> — pilote 3 mois puis reconduction ; sort des commissions en cours (<em>run-off</em>).</li>
+    </ol>
+
+    <h3>Annexe C — Exemple chiffré (illustratif)</h3>
+    <p style="color:var(--ink-soft);font-size:15px">Hypothèses&nbsp;: fixe 6 000 MAD/mois, commission 5 % du CA, fenêtre 90 j.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Mois</th><th>Leads</th><th>Ventes</th><th>CA généré</th><th>Fixe</th><th>Commission</th><th>Total facturé</th></tr></thead>
+        <tbody>
+          <tr><td>M1</td><td class="num">40</td><td class="num">2</td><td class="num">60 000</td><td class="num">6 000</td><td class="num">3 000</td><td class="num"><strong>9 000</strong></td></tr>
+          <tr><td>M2</td><td class="num">55</td><td class="num">4</td><td class="num">130 000</td><td class="num">6 000</td><td class="num">6 500</td><td class="num"><strong>12 500</strong></td></tr>
+          <tr><td>M3</td><td class="num">60</td><td class="num">6</td><td class="num">210 000</td><td class="num">6 000</td><td class="num">10 500</td><td class="num"><strong>16 500</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--ink-soft);font-size:14px"><em>Chiffres purement illustratifs — à remplacer par les paniers moyens réels de l'agence (Omra, circuits, sur-mesure…).</em></p>
+  </section>
+
+  <footer class="doc">
+    Document préparé comme base de négociation. À adapter aux montants, produits et réalités de l'agence avant signature. Pour la partie juridique du contrat, une relecture par un conseil est recommandée.
+  </footer>
+
+</div>
