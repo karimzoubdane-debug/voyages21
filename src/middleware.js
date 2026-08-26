@@ -6,9 +6,9 @@ import { NextResponse } from 'next/server';
 import { getRole } from './lib/auth.js';
 
 // Réservées au propriétaire (Karim)
-const OWNER_ONLY = new Set(['/admin-produits.html', '/admin-cover.html']);
+const OWNER_ONLY = new Set(['/formulaire-voyage.html']);
 // Accessibles à l'équipe ET au propriétaire
-const TEAM_OR_OWNER = new Set(['/admin-medias.html', '/formulaire-voyage.html']);
+const TEAM_OR_OWNER = new Set(['/admin-produits.html', '/admin-cover.html', '/admin-medias.html']);
 
 function toLogin(request) {
   const url = request.nextUrl.clone();
