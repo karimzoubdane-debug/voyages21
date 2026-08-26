@@ -38,6 +38,7 @@
 
   function badgeHtml(slug) {
     var st = statusMap[slug];
+    if (st && st.surDevis) return '<span class="card-badge card-badge--gold">Voyage possible</span>';
     if (!st || !st.badge) return '';
     var color = st.badgeColor || 'danger';
     return '<span class="card-badge card-badge--' + esc(color) + '">' + esc(st.badge) + '</span>';
@@ -85,7 +86,9 @@
       + '<div class="tag">' + esc(v.tag || cfg.title) + '</div>'
       + '<h2 class="title">' + esc(v.title) + '</h2>'
       + (v.duration ? '<div class="meta">' + bidiNum(v.duration) + '</div>' : '')
-      + (v.price ? '<div class="card-price">' + bidiNum((v.pricePrefix ? v.pricePrefix + ' ' : '') + v.price) + '</div>' : '')
+      + ((statusMap[slug] && statusMap[slug].surDevis)
+          ? '<div class="card-price">Sur devis</div>'
+          : (v.price ? '<div class="card-price">' + bidiNum((v.pricePrefix ? v.pricePrefix + ' ' : '') + v.price) + '</div>' : ''))
       + '<p class="excerpt">' + esc(intro) + '</p>'
       + '<a class="more" href="' + link + '">Voir plus</a>'
       + '</div>'

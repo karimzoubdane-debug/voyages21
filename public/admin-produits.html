@@ -854,6 +854,7 @@ function renderBadgePill(st, source) {
 
   if (st.removed) return '<span class="badge-pill hidden">Supprimé</span>';
   if (st.hidden) return '<span class="badge-pill hidden">Masqué</span>';
+  if (st.surDevis) return '<span class="badge-pill gold">Sur devis</span>';
   if (st.badge) return '<span class="badge-pill ' + cls + '">' + esc(st.badge) + '</span>';
   return '';
 }
@@ -869,6 +870,9 @@ function renderStatusDrawer(slug, st) {
     + drawerBtn(slug, 'Nouveau', 'gold', '✨ Nouveau')
     + drawerBtn(slug, 'Promo', 'gold', '💰 Promo')
     + '</div>'
+    + '<div style="margin:.55rem 0;border-top:1px solid var(--line);padding-top:.55rem">'
+    + '<button class="badge-opt ' + (st.surDevis ? 'sel-gold' : '') + '" type="button" onclick="applySurDevis(\'' + esc(slug) + '\',' + (st.surDevis ? 'false' : 'true') + ')" title="Garder le voyage visible comme inspiration : prix → Sur devis, dates masquées, bouton devis conservé">🧭 ' + (st.surDevis ? 'Sur devis / Voyage possible ✓' : 'Sur devis / Voyage possible') + '</button>'
+    + '</div>'
     + '<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">'
     + '<input type="text" id="customBadge-' + esc(slug) + '" placeholder="Badge libre…" value="' + esc(st.badge && !['SOLDÉ','Dernières places','5 places','3 places','Nouveau','Promo'].includes(st.badge) ? st.badge : '') + '" style="border:1px solid #cfc5b3;border-radius:6px;padding:.42rem .6rem;font:.83rem/1 \'DM Sans\',sans-serif;flex:1;min-width:130px">'
     + '<button class="mini ok" type="button" onclick="applyCustomBadge(\'' + esc(slug) + '\')">Appliquer</button>'
@@ -877,7 +881,7 @@ function renderStatusDrawer(slug, st) {
 
 function drawerBtn(slug, badge, color, label) {
   var st = manifest.status[slug] || {};
-  var sel = (st.badge === badge && !st.hidden) || (!badge && !st.badge && !st.hidden);
+  var sel = (st.badge === badge && !st.hidden && !st.surDevis) || (!badge && !st.badge && !st.hidden && !st.surDevis);
   var selCls = sel ? (color === 'danger' ? 'sel-danger' : color === 'gold' ? 'sel-gold' : 'sel') : '';
   return '<button class="badge-opt ' + selCls + '" type="button" onclick="applyStatus(\'' + esc(slug) + '\',\'' + esc(badge) + '\',\'' + esc(color) + '\')">' + esc(label) + '</button>';
 }
@@ -910,6 +914,30 @@ function applyStatus(slug, badge, color) {
     }
   })
   .catch(function(e){ log('Erreur : ' + e.message); });
+}
+
+// Mode « Sur devis / Voyage possible » : le voyage reste visible mais son prix
+// devient « Sur devis », ses dates sont masquées, un badge « Voyage possible »
+// s'affiche et le bouton devis est conservé. Activable sur tout voyage.
+function applySurDevis(slug, on) {
+  log('Enregistrement…');
+  var st = on ? { surDevis: true, hidden: false } : { hidden: false };
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'status', slug: slug, status: st })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      manifest.status[slug] = st;
+      toast(on ? '✅ Voyage passé « Sur devis » — prix & dates masqués, voyage gardé' : '✅ Mode « Sur devis » retiré');
+      renderCatalogue();
+    } else {
+      toast('❌ ' + (data.error || 'erreur'));
+    }
+  })
+  .catch(function(e){ toast('❌ Erreur réseau'); log('Erreur : ' + e.message); });
 }
 
 function applyCustomBadge(slug) {
