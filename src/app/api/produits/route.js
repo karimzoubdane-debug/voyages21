@@ -226,9 +226,17 @@ export async function DELETE(request) {
     const data = await readManifest();
 
     if (type === 'delete') {
-      delete data.custom[slug];
-      delete data.status[slug];
-      await removeMediaEntry(slug); // le voyage disparaît aussi de la médiathèque
+      if (data.custom[slug]) {
+        // Voyage ajouté via l'admin : suppression réelle (fiche + statut + média).
+        delete data.custom[slug];
+        delete data.status[slug];
+        await removeMediaEntry(slug); // le voyage disparaît aussi de la médiathèque
+      } else {
+        // Voyage du catalogue de base (codé dans data.js) : impossible d'effacer
+        // le code depuis l'admin. On le marque « supprimé » → retiré des listes
+        // ET fiche rendue indisponible. Réversible via « Restaurer » (removed:false).
+        data.status[slug] = { ...(data.status[slug] || {}), removed: true, hidden: true };
+      }
     } else {
       data.status[slug] = { ...(data.status[slug] || {}), hidden: true };
     }

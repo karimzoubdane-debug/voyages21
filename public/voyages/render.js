@@ -261,6 +261,16 @@
         .then(function (r) { return r.ok ? r.json() : {}; })
         .then(function (manifest) {
             var statusEntry = (manifest.status || {})[slug] || {};
+            // Voyage retiré du site via l'admin : fiche indisponible.
+            if (statusEntry.removed) {
+                document.title = "Voyage indisponible — Voyages21";
+                if (app) app.innerHTML = '<div style="max-width:640px;margin:5rem auto;padding:2rem;text-align:center;font-family:\'DM Sans\',system-ui,sans-serif">'
+                    + '<h1 style="font-family:\'Playfair Display\',Georgia,serif;color:#1B3A28;font-style:italic">Voyage indisponible</h1>'
+                    + '<p style="color:#6b6457;line-height:1.5">Ce voyage n\'est plus proposé. Découvrez nos autres destinations sur mesure.</p>'
+                    + '<a href="/" style="display:inline-block;margin-top:1.2rem;background:#1B3A28;color:#fff;padding:.75rem 1.5rem;border-radius:9px;text-decoration:none;font-weight:700">Retour à l\'accueil</a>'
+                    + '</div>';
+                return;
+            }
             var customEntry = (manifest.custom || {})[slug] || {};
             var pdfUrl = statusEntry.pdfUrl || customEntry.pdfUrl;
             if (!pdfUrl) return;

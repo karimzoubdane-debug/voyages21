@@ -824,7 +824,12 @@ function renderProdRow(slug, v, source) {
     + '<a class="btn mini" href="' + (source === 'custom' ? '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug) : '/voyages/' + esc(slug) + '.html') + '" target="_blank" rel="noopener" title="Voir la fiche sur le site">👁 Voir</a>'
     + renderPdfBtn(slug, v, source)
     + (source === 'custom' ? '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>' : '')
-    + (source === 'custom' ? '<button class="mini danger" type="button" onclick="confirmDelete(\'' + esc(slug) + '\')">Supprimer</button>' : '<button class="mini ghost" type="button" onclick="confirmHide(\'' + esc(slug) + '\',\'' + esc(v.title||'') + '\')">' + (manifest.status[slug] && manifest.status[slug].hidden ? 'Afficher' : 'Masquer') + '</button>')
+    + (source === 'custom'
+        ? '<button class="mini danger" type="button" onclick="confirmDelete(\'' + esc(slug) + '\')">Supprimer</button>'
+        : ((manifest.status[slug] && manifest.status[slug].removed)
+            ? '<button class="mini ok" type="button" onclick="restoreStatic(\'' + esc(slug) + '\')" title="Remettre ce voyage sur le site">♻ Restaurer</button>'
+            : '<button class="mini ghost" type="button" onclick="confirmHide(\'' + esc(slug) + '\',\'' + esc(v.title||'') + '\')">' + (manifest.status[slug] && manifest.status[slug].hidden ? 'Afficher' : 'Masquer') + '</button>'
+              + '<button class="mini danger" type="button" onclick="confirmDeleteStatic(\'' + esc(slug) + '\',\'' + esc(v.title||'') + '\')">Supprimer</button>'))
     + '</div>'
     + '</div>';
 }
@@ -841,12 +846,13 @@ function renderPdfBtn(slug, v, source) {
 function renderBadgePill(st, source) {
   if (!st) return '';
   var cls = '';
-  if (st.hidden) cls = 'hidden';
+  if (st.removed || st.hidden) cls = 'hidden';
   else if (st.badgeColor === 'danger' || st.badge === 'SOLDÉ' || st.badge === 'Complet') cls = 'sold';
   else if (st.badgeColor === 'gold') cls = 'gold';
   else if (st.badgeColor === 'green') cls = 'green';
   else if (st.badge) cls = 'gold';
 
+  if (st.removed) return '<span class="badge-pill hidden">Supprimé</span>';
   if (st.hidden) return '<span class="badge-pill hidden">Masqué</span>';
   if (st.badge) return '<span class="badge-pill ' + cls + '">' + esc(st.badge) + '</span>';
   return '';
@@ -963,6 +969,56 @@ function confirmDelete(slug) {
         log('Erreur réseau suppression : ' + e.message);
       });
   });
+}
+
+// Suppression d'un voyage du CATALOGUE DE BASE (codé dans data.js) : on ne peut
+// pas effacer le code depuis l'admin → le serveur le marque « supprimé »
+// (retiré des listes + fiche indisponible). Réversible via restoreStatic().
+function confirmDeleteStatic(slug, title) {
+  confirm2('Supprimer ce voyage du site ?', '"' + (title||slug) + '" sera retiré du catalogue ET sa fiche deviendra indisponible. C\'est un voyage du catalogue de base : l\'opération est réversible via « Restaurer ».', function() {
+    log('Suppression…');
+    fetch('/api/produits?slug=' + encodeURIComponent(slug) + '&type=delete', { method: 'DELETE' })
+      .then(function(r){ return r.json().then(function(d){ return { httpOk: r.ok, data: d }; }); })
+      .then(function(res){
+        if (res.httpOk && res.data && res.data.ok) {
+          manifest.status[slug] = { ...(manifest.status[slug]||{}), removed: true, hidden: true };
+          toast('✅ Voyage supprimé du site');
+          renderCatalogue();
+        } else {
+          var err = (res.data && res.data.error) || 'erreur inconnue';
+          toast('❌ Suppression refusée : ' + err);
+          log('Échec suppression (' + slug + ') : ' + err);
+        }
+      })
+      .catch(function(e){
+        toast('❌ Erreur réseau pendant la suppression');
+        log('Erreur réseau suppression : ' + e.message);
+      });
+  });
+}
+
+// Restaurer un voyage de base précédemment supprimé (removed:false, hidden:false).
+function restoreStatic(slug) {
+  log('Restauration…');
+  var newSt = { ...(manifest.status[slug]||{}) };
+  delete newSt.removed;
+  newSt.hidden = false;
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'status', slug: slug, status: newSt })
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok) {
+        manifest.status[slug] = newSt;
+        toast('✅ Voyage restauré — de nouveau visible sur le site');
+        renderCatalogue();
+      } else {
+        toast('❌ ' + (data.error || 'erreur'));
+      }
+    })
+    .catch(function(e){ toast('❌ Erreur réseau'); log('Erreur restauration : ' + e.message); });
 }
 
 // ─────────────────────────────────────────
