@@ -45,7 +45,7 @@
 
   function isHidden(slug) {
     var st = statusMap[slug];
-    return st && st.hidden;
+    return st && (st.hidden || st.removed);
   }
 
   function isMarocSejour(slug) {
