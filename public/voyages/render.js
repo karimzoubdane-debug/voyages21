@@ -4,10 +4,51 @@
    Pour une page en arabe : data.voyage.lang = "ar" et la coquille <html dir="rtl" lang="ar">. */
 (function () {
     var slug = document.body.getAttribute("data-voyage");
-    var v = (window.VOYAGES || {})[slug];
+    var baseV = (window.VOYAGES || {})[slug];
     var app = document.getElementById("app");
-    if (!v) { app.innerHTML = '<p style="padding:2rem;text-align:center">Voyage introuvable.</p>'; return; }
+    if (!baseV) { app.innerHTML = '<p style="padding:2rem;text-align:center">Voyage introuvable.</p>'; return; }
 
+    // Applique une éventuelle « reconduction » (édition active) définie côté admin,
+    // par-dessus l'ossature d'origine (data.js), qui n'est jamais modifiée, puis rend.
+    fetch("/api/produits", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .catch(function () { return {}; })
+        .then(function (manifest) {
+            var st = (manifest && manifest.status && manifest.status[slug]) || {};
+            if (st.removed) {
+                document.title = "Voyage indisponible — Voyages21";
+                app.innerHTML = '<div style="max-width:640px;margin:5rem auto;padding:2rem;text-align:center;font-family:\'DM Sans\',system-ui,sans-serif">'
+                    + '<h1 style="font-family:\'Playfair Display\',Georgia,serif;color:#1B3A28;font-style:italic">Voyage indisponible</h1>'
+                    + '<p style="color:#6b6457;line-height:1.5">Ce voyage n\'est plus proposé. Découvrez nos autres destinations sur mesure.</p>'
+                    + '<a href="/" style="display:inline-block;margin-top:1.2rem;background:#1B3A28;color:#fff;padding:.75rem 1.5rem;border-radius:9px;text-decoration:none;font-weight:700">Retour à l\'accueil</a>'
+                    + '</div>';
+                return;
+            }
+            start(mergeEdition(baseV, st));
+        });
+
+    // Fusionne l'édition active (versions[active].data) par-dessus l'ossature.
+    // Seuls les champs réellement renseignés écrasent l'original.
+    function mergeEdition(base, st) {
+        var ed = st && st.editions;
+        if (!ed || !ed.active) return base;
+        var arr = ed.versions || [], ver = null;
+        for (var i = 0; i < arr.length; i++) { if (arr[i] && arr[i].id === ed.active) { ver = arr[i]; break; } }
+        if (!ver || !ver.data) return base;
+        var out = {}, k, d = ver.data;
+        for (k in base) out[k] = base[k];
+        for (k in d) {
+            var val = d[k];
+            if (val == null) continue;
+            if (typeof val === "string" && val.trim() === "") continue;
+            if (Array.isArray(val) && val.length === 0) continue;
+            if (k === "dates" && val && !val.line && !val.note) continue;
+            out[k] = val;
+        }
+        return out;
+    }
+
+    function start(v) {
     var WHATSAPP = v.whatsapp || "212614152686";
     var MEDIA_KEY_ALIASES = {
         "modal-omra": "modal-omra-mouharram",
@@ -372,4 +413,6 @@
     document.addEventListener("click", function (event) {
         var fan = document.getElementById("contactBar");
         if (fan && fan.classList.contains("open") && !fan.contains(event.target)) fan.classList.remove("open");
-    });})();
+    });
+    } // fin start(v)
+})();

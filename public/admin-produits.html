@@ -521,6 +521,7 @@ var uploadedPhotos = []; // { url, file }
 var uploadedPdf = null;  // { file, url, existing }
 var activeBadgeBtn = 'none';
 var currentEditSlug = null;
+var reconductionSlug = null; // si défini, le formulaire enregistre une « reconduction » (édition versionnée)
 var _pdfUploadTargetSlug = null; // pour l'upload inline depuis une ligne produit
 var activeGroup = 'all';
 var activeMarocSub = 'all';
@@ -855,6 +856,7 @@ function renderBadgePill(st, source) {
   if (st.removed) return '<span class="badge-pill hidden">Supprimé</span>';
   if (st.hidden) return '<span class="badge-pill hidden">Masqué</span>';
   if (st.surDevis) return '<span class="badge-pill gold">Sur devis</span>';
+  if (st.editions && st.editions.active && !st.badge) return '<span class="badge-pill gold">↻ Reconduit</span>';
   if (st.badge) return '<span class="badge-pill ' + cls + '">' + esc(st.badge) + '</span>';
   return '';
 }
@@ -876,7 +878,112 @@ function renderStatusDrawer(slug, st) {
     + '<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">'
     + '<input type="text" id="customBadge-' + esc(slug) + '" placeholder="Badge libre…" value="' + esc(st.badge && !['SOLDÉ','Dernières places','5 places','3 places','Nouveau','Promo'].includes(st.badge) ? st.badge : '') + '" style="border:1px solid #cfc5b3;border-radius:6px;padding:.42rem .6rem;font:.83rem/1 \'DM Sans\',sans-serif;flex:1;min-width:130px">'
     + '<button class="mini ok" type="button" onclick="applyCustomBadge(\'' + esc(slug) + '\')">Appliquer</button>'
+    + '</div>'
+    + renderEditionsSection(slug, st);
+}
+
+// ─────────────────────────────────────────
+// Reconductions (éditions versionnées) — garder l'ossature, changer dates/prix/conditions
+// ─────────────────────────────────────────
+function renderEditionsSection(slug, st) {
+  var ed = (st && st.editions) || { active: null, versions: [] };
+  var versions = ed.versions || [];
+  var html = '<div style="margin-top:.6rem;border-top:1px solid var(--line);padding-top:.55rem">'
+    + '<div style="font-weight:700;font-size:.82rem;margin-bottom:.4rem">↻ Reconductions (éditions)</div>'
+    + '<div style="font-size:.78rem;color:#6b6457;margin-bottom:.4rem">Le voyage garde son ossature ; l\'édition active change dates / prix / conditions. « Origine » = version d\'origine (rembobiner).</div>'
+    + editionRow(slug, null, 'Origine (version d\'origine)', ed.active == null);
+  versions.forEach(function(ver) {
+    html += editionRow(slug, ver.id, (ver.label || 'Édition') + (ver.date ? ' · ' + ver.date : ''), ed.active === ver.id);
+  });
+  html += '<button class="mini blue" type="button" onclick="reconduire(\'' + esc(slug) + '\')" style="margin-top:.45rem">↻ Nouvelle reconduction</button>'
     + '</div>';
+  return html;
+}
+
+function editionRow(slug, id, label, active) {
+  return '<div style="display:flex;align-items:center;gap:.4rem;margin:.28rem 0;font-size:.83rem">'
+    + '<span style="flex:1">' + (active ? '● ' : '○ ') + esc(label) + (active ? ' <b style="color:var(--ok)">(en ligne)</b>' : '') + '</span>'
+    + (active ? '' : '<button class="mini" type="button" onclick="activateEdition(\'' + esc(slug) + '\',' + (id ? '\'' + esc(id) + '\'' : 'null') + ')">' + (id ? 'Activer' : '↺ Rembobiner') + '</button>')
+    + (id ? '<button class="mini danger" type="button" onclick="deleteEdition(\'' + esc(slug) + '\',\'' + esc(id) + '\')" title="Supprimer cette édition">✕</button>' : '')
+    + '</div>';
+}
+
+function saveEditions(slug, editions, okMsg) {
+  var st = Object.assign({}, manifest.status[slug] || {}, { editions: editions });
+  return fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'status', slug: slug, status: st })
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok) { manifest.status[slug] = st; if (okMsg) toast(okMsg); renderCatalogue(); }
+      else { toast('❌ ' + (data.error || 'erreur')); }
+    })
+    .catch(function(e){ toast('❌ Erreur réseau'); log('Erreur éditions : ' + e.message); });
+}
+
+function activateEdition(slug, id) {
+  var ed = (manifest.status[slug] && manifest.status[slug].editions) || { active: null, versions: [] };
+  saveEditions(slug, { active: id || null, versions: ed.versions || [] }, id ? '✅ Édition mise en ligne' : '↺ Rembobiné — retour à la version d\'origine');
+}
+
+function deleteEdition(slug, id) {
+  var ed = (manifest.status[slug] && manifest.status[slug].editions) || { active: null, versions: [] };
+  var versions = (ed.versions || []).filter(function(v){ return v.id !== id; });
+  var active = ed.active === id ? null : ed.active;
+  saveEditions(slug, { active: active, versions: versions }, '✅ Édition supprimée');
+}
+
+// Version « effective » actuellement en ligne (ossature + édition active) — pour pré-remplir le formulaire.
+function effectiveVoyage(slug, base) {
+  var st = manifest.status[slug] || {};
+  var ed = st.editions;
+  if (!ed || !ed.active) return base;
+  var ver = (ed.versions || []).filter(function(x){ return x.id === ed.active; })[0];
+  if (!ver || !ver.data) return base;
+  var out = {}, k, d = ver.data;
+  for (k in base) out[k] = base[k];
+  for (k in d) { if (d[k] != null) out[k] = d[k]; }
+  return out;
+}
+
+// Ouvre le formulaire pré-rempli pour créer une nouvelle reconduction (édition).
+function reconduire(slug) {
+  var base = (window.VOYAGES && window.VOYAGES[slug]) || (manifest.custom && manifest.custom[slug]);
+  if (!base) { toast('Voyage introuvable'); return; }
+  var v = effectiveVoyage(slug, base);
+  reconductionSlug = slug;
+  currentEditSlug = null;
+  document.getElementById('editSlug').value = '';
+  var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = 'none';
+  var f = document.getElementById('productForm');
+  f.reset();
+  f.title.value = v.title || '';
+  f.tag.value = v.tag || '';
+  onTagChange(v.tag || '');
+  if (f.schengen) f.schengen.value = v.schengen === true ? 'true' : v.schengen === false ? 'false' : '';
+  f.price.value = v.price || '';
+  f.duration.value = v.duration || '';
+  f.pricePrefix.value = v.pricePrefix || '';
+  f.eyebrow.value = v.eyebrow || '';
+  f.whatsapp.value = v.whatsapp || '212614152686';
+  f.intro.value = Array.isArray(v.intro) ? v.intro.join('\n\n') : (v.intro || '');
+  f.highlights.value = Array.isArray(v.highlights) ? v.highlights.join('\n') : (v.highlights || '');
+  f.inclus.value = Array.isArray(v.inclus) ? v.inclus.join('\n') : (v.inclus || '');
+  f.exclus.value = Array.isArray(v.exclus) ? v.exclus.join('\n') : (v.exclus || '');
+  f.datesList.value = Array.isArray(v.datesList) ? v.datesList.join(', ') : (v.datesList || '');
+  f.datesLine.value = (v.dates && v.dates.line) || '';
+  f.datesNote.value = (v.dates && v.dates.note) || '';
+  f.hotels.value = Array.isArray(v.hotels) ? v.hotels.join('\n') : (v.hotels || '');
+  clearFormPdf();
+  uploadedPhotos = [];
+  renderPhotoPreviews();
+  selectBadge('none');
+  document.getElementById('hiddenCheck').checked = false;
+  document.getElementById('submitBtn').textContent = '↻ Enregistrer la reconduction';
+  switchTab('form', document.getElementById('tabFormBtn'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function drawerBtn(slug, badge, color, label) {
@@ -897,7 +1004,8 @@ function toggleDrawer(slug) {
 // ─────────────────────────────────────────
 function applyStatus(slug, badge, color) {
   log('Enregistrement…');
-  var st = { badge: badge, badgeColor: color, hidden: false };
+  var st = Object.assign({}, manifest.status[slug] || {}, { badge: badge, badgeColor: color, hidden: false });
+  delete st.surDevis; // choisir un badge « actif » sort du mode Sur devis (les éditions sont conservées)
   fetch('/api/produits', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -921,7 +1029,9 @@ function applyStatus(slug, badge, color) {
 // s'affiche et le bouton devis est conservé. Activable sur tout voyage.
 function applySurDevis(slug, on) {
   log('Enregistrement…');
-  var st = on ? { surDevis: true, hidden: false } : { hidden: false };
+  var st = Object.assign({}, manifest.status[slug] || {}, { hidden: false });
+  if (on) { st.surDevis = true; delete st.badge; delete st.badgeColor; }
+  else { delete st.surDevis; }
   fetch('/api/produits', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -1125,6 +1235,7 @@ async function quickSubmit() {
 // ─────────────────────────────────────────
 function openNewForm() {
   currentEditSlug = null;
+  reconductionSlug = null;
   document.getElementById('editSlug').value = '';
   document.getElementById('productForm').reset();
   uploadedPhotos = [];
@@ -1144,6 +1255,7 @@ function editProduct(slug) {
   var v = manifest.custom[slug];
   if (!v) { toast('Produit introuvable'); return; }
   currentEditSlug = slug;
+  reconductionSlug = null;
   document.getElementById('editSlug').value = slug;
   var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = 'none';
 
@@ -1203,6 +1315,7 @@ function editProduct(slug) {
 
 function cancelForm() {
   currentEditSlug = null;
+  reconductionSlug = null;
   uploadedPhotos = [];
   clearFormPdf();
   document.getElementById('productForm').reset();
@@ -1278,6 +1391,45 @@ async function submitForm(e) {
   // PDF brochure
   if (uploadedPdf && uploadedPdf.url) {
     product.pdfUrl = uploadedPdf.url;
+  }
+
+  // ── Mode RECONDUCTION : on enregistre une nouvelle édition versionnée dans le
+  //    statut du voyage (l'ossature d'origine reste intacte), et on la met en ligne.
+  if (reconductionSlug) {
+    var rslug = reconductionSlug;
+    var label = (window.prompt('Nom de cette reconduction (ex : Été 2026, Départ octobre…) :', product.eyebrow || product.title || 'Nouvelle édition') || '').trim();
+    if (!label) label = 'Édition';
+    delete product.images; // les photos restent gérées dans Médias (par mediaKey)
+    var edNow = (manifest.status[rslug] && manifest.status[rslug].editions) || { active: null, versions: [] };
+    var versions = (edNow.versions || []).slice();
+    var edId = 'ed-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6);
+    var d = new Date();
+    var dateStr = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    versions.push({ id: edId, label: label, date: dateStr, data: product });
+    var stEd = Object.assign({}, manifest.status[rslug] || {}, { editions: { active: edId, versions: versions } });
+    try {
+      var rr = await fetch('/api/produits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'status', slug: rslug, status: stEd })
+      });
+      var dd = await rr.json();
+      if (dd.ok) {
+        manifest.status[rslug] = stEd;
+        toast('✅ Reconduction « ' + label + ' » enregistrée et mise en ligne');
+        reconductionSlug = null;
+        reload();
+        cancelForm();
+      } else {
+        toast('❌ ' + (dd.error || 'erreur'));
+      }
+    } catch (err) {
+      toast('❌ Erreur réseau');
+      log('Erreur reconduction : ' + err.message);
+    }
+    btn.disabled = false;
+    btn.textContent = 'Enregistrer le voyage';
+    return;
   }
 
   var slug = currentEditSlug || slugify(product.title);
