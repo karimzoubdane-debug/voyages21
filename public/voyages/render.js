@@ -28,6 +28,8 @@
             accommodation: "Hébergement", mapTitle: "L'itinéraire en un coup d'œil", datesPrices: "Dates & prix",
             childPrices: "Tarifs enfants :", photos: "photos", videoSoon: "Vidéo bientôt disponible", openLink: "Ouvrir le lien",
             tabWhy: "Le voyage", tabItin: "Itinéraire", tabIncl: "Inclus", tabHotel: "Hébergement", tabMap: "Carte", tabDates: "Dates & prix",
+            possibleTrip: "Voyage possible", surDevis: "Sur devis",
+            surDevisNote: "Ce voyage est proposé sur mesure. Contactez-nous pour un itinéraire et un tarif personnalisés.",
             pdf: "📎 Télécharger la brochure",
             askText: function (t, l) { return "Bonjour, je suis intéressé(e) par le voyage « " + t + " »" + (l ? " (" + l + ")" : "") + ". Pouvez-vous me faire une proposition ?"; }
         },
@@ -40,6 +42,8 @@
             accommodation: "الإقامة", mapTitle: "مسار الرحلة", datesPrices: "التواريخ والأسعار",
             childPrices: "أسعار الأطفال:", photos: "صور", videoSoon: "الفيديو متوفّر قريباً", openLink: "افتح الرابط",
             tabWhy: "الرحلة", tabItin: "البرنامج", tabIncl: "المشمول", tabHotel: "الإقامة", tabMap: "الخريطة", tabDates: "التواريخ",
+            possibleTrip: "رحلة ممكنة", surDevis: "حسب الطلب",
+            surDevisNote: "هذه الرحلة مقترحة على المقاس. تواصلوا معنا لبرنامج وسعر مخصّصين.",
             pdf: "📎 تحميل الكتيّب",
             askText: function (t, l) { return "السلام عليكم، أنا مهتمّ برحلة « " + t + " »" + (l ? " (" + l + ")" : "") + ". هل يمكنكم تقديم عرض؟"; }
         }
@@ -270,6 +274,14 @@
                     + '<a href="/" style="display:inline-block;margin-top:1.2rem;background:#1B3A28;color:#fff;padding:.75rem 1.5rem;border-radius:9px;text-decoration:none;font-weight:700">Retour à l\'accueil</a>'
                     + '</div>';
                 return;
+            }
+            // Mode « Sur devis / Voyage possible » : prix masqué (→ Sur devis),
+            // section Dates & prix remplacée par une note, bouton devis conservé.
+            if (statusEntry.surDevis) {
+                var cp = document.querySelector(".cadran-price");
+                if (cp) cp.innerHTML = '<span style="display:inline-block;background:#C8A440;color:#152E1F;font-weight:700;font-size:.72rem;letter-spacing:.04em;padding:.2rem .6rem;border-radius:999px;margin-bottom:.45rem">' + L.possibleTrip + '</span><br><b>' + L.surDevis + "</b>";
+                var ds = document.getElementById("dates");
+                if (ds) ds.innerHTML = '<h2 class="sec-title">' + L.datesPrices + '</h2><p class="note">' + L.surDevisNote + "</p>";
             }
             var customEntry = (manifest.custom || {})[slug] || {};
             var pdfUrl = statusEntry.pdfUrl || customEntry.pdfUrl;
