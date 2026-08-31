@@ -230,7 +230,7 @@ export default function AdminPortal() {
   const isOwner = role === 'owner';
   const tools = isOwner
     ? [TOOLS.produits, TOOLS.cover, TOOLS.fiche, TOOLS.medias, TOOLS.incoming]
-    : [TOOLS.produits, TOOLS.cover, TOOLS.medias];
+    : [TOOLS.produits, TOOLS.cover, TOOLS.medias, TOOLS.incoming];
 
   return (
     <Shell>
