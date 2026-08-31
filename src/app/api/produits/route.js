@@ -15,9 +15,11 @@ function slugify(s) {
     .replace(/^-|-$/g, '') || ('voyage-' + Date.now());
 }
 
-// Le catalogue n'est modifiable que par le propriétaire (l'équipe n'y touche pas).
-async function denyIfNotOwner(request, headers) {
-  if ((await getRole(request)) === 'owner') return null;
+// Le catalogue est modifiable par le propriétaire ET par l'équipe.
+// (Accès complet accordé à l'équipe : statuts, modification, suppression, validation.)
+async function denyIfNotAdmin(request, headers) {
+  const role = await getRole(request);
+  if (role === 'owner' || role === 'team') return null;
   return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers });
 }
 
@@ -95,9 +97,10 @@ export async function GET(request) {
       }
       return Response.json({ ok: true, product }, { headers: corsHeaders });
     }
-    // La file « en attente » (soumissions équipe) n'est visible que du propriétaire.
+    // La file « en attente » (soumissions équipe) est visible du propriétaire et de l'équipe.
     const out = { custom: data.custom || {}, status: data.status || {} };
-    if ((await getRole(request)) === 'owner') out.pending = data.pending || {};
+    const role = await getRole(request);
+    if (role === 'owner' || role === 'team') out.pending = data.pending || {};
     return Response.json(out, { headers: corsHeaders });
   } catch {
     return Response.json({ custom: {}, status: {} }, { headers: corsHeaders });
@@ -129,8 +132,8 @@ export async function POST(request) {
       return Response.json({ ok: true, id }, { headers: corsHeaders });
     }
 
-    // Publication directe : propriétaire uniquement.
-    if (role !== 'owner') {
+    // Publication directe : propriétaire ou équipe.
+    if (role !== 'owner' && role !== 'team') {
       return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers: corsHeaders });
     }
     if (!body.slug || !body.product) {
@@ -155,7 +158,7 @@ export async function POST(request) {
 //   { type: 'status', slug, status: { badge, badgeColor, hidden } }  → statut
 //   { slug, product }                                                  → modifier produit custom
 export async function PUT(request) {
-  const denied = await denyIfNotOwner(request, corsHeaders);
+  const denied = await denyIfNotAdmin(request, corsHeaders);
   if (denied) return denied;
   try {
     const body = await request.json();
@@ -214,7 +217,7 @@ export async function PUT(request) {
 //   hide   → marque hidden:true dans status (défaut)
 //   delete → supprime le produit custom du manifeste
 export async function DELETE(request) {
-  const denied = await denyIfNotOwner(request, corsHeaders);
+  const denied = await denyIfNotAdmin(request, corsHeaders);
   if (denied) return denied;
   try {
     const url = new URL(request.url);
