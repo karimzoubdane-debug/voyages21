@@ -23,8 +23,14 @@ async function denyIfNotAdmin(request, headers) {
   return Response.json({ ok: false, error: 'non autorisé' }, { status: 401, headers });
 }
 
+// La corbeille (voir / restaurer / vider) est réservée au PROPRIÉTAIRE.
+async function denyIfNotOwner(request, headers) {
+  if ((await getRole(request)) === 'owner') return null;
+  return Response.json({ ok: false, error: 'réservé au propriétaire' }, { status: 401, headers });
+}
+
 async function readManifest() {
-  const empty = { custom: {}, status: {}, pending: {} };
+  const empty = { custom: {}, status: {}, pending: {}, trash: {} };
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
   const hit = blobs.find((b) => b.pathname === MANIFEST);
   if (!hit) return { ...empty };
@@ -98,9 +104,11 @@ export async function GET(request) {
       return Response.json({ ok: true, product }, { headers: corsHeaders });
     }
     // La file « en attente » (soumissions équipe) est visible du propriétaire et de l'équipe.
-    const out = { custom: data.custom || {}, status: data.status || {} };
     const role = await getRole(request);
+    const out = { custom: data.custom || {}, status: data.status || {}, role: role || '' };
     if (role === 'owner' || role === 'team') out.pending = data.pending || {};
+    // La corbeille n'est visible QUE du propriétaire.
+    if (role === 'owner') out.trash = data.trash || {};
     return Response.json(out, { headers: corsHeaders });
   } catch {
     return Response.json({ custom: {}, status: {} }, { headers: corsHeaders });
@@ -164,6 +172,21 @@ export async function PUT(request) {
     const body = await request.json();
     const data = await readManifest();
 
+    // Restaurer un voyage depuis la corbeille → PROPRIÉTAIRE uniquement.
+    if (body.action === 'restore' && body.slug) {
+      const deniedOwner = await denyIfNotOwner(request, corsHeaders);
+      if (deniedOwner) return deniedOwner;
+      const t = data.trash && data.trash[body.slug];
+      if (!t) {
+        return Response.json({ ok: false, error: 'introuvable dans la corbeille' }, { status: 404, headers: corsHeaders });
+      }
+      data.custom[body.slug] = t.product;
+      if (t.status) data.status[body.slug] = t.status; else delete data.status[body.slug];
+      delete data.trash[body.slug];
+      await writeManifest(data);
+      return Response.json({ ok: true, restored: body.slug }, { headers: corsHeaders });
+    }
+
     // Valider une soumission équipe → publie le voyage et le retire de la file.
     if (body.action === 'validate' && body.id) {
       const sub = data.pending[body.id];
@@ -213,27 +236,63 @@ export async function PUT(request) {
   }
 }
 
-// DELETE /api/produits?slug=xxx&type=hide|delete
+// DELETE /api/produits?slug=xxx&type=hide|delete|purge   (+ type=empty sans slug)
 //   hide   → marque hidden:true dans status (défaut)
-//   delete → supprime le produit custom du manifeste
+//   delete → met le voyage à la CORBEILLE (récupérable) — équipe autorisée
+//   purge  → supprime DÉFINITIVEMENT un élément de la corbeille — propriétaire seul
+//   empty  → vide TOUTE la corbeille (définitif) — propriétaire seul
 export async function DELETE(request) {
   const denied = await denyIfNotAdmin(request, corsHeaders);
   if (denied) return denied;
+  const role = await getRole(request);
   try {
     const url = new URL(request.url);
     const slug = url.searchParams.get('slug');
     const type = url.searchParams.get('type') || 'hide';
+
+    // Vider toute la corbeille (définitif) — propriétaire uniquement.
+    if (type === 'empty') {
+      const deniedOwner = await denyIfNotOwner(request, corsHeaders);
+      if (deniedOwner) return deniedOwner;
+      const data = await readManifest();
+      const keys = Object.keys(data.trash || {});
+      for (const k of keys) await removeMediaEntry(k); // enlève aussi les médias
+      data.trash = {};
+      await writeManifest(data);
+      return Response.json({ ok: true, emptied: keys.length }, { headers: corsHeaders });
+    }
+
     if (!slug) {
       return Response.json({ ok: false, error: 'slug requis' }, { status: 400, headers: corsHeaders });
     }
     const data = await readManifest();
 
+    // Suppression DÉFINITIVE d'un élément de la corbeille — propriétaire uniquement.
+    if (type === 'purge') {
+      const deniedOwner = await denyIfNotOwner(request, corsHeaders);
+      if (deniedOwner) return deniedOwner;
+      if (data.trash && data.trash[slug]) {
+        delete data.trash[slug];
+        await removeMediaEntry(slug);
+      }
+      await writeManifest(data);
+      return Response.json({ ok: true }, { headers: corsHeaders });
+    }
+
     if (type === 'delete') {
       if (data.custom[slug]) {
-        // Voyage ajouté via l'admin : suppression réelle (fiche + statut + média).
+        // Voyage ajouté via l'admin : on le MET À LA CORBEILLE (pas d'effacement).
+        // La donnée et les médias sont conservés → restauration complète possible.
+        data.trash = data.trash || {};
+        data.trash[slug] = {
+          slug,
+          product: data.custom[slug],
+          status: data.status[slug] || null,
+          deletedAt: new Date().toISOString(),
+          deletedBy: role || '',
+        };
         delete data.custom[slug];
         delete data.status[slug];
-        await removeMediaEntry(slug); // le voyage disparaît aussi de la médiathèque
       } else {
         // Voyage du catalogue de base (codé dans data.js) : impossible d'effacer
         // le code depuis l'admin. On le marque « supprimé » → retiré des listes

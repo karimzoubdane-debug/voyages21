@@ -245,6 +245,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
       </label>
     </div>
     <div id="pendingSection"></div>
+    <div id="trashSection"></div>
     <div id="productList"><p class="empty">Chargement…</p></div>
   </div>
 
@@ -581,7 +582,10 @@ function reload() {
       manifest.custom = data.custom || {};
       manifest.status = data.status || {};
       manifest.pending = data.pending || {};
+      manifest.trash = data.trash || {};
+      manifest.role = data.role || '';
       renderPending();
+      renderTrash();
       renderCatalogue();
       log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
     })
@@ -650,6 +654,99 @@ function rejectPending(id) {
           renderPending();
         } else {
           toast('❌ ' + ((res.d && res.d.error) || 'échec du refus'));
+        }
+      })
+      .catch(function(){ toast('❌ Erreur réseau'); });
+  });
+}
+
+// ─────────────────────────────────────────
+// Corbeille — visible et gérable par le PROPRIÉTAIRE uniquement.
+// Les voyages supprimés (par toi ou l'équipe) atterrissent ici : rien n'est
+// perdu tant que tu ne vides pas la corbeille.
+// ─────────────────────────────────────────
+function renderTrash() {
+  var box = document.getElementById('trashSection');
+  if (!box) return;
+  if (manifest.role !== 'owner') { box.innerHTML = ''; return; } // équipe : rien
+  var trash = manifest.trash || {};
+  var slugs = Object.keys(trash);
+  var items = slugs.map(function(slug){
+    var t = trash[slug] || {}; var p = t.product || {};
+    var meta = [p.tag, p.duration, p.price].filter(Boolean).map(esc).join(' · ');
+    var when = t.deletedAt ? new Date(t.deletedAt).toLocaleDateString('fr-FR') : '';
+    var who = t.deletedBy === 'team' ? ' · par l’équipe' : (t.deletedBy === 'owner' ? ' · par toi' : '');
+    return '<div style="display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;border-top:1px solid #eadfca;padding:.6rem 0">'
+      + '<div style="min-width:0"><div style="font-weight:700;color:var(--forest)">' + esc(p.title || slug) + '</div>'
+      + '<div style="font-size:.82rem;color:#8a8279">' + meta + (meta && (when||who) ? ' — ' : '') + esc(when) + who + '</div></div>'
+      + '<div style="display:flex;gap:.5rem">'
+      + '<button class="mini ok" type="button" onclick="restoreTrash(\'' + esc(slug) + '\')" title="Remettre ce voyage dans le catalogue">♻ Restaurer</button>'
+      + '<button class="mini danger" type="button" onclick="purgeTrash(\'' + esc(slug) + '\')" title="Supprimer définitivement (irréversible)">🗑 Supprimer définitivement</button>'
+      + '</div></div>';
+  }).join('');
+  box.innerHTML =
+    '<div style="border:1px solid #d9c7a8;background:#faf6ef;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap">'
+    + '<h3 style="margin:0;color:var(--forest)">🗑 Corbeille (' + slugs.length + ')</h3>'
+    + (slugs.length ? '<button class="mini danger" type="button" onclick="emptyTrash()">Vider la corbeille</button>' : '')
+    + '</div>'
+    + (slugs.length
+        ? '<p style="font-size:.82rem;color:#8a8279;margin:.4rem 0 .2rem">Réservé au propriétaire. « Restaurer » remet le voyage en ligne ; « Supprimer définitivement » est irréversible.</p>' + items
+        : '<p style="font-size:.85rem;color:#8a8279;margin:.5rem 0 0">Corbeille vide.</p>')
+    + '</div>';
+}
+
+function restoreTrash(slug) {
+  log('Restauration…');
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'restore', slug: slug })
+  })
+    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+    .then(function(res){
+      if (res.ok && res.d && res.d.ok) {
+        toast('♻ Voyage restauré');
+        reload();
+      } else {
+        toast('❌ Restauration refusée : ' + ((res.d && res.d.error) || 'erreur'));
+      }
+    })
+    .catch(function(e){ toast('❌ Erreur réseau pendant la restauration'); log(e.message); });
+}
+
+function purgeTrash(slug) {
+  var t = (manifest.trash || {})[slug] || {}; var p = t.product || {};
+  confirm2('Supprimer définitivement ?', '"' + (p.title || slug) + '" sera effacé pour de bon (photos comprises). Cette action est IRRÉVERSIBLE.', function(){
+    log('Suppression définitive…');
+    fetch('/api/produits?slug=' + encodeURIComponent(slug) + '&type=purge', { method: 'DELETE' })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(res){
+        if (res.ok && res.d && res.d.ok) {
+          if (manifest.trash) delete manifest.trash[slug];
+          toast('Élément supprimé définitivement');
+          renderTrash();
+        } else {
+          toast('❌ ' + ((res.d && res.d.error) || 'échec'));
+        }
+      })
+      .catch(function(){ toast('❌ Erreur réseau'); });
+  });
+}
+
+function emptyTrash() {
+  var n = Object.keys(manifest.trash || {}).length;
+  confirm2('Vider toute la corbeille ?', n + ' voyage(s) seront effacés pour de bon (photos comprises). Cette action est IRRÉVERSIBLE.', function(){
+    log('Vidage de la corbeille…');
+    fetch('/api/produits?type=empty', { method: 'DELETE' })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(res){
+        if (res.ok && res.d && res.d.ok) {
+          manifest.trash = {};
+          toast('🗑 Corbeille vidée');
+          renderTrash();
+        } else {
+          toast('❌ ' + ((res.d && res.d.error) || 'échec'));
         }
       })
       .catch(function(){ toast('❌ Erreur réseau'); });
@@ -974,17 +1071,21 @@ function confirmHide(slug, title) {
 
 function confirmDelete(slug) {
   var v = manifest.custom[slug] || {};
-  confirm2('Supprimer définitivement ?', '"' + (v.title||slug) + '" sera supprimé du catalogue admin. Cette action est irréversible.', function() {
-    log('Suppression…');
+  confirm2('Mettre à la corbeille ?', '"' + (v.title||slug) + '" sera retiré du site et placé dans la corbeille. Le propriétaire pourra le restaurer.', function() {
+    log('Mise à la corbeille…');
     fetch('/api/produits?slug=' + encodeURIComponent(slug) + '&type=delete', { method: 'DELETE' })
       .then(function(r){ return r.json().then(function(d){ return { httpOk: r.ok, data: d }; }); })
       .then(function(res){
         if (res.httpOk && res.data && res.data.ok) {
+          // Retrait local immédiat + copie locale vers la corbeille (le Blob met
+          // quelques secondes à se propager ; on n'attend pas le rechargement).
+          if (manifest.role === 'owner') {
+            manifest.trash = manifest.trash || {};
+            manifest.trash[slug] = { slug: slug, product: manifest.custom[slug], status: manifest.status[slug] || null, deletedAt: new Date().toISOString(), deletedBy: manifest.role };
+          }
           delete manifest.custom[slug];
-          toast('✅ Voyage supprimé du site');
-          // Retrait local immédiat : on NE recharge PAS depuis le serveur tout
-          // de suite (la propagation du Blob prend quelques secondes et
-          // renverrait l'ancienne liste, faisant « réapparaître » le voyage).
+          toast('🗑 Voyage mis à la corbeille');
+          renderTrash();
           renderCatalogue();
         } else {
           var err = (res.data && res.data.error) || 'erreur inconnue';
