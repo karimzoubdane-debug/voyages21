@@ -181,6 +181,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
     <button class="ghost mini" type="button" onclick="location.href='/admin-cover.html'">Cover</button>
   </div>
   <div class="action-log" id="actionLog">Prêt.</div>
+  <div id="roleBadge" style="margin-top:.5rem;font-size:.85rem;font-weight:700"></div>
 </header>
 
 <main>
@@ -584,6 +585,7 @@ function reload() {
       manifest.pending = data.pending || {};
       manifest.trash = data.trash || {};
       manifest.role = data.role || '';
+      renderRoleBadge();
       renderPending();
       renderTrash();
       renderCatalogue();
@@ -658,6 +660,20 @@ function rejectPending(id) {
       })
       .catch(function(){ toast('❌ Erreur réseau'); });
   });
+}
+
+// Badge de rôle : indique clairement si tu es Propriétaire ou Équipe.
+function renderRoleBadge() {
+  var el = document.getElementById('roleBadge');
+  if (!el) return;
+  var r = manifest.role;
+  if (r === 'owner') {
+    el.innerHTML = '<span style="background:#1b5e20;color:#fff;padding:.25rem .7rem;border-radius:999px">👑 Connecté : Propriétaire (accès total + corbeille)</span>';
+  } else if (r === 'team') {
+    el.innerHTML = '<span style="background:#b8860b;color:#fff;padding:.25rem .7rem;border-radius:999px">👥 Connecté : Équipe (la corbeille est réservée au propriétaire)</span>';
+  } else {
+    el.innerHTML = '<span style="background:#8a2c2c;color:#fff;padding:.25rem .7rem;border-radius:999px">⚠ Non connecté</span>';
+  }
 }
 
 // ─────────────────────────────────────────
