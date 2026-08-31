@@ -18,6 +18,8 @@ const TOOLS = {
   cover: { href: '/admin-cover.html', icon: '📕', title: 'Cover Magazine', desc: 'Gérer les couvertures du site' },
   fiche: { href: '/formulaire-voyage.html', icon: '📝', title: 'Fiche Voyages', desc: 'Préparer une fiche voyage' },
   medias: { href: '/admin-medias.html', icon: '🖼️', title: 'Gestion des médias', desc: 'Photos et vidéos des voyages' },
+  // Autre site (INCOMING) : moroccovoyages21.com — s'ouvre dans un nouvel onglet.
+  incoming: { href: 'https://www.moroccovoyages21.com/admin', icon: '🌍', title: 'Site Incoming — Photos', desc: 'Bannières & vidéos de moroccovoyages21.com', external: true },
 };
 
 export default function AdminPortal() {
@@ -226,7 +228,9 @@ export default function AdminPortal() {
   }
 
   const isOwner = role === 'owner';
-  const tools = isOwner ? [TOOLS.produits, TOOLS.cover, TOOLS.fiche, TOOLS.medias] : [TOOLS.produits, TOOLS.cover, TOOLS.medias];
+  const tools = isOwner
+    ? [TOOLS.produits, TOOLS.cover, TOOLS.fiche, TOOLS.medias, TOOLS.incoming]
+    : [TOOLS.produits, TOOLS.cover, TOOLS.medias];
 
   return (
     <Shell>
@@ -243,9 +247,17 @@ export default function AdminPortal() {
 
         <div style={grid}>
           {tools.map((t) => (
-            <a key={t.href} href={t.href} style={toolCard}>
+            <a
+              key={t.href}
+              href={t.href}
+              target={t.external ? '_blank' : undefined}
+              rel={t.external ? 'noopener noreferrer' : undefined}
+              style={toolCard}
+            >
               <span style={{ fontSize: '1.8rem' }}>{t.icon}</span>
-              <span style={{ fontWeight: 700, color: COLORS.forest, fontSize: '1.05rem' }}>{t.title}</span>
+              <span style={{ fontWeight: 700, color: COLORS.forest, fontSize: '1.05rem' }}>
+                {t.title}{t.external ? ' ↗' : ''}
+              </span>
               <span style={{ color: '#6b6457', fontSize: '.85rem' }}>{t.desc}</span>
             </a>
           ))}
