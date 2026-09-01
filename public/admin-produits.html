@@ -966,8 +966,12 @@ function renderProdRow(slug, v, source, idx, total) {
   var thumbStyle = thumb ? 'background-image:url(' + JSON.stringify(thumb) + ')' : '';
   var badgeHtml = renderBadgePill(st, source);
   var drawerId = 'drawer-' + slug.replace(/[^a-z0-9]/g,'_');
+  // Numéro de position (ordre d'affichage) — bien visible dans l'admin.
+  var pos = (typeof idx === 'number') ? (idx + 1) : '';
+  var posBadge = '<div class="prod-pos" title="Position d’affichage" style="flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;align-self:center">' + pos + '</div>';
 
   return '<div class="prod-row" id="row-' + esc(slug) + '">'
+    + posBadge
     + '<div class="prod-thumb" style="' + esc(thumbStyle) + '"></div>'
     + '<div style="display:flex;flex-direction:column;min-width:0">'
     + '<div class="prod-info">'
