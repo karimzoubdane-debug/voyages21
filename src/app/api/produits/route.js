@@ -30,7 +30,7 @@ async function denyIfNotOwner(request, headers) {
 }
 
 async function readManifest() {
-  const empty = { custom: {}, status: {}, pending: {}, trash: {} };
+  const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {} };
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
   const hit = blobs.find((b) => b.pathname === MANIFEST);
   if (!hit) return { ...empty };
@@ -105,7 +105,7 @@ export async function GET(request) {
     }
     // La file « en attente » (soumissions équipe) est visible du propriétaire et de l'équipe.
     const role = await getRole(request);
-    const out = { custom: data.custom || {}, status: data.status || {}, role: role || '' };
+    const out = { custom: data.custom || {}, status: data.status || {}, order: data.order || {}, role: role || '' };
     if (role === 'owner' || role === 'team') out.pending = data.pending || {};
     // La corbeille n'est visible QUE du propriétaire.
     if (role === 'owner') out.trash = data.trash || {};
@@ -202,6 +202,21 @@ export async function PUT(request) {
     // Refuser une soumission → simple retrait de la file (rien n'est publié).
     if (body.action === 'reject' && body.id) {
       delete data.pending[body.id];
+      await writeManifest(data);
+      return Response.json({ ok: true }, { headers: corsHeaders });
+    }
+
+    if (body.type === 'order') {
+      // Ordre d'affichage des produits (rang par slug). On FUSIONNE la carte
+      // reçue (souvent une seule catégorie visible) dans l'ordre global.
+      if (!body.order || typeof body.order !== 'object') {
+        return Response.json({ ok: false, error: 'order requis' }, { status: 400, headers: corsHeaders });
+      }
+      data.order = data.order || {};
+      Object.keys(body.order).forEach(function (slug) {
+        const n = parseInt(body.order[slug], 10);
+        if (!isNaN(n)) data.order[slug] = n;
+      });
       await writeManifest(data);
       return Response.json({ ok: true }, { headers: corsHeaders });
     }

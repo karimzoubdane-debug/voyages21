@@ -518,7 +518,8 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 // ─────────────────────────────────────────
 // État global
 // ─────────────────────────────────────────
-var manifest = { custom: {}, status: {} };
+var manifest = { custom: {}, status: {}, order: {} };
+var currentVisible = []; // slugs affichés dans l'ordre courant (pour Monter/Descendre)
 var uploadedPhotos = []; // { url, file }
 var uploadedPdf = null;  // { file, url, existing }
 var activeBadgeBtn = 'none';
@@ -584,6 +585,7 @@ function reload() {
       manifest.status = data.status || {};
       manifest.pending = data.pending || {};
       manifest.trash = data.trash || {};
+      manifest.order = data.order || {};
       manifest.role = data.role || '';
       renderRoleBadge();
       renderPending();
@@ -891,15 +893,58 @@ function renderCatalogue() {
     return true;
   });
 
+  // Même tri que le site public : ordre manuel d'abord, puis prix.
+  items.sort(function(a, b) {
+    var oa = orderVal(a.slug), ob = orderVal(b.slug);
+    if (oa !== ob) return oa - ob;
+    return priceNum(a.v) - priceNum(b.v);
+  });
+  currentVisible = items.map(function(i) { return i.slug; });
+
   var container = document.getElementById('productList');
   if (!items.length) {
     container.innerHTML = '<p class="empty">Aucun produit trouvé.</p>';
     return;
   }
 
-  container.innerHTML = items.map(function(item) {
-    return renderProdRow(item.slug, item.v, item.source);
+  container.innerHTML = items.map(function(item, idx) {
+    return renderProdRow(item.slug, item.v, item.source, idx, items.length);
   }).join('');
+}
+
+function orderVal(slug) {
+  var n = (manifest.order || {})[slug];
+  return (typeof n === 'number' && !isNaN(n)) ? n : Infinity;
+}
+function priceNum(v) {
+  var n = parseInt(String((v && v.price) || '').replace(/[^0-9]/g, ''), 10);
+  return isNaN(n) ? Infinity : n;
+}
+
+// Réordonner un produit dans la liste visible (ex. les 4 Omra).
+// On recalcule les rangs 1..N de la liste visible et on les enregistre.
+function moveProduct(slug, dir) {
+  var list = currentVisible.slice();
+  var i = list.indexOf(slug);
+  if (i < 0) return;
+  if (dir === 'up' && i > 0) { list.splice(i, 1); list.splice(i - 1, 0, slug); }
+  else if (dir === 'down' && i < list.length - 1) { list.splice(i, 1); list.splice(i + 1, 0, slug); }
+  else if (dir === 'top' && i > 0) { list.splice(i, 1); list.unshift(slug); }
+  else return; // déjà en position, rien à faire
+
+  var patch = {};
+  manifest.order = manifest.order || {};
+  list.forEach(function(s, idx) { patch[s] = idx + 1; manifest.order[s] = idx + 1; });
+  renderCatalogue(); // reflète tout de suite le nouvel ordre
+
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'order', order: patch })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d && d.ok) toast('✅ Ordre mis à jour sur le site'); else toast('❌ ' + ((d && d.error) || 'échec de l’ordre')); })
+    .catch(function() { toast('❌ Erreur réseau (ordre)'); });
 }
 
 function getThumb(slug, v) {
@@ -909,14 +954,24 @@ function getThumb(slug, v) {
   return '';
 }
 
-function renderProdRow(slug, v, source) {
+function renderProdRow(slug, v, source, idx, total) {
   var st = manifest.status[slug] || {};
   var thumb = getThumb(slug, v);
+  // Boutons d'ordre (⤒ en tête · ⬆️ monter · ⬇️ descendre), désactivés aux extrémités.
+  var isFirst = (idx === 0), isLast = (idx === (total - 1));
+  var orderBtns =
+      '<button class="mini" type="button" ' + (isFirst ? 'disabled' : '') + ' onclick="moveProduct(\'' + esc(slug) + '\',\'top\')" title="Mettre en tête">⤒</button>'
+    + '<button class="mini" type="button" ' + (isFirst ? 'disabled' : '') + ' onclick="moveProduct(\'' + esc(slug) + '\',\'up\')" title="Monter">⬆️</button>'
+    + '<button class="mini" type="button" ' + (isLast ? 'disabled' : '') + ' onclick="moveProduct(\'' + esc(slug) + '\',\'down\')" title="Descendre">⬇️</button>';
   var thumbStyle = thumb ? 'background-image:url(' + JSON.stringify(thumb) + ')' : '';
   var badgeHtml = renderBadgePill(st, source);
   var drawerId = 'drawer-' + slug.replace(/[^a-z0-9]/g,'_');
+  // Numéro de position (ordre d'affichage) — bien visible dans l'admin.
+  var pos = (typeof idx === 'number') ? (idx + 1) : '';
+  var posBadge = '<div class="prod-pos" title="Position d’affichage" style="flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;align-self:center">' + pos + '</div>';
 
   return '<div class="prod-row" id="row-' + esc(slug) + '">'
+    + posBadge
     + '<div class="prod-thumb" style="' + esc(thumbStyle) + '"></div>'
     + '<div style="display:flex;flex-direction:column;min-width:0">'
     + '<div class="prod-info">'
@@ -933,6 +988,7 @@ function renderProdRow(slug, v, source) {
     + '</div>'
     + '</div>'
     + '<div class="prod-actions">'
+    + orderBtns
     + '<button class="mini" type="button" onclick="toggleDrawer(\'' + esc(slug) + '\')">Statut</button>'
     + '<a class="btn mini" href="' + (source === 'custom' ? '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug) : '/voyages/' + esc(slug) + '.html') + '" target="_blank" rel="noopener" title="Voir la fiche sur le site">👁 Voir</a>'
     + renderPdfBtn(slug, v, source)
