@@ -221,12 +221,23 @@
         var sejours = slugs.filter(isMarocSejour);
         var circuits = slugs.filter(function (s) { return !isMarocSejour(s); });
         if (sejours.length && circuits.length) {
-          content = '<nav class="dest-tabs" aria-label="Catégories Maroc">'
-            + '<button class="dest-tab active" type="button" data-dest-tab="sejours" aria-selected="true">Séjours</button>'
-            + '<button class="dest-tab" type="button" data-dest-tab="circuits" aria-selected="false">Circuits</button>'
-            + '</nav>'
-            + '<section data-dest-panel="sejours">' + renderGrid(sejours, extraCustom.filter(function(s){ return (customProducts[s]||{}).sejourType==='sejour'; })) + '</section>'
-            + '<section data-dest-panel="circuits" hidden>' + renderGrid(circuits, extraCustom.filter(function(s){ return (customProducts[s]||{}).sejourType!=='sejour'; })) + '</section>';
+          // Cadrans Séjours / Circuits : ordre pilotable depuis l'Admin Produits
+          // (groupOrder['maroc']), par défaut Séjours puis Circuits.
+          var pieces = {
+            sejours: { tab: 'Séjours', panel: renderGrid(sejours, extraCustom.filter(function(s){ return (customProducts[s]||{}).sejourType==='sejour'; })) },
+            circuits: { tab: 'Circuits', panel: renderGrid(circuits, extraCustom.filter(function(s){ return (customProducts[s]||{}).sejourType!=='sejour'; })) }
+          };
+          var mo = (groupOrderMap[destKey] && groupOrderMap[destKey].length) ? groupOrderMap[destKey] : ['sejours', 'circuits'];
+          var ord = mo.filter(function(id){ return pieces[id]; });
+          ['sejours', 'circuits'].forEach(function(id){ if (ord.indexOf(id) < 0) ord.push(id); });
+          var mnav = '<nav class="dest-tabs" aria-label="Catégories Maroc">';
+          var mpanels = '';
+          ord.forEach(function(id, i){
+            var active = i === 0;
+            mnav += '<button class="dest-tab' + (active ? ' active' : '') + '" type="button" data-dest-tab="' + id + '" aria-selected="' + (active ? 'true' : 'false') + '">' + pieces[id].tab + '</button>';
+            mpanels += '<section data-dest-panel="' + id + '"' + (active ? '' : ' hidden') + '>' + pieces[id].panel + '</section>';
+          });
+          content = mnav + '</nav>' + mpanels;
         } else {
           content = renderGrid(slugs, extraCustom);
         }
