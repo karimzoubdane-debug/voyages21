@@ -32,6 +32,26 @@
     return esc(s).replace(/(\d[\d ]*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
   }
 
+  // Fusionne l'édition « reconduction » active par-dessus l'ossature (pour la carte).
+  function withEdition(slug, base) {
+    var st = statusMap[slug];
+    var ed = st && st.editions;
+    if (!base || !ed || !ed.active) return base;
+    var arr = ed.versions || [], ver = null;
+    for (var i = 0; i < arr.length; i++) { if (arr[i] && arr[i].id === ed.active) { ver = arr[i]; break; } }
+    if (!ver || !ver.data) return base;
+    var out = {}, k, d = ver.data;
+    for (k in base) out[k] = base[k];
+    for (k in d) {
+      var val = d[k];
+      if (val == null) continue;
+      if (typeof val === 'string' && val.trim() === '') continue;
+      if (Array.isArray(val) && val.length === 0) continue;
+      out[k] = val;
+    }
+    return out;
+  }
+
   function firstImage(v) {
     // Produits admin : images stockées directement sur le produit
     if (v.images && v.images.length) return v.images[0];
@@ -71,7 +91,7 @@
   }
 
   function card(slug, customData) {
-    var v = customData || all[slug];
+    var v = customData || withEdition(slug, all[slug]);
     if (!v) return '';
     if (isHidden(slug)) return '';
 
@@ -100,7 +120,7 @@
   }
 
   function priceValue(slug, customData) {
-    var v = customData || all[slug] || {};
+    var v = customData || withEdition(slug, all[slug]) || {};
     var n = parseInt(String(v.price || '').replace(/[^0-9]/g, ''), 10);
     return isNaN(n) ? Infinity : n;
   }
