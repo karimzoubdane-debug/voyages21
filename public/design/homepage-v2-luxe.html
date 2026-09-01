@@ -3350,9 +3350,11 @@
     <!-- Fallback gradient pendant le chargement -->
     <div class="hero-fallback"></div>
 
-    <!-- Vidéo 0529 — streaming direct Google Drive -->
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
-      <source id="heroVideoSource" src="https://res.cloudinary.com/dwjh73xi4/video/upload/v1780042020/0529_1_2_wrzi1s.mp4" type="video/mp4">
+    <!-- Vidéo 0529 — Cloudinary optimisé (f_auto,q_auto = format + qualité adaptés
+         au navigateur/connexion) + poster affiché instantanément pendant le chargement. -->
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"
+           poster="https://res.cloudinary.com/dwjh73xi4/video/upload/so_0,f_auto,q_auto,w_1600/v1780042020/0529_1_2_wrzi1s.jpg">
+      <source id="heroVideoSource" src="https://res.cloudinary.com/dwjh73xi4/video/upload/f_auto,q_auto/v1780042020/0529_1_2_wrzi1s.mp4" type="video/mp4">
     </video>
 
     <!-- Voile sombre -->
@@ -3867,7 +3869,7 @@
         <div class="team-slogan-cap">
           <h2 class="team-slogan">Derrière chaque voyage d'exception,<br><em>une équipe d'exception.</em></h2>
         </div>
-        <img src="/design/team/equipe-voyages21.jpg" alt="L'équipe Voyages21" onerror="this.style.opacity='.15'">
+        <img src="/design/team/equipe-voyages21.jpg" alt="L'équipe Voyages21" loading="lazy" decoding="async" onerror="this.style.opacity='.15'">
       </div>
     </div>
   </section>
@@ -4760,6 +4762,21 @@
       const button = document.getElementById('heroButton');
       let idx = 0;
       const fallbackVideo = source ? source.getAttribute('src') : '';
+      // Optimise une URL Cloudinary : insère f_auto,q_auto (format + qualité adaptés
+      // au navigateur et à la connexion) si ce n'est pas déjà fait. Sans effet sur les
+      // URLs non-Cloudinary (renvoyées telles quelles).
+      function cldVideo(url) {
+        if (!url || url.indexOf('res.cloudinary.com') === -1) return url;
+        if (/\/upload\/[^/]*(?:f_auto|q_auto)/.test(url)) return url;
+        return url.replace('/upload/', '/upload/f_auto,q_auto/');
+      }
+      // Génère l'image poster (1re frame) correspondant à une vidéo Cloudinary.
+      function cldPoster(url) {
+        if (!url || url.indexOf('res.cloudinary.com') === -1) return '';
+        return url
+          .replace('/upload/', '/upload/so_0,f_auto,q_auto,w_1600/')
+          .replace(/\.(mp4|webm|mov|m4v)(\?|$)/i, '.jpg$2');
+      }
       function cleanSlides(list) {
         return (Array.isArray(list) ? list : []).filter(s => s && (s.destination || s.name)).map(s => ({
           destination: s.destination || s.name || 'Voyages 21',
@@ -4770,8 +4787,11 @@
         }));
       }
       function setVideo(url) {
-        if (source && video && url && source.getAttribute('src') !== url) {
-          source.setAttribute('src', url);
+        const optimized = cldVideo(url);
+        if (source && video && optimized && source.getAttribute('src') !== optimized) {
+          const poster = cldPoster(url);
+          if (poster) video.setAttribute('poster', poster);
+          source.setAttribute('src', optimized);
           video.load();
           video.play().catch(() => {});
         }
@@ -5970,13 +5990,13 @@
       </div>
       <div class="promo-cards">
         <div class="promo-prog">
-          <img class="promo-logo" src="/images/logo-ram.png" alt="الخطوط الملكية المغربية">
+          <img class="promo-logo" src="/images/logo-ram.png" alt="الخطوط الملكية المغربية" loading="lazy" decoding="async">
           <p class="promo-dates">من <span class="num">09</span> إلى <span class="num">23</span> شتنبر 2026</p>
           <p class="promo-price">ابتداءً من <strong class="num">13 700 <span>درهم</span></strong></p>
           <a class="promo-cta" href="/omra-septembre-ram.html">التفاصيل والحجز</a>
         </div>
         <div class="promo-prog">
-          <img class="promo-logo" src="/images/logo-saudia.png" alt="الخطوط السعودية">
+          <img class="promo-logo" src="/images/logo-saudia.png" alt="الخطوط السعودية" loading="lazy" decoding="async">
           <p class="promo-dates">من <span class="num">24</span> شتنبر إلى <span class="num">05</span> أكتوبر 2026</p>
           <p class="promo-price">ابتداءً من <strong class="num">13 500 <span>درهم</span></strong></p>
           <a class="promo-cta" href="/omra-septembre-saudia.html">التفاصيل والحجز</a>
