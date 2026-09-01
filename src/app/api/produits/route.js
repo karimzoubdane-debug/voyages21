@@ -30,7 +30,7 @@ async function denyIfNotOwner(request, headers) {
 }
 
 async function readManifest() {
-  const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {} };
+  const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {}, groupOrder: {} };
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
   const hit = blobs.find((b) => b.pathname === MANIFEST);
   if (!hit) return { ...empty };
@@ -105,7 +105,7 @@ export async function GET(request) {
     }
     // La file « en attente » (soumissions équipe) est visible du propriétaire et de l'équipe.
     const role = await getRole(request);
-    const out = { custom: data.custom || {}, status: data.status || {}, order: data.order || {}, role: role || '' };
+    const out = { custom: data.custom || {}, status: data.status || {}, order: data.order || {}, groupOrder: data.groupOrder || {}, role: role || '' };
     if (role === 'owner' || role === 'team') out.pending = data.pending || {};
     // La corbeille n'est visible QUE du propriétaire.
     if (role === 'owner') out.trash = data.trash || {};
@@ -217,6 +217,17 @@ export async function PUT(request) {
         const n = parseInt(body.order[slug], 10);
         if (!isNaN(n)) data.order[slug] = n;
       });
+      await writeManifest(data);
+      return Response.json({ ok: true }, { headers: corsHeaders });
+    }
+
+    if (body.type === 'groupOrder') {
+      // Ordre des cadrans (sous-sections) d'une destination : { dest, order:[ids] }.
+      if (!body.dest || !Array.isArray(body.order)) {
+        return Response.json({ ok: false, error: 'dest + order requis' }, { status: 400, headers: corsHeaders });
+      }
+      data.groupOrder = data.groupOrder || {};
+      data.groupOrder[String(body.dest)] = body.order.map(String);
       await writeManifest(data);
       return Response.json({ ok: true }, { headers: corsHeaders });
     }
