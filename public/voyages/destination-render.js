@@ -8,6 +8,7 @@
   var media = {};
   var customProducts = {};  // produits ajoutés via admin-produits
   var statusMap = {};       // overrides de statut (soldé, places, masqué)
+  var orderMap = {};        // rang d'affichage manuel par slug (Admin Produits)
 
   var MEDIA_KEY_ALIASES = {
     'modal-omra': 'modal-omra-mouharram',
@@ -105,6 +106,19 @@
     return arr.slice().sort(function (a, b) { return priceValue(a) - priceValue(b); });
   }
 
+  // Rang manuel d'un produit (défini dans Admin Produits). Absent = rangé après,
+  // trié par prix comme avant.
+  function orderValue(slug) {
+    var n = orderMap[slug];
+    return (typeof n === 'number' && !isNaN(n)) ? n : Infinity;
+  }
+  // Tri : d'abord l'ordre manuel (ascendant), puis le prix pour les non-classés.
+  function byOrderThenPrice(a, b) {
+    var oa = orderValue(a.slug), ob = orderValue(b.slug);
+    if (oa !== ob) return oa - ob;
+    return a.price - b.price;
+  }
+
   function renderGrid(items, extraCustom) {
     var extraCustom = extraCustom || [];
     var existingCards = items
@@ -118,7 +132,7 @@
       .filter(function (x) { return x.html; });
 
     var allCards = existingCards.concat(customCards)
-      .sort(function (a, b) { return a.price - b.price; })
+      .sort(byOrderThenPrice)
       .map(function (x) { return x.html; });
 
     return allCards.length
@@ -237,6 +251,7 @@
     var manifest = results[1] || {};
     customProducts = manifest.custom || {};
     statusMap = manifest.status || {};
+    orderMap = manifest.order || {};
     render();
   }).catch(render);
 })();
