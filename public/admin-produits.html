@@ -245,6 +245,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         <input type="search" placeholder="Rechercher…" id="filterSearch" oninput="applyFilters()" style="min-width:180px">
       </label>
     </div>
+    <div id="cadranSection"></div>
     <div id="pendingSection"></div>
     <div id="trashSection"></div>
     <div id="productList"><p class="empty">Chargement…</p></div>
@@ -518,8 +519,15 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 // ─────────────────────────────────────────
 // État global
 // ─────────────────────────────────────────
-var manifest = { custom: {}, status: {}, order: {} };
+var manifest = { custom: {}, status: {}, order: {}, groupOrder: {} };
 var currentVisible = []; // slugs affichés dans l'ordre courant (pour Monter/Descendre)
+
+// Destinations qui ont plusieurs cadrans (sous-sections) réordonnables.
+// La clé = nom de la page destination (…/destinations/<clé>.html).
+var DEST_CADRANS = {
+  'omra': { title: 'Omra & Hajj', groups: [ { id: 'omra', label: 'العمرة · Omra' }, { id: 'hajj', label: 'الحج · Hajj' } ] },
+  'croisieres': { title: 'Croisières', groups: [ { id: 'schengen', label: 'Avec visa Schengen' }, { id: 'sans-schengen', label: 'Sans visa Schengen' } ] }
+};
 var uploadedPhotos = []; // { url, file }
 var uploadedPdf = null;  // { file, url, existing }
 var activeBadgeBtn = 'none';
@@ -586,10 +594,12 @@ function reload() {
       manifest.pending = data.pending || {};
       manifest.trash = data.trash || {};
       manifest.order = data.order || {};
+      manifest.groupOrder = data.groupOrder || {};
       manifest.role = data.role || '';
       renderRoleBadge();
       renderPending();
       renderTrash();
+      renderCadrans();
       renderCatalogue();
       log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
     })
@@ -662,6 +672,59 @@ function rejectPending(id) {
       })
       .catch(function(){ toast('❌ Erreur réseau'); });
   });
+}
+
+// Ordre des cadrans (sous-sections) d'une destination — ex. Omra : Omra / Hajj.
+function orderedGroups(dest) {
+  var reg = DEST_CADRANS[dest]; if (!reg) return [];
+  var wanted = (manifest.groupOrder || {})[dest] || [];
+  var byId = {}; reg.groups.forEach(function(g){ byId[g.id] = g; });
+  var out = [];
+  wanted.forEach(function(id){ if (byId[id]) { out.push(byId[id]); delete byId[id]; } });
+  reg.groups.forEach(function(g){ if (byId[g.id]) out.push(g); }); // ceux non listés, ordre d'origine
+  return out;
+}
+function renderCadrans() {
+  var box = document.getElementById('cadranSection');
+  if (!box) return;
+  var dests = Object.keys(DEST_CADRANS);
+  var blocks = dests.map(function(dest){
+    var reg = DEST_CADRANS[dest];
+    var groups = orderedGroups(dest);
+    var rows = groups.map(function(g, i){
+      return '<div style="display:flex;align-items:center;gap:.6rem;border-top:1px solid #eadfca;padding:.5rem 0">'
+        + '<span style="width:26px;height:26px;border-radius:50%;background:var(--forest);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem">' + (i+1) + '</span>'
+        + '<span style="font-weight:600;color:var(--forest);flex:1;min-width:0">' + esc(g.label) + '</span>'
+        + '<button class="mini" type="button" ' + (i===0?'disabled':'') + ' onclick="moveCadran(\'' + dest + '\',\'' + esc(g.id) + '\',\'up\')" title="Monter">⬆️</button>'
+        + '<button class="mini" type="button" ' + (i===groups.length-1?'disabled':'') + ' onclick="moveCadran(\'' + dest + '\',\'' + esc(g.id) + '\',\'down\')" title="Descendre">⬇️</button>'
+        + '</div>';
+    }).join('');
+    return '<div style="margin-bottom:.8rem"><div style="font-weight:700;color:var(--forest)">' + esc(reg.title) + '</div>' + rows + '</div>';
+  }).join('');
+  box.innerHTML =
+    '<div style="border:1px solid #d9c7a8;background:#faf6ef;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
+    + '<h3 style="margin:0 0 .3rem;color:var(--forest)">🗂 Ordre des cadrans (sous-sections)</h3>'
+    + '<p style="font-size:.82rem;color:#8a8279;margin:0 0 .4rem">Change l’ordre des onglets d’une destination sur le site (ex. mettre Hajj avant Omra).</p>'
+    + blocks + '</div>';
+}
+function moveCadran(dest, id, dir) {
+  var groups = orderedGroups(dest).map(function(g){ return g.id; });
+  var i = groups.indexOf(id);
+  if (i < 0) return;
+  if (dir === 'up' && i > 0) { groups.splice(i,1); groups.splice(i-1,0,id); }
+  else if (dir === 'down' && i < groups.length-1) { groups.splice(i,1); groups.splice(i+1,0,id); }
+  else return;
+  manifest.groupOrder = manifest.groupOrder || {};
+  manifest.groupOrder[dest] = groups;
+  renderCadrans();
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'groupOrder', dest: dest, order: groups })
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(d){ if (d && d.ok) toast('✅ Ordre des cadrans mis à jour'); else toast('❌ ' + ((d && d.error) || 'échec')); })
+    .catch(function(){ toast('❌ Erreur réseau (cadrans)'); });
 }
 
 // Badge de rôle : indique clairement si tu es Propriétaire ou Équipe.

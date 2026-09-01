@@ -9,6 +9,9 @@
   var customProducts = {};  // produits ajoutés via admin-produits
   var statusMap = {};       // overrides de statut (soldé, places, masqué)
   var orderMap = {};        // rang d'affichage manuel par slug (Admin Produits)
+  var groupOrderMap = {};   // ordre des cadrans par destination (Admin Produits)
+  // Clé stable de la destination (ex. /voyages/destinations/omra.html -> "omra").
+  var destKey = (location.pathname.split('/').pop() || '').replace(/\.html?$/, '');
 
   var MEDIA_KEY_ALIASES = {
     'modal-omra': 'modal-omra-mouharram',
@@ -181,6 +184,15 @@
 
     var content;
     if (cfg.groups && cfg.groups.length) {
+      // Ordre des cadrans défini dans l'Admin Produits (sinon ordre d'origine).
+      var wanted = groupOrderMap[destKey];
+      if (wanted && wanted.length) {
+        cfg.groups.sort(function (a, b) {
+          var ia = wanted.indexOf(a.id), ib = wanted.indexOf(b.id);
+          if (ia === -1) ia = 999; if (ib === -1) ib = 999;
+          return ia - ib;
+        });
+      }
       var nav = '<nav class="dest-tabs" aria-label="Catégories">';
       var panels = '';
       cfg.groups.forEach(function (g, i) {
@@ -252,6 +264,7 @@
     customProducts = manifest.custom || {};
     statusMap = manifest.status || {};
     orderMap = manifest.order || {};
+    groupOrderMap = manifest.groupOrder || {};
     render();
   }).catch(render);
 })();
