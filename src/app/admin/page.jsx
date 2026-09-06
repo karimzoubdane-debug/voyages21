@@ -20,8 +20,10 @@ const TOOLS = {
   medias: { href: '/admin-medias.html', icon: '🖼️', title: 'Gestion des médias', desc: 'Photos et vidéos des voyages' },
   // Autre site (INCOMING) : moroccovoyages21.com — s'ouvre dans un nouvel onglet.
   incoming: { href: 'https://www.moroccovoyages21.com/admin', icon: '🌍', title: 'Site Incoming — Photos', desc: 'Bannières & vidéos de moroccovoyages21.com', external: true },
-  // Appli PackAc (Configurateur de séjour) — dépôt indépendant, admin externe.
-  packac: { href: 'https://packages-appli-da-21.vercel.app/admin', icon: '🏝️', title: 'Packs & Activités', desc: 'Configurateur de séjour — médias & contenu', external: true },
+  // Appli PackAc (Configurateur de séjour) — dépôt indépendant. La carte passe
+  // par le relais /api/packac : il vérifie la session admin puis ouvre l'admin
+  // PackAc déjà déverrouillé (clé cachée côté serveur, jamais dans ce code).
+  packac: { href: '/api/packac', icon: '🏝️', title: 'Packs & Activités', desc: 'Configurateur de séjour — médias & contenu', external: true },
 };
 
 export default function AdminPortal() {
