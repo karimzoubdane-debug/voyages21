@@ -20,6 +20,10 @@ const TOOLS = {
   medias: { href: '/admin-medias.html', icon: '🖼️', title: 'Gestion des médias', desc: 'Photos et vidéos des voyages' },
   // Autre site (INCOMING) : moroccovoyages21.com — s'ouvre dans un nouvel onglet.
   incoming: { href: 'https://www.moroccovoyages21.com/admin', icon: '🌍', title: 'Site Incoming — Photos', desc: 'Bannières & vidéos de moroccovoyages21.com', external: true },
+  // Appli PackAc (Configurateur de séjour) — dépôt indépendant. La carte passe
+  // par le relais /api/packac : il vérifie la session admin puis ouvre l'admin
+  // PackAc déjà déverrouillé (clé cachée côté serveur, jamais dans ce code).
+  packac: { href: '/api/packac', icon: '🏝️', title: 'Packs & Activités', desc: 'Configurateur de séjour — médias & contenu', external: true },
 };
 
 export default function AdminPortal() {
@@ -229,8 +233,8 @@ export default function AdminPortal() {
 
   const isOwner = role === 'owner';
   const tools = isOwner
-    ? [TOOLS.produits, TOOLS.cover, TOOLS.fiche, TOOLS.medias, TOOLS.incoming]
-    : [TOOLS.produits, TOOLS.cover, TOOLS.medias, TOOLS.incoming];
+    ? [TOOLS.produits, TOOLS.cover, TOOLS.fiche, TOOLS.medias, TOOLS.incoming, TOOLS.packac]
+    : [TOOLS.produits, TOOLS.cover, TOOLS.medias, TOOLS.incoming, TOOLS.packac];
 
   return (
     <Shell>
