@@ -190,6 +190,13 @@
         + '</div>';
 
     // ===== Médias en ligne + comportements =====
+    // Optimise une URL vidéo Cloudinary (f_auto,q_auto = format + qualité adaptés au
+    // navigateur et à la connexion). Sans effet sur les URLs non-Cloudinary.
+    function cldVideo(url) {
+        if (!url || url.indexOf("res.cloudinary.com") === -1) return url;
+        if (/\/upload\/[^/]*(?:f_auto|q_auto)/.test(url)) return url;
+        return url.replace("/upload/", "/upload/f_auto,q_auto/");
+    }
     var hero = document.getElementById("heroVideo");
     var heroBox = document.getElementById("hero");
     var voirVideoBtn = document.getElementById("voirVideo");
@@ -229,7 +236,7 @@
         rec = rec || {};
         if (rec.videoUrl && hero) {
             if (rec.images && rec.images[0] && rec.images[0].url) hero.setAttribute("poster", rec.images[0].url);
-            hero.src = rec.videoUrl;
+            hero.src = cldVideo(rec.videoUrl);
             playHero();
         } else {
             if (hero) hero.style.display = "none";
