@@ -25,6 +25,15 @@ export const RECOVERY_CODE = process.env.V21_RECOVERY_CODE || '';
 const API_SECRET = process.env.V21_API_SECRET || '';
 export const API_AUDIENCE = 'v21-api';
 
+// Porte de secours de l'ancien admin (phase 2.5). Depuis que l'admin vit sur
+// admin.moroccovoyages21.com, les anciennes pages /admin* du site redirigent
+// vers le portail. Une visite unique de /admin?secours=<V21_RESCUE_KEY> pose
+// un cookie signé (12 h) qui rouvre l'ancien admin sur ce navigateur seulement.
+// Vide = porte fermée (tout redirige, sans exception).
+const RESCUE_KEY = process.env.V21_RESCUE_KEY || '';
+export const RESCUE_COOKIE = 'v21_secours';
+export const RESCUE_MAX_AGE = 60 * 60 * 12; // 12 heures
+
 const encoder = new TextEncoder();
 
 function base64urlFromBytes(buffer) {
@@ -105,6 +114,32 @@ export async function verifyApiToken(token) {
   if (!payload || payload.aud !== API_AUDIENCE) return null;
   if (payload.role !== 'owner' && payload.role !== 'team') return null;
   return payload;
+}
+
+// Comparaison en temps constant (évite de deviner la clé caractère par caractère).
+function safeEqual(a, b) {
+  const x = String(a), y = String(b);
+  let diff = x.length ^ y.length;
+  for (let i = 0; i < Math.max(x.length, y.length); i += 1) {
+    diff |= (x.charCodeAt(i) || 0) ^ (y.charCodeAt(i) || 0);
+  }
+  return diff === 0;
+}
+
+export function isRescueKey(value) {
+  return !!RESCUE_KEY && typeof value === 'string' && safeEqual(value, RESCUE_KEY);
+}
+
+export function rescueCookieValue() {
+  return hmac('secours:' + RESCUE_KEY);
+}
+
+// La porte de secours est-elle ouverte pour cette requête (cookie valide) ?
+export async function hasRescue(request) {
+  if (!RESCUE_KEY) return false;
+  const value = readCookie(request, RESCUE_COOKIE);
+  if (!value) return false;
+  return safeEqual(value, await rescueCookieValue());
 }
 
 function readBearer(request) {
