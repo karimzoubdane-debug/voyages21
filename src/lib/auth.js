@@ -165,3 +165,15 @@ export async function getRole(request) {
   const api = await verifyApiToken(bearer);
   return api ? api.role : null;
 }
+
+// Rôle d'API pour cette requête ('owner' | 'team' | null), lu UNIQUEMENT dans
+// l'en-tête « Authorization: Bearer … » (jeton signé avec V21_API_SECRET).
+// Sert au middleware à reconnaître le portail admin authentifié (fetch serveur)
+// pour lui servir la vraie page au lieu de le rediriger. Réutilise verifyApiToken :
+// même vérification (signature + aud 'v21-api' + expiration) que /api/packac.
+export async function getApiRole(request) {
+  const bearer = readBearer(request);
+  if (!bearer) return null;
+  const api = await verifyApiToken(bearer);
+  return api ? api.role : null;
+}

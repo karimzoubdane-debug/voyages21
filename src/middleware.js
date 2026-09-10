@@ -11,7 +11,7 @@
 // aucune exception. Sans V21_RESCUE_KEY dans Vercel, la porte est fermée.
 
 import { NextResponse } from 'next/server';
-import { getRole, hasRescue, isRescueKey, rescueCookieValue, RESCUE_COOKIE, RESCUE_MAX_AGE } from './lib/auth.js';
+import { getRole, getApiRole, hasRescue, isRescueKey, rescueCookieValue, RESCUE_COOKIE, RESCUE_MAX_AGE } from './lib/auth.js';
 
 const PORTAL = 'https://admin.moroccovoyages21.com';
 
@@ -51,7 +51,16 @@ export async function middleware(request) {
       });
       return res;
     }
-    // 2) Porte fermée → le portail (redirection temporaire : jamais mise en cache).
+    // 2) Portail admin authentifié : admin.moroccovoyages21.com va chercher ces
+    //    pages CÔTÉ SERVEUR avec un jeton d'API « Authorization: Bearer … ». Ce
+    //    fetch attend un 200 ; si on le redirige (302), les cartes Cover / Médias /
+    //    Produits / Fiche du portail cassent. Jeton d'API valide → on sert la vraie
+    //    page. (Même vérification que /api/packac : ne dépend PAS d'un cookie, donc
+    //    un visiteur normal — sans jeton — reste redirigé ci-dessous.)
+    if (await getApiRole(request)) {
+      return NextResponse.next();
+    }
+    // 3) Porte fermée → le portail (redirection temporaire : jamais mise en cache).
     if (!(await hasRescue(request))) {
       return NextResponse.redirect(PORTAL + MOVED[path], { status: 302 });
     }
