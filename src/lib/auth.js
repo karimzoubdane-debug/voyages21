@@ -19,6 +19,12 @@ export const IS_CONFIGURED = !!(process.env.V21_OWNER_PASSWORD && process.env.V2
 // Vide = fonction désactivée (il faut définir V21_RECOVERY_CODE dans Vercel).
 export const RECOVERY_CODE = process.env.V21_RECOVERY_CODE || '';
 
+// Jeton d'API (admin maître sur admin.moroccovoyages21.com) : un jeton signé
+// avec V21_API_SECRET, envoyé dans l'en-tête « Authorization: Bearer … ».
+// Vide = fonction désactivée (seul le cookie de session est accepté).
+const API_SECRET = process.env.V21_API_SECRET || '';
+export const API_AUDIENCE = 'v21-api';
+
 const encoder = new TextEncoder();
 
 function base64urlFromBytes(buffer) {
@@ -41,16 +47,20 @@ function stringFromBase64url(input) {
   return new TextDecoder().decode(bytes);
 }
 
-async function hmac(message) {
+async function hmacWith(secret, message) {
   const key = await crypto.subtle.importKey(
     'raw',
-    encoder.encode(AUTH_SECRET),
+    encoder.encode(secret),
     { name: 'HMAC', hash: 'SHA-256' },
     false,
     ['sign'],
   );
   const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(message));
   return base64urlFromBytes(signature);
+}
+
+function hmac(message) {
+  return hmacWith(AUTH_SECRET, message);
 }
 
 // Empreinte d'un mot de passe (pour stocker le code équipe sans le mot de passe clair).
@@ -65,12 +75,12 @@ export async function createToken(role) {
   return body + '.' + signature;
 }
 
-export async function verifyTokenString(token) {
+async function verifyWith(secret, token) {
   if (!token || token.indexOf('.') === -1) return null;
   const cut = token.lastIndexOf('.');
   const body = token.slice(0, cut);
   const signature = token.slice(cut + 1);
-  const expected = await hmac(body);
+  const expected = await hmacWith(secret, body);
   if (signature !== expected) return null;
   let payload;
   try {
@@ -82,6 +92,27 @@ export async function verifyTokenString(token) {
   return payload;
 }
 
+export function verifyTokenString(token) {
+  return verifyWith(AUTH_SECRET, token);
+}
+
+// Jeton d'API : même format que le cookie, mais signé avec V21_API_SECRET et
+// portant aud = 'v21-api' (un cookie de session ne peut pas servir de jeton d'API
+// et inversement). Désactivé tant que V21_API_SECRET n'est pas défini.
+export async function verifyApiToken(token) {
+  if (!API_SECRET) return null;
+  const payload = await verifyWith(API_SECRET, token);
+  if (!payload || payload.aud !== API_AUDIENCE) return null;
+  if (payload.role !== 'owner' && payload.role !== 'team') return null;
+  return payload;
+}
+
+function readBearer(request) {
+  const header = request.headers.get('authorization') || '';
+  const match = header.match(/^Bearer\s+(.+)$/i);
+  return match ? match[1].trim() : null;
+}
+
 function readCookie(request, name) {
   const header = request.headers.get('cookie') || '';
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -89,8 +120,13 @@ function readCookie(request, name) {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-// Rôle courant à partir du cookie de la requête ('owner' | 'team' | null).
+// Rôle courant ('owner' | 'team' | null) : cookie de session en priorité,
+// sinon jeton d'API « Authorization: Bearer … » (admin maître à distance).
 export async function getRole(request) {
   const payload = await verifyTokenString(readCookie(request, COOKIE_NAME));
-  return payload ? payload.role : null;
+  if (payload) return payload.role;
+  const bearer = readBearer(request);
+  if (!bearer) return null;
+  const api = await verifyApiToken(bearer);
+  return api ? api.role : null;
 }
