@@ -18,6 +18,17 @@ const ALLOWED = [
   'audio/wav',
 ];
 
+const corsHeaders = {
+  'Cache-Control': 'no-store',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: corsHeaders });
+}
+
 export async function POST(request) {
   const body = await request.json();
   try {
@@ -34,11 +45,11 @@ export async function POST(request) {
       },
       onUploadCompleted: async () => {},
     });
-    return Response.json(json);
+    return Response.json(json, { headers: corsHeaders });
   } catch (error) {
     return Response.json(
       { ok: false, error: error.message || 'Upload failed' },
-      { status: 400 },
+      { status: 400, headers: corsHeaders },
     );
   }
 }

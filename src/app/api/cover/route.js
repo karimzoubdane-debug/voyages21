@@ -16,7 +16,18 @@ const DEFAULT_COVER = {
   media: [],
 };
 
-const noStore = { 'Cache-Control': 'no-store' };
+// Accès distant autorisé (admin maître sur admin.moroccovoyages21.com) : CORS +
+// en-tête Authorization (jeton d'API). Les réponses restent non mises en cache.
+const noStore = {
+  'Cache-Control': 'no-store',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: noStore });
+}
 
 export async function GET() {
   try {
