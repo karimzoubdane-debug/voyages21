@@ -4657,6 +4657,19 @@
     });
 
     // Vidéo hero — forcer le play sur mobile (autoplay parfois bloqué)
+    // Manifeste medias (/api/media, ~90 Ko) : UNE seule requete partagee par
+    // tous les blocs de la page. Avant, l'accueil le telechargeait deux fois
+    // au chargement (cover editoriale + hero produits).
+    // v21MediaManifest(true) force une nouvelle requete (mise a jour admin).
+    function v21MediaManifest(force) {
+      if (force || !v21MediaManifest._p) {
+        v21MediaManifest._p = fetch('/api/media', { cache: 'no-store' })
+          .then(r => (r.ok ? r.json() : {}));
+      }
+      return v21MediaManifest._p;
+    }
+    window.v21MediaManifest = v21MediaManifest;
+
     // Reglages admin de l'accueil brochure.
     (function () {
       const KEY = '__homepageCover';
@@ -4703,9 +4716,8 @@
         if (sub) sub.innerHTML = lines(cfg.subtitle || DEFAULTS.subtitle);
         if (button) button.textContent = cfg.buttonText || DEFAULTS.buttonText;
       }
-      function loadHomeCover() {
-        fetch('/api/media', { cache: 'no-store' })
-          .then(r => r.ok ? r.json() : {})
+      function loadHomeCover(force) {
+        v21MediaManifest(force === true)
           .then(data => applyHomeCover(data && data[KEY]))
           .catch(() => {});
       }
@@ -4713,7 +4725,8 @@
       loadHomeCover();
       if ('BroadcastChannel' in window) {
         const bc = new BroadcastChannel('v21_media');
-        bc.onmessage = loadHomeCover;
+        // Mise a jour depuis l'admin : on force une requete fraiche.
+        bc.onmessage = () => loadHomeCover(true);
       }
     })();
 
@@ -4758,8 +4771,7 @@
         if (button) button.href = item.link;
         idx = (idx + 1) % slides.length;
       }
-      fetch('/api/media', { cache: 'no-store' })
-        .then(r => r.ok ? r.json() : {})
+      v21MediaManifest()
         .then(map => {
           coverVideo = (map && map.__homepageCover && map.__homepageCover.videoUrl) || fallbackVideo;
           const all = cleanSlides(map && map.__heroProducts && map.__heroProducts.items);
