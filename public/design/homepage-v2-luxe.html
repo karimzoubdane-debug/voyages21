@@ -3318,9 +3318,12 @@
     <!-- Fallback gradient pendant le chargement -->
     <div class="hero-fallback"></div>
 
-    <!-- Vidéo 0529 — streaming direct Google Drive -->
+    <!-- Vidéo du hero : MÊME URL que la cover choisie dans l'admin (/api/media
+         → __homepageCover.videoUrl). Si les deux diffèrent, le navigateur
+         télécharge DEUX vidéos (~29 Mo) au lieu d'une : garder les deux
+         synchronisées. -->
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
-      <source id="heroVideoSource" src="https://res.cloudinary.com/dwjh73xi4/video/upload/v1780042020/0529_1_2_wrzi1s.mp4" type="video/mp4">
+      <source id="heroVideoSource" src="https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/World_landmarks_montage_travel_a%E2%80%A6_202606062148-3MFmrfOZtDFS6cNXGGMXRUnw3cY6ai.mp4" type="video/mp4">
     </video>
 
     <!-- Voile sombre -->
