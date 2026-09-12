@@ -57,16 +57,26 @@
     return /^maroc-(merzouga|bin-el-ouidane|dakhla)$/.test(slug || '');
   }
 
-  // Produits de la destination courante filtrés depuis le manifeste admin
+  // Produits de la destination courante filtrés depuis le manifeste admin.
+  // La page accepte son titre (« Omra & Hajj ») mais aussi les libellés déclarés
+  // dans cfg.tags : l'Admin Produits range les Omra sous « عمرة », qui ne
+  // ressemble pas au titre de la page — sans cet alias, ces fiches n'apparaissent
+  // sur aucune page du site.
+  function destNames() {
+    return [cfg.title].concat(cfg.tags || [])
+      .filter(Boolean)
+      .map(function (n) { return String(n).toLowerCase(); });
+  }
+
   function customSlugsForDest() {
-    var destTitle = (cfg.title || '').toLowerCase();
+    var names = destNames();
     return Object.keys(customProducts).filter(function (slug) {
       var v = customProducts[slug];
       if (!v) return false;
       var tag = (v.tag || '').toLowerCase();
       var dests = v.destinations || [];
-      return tag === destTitle
-        || dests.some(function (d) { return d.toLowerCase() === destTitle; });
+      return names.indexOf(tag) !== -1
+        || dests.some(function (d) { return names.indexOf(String(d).toLowerCase()) !== -1; });
     });
   }
 
