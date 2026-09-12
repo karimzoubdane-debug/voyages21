@@ -1344,6 +1344,7 @@ async function quickSubmit() {
   //    vols, inclus). Le voyage est créé MASQUÉ — à relire puis à rendre visible
   //    avec le bouton « Statut ».
   var readOk = false;
+  var readError = '';
   try {
     var rx = await fetch('/api/produits-from-pdf', {
       method: 'POST',
@@ -1358,12 +1359,17 @@ async function quickSubmit() {
       qlog.textContent = '✅ Fiche remplie depuis le PDF — « ' + title + ' » est MASQUÉE : relisez-la, puis rendez-la visible avec « Statut ».';
       toast('✅ « ' + title + ' » lue depuis le PDF — masquée en attendant votre relecture.');
     } else {
-      qlog.style.color='var(--danger)';
-      qlog.textContent = '⚠️ Lecture automatique impossible (' + (dx.error || 'erreur') + ') — création de la fiche simple…';
+      readError = dx.error || 'erreur inconnue';
     }
   } catch(err) {
+    readError = err.message || 'appel impossible';
+  }
+  if (readError) {
     qlog.style.color='var(--danger)';
-    qlog.textContent = '⚠️ Lecture automatique indisponible — création de la fiche simple…';
+    qlog.textContent = '⚠️ Lecture automatique impossible (' + readError + ') — création de la fiche simple…';
+    // Trace durable : le détail reste lisible dans le bandeau d'action même
+    // apres le message de succes du repli (sinon l'erreur disparait).
+    log('Lecture automatique du PDF impossible : ' + readError);
   }
 
   if (readOk) { resetQuickForm(); switchTab('catalogue', document.querySelector('[data-tab="catalogue"]')); return; }
@@ -1382,7 +1388,8 @@ async function quickSubmit() {
     if (!data.ok) throw new Error(data.error || 'Erreur serveur');
     reload();
     qlog.style.color='var(--ok)';
-    qlog.textContent = '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
+    qlog.textContent = (readError ? '⚠️ PDF non lu (' + readError + ') — ' : '')
+      + '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
     toast('✅ Voyage « ' + title + ' » ajouté dans ' + tag + ' — visible sur le site !');
     resetQuickForm();
     switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));

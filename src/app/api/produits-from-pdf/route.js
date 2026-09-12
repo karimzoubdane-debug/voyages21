@@ -67,11 +67,24 @@ async function writeManifest(data) {
   });
 }
 
-// Champs lus par public/voyages/render.js. Tout est requis (contrainte des
-// sorties structurées) : les parties absentes de la brochure reviennent à null
-// ou en tableau vide, et sont retirées avant enregistrement.
-const nullableString = { type: ['string', 'null'] };
+// Champs lus par public/voyages/render.js.
+//
+// Contraintes des sorties structurées (schéma JSON) : pas de type combiné
+// (["string","null"]) — il faut anyOf ; additionalProperties doit valoir false ;
+// minItems accepte 0 ou 1 et maxItems n'existe pas. Les parties absentes de la
+// brochure reviennent à null ou en tableau vide, et sont retirées avant
+// enregistrement.
+const nullable = (schema) => ({ anyOf: [schema, { type: 'null' }] });
+const nullableString = nullable({ type: 'string' });
 const stringList = { type: 'array', items: { type: 'string' } };
+const withDesc = (schema, description) => ({ ...schema, description });
+
+const hotelSchema = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['name'],
+  properties: { name: { type: 'string' } },
+};
 
 const FICHE_SCHEMA = {
   type: 'object',
@@ -85,30 +98,29 @@ const FICHE_SCHEMA = {
     lang: { type: 'string', enum: ['fr', 'ar'], description: 'Langue de la brochure : "ar" si elle est en arabe.' },
     title: { type: 'string', description: 'Titre du voyage, dans la langue de la brochure.' },
     eyebrow: nullableString,
-    duration: { ...nullableString, description: 'Ex. "13 ليلة" ou "8 jours / 7 nuits".' },
-    price: { ...nullableString, description: 'Prix le plus bas du tableau, ex. "13 900 درهم". null si la brochure n\'affiche aucun prix.' },
-    pricePrefix: { ...nullableString, description: '"انطلاقا من" en arabe, "À partir de" en français.' },
+    duration: withDesc(nullableString, 'Ex. "13 ليلة" ou "8 jours / 7 nuits".'),
+    price: withDesc(nullableString, 'Prix le plus bas du tableau, ex. "13 900 درهم". null si la brochure n\'affiche aucun prix.'),
+    pricePrefix: withDesc(nullableString, '"انطلاقا من" en arabe, "À partir de" en français.'),
     cadran: {
       type: 'array',
-      description: 'Paires [libellé, valeur] : départ, compagnie, durée, dates.',
-      items: { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 2 },
+      description: 'Paires [libellé, valeur] — exactement deux entrées par ligne : départ, compagnie, durée, dates.',
+      items: { type: 'array', items: { type: 'string' } },
     },
-    intro: { ...stringList, description: '1 à 3 paragraphes de présentation, rédigés à partir de la brochure.' },
-    highlights: { ...stringList, description: 'Les points forts, une phrase chacun.' },
-    programme: { ...stringList, description: 'Étapes du séjour, une ligne chacune.' },
-    route: { ...stringList, description: 'Villes traversées, dans l\'ordre.' },
-    hotels: { ...stringList, description: 'Hébergements par formule, une ligne chacune.' },
-    priceTable: {
-      type: ['object', 'null'],
+    intro: withDesc(stringList, '1 à 3 paragraphes de présentation, rédigés à partir de la brochure.'),
+    highlights: withDesc(stringList, 'Les points forts, une phrase chacun.'),
+    programme: withDesc(stringList, 'Étapes du séjour, une ligne chacune.'),
+    route: withDesc(stringList, 'Villes traversées, dans l\'ordre.'),
+    hotels: withDesc(stringList, 'Hébergements par formule, une ligne chacune.'),
+    priceTable: nullable({
+      type: 'object',
       additionalProperties: false,
       required: ['style', 'medina', 'mecca', 'head', 'columns', 'currency', 'rows', 'note'],
-      description: 'Tableau des prix. Omra : style "hotel-grid" (couples d\'hôtels Médine/Mecque). Autres voyages : style "simple" avec head + rows.',
       properties: {
-        style: { type: 'string', enum: ['hotel-grid', 'simple'] },
-        medina: { type: ['object', 'null'], additionalProperties: false, required: ['label'], properties: { label: { type: 'string' } } },
-        mecca: { type: ['object', 'null'], additionalProperties: false, required: ['label'], properties: { label: { type: 'string' } } },
-        head: { ...stringList, description: 'En-têtes du tableau, uniquement pour le style "simple".' },
-        columns: { ...stringList, description: 'Types de chambre, ex. ["ثنائية","ثلاثية","رباعية"].' },
+        style: { type: 'string', enum: ['hotel-grid', 'simple'], description: 'Omra : "hotel-grid" (couples d\'hôtels Médine/Mecque). Circuit ou séjour : "simple" (head + cells).' },
+        medina: nullable(hotelSchema),
+        mecca: nullable(hotelSchema),
+        head: withDesc(stringList, 'En-têtes du tableau, uniquement pour le style "simple".'),
+        columns: withDesc(stringList, 'Types de chambre, ex. ["ثنائية","ثلاثية","رباعية"].'),
         currency: { type: 'string' },
         rows: {
           type: 'array',
@@ -117,25 +129,28 @@ const FICHE_SCHEMA = {
             additionalProperties: false,
             required: ['medinaHotel', 'meccaHotel', 'prices', 'cells'],
             properties: {
-              medinaHotel: { type: ['object', 'null'], additionalProperties: false, required: ['name'], properties: { name: { type: 'string' } } },
-              meccaHotel: { type: ['object', 'null'], additionalProperties: false, required: ['name'], properties: { name: { type: 'string' } } },
-              prices: { ...stringList, description: 'Un prix par colonne, "—" si la case est vide.' },
-              cells: { ...stringList, description: 'Cellules de la ligne, uniquement pour le style "simple".' },
+              medinaHotel: nullable(hotelSchema),
+              meccaHotel: nullable(hotelSchema),
+              prices: withDesc(stringList, 'Un prix par colonne, "—" si la case est vide.'),
+              cells: withDesc(stringList, 'Cellules de la ligne, uniquement pour le style "simple".'),
             },
           },
         },
         note: nullableString,
       },
-    },
-    datesList: { ...stringList, description: 'Dates de départ, ex. "04 أكتوبر ← 18 أكتوبر 2026".' },
-    dates: {
-      type: ['object', 'null'],
+    }),
+    datesList: withDesc(stringList, 'Dates de départ, ex. "04 أكتوبر ← 18 أكتوبر 2026".'),
+    dates: nullable({
+      type: 'object',
       additionalProperties: false,
       required: ['line', 'note'],
-      properties: { line: nullableString, note: { ...nullableString, description: 'Horaires de vol et mentions légales de la brochure, recopiées fidèlement.' } },
-    },
-    inclus: { ...stringList, description: 'Ce que le programme comprend.' },
-    exclus: { ...stringList, description: 'Ce qui n\'est pas compris.' },
+      properties: {
+        line: nullableString,
+        note: withDesc(nullableString, 'Horaires de vol et mentions légales de la brochure, recopiées fidèlement.'),
+      },
+    }),
+    inclus: withDesc(stringList, 'Ce que le programme comprend.'),
+    exclus: withDesc(stringList, 'Ce qui n\'est pas compris.'),
     days: {
       type: 'array',
       description: 'Jour par jour, pour les circuits. Vide pour une Omra.',
@@ -146,12 +161,12 @@ const FICHE_SCHEMA = {
         properties: { num: { type: 'string' }, title: { type: 'string' }, text: { type: 'string' } },
       },
     },
-    cta: {
-      type: ['object', 'null'],
+    cta: nullable({
+      type: 'object',
       additionalProperties: false,
       required: ['title', 'text'],
       properties: { title: { type: 'string' }, text: { type: 'string' } },
-    },
+    }),
   },
 };
 
