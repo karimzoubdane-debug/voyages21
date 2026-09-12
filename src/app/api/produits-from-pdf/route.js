@@ -67,106 +67,66 @@ async function writeManifest(data) {
   });
 }
 
-// Champs lus par public/voyages/render.js.
-//
-// Contraintes des sorties structurées (schéma JSON) : pas de type combiné
-// (["string","null"]) — il faut anyOf ; additionalProperties doit valoir false ;
-// minItems accepte 0 ou 1 et maxItems n'existe pas. Les parties absentes de la
-// brochure reviennent à null ou en tableau vide, et sont retirées avant
-// enregistrement.
-const nullable = (schema) => ({ anyOf: [schema, { type: 'null' }] });
-const nullableString = nullable({ type: 'string' });
-const stringList = { type: 'array', items: { type: 'string' } };
-const withDesc = (schema, description) => ({ ...schema, description });
-
-const hotelSchema = {
-  type: 'object',
-  additionalProperties: false,
-  required: ['name'],
-  properties: { name: { type: 'string' } },
-};
+// Schéma de la réponse. Il doit rester PLAT et COURT : le moteur de sorties
+// structurées compile une grammaire à partir du schéma et refuse (400 « compiled
+// grammar is too large ») dès qu'il y a trop de champs optionnels, de anyOf ou
+// d'imbrications. D'où : que des chaînes et des listes de chaînes, pas de type
+// nullable (un champ inconnu revient en chaîne vide), deux objets imbriqués au
+// maximum. La forme attendue par render.js est reconstruite plus bas, dans
+// assembleFiche().
+const str = { type: 'string' };
+const strList = { type: 'array', items: { type: 'string' } };
 
 const FICHE_SCHEMA = {
   type: 'object',
   additionalProperties: false,
   required: [
     'lang', 'title', 'eyebrow', 'duration', 'price', 'pricePrefix',
-    'cadran', 'intro', 'highlights', 'programme', 'route', 'hotels',
-    'priceTable', 'datesList', 'dates', 'inclus', 'exclus', 'days', 'cta',
+    'cadranLabels', 'cadranValues', 'intro', 'highlights', 'programme', 'route',
+    'hotels', 'priceStyle', 'priceColumns', 'priceCurrency', 'priceNote', 'priceRows',
+    'datesList', 'datesLine', 'datesNote', 'inclus', 'exclus', 'days',
   ],
   properties: {
-    lang: { type: 'string', enum: ['fr', 'ar'], description: 'Langue de la brochure : "ar" si elle est en arabe.' },
-    title: { type: 'string', description: 'Titre du voyage, dans la langue de la brochure.' },
-    eyebrow: nullableString,
-    duration: withDesc(nullableString, 'Ex. "13 ليلة" ou "8 jours / 7 nuits".'),
-    price: withDesc(nullableString, 'Prix le plus bas du tableau, ex. "13 900 درهم". null si la brochure n\'affiche aucun prix.'),
-    pricePrefix: withDesc(nullableString, '"انطلاقا من" en arabe, "À partir de" en français.'),
-    cadran: {
+    lang: { type: 'string', enum: ['fr', 'ar'] },
+    title: str,
+    eyebrow: str,
+    duration: str,
+    price: str,
+    pricePrefix: str,
+    cadranLabels: strList,
+    cadranValues: strList,
+    intro: strList,
+    highlights: strList,
+    programme: strList,
+    route: strList,
+    hotels: strList,
+    priceStyle: { type: 'string', enum: ['hotel-grid', 'simple', 'none'] },
+    priceColumns: strList,
+    priceCurrency: str,
+    priceNote: str,
+    priceRows: {
       type: 'array',
-      description: 'Paires [libellé, valeur] — exactement deux entrées par ligne : départ, compagnie, durée, dates.',
-      items: { type: 'array', items: { type: 'string' } },
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['left', 'right', 'cells'],
+        properties: { left: str, right: str, cells: strList },
+      },
     },
-    intro: withDesc(stringList, '1 à 3 paragraphes de présentation, rédigés à partir de la brochure.'),
-    highlights: withDesc(stringList, 'Les points forts, une phrase chacun.'),
-    programme: withDesc(stringList, 'Étapes du séjour, une ligne chacune.'),
-    route: withDesc(stringList, 'Villes traversées, dans l\'ordre.'),
-    hotels: withDesc(stringList, 'Hébergements par formule, une ligne chacune.'),
-    priceTable: nullable({
-      type: 'object',
-      additionalProperties: false,
-      required: ['style', 'medina', 'mecca', 'head', 'columns', 'currency', 'rows', 'note'],
-      properties: {
-        style: { type: 'string', enum: ['hotel-grid', 'simple'], description: 'Omra : "hotel-grid" (couples d\'hôtels Médine/Mecque). Circuit ou séjour : "simple" (head + cells).' },
-        medina: nullable(hotelSchema),
-        mecca: nullable(hotelSchema),
-        head: withDesc(stringList, 'En-têtes du tableau, uniquement pour le style "simple".'),
-        columns: withDesc(stringList, 'Types de chambre, ex. ["ثنائية","ثلاثية","رباعية"].'),
-        currency: { type: 'string' },
-        rows: {
-          type: 'array',
-          items: {
-            type: 'object',
-            additionalProperties: false,
-            required: ['medinaHotel', 'meccaHotel', 'prices', 'cells'],
-            properties: {
-              medinaHotel: nullable(hotelSchema),
-              meccaHotel: nullable(hotelSchema),
-              prices: withDesc(stringList, 'Un prix par colonne, "—" si la case est vide.'),
-              cells: withDesc(stringList, 'Cellules de la ligne, uniquement pour le style "simple".'),
-            },
-          },
-        },
-        note: nullableString,
-      },
-    }),
-    datesList: withDesc(stringList, 'Dates de départ, ex. "04 أكتوبر ← 18 أكتوبر 2026".'),
-    dates: nullable({
-      type: 'object',
-      additionalProperties: false,
-      required: ['line', 'note'],
-      properties: {
-        line: nullableString,
-        note: withDesc(nullableString, 'Horaires de vol et mentions légales de la brochure, recopiées fidèlement.'),
-      },
-    }),
-    inclus: withDesc(stringList, 'Ce que le programme comprend.'),
-    exclus: withDesc(stringList, 'Ce qui n\'est pas compris.'),
+    datesList: strList,
+    datesLine: str,
+    datesNote: str,
+    inclus: strList,
+    exclus: strList,
     days: {
       type: 'array',
-      description: 'Jour par jour, pour les circuits. Vide pour une Omra.',
       items: {
         type: 'object',
         additionalProperties: false,
         required: ['num', 'title', 'text'],
-        properties: { num: { type: 'string' }, title: { type: 'string' }, text: { type: 'string' } },
+        properties: { num: str, title: str, text: str },
       },
     },
-    cta: nullable({
-      type: 'object',
-      additionalProperties: false,
-      required: ['title', 'text'],
-      properties: { title: { type: 'string' }, text: { type: 'string' } },
-    }),
   },
 };
 
@@ -174,19 +134,106 @@ const SYSTEM = [
   "Tu remplis la fiche d'un voyage de l'agence marocaine Voyages 21 à partir de sa brochure PDF.",
   '',
   "RÈGLE ABSOLUE : n'invente jamais. Prix, noms d'hôtels, horaires, dates et compagnies",
-  'doivent venir du PDF, au caractère près. Si une information est absente, laisse le champ',
-  "vide (null ou tableau vide) — ne le devine pas, ne le complète pas par plausibilité.",
+  'doivent venir du PDF, au caractère près. Toute information absente de la brochure',
+  'reste une chaîne vide ou une liste vide — ne la devine pas, ne la complète pas.',
   '',
   'Écris dans la langue de la brochure : une brochure en arabe donne une fiche en arabe',
-  '(lang "ar"), y compris les titres, les intros et les libellés du cadran.',
+  '(lang "ar"), titres, intros et libellés compris.',
   '',
-  'Pour une Omra, le tableau des prix a le style "hotel-grid" : une ligne par couple',
-  "d'hôtels (Médine + Mecque) et un prix par type de chambre. Pour un circuit ou un séjour,",
-  'utilise le style "simple" avec head (en-têtes) et cells (cellules de chaque ligne).',
+  'Champ par champ :',
+  '- eyebrow : une ligne de contexte, ex. "عمرة · طيران مباشر إلى جدة مع طيران ناس".',
+  '- duration : ex. "13 ليلة" ou "8 jours / 7 nuits".',
+  '- price : le prix le PLUS BAS du tableau, ex. "13 900 درهم" ; vide si la brochure',
+  '  n\'affiche aucun prix. pricePrefix : "انطلاقا من" en arabe, "À partir de" en français.',
+  '- cadranLabels et cadranValues : deux listes de MÊME longueur, lues en parallèle',
+  '  (départ, compagnie, durée, date d\'aller, date de retour).',
+  '- priceStyle : "hotel-grid" pour une Omra (chaque ligne = un couple d\'hôtels),',
+  '  "simple" pour un circuit ou un séjour, "none" s\'il n\'y a pas de tableau.',
+  '- priceRows, style "hotel-grid" : left = hôtel de Médine, right = hôtel de La Mecque,',
+  '  cells = un prix par colonne de priceColumns (ex. ثنائية, ثلاثية, رباعية), "—" si vide.',
+  '- priceRows, style "simple" : left et right vides, cells = les cellules de la ligne,',
+  '  dans l\'ordre des en-têtes donnés par priceColumns.',
+  '- datesNote : horaires de vol et mentions légales de la brochure, recopiés fidèlement.',
+  '- days : le jour par jour, pour les circuits seulement ; liste vide pour une Omra.',
   '',
-  "Les champs intro et highlights sont les seuls que tu rédiges : reste factuel, appuie-toi",
-  'sur le contenu du PDF, pas de superlatifs inventés, 3 phrases maximum par paragraphe.',
+  'intro et highlights sont les seuls textes que tu rédiges : factuels, appuyés sur le PDF,',
+  'sans superlatif inventé, 3 phrases maximum par paragraphe.',
 ].join('\n');
+
+// Passe de la réponse plate à la forme attendue par public/voyages/render.js.
+function assembleFiche(raw) {
+  const txt = (v) => (typeof v === 'string' ? v.trim() : '');
+  const listOf = (v) => (Array.isArray(v) ? v.filter((x) => txt(x)) : []);
+  const product = {};
+
+  const put1 = (key, value) => { if (value) product[key] = value; };
+  const putList = (key, value) => { if (value.length) product[key] = value; };
+
+  product.lang = raw.lang === 'ar' ? 'ar' : 'fr';
+  put1('title', txt(raw.title));
+  put1('eyebrow', txt(raw.eyebrow));
+  put1('duration', txt(raw.duration));
+  put1('price', txt(raw.price));
+  put1('pricePrefix', txt(raw.pricePrefix));
+
+  // Le cadran arrive en deux listes parallèles ; render.js attend des paires.
+  const labels = listOf(raw.cadranLabels);
+  const values = Array.isArray(raw.cadranValues) ? raw.cadranValues : [];
+  const cadran = labels
+    .map((label, i) => [label, txt(values[i])])
+    .filter(([, value]) => value);
+  putList('cadran', cadran);
+
+  putList('intro', listOf(raw.intro));
+  putList('highlights', listOf(raw.highlights));
+  putList('programme', listOf(raw.programme));
+  putList('route', listOf(raw.route));
+  putList('hotels', listOf(raw.hotels));
+  putList('datesList', listOf(raw.datesList));
+  putList('inclus', listOf(raw.inclus));
+  putList('exclus', listOf(raw.exclus));
+
+  const days = (Array.isArray(raw.days) ? raw.days : [])
+    .filter((d) => d && txt(d.title))
+    .map((d) => ({ num: txt(d.num), title: txt(d.title), text: txt(d.text) }));
+  putList('days', days);
+
+  const rows = (Array.isArray(raw.priceRows) ? raw.priceRows : [])
+    .filter((r) => r && listOf(r.cells).length);
+  if (raw.priceStyle === 'hotel-grid' && rows.length) {
+    product.priceTable = {
+      style: 'hotel-grid',
+      medina: { label: product.lang === 'ar' ? 'المدينة المنورة' : 'Médine' },
+      mecca: { label: product.lang === 'ar' ? 'مكة المكرمة' : 'La Mecque' },
+      columns: listOf(raw.priceColumns),
+      currency: txt(raw.priceCurrency) || (product.lang === 'ar' ? 'درهم' : 'DH'),
+      rows: rows.map((r) => ({
+        medinaHotel: { name: txt(r.left) },
+        meccaHotel: { name: txt(r.right) },
+        prices: r.cells.map((c) => txt(c) || '—'),
+      })),
+    };
+    if (txt(raw.priceNote)) product.priceTable.note = txt(raw.priceNote);
+  } else if (raw.priceStyle === 'simple' && rows.length) {
+    product.priceTable = {
+      head: listOf(raw.priceColumns),
+      rows: rows.map((r) => r.cells.map((c) => txt(c))),
+    };
+    if (txt(raw.priceNote)) product.priceTable.note = txt(raw.priceNote);
+  }
+
+  if (txt(raw.datesLine) || txt(raw.datesNote)) {
+    product.dates = {};
+    if (txt(raw.datesLine)) product.dates.line = txt(raw.datesLine);
+    if (txt(raw.datesNote)) product.dates.note = txt(raw.datesNote);
+  }
+
+  product.cta = product.lang === 'ar'
+    ? { title: 'هل تنوون السفر معنا؟', text: 'ننظّم رحلتكم على المقاس وفق تواريخكم ورغباتكم — Voyages 21، منذ سنة 2000.' }
+    : { title: 'Envie de partir ?', text: 'Nous organisons votre voyage sur mesure, à vos dates — Voyages 21, depuis 2000.' };
+
+  return product;
+}
 
 export async function POST(request) {
   const role = await getRole(request);
@@ -234,7 +281,7 @@ export async function POST(request) {
   }
 
   // 2) Demander la fiche au modèle, au format imposé par FICHE_SCHEMA.
-  let fiche;
+  let raw;
   try {
     const client = new Anthropic();
     const response = await client.messages.create({
@@ -256,7 +303,7 @@ export async function POST(request) {
       throw new Error('le modèle a refusé de traiter ce document');
     }
     const text = (response.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
-    fiche = JSON.parse(text);
+    raw = JSON.parse(text);
   } catch (e) {
     return Response.json(
       { ok: false, error: 'Lecture automatique impossible : ' + String((e && e.message) || e) },
@@ -264,30 +311,8 @@ export async function POST(request) {
     );
   }
 
-  // 3) Nettoyer : ce que le PDF ne disait pas ne doit pas polluer la fiche.
-  const product = {};
-  for (const [key, value] of Object.entries(fiche)) {
-    if (value === null || value === undefined) continue;
-    if (Array.isArray(value) && value.length === 0) continue;
-    product[key] = value;
-  }
-  if (product.priceTable) {
-    const pt = product.priceTable;
-    if (pt.style === 'hotel-grid') {
-      delete pt.head;
-      (pt.rows || []).forEach((r) => delete r.cells);
-    } else {
-      // Style "simple" : render.js attend { head, rows } avec rows = tableaux de cellules.
-      product.priceTable = {
-        head: pt.head || [],
-        rows: (pt.rows || []).map((r) => r.cells || []),
-        note: pt.note || undefined,
-      };
-    }
-    Object.keys(product.priceTable).forEach((k) => {
-      if (product.priceTable[k] === null) delete product.priceTable[k];
-    });
-  }
+  // 3) Reconstruire la fiche au format du site.
+  const product = assembleFiche(raw);
 
   const title = String(body.title || product.title || '').trim();
   if (!title) {
@@ -296,7 +321,7 @@ export async function POST(request) {
   product.title = title;
   product.tag = tag;
   product.pdfUrl = pdfUrl;
-  product.whatsapp = product.whatsapp || '212614152686';
+  product.whatsapp = '212614152686';
   if (Array.isArray(body.destinations) && body.destinations.length) product.destinations = body.destinations;
   if (body.groupId) product.groupId = body.groupId;
 
