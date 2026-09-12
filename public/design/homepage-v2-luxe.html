@@ -3115,8 +3115,15 @@
   <!-- Note (4,8) et avis Google RÉELS (import via scraping Google Maps, Place ID
        ChIJPaMFhYzurw0R50-J4mRz7oc, 78 avis au 2026-07-30). -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- GSAP (72 Ko) + ScrollTrigger (43 Ko) ont ete retires : ils etaient
+       charges en bloquant l'affichage alors que RIEN sur cette page ne les
+       utilise. ScrollTrigger n'est cite nulle part, et le seul bloc GSAP
+       (« Seamless Card Loop ») cible « .sr-cards li » — un balisage qui
+       n'existe pas dans la page (la classe .sr-cards n'apparait que dans le
+       CSS). Ce bloc sort donc immediatement grace a son garde
+       « if (typeof gsap === 'undefined') return; ».
+       Pour reactiver l'animation il faudra remettre ces deux <script> ET
+       ajouter le balisage <ul class="sr-cards"><li>...</li></ul>. -->
 </head>
 <body>
 
