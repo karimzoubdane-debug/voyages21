@@ -205,15 +205,21 @@
       }
       var nav = '<nav class="dest-tabs" aria-label="Catégories">';
       var panels = '';
+      // Les onglets connus de cette page : une fiche de l'Admin Produits qui ne
+      // désigne aucun d'eux (groupId absent ou inconnu) tomberait sinon entre les
+      // onglets et n'apparaîtrait nulle part — elle rejoint le premier onglet.
+      var groupIds = cfg.groups.map(function (g) { return g.id; });
       cfg.groups.forEach(function (g, i) {
         var active = i === 0;
         var cls = 'dest-tab' + (active ? ' active' : '') + (g.accent === 'red' ? ' is-alert' : '');
         nav += '<button class="' + cls + '" type="button" data-dest-tab="'
           + esc(g.id) + '" aria-selected="' + (active ? 'true' : 'false') + '">' + esc(g.label) + '</button>';
-        // Répartit les produits custom entre groupes si leur slug commence par l'id du groupe
+        // Répartit les produits custom entre groupes selon leur groupId ; ceux
+        // qui n'en ont pas de valide vont dans le premier onglet.
         var groupCustom = extraCustom.filter(function (s) {
-          var v = customProducts[s] || {};
-          return (v.groupId || '') === g.id;
+          var gid = (customProducts[s] || {}).groupId || '';
+          if (groupIds.indexOf(gid) !== -1) return gid === g.id;
+          return active;
         });
         // Un groupe peut fournir du HTML libre (g.html) — utile pour un onglet
         // qui pointe vers une page dédiée (ex. Hajj), en plus ou à la place des fiches.
