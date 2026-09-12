@@ -155,6 +155,18 @@ function readCookie(request, name) {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
+// Un jeton d'API valide est-il présent dans l'en-tête « Authorization: Bearer … » ?
+// Réutilise verifyApiToken (signature HMAC avec V21_API_SECRET, aud = 'v21-api',
+// exp non dépassée) — SANS regarder le cookie de session. Sert au middleware à
+// servir la vraie page (200) au fetch serveur du portail, sans rediriger.
+// Retourne le rôle ('owner' | 'team') si le jeton est valide, sinon null.
+export async function apiRoleFromRequest(request) {
+  const bearer = readBearer(request);
+  if (!bearer) return null;
+  const api = await verifyApiToken(bearer);
+  return api ? api.role : null;
+}
+
 // Rôle courant ('owner' | 'team' | null) : cookie de session en priorité,
 // sinon jeton d'API « Authorization: Bearer … » (admin maître à distance).
 export async function getRole(request) {

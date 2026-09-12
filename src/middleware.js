@@ -11,7 +11,7 @@
 // aucune exception. Sans V21_RESCUE_KEY dans Vercel, la porte est fermée.
 
 import { NextResponse } from 'next/server';
-import { getRole, hasRescue, isRescueKey, rescueCookieValue, RESCUE_COOKIE, RESCUE_MAX_AGE } from './lib/auth.js';
+import { apiRoleFromRequest, getRole, hasRescue, isRescueKey, rescueCookieValue, RESCUE_COOKIE, RESCUE_MAX_AGE } from './lib/auth.js';
 
 const PORTAL = 'https://admin.moroccovoyages21.com';
 
@@ -51,7 +51,15 @@ export async function middleware(request) {
       });
       return res;
     }
-    // 2) Porte fermée → le portail (redirection temporaire : jamais mise en cache).
+    // 2) Jeton d'API valide (en-tête « Authorization: Bearer … ») : c'est le
+    //    fetch serveur du portail admin.moroccovoyages21.com qui vient relire la
+    //    vraie page. On la SERT (200) au lieu de rediriger. Seul un jeton
+    //    valide (HMAC V21_API_SECRET, aud = 'v21-api', non expiré) ouvre cette
+    //    exception ; un visiteur normal n'a pas d'en-tête et tombe en (3).
+    if (await apiRoleFromRequest(request)) {
+      return NextResponse.next();
+    }
+    // 3) Porte fermée → le portail (redirection temporaire : jamais mise en cache).
     if (!(await hasRescue(request))) {
       return NextResponse.redirect(PORTAL + MOVED[path], { status: 302 });
     }
