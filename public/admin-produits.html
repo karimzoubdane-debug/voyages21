@@ -1307,6 +1307,15 @@ function onQuickPdf(input) {
   }
 }
 
+function resetQuickForm() {
+  quickPdfFile = null;
+  document.getElementById('qTag').value = '';
+  document.getElementById('qTitle').value = '';
+  document.getElementById('qPdfInput').value = '';
+  document.getElementById('qPdfZone').classList.remove('has-file');
+  document.getElementById('qPdfLabel').textContent = '📎 Cliquez pour sélectionner le PDF';
+}
+
 async function quickSubmit() {
   var tag = document.getElementById('qTag').value;
   var title = document.getElementById('qTitle').value.trim();
@@ -1329,6 +1338,37 @@ async function quickSubmit() {
     return;
   }
 
+  qlog.textContent = 'Lecture du PDF… (20 à 60 secondes)';
+
+  // 1) Lecture automatique : le PDF est analysé et la fiche remplie (prix, hôtels,
+  //    vols, inclus). Le voyage est créé MASQUÉ — à relire puis à rendre visible
+  //    avec le bouton « Statut ».
+  var readOk = false;
+  try {
+    var rx = await fetch('/api/produits-from-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pdfUrl: pdfUrl, tag: tag, title: title })
+    });
+    var dx = await rx.json();
+    if (dx.ok) {
+      readOk = true;
+      reload();
+      qlog.style.color='var(--ok)';
+      qlog.textContent = '✅ Fiche remplie depuis le PDF — « ' + title + ' » est MASQUÉE : relisez-la, puis rendez-la visible avec « Statut ».';
+      toast('✅ « ' + title + ' » lue depuis le PDF — masquée en attendant votre relecture.');
+    } else {
+      qlog.style.color='var(--danger)';
+      qlog.textContent = '⚠️ Lecture automatique impossible (' + (dx.error || 'erreur') + ') — création de la fiche simple…';
+    }
+  } catch(err) {
+    qlog.style.color='var(--danger)';
+    qlog.textContent = '⚠️ Lecture automatique indisponible — création de la fiche simple…';
+  }
+
+  if (readOk) { resetQuickForm(); switchTab('catalogue', document.querySelector('[data-tab="catalogue"]')); return; }
+
+  // 2) Repli : l'ancienne fiche minimale (titre + PDF joint), pour ne jamais rester bloqué.
   qlog.textContent = 'Création du voyage…';
 
   var product = { title: title, tag: tag, price: 'Sur devis', pdfUrl: pdfUrl, intro: [], highlights: [], whatsapp: '212614152686' };
@@ -1344,13 +1384,7 @@ async function quickSubmit() {
     qlog.style.color='var(--ok)';
     qlog.textContent = '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
     toast('✅ Voyage « ' + title + ' » ajouté dans ' + tag + ' — visible sur le site !');
-    // Reset
-    quickPdfFile = null;
-    document.getElementById('qTag').value = '';
-    document.getElementById('qTitle').value = '';
-    document.getElementById('qPdfInput').value = '';
-    document.getElementById('qPdfZone').classList.remove('has-file');
-    document.getElementById('qPdfLabel').textContent = '📎 Cliquez pour sélectionner le PDF';
+    resetQuickForm();
     switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));
   } catch(err) {
     qlog.style.color='var(--danger)';
