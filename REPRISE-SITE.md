@@ -4,15 +4,60 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-08-03_
+_Dernière mise à jour : 2026-09-12_
 
 ## ▶️ Prochaine étape — Chantiers SEO restants (audit UX/SEO)
 Les lots 1 & 2 de l'audit sont **fusionnés et en ligne** (voir ci-dessous). Restent
 **2 chantiers séparés** (branche dédiée + PR draft chacun) :
 1. **i18n FR/EN/ES/DE + hreflang** (`next-intl`) — le plus gros morceau.
 2. **Bannière RGPD Cookieyes** (remplacer le placeholder `VOTRE_CLE_COOKIEYES`).
-En parallèle (hors code) : **décision connexion domaine `voyages21.com`** (Valablue →
+En parallèle (hors code) : **alléger les vidéos de l'intro et du hero** (45,6 Mo + 15,3 Mo,
+voir l'audit de performance ci-dessous) · **décision connexion domaine `voyages21.com`** (Valablue →
 Vercel, migrer les emails AVANT) + choix hébergement vidéo header (fichier `2964957128`).
+
+## ✅ Audit de performance de l'accueil (PR #278 → #282) — FUSIONNÉES le 2026-09-12
+Branche `claude/voyages21-performance-audit-nmxnyg`. Point de départ : « le site a
+ralenti ». Tout est mesuré (en-têtes HTTP réels + Chromium), rien d'estimé.
+
+**Ce qui ralentissait, et ce qui a été corrigé :**
+1. **#278 — deux vidéos de hero au lieu d'une (-13,5 Mo/visite).** La balise
+   `<source>` pointait sur une vidéo Cloudinary (13 476 185 o) que le script
+   remplaçait aussitôt par la cover de l'admin (15 322 504 o). La première était
+   téléchargée puis jetée. ⚠️ **À retenir** : l'URL écrite dans le HTML doit rester
+   la même que `__homepageCover.videoUrl` de `/api/media`, sinon le doublon revient.
+2. **#279 — un seul appel à `/api/media`.** Il était appelé deux fois au chargement
+   (91 316 o, `no-store`, ~0,6 s chacun). Helper `v21MediaManifest(force)` partagé ;
+   `v21MediaManifest(true)` (BroadcastChannel `v21_media`) garde la mise à jour admin
+   en direct. Testé : la publication depuis l'admin déclenche bien une requête fraîche.
+3. **#280 — GSAP + ScrollTrigger retirés (-115 Ko bloquants).** Chargés en fin de
+   `<head>` sans `defer` alors que rien ne les utilise : ScrollTrigger n'est cité
+   nulle part et le bloc « Seamless Card Loop » cible `.sr-cards li`, un balisage
+   absent de la page (la classe n'existe que dans le CSS). Le bloc JS est conservé,
+   avec un commentaire expliquant comment réactiver (remettre les 2 balises script
+   + ajouter le balisage `.sr-cards`).
+4. **#281 — la vidéo du hero ne se charge plus derrière l'intro.** L'intro plein écran
+   (`#v21-intro`, iframe `/cover-ete-2026.html?embed=1`) recouvre tout l'accueil à
+   chaque arrivée ; la vidéo de hero (15,3 Mo) se téléchargeait quand même, invisible.
+   `<video>` passe en `preload="none"` sans `autoplay`, URL dans `data-src`, module
+   `v21Hero` qui ne charge qu'à la fermeture de l'intro (MutationObserver sur
+   `hidden` / `is-closing`), avec repli si `/api/media` tombe et filet à 30 s.
+5. **#282 — plus de double téléchargement des vidéos de l'intro.** Dans
+   `paintLayer()` (`public/cover-ete-2026.html`), le fond flou `.layer-bg` reprenait
+   l'URL du média : pour une vidéo sans poster, un `.mp4` dans un `background-image`
+   CSS n'affiche rien mais déclenche une 2ᵉ requête complète. Fond flou posé
+   uniquement s'il y a une vraie image (poster explicite ou média de type image).
+
+**Vérification finale (Chromium, accueil d'origine `6e80e89` vs `main`)** : texte de
+page strictement identique (même empreinte), 104 liens, 0 erreur JS ; requêtes vidéo
+pendant l'intro **2 → 0**.
+
+## 🚧 Reste à faire (hors code) — alléger les vidéos
+Premier poste de ralentissement restant, mesuré sur les fichiers réellement servis :
+- **intro** (`/api/cover`) : 7 vidéos = **47 824 833 o ≈ 45,6 Mo** (la plus lourde
+  12 331 677 o) ;
+- **hero de l'accueil** (`/api/media` → `__homepageCover.videoUrl`) : **15 322 504 o ≈ 15,3 Mo**.
+Hébergées sur Vercel Blob et pilotées depuis l'admin → ré-encodage + ré-upload par
+l'admin, pas une modification de code. **Décision en attente de Karim.**
 
 ## ✅ Audit SEO lot 2 — Page d'accueil indexable à la racine (PR #245) — FUSIONNÉ le 2026-07-31
 Branche `claude/voyages21-ux-seo-audit-gfyw9w` (repartie de `main` après #243).
