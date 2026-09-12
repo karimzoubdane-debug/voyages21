@@ -3122,8 +3122,8 @@
        n'existe pas dans la page (la classe .sr-cards n'apparait que dans le
        CSS). Ce bloc sort donc immediatement grace a son garde
        « if (typeof gsap === 'undefined') return; ».
-       Pour reactiver l'animation il faudra remettre ces deux <script> ET
-       ajouter le balisage <ul class="sr-cards"><li>...</li></ul>. -->
+       Pour reactiver l'animation il faudra remettre ces deux balises script
+       ET ajouter le balisage « ul class="sr-cards" » avec ses « li ». -->
 </head>
 <body>
 
@@ -3329,8 +3329,8 @@
          → __homepageCover.videoUrl). Si les deux diffèrent, le navigateur
          télécharge DEUX vidéos (~29 Mo) au lieu d'une : garder les deux
          synchronisées. -->
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
-      <source id="heroVideoSource" src="https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/World_landmarks_montage_travel_a%E2%80%A6_202606062148-3MFmrfOZtDFS6cNXGGMXRUnw3cY6ai.mp4" type="video/mp4">
+    <video class="hero-video" id="heroVideo" muted loop playsinline preload="none">
+      <source id="heroVideoSource" data-src="https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/World_landmarks_montage_travel_a%E2%80%A6_202606062148-3MFmrfOZtDFS6cNXGGMXRUnw3cY6ai.mp4" type="video/mp4">
     </video>
 
     <!-- Voile sombre -->
@@ -4664,6 +4664,61 @@
     });
 
     // Vidéo hero — forcer le play sur mobile (autoplay parfois bloqué)
+    // ── Video du hero : chargement differe tant que l'intro est affichee ──
+    // A chaque arrivee, l'intro plein ecran (#v21-intro, iframe
+    // /cover-ete-2026.html) recouvre TOUT l'accueil et joue ses propres
+    // videos. Telecharger en meme temps la video du hero (~15 Mo), invisible
+    // derriere l'intro, volait de la bande passante a l'intro et au reste de
+    // la page. On ne la charge donc qu'une fois l'intro refermee.
+    var v21Hero = (function () {
+      var wanted = '';      // derniere URL demandee
+      var released = false; // chargement autorise ?
+      function apply() {
+        var video = document.getElementById('heroVideo');
+        var source = document.getElementById('heroVideoSource');
+        if (!released || !video || !source) return;
+        // Si rien n'a ete demande (ex. /api/media en panne), on retombe sur
+        // l'URL ecrite dans le HTML, comme avant.
+        var url = wanted || source.getAttribute('data-src') || '';
+        if (!url) return;
+        if (source.getAttribute('src') !== url) {
+          source.setAttribute('src', url);
+          video.load();
+        }
+        video.play().catch(function () {});
+      }
+      return {
+        // Demande l'affichage d'une video (appliquee tout de suite ou a la
+        // fermeture de l'intro).
+        setUrl: function (url) { if (url) { wanted = url; apply(); } },
+        // Autorise le chargement (intro fermee, ou pas d'intro du tout).
+        release: function () { released = true; apply(); },
+        // Relance la lecture (autoplay parfois bloque sur mobile).
+        play: function () { apply(); }
+      };
+    })();
+    window.v21Hero = v21Hero;
+
+    (function () {
+      var host = document.getElementById('v21-intro');
+      // Pas d'intro affichee (element absent, ou intro qui ne s'est pas
+      // ouverte) : on charge la video tout de suite, comme avant.
+      if (!host || host.hidden) { v21Hero.release(); return; }
+      function closed() {
+        return host.hidden || host.classList.contains('is-closing');
+      }
+      if (closed()) { v21Hero.release(); return; }
+      if ('MutationObserver' in window) {
+        var obs = new MutationObserver(function () {
+          if (closed()) { obs.disconnect(); v21Hero.release(); }
+        });
+        obs.observe(host, { attributes: true, attributeFilter: ['hidden', 'class'] });
+      }
+      // Filet de securite : si le signal de fermeture n'arrive jamais
+      // (iframe en erreur, message perdu), on charge quand meme.
+      setTimeout(function () { v21Hero.release(); }, 30000);
+    })();
+
     // Manifeste medias (/api/media, ~90 Ko) : UNE seule requete partagee par
     // tous les blocs de la page. Avant, l'accueil le telechargeait deux fois
     // au chargement (cover editoriale + hero produits).
@@ -4750,7 +4805,7 @@
       const badge = document.getElementById('heroProductBadge');
       const button = document.getElementById('heroButton');
       let idx = 0;
-      const fallbackVideo = source ? source.getAttribute('src') : '';
+      const fallbackVideo = source ? (source.getAttribute('data-src') || source.getAttribute('src') || '') : '';
       function cleanSlides(list) {
         return (Array.isArray(list) ? list : []).filter(s => s && (s.destination || s.name)).map(s => ({
           destination: s.destination || s.name || 'Voyages 21',
@@ -4761,11 +4816,7 @@
         }));
       }
       function setVideo(url) {
-        if (source && video && url && source.getAttribute('src') !== url) {
-          source.setAttribute('src', url);
-          video.load();
-          video.play().catch(() => {});
-        }
+        v21Hero.setUrl(url);
       }
       let coverVideo = fallbackVideo;
       // On ne touche plus au titre/label editorial du hero.
@@ -4803,7 +4854,8 @@
     (function () {
       const vid = document.querySelector('.hero-video');
       if (!vid) return;
-      const tryPlay = () => vid.play().catch(() => {});
+      // Ne demarre rien tant que v21Hero n'a pas autorise le chargement.
+      const tryPlay = () => v21Hero.play();
       tryPlay();
       ['touchstart','click','scroll'].forEach(ev =>
         document.addEventListener(ev, tryPlay, { once: true, passive: true })
