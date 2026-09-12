@@ -1530,7 +1530,13 @@ async function submitForm(e) {
   var badge = document.getElementById('badgeValue').value;
   var badgeColor = document.getElementById('badgeColor').value;
 
+  // Le formulaire n'expose qu'une partie des champs. Une fiche lue depuis un PDF
+  // porte aussi priceTable, cadran, programme, route, days, lang, cta… : on part
+  // de la fiche existante et on n'écrase que ce que le formulaire montre, sinon
+  // corriger un titre effacerait le tableau des prix.
+  var existing = (currentEditSlug && manifest.custom[currentEditSlug]) || {};
   var product = {
+    ...existing,
     title: f.title.value.trim(),
     tag: f.tag.value,
     price: f.price.value.trim(),

@@ -188,7 +188,6 @@ function assembleFiche(raw) {
   putList('highlights', listOf(raw.highlights));
   putList('programme', listOf(raw.programme));
   putList('route', listOf(raw.route));
-  putList('hotels', listOf(raw.hotels));
   putList('datesList', listOf(raw.datesList));
   putList('inclus', listOf(raw.inclus));
   putList('exclus', listOf(raw.exclus));
@@ -200,6 +199,10 @@ function assembleFiche(raw) {
 
   const rows = (Array.isArray(raw.priceRows) ? raw.priceRows : [])
     .filter((r) => r && listOf(r.cells).length);
+  // Sur une Omra, le tableau porte déjà les hôtels ligne par ligne : reprendre la
+  // liste « Hébergement » ferait doublon. Sur un circuit ou un séjour, le tableau
+  // ne les contient pas — on la garde.
+  if (raw.priceStyle !== 'hotel-grid') putList('hotels', listOf(raw.hotels));
   if (raw.priceStyle === 'hotel-grid' && rows.length) {
     product.priceTable = {
       style: 'hotel-grid',
