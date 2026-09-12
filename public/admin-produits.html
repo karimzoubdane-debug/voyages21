@@ -37,7 +37,7 @@ main{max-width:1140px;margin:1.4rem auto 4rem;padding:0 1rem}
 
 /* Product list */
 #productList{display:flex;flex-direction:column;gap:.7rem}
-.prod-row{background:#fff;border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:80px minmax(0,1fr) auto;gap:0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.prod-row{background:#fff;border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:80px minmax(0,1fr) max-content;gap:0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .prod-thumb{width:80px;min-height:70px;background:linear-gradient(135deg,var(--forest),var(--forest2)) center/cover no-repeat}
 .prod-info{padding:.7rem .9rem;display:flex;flex-direction:column;gap:.2rem}
 .prod-title{font:700 .98rem/1.2 "Playfair Display",serif;color:var(--forest)}
@@ -45,7 +45,7 @@ main{max-width:1140px;margin:1.4rem auto 4rem;padding:0 1rem}
 .prod-price{font-weight:800;color:var(--forest)}
 .prod-tag{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 .prod-source{font-size:.7rem;color:#999;font-style:italic}
-.prod-actions{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;padding:.5rem .7rem;border-left:1px solid var(--line)}
+.prod-actions{display:flex;flex-wrap:nowrap;gap:.4rem;align-items:center;padding:.5rem .7rem;border-left:1px solid var(--line);white-space:nowrap}
 .badge-pill{display:inline-block;border-radius:999px;padding:.18rem .55rem;font:700 .68rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase}
 .badge-pill.sold{background:#d7263d;color:#fff}
 .badge-pill.gold{background:var(--gold);color:var(--forest2)}
@@ -159,7 +159,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .gnav[data-group="destinations"].active{background:#4a90d9;border-color:#4a90d9;color:#fff}
 .gnav[data-group="iles"].active{background:#0e9480;border-color:#0e9480;color:#fff}
 
-@media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}.prod-row{grid-template-columns:72px minmax(0,1fr)}.prod-actions{border-left:0;border-top:1px solid var(--line);padding:.45rem .7rem}}
+@media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}.prod-row{grid-template-columns:72px minmax(0,1fr)}.prod-actions{border-left:0;border-top:1px solid var(--line);padding:.45rem .7rem;flex-wrap:wrap;grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -1307,6 +1307,15 @@ function onQuickPdf(input) {
   }
 }
 
+function resetQuickForm() {
+  quickPdfFile = null;
+  document.getElementById('qTag').value = '';
+  document.getElementById('qTitle').value = '';
+  document.getElementById('qPdfInput').value = '';
+  document.getElementById('qPdfZone').classList.remove('has-file');
+  document.getElementById('qPdfLabel').textContent = '📎 Cliquez pour sélectionner le PDF';
+}
+
 async function quickSubmit() {
   var tag = document.getElementById('qTag').value;
   var title = document.getElementById('qTitle').value.trim();
@@ -1329,6 +1338,43 @@ async function quickSubmit() {
     return;
   }
 
+  qlog.textContent = 'Lecture du PDF… (20 à 60 secondes)';
+
+  // 1) Lecture automatique : le PDF est analysé et la fiche remplie (prix, hôtels,
+  //    vols, inclus). Le voyage est créé MASQUÉ — à relire puis à rendre visible
+  //    avec le bouton « Statut ».
+  var readOk = false;
+  var readError = '';
+  try {
+    var rx = await fetch('/api/produits-from-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pdfUrl: pdfUrl, tag: tag, title: title })
+    });
+    var dx = await rx.json();
+    if (dx.ok) {
+      readOk = true;
+      reload();
+      qlog.style.color='var(--ok)';
+      qlog.textContent = '✅ Fiche remplie depuis le PDF — « ' + title + ' » est MASQUÉE : relisez-la, puis rendez-la visible avec « Statut ».';
+      toast('✅ « ' + title + ' » lue depuis le PDF — masquée en attendant votre relecture.');
+    } else {
+      readError = dx.error || 'erreur inconnue';
+    }
+  } catch(err) {
+    readError = err.message || 'appel impossible';
+  }
+  if (readError) {
+    qlog.style.color='var(--danger)';
+    qlog.textContent = '⚠️ Lecture automatique impossible (' + readError + ') — création de la fiche simple…';
+    // Trace durable : le détail reste lisible dans le bandeau d'action même
+    // apres le message de succes du repli (sinon l'erreur disparait).
+    log('Lecture automatique du PDF impossible : ' + readError);
+  }
+
+  if (readOk) { resetQuickForm(); switchTab('catalogue', document.querySelector('[data-tab="catalogue"]')); return; }
+
+  // 2) Repli : l'ancienne fiche minimale (titre + PDF joint), pour ne jamais rester bloqué.
   qlog.textContent = 'Création du voyage…';
 
   var product = { title: title, tag: tag, price: 'Sur devis', pdfUrl: pdfUrl, intro: [], highlights: [], whatsapp: '212614152686' };
@@ -1342,15 +1388,10 @@ async function quickSubmit() {
     if (!data.ok) throw new Error(data.error || 'Erreur serveur');
     reload();
     qlog.style.color='var(--ok)';
-    qlog.textContent = '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
+    qlog.textContent = (readError ? '⚠️ PDF non lu (' + readError + ') — ' : '')
+      + '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
     toast('✅ Voyage « ' + title + ' » ajouté dans ' + tag + ' — visible sur le site !');
-    // Reset
-    quickPdfFile = null;
-    document.getElementById('qTag').value = '';
-    document.getElementById('qTitle').value = '';
-    document.getElementById('qPdfInput').value = '';
-    document.getElementById('qPdfZone').classList.remove('has-file');
-    document.getElementById('qPdfLabel').textContent = '📎 Cliquez pour sélectionner le PDF';
+    resetQuickForm();
     switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));
   } catch(err) {
     qlog.style.color='var(--danger)';
@@ -1489,7 +1530,13 @@ async function submitForm(e) {
   var badge = document.getElementById('badgeValue').value;
   var badgeColor = document.getElementById('badgeColor').value;
 
+  // Le formulaire n'expose qu'une partie des champs. Une fiche lue depuis un PDF
+  // porte aussi priceTable, cadran, programme, route, days, lang, cta… : on part
+  // de la fiche existante et on n'écrase que ce que le formulaire montre, sinon
+  // corriger un titre effacerait le tableau des prix.
+  var existing = (currentEditSlug && manifest.custom[currentEditSlug]) || {};
   var product = {
+    ...existing,
     title: f.title.value.trim(),
     tag: f.tag.value,
     price: f.price.value.trim(),
