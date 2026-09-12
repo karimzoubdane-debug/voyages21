@@ -38,16 +38,17 @@ const OWNER_ONLY = new Set(['/formulaire-voyage.html']);
 // Accessibles à l'équipe ET au propriétaire
 const TEAM_OR_OWNER = new Set(['/admin-produits.html', '/admin-cover.html', '/admin-medias.html']);
 
-// 404 « banale » : on réécrit la requête vers une adresse interne qui n'existe
-// pas, donc Next rend sa page 404 standard avec le code 404 — exactement la même
-// réponse que pour n'importe quelle URL inconnue du site. Rien n'est divulgué.
+// 404 « banale » : on réécrit la requête vers /404, l'adresse interne de la page
+// « introuvable » du site — celle que Vercel sert déjà pour n'importe quelle URL
+// inconnue (en-tête x-matched-path: /404). La réponse est donc EXACTEMENT celle
+// d'une URL inexistante : même code 404, même corps, mêmes en-têtes. Rien n'est
+// divulgué.
+//
+// ⚠️ Ne pas viser /_not-found : en local (next start) cela renvoie bien un 404,
+// mais sur Vercel cette adresse est une page pré-générée servie avec le code
+// 200 — une « fausse 404 » (soft 404) au corps différent. Corrige la PR #269.
 function notFound(request) {
-  const res = NextResponse.rewrite(new URL('/_not-found', request.url));
-  // Même en-tête de cache qu'une 404 ordinaire de Next : la réponse n'est mise
-  // en cache ni par le navigateur ni par le CDN. Indispensable pour que la porte
-  // de secours et le portail ne se heurtent jamais à une 404 mémorisée.
-  res.headers.set('cache-control', 'private, no-cache, no-store, max-age=0, must-revalidate');
-  return res;
+  return NextResponse.rewrite(new URL('/404', request.url));
 }
 
 function toLogin(request) {
