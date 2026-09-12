@@ -38,14 +38,29 @@ const OWNER_ONLY = new Set(['/formulaire-voyage.html']);
 // Accessibles à l'équipe ET au propriétaire
 const TEAM_OR_OWNER = new Set(['/admin-produits.html', '/admin-cover.html', '/admin-medias.html']);
 
-// 404 « banale » : on réécrit la requête vers une adresse interne qui n'existe
-// pas, donc Next rend sa page 404 standard avec le code 404 — exactement la même
-// réponse que pour n'importe quelle URL inconnue du site. Rien n'est divulgué.
+// Adresse interne volontairement inexistante : aucune route du site ne porte ce
+// nom, et le préfixe « _v21- » est réservé à cet usage.
+const NOT_FOUND_TARGET = '/_v21-introuvable';
+
+// 404 « banale » : on réécrit la requête vers cette adresse inexistante, donc le
+// site rend sa page « introuvable » standard avec le code 404 — exactement la
+// même réponse que pour n'importe quelle URL inconnue du site. Rien n'est
+// divulgué : la cible de réécriture n'apparaît dans aucun en-tête.
+//
+// ⚠️ Mesuré sur un déploiement Vercel (un test local ne fait PAS foi ici) :
+// réécrire vers `/_not-found` ne suffisait pas — c'est une page prérendue
+// statique que Vercel sert en 200, d'où le « soft 404 » de la #269 (sous
+// `next start` la même réécriture donnait bien 404, test local trompeur).
+// Réécrire vers une adresse qui n'existe pas donne, elle, un vrai statut 404
+// avec le corps de la page 404 du site octet pour octet. Le `status: 404`
+// explicite est une ceinture de sécurité : il impose le statut même si la cible
+// de réécriture venait un jour à répondre 200.
 function notFound(request) {
-  const res = NextResponse.rewrite(new URL('/_not-found', request.url));
-  // Même en-tête de cache qu'une 404 ordinaire de Next : la réponse n'est mise
-  // en cache ni par le navigateur ni par le CDN. Indispensable pour que la porte
-  // de secours et le portail ne se heurtent jamais à une 404 mémorisée.
+  const res = NextResponse.rewrite(new URL(NOT_FOUND_TARGET, request.url), { status: 404 });
+  // Réponse non mémorisable, ni par le navigateur ni par le CDN (c'est le seul
+  // écart avec une 404 ordinaire du site, qui est servie en
+  // `public, max-age=0, must-revalidate`). Indispensable pour que la porte de
+  // secours et le portail ne se heurtent jamais à une 404 mise en cache.
   res.headers.set('cache-control', 'private, no-cache, no-store, max-age=0, must-revalidate');
   return res;
 }
