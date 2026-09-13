@@ -4,7 +4,7 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-09-12_
+_Dernière mise à jour : 2026-09-13_
 
 ## ▶️ Prochaine étape — Chantiers SEO restants (audit UX/SEO)
 Les lots 1 & 2 de l'audit sont **fusionnés et en ligne** (voir ci-dessous). Restent
@@ -14,6 +14,31 @@ Les lots 1 & 2 de l'audit sont **fusionnés et en ligne** (voir ci-dessous). Res
 En parallèle (hors code) : **alléger les vidéos de l'intro et du hero** (45,6 Mo + 15,3 Mo,
 voir l'audit de performance ci-dessous) · **décision connexion domaine `voyages21.com`** (Valablue →
 Vercel, migrer les emails AVANT) + choix hébergement vidéo header (fichier `2964957128`).
+
+## ✅ Anciennes pages admin : vraie 404 (PR #284) — FUSIONNÉE le 2026-09-13
+Le gardien `src/middleware.js` (phase 2.6) visait « exactement la même réponse que
+pour n'importe quelle URL inconnue ». Ce n'était pas le cas : la réécriture renvoyait
+le contenu de la page 404 avec le **code 200**, et — découvert seulement en testant la
+preview Vercel, pas en local — une page **170 octets plus courte** (il y manquait
+`<meta name="robots" content="noindex">`). La taille et le code suffisaient à repérer
+`/admin`, `/admin-cover.html`, `/admin-medias.html`, `/admin-produits.html` et
+`/formulaire-voyage.html`.
+Correctif : la réécriture vise une adresse volontairement inexistante
+(`NOT_FOUND_PATH = '/v21-adresse-inconnue'`) avec `{ status: 404 }`.
+**Vérifié en production** : les 5 pages gardées et une URL inconnue renvoient toutes
+404 / 27 068 octets, corps **strictement identiques** (`cmp`). Accès légitimes testés
+sur build local (jeton du portail → vraie page ; `?secours=<clé>` → 302 + cookie ;
+mauvaise clé → 404 ; variantes d'URL `…/`, `//`, `./`, `../`, casse → 404).
+⚠️ **Leçon** : pour ce fichier, le test local ne suffit pas — la page 404 de Vercel
+diffère de celle de `next start`. Toujours re-mesurer sur la preview.
+
+## ⏳ À vérifier par Karim (hors code)
+- **DNS** : `www.admin.moroccovoyages21.com` ne répond pas du tout ; seul
+  `admin.moroccovoyages21.com` (sans `www`) fonctionne.
+- **Vercel** : confirmer que `V21_OWNER_PASSWORD` et `V21_AUTH_SECRET` sont bien
+  définis. Sans eux, `src/lib/auth.js` retombe sur ses valeurs de démo
+  (`admin21` / `dev-secret-voyages21-change-me`), que son propre commentaire signale
+  comme « à NE PAS laisser en prod ».
 
 ## ✅ Audit de performance de l'accueil (PR #278 → #282) — FUSIONNÉES le 2026-09-12
 Branche `claude/voyages21-performance-audit-nmxnyg`. Point de départ : « le site a
