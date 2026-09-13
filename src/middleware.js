@@ -42,7 +42,11 @@ const TEAM_OR_OWNER = new Set(['/admin-produits.html', '/admin-cover.html', '/ad
 // pas, donc Next rend sa page 404 standard avec le code 404 — exactement la même
 // réponse que pour n'importe quelle URL inconnue du site. Rien n'est divulgué.
 function notFound(request) {
-  const res = NextResponse.rewrite(new URL('/_not-found', request.url));
+  // « status: 404 » est indispensable : sans lui, la réécriture renvoie le
+  // contenu de la page 404 avec un code 200, alors qu'une URL réellement
+  // inexistante renvoie 404. Cet écart de code suffisait à révéler que ces
+  // adresses sont particulières — exactement ce que le camouflage veut éviter.
+  const res = NextResponse.rewrite(new URL('/_not-found', request.url), { status: 404 });
   // Même en-tête de cache qu'une 404 ordinaire de Next : la réponse n'est mise
   // en cache ni par le navigateur ni par le CDN. Indispensable pour que la porte
   // de secours et le portail ne se heurtent jamais à une 404 mémorisée.
