@@ -155,7 +155,7 @@ async function main() {
   const newThreshold = CONFIG.settings?.new_video_threshold_hours || 48;
 
   for (const ch of CONFIG.channels) {
-    process.stdout.write(`📡 ${ch.name} (@${ch.handle})… `);
+    process.stdout.write(`📡 ${ch.name}${ch.handle ? ` (@${ch.handle})` : ''}… `);
 
     let channelId = ch.channel_id || '';
     if (!channelId) channelId = await resolveChannelId(ch.handle) || '';
@@ -236,8 +236,10 @@ function parseXML_safe(xml) {
 // ─── HTML Kanban generator ────────────────────────────────────────────────────
 
 function generateKanban(results, { dateLabel, dateShort, totalNew, nowISO, newThreshold }) {
-  const mes3    = results.filter(r => r.group === 'mes-chaines');
-  const top5    = results.filter(r => r.group === 'top5-global');
+  // Groupes pilotés par channels.json (plus de groupes codés en dur)
+  const groups = (CONFIG.groups || [])
+    .map(g => ({ ...g, count: results.filter(r => r.group === g.id).length }))
+    .filter(g => g.count > 0);
   const checkedAt = new Date(nowISO).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
 
   function videoCard(v, thresholdH) {
@@ -463,31 +465,24 @@ footer{
 <div class="filter-bar">
   <button class="chip active" onclick="filterGroup('all')">Toutes (${results.length})</button>
   <button class="chip gold" onclick="filterGroup('new')">Nouvelles uniquement (${totalNew})</button>
-  <button class="chip" onclick="filterGroup('mes-chaines')">Mes 3 chaînes (${mes3.length})</button>
-  <button class="chip" onclick="filterGroup('top5-global')">Top 5 Mondial (${top5.length})</button>
+  ${groups.map(g => `<button class="chip" onclick="filterGroup('${g.id}')">${g.label} (${g.count})</button>`).join('\n  ')}
 </div>
 
 <div class="main">
 
-  <div class="section-block" id="sec-mes-chaines">
+  ${groups.map(g => {
+    const rows = results.filter(r => r.group === g.id);
+    return `
+  <div class="section-block" id="sec-${g.id}">
     <div class="section-label">
-      🇫🇷 Mes 3 Chaînes
-      <span class="section-count">${mes3.length} chaînes · ${mes3.reduce((s,r)=>s+r.newCount,0)} nouvelles vidéos</span>
+      ${g.label}
+      <span class="section-count">${rows.length} chaînes · ${rows.reduce((s,r)=>s+r.newCount,0)} nouvelles vidéos</span>
     </div>
     <div class="ch-grid">
-      ${mes3.map(channelCard).join('\n')}
+      ${rows.map(channelCard).join('\n')}
     </div>
-  </div>
-
-  <div class="section-block" id="sec-top5-global">
-    <div class="section-label">
-      🌍 Top 5 Mondial — IA · Business · Marketing
-      <span class="section-count">${top5.length} chaînes · ${top5.reduce((s,r)=>s+r.newCount,0)} nouvelles vidéos</span>
-    </div>
-    <div class="ch-grid">
-      ${top5.map(channelCard).join('\n')}
-    </div>
-  </div>
+  </div>`;
+  }).join('\n')}
 
 </div>
 
@@ -497,32 +492,20 @@ footer{
 </footer>
 
 <script>
+const GROUP_IDS = ${JSON.stringify(groups.map(g => g.id))};
 function filterGroup(group) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   event.target.classList.add('active');
-
   const cards = document.querySelectorAll('.ch-card');
-  const secMes  = document.getElementById('sec-mes-chaines');
-  const secTop5 = document.getElementById('sec-top5-global');
-
-  if (group === 'all') {
-    secMes.style.display = secTop5.style.display = '';
-    cards.forEach(c => c.style.display = '');
-  } else if (group === 'new') {
-    secMes.style.display = secTop5.style.display = '';
-    cards.forEach(c => {
-      c.style.display = c.classList.contains('ch-card-new') ? '' : 'none';
-    });
-  } else if (group === 'mes-chaines') {
-    secMes.style.display = '';
-    secTop5.style.display = 'none';
-    cards.forEach(c => c.style.display = '');
-  } else if (group === 'top5-global') {
-    secMes.style.display = 'none';
-    secTop5.style.display = '';
-    cards.forEach(c => c.style.display = '');
-  }
+  GROUP_IDS.forEach(id => {
+    const sec = document.getElementById('sec-' + id);
+    if (sec) sec.style.display = (group === 'all' || group === 'new' || group === id) ? '' : 'none';
+  });
+  cards.forEach(c => {
+    c.style.display = (group === 'new' && !c.classList.contains('ch-card-new')) ? 'none' : '';
+  });
 }
+
 </script>
 </body>
 </html>`;
@@ -532,8 +515,9 @@ function filterGroup(group) {
 
 function generateWhatsApp(results, { dateLabel, dateShort, totalNew, newThreshold }) {
   const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-  const mes3 = results.filter(r => r.group === 'mes-chaines');
-  const top5 = results.filter(r => r.group === 'top5-global');
+  const groups = (CONFIG.groups || [])
+    .map(g => ({ ...g, rows: results.filter(r => r.group === g.id) }))
+    .filter(g => g.rows.length);
 
   function channelBlock(r) {
     const lines = [`📌 *${r.name}* ${r.flag}`];
@@ -561,14 +545,12 @@ function generateWhatsApp(results, { dateLabel, dateShort, totalNew, newThreshol
     `📺 *VEILLE YOUTUBE — ${cap(dateLabel)}*`,
     `━━━━━━━━━━━━━━━━━━━━━━━`,
     ``,
-    `🇫🇷 *MES 3 CHAÎNES*`,
-    `──────────────────`,
-    ...mes3.map(channelBlock),
-    ``,
-    `🌍 *TOP 5 MONDIAL IA/BUSINESS*`,
-    `──────────────────────────────`,
-    ...top5.map(channelBlock),
-    ``,
+    ...groups.flatMap(g => [
+      `*${g.label.toUpperCase()}*`,
+      `──────────────────`,
+      ...g.rows.map(channelBlock),
+      ``,
+    ]),
     `━━━━━━━━━━━━━━━━━━━━━━━`,
     `📊 *Résumé :* ${totalNew} nouvelle(s) vidéo(s) sur ${results.length} chaînes`,
     `⏰ *Prochaine veille :* ${cap(nextDate)} à 11h00`,

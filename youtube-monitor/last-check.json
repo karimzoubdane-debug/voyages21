@@ -1,50 +1,218 @@
 {
+  "dunya-travel-world": {
+    "name": "Dunya Travel World",
+    "channelId": "UC0pMFw9LxVP4Prxt97tVUWA",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "87Z44EYG7oE"
+  },
+  "lyly-et-jay": {
+    "name": "Lyly et Jay",
+    "channelId": "UC67zZlF7YfBgQBOOTKa8iVQ",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "h48quAowAnw"
+  },
+  "claire": {
+    "name": "Claire",
+    "channelId": "UCCGCKclATIUDX9MPFrD7d6w",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "eDm0zu-XVEE"
+  },
+  "esra-vlogs": {
+    "name": "Esra vlogs",
+    "channelId": "UCEed01I20euksbWDtjgNnSQ",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "K_zf9qkhR_4"
+  },
+  "lorns-amian": {
+    "name": "لورنس عميان Lorns Amian",
+    "channelId": "UCGT3A3RapC_YrIIn0F50FYg",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "o9gcXRDbm8g"
+  },
+  "the-dungeon-dubai": {
+    "name": "The Dungeon Dubai",
+    "channelId": "UCJsXPi-JGHDvUybBpQjgK9A",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "MA886K6NbFM"
+  },
+  "uclysqme2b": {
+    "name": "فلوقات في ماليزيا 🇲🇾",
+    "channelId": "UCLYsQME2bEIeCHyRhtjfFyA",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "8hj7uWZVd7E"
+  },
+  "justinistanbul": {
+    "name": "Justinistanbul",
+    "channelId": "UCOo1VH4_Qhv9pbxQZe6qz2A",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "eqj7Bm__bHw"
+  },
+  "yassmine": {
+    "name": "الياسمين🌸Yassmine",
+    "channelId": "UCRsxODu4aTuI-1yGCtF1N1A",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "a7Ndd1tMQKg"
+  },
+  "tibi-jones": {
+    "name": "Tibi Jones",
+    "channelId": "UCSDx1E2Z9eDv0pEgW4_yubA",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "bzvQ1FBUQio"
+  },
+  "bento": {
+    "name": "Bento",
+    "channelId": "UCTB6K2PWTJYac-IdhR_t3CA",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "k_H6EOqF6rs"
+  },
+  "nour-brahimi": {
+    "name": "Nour Brahimi",
+    "channelId": "UCVqnriClC9YapZykWVEcrpw",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "ut9hbbW0Owk"
+  },
+  "nadine": {
+    "name": "Nadine | نادين",
+    "channelId": "UCWZK5WD_qI-9_u5LcgVichg",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "zipN5arhOuI"
+  },
+  "shaymaa-coco": {
+    "name": "Shaymaa CoCo",
+    "channelId": "UCX6DnIqc3Y6P6x8rkpPpNmw",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "OTNc17DCkQY"
+  },
+  "uczras2pax": {
+    "name": "الرحال إبراهيم جحاف",
+    "channelId": "UCZRas2pAxtSgbbuAyfg0yPw",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "zwUAvOKv1eA"
+  },
+  "romy": {
+    "name": "ROMY",
+    "channelId": "UC_7520oUmZ2piOVjxc3D_nw",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "-3GDOhRa_DM"
+  },
+  "baikann": {
+    "name": "Baikann",
+    "channelId": "UChxeF6_X1HVx4IA_rgBvisg",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "f4VnYtkyewc"
+  },
+  "ucomyeozr6": {
+    "name": "جزائرية في دبي",
+    "channelId": "UCoMyeOzr6wvmGRzKyEy-uWQ",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "J99RhvPT5h0"
+  },
+  "jules-en-asie": {
+    "name": "Jules en Asie",
+    "channelId": "UCsSrPXZ5r5N2OINXBIGHJ6Q",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "DO1bVXOn-zI"
+  },
+  "live-love-thailand": {
+    "name": "Live Love Thailand",
+    "channelId": "UCuy0xiNqTQKDTS9aT5LDIPQ",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "yEU-7p3IpBM"
+  },
+  "farah-vlogs": {
+    "name": "Farah Vlogs",
+    "channelId": "UCyBX7oo3IUQzR4OWYyD-v3w",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "uHyOB-_62KA"
+  },
+  "kara-and-nate": {
+    "name": "Kara and Nate",
+    "channelId": "UC4ijq8Cg-8zQKx8OH12dUSw",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "5dsRGAJQGU8"
+  },
+  "drew-binsky": {
+    "name": "Drew Binsky",
+    "channelId": "UC0Ize0RLIbGdH5x4wI45G-A",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "eSN-XOMszog"
+  },
+  "yes-theory": {
+    "name": "Yes Theory",
+    "channelId": "UCvK4bOhULCpmLabd2pDMtnA",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "Rtj5-iql5FE"
+  },
+  "flying-the-nest": {
+    "name": "Flying The Nest",
+    "channelId": "UC3CxEBKx2l38nl1_SFsC2gg",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "Be977VddFU0"
+  },
+  "eva-zu-beck": {
+    "name": "Eva zu Beck",
+    "channelId": "UCDTINI9skkeZNY2ZXnBqIkQ",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "uuJpJ6sAULE"
+  },
+  "traveling-with-kristin": {
+    "name": "Traveling with Kristin",
+    "channelId": "UCS2ezhBvebMx6BUL-4qpadQ",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "sUJM81d4xos"
+  },
+  "indigo-traveller": {
+    "name": "Indigo Traveller",
+    "channelId": "UCXulruMI7BHj3kGyosNa0jA",
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "LiIraJl0bBU"
+  },
   "enzo-webmaster": {
     "name": "Enzo Webmaster 2.0",
     "channelId": "UCBdbSVXZNwNDOK8FHJlfilw",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "81DpE0Jg-8E"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "fVFMn7bCMf8"
   },
   "eliott-meunier": {
     "name": "Eliott Meunier",
     "channelId": "UCPo1nFSGNkyzrA9yvtkEvIw",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "DAFrLYL2Omo"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "giolj6-hAP0"
   },
   "shubham-sharma": {
     "name": "Shubham Sharma",
     "channelId": "UCLKx4-_XO5sR0AO0j8ye7zQ",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "815DM3oAJGU"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "xyCMd9S_Cfg"
   },
   "matt-wolfe": {
     "name": "Matt Wolfe — Future Tools",
     "channelId": "UChpleBmo18P08aKCIgti38g",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "Db260rUuKJg"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "FxcYK5WOk1c"
   },
   "liam-ottley": {
     "name": "Liam Ottley",
     "channelId": "UCui4jxDaMb53Gdh-AZUTPAg",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "zugGJjnF6vM"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "GTkGn8drbl4"
   },
   "ali-abdaal": {
     "name": "Ali Abdaal",
     "channelId": "UCoOae5nYA7VqaXzerajD0lg",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "kV2HSEUypzM"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "w0q7fsLa26E"
   },
   "garyvee": {
     "name": "Gary Vaynerchuk — GaryVee",
     "channelId": "UCctXZhXmG-kf3tlIXgVZUlw",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "aDWcDUrFhD4"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "VxxyGx3nibE"
   },
   "greg-isenberg": {
     "name": "Greg Isenberg",
     "channelId": "UCPjNBjflYl0-HQtUvOx0Ibw",
-    "lastCheck": "2026-06-21T03:57:22.005Z",
-    "latestVideoId": "ytO3bJWofmw"
+    "lastCheck": "2026-09-15T16:58:37.938Z",
+    "latestVideoId": "_LCeJZFIsd4"
   }
 }
