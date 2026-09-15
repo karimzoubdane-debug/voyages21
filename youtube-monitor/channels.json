@@ -1,10 +1,422 @@
 {
   "_meta": {
-    "description": "Configuration des chaînes YouTube à surveiller",
-    "note_ids": "Les channel_id YouTube commencent par 'UC'. Si vide, le script tente de le résoudre automatiquement via le handle.",
-    "last_updated": "2026-05-11"
+    "description": "Chaînes YouTube surveillées — veille destinations outgoing Voyages21",
+    "note_ids": "channel_id résolu et vérifié via le flux RSS public YouTube (aucune clé API requise).",
+    "methode": "Chaînes trouvées par recherche YouTube sur les destinations réellement vendues par Voyages21, puis filtrées : flux RSS lisible + au moins 2 vidéos publiées sur les 90 derniers jours.",
+    "verifie_le": "2026-09-15",
+    "last_updated": "2026-09-15"
   },
+  "groups": [
+    {
+      "id": "voyage-fr",
+      "label": "Créateurs francophones"
+    },
+    {
+      "id": "voyage-ar",
+      "label": "Créateurs arabophones"
+    },
+    {
+      "id": "voyage-monde",
+      "label": "Créateurs internationaux"
+    },
+    {
+      "id": "tech-archive",
+      "label": "Veille tech (archive)"
+    }
+  ],
   "channels": [
+    {
+      "id": "dunya-travel-world",
+      "name": "Dunya Travel World",
+      "channel_id": "UC0pMFw9LxVP4Prxt97tVUWA",
+      "category": "Voyage · Turquie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-08-07",
+      "videos_90j": 15
+    },
+    {
+      "id": "lyly-et-jay",
+      "name": "Lyly et Jay",
+      "channel_id": "UC67zZlF7YfBgQBOOTKa8iVQ",
+      "category": "Voyage · Vietnam",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Vietnam"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-11",
+      "videos_90j": 15
+    },
+    {
+      "id": "claire",
+      "name": "Claire",
+      "channel_id": "UCCGCKclATIUDX9MPFrD7d6w",
+      "category": "Voyage · Vietnam",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Vietnam"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-12",
+      "videos_90j": 15
+    },
+    {
+      "id": "esra-vlogs",
+      "name": "Esra vlogs",
+      "channel_id": "UCEed01I20euksbWDtjgNnSQ",
+      "category": "Voyage · Turquie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-07-20",
+      "videos_90j": 2
+    },
+    {
+      "id": "lorns-amian",
+      "name": "لورنس عميان Lorns Amian",
+      "channel_id": "UCGT3A3RapC_YrIIn0F50FYg",
+      "category": "Voyage · Malaisie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Malaisie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-12",
+      "videos_90j": 15
+    },
+    {
+      "id": "the-dungeon-dubai",
+      "name": "The Dungeon Dubai",
+      "channel_id": "UCJsXPi-JGHDvUybBpQjgK9A",
+      "category": "Voyage · Dubaï / Golfe",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Dubaï / Golfe"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-14",
+      "videos_90j": 8
+    },
+    {
+      "id": "uclysqme2b",
+      "name": "فلوقات في ماليزيا 🇲🇾",
+      "channel_id": "UCLYsQME2bEIeCHyRhtjfFyA",
+      "category": "Voyage · Malaisie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Malaisie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-02",
+      "videos_90j": 5
+    },
+    {
+      "id": "justinistanbul",
+      "name": "Justinistanbul",
+      "channel_id": "UCOo1VH4_Qhv9pbxQZe6qz2A",
+      "category": "Voyage · Turquie",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-06-25",
+      "videos_90j": 2
+    },
+    {
+      "id": "yassmine",
+      "name": "الياسمين🌸Yassmine",
+      "channel_id": "UCRsxODu4aTuI-1yGCtF1N1A",
+      "category": "Voyage · Turquie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-09",
+      "videos_90j": 15
+    },
+    {
+      "id": "tibi-jones",
+      "name": "Tibi Jones",
+      "channel_id": "UCSDx1E2Z9eDv0pEgW4_yubA",
+      "category": "Voyage · Turquie",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-13",
+      "videos_90j": 4
+    },
+    {
+      "id": "bento",
+      "name": "Bento",
+      "channel_id": "UCTB6K2PWTJYac-IdhR_t3CA",
+      "category": "Voyage · Vietnam",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Vietnam"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-08-27",
+      "videos_90j": 2
+    },
+    {
+      "id": "nour-brahimi",
+      "name": "Nour Brahimi",
+      "channel_id": "UCVqnriClC9YapZykWVEcrpw",
+      "category": "Voyage · Malaisie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Malaisie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-13",
+      "videos_90j": 3
+    },
+    {
+      "id": "nadine",
+      "name": "Nadine | نادين",
+      "channel_id": "UCWZK5WD_qI-9_u5LcgVichg",
+      "category": "Voyage · Turquie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-07-17",
+      "videos_90j": 8
+    },
+    {
+      "id": "shaymaa-coco",
+      "name": "Shaymaa CoCo",
+      "channel_id": "UCX6DnIqc3Y6P6x8rkpPpNmw",
+      "category": "Voyage · Turquie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Turquie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-13",
+      "videos_90j": 15
+    },
+    {
+      "id": "uczras2pax",
+      "name": "الرحال إبراهيم جحاف",
+      "channel_id": "UCZRas2pAxtSgbbuAyfg0yPw",
+      "category": "Voyage · Malaisie",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Malaisie"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-15",
+      "videos_90j": 15
+    },
+    {
+      "id": "romy",
+      "name": "ROMY",
+      "channel_id": "UC_7520oUmZ2piOVjxc3D_nw",
+      "category": "Voyage · Vietnam",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Vietnam"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-15",
+      "videos_90j": 15
+    },
+    {
+      "id": "baikann",
+      "name": "Baikann",
+      "channel_id": "UChxeF6_X1HVx4IA_rgBvisg",
+      "category": "Voyage · Thaïlande",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Thaïlande"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-13",
+      "videos_90j": 15
+    },
+    {
+      "id": "ucomyeozr6",
+      "name": "جزائرية في دبي",
+      "channel_id": "UCoMyeOzr6wvmGRzKyEy-uWQ",
+      "category": "Voyage · Dubaï / Golfe",
+      "flag": "🇸🇦",
+      "langue": "ar",
+      "destinations": [
+        "Dubaï / Golfe"
+      ],
+      "group": "voyage-ar",
+      "derniere_video": "2026-09-15",
+      "videos_90j": 13
+    },
+    {
+      "id": "jules-en-asie",
+      "name": "Jules en Asie",
+      "channel_id": "UCsSrPXZ5r5N2OINXBIGHJ6Q",
+      "category": "Voyage · Thaïlande",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Thaïlande"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-14",
+      "videos_90j": 15
+    },
+    {
+      "id": "live-love-thailand",
+      "name": "Live Love Thailand",
+      "channel_id": "UCuy0xiNqTQKDTS9aT5LDIPQ",
+      "category": "Voyage · Thaïlande",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Thaïlande"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-09",
+      "videos_90j": 15
+    },
+    {
+      "id": "farah-vlogs",
+      "name": "Farah Vlogs",
+      "channel_id": "UCyBX7oo3IUQzR4OWYyD-v3w",
+      "category": "Voyage · Dubaï / Golfe",
+      "flag": "🇫🇷",
+      "langue": "fr",
+      "destinations": [
+        "Dubaï / Golfe"
+      ],
+      "group": "voyage-fr",
+      "derniere_video": "2026-09-14",
+      "videos_90j": 3
+    },
+    {
+      "id": "kara-and-nate",
+      "name": "Kara and Nate",
+      "channel_id": "UC4ijq8Cg-8zQKx8OH12dUSw",
+      "category": "Voyage · Tour du monde · aventure",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-09-12",
+      "videos_90j": null
+    },
+    {
+      "id": "drew-binsky",
+      "name": "Drew Binsky",
+      "channel_id": "UC0Ize0RLIbGdH5x4wI45G-A",
+      "category": "Voyage · Destinations rares · rencontres",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-09-14",
+      "videos_90j": null
+    },
+    {
+      "id": "yes-theory",
+      "name": "Yes Theory",
+      "channel_id": "UCvK4bOhULCpmLabd2pDMtnA",
+      "category": "Voyage · Aventure · formats viraux",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-08-30",
+      "videos_90j": null
+    },
+    {
+      "id": "flying-the-nest",
+      "name": "Flying The Nest",
+      "channel_id": "UC3CxEBKx2l38nl1_SFsC2gg",
+      "category": "Voyage · Asie · famille",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-09-13",
+      "videos_90j": null
+    },
+    {
+      "id": "eva-zu-beck",
+      "name": "Eva zu Beck",
+      "channel_id": "UCDTINI9skkeZNY2ZXnBqIkQ",
+      "category": "Voyage · Destinations émergentes",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-09-11",
+      "videos_90j": null
+    },
+    {
+      "id": "traveling-with-kristin",
+      "name": "Traveling with Kristin",
+      "channel_id": "UCS2ezhBvebMx6BUL-4qpadQ",
+      "category": "Voyage · Expatriation · coût de la vie",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-09-13",
+      "videos_90j": null
+    },
+    {
+      "id": "indigo-traveller",
+      "name": "Indigo Traveller",
+      "channel_id": "UCXulruMI7BHj3kGyosNa0jA",
+      "category": "Voyage · Destinations hors radar",
+      "flag": "🇬🇧",
+      "langue": "en",
+      "destinations": [
+        "Monde"
+      ],
+      "group": "voyage-monde",
+      "derniere_video": "2026-06-30",
+      "videos_90j": null
+    },
     {
       "id": "enzo-webmaster",
       "name": "Enzo Webmaster 2.0",
@@ -12,7 +424,7 @@
       "channel_id": "UCBdbSVXZNwNDOK8FHJlfilw",
       "category": "Web · SEO · Freelance",
       "flag": "🇫🇷",
-      "group": "mes-chaines"
+      "group": "tech-archive"
     },
     {
       "id": "eliott-meunier",
@@ -21,7 +433,7 @@
       "channel_id": "UCPo1nFSGNkyzrA9yvtkEvIw",
       "category": "Productivité · Business",
       "flag": "🇫🇷",
-      "group": "mes-chaines"
+      "group": "tech-archive"
     },
     {
       "id": "shubham-sharma",
@@ -30,7 +442,7 @@
       "channel_id": "UCLKx4-_XO5sR0AO0j8ye7zQ",
       "category": "IA · Web · Automatisation",
       "flag": "🇫🇷",
-      "group": "mes-chaines"
+      "group": "tech-archive"
     },
     {
       "id": "matt-wolfe",
@@ -39,7 +451,7 @@
       "channel_id": "UChpleBmo18P08aKCIgti38g",
       "category": "IA · Outils · News",
       "flag": "🇺🇸",
-      "group": "top5-global"
+      "group": "tech-archive"
     },
     {
       "id": "liam-ottley",
@@ -48,7 +460,7 @@
       "channel_id": "UCui4jxDaMb53Gdh-AZUTPAg",
       "category": "IA · Agence · Automatisation",
       "flag": "🇬🇧",
-      "group": "top5-global"
+      "group": "tech-archive"
     },
     {
       "id": "ali-abdaal",
@@ -57,7 +469,7 @@
       "channel_id": "UCoOae5nYA7VqaXzerajD0lg",
       "category": "Productivité · Business · Revenu passif",
       "flag": "🇬🇧",
-      "group": "top5-global"
+      "group": "tech-archive"
     },
     {
       "id": "garyvee",
@@ -66,7 +478,7 @@
       "channel_id": "UCctXZhXmG-kf3tlIXgVZUlw",
       "category": "Marketing · Entrepreneuriat",
       "flag": "🇺🇸",
-      "group": "top5-global"
+      "group": "tech-archive"
     },
     {
       "id": "greg-isenberg",
@@ -75,7 +487,7 @@
       "channel_id": "UCPjNBjflYl0-HQtUvOx0Ibw",
       "category": "Startup · IA · Business",
       "flag": "🇨🇦",
-      "group": "top5-global"
+      "group": "tech-archive"
     }
   ],
   "schedule": {
