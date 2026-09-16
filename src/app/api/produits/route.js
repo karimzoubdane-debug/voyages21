@@ -30,7 +30,7 @@ async function denyIfNotOwner(request, headers) {
 }
 
 async function readManifest() {
-  const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {}, groupOrder: {} };
+  const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {}, groupOrder: {}, overrides: {} };
   const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
   const hit = blobs.find((b) => b.pathname === MANIFEST);
   if (!hit) return { ...empty };
@@ -105,7 +105,7 @@ export async function GET(request) {
     }
     // La file « en attente » (soumissions équipe) est visible du propriétaire et de l'équipe.
     const role = await getRole(request);
-    const out = { custom: data.custom || {}, status: data.status || {}, order: data.order || {}, groupOrder: data.groupOrder || {}, role: role || '' };
+    const out = { custom: data.custom || {}, status: data.status || {}, order: data.order || {}, groupOrder: data.groupOrder || {}, overrides: data.overrides || {}, role: role || '' };
     if (role === 'owner' || role === 'team') out.pending = data.pending || {};
     // La corbeille n'est visible QUE du propriétaire.
     if (role === 'owner') out.trash = data.trash || {};
@@ -171,6 +171,27 @@ export async function PUT(request) {
   try {
     const body = await request.json();
     const data = await readManifest();
+
+    // Correctif sur un voyage du CATALOGUE DE BASE (codé dans data.js).
+    // On ne touche pas au fichier du site : on range les champs corrigés dans
+    // `overrides`, et render.js les applique par-dessus la fiche d'origine.
+    // Un champ vide EFFACE le correctif de ce champ (retour à la valeur d'origine).
+    if (body.type === 'override' && body.slug) {
+      if (!body.product || typeof body.product !== 'object') {
+        return Response.json({ ok: false, error: 'product requis' }, { status: 400, headers: corsHeaders });
+      }
+      if (!data.overrides) data.overrides = {};
+      const clean = {};
+      for (const [k, val] of Object.entries(body.product)) {
+        if (val === '' || val === null || val === undefined) continue;
+        if (Array.isArray(val) && val.length === 0) continue;
+        clean[k] = val;
+      }
+      if (Object.keys(clean).length === 0) delete data.overrides[body.slug];
+      else data.overrides[body.slug] = { ...clean, updatedAt: new Date().toISOString() };
+      await writeManifest(data);
+      return Response.json({ ok: true, slug: body.slug }, { headers: corsHeaders });
+    }
 
     // Restaurer un voyage depuis la corbeille → PROPRIÉTAIRE uniquement.
     if (body.action === 'restore' && body.slug) {

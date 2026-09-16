@@ -4,10 +4,36 @@
    Pour une page en arabe : data.voyage.lang = "ar" et la coquille <html dir="rtl" lang="ar">. */
 (function () {
     var slug = document.body.getAttribute("data-voyage");
-    var v = (window.VOYAGES || {})[slug];
+    var base = (window.VOYAGES || {})[slug];
     var app = document.getElementById("app");
-    if (!v) { app.innerHTML = '<p style="padding:2rem;text-align:center">Voyage introuvable.</p>'; return; }
+    if (!base) { app.innerHTML = '<p style="padding:2rem;text-align:center">Voyage introuvable.</p>'; return; }
 
+    // ── Correctifs saisis dans l'admin ────────────────────────────────────
+    // Les voyages du catalogue de base vivent dans data.js (fichier du site).
+    // Quand l'admin en corrige un (prix, dates, textes…), le correctif est rangé
+    // dans `overrides` du manifeste — data.js n'est jamais touché.
+    // On dessine TOUT DE SUITE avec la fiche d'origine (aucun ralentissement
+    // pour les voyages non corrigés), puis on redessine une seule fois si un
+    // correctif existe pour ce voyage.
+    var redessine = false;
+    start(base);
+    fetch("/api/produits", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .then(function (m) {
+            var corr = (m && m.overrides && m.overrides[slug]) || null;
+            if (!corr || redessine) return;
+            redessine = true;
+            var fusion = {};
+            Object.keys(base).forEach(function (k) { fusion[k] = base[k]; });
+            Object.keys(corr).forEach(function (k) {
+                if (k === "updatedAt") return;
+                fusion[k] = corr[k];
+            });
+            start(fusion);
+        })
+        .catch(function () {});
+
+    function start(v) {
     var WHATSAPP = v.whatsapp || "212614152686";
     var MEDIA_KEY_ALIASES = {
         "modal-omra": "modal-omra-mouharram",
@@ -372,4 +398,6 @@
     document.addEventListener("click", function (event) {
         var fan = document.getElementById("contactBar");
         if (fan && fan.classList.contains("open") && !fan.contains(event.target)) fan.classList.remove("open");
-    });})();
+    });
+    }
+})();
