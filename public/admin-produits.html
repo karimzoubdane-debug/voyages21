@@ -521,7 +521,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 // ─────────────────────────────────────────
 // État global
 // ─────────────────────────────────────────
-var manifest = { custom: {}, status: {}, order: {}, groupOrder: {} };
+var manifest = { custom: {}, status: {}, order: {}, groupOrder: {}, overrides: {} };
 var currentVisible = []; // slugs affichés dans l'ordre courant (pour Monter/Descendre)
 
 // Destinations qui ont plusieurs cadrans (sous-sections) réordonnables.
@@ -535,6 +535,7 @@ var uploadedPhotos = []; // { url, file }
 var uploadedPdf = null;  // { file, url, existing }
 var activeBadgeBtn = 'none';
 var currentEditSlug = null;
+var currentEditIsStatic = false;
 var _pdfUploadTargetSlug = null; // pour l'upload inline depuis une ligne produit
 var activeGroup = 'all';
 var activeMarocSub = 'all';
@@ -595,6 +596,7 @@ function reload() {
       manifest.custom = data.custom || {};
       manifest.status = data.status || {};
       manifest.pending = data.pending || {};
+      manifest.overrides = data.overrides || {};
       manifest.trash = data.trash || {};
       manifest.order = data.order || {};
       manifest.groupOrder = data.groupOrder || {};
@@ -1080,7 +1082,7 @@ function renderProdRow(slug, v, source, idx, total) {
     + '<button class="mini" type="button" onclick="toggleDrawer(\'' + esc(slug) + '\')">Statut</button>'
     + '<a class="btn mini" href="' + (source === 'custom' ? '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug) : '/voyages/' + esc(slug) + '.html') + '" target="_blank" rel="noopener" title="Voir la fiche sur le site">👁 Voir</a>'
     + renderPdfBtn(slug, v, source)
-    + (source === 'custom' ? '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>' : '')
+    + '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>'
     + (source === 'custom'
         ? '<button class="mini danger" type="button" onclick="confirmDelete(\'' + esc(slug) + '\')">Supprimer</button>'
         : ((manifest.status[slug] && manifest.status[slug].removed)
@@ -1444,7 +1446,18 @@ function openNewForm() {
 
 function editProduct(slug) {
   var v = manifest.custom[slug];
-  if (!v) { toast('Produit introuvable'); return; }
+  // Fiche du CATALOGUE DE BASE (data.js) : on part de la fiche d'origine et on
+  // pose par-dessus le correctif déjà enregistré, s'il y en a un.
+  currentEditIsStatic = false;
+  if (!v) {
+    var origine = (window.VOYAGES || {})[slug];
+    if (!origine) { toast('Produit introuvable'); return; }
+    currentEditIsStatic = true;
+    var corr = (manifest.overrides || {})[slug] || {};
+    v = {};
+    Object.keys(origine).forEach(function (k) { v[k] = origine[k]; });
+    Object.keys(corr).forEach(function (k) { if (k !== 'updatedAt') v[k] = corr[k]; });
+  }
   currentEditSlug = slug;
   document.getElementById('editSlug').value = slug;
   var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = 'none';
@@ -1505,6 +1518,7 @@ function editProduct(slug) {
 
 function cancelForm() {
   currentEditSlug = null;
+  currentEditIsStatic = false;
   uploadedPhotos = [];
   clearFormPdf();
   document.getElementById('productForm').reset();
@@ -1590,8 +1604,10 @@ async function submitForm(e) {
 
   var slug = currentEditSlug || slugify(product.title);
   var method = currentEditSlug ? 'PUT' : 'POST';
-  var body = currentEditSlug
-    ? JSON.stringify({ slug: slug, product: product })
+  // Fiche du catalogue de base : on enregistre un CORRECTIF (override).
+  // data.js n'est jamais modifié ; le site applique le correctif par-dessus.
+  var body = currentEditIsStatic
+    ? JSON.stringify({ type: 'override', slug: slug, product: product })
     : JSON.stringify({ slug: slug, product: product });
 
   try {
