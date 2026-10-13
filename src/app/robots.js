@@ -18,6 +18,7 @@ export default function robots() {
         '/admin-cover.html',
         '/admin-medias.html',
         '/formulaire-voyage.html',
+        '/beijing',
       ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
