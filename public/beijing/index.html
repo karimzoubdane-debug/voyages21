@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Pékin — mes liens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;600&family=Noto+Sans+SC:wght@500&display=swap">
+<style>
+/* Layout : une colonne pour téléphone, un bloc par jour, liens en « pastilles » à toucher. */
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --ink:#1E1C1A; --muted:#5E625C; --line:#DFE1DB;
+  --lacquer:#A1302A; --jade:#2D6A5C; --chip:#EEF1EC;
+  --f-display:"Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --f-body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-zh:"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#141615; --surface:#1D201E; --ink:#ECEDE9; --muted:#A2A79F; --line:#2E322F;
+  --lacquer:#E0675E; --jade:#6FB7A5; --chip:#252926; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#141615; --surface:#1D201E; --ink:#ECEDE9; --muted:#A2A79F; --line:#2E322F;
+  --lacquer:#E0675E; --jade:#6FB7A5; --chip:#252926; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font:16px/1.5 var(--f-body); padding-inline:16px; padding-block:18px 40px}
+.wrap{max-width:720px; margin:0 auto; display:grid; gap:14px}
+h1{font:700 clamp(28px,7vw,40px)/1.05 var(--f-display); margin:0; text-wrap:balance}
+h2{font:700 20px/1.2 var(--f-display); margin:0; text-wrap:balance}
+h3{font:600 16px/1.3 var(--f-body); margin:0}
+.eyebrow{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--lacquer); font-weight:600}
+.lead{color:var(--muted); margin:6px 0 0; max-width:62ch}
+.zh{font-family:var(--f-zh); font-weight:500}
+.alert{border:1.5px solid var(--lacquer); border-radius:12px; padding:12px 14px; background:var(--surface)}
+.alert b{color:var(--lacquer)}
+section{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:12px}
+.day{display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap}
+.day small{color:var(--muted)}
+.item{display:grid; gap:7px; padding-top:12px; border-top:1px solid var(--line); min-width:0}
+.item:first-of-type{border-top:0; padding-top:0}
+.meta{color:var(--muted); font-size:14px}
+.links{display:flex; flex-wrap:wrap; gap:8px}
+.links a{display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:8px 13px; border-radius:999px; background:var(--chip); color:var(--ink); text-decoration:none; font-weight:600; font-size:14.5px; border:1px solid var(--line)}
+.links a.buy{background:var(--lacquer); border-color:var(--lacquer); color:#fff}
+.links a.map{color:var(--jade)}
+.links a:focus-visible, .copy:focus-visible{outline:3px solid var(--jade); outline-offset:2px}
+.taxi{display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:var(--chip); border-radius:10px; padding:8px 10px}
+.taxi .zh{font-size:19px; user-select:all}
+.copy{font:600 13px var(--f-body); border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:8px; padding:6px 10px; cursor:pointer; min-height:34px}
+.eat{display:grid; gap:6px; padding:10px; border:1px solid var(--line); border-radius:10px; min-width:0}
+.eh{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px} .eh b{flex:1 1 220px}
+.px{font-weight:700; color:var(--jade); font-variant-numeric:tabular-nums; white-space:nowrap}
+.tag{font-size:12px; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--chip); color:var(--jade); border:1px solid var(--line)}
+.tot{background:var(--chip); border-radius:10px; padding:10px 12px; font-size:15px} .tot b{color:var(--ink)}
+.meta a{color:var(--jade)}
+.foot{color:var(--muted); font-size:13px}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+<style>html{color-scheme:light} body{margin:0} img{max-width:100%}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Pékin · 13 → 18 octobre 2026</div>
+    <h1>Mes liens utiles à Pékin</h1>
+    <p class="lead">Tickets, cartes, voitures, trains et restaurants sans porc, jour par jour, avec la dépense par personne. Touchez « Copier » sous un nom chinois pour le montrer au chauffeur. Les liens de carte ouvrent une recherche dans Amap ou Google Maps.</p>
+  </header>
+
+  <div class="alert"><b>À faire maintenant :</b> réserver la Cité interdite pour dimanche 18. Aucun billet sur place ; réservation 7 jours avant à 20h, avec votre passeport.
+    <div class="links" style="margin-top:8px"><a class="buy" href="https://ticket.dpm.org.cn/" target="_blank" rel="noopener">Billets officiels Cité interdite</a><a href="https://www.dpm.org.cn/singles_detail/259831.html" target="_blank" rel="noopener">Règles de réservation</a></div>
+  </div>
+
+  <section aria-labelledby="t-move">
+    <h2 id="t-move">Se déplacer</h2>
+    <div class="item">
+      <h3>Mon hôtel — The Kunlun Beijing</h3>
+      <div class="meta">2 South Xin Yuan Road, Chaoyang · le salon est à environ 1 km</div>
+      <div class="links">
+        <a class="map" href="https://uri.amap.com/marker?position=116.459941,39.948272&name=The%20Kunlun%20Beijing&src=v21-veille&coordinate=gaode&callnative=1" target="_blank" rel="noopener">Hôtel sur Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=The%20Kunlun%20Beijing" target="_blank" rel="noopener">Hôtel sur Google Maps</a>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Salon COITM — National Agricultural Exhibition Center</h3>
+      <div class="taxi"><span class="zh" id="zh-coitm">全国农业展览馆</span><button class="copy" type="button" data-copy="zh-coitm">Copier</button></div>
+      <div class="links">
+        <a class="map" href="https://uri.amap.com/search?keyword=%E5%85%A8%E5%9B%BD%E5%86%9C%E4%B8%9A%E5%B1%95%E8%A7%88%E9%A6%86&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E5%85%A8%E5%9B%BD%E5%86%9C%E4%B8%9A%E5%B1%95%E8%A7%88%E9%A6%86" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Voiture, taxi, train</h3>
+      <div class="meta">Amap (en anglais) commande aussi des taxis et VTC. DiDi est l'appli de VTC la plus utilisée. Train pour Xi'an : 12306 (officiel) ou Trip.com.</div>
+      <div class="links">
+        <a href="https://www.didiglobal.com/" target="_blank" rel="noopener">DiDi</a>
+        <a href="https://www.amap.com/" target="_blank" rel="noopener">Amap</a>
+        <a class="buy" href="https://www.12306.cn/en/index.html" target="_blank" rel="noopener">Trains 12306</a>
+        <a href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trains Trip.com</a>
+      </div>
+      <div class="meta">Métro : environ 3 à 8 CNY le trajet. Le soir, vérifiez l'heure du dernier métro de votre ligne.</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-13">
+    <div class="day"><h2 id="t-13">Mardi 13 — Grande Muraille</h2><small>départ 11h00 · le soir, SKP</small></div>
+    <div class="item">
+      <h3>Mutianyu</h3>
+      <div class="meta">Entrée 40 · navette 15–20 · téléphérique A/R 120–140 CNY. 1h30 à 2h30 de route. Demandez l'heure de la dernière descente au guichet.</div>
+      <div class="taxi"><span class="zh" id="zh-mty">慕田峪长城游客服务中心</span><button class="copy" type="button" data-copy="zh-mty">Copier</button></div>
+      <div class="links">
+        <a class="buy" href="https://en.mutianyugreatwall.com/" target="_blank" rel="noopener">Site officiel Mutianyu</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E6%85%95%E7%94%B0%E5%B3%AA%E9%95%BF%E5%9F%8E%E6%B8%B8%E5%AE%A2%E6%9C%8D%E5%8A%A1%E4%B8%AD%E5%BF%83%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%85%95%E7%94%B0%E5%B3%AA%E9%95%BF%E5%9F%8E%E6%B8%B8%E5%AE%A2%E6%9C%8D%E5%8A%A1%E4%B8%AD%E5%BF%83%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+  <div class="item">
+      <h3>Le soir : centre commercial SKP Beijing (Shin Kong Place) · 19h00 à 22h00</h3>
+      <div class="meta">Le centre commercial le plus vendeur de Chine en 2021 (24,7 milliards de yuans de ventes). Six étages, grandes marques internationales. Ouvert de 10h00 à 22h00. 87 Jianguo Road, Chaoyang · environ 4,6 km à vol d'oiseau de l'hôtel. Visite limitée à 3 heures : vous y dînez aussi.</div>
+      <div class="taxi"><span class="zh" id="zh-skp">北京SKP</span><button class="copy" type="button" data-copy="zh-skp">Copier</button></div>
+      <div class="links">
+        <a href="http://www.skp-beijing.com/" target="_blank" rel="noopener">Site officiel SKP</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E5%8C%97%E4%BA%ACSKP&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beijing%20SKP" target="_blank" rel="noopener">Google Maps</a>
+        <a href="https://english.visitbeijing.com.cn/article/47OO1UTJEim" target="_blank" rel="noopener">Source : Visit Beijing</a>
+        <a href="https://govt.chinadaily.com.cn/s/202206/30/WS62cb9f83498ea2749279cdfd/top-10-chinese-shopping-malls-by-sales-volume.html" target="_blank" rel="noopener">Source : China Daily</a>
+      </div>
+    </div>
+    <div class="item"><h3>🍽 Où manger à Mutianyu</h3><div class="eat"><div class="eh"><b>The Schoolhouse at Mutianyu (café-restaurant du village)</b><span class="px">prix récent non trouvé (un plat 59 CNY dans un ancien article)</span></div>
+<div class="meta">Village de Mutianyu, près du centre d'accueil · cuisine occidentale et locale · <a href="https://www.beijing-kids.com/?p=20557" target="_blank" rel="noopener">source : Beijing Kids</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=The%20Schoolhouse%20Mutianyu&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> entrée 40 + navette 15–20 + téléphérique 120–140 = <b>175 à 200 CNY</b>, plus le déjeuner, le dîner à SKP, vos achats et la voiture (prix affiché dans DiDi ou Amap).</div>
+  </section>
+
+  <section aria-labelledby="t-14">
+    <div class="day"><h2 id="t-14">Mercredi 14 — salon de thé Lao She</h2><small>après le salon, vers 17h</small></div>
+    <div class="item">
+      <h3>Lao She Teahouse, Qianmen</h3>
+      <div class="meta">Dès 180 CNY (180–580 selon la formule). Choisissez la séance du soir.</div>
+      <div class="taxi"><span class="zh" id="zh-ls">老舍茶馆</span><button class="copy" type="button" data-copy="zh-ls">Copier</button></div>
+      <div class="links">
+        <a class="buy" href="https://www.laosheteahouse.com/" target="_blank" rel="noopener">Programme officiel</a>
+        <a href="https://www.klook.com/" target="_blank" rel="noopener">Comparer sur Klook</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E8%80%81%E8%88%8D%E8%8C%B6%E9%A6%86%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E8%88%8D%E8%8C%B6%E9%A6%86%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+  <div class="item"><h3>🍽 Où manger près du salon de thé Lao She</h3><div class="eat"><div class="eh"><b>Quanjude, maison mère de Hepingmen — canard laqué</b><span class="px">180 à 260 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-qjd">全聚德和平门总店</span><button class="copy" type="button" data-copy="e-qjd">Copier</button></div>
+<div class="meta">14 Qianmen Xidajie, Xicheng · à deux pas du salon de thé · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=全聚德和平门总店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div><div class="eat"><div class="eh"><b>Gongdelin, restaurant végétarien de Qianmen</b><span class="tag">végétarien</span><span class="px">95 à 120 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-gdl">功德林素菜饭庄前门店</span><button class="copy" type="button" data-copy="e-gdl">Copier</button></div>
+<div class="meta">Jia 2 Qianmen Dongdajie, Dongcheng · environ 800 m à vol d'oiseau · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=功德林素菜饭庄前门店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> dîner 95–260 + spectacle 180–580 = <b>275 à 840 CNY</b>, plus le taxi.</div>
+  </section>
+
+  <section aria-labelledby="t-15">
+    <div class="day"><h2 id="t-15">Jeudi 15 — acrobaties</h2><small>après le salon, vers 17h</small></div>
+    <div class="item">
+      <h3>Red Theatre, 44 Xingfu Street, Dongcheng</h3>
+      <div class="meta">Environ 1 h · places 220 / 300 / 380 / 550 / 700 CNY.</div>
+      <div class="taxi"><span class="zh" id="zh-red">红剧场</span><button class="copy" type="button" data-copy="zh-red">Copier</button></div>
+      <div class="links">
+        <a class="buy" href="https://theatrebeijing.com/discount_tickets/acrobatic_red_theatre/" target="_blank" rel="noopener">Billets et prix</a>
+        <a href="https://whlyj.beijing.gov.cn/ggfw/wh/202009/t20200904_1997492.html" target="_blank" rel="noopener">Programme de la semaine</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E7%BA%A2%E5%89%A7%E5%9C%BA%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E7%BA%A2%E5%89%A7%E5%9C%BA%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+  <div class="item"><h3>🍽 Où manger avant les acrobaties</h3><div class="eat"><div class="eh"><b>Kaorouliu, barbecue pékinois (maison mère de Jinyuchi)</b><span class="tag">halal</span><span class="px">100 à 120 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-krl">烤肉刘金鱼池创始总店</span><button class="copy" type="button" data-copy="e-krl">Copier</button></div>
+<div class="meta">2 Jinyuchi Zhongjie, Dongcheng · environ 2 km à vol d'oiseau du théâtre · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=烤肉刘金鱼池创始总店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> dîner 100–120 + spectacle 220–700 = <b>320 à 820 CNY</b>, plus le taxi.</div>
+  </section>
+
+  <section aria-labelledby="t-16">
+    <div class="day"><h2 id="t-16">Vendredi 16 — lacs de Shichahai</h2><small>après le salon, vers 17h</small></div>
+    <div class="item">
+      <h3>Pont Yinding, Shichahai et Houhai</h3>
+      <div class="meta">Gratuit. Métro ligne 8, station Shichahai. Au bar, demandez d'abord le menu, le droit d'entrée et le minimum de consommation.</div>
+      <div class="taxi"><span class="zh" id="zh-sch">什刹海银锭桥</span><button class="copy" type="button" data-copy="zh-sch">Copier</button></div>
+      <div class="links">
+        <a class="map" href="https://uri.amap.com/search?keyword=%E4%BB%80%E5%88%B9%E6%B5%B7%E9%93%B6%E9%94%AD%E6%A1%A5%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E4%BB%80%E5%88%B9%E6%B5%B7%E9%93%B6%E9%94%AD%E6%A1%A5%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+        <a href="https://english.beijing.gov.cn/" target="_blank" rel="noopener">Infos Beijing (officiel)</a>
+      </div>
+    </div>
+  <div class="item"><h3>🍽 Où manger au bord des lacs</h3><div class="eat"><div class="eh"><b>Ya'er Liji, fondue d'agneau (maison mère de Shichahai)</b><span class="tag">halal</span><span class="px">85 à 110 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-yel">清真鸦儿李记涮肉什刹海创始门店</span><button class="copy" type="button" data-copy="e-yel">Copier</button></div>
+<div class="meta">2 Qianhai Dongyan, Xicheng · à environ 200 m du pont Yinding · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=清真鸦儿李记涮肉什刹海创始门店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div><div class="eat"><div class="eh"><b>Kaorouji, agneau grillé (maison historique)</b><span class="tag">halal</span><span class="px">environ 130 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-krj">烤肉季</span><button class="copy" type="button" data-copy="e-krj">Copier</button></div>
+<div class="meta">14 Qianhai Dongyan, Xicheng · au bord du lac · <a href="https://english.visitbeijing.com.cn/article/47ONQSKCRQr" target="_blank" rel="noopener">source : Visit Beijing (officiel)</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=烤肉季&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> dîner 85–130 + métro 3–8 = <b>90 à 140 CNY</b>, plus un verre au bar si vous voulez (demandez les prix avant).</div>
+  </section>
+
+  <section aria-labelledby="t-17">
+    <div class="day"><h2 id="t-17">Samedi 17 — canard laqué et MO Bar</h2><small>après le salon, vers 17h</small></div>
+    <div class="item">
+      <h3>MO Bar, 5e étage, Mandarin Oriental Wangfujing</h3>
+      <div class="meta">269 Wangfujing Street · boissons 200–400 CNY. Réservez la terrasse. Canard laqué avant : 150–300 CNY par personne.</div>
+      <div class="links">
+        <a class="buy" href="https://www.mandarinoriental.com/en/beijing/wangfujing" target="_blank" rel="noopener">Réserver (hôtel)</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E5%8C%97%E4%BA%AC%E7%8E%8B%E5%BA%9C%E4%BA%95%E6%96%87%E5%8D%8E%E4%B8%9C%E6%96%B9%E9%85%92%E5%BA%97MO%20Bar%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E4%BA%AC%E7%8E%8B%E5%BA%9C%E4%BA%95%E6%96%87%E5%8D%8E%E4%B8%9C%E6%96%B9%E9%85%92%E5%BA%97MO%20Bar%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+  <div class="item"><h3>🍽 Où manger à Wangfujing</h3><div class="eat"><div class="eh"><b>Donglaishun, fondue d'agneau (maison mère de Wangfujing)</b><span class="tag">halal</span><span class="px">100 à 130 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-dls">东来顺饭庄王府井总店</span><button class="copy" type="button" data-copy="e-dls">Copier</button></div>
+<div class="meta">5e étage, Beijing APM, 138 Wangfujing Dajie · même rue que le MO Bar · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=东来顺饭庄王府井总店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div><div class="eat"><div class="eh"><b>Siji Minfu, canard laqué (branche de la Cité interdite)</b><span class="px">130 à 180 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-sjm">四季民福故宫店</span><button class="copy" type="button" data-copy="e-sjm">Copier</button></div>
+<div class="meta">11 Nanchizi Dajie, Dongcheng · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=四季民福故宫店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> dîner 100–180 + MO Bar 200–400 = <b>300 à 580 CNY</b>, plus le taxi.</div>
+  </section>
+
+  <section aria-labelledby="t-18">
+    <div class="day"><h2 id="t-18">Dimanche 18 — Cité interdite, puis Xi'an</h2><small>départ 9h30</small></div>
+    <div class="item">
+      <h3>Cité interdite — entrée porte Wumen (sud)</h3>
+      <div class="meta">60 CNY · 3 à 4 h · arrivez 60 à 90 min avant votre heure d'entrée.</div>
+      <div class="taxi"><span class="zh" id="zh-fc">故宫博物院午门</span><button class="copy" type="button" data-copy="zh-fc">Copier</button></div>
+      <div class="links">
+        <a class="buy" href="https://ticket.dpm.org.cn/" target="_blank" rel="noopener">Billets officiels</a>
+        <a href="https://www.dpm.org.cn/singles_detail/257830.html" target="_blank" rel="noopener">Tarifs</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2%E5%8D%88%E9%97%A8%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2%E5%8D%88%E9%97%A8%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Colline de Jingshan — porte sud</h3>
+      <div class="meta">2 CNY · 45 à 75 min · juste en face de la sortie nord de la Cité interdite.</div>
+      <div class="taxi"><span class="zh" id="zh-js">景山公园南门</span><button class="copy" type="button" data-copy="zh-js">Copier</button></div>
+      <div class="links">
+        <a href="https://bjaxiscloud.com.cn/mobile/address/details/1558142840655642625.html" target="_blank" rel="noopener">Infos officielles</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E6%99%AF%E5%B1%B1%E5%85%AC%E5%9B%AD%E5%8D%97%E9%97%A8%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%99%AF%E5%B1%B1%E5%85%AC%E5%9B%AD%E5%8D%97%E9%97%A8%20%E5%8C%97%E4%BA%AC" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Train pour Xi'an</h3>
+      <div class="links">
+        <a class="buy" href="https://www.12306.cn/en/index.html" target="_blank" rel="noopener">Trains 12306</a>
+        <a href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trains Trip.com</a>
+      </div>
+    </div>
+  <div class="item"><h3>🍽 Où déjeuner après la Cité interdite</h3><div class="eat"><div class="eh"><b>Siji Minfu, canard laqué (branche de la Cité interdite)</b><span class="px">130 à 180 CNY / pers.</span></div>
+<div class="taxi"><span class="zh" id="e-sjm2">四季民福故宫店</span><button class="copy" type="button" data-copy="e-sjm2">Copier</button></div>
+<div class="meta">11 Nanchizi Dajie, Dongcheng · côté est de la Cité interdite · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
+<div class="links"><a class="map" href="https://uri.amap.com/search?keyword=四季民福故宫店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> Cité interdite 60 + Jingshan 2 + déjeuner 130–180 = <b>192 à 242 CNY</b>, plus le taxi et le train pour Xi'an.</div>
+  </section>
+
+  <section aria-labelledby="t-more">
+    <h2 id="t-more">En réserve, si un créneau se libère</h2>
+    <div class="item">
+      <h3>Temple du Ciel — porte Est</h3>
+      <div class="meta">Billet combiné 34 CNY · métro ligne 5, Tiantandongmen.</div>
+      <div class="links">
+        <a href="https://s.visitbeijing.com.cn/" target="_blank" rel="noopener">Portail tourisme Beijing</a>
+        <a class="map" href="https://uri.amap.com/search?keyword=%E5%A4%A9%E5%9D%9B%E5%85%AC%E5%9B%AD%E4%B8%9C%E9%97%A8%20%E5%8C%97%E4%BA%AC&city=%E5%8C%97%E4%BA%AC&citylimit=true" target="_blank" rel="noopener">Amap</a>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Bière artisanale — Jing-A Longfusi</h3>
+      <div class="meta">38 Qianliang Hutong, Dongcheng · 100–200 CNY par personne.</div>
+      <div class="links"><a href="https://jingabrewing.com/" target="_blank" rel="noopener">Jing-A</a></div>
+    </div>
+  </section>
+
+  <p class="foot">Prix des visites, adresses et noms chinois des lieux : <i>Beijing Travel Roadbook</i>, édition du 15 septembre 2026. Restaurants : source indiquée sous chacun (prix moyens publiés, à confirmer sur place). Les taxis ne sont pas comptés : leur prix s'affiche dans DiDi ou Amap. Les prix changent : vérifiez avant de payer. Préparé par Voyages21 le 13 octobre 2026.</p>
+</div>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach(function(b){
+  b.addEventListener("click", function(){
+    var el=document.getElementById(b.getAttribute("data-copy")), t=el?el.textContent:"";
+    function ok(){ b.textContent="Copié ✓"; setTimeout(function(){ b.textContent="Copier"; },1800); }
+    function select(){ var r=document.createRange(); r.selectNodeContents(el); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent="Sélectionné"; }
+    try{ navigator.clipboard.writeText(t).then(ok, select); }catch(e){ select(); }
+  });
+});
+</script>
+
+</body>
+</html>

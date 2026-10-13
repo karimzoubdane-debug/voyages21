@@ -6,6 +6,8 @@ const nextConfig = {
       // qui contient déjà sa propre vidéo hero. L'URL reste "/" (pas de
       // redirection) : Google lit l'accueil, pas l'ancien splash vidéo.
       { source: '/', destination: '/design/homepage-v2-luxe.html' },
+      // Page perso « Pékin — mes liens » (séjour du 13 au 18/10/2026), non indexée.
+      { source: '/beijing', destination: '/beijing/index.html' },
     ]
   },
 };
