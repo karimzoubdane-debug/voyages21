@@ -62,6 +62,16 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 .desc{border:1px solid var(--line); border-radius:10px; padding:0 12px; background:var(--surface)}
 .desc summary{cursor:pointer; font-weight:600; padding:9px 0; min-height:40px; display:flex; align-items:center; color:var(--jade)}
 .desc p{margin:0 0 6px} .desc small{display:block; color:var(--muted); padding-bottom:10px}
+.fold{border:1px solid var(--line); border-radius:12px; background:var(--surface)}
+.fold>summary{list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; min-height:48px; font:600 16px/1.3 var(--f-body)}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary .plus{flex:none; width:28px; height:28px; border-radius:50%; display:grid; place-items:center; background:var(--lacquer); color:#fff; font:700 20px/1 var(--f-body); animation:clignote 1.4s ease-in-out infinite}
+.fold[open]>summary .plus{animation:none; background:var(--jade)}
+.fold[open]>summary .plus::before{content:"−"} .fold[open]>summary .plus span{display:none}
+.fold>.in{display:grid; gap:10px; padding:0 14px 14px}
+.item.folded{padding-top:0; border-top:0}
+@keyframes clignote{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.35; transform:scale(.88)}}
+@media (prefers-reduced-motion: reduce){ .fold>summary .plus{animation:none} }
 .foot{color:var(--muted); font-size:13px}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
@@ -290,6 +300,28 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
   <p class="foot">Prix des visites, adresses et noms chinois des lieux : <i>Beijing Travel Roadbook</i>, édition du 15 septembre 2026. Restaurants : source indiquée sous chacun (prix moyens publiés, à confirmer sur place). Les taxis ne sont pas comptés : leur prix s'affiche dans DiDi ou Amap. Les prix changent : vérifiez avant de payer. Préparé par Voyages21 le 13 octobre 2026.</p>
 </div>
 
+<script>
+// Chaque lieu : seul son titre reste visible ; le détail se déplie avec le « + » qui clignote.
+(function(){
+  function plier(titre, noeuds, hote){
+    var d=document.createElement("details"); d.className="fold";
+    var su=document.createElement("summary"); var t=document.createElement("span"); t.textContent=titre;
+    var pl=document.createElement("span"); pl.className="plus"; pl.setAttribute("aria-hidden","true"); pl.innerHTML="<span>+</span>";
+    su.appendChild(t); su.appendChild(pl); d.appendChild(su);
+    var inn=document.createElement("div"); inn.className="in"; noeuds.forEach(function(n){ inn.appendChild(n); }); d.appendChild(inn);
+    return d;
+  }
+  document.querySelectorAll("section .item").forEach(function(it){
+    var h=it.querySelector(":scope > h3"); if(!h) return;
+    var reste=Array.prototype.slice.call(it.children).filter(function(c){ return c!==h; });
+    if(!reste.length) return;
+    var d=plier(h.textContent.trim(), reste); it.innerHTML=""; it.appendChild(d); it.classList.add("folded");
+  });
+  document.querySelectorAll("section .tot").forEach(function(t){
+    var d=plier("💰 Dépense du jour, par personne", []); t.parentNode.insertBefore(d, t); d.querySelector(".in").appendChild(t);
+  });
+})();
+</script>
 <script>
 document.querySelectorAll("[data-copy]").forEach(function(b){
   b.addEventListener("click", function(){
