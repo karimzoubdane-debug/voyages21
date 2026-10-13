@@ -50,10 +50,15 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 .copy{font:600 13px var(--f-body); border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:8px; padding:6px 10px; cursor:pointer; min-height:34px}
 .eat{display:grid; gap:6px; padding:10px; border:1px solid var(--line); border-radius:10px; min-width:0}
 .eh{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px} .eh b{flex:1 1 220px}
-.px{font-weight:700; color:var(--jade); font-variant-numeric:tabular-nums; white-space:nowrap}
+.px{font-weight:700; color:var(--jade); font-variant-numeric:tabular-nums}
 .tag{font-size:12px; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--chip); color:var(--jade); border:1px solid var(--line)}
 .tot{background:var(--chip); border-radius:10px; padding:10px 12px; font-size:15px} .tot b{color:var(--ink)}
 .meta a{color:var(--jade)}
+.car{display:flex; gap:8px; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -14px; padding:0 14px 4px; scrollbar-width:thin}
+.car figure{flex:0 0 86%; max-width:520px; margin:0; scroll-snap-align:start; display:grid; gap:4px}
+.car img{width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:10px; background:var(--chip); display:block}
+.car figcaption{font-size:12px; color:var(--muted)} .car figcaption a{color:var(--jade)}
+.car:empty{display:none}
 .foot{color:var(--muted); font-size:13px}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
@@ -63,48 +68,15 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Pékin · 13 → 18 octobre 2026</div>
+    <div class="eyebrow">Pékin · à partir d'aujourd'hui, mardi 13 octobre</div>
     <h1>Mes liens utiles à Pékin</h1>
-    <p class="lead">Tickets, cartes, voitures, trains et restaurants sans porc, jour par jour, avec la dépense par personne. Touchez « Copier » sous un nom chinois pour le montrer au chauffeur. Les liens de carte ouvrent une recherche dans Amap ou Google Maps.</p>
+    <p class="lead">Jour par jour à partir d'aujourd'hui : photos, billets, cartes, restaurants sans porc et dépense par personne. Touchez « Copier » sous un nom chinois pour le montrer au chauffeur. Les liens de carte ouvrent une recherche dans Amap ou Google Maps.</p>
   </header>
-
-  <div class="alert"><b>À faire maintenant :</b> réserver la Cité interdite pour dimanche 18. Aucun billet sur place ; réservation 7 jours avant à 20h, avec votre passeport.
-    <div class="links" style="margin-top:8px"><a class="buy" href="https://ticket.dpm.org.cn/" target="_blank" rel="noopener">Billets officiels Cité interdite</a><a href="https://www.dpm.org.cn/singles_detail/259831.html" target="_blank" rel="noopener">Règles de réservation</a></div>
-  </div>
-
-  <section aria-labelledby="t-move">
-    <h2 id="t-move">Se déplacer</h2>
-    <div class="item">
-      <h3>Mon hôtel — The Kunlun Beijing</h3>
-      <div class="meta">2 South Xin Yuan Road, Chaoyang · le salon est à environ 1 km</div>
-      <div class="links">
-        <a class="map" href="https://uri.amap.com/marker?position=116.459941,39.948272&name=The%20Kunlun%20Beijing&src=v21-veille&coordinate=gaode&callnative=1" target="_blank" rel="noopener">Hôtel sur Amap</a>
-        <a class="map" href="https://www.google.com/maps/search/?api=1&query=The%20Kunlun%20Beijing" target="_blank" rel="noopener">Hôtel sur Google Maps</a>
-      </div>
-    </div>
-    <div class="item">
-      <h3>Salon COITM — National Agricultural Exhibition Center</h3>
-      <div class="taxi"><span class="zh" id="zh-coitm">全国农业展览馆</span><button class="copy" type="button" data-copy="zh-coitm">Copier</button></div>
-      <div class="links">
-        <a class="map" href="https://uri.amap.com/search?keyword=%E5%85%A8%E5%9B%BD%E5%86%9C%E4%B8%9A%E5%B1%95%E8%A7%88%E9%A6%86&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a>
-        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E5%85%A8%E5%9B%BD%E5%86%9C%E4%B8%9A%E5%B1%95%E8%A7%88%E9%A6%86" target="_blank" rel="noopener">Google Maps</a>
-      </div>
-    </div>
-    <div class="item">
-      <h3>Voiture, taxi, train</h3>
-      <div class="meta">Amap (en anglais) commande aussi des taxis et VTC. DiDi est l'appli de VTC la plus utilisée. Train pour Xi'an : 12306 (officiel) ou Trip.com.</div>
-      <div class="links">
-        <a href="https://www.didiglobal.com/" target="_blank" rel="noopener">DiDi</a>
-        <a href="https://www.amap.com/" target="_blank" rel="noopener">Amap</a>
-        <a class="buy" href="https://www.12306.cn/en/index.html" target="_blank" rel="noopener">Trains 12306</a>
-        <a href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trains Trip.com</a>
-      </div>
-      <div class="meta">Métro : environ 3 à 8 CNY le trajet. Le soir, vérifiez l'heure du dernier métro de votre ligne.</div>
-    </div>
-  </section>
 
   <section aria-labelledby="t-13">
     <div class="day"><h2 id="t-13">Mardi 13 — Grande Muraille</h2><small>départ 11h00 · le soir, SKP</small></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Great_Wall_of_China_July_2006.JPG/960px-Great_Wall_of_China_July_2006.JPG" alt="La Grande Muraille à Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La Grande Muraille à Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Great_Wall_of_China_July_2006.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/The_Mutianyu_section_of_the_Great_Wall_of_China.jpg/960px-The_Mutianyu_section_of_the_Great_Wall_of_China.jpg" alt="Le tronçon de Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le tronçon de Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:The_Mutianyu_section_of_the_Great_Wall_of_China.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Great_wall_of_china-mutianyu_4.JPG/960px-Great_wall_of_china-mutianyu_4.JPG" alt="Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Great_wall_of_china-mutianyu_4.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Mutianyu_Great_Wall_%286222519140%29.jpg/960px-Mutianyu_Great_Wall_%286222519140%29.jpg" alt="Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Mutianyu_Great_Wall_(6222519140).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    
     <div class="item">
       <h3>Mutianyu</h3>
       <div class="meta">Entrée 40 · navette 15–20 · téléphérique A/R 120–140 CNY. 1h30 à 2h30 de route. Demandez l'heure de la dernière descente au guichet.</div>
@@ -134,6 +106,8 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-14">
     <div class="day"><h2 id="t-14">Mercredi 14 — salon de thé Lao She</h2><small>après le salon, vers 17h</small></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/IMGP0739_%2819415725842%29.jpg/640px-IMGP0739_%2819415725842%29.jpg" alt="Opéra de Pékin (illustration du type de spectacle)" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Opéra de Pékin (illustration du type de spectacle) · <a href="https://commons.wikimedia.org/wiki/File:IMGP0739_(19415725842).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Carving_up_our_duck.jpg/640px-Carving_up_our_duck.jpg" alt="Découpe du canard chez Quanjude" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Découpe du canard chez Quanjude · <a href="https://commons.wikimedia.org/wiki/File:Carving_up_our_duck.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    
     <div class="item">
       <h3>Lao She Teahouse, Qianmen</h3>
       <div class="meta">Dès 180 CNY (180–580 selon la formule). Choisissez la séance du soir.</div>
@@ -175,6 +149,8 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-16">
     <div class="day"><h2 id="t-16">Vendredi 16 — lacs de Shichahai</h2><small>après le salon, vers 17h</small></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Beijinglakeview.jpg/640px-Beijinglakeview.jpg" alt="Le lac de Houhai" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le lac de Houhai · <a href="https://commons.wikimedia.org/wiki/File:Beijinglakeview.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    
     <div class="item">
       <h3>Pont Yinding, Shichahai et Houhai</h3>
       <div class="meta">Gratuit. Métro ligne 8, station Shichahai. Au bar, demandez d'abord le menu, le droit d'entrée et le minimum de consommation.</div>
@@ -196,6 +172,8 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-17">
     <div class="day"><h2 id="t-17">Samedi 17 — canard laqué et MO Bar</h2><small>après le salon, vers 17h</small></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Beijing_Wangfujing_20170806.jpg/640px-Beijing_Wangfujing_20170806.jpg" alt="La rue Wangfujing" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La rue Wangfujing · <a href="https://commons.wikimedia.org/wiki/File:Beijing_Wangfujing_20170806.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Peking_Duck%2C_2014_%2802%29.jpg/640px-Peking_Duck%2C_2014_%2802%29.jpg" alt="Canard laqué de Pékin" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Canard laqué de Pékin · <a href="https://commons.wikimedia.org/wiki/File:Peking_Duck,_2014_(02).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    
     <div class="item">
       <h3>MO Bar, 5e étage, Mandarin Oriental Wangfujing</h3>
       <div class="meta">269 Wangfujing Street · boissons 200–400 CNY. Réservez la terrasse. Canard laqué avant : 150–300 CNY par personne.</div>
@@ -216,6 +194,11 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-18">
     <div class="day"><h2 id="t-18">Dimanche 18 — Cité interdite, puis Xi'an</h2><small>départ 9h30</small></div>
+    <div class="alert"><b>À réserver dès aujourd'hui :</b> réserver la Cité interdite pour dimanche 18. Aucun billet sur place ; réservation 7 jours avant à 20h, avec votre passeport.
+    <div class="links" style="margin-top:8px"><a class="buy" href="https://ticket.dpm.org.cn/" target="_blank" rel="noopener">Billets officiels Cité interdite</a><a href="https://www.dpm.org.cn/singles_detail/259831.html" target="_blank" rel="noopener">Règles de réservation</a></div>
+  </div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/The_Forbidden_City_-_View_from_Coal_Hill.jpg/960px-The_Forbidden_City_-_View_from_Coal_Hill.jpg" alt="La Cité interdite vue de la colline de Jingshan" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La Cité interdite vue de la colline de Jingshan · <a href="https://commons.wikimedia.org/wiki/File:The_Forbidden_City_-_View_from_Coal_Hill.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Sunset_of_the_Forbidden_City_2006.JPG/960px-Sunset_of_the_Forbidden_City_2006.JPG" alt="Coucher de soleil sur la Cité interdite" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Coucher de soleil sur la Cité interdite · <a href="https://commons.wikimedia.org/wiki/File:Sunset_of_the_Forbidden_City_2006.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg/960px-Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg" alt="Cité interdite" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Cité interdite · <a href="https://commons.wikimedia.org/wiki/File:Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Jingshan_park.jpg/640px-Jingshan_park.jpg" alt="Parc Jingshan" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Parc Jingshan · <a href="https://commons.wikimedia.org/wiki/File:Jingshan_park.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    
     <div class="item">
       <h3>Cité interdite — entrée porte Wumen (sud)</h3>
       <div class="meta">60 CNY · 3 à 4 h · arrivez 60 à 90 min avant votre heure d'entrée.</div>
@@ -248,6 +231,29 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 <div class="taxi"><span class="zh" id="e-sjm2">四季民福故宫店</span><button class="copy" type="button" data-copy="e-sjm2">Copier</button></div>
 <div class="meta">11 Nanchizi Dajie, Dongcheng · côté est de la Cité interdite · <a href="https://www.chinabound.cn/s/202607/20/WS6a5dd48f498e23165e0710cb/where-to-eat-in-beijing-dining-options-for-every-taste-and-budget.html" target="_blank" rel="noopener">source : China Bound, juillet 2026</a></div>
 <div class="links"><a class="map" href="https://uri.amap.com/search?keyword=四季民福故宫店&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a></div></div></div><div class="tot"><b>Dépense du jour, par personne :</b> Cité interdite 60 + Jingshan 2 + déjeuner 130–180 = <b>192 à 242 CNY</b>, plus le taxi et le train pour Xi'an.</div>
+  </section>
+
+  <section aria-labelledby="t-move">
+    <h2 id="t-move">Se déplacer</h2>
+    <div class="item">
+      <h3>Salon COITM — National Agricultural Exhibition Center</h3>
+      <div class="taxi"><span class="zh" id="zh-coitm">全国农业展览馆</span><button class="copy" type="button" data-copy="zh-coitm">Copier</button></div>
+      <div class="links">
+        <a class="map" href="https://uri.amap.com/search?keyword=%E5%85%A8%E5%9B%BD%E5%86%9C%E4%B8%9A%E5%B1%95%E8%A7%88%E9%A6%86&city=%E5%8C%97%E4%BA%AC&view=map&callnative=1" target="_blank" rel="noopener">Amap</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E5%85%A8%E5%9B%BD%E5%86%9C%E4%B8%9A%E5%B1%95%E8%A7%88%E9%A6%86" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Voiture, taxi, train</h3>
+      <div class="meta">Amap (en anglais) commande aussi des taxis et VTC. DiDi est l'appli de VTC la plus utilisée. Train pour Xi'an : 12306 (officiel) ou Trip.com.</div>
+      <div class="links">
+        <a href="https://www.didiglobal.com/" target="_blank" rel="noopener">DiDi</a>
+        <a href="https://www.amap.com/" target="_blank" rel="noopener">Amap</a>
+        <a class="buy" href="https://www.12306.cn/en/index.html" target="_blank" rel="noopener">Trains 12306</a>
+        <a href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trains Trip.com</a>
+      </div>
+      <div class="meta">Métro : environ 3 à 8 CNY le trajet. Le soir, vérifiez l'heure du dernier métro de votre ligne.</div>
+    </div>
   </section>
 
   <section aria-labelledby="t-more">
