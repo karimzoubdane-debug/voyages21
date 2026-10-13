@@ -59,6 +59,19 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 .car img{width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:10px; background:var(--chip); display:block}
 .car figcaption{font-size:12px; color:var(--muted)} .car figcaption a{color:var(--jade)}
 .car:empty{display:none}
+.desc{border:1px solid var(--line); border-radius:10px; padding:0 12px; background:var(--surface)}
+.desc summary{cursor:pointer; font-weight:600; padding:9px 0; min-height:40px; display:flex; align-items:center; color:var(--jade)}
+.desc p{margin:0 0 6px} .desc small{display:block; color:var(--muted); padding-bottom:10px}
+.fold{border:1px solid var(--line); border-radius:12px; background:var(--surface)}
+.fold>summary{list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; min-height:48px; font:600 16px/1.3 var(--f-body)}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary .plus{flex:none; width:28px; height:28px; border-radius:50%; display:grid; place-items:center; background:var(--lacquer); color:#fff; font:700 20px/1 var(--f-body); animation:clignote 1.4s ease-in-out infinite}
+.fold[open]>summary .plus{animation:none; background:var(--jade)}
+.fold[open]>summary .plus::before{content:"−"} .fold[open]>summary .plus span{display:none}
+.fold>.in{display:grid; gap:10px; padding:0 14px 14px}
+.item.folded{padding-top:0; border-top:0}
+@keyframes clignote{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.35; transform:scale(.88)}}
+@media (prefers-reduced-motion: reduce){ .fold>summary .plus{animation:none} }
 .foot{color:var(--muted); font-size:13px}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
@@ -75,10 +88,11 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-13">
     <div class="day"><h2 id="t-13">Mardi 13 — Grande Muraille</h2><small>départ 11h00 · le soir, SKP</small></div>
-    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Great_Wall_of_China_July_2006.JPG/960px-Great_Wall_of_China_July_2006.JPG" alt="La Grande Muraille à Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La Grande Muraille à Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Great_Wall_of_China_July_2006.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/The_Mutianyu_section_of_the_Great_Wall_of_China.jpg/960px-The_Mutianyu_section_of_the_Great_Wall_of_China.jpg" alt="Le tronçon de Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le tronçon de Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:The_Mutianyu_section_of_the_Great_Wall_of_China.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Great_wall_of_china-mutianyu_4.JPG/960px-Great_wall_of_china-mutianyu_4.JPG" alt="Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Great_wall_of_china-mutianyu_4.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Mutianyu_Great_Wall_%286222519140%29.jpg/960px-Mutianyu_Great_Wall_%286222519140%29.jpg" alt="Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Mutianyu_Great_Wall_(6222519140).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="/beijing/img/mut1.jpg" alt="La Grande Muraille à Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La Grande Muraille à Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Great_Wall_of_China_July_2006.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/mut2.jpg" alt="Le tronçon de Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le tronçon de Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:The_Mutianyu_section_of_the_Great_Wall_of_China.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/mut3.jpg" alt="Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Great_wall_of_china-mutianyu_4.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/mut4.jpg" alt="Mutianyu" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Mutianyu · <a href="https://commons.wikimedia.org/wiki/File:Mutianyu_Great_Wall_(6222519140).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
     
     <div class="item">
       <h3>Mutianyu</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Des remparts restaurés suivent des crêtes boisées au nord-est de Pékin. Choisissez un tronçon de tour en tour à votre rythme et profitez des points de vue, sans en faire une randonnée d'endurance. Le téléphérique et le toboggan sont deux systèmes différents ; le vent, l'orage ou le gel peuvent les arrêter.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">Entrée 40 · navette 15–20 · téléphérique A/R 120–140 CNY. 1h30 à 2h30 de route. Demandez l'heure de la dernière descente au guichet.</div>
       <div class="taxi"><span class="zh" id="zh-mty">慕田峪长城游客服务中心</span><button class="copy" type="button" data-copy="zh-mty">Copier</button></div>
       <div class="links">
@@ -89,6 +103,7 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
     </div>
   <div class="item">
       <h3>Le soir : centre commercial SKP Beijing (Shin Kong Place) · 19h00 à 22h00</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Shin Kong Place : six étages de boutiques, avec de grandes marques internationales comme Valentino, Prada et Gucci. Les marques y organisent aussi des événements avec des célébrités.</p><small>Source : <a href="https://english.visitbeijing.com.cn/article/47OO1UTJEim" target="_blank" rel="noopener">Visit Beijing</a></small></details>
       <div class="meta">Le centre commercial le plus vendeur de Chine en 2021 (24,7 milliards de yuans de ventes). Six étages, grandes marques internationales. Ouvert de 10h00 à 22h00. 87 Jianguo Road, Chaoyang · environ 4,6 km à vol d'oiseau de l'hôtel. Visite limitée à 3 heures : vous y dînez aussi.</div>
       <div class="taxi"><span class="zh" id="zh-skp">北京SKP</span><button class="copy" type="button" data-copy="zh-skp">Copier</button></div>
       <div class="links">
@@ -106,10 +121,11 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-14">
     <div class="day"><h2 id="t-14">Mercredi 14 — salon de thé Lao She</h2><small>après le salon, vers 17h</small></div>
-    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/IMGP0739_%2819415725842%29.jpg/640px-IMGP0739_%2819415725842%29.jpg" alt="Opéra de Pékin (illustration du type de spectacle)" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Opéra de Pékin (illustration du type de spectacle) · <a href="https://commons.wikimedia.org/wiki/File:IMGP0739_(19415725842).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Carving_up_our_duck.jpg/640px-Carving_up_our_duck.jpg" alt="Découpe du canard chez Quanjude" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Découpe du canard chez Quanjude · <a href="https://commons.wikimedia.org/wiki/File:Carving_up_our_duck.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="/beijing/img/opera.jpg" alt="Opéra de Pékin (illustration du type de spectacle)" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Opéra de Pékin (illustration du type de spectacle) · <a href="https://commons.wikimedia.org/wiki/File:IMGP0739_(19415725842).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/duckcut.jpg" alt="Découpe du canard chez Quanjude" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Découpe du canard chez Quanjude · <a href="https://commons.wikimedia.org/wiki/File:Carving_up_our_duck.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
     
     <div class="item">
       <h3>Lao She Teahouse, Qianmen</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Un spectacle de salon de thé qui réunit plusieurs arts de scène traditionnels. Le thé et les en-cas compris varient selon la formule. Une partie du spectacle est parlée en mandarin.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">Dès 180 CNY (180–580 selon la formule). Choisissez la séance du soir.</div>
       <div class="taxi"><span class="zh" id="zh-ls">老舍茶馆</span><button class="copy" type="button" data-copy="zh-ls">Copier</button></div>
       <div class="links">
@@ -132,6 +148,7 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
     <div class="day"><h2 id="t-15">Jeudi 15 — acrobaties</h2><small>après le salon, vers 17h</small></div>
     <div class="item">
       <h3>Red Theatre, 44 Xingfu Street, Dongcheng</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Un spectacle visuel, idéal si l'on ne parle pas mandarin : le programme officiel de Pékin y annonce une production acrobatique d'environ 1 heure. Ne la confondez pas avec les anciennes publicités pour l'ancien spectacle de kung-fu ; vérifiez le titre et la séance sur votre billet.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">Environ 1 h · places 220 / 300 / 380 / 550 / 700 CNY.</div>
       <div class="taxi"><span class="zh" id="zh-red">红剧场</span><button class="copy" type="button" data-copy="zh-red">Copier</button></div>
       <div class="links">
@@ -149,10 +166,11 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-16">
     <div class="day"><h2 id="t-16">Vendredi 16 — lacs de Shichahai</h2><small>après le salon, vers 17h</small></div>
-    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Beijinglakeview.jpg/640px-Beijinglakeview.jpg" alt="Le lac de Houhai" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le lac de Houhai · <a href="https://commons.wikimedia.org/wiki/File:Beijinglakeview.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="/beijing/img/houhai.jpg" alt="Le lac de Houhai" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le lac de Houhai · <a href="https://commons.wikimedia.org/wiki/File:Beijinglakeview.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
     
     <div class="item">
       <h3>Pont Yinding, Shichahai et Houhai</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Des ruelles historiques et des lacs reliés entre eux : l'une des promenades les plus vivantes de Pékin. Calme le matin, l'ambiance change le soir avec les restaurants illuminés et les bars musicaux.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">Gratuit. Métro ligne 8, station Shichahai. Au bar, demandez d'abord le menu, le droit d'entrée et le minimum de consommation.</div>
       <div class="taxi"><span class="zh" id="zh-sch">什刹海银锭桥</span><button class="copy" type="button" data-copy="zh-sch">Copier</button></div>
       <div class="links">
@@ -172,10 +190,11 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
 
   <section aria-labelledby="t-17">
     <div class="day"><h2 id="t-17">Samedi 17 — canard laqué et MO Bar</h2><small>après le salon, vers 17h</small></div>
-    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Beijing_Wangfujing_20170806.jpg/640px-Beijing_Wangfujing_20170806.jpg" alt="La rue Wangfujing" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La rue Wangfujing · <a href="https://commons.wikimedia.org/wiki/File:Beijing_Wangfujing_20170806.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Peking_Duck%2C_2014_%2802%29.jpg/640px-Peking_Duck%2C_2014_%2802%29.jpg" alt="Canard laqué de Pékin" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Canard laqué de Pékin · <a href="https://commons.wikimedia.org/wiki/File:Peking_Duck,_2014_(02).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="/beijing/img/wfj.jpg" alt="La rue Wangfujing" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La rue Wangfujing · <a href="https://commons.wikimedia.org/wiki/File:Beijing_Wangfujing_20170806.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/duck.jpg" alt="Canard laqué de Pékin" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Canard laqué de Pékin · <a href="https://commons.wikimedia.org/wiki/File:Peking_Duck,_2014_(02).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
     
     <div class="item">
       <h3>MO Bar, 5e étage, Mandarin Oriental Wangfujing</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Un bar d'hôtel raffiné, avec une terrasse qui domine le centre historique. Réservez pour avoir une place dehors ; la vue et l'accès à la terrasse dépendent de la météo et des disponibilités.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">269 Wangfujing Street · boissons 200–400 CNY. Réservez la terrasse. Canard laqué avant : 150–300 CNY par personne.</div>
       <div class="links">
         <a class="buy" href="https://www.mandarinoriental.com/en/beijing/wangfujing" target="_blank" rel="noopener">Réserver (hôtel)</a>
@@ -197,10 +216,11 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
     <div class="alert"><b>À réserver dès aujourd'hui :</b> réserver la Cité interdite pour dimanche 18. Aucun billet sur place ; réservation 7 jours avant à 20h, avec votre passeport.
     <div class="links" style="margin-top:8px"><a class="buy" href="https://ticket.dpm.org.cn/" target="_blank" rel="noopener">Billets officiels Cité interdite</a><a href="https://www.dpm.org.cn/singles_detail/259831.html" target="_blank" rel="noopener">Règles de réservation</a></div>
   </div>
-    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/The_Forbidden_City_-_View_from_Coal_Hill.jpg/960px-The_Forbidden_City_-_View_from_Coal_Hill.jpg" alt="La Cité interdite vue de la colline de Jingshan" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La Cité interdite vue de la colline de Jingshan · <a href="https://commons.wikimedia.org/wiki/File:The_Forbidden_City_-_View_from_Coal_Hill.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Sunset_of_the_Forbidden_City_2006.JPG/960px-Sunset_of_the_Forbidden_City_2006.JPG" alt="Coucher de soleil sur la Cité interdite" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Coucher de soleil sur la Cité interdite · <a href="https://commons.wikimedia.org/wiki/File:Sunset_of_the_Forbidden_City_2006.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg/960px-Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg" alt="Cité interdite" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Cité interdite · <a href="https://commons.wikimedia.org/wiki/File:Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Jingshan_park.jpg/640px-Jingshan_park.jpg" alt="Parc Jingshan" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Parc Jingshan · <a href="https://commons.wikimedia.org/wiki/File:Jingshan_park.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
+    <div class="car" tabindex="0" aria-label="Photos"><figure><img src="/beijing/img/fc1.jpg" alt="La Cité interdite vue de la colline de Jingshan" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>La Cité interdite vue de la colline de Jingshan · <a href="https://commons.wikimedia.org/wiki/File:The_Forbidden_City_-_View_from_Coal_Hill.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/fc2.jpg" alt="Coucher de soleil sur la Cité interdite" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Coucher de soleil sur la Cité interdite · <a href="https://commons.wikimedia.org/wiki/File:Sunset_of_the_Forbidden_City_2006.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/fc3.jpg" alt="Cité interdite" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Cité interdite · <a href="https://commons.wikimedia.org/wiki/File:Beijing_forbidden_city_Belvedere_of_Embodying_Benevolence-20071018-RM-142403.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure><figure><img src="/beijing/img/jingshan.jpg" alt="Parc Jingshan" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Parc Jingshan · <a href="https://commons.wikimedia.org/wiki/File:Jingshan_park.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
     
     <div class="item">
       <h3>Cité interdite — entrée porte Wumen (sud)</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Une immense suite de salles de cérémonie et de cours résidentielles, au cœur de l'ancienne capitale impériale. Concentrez-vous sur l'axe central et une aile latérale plutôt que d'essayer de tout voir. Visite du sud vers le nord, sortie par la porte Shenwumen.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">60 CNY · 3 à 4 h · arrivez 60 à 90 min avant votre heure d'entrée.</div>
       <div class="taxi"><span class="zh" id="zh-fc">故宫博物院午门</span><button class="copy" type="button" data-copy="zh-fc">Copier</button></div>
       <div class="links">
@@ -212,6 +232,7 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
     </div>
     <div class="item">
       <h3>Colline de Jingshan — porte sud</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Une petite colline juste au nord du palais, avec une vue large sur ses toits de tuiles et sur l'axe central de Pékin. La courte montée jusqu'au pavillon Wanchun est l'une des meilleures façons de comprendre le plan historique de la ville.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">2 CNY · 45 à 75 min · juste en face de la sortie nord de la Cité interdite.</div>
       <div class="taxi"><span class="zh" id="zh-js">景山公园南门</span><button class="copy" type="button" data-copy="zh-js">Copier</button></div>
       <div class="links">
@@ -259,7 +280,9 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
   <section aria-labelledby="t-more">
     <h2 id="t-more">En réserve, si un créneau se libère</h2>
     <div class="item">
+      <div class="car" tabindex="0" aria-label="Photos"><figure><img src="/beijing/img/tiantan.jpg" alt="Le Temple du Ciel" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Le Temple du Ciel · <a href="https://commons.wikimedia.org/wiki/File:Temple_of_Heaven_20160323_01.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure></div>
       <h3>Temple du Ciel — porte Est</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Des toits vernissés bleus, de larges terrasses de cérémonie et des allées de vieux cyprès. La salle des Prières pour de bonnes moissons est le clou de la visite, mais les allées du parc méritent qu'on prenne son temps.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">Billet combiné 34 CNY · métro ligne 5, Tiantandongmen.</div>
       <div class="links">
         <a href="https://s.visitbeijing.com.cn/" target="_blank" rel="noopener">Portail tourisme Beijing</a>
@@ -268,6 +291,7 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
     </div>
     <div class="item">
       <h3>Bière artisanale — Jing-A Longfusi</h3>
+      <details class="desc"><summary>📖 Description</summary><p>Une halte bière artisanale détendue dans le quartier Dongsi / Longfusi, pour une soirée simple après les visites du centre. Ouvert à partir de 11h jusque tard ; vérifiez l'heure de fermeture du jour.</p><small>Source : <i>Beijing Travel Roadbook</i> (15/09/2026)</small></details>
       <div class="meta">38 Qianliang Hutong, Dongcheng · 100–200 CNY par personne.</div>
       <div class="links"><a href="https://jingabrewing.com/" target="_blank" rel="noopener">Jing-A</a></div>
     </div>
@@ -276,6 +300,28 @@ section{background:var(--surface); border:1px solid var(--line); border-radius:1
   <p class="foot">Prix des visites, adresses et noms chinois des lieux : <i>Beijing Travel Roadbook</i>, édition du 15 septembre 2026. Restaurants : source indiquée sous chacun (prix moyens publiés, à confirmer sur place). Les taxis ne sont pas comptés : leur prix s'affiche dans DiDi ou Amap. Les prix changent : vérifiez avant de payer. Préparé par Voyages21 le 13 octobre 2026.</p>
 </div>
 
+<script>
+// Chaque lieu : seul son titre reste visible ; le détail se déplie avec le « + » qui clignote.
+(function(){
+  function plier(titre, noeuds, hote){
+    var d=document.createElement("details"); d.className="fold";
+    var su=document.createElement("summary"); var t=document.createElement("span"); t.textContent=titre;
+    var pl=document.createElement("span"); pl.className="plus"; pl.setAttribute("aria-hidden","true"); pl.innerHTML="<span>+</span>";
+    su.appendChild(t); su.appendChild(pl); d.appendChild(su);
+    var inn=document.createElement("div"); inn.className="in"; noeuds.forEach(function(n){ inn.appendChild(n); }); d.appendChild(inn);
+    return d;
+  }
+  document.querySelectorAll("section .item").forEach(function(it){
+    var h=it.querySelector(":scope > h3"); if(!h) return;
+    var reste=Array.prototype.slice.call(it.children).filter(function(c){ return c!==h; });
+    if(!reste.length) return;
+    var d=plier(h.textContent.trim(), reste); it.innerHTML=""; it.appendChild(d); it.classList.add("folded");
+  });
+  document.querySelectorAll("section .tot").forEach(function(t){
+    var d=plier("💰 Dépense du jour, par personne", []); t.parentNode.insertBefore(d, t); d.querySelector(".in").appendChild(t);
+  });
+})();
+</script>
 <script>
 document.querySelectorAll("[data-copy]").forEach(function(b){
   b.addEventListener("click", function(){
