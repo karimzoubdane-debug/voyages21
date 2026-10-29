@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Prof - Apprentissage interactif</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.7.0/mammoth.browser.min.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        }
+    </script>
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --g: #00cc88;
+            --gd: #009966;
+            --bl: #4488ff;
+            --bg: #0b0d12;
+            --b2: #111420;
+            --b3: #181c28;
+            --br: #242840;
+            --tx: #dde2f0;
+            --mu: #5c647e;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--tx);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app { display: flex; flex-direction: column; height: 100vh; }
+
+        /* Header */
+        .header {
+            background: var(--b2);
+            border-bottom: 1px solid var(--br);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo { font-size: 18px; font-weight: bold; color: var(--g); }
+
+        .api-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 6px;
+            padding: 0 8px;
+        }
+
+        .api-input {
+            background: transparent;
+            border: none;
+            color: var(--tx);
+            padding: 6px 0;
+            font-size: 12px;
+            width: 220px;
+            outline: none;
+        }
+
+        .eye-btn {
+            background: none;
+            border: none;
+            color: var(--mu);
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            transition: color 0.2s;
+            font-family: monospace;
+        }
+
+        .eye-btn:hover { color: var(--g); }
+
+        /* Layout */
+        .main-layout { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--b2);
+            border-right: 1px solid var(--br);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--mu);
+            margin: 15px 0 8px 0;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        .project-item {
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-item:hover { border-color: var(--g); transform: translateX(3px); }
+        .project-item.selected { border-color: var(--g); background: rgba(0,204,136,0.1); }
+
+        .project-name { font-size: 13px; font-weight: 500; }
+
+        .delete-project {
+            background: rgba(255,68,85,0.1);
+            border: 1px solid rgba(255,68,85,0.3);
+            color: #ff4455;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 1;
+            padding: 3px 7px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .delete-project:hover { background: rgba(255,68,85,0.3); }
+
+        /* Chat */
+        .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+        .messages { flex: 1; overflow-y: auto; padding: 20px; }
+
+        .message { margin-bottom: 15px; display: flex; gap: 10px; }
+        .message.user { flex-direction: row-reverse; }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--b3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message.user .avatar { background: linear-gradient(135deg, var(--bl), #2244bb); }
+        .message.assistant .avatar { background: linear-gradient(135deg, var(--g), #006644); }
+
+        .bubble {
+            max-width: 70%;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .message.user .bubble { background: rgba(68,136,255,0.1); }
+
+        pre {
+            background: #080a10;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-size: 12px;
+            border: 1px solid var(--br);
+        }
+
+        code { font-family: 'Courier New', monospace; }
+
+        /* Input */
+        .input-area {
+            border-top: 1px solid var(--br);
+            padding: 15px 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            color: var(--tx);
+            padding: 10px 15px;
+            border-radius: 10px;
+            resize: none;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input:focus { border-color: var(--g); }
+
+        .send-btn {
+            background: var(--g);
+            color: #000;
+            border: none;
+            padding: 0 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover { background: var(--gd); }
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Action buttons */
+        .action-btn {
+            background: var(--b3);
+            border: 1px solid var(--br);
+            color: var(--tx);
+            padding: 7px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            width: 100%;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .action-btn:hover { border-color: var(--g); color: var(--g); }
+        .action-btn.primary { background: rgba(0,204,136,0.15); }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--b2);
+            border: 1px solid var(--br);
+            border-radius: 12px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--br);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--tx);
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Execution */
+        .execution-area {
+            background: var(--b3);
+            border: 1px solid var(--br);
+            border-radius: 8px;
+            margin-top: 15px;
+            padding: 10px;
+        }
+
+        .execution-output {
+            background: #080a10;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            min-height: 60px;
+        }
+
+        /* Quiz */
+        .quiz-question {
+            background: var(--b3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover { background: var(--br); }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--br);
+            border-top-color: var(--g);
+            border-radius: 50%;
+            animation: spin 0.5s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .status-bar {
+            font-size: 11px;
+            color: var(--mu);
+            padding: 4px 20px;
+            background: var(--b2);
+            border-top: 1px solid var(--br);
+        }
+
+        .status-bar.ok { color: var(--g); }
+        .status-bar.err { color: #ff4455; }
+
+        /* Hamburger button - hidden on desktop, shown on mobile */
+        .menu-btn {
+            display: none;
+            background: var(--b3);
+            border: 1px solid var(--br);
+            color: var(--tx);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* Sidebar overlay (mobile only) */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 90;
+        }
+
+        /* ─── MOBILE (<= 768px) ─── */
+        @media (max-width: 768px) {
+            .menu-btn { display: block; }
+
+            .header { padding: 10px 12px; gap: 8px; }
+            .logo { font-size: 16px; }
+
+            .main-layout { position: relative; }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                z-index: 100;
+                transition: left 0.25s ease;
+                box-shadow: 4px 0 16px rgba(0,0,0,0.6);
+                padding-top: 50px;
+            }
+            .sidebar.open { left: 0; }
+            .sidebar-overlay.show { display: block; }
+
+            .sidebar-close {
+                position: absolute;
+                top: 10px; right: 10px;
+                background: var(--b3);
+                border: 1px solid var(--br);
+                color: var(--tx);
+                width: 32px; height: 32px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .bubble { max-width: 88%; font-size: 13px; }
+            .messages { padding: 12px; }
+            .message { gap: 6px; }
+            .avatar { width: 28px; height: 28px; font-size: 10px; }
+
+            .input-area { padding: 10px; gap: 6px; }
+            .chat-input { padding: 8px 10px; font-size: 14px; }
+            .send-btn { padding: 0 14px; font-size: 13px; }
+
+            pre { font-size: 11px; padding: 10px; }
+
+            .modal-content { max-height: 88vh; padding: 14px; }
+
+            /* Status bar : on cache la version desktop, on l'affiche compacte */
+            .status-bar { font-size: 10px; padding: 3px 12px; }
+        }
+
+        /* Sur desktop, l'overlay et le bouton close ne servent pas */
+        @media (min-width: 769px) {
+            .sidebar-close { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const HANGMAN_CODE = `import random
+
+def choisir_mot():
+    mots = ["PYTHON", "PROGRAMMATION", "ORDINATEUR", "DEVELOPPEMENT"]
+    return random.choice(mots)
+
+def afficher_pendu(erreurs):
+    etapes = [
+        "",
+        "O",
+        "O|",
+        "O|/",
+        "O|/|",
+        "O|/|\\\\",
+        "O|/|\\\\\\n |"
+    ]
+    return etapes[min(erreurs, len(etapes) - 1)]
+
+def jouer():
+    mot = choisir_mot()
+    lettres_trouvees = set()
+    erreurs = 0
+    max_erreurs = 6
+
+    print("=== JEU DU PENDU ===")
+
+    while erreurs < max_erreurs:
+        mot_cache = " ".join(l if l in lettres_trouvees else "_" for l in mot)
+        print(f"\\nMot: {mot_cache}")
+        print(afficher_pendu(erreurs))
+        print(f"Erreurs: {erreurs}/{max_erreurs}")
+
+        if "_" not in mot_cache:
+            print(f"\\nBRAVO! Tu as trouve le mot: {mot}")
+            return
+
+        proposition = input("Propose une lettre: ").upper()
+
+        if len(proposition) != 1 or not proposition.isalpha():
+            print("Lettre invalide!")
+            continue
+
+        if proposition in lettres_trouvees:
+            print("Deja proposee!")
+        elif proposition in mot:
+            lettres_trouvees.add(proposition)
+            print("Bonne lettre!")
+        else:
+            lettres_trouvees.add(proposition)
+            erreurs += 1
+            print("Mauvaise lettre!")
+
+    print(f"\\nPERDU! Le mot etait: {mot}")
+
+if __name__ == "__main__":
+    jouer()`;
+
+        const CALCULATOR_CODE = `def calculatrice():
+    print("=== CALCULATRICE ===")
+    print("Operations: +, -, *, /")
+
+    try:
+        a = float(input("Premier nombre: "))
+        op = input("Operation (+, -, *, /): ")
+        b = float(input("Deuxieme nombre: "))
+
+        if op == '+':
+            resultat = a + b
+        elif op == '-':
+            resultat = a - b
+        elif op == '*':
+            resultat = a * b
+        elif op == '/':
+            if b != 0:
+                resultat = a / b
+            else:
+                print("Erreur: Division par zero!")
+                return
+        else:
+            print("Operation invalide!")
+            return
+
+        print(f"Resultat: {a} {op} {b} = {resultat}")
+
+    except ValueError:
+        print("Erreur: Veuillez entrer des nombres valides!")
+
+if __name__ == "__main__":
+    calculatrice()`;
+
+        const DEFAULT_PROJECTS = {
+            "Jeu du Pendu": { code: HANGMAN_CODE, description: "Devine le mot lettre par lettre" },
+            "Calculatrice":  { code: CALCULATOR_CODE, description: "Calculatrice simple avec les 4 operations" }
+        };
+
+        /* ── Simulation de génération de code ── */
+        const simulateGenerate = (request) => {
+            const r = request.toLowerCase();
+            if (r.includes("pendu")) return { name: "Jeu du Pendu", code: HANGMAN_CODE };
+            if (r.includes("calculatrice") || r.includes("calcul")) return { name: "Calculatrice", code: CALCULATOR_CODE };
+
+            const name = request.slice(0, 40).trim();
+            const code = `# Programme: ${name}
+
+def main():
+    print("=== ${name.toUpperCase()} ===")
+    # Votre logique ici
+    print("Programme termine.")
+
+if __name__ == "__main__":
+    main()`;
+            return { name, code };
+        };
+
+        /* ── Appel API Claude (si clé fournie) ── */
+        const SYSTEM_PROMPT = `Tu es un assistant IA polyvalent alimente par Claude Haiku.
+Tu maitrises le francais, l'anglais et l'arabe — reponds TOUJOURS dans la langue de l'utilisateur
+ou dans la langue du document quand il en fournit un.
+
+Tu peux discuter de tout : culture, science, conseil, ecriture, philosophie, math, etc.
+Sois clair, concis, naturel.
+
+LECONS / DOCUMENTS : quand l'utilisateur t'envoie une lecon (entre "--- DEBUT LECON ---" et
+"--- FIN LECON ---") :
+- Pour un resume : produis des titres en gras, des listes a puces, et reste fidele au contenu.
+- Pour un quiz : 5 QCM (4 options A/B/C/D), puis "Reponses: 1-X, 2-Y..." a la fin.
+- Reponds dans la meme langue que la lecon (arabe → arabe, anglais → anglais, francais → francais).
+
+SPECIALITE Python : quand l'utilisateur demande un programme, fournis le code complet
+dans un bloc \`\`\`python ... \`\`\` en respectant ces regles :
+1. Code AUTONOME et EXECUTABLE tel quel, commente en francais.
+2. Toujours definir main() et terminer par : if __name__ == "__main__": main()
+3. Si tu utilises input(), reste COURT (max 5 input()) avec des prompts clairs.
+4. Bibliotheque standard uniquement : random, math, datetime, time, json, re, string.
+5. PAS de tkinter, pygame, matplotlib, requests (ne marchent pas dans Pyodide).
+6. Enveloppe float()/int() dans try/except ValueError.
+
+Hors demande de programme, reponds naturellement sans bloc de code.`;
+
+        const callClaude = async (conversationMessages) => {
+            const res = await fetch("/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    system: SYSTEM_PROMPT,
+                    messages: conversationMessages
+                })
+            });
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error?.message || `HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            let text = data.content[0].text;
+            if (data.stop_reason === "max_tokens") {
+                text += "\n\n_(Reponse tronquee — la limite de tokens a ete atteinte. Si le code est incomplet, demande une version plus courte.)_";
+            }
+            return text;
+        };
+
+        /* ── Helper: enrobe le code Python avec un wrapper qui n'efface pas la console Windows ── */
+        const hasArabic = (s) => /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/.test(s || "");
+
+        const wrapPyForDownload = (code, name) => {
+            const arabicWarning = hasArabic(code)
+                ? `# ─────────────────────────────────────────────────────────────────────────
+# ATTENTION : ce programme contient du texte arabe.
+# Windows cmd.exe N'AFFICHE PAS correctement l'arabe (pas de BiDi, pas de
+# liaison des lettres). Pour un rendu correct, choisis UNE des solutions :
+#   1. Dans Python Prof, clique "Executer (jouer)" — l'arabe s'affiche bien
+#   2. Lance ce fichier dans Windows Terminal (gratuit sur le Microsoft Store)
+#   3. Clic droit sur ce fichier > "Edit with IDLE" puis F5
+# Lancer avec cmd.exe affichera les lettres a l'envers et separees.
+# ─────────────────────────────────────────────────────────────────────────
+
+`
+                : "";
+
+            return `# ${name || "Programme"}
+# Genere par Python Prof — https://prof-python-abderrahman.vercel.app
+${arabicWarning}
+import sys
+import os
+
+# Force UTF-8 sur Windows pour eviter les caracteres bizarres (mojibake)
+if os.name == "nt":
+    try:
+        os.system("chcp 65001 > nul 2>&1")
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stdin.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
+try:
+${code.split("\n").map(l => "    " + l).join("\n")}
+except KeyboardInterrupt:
+    print("\\n\\n[Programme interrompu]")
+except Exception as _e:
+    print(f"\\n\\n[Erreur : {type(_e).__name__}: {_e}]")
+    import traceback
+    traceback.print_exc()
+
+# Empeche la fenetre cmd de se fermer immediatement sous Windows
+try:
+    input("\\n--- Appuie sur Entree pour quitter ---")
+except EOFError:
+    pass
+`;
+        };
+
+        const triggerDownload = (filename, content) => {
+            const blob = new Blob([content], { type: "text/x-python;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        /* ── Rendu du contenu avec blocs de code + boutons copier/telecharger ── */
+        const CodeBlock = ({ code }) => {
+            const [copied, setCopied] = React.useState(false);
+            const copy = () => {
+                navigator.clipboard.writeText(code).then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                });
+            };
+            const download = () => {
+                triggerDownload("programme.py", wrapPyForDownload(code, "Programme Python Prof"));
+            };
+            const btnStyle = {
+                background: "var(--br)", color: "var(--tx)",
+                border: "none", borderRadius: 4, padding: "3px 10px",
+                fontSize: 11, cursor: "pointer", fontFamily: "inherit"
+            };
+            return (
+                <div style={{ position: "relative", margin: "10px 0" }}>
+                    <div style={{ position: "absolute", top: 6, right: 6, display: "flex", gap: 6 }}>
+                        <button onClick={copy} style={{ ...btnStyle, background: copied ? "var(--g)" : "var(--br)", color: copied ? "#000" : "var(--tx)" }}>
+                            {copied ? "Copie !" : "Copier"}
+                        </button>
+                        <button onClick={download} style={btnStyle} title="Telecharger en .py (avec pause de fin)">
+                            Telecharger
+                        </button>
+                    </div>
+                    <pre style={{ paddingTop: 30 }}><code>{code}</code></pre>
+                </div>
+            );
+        };
+
+        const renderContent = (content) => {
+            const parts = content.split(/(```python[\s\S]*?```|```[\s\S]*?```)/g);
+            return parts.map((part, i) => {
+                if (part.startsWith("```")) {
+                    const code = part.replace(/^```(?:python)?\n?/, "").replace(/```$/, "");
+                    return <CodeBlock key={i} code={code} />;
+                }
+                return <span key={i} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
+            });
+        };
+
+        /* ── Extraction de code depuis une réponse Claude ── */
+        const extractCode = (text) => {
+            const m = text.match(/```python\n([\s\S]*?)```/);
+            return m ? m[1] : null;
+        };
+
+        /* ══════════════════════════════════════════════════════
+           Composant principal
+        ══════════════════════════════════════════════════════ */
+        const App = () => {
+            const [messages, setMessages]           = useState([]);
+            const [input, setInput]                 = useState("");
+            const [loading, setLoading]             = useState(false);
+            const [pyodide, setPyodide]             = useState(null);
+            const [pyStatus, setPyStatus]           = useState("Pyodide: chargement...");
+
+            const [projects, setProjects] = useState(() => {
+                try {
+                    const saved = localStorage.getItem("python_projects");
+                    return saved ? JSON.parse(saved) : DEFAULT_PROJECTS;
+                } catch { return DEFAULT_PROJECTS; }
+            });
+
+            const [selectedProject, setSelectedProject] = useState(
+                () => Object.keys(DEFAULT_PROJECTS)[0]
+            );
+
+            const [modal, setModal]                 = useState(null); // null | "quiz" | "exec"
+            const [quizQuestions, setQuizQuestions] = useState([]);
+            const [quizAnswers, setQuizAnswers]     = useState({});
+            const [execOutput, setExecOutput]       = useState("");
+            const [executing, setExecuting]         = useState(false);
+            const [apiOk, setApiOk]                 = useState(null); // null | true | false
+            const [lesson, setLesson]               = useState(null); // { name, text, lang }
+            const [lessonLoading, setLessonLoading] = useState(false);
+            const [sidebarOpen, setSidebarOpen]     = useState(false);
+            const fileInputRef                      = useRef(null);
+
+            // Détection mobile pour fermer la sidebar après une action
+            const isMobile = () => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+            const closeSidebarOnMobile = () => { if (isMobile()) setSidebarOpen(false); };
+
+            const messagesEndRef = useRef(null);
+
+            /* scroll to bottom */
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            }, [messages]);
+
+            /* ferme la sidebar sur mobile dès qu'une modale s'ouvre */
+            useEffect(() => {
+                if (modal) closeSidebarOnMobile();
+            }, [modal]);
+
+            /* load Pyodide */
+            useEffect(() => {
+                (async () => {
+                    try {
+                        const py = await window.loadPyodide({
+                            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"
+                        });
+                        setPyodide(py);
+                        setPyStatus("Pyodide: pret");
+                    } catch {
+                        setPyStatus("Pyodide: echec du chargement");
+                    }
+                })();
+            }, []);
+
+            /* persist projects */
+            useEffect(() => {
+                try { localStorage.setItem("python_projects", JSON.stringify(projects)); }
+                catch {}
+            }, [projects]);
+
+            /* ── Envoyer un message ── */
+            /* ── Détection grossière de la langue dominante ── */
+            const detectLang = (text) => {
+                const sample = text.slice(0, 2000);
+                if (/[؀-ۿ]/.test(sample)) return "ar"; // arabe
+                const fr = (sample.match(/\b(le|la|les|un|une|des|de|du|et|est|que|qui|pour|dans|avec|sur)\b/gi) || []).length;
+                const en = (sample.match(/\b(the|a|an|of|and|to|is|that|in|on|with|for|are|this)\b/gi) || []).length;
+                return en > fr ? "en" : "fr";
+            };
+
+            /* ── Lit un fichier (.txt, .md, .pdf, .docx, image) et le stocke en tant que leçon ── */
+            const handleFileUpload = async (file) => {
+                if (!file) return;
+                setLessonLoading(true);
+                try {
+                    const name = file.name;
+                    const lower = name.toLowerCase();
+                    const mime = file.type || "";
+
+                    // ─── IMAGE : via la vision native de Claude (pas d'OCR local) ───
+                    if (mime.startsWith("image/")) {
+                        if (file.size > 5 * 1024 * 1024) {
+                            throw new Error("Image trop lourde (max 5 Mo).");
+                        }
+                        const dataUrl = await new Promise((res, rej) => {
+                            const r = new FileReader();
+                            r.onload = () => res(r.result);
+                            r.onerror = () => rej(new Error("Echec de lecture du fichier image."));
+                            r.readAsDataURL(file);
+                        });
+                        const base64 = dataUrl.split(",")[1];
+                        const mediaType = mime || "image/jpeg";
+                        setLesson({
+                            name, type: "image", mediaType, base64,
+                            dataUrl, lang: "auto",
+                            sizeKb: Math.round(file.size / 1024)
+                        });
+                        return;
+                    }
+
+                    // ─── DOCUMENT TEXTE : .txt, .md, .pdf, .docx ───
+                    let text = "";
+                    if (lower.endsWith(".pdf")) {
+                        if (!window.pdfjsLib) throw new Error("PDF.js n'est pas charge — recharge la page.");
+                        const arrayBuffer = await file.arrayBuffer();
+                        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                        const pages = [];
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const content = await page.getTextContent();
+                            pages.push(content.items.map(it => it.str).join(" "));
+                        }
+                        text = pages.join("\n\n");
+                    } else if (lower.endsWith(".docx")) {
+                        if (!window.mammoth) throw new Error("Mammoth.js n'est pas charge — recharge la page.");
+                        const arrayBuffer = await file.arrayBuffer();
+                        const result = await window.mammoth.extractRawText({ arrayBuffer });
+                        text = result.value || "";
+                    } else if (lower.endsWith(".doc")) {
+                        throw new Error("Format .doc (ancien Word binaire) non supporte. Reenregistre en .docx ou .pdf.");
+                    } else {
+                        // .txt, .md, .text, autres textes simples
+                        text = await file.text();
+                    }
+
+                    text = text.trim();
+                    if (!text) throw new Error("Le fichier est vide ou illisible.");
+
+                    // Tronque si > 30 000 caracteres pour rester sous max_tokens
+                    let truncated = false;
+                    if (text.length > 30000) {
+                        text = text.slice(0, 30000);
+                        truncated = true;
+                    }
+
+                    const lang = detectLang(text);
+                    setLesson({ name, type: "text", text, lang, truncated, chars: text.length });
+                } catch (err) {
+                    alert(`Erreur de lecture : ${err.message}`);
+                } finally {
+                    setLessonLoading(false);
+                    if (fileInputRef.current) fileInputRef.current.value = "";
+                }
+            };
+
+            /* ── Helper : construit le contenu API d'un message utilisateur en y attachant la leçon ── */
+            const attachLessonTo = (userText) => {
+                if (!lesson) return userText;
+                if (lesson.type === "image") {
+                    return [
+                        { type: "image", source: { type: "base64", media_type: lesson.mediaType, data: lesson.base64 }},
+                        { type: "text", text: userText || "Decris cette image en detail." }
+                    ];
+                }
+                // text-based lesson
+                return `${userText}\n\n--- DEBUT LECON (${lesson.name}) ---\n${lesson.text}\n--- FIN LECON ---`;
+            };
+
+            /* ── Envoie une action sur la leçon (Résumé / Quiz) ── */
+            const askLessonAction = async (action) => {
+                if (!lesson || loading) return;
+
+                let promptText;
+                if (action === "resume") {
+                    promptText = lesson.type === "image"
+                        ? `Decris et resume le contenu de cette image (fichier: ${lesson.name}). Reponds dans la langue principale du document/de l'image.`
+                        : `Fais-moi un resume clair et structure de cette lecon (titres, listes a puces). Reponds dans la meme langue que la lecon.`;
+                } else if (action === "quiz") {
+                    promptText = lesson.type === "image"
+                        ? `A partir du contenu de cette image (fichier: ${lesson.name}), cree un quiz de 5 questions a choix multiples (4 options A/B/C/D). Termine par les bonnes reponses sous la forme: "Reponses: 1-X, 2-Y, ...". Reponds dans la langue principale de l'image.`
+                        : `Cree un quiz de 5 questions a choix multiples (4 options A/B/C/D) sur cette lecon. Termine par les bonnes reponses sous la forme: "Reponses: 1-X, 2-Y, ...". Reponds dans la meme langue que la lecon.`;
+                } else {
+                    return;
+                }
+
+                const displayText = action === "resume"
+                    ? `Resume "${lesson.name}"`
+                    : `Quiz sur "${lesson.name}"`;
+                const newMessages = [...messages, { role: "user", content: displayText }];
+                setMessages(newMessages);
+                setLoading(true);
+
+                try {
+                    // Construit l'historique avec la leçon attachée au dernier user message
+                    const history = newMessages.slice(-20).map(m => ({ role: m.role, content: m.content }));
+                    history[history.length - 1].content = attachLessonTo(promptText);
+
+                    let assistantText;
+                    try {
+                        assistantText = await callClaude(history);
+                        setApiOk(true);
+                    } catch (apiErr) {
+                        setApiOk(false);
+                        assistantText = `_(API Claude indisponible : ${apiErr.message})_`;
+                    }
+                    setMessages(prev => [...prev, { role: "assistant", content: assistantText }]);
+                } catch (err) {
+                    setMessages(prev => [...prev, { role: "assistant", content: `Erreur: ${err.message}` }]);
+                }
+                setLoading(false);
+            };
+
+            const sendMessage = async () => {
+                const text = input.trim();
+                if (!text || loading) return;
+
+                setInput("");
+                setMessages(prev => [...prev, { role: "user", content: text }]);
+                setLoading(true);
+
+                try {
+                    let assistantText;
+                    let codeForLibrary = null;
+                    let projectName = text.slice(0, 40).trim();
+
+                    // Construit l'historique complet pour donner du contexte conversationnel a Claude.
+                    // On limite a 20 derniers messages pour eviter d'exploser les tokens / le cout.
+                    const history = [...messages, { role: "user", content: text }]
+                        .slice(-20)
+                        .map(m => ({ role: m.role, content: m.content }));
+
+                    // Si une leçon est chargée, on l'attache au dernier message utilisateur
+                    if (lesson) {
+                        history[history.length - 1].content = attachLessonTo(text);
+                    }
+
+                    try {
+                        assistantText = await callClaude(history);
+                        setApiOk(true);
+                        const extracted = extractCode(assistantText);
+                        if (extracted) codeForLibrary = extracted;
+                    } catch (apiErr) {
+                        /* Fallback simulation si /api/chat echoue */
+                        setApiOk(false);
+                        await new Promise(r => setTimeout(r, 600));
+                        const result = simulateGenerate(text);
+                        projectName = result.name;
+                        codeForLibrary = result.code;
+                        assistantText = `_(API Claude indisponible : ${apiErr.message})_\n\nMode demo — exemple de code pour "${result.name}" :\n\n\`\`\`python\n${result.code}\n\`\`\``;
+                    }
+
+                    setMessages(prev => [...prev, { role: "assistant", content: assistantText }]);
+
+                    if (codeForLibrary) {
+                        setProjects(prev => ({
+                            ...prev,
+                            [projectName]: { code: codeForLibrary, description: `Projet: ${projectName}` }
+                        }));
+                        setSelectedProject(projectName);
+                    }
+
+                } catch (err) {
+                    setMessages(prev => [...prev, {
+                        role: "assistant",
+                        content: `Erreur: ${err.message}`
+                    }]);
+                }
+
+                setLoading(false);
+            };
+
+            /* ── Quiz ── */
+            const generateQuiz = () => {
+                const project = projects[selectedProject];
+                if (!project) return;
+
+                const questions = [
+                    {
+                        q: `Dans "${selectedProject}", quel est le role de la premiere fonction definie ?`,
+                        opts: [
+                            "Afficher le menu principal",
+                            "Initialiser les donnees ou choisir un element de depart",
+                            "Sauvegarder le score",
+                            "Quitter le programme"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        q: "Comment appelle-t-on une fonction en Python ?",
+                        opts: ["call nom_fonction()", "run nom_fonction()", "nom_fonction()", "execute nom_fonction()"],
+                        correct: 2
+                    },
+                    {
+                        q: `Que signifie la condition if __name__ == "__main__": ?`,
+                        opts: [
+                            "Le fichier est importe depuis un autre module",
+                            "Le programme est execute directement (pas importe)",
+                            "La fonction principale est definie ici",
+                            "Le programme s'arrete"
+                        ],
+                        correct: 1
+                    }
+                ];
+
+                setQuizQuestions(questions);
+                setQuizAnswers({});
+                setModal("quiz");
+            };
+
+            /* ── Exécuter en direct (mode interactif uniquement) ── */
+            const executeCode = async () => {
+                const project = projects[selectedProject];
+                if (!project) return;
+
+                setModal("exec");
+                setExecOutput("");
+                setExecuting(true);
+
+                if (!pyodide) {
+                    setExecOutput("Pyodide n'est pas encore charge. Patientez et reessayez.");
+                    setExecuting(false);
+                    return;
+                }
+
+                // Expose un prompt JS interactif (popup native)
+                window.pyPromptFn = (msg) => {
+                    const reply = window.prompt(msg && msg.length ? msg : "Saisie :");
+                    return reply === null ? "" : String(reply);
+                };
+
+                try {
+                    const setupCode = `
+import sys
+import builtins
+from io import StringIO
+from js import window as _js_window
+
+_captured = StringIO()
+sys.stdout = _captured
+sys.stderr = _captured
+_input_count = 0
+_last_output_pos = 0
+
+def _patched_input(prompt=""):
+    global _input_count, _last_output_pos
+    _input_count += 1
+    if _input_count > 80:
+        raise RuntimeError("Limite de 80 appels a input() atteinte — boucle infinie probable")
+    p = str(prompt)
+    # Recupere tout ce qui a ete imprime depuis la derniere saisie
+    # (typiquement : la question + les options) et le met dans la popup.
+    full = _captured.getvalue()
+    context = full[_last_output_pos:]
+    if len(context) > 2000:
+        context = "...\\n" + context[-2000:]
+    msg = (context.rstrip() + "\\n\\n" + p) if context.strip() else p
+    val = _js_window.pyPromptFn(msg)
+    _captured.write(p + str(val) + "\\n")
+    _last_output_pos = len(_captured.getvalue())
+    return val
+
+builtins.input = _patched_input
+`;
+                    pyodide.runPython(setupCode);
+
+                    let execError = null;
+                    try {
+                        await pyodide.runPythonAsync(project.code);
+                    } catch (e) {
+                        execError = e;
+                    }
+
+                    const output = pyodide.runPython("_captured.getvalue()");
+                    let result = output.trim() || "(Aucune sortie produite)";
+                    if (execError) {
+                        const msg = String(execError.message || execError);
+                        // Nettoie le traceback pour ne garder que la derniere ligne utile
+                        const lines = msg.split("\n").filter(l => l.trim());
+                        const lastErr = lines[lines.length - 1] || msg;
+                        result += `\n\n--- Erreur Python ---\n${lastErr}`;
+                    }
+                    setExecOutput(result);
+                } catch (err) {
+                    setExecOutput(`Erreur d'execution : ${err.message}`);
+                } finally {
+                    try {
+                        pyodide.runPython(`
+import sys, builtins
+sys.stdout = sys.__stdout__
+sys.stderr = sys.__stderr__
+builtins.input = input
+`);
+                    } catch {}
+                    setExecuting(false);
+                }
+            };
+
+            /* ── Télécharger le .py avec un ending sûr (pas de fermeture du terminal) ── */
+            const downloadPy = () => {
+                const project = projects[selectedProject];
+                if (!project) return;
+                const safeName = selectedProject.replace(/[^a-zA-Z0-9_-]/g, "_").toLowerCase() || "programme";
+                triggerDownload(`${safeName}.py`, wrapPyForDownload(project.code, selectedProject));
+            };
+
+            /* ── Réinitialiser la bibliothèque ── */
+            const resetLibrary = () => {
+                if (!confirm("Vider toute la bibliotheque ? Les projets par defaut (Pendu, Calculatrice) seront restaures.")) return;
+                try { localStorage.removeItem("python_projects"); } catch {}
+                setProjects(DEFAULT_PROJECTS);
+                setSelectedProject(Object.keys(DEFAULT_PROJECTS)[0]);
+            };
+
+            /* ── Supprimer un projet ── */
+            const deleteProject = (name) => {
+                if (!confirm(`Supprimer le projet "${name}" ?`)) return;
+                setProjects(prev => {
+                    const next = { ...prev };
+                    delete next[name];
+                    return next;
+                });
+                if (selectedProject === name) {
+                    const remaining = Object.keys(projects).filter(k => k !== name);
+                    if (remaining.length) setSelectedProject(remaining[0]);
+                }
+            };
+
+            /* ── Render ── */
+            return (
+                <div className="app">
+                    {/* Header */}
+                    <div className="header">
+                        <button
+                            className="menu-btn"
+                            onClick={() => setSidebarOpen(true)}
+                            aria-label="Ouvrir le menu"
+                        >☰</button>
+                        <div className="logo">Python Prof</div>
+                        <div style={{ flex: 1 }} />
+                        <div style={{ fontSize: 11, color: "var(--mu)", display: "flex", alignItems: "center", gap: 6 }}>
+                            <span style={{
+                                display: "inline-block", width: 8, height: 8, borderRadius: "50%",
+                                background: apiOk === true ? "var(--g)" : apiOk === false ? "#ff4455" : "var(--mu)"
+                            }} />
+                            <span className="api-status-text">
+                                {apiOk === true ? "Claude connecte"
+                                    : apiOk === false ? "Mode demo"
+                                    : "en attente"}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="main-layout">
+                        {/* Overlay sombre derrière la sidebar (mobile uniquement) */}
+                        <div
+                            className={`sidebar-overlay${sidebarOpen ? " show" : ""}`}
+                            onClick={() => setSidebarOpen(false)}
+                        />
+                        {/* Sidebar */}
+                        <div className={`sidebar${sidebarOpen ? " open" : ""}`}>
+                            <button
+                                className="sidebar-close"
+                                onClick={() => setSidebarOpen(false)}
+                                aria-label="Fermer le menu"
+                            >x</button>
+                            <div className="section-title">Bibliotheque de projets</div>
+                            {Object.keys(projects).length === 0 && (
+                                <div style={{ color: "var(--mu)", fontSize: 12 }}>Aucun projet</div>
+                            )}
+                            {Object.keys(projects).map(name => {
+                                const firstLine = (projects[name].code || "")
+                                    .split("\n")
+                                    .find(l => l.trim() && !l.trim().startsWith("#")) || "";
+                                return (
+                                    <div
+                                        key={name}
+                                        className={`project-item${selectedProject === name ? " selected" : ""}`}
+                                    >
+                                        <div onClick={() => setSelectedProject(name)} style={{ flex: 1, minWidth: 0 }}>
+                                            <div className="project-name">{name}</div>
+                                            <div style={{
+                                                fontSize: 10, color: "var(--mu)", marginTop: 2,
+                                                fontFamily: "monospace",
+                                                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
+                                            }}>
+                                                {firstLine.trim() || "(code vide)"}
+                                            </div>
+                                        </div>
+                                        <button className="delete-project" onClick={() => deleteProject(name)}>x</button>
+                                    </div>
+                                );
+                            })}
+
+                            <button
+                                className="action-btn"
+                                style={{ marginTop: 8, color: "#ff4455", borderColor: "rgba(255,68,85,0.3)" }}
+                                onClick={resetLibrary}
+                            >
+                                Vider la bibliotheque
+                            </button>
+
+                            <div className="section-title" style={{ marginTop: 20 }}>Actions</div>
+                            <button className="action-btn primary" onClick={executeCode}>
+                                Executer (jouer)
+                            </button>
+                            <button className="action-btn" onClick={downloadPy}>
+                                Telecharger le .py
+                            </button>
+                            <button className="action-btn" onClick={generateQuiz}>
+                                Quiz Python
+                            </button>
+
+                            <div className="section-title" style={{ marginTop: 20 }}>Conversation</div>
+                            <button
+                                className="action-btn"
+                                onClick={() => {
+                                    if (messages.length === 0) return;
+                                    if (confirm("Effacer la conversation ? (les projets sont conserves)")) {
+                                        setMessages([]);
+                                    }
+                                }}
+                            >
+                                Nouveau chat ({messages.length} msg)
+                            </button>
+                        </div>
+
+                        {/* Chat */}
+                        <div className="chat-area">
+                            <div className="messages">
+                                {messages.length === 0 && (
+                                    <div style={{ textAlign: "center", marginTop: 60, color: "var(--mu)" }}>
+                                        <h2 style={{ color: "var(--g)", marginBottom: 10 }}>Bienvenue</h2>
+                                        <p>Discute avec Claude Haiku — sur n'importe quel sujet.</p>
+                                        <p style={{ marginTop: 6, fontSize: 12 }}>
+                                            Demande un programme Python ("cree un pendu"), pose une question
+                                            de culture, demande un conseil, fais traduire un texte...
+                                        </p>
+                                    </div>
+                                )}
+                                {messages.map((msg, idx) => (
+                                    <div key={idx} className={`message ${msg.role}`}>
+                                        <div className="avatar">
+                                            {msg.role === "user" ? "U" : "AI"}
+                                        </div>
+                                        <div className="bubble">
+                                            {renderContent(msg.content)}
+                                        </div>
+                                    </div>
+                                ))}
+                                {loading && (
+                                    <div className="message assistant">
+                                        <div className="avatar">AI</div>
+                                        <div className="bubble">
+                                            <span className="loading" />Generation en cours...
+                                        </div>
+                                    </div>
+                                )}
+                                <div ref={messagesEndRef} />
+                            </div>
+
+                            {/* Bannière de leçon chargée */}
+                            {lesson && (
+                                <div style={{
+                                    margin: "0 20px",
+                                    padding: "10px 12px",
+                                    background: "rgba(0,204,136,0.10)",
+                                    border: "1px solid rgba(0,204,136,0.4)",
+                                    borderRadius: 8,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 10,
+                                    flexWrap: "wrap",
+                                    fontSize: 12
+                                }}>
+                                    {lesson.type === "image" ? (
+                                        <img
+                                            src={lesson.dataUrl}
+                                            alt={lesson.name}
+                                            style={{
+                                                width: 42, height: 42, objectFit: "cover",
+                                                borderRadius: 6, border: "1px solid var(--br)"
+                                            }}
+                                        />
+                                    ) : (
+                                        <span style={{ fontSize: 22 }}>📄</span>
+                                    )}
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ fontWeight: "bold", color: "var(--g)" }}>
+                                            {lesson.name}
+                                        </div>
+                                        <div style={{ color: "var(--mu)", fontSize: 11 }}>
+                                            {lesson.type === "image"
+                                                ? `Image · ${lesson.sizeKb} Ko · vision Claude`
+                                                : `${lesson.chars.toLocaleString()} caracteres · langue: ${lesson.lang}${lesson.truncated ? " · tronquée à 30k" : ""}`}
+                                        </div>
+                                    </div>
+                                    <button
+                                        className="action-btn"
+                                        style={{ width: "auto", margin: 0, padding: "6px 12px" }}
+                                        onClick={() => askLessonAction("resume")}
+                                        disabled={loading}
+                                    >
+                                        Résumé
+                                    </button>
+                                    <button
+                                        className="action-btn"
+                                        style={{ width: "auto", margin: 0, padding: "6px 12px" }}
+                                        onClick={() => askLessonAction("quiz")}
+                                        disabled={loading}
+                                    >
+                                        Quiz
+                                    </button>
+                                    <button
+                                        className="action-btn"
+                                        style={{ width: "auto", margin: 0, padding: "6px 10px", color: "#ff4455", borderColor: "rgba(255,68,85,0.3)" }}
+                                        onClick={() => setLesson(null)}
+                                        title="Retirer la leçon"
+                                    >
+                                        x
+                                    </button>
+                                </div>
+                            )}
+
+                            <div className="input-area">
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept=".txt,.md,.text,.pdf,.docx,image/*,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                    style={{ display: "none" }}
+                                    onChange={e => handleFileUpload(e.target.files?.[0])}
+                                />
+                                <button
+                                    className="send-btn"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={lessonLoading}
+                                    title="Charger un document (.txt, .md, .pdf, .docx) ou une image"
+                                    style={{ background: "var(--b3)", color: "var(--tx)", padding: "0 14px", fontSize: 18 }}
+                                >
+                                    {lessonLoading ? "..." : "+"}
+                                </button>
+                                <textarea
+                                    className="chat-input"
+                                    rows={2}
+                                    placeholder={lesson
+                                        ? `Pose une question sur "${lesson.name}" ou clique sur Résumé / Quiz...`
+                                        : "Discute avec Claude ou demande un programme Python..."}
+                                    value={input}
+                                    onChange={e => setInput(e.target.value)}
+                                    onKeyDown={e => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            sendMessage();
+                                        }
+                                    }}
+                                />
+                                <button className="send-btn" onClick={sendMessage} disabled={loading}>
+                                    Envoyer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={`status-bar${pyodide ? " ok" : ""}`}>{pyStatus}</div>
+
+                    {/* Modal Quiz */}
+                    {modal === "quiz" && (
+                        <div className="modal" onClick={() => setModal(null)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h3>Quiz — {selectedProject}</h3>
+                                    <button className="modal-close" onClick={() => setModal(null)}>x</button>
+                                </div>
+                                {quizQuestions.map((q, qi) => (
+                                    <div key={qi} className="quiz-question">
+                                        <div style={{ fontWeight: "bold", marginBottom: 10 }}>
+                                            {qi + 1}. {q.q}
+                                        </div>
+                                        {q.opts.map((opt, oi) => (
+                                            <label key={oi} className="quiz-option">
+                                                <input
+                                                    type="radio"
+                                                    name={`q${qi}`}
+                                                    checked={quizAnswers[qi] === oi}
+                                                    onChange={() => setQuizAnswers(prev => ({ ...prev, [qi]: oi }))}
+                                                />
+                                                {opt}
+                                            </label>
+                                        ))}
+                                                        {quizAnswers[qi] !== undefined && (
+                                            <div style={{
+                                                marginTop: 8,
+                                                fontSize: 12,
+                                                padding: "6px 10px",
+                                                borderRadius: 6,
+                                                background: quizAnswers[qi] === q.correct ? "rgba(0,204,136,0.15)" : "rgba(255,68,85,0.15)",
+                                                color: quizAnswers[qi] === q.correct ? "var(--g)" : "#ff4455"
+                                            }}>
+                                                {quizAnswers[qi] === q.correct
+                                                    ? "Correct !"
+                                                    : `Incorrect — bonne reponse : ${q.opts[q.correct]}`}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Modal Execution */}
+                    {modal === "exec" && (
+                        <div className="modal" onClick={() => setModal(null)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h3>Execution — {selectedProject}</h3>
+                                    <button className="modal-close" onClick={() => setModal(null)}>x</button>
+                                </div>
+                                <div className="execution-area">
+                                    <div style={{ marginBottom: 8, fontSize: 12, color: "var(--mu)" }}>
+                                        Sortie du programme :
+                                    </div>
+                                    <div className="execution-output">
+                                        {executing
+                                            ? <span><span className="loading" /> Execution...</span>
+                                            : (execOutput || "En attente d'execution...")}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+</body>
+</html>
