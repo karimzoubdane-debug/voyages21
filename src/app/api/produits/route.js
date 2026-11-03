@@ -193,8 +193,8 @@ export async function PUT(request) {
       return Response.json({ ok: true, slug: body.slug }, { headers: corsHeaders });
     }
 
-    // Voyage PASSÉ (date de fin dépassée) → corbeille, sans rien changer à la fiche
-    // (choix de Karim, 03/11/2026). Déclenché par l'Admin Produits à l'ouverture du
+    // Voyage OMRA PASSÉ (date de fin dépassée) → corbeille, sans rien changer à la fiche
+    // (choix de Karim, 03/11/2026 : Omra seulement). Déclenché par l'Admin Produits à l'ouverture du
     // catalogue. Voyage admin : déplacé de `custom` vers `trash`. Voyage du catalogue
     // de base (data.js, non effaçable d'ici) : marqué « supprimé » (retiré du site)
     // et inscrit dans la corbeille pour pouvoir être restauré.
@@ -207,6 +207,12 @@ export async function PUT(request) {
       const prev = data.status[slug] || null;
       if (prev && prev.keepAfterExpiry) {
         return Response.json({ ok: false, error: 'gardé en ligne par le propriétaire' }, { status: 409, headers: corsHeaders });
+      }
+      // Omra seulement (étiquette « عمرة » ou « Omra »)
+      const tagOf = (t) => String(t || '').trim().toLowerCase();
+      const tag = data.custom[slug] ? data.custom[slug].tag : (body.snapshot && body.snapshot.tag);
+      if (tagOf(tag) !== 'عمرة' && tagOf(tag) !== 'omra') {
+        return Response.json({ ok: false, error: 'seuls les voyages Omra passent automatiquement à la corbeille' }, { status: 400, headers: corsHeaders });
       }
       const entry = { slug, status: prev, deletedAt: new Date().toISOString(), deletedBy: 'expiration', expiredOn: fin, movedBy: role || '' };
       if (data.custom[slug]) {

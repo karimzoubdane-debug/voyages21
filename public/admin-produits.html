@@ -661,9 +661,9 @@ function hasAnyMedia(rec) {
 }
 
 // ─────────────────────────────────────────
-// Voyages passés → corbeille (choix de Karim, 03/11/2026)
+// Voyages OMRA passés → corbeille (choix de Karim, 03/11/2026 : Omra seulement)
 // ─────────────────────────────────────────
-// À chaque ouverture du catalogue (propriétaire ou équipe), tout voyage dont la
+// À chaque ouverture du catalogue (propriétaire ou équipe), tout voyage Omra dont la
 // date de fin écrite est dépassée part à la corbeille SANS AUCUN CHANGEMENT de sa
 // fiche : il n'est plus sur le site. Après 1 mois dans la corbeille, il est supprimé
 // définitivement (à l'ouverture par le propriétaire). « Restaurer » le remet en ligne
@@ -767,6 +767,7 @@ async function runExpirySweep() {
   var candidates = allProducts().filter(function(item) {
     var st = manifest.status[item.slug] || {};
     if (st.removed || st.keepAfterExpiry || trash[item.slug]) return false;
+    if (destKey((item.v || {}).tag) !== 'عمرة') return false; // Omra seulement
     var r = tripEnd(productForDates(item));
     item.fin = r.fin;
     return !!r.fin && r.fin < today;
@@ -811,7 +812,7 @@ function renderExpiryBanner(moved, failed, purged) {
   var purgeOn = new Date(Date.now() + EXPIRY_PURGE_DAYS * 86400000).toISOString().slice(0, 10);
   var html = '<div style="border:2px solid var(--warn);background:#fff7ea;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">';
   if (moved.length) {
-    html += '<h3 style="margin:0 0 .4rem;color:#8a5208">🗓 ' + moved.length + ' voyage' + (moved.length > 1 ? 's passés retirés' : ' passé retiré') + ' du site</h3>'
+    html += '<h3 style="margin:0 0 .4rem;color:#8a5208">🗓 ' + moved.length + ' voyage' + (moved.length > 1 ? 's Omra passés retirés' : ' Omra passé retiré') + ' du site</h3>'
       + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">Leur date de fin est dépassée : ' + (moved.length > 1 ? 'ils sont partis' : 'il est parti')
       + ' dans la corbeille sans aucun changement. Suppression définitive le ' + frDate(purgeOn) + ', sauf si tu ' + (moved.length > 1 ? 'les restaures' : 'le restaures') + '.</p>'
       + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">'
