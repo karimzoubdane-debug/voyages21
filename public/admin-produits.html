@@ -113,6 +113,25 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .quick-pdf-zone.has-file{border-color:var(--ok);color:var(--ok)}
 .quick-add label.qlabel{display:flex;flex-direction:column;gap:.3rem;font:.72rem/1 "DM Sans",sans-serif;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#536154}
 @media(max-width:600px){.quick-add-grid{grid-template-columns:1fr}}
+/* Clavier à l'écran (arabe / français) pour le champ Titre */
+.kb-field{display:flex;gap:.4rem;align-items:stretch}
+.kb-field input{flex:1;min-width:0}
+.kb-toggle{flex:0 0 auto;min-height:0;padding:0 .7rem;background:#fff;border:1px solid #cfc5b3;color:var(--forest);font-size:1.15rem}
+.kb-toggle[aria-expanded="true"]{background:var(--forest);border-color:var(--forest);color:#fff}
+.kb-panel{margin-top:.7rem;background:#fff;border:1px solid #cfc5b3;border-radius:10px;padding:.6rem;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.kb-panel[hidden]{display:none}
+.kb-tabs{display:flex;gap:.35rem;margin-bottom:.5rem;flex-wrap:wrap}
+.kb-tabs button{min-height:32px;padding:.3rem .8rem;background:#f0ede4;color:var(--forest2);border:1px solid #cfc5b3}
+.kb-tabs button.on{background:var(--forest);border-color:var(--forest);color:#fff}
+.kb-tabs .kb-close{margin-left:auto;background:transparent;border-color:transparent}
+.kb-row{display:flex;gap:.25rem;justify-content:center;margin-bottom:.25rem;flex-wrap:wrap}
+.kb-key{min-height:38px;min-width:34px;padding:.2rem .45rem;background:#f7f4ee;color:var(--ink);border:1px solid #d8cfbf;font:600 1rem/1 "DM Sans",system-ui,sans-serif;text-transform:none}
+.kb-key:hover{background:#ece6da}
+.kb-key.wide{min-width:120px}
+.kb-key.act{background:#e8f4ed;color:var(--forest);font-size:.8rem}
+.kb-key.act.on{background:var(--forest);color:#fff}
+.kb-ar .kb-key{font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",system-ui,sans-serif;font-size:1.1rem}
+@media(max-width:600px){.kb-panel{padding:.45rem}.kb-row{gap:.15rem;flex-wrap:nowrap}.kb-row .kb-key{flex:1 1 0;min-width:0;max-width:40px;min-height:38px;padding:.2rem 0;font-size:.9rem}.kb-row .kb-key.wide{flex:3 1 0;max-width:none}.kb-row .kb-key.act{flex:2 1 0;max-width:none}}
 
 /* Empty / loading */
 .empty{text-align:center;color:#8a8279;padding:2rem;font-style:italic}
@@ -167,6 +186,11 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 <div class="v21-site-banner" style="background:#1B3A28;color:#fff;text-align:center;font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:8px 12px">📍 Tu édites le site <b>voyages21.com</b> (site principal). Pour les photos du site Incoming, utilise l’admin « Site Incoming » (<b>moroccovoyages21.com</b>).</div>
 <!-- ───── Data source : voyages existants ───── -->
 <script src="/voyages/data.js?v=admin-produits-v1"></script>
+<script type="module">
+  // Envoi direct navigateur -> Vercel Blob pour les images (même module que la page Médias).
+  import { upload } from 'https://esm.sh/@vercel/blob@2.4.0/client';
+  window.v21upload = upload;
+</script>
 
 <header>
   <h1>VOYAGES21 — Admin Produits</h1>
@@ -256,9 +280,9 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
   <!-- ── Onglet Formulaire ── -->
   <div id="tab-form" hidden>
 
-    <!-- ⚡ MODE RAPIDE : PDF uniquement -->
+    <!-- ⚡ MODE RAPIDE : PDF ou image (JPG, PNG, WEBP) -->
     <div class="quick-add" id="quickAddBox">
-      <h3>⚡ Ajout rapide — PDF reçu de l'équipe</h3>
+      <h3>⚡ Ajout rapide — PDF ou image reçus de l'équipe</h3>
       <div class="quick-add-grid">
         <label class="qlabel">1 — Destination *
           <select id="qTag">
@@ -273,19 +297,23 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
             <optgroup label="Catégories spéciales"><option>Maroc</option><option>Combinés</option><option>عمرة</option><option>Croisières</option></optgroup>
           </select>
         </label>
-        <label class="qlabel">2 — PDF de l'équipe *
+        <label class="qlabel">2 — PDF ou image de l'équipe *
           <div class="quick-pdf-zone" id="qPdfZone" onclick="document.getElementById('qPdfInput').click()">
-            <input type="file" id="qPdfInput" accept=".pdf" style="display:none" onchange="onQuickPdf(this)">
-            <span id="qPdfLabel">📎 Cliquez pour sélectionner le PDF</span>
+            <input type="file" id="qPdfInput" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" style="display:none" onchange="onQuickPdf(this)">
+            <span id="qPdfLabel">📎 Cliquez pour sélectionner le PDF ou l'image</span>
           </div>
         </label>
         <label class="qlabel">3 — Titre (auto depuis le nom du fichier, modifiable)
-          <input type="text" id="qTitle" placeholder="Auto depuis le nom du PDF">
+          <span class="kb-field">
+            <input type="text" id="qTitle" dir="auto" placeholder="Auto depuis le nom du fichier">
+            <button type="button" class="kb-toggle" id="qTitleKbBtn" aria-expanded="false" aria-controls="qTitleKb" title="Clavier arabe / français" onclick="toggleKeyboard('qTitle')">⌨️</button>
+          </span>
         </label>
         <div style="display:flex;align-items:flex-end">
           <button type="button" class="ok" style="width:100%;min-height:44px;font-size:.92rem" onclick="quickSubmit()">⚡ Créer ce voyage</button>
         </div>
       </div>
+      <div class="kb-panel" id="qTitleKb" hidden></div>
       <div id="qLog" style="margin-top:.55rem;font:.8rem/1.3 'DM Sans',sans-serif;color:var(--ok);font-weight:700;min-height:1rem"></div>
     </div>
 
@@ -1313,22 +1341,44 @@ function restoreStatic(slug) {
 }
 
 // ─────────────────────────────────────────
-// Mode rapide PDF
+// Mode rapide : PDF ou image
 // ─────────────────────────────────────────
 var quickPdfFile = null;
+// Formats que la lecture automatique sait lire (PDF + images JPG, PNG, WEBP).
+// Le HEIC des iPhone n'est pas lisible : il faut l'exporter en JPG.
+var QUICK_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
+var QUICK_LABEL = '📎 Cliquez pour sélectionner le PDF ou l\'image';
+
+function quickFileType(file) {
+  if (QUICK_TYPES.indexOf(file.type) !== -1) return file.type;
+  // Certains navigateurs laissent le type vide : on se fie alors à l'extension.
+  var ext = (file.name.split('.').pop() || '').toLowerCase();
+  return { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }[ext] || '';
+}
 
 function onQuickPdf(input) {
   var file = input.files && input.files[0];
   if (!file) return;
-  quickPdfFile = file;
   var zone = document.getElementById('qPdfZone');
   var label = document.getElementById('qPdfLabel');
+  var qlog = document.getElementById('qLog');
+  if (!quickFileType(file)) {
+    quickPdfFile = null;
+    input.value = '';
+    zone.classList.remove('has-file');
+    label.textContent = QUICK_LABEL;
+    qlog.style.color = 'var(--danger)';
+    qlog.textContent = '⚠️ Format non pris en charge (' + file.name + ') : choisissez un PDF ou une image JPG, PNG ou WEBP.';
+    return;
+  }
+  qlog.textContent = '';
+  quickPdfFile = file;
   zone.classList.add('has-file');
   label.textContent = '✅ ' + file.name;
   // Auto-remplir le titre depuis le nom de fichier
   var titleInput = document.getElementById('qTitle');
   if (!titleInput.value) {
-    titleInput.value = file.name.replace(/\.pdf$/i,'').replace(/[-_]+/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    titleInput.value = file.name.replace(/\.(pdf|jpe?g|png|webp)$/i,'').replace(/[-_]+/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
   }
 }
 
@@ -1338,7 +1388,122 @@ function resetQuickForm() {
   document.getElementById('qTitle').value = '';
   document.getElementById('qPdfInput').value = '';
   document.getElementById('qPdfZone').classList.remove('has-file');
-  document.getElementById('qPdfLabel').textContent = '📎 Cliquez pour sélectionner le PDF';
+  document.getElementById('qPdfLabel').textContent = QUICK_LABEL;
+}
+
+// ─────────────────────────────────────────
+// Clavier à l'écran arabe / français (champ Titre)
+// ─────────────────────────────────────────
+// Disposition arabe standard (clavier « Arabe 101 » de Windows), touches sans
+// et avec Maj ; disposition française AZERTY + lettres accentuées.
+var KB_LAYOUTS = {
+  ar: {
+    rows: [
+      ['ذ','ض','ص','ث','ق','ف','غ','ع','ه','خ','ح','ج','د'],
+      ['ش','س','ي','ب','ل','ا','ت','ن','م','ك','ط'],
+      ['ئ','ء','ؤ','ر','لا','ى','ة','و','ز','ظ'],
+      ['أ','إ','آ','ـ','،','؟'],
+      ['١','٢','٣','٤','٥','٦','٧','٨','٩','٠']
+    ]
+  },
+  fr: {
+    rows: [
+      ['a','z','e','r','t','y','u','i','o','p'],
+      ['q','s','d','f','g','h','j','k','l','m'],
+      ['w','x','c','v','b','n',',','.','\'','-'],
+      ['é','è','ê','ë','à','â','ç','ù','û','î','ï','ô','œ'],
+      ['1','2','3','4','5','6','7','8','9','0']
+    ]
+  }
+};
+var kbState = { target: null, lang: 'ar', caps: false };
+
+function kbInsert(text) {
+  var input = document.getElementById(kbState.target);
+  if (!input) return;
+  var start = input.selectionStart == null ? input.value.length : input.selectionStart;
+  var end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
+  input.value = input.value.slice(0, start) + text + input.value.slice(end);
+  var pos = start + text.length;
+  input.focus();
+  input.setSelectionRange(pos, pos);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function kbBackspace() {
+  var input = document.getElementById(kbState.target);
+  if (!input) return;
+  var start = input.selectionStart == null ? input.value.length : input.selectionStart;
+  var end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
+  if (start === end && start > 0) {
+    // Effacer un caractère entier (y compris les caractères composés)
+    var before = Array.from(input.value.slice(0, start));
+    before.pop();
+    var kept = before.join('');
+    input.value = kept + input.value.slice(end);
+    start = end = kept.length;
+  } else {
+    input.value = input.value.slice(0, start) + input.value.slice(end);
+    end = start;
+  }
+  input.focus();
+  input.setSelectionRange(start, start);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function kbRender() {
+  var panel = document.getElementById(kbState.target + 'Kb');
+  if (!panel) return;
+  var lang = kbState.lang;
+  var html = '<div class="kb-tabs">'
+    + '<button type="button" data-kb-lang="ar" class="' + (lang === 'ar' ? 'on' : '') + '">عربي</button>'
+    + '<button type="button" data-kb-lang="fr" class="' + (lang === 'fr' ? 'on' : '') + '">Français</button>'
+    + '<button type="button" class="kb-close" data-kb-act="close" title="Fermer le clavier">✕</button>'
+    + '</div>';
+  html += '<div class="' + (lang === 'ar' ? 'kb-ar' : 'kb-fr') + '">';
+  KB_LAYOUTS[lang].rows.forEach(function(row) {
+    // Rangées de gauche à droite, comme sur un vrai clavier (ض à gauche)
+    html += '<div class="kb-row">';
+    row.forEach(function(k) {
+      var shown = (lang === 'fr' && kbState.caps) ? k.toUpperCase() : k;
+      html += '<button type="button" class="kb-key" data-kb-key="' + esc(shown) + '">' + esc(shown) + '</button>';
+    });
+    html += '</div>';
+  });
+  html += '<div class="kb-row">';
+  if (lang === 'fr') html += '<button type="button" class="kb-key act' + (kbState.caps ? ' on' : '') + '" data-kb-act="caps" title="Majuscules">⇧ Maj</button>';
+  html += '<button type="button" class="kb-key wide" data-kb-key=" ">espace</button>'
+    + '<button type="button" class="kb-key act" data-kb-act="back" title="Effacer">⌫ Effacer</button>'
+    + '</div></div>';
+  panel.innerHTML = html;
+}
+
+function toggleKeyboard(targetId) {
+  var panel = document.getElementById(targetId + 'Kb');
+  var btn = document.getElementById(targetId + 'KbBtn');
+  if (!panel) return;
+  var open = panel.hidden;
+  if (open) {
+    kbState.target = targetId;
+    kbRender();
+    if (!panel.dataset.kbReady) {
+      panel.dataset.kbReady = '1';
+      // Garder le curseur dans le champ pendant les clics sur les touches
+      panel.addEventListener('mousedown', function(e) { if (e.target.closest('button')) e.preventDefault(); });
+      panel.addEventListener('click', function(e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        if (b.dataset.kbLang) { kbState.lang = b.dataset.kbLang; kbRender(); return; }
+        if (b.dataset.kbAct === 'close') { toggleKeyboard(targetId); return; }
+        if (b.dataset.kbAct === 'caps') { kbState.caps = !kbState.caps; kbRender(); return; }
+        if (b.dataset.kbAct === 'back') { kbBackspace(); return; }
+        if (b.dataset.kbKey != null) kbInsert(b.dataset.kbKey);
+      });
+    }
+  }
+  panel.hidden = !open;
+  if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) { var input = document.getElementById(targetId); if (input) input.focus(); }
 }
 
 async function quickSubmit() {
@@ -1347,11 +1512,11 @@ async function quickSubmit() {
   var qlog = document.getElementById('qLog');
 
   if (!tag) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Sélectionnez une destination.'; return; }
-  if (!title) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Entrez un titre (ou sélectionnez un PDF pour qu\'il s\'auto-remplisse).'; return; }
-  if (!quickPdfFile) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Sélectionnez le PDF envoyé par l\'équipe.'; return; }
+  if (!title) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Entrez un titre (ou sélectionnez un fichier pour qu\'il s\'auto-remplisse).'; return; }
+  if (!quickPdfFile) { qlog.style.color='var(--danger)'; qlog.textContent='⚠️ Sélectionnez le PDF ou l\'image envoyés par l\'équipe.'; return; }
 
   qlog.style.color='var(--ok)';
-  qlog.textContent = 'Upload du PDF…';
+  qlog.textContent = 'Envoi du fichier…';
 
   var pdfUrl = '';
   try {
@@ -1359,11 +1524,11 @@ async function quickSubmit() {
     pdfUrl = r.url;
   } catch(err) {
     qlog.style.color='var(--danger)';
-    qlog.textContent = '❌ Erreur upload PDF : ' + err.message;
+    qlog.textContent = '❌ Erreur d\'envoi du fichier : ' + err.message;
     return;
   }
 
-  qlog.textContent = 'Lecture du PDF… (20 à 60 secondes)';
+  qlog.textContent = 'Lecture du fichier… (20 à 60 secondes)';
 
   // 1) Lecture automatique : le PDF est analysé et la fiche remplie (prix, hôtels,
   //    vols, inclus). Le voyage est créé MASQUÉ — à relire puis à rendre visible
@@ -1381,8 +1546,8 @@ async function quickSubmit() {
       readOk = true;
       reload();
       qlog.style.color='var(--ok)';
-      qlog.textContent = '✅ Fiche remplie depuis le PDF — « ' + title + ' » est MASQUÉE : relisez-la, puis rendez-la visible avec « Statut ».';
-      toast('✅ « ' + title + ' » lue depuis le PDF — masquée en attendant votre relecture.');
+      qlog.textContent = '✅ Fiche remplie depuis le fichier — « ' + title + ' » est MASQUÉE : relisez-la, puis rendez-la visible avec « Statut ».';
+      toast('✅ « ' + title + ' » lue depuis le fichier — masquée en attendant votre relecture.');
     } else {
       readError = dx.error || 'erreur inconnue';
     }
@@ -1394,7 +1559,7 @@ async function quickSubmit() {
     qlog.textContent = '⚠️ Lecture automatique impossible (' + readError + ') — création de la fiche simple…';
     // Trace durable : le détail reste lisible dans le bandeau d'action même
     // apres le message de succes du repli (sinon l'erreur disparait).
-    log('Lecture automatique du PDF impossible : ' + readError);
+    log('Lecture automatique du fichier impossible : ' + readError);
   }
 
   if (readOk) { resetQuickForm(); switchTab('catalogue', document.querySelector('[data-tab="catalogue"]')); return; }
@@ -1413,7 +1578,7 @@ async function quickSubmit() {
     if (!data.ok) throw new Error(data.error || 'Erreur serveur');
     reload();
     qlog.style.color='var(--ok)';
-    qlog.textContent = (readError ? '⚠️ PDF non lu (' + readError + ') — ' : '')
+    qlog.textContent = (readError ? '⚠️ Fichier non lu (' + readError + ') — ' : '')
       + '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
     toast('✅ Voyage « ' + title + ' » ajouté dans ' + tag + ' — visible sur le site !');
     resetQuickForm();
@@ -1676,16 +1841,58 @@ function removePhoto(i) {
   renderPhotoPreviews();
 }
 
-async function uploadFile(file) {
-  var endpoint = file.type === 'application/pdf'
-    ? '/api/pdf/upload?filename=' + encodeURIComponent(file.name)
-    : '/api/media/upload?filename=' + encodeURIComponent(file.name);
-  var r = await fetch(endpoint, {
-    method: 'POST',
-    body: file
+// Au-delà de 7 Mo, une image dépasse la limite de lecture automatique (10 Mo une
+// fois encodée) : on la redessine à 2 576 px sur le grand côté, la taille maximale
+// que le modèle lit de toute façon (il réduit lui-même les images plus grandes).
+var IMG_MAX_BYTES = 7 * 1024 * 1024;
+var IMG_MAX_EDGE = 2576;
+
+function shrinkImage(file) {
+  if (file.size <= IMG_MAX_BYTES) return Promise.resolve(file);
+  return new Promise(function(resolve, reject) {
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function() {
+      URL.revokeObjectURL(url);
+      var scale = Math.min(1, IMG_MAX_EDGE / Math.max(img.naturalWidth, img.naturalHeight));
+      var canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(function(blob) {
+        if (!blob) { reject(new Error('image illisible')); return; }
+        var name = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+        resolve(new File([blob], name, { type: 'image/jpeg' }));
+      }, 'image/jpeg', 0.92);
+    };
+    img.onerror = function() { URL.revokeObjectURL(url); reject(new Error('image illisible')); };
+    img.src = url;
   });
-  if (!r.ok) throw new Error('Upload échoué (' + r.status + ')');
-  return r.json();
+}
+
+async function uploadFile(file) {
+  var type = file.type || quickFileType(file);
+  if (type === 'application/pdf') {
+    var r = await fetch('/api/pdf/upload?filename=' + encodeURIComponent(file.name), {
+      method: 'POST',
+      body: file
+    });
+    if (!r.ok) throw new Error('Upload échoué (' + r.status + ')');
+    return r.json();
+  }
+  // Images : envoi direct navigateur -> stockage, comme la page Médias
+  // (/api/media/upload ne fait que délivrer l'autorisation d'envoi).
+  if (!window.v21upload) throw new Error('module d\'envoi non chargé — rechargez la page');
+  var img = await shrinkImage(file);
+  var res = await window.v21upload(img.name, img, {
+    access: 'public',
+    handleUploadUrl: '/api/media/upload',
+    contentType: img.type || type || undefined
+  });
+  return { url: res.url };
 }
 
 function setupPhotoDrop() {
