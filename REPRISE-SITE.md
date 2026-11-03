@@ -6,13 +6,13 @@
 
 _Dernière mise à jour : 2026-11-03_
 
-## 🆕 Admin Produits : ajout rapide depuis une image + clavier arabe/français (PR #300, DRAFT, 2026-11-03)
+## ✅ Admin Produits : ajout rapide depuis une image + clavier arabe/français (PR #300) — FUSIONNÉE le 2026-11-03
 Demande de Karim (capture de l'admin maître) : un JPG dans « PDF de l'équipe » donnait
 « Erreur upload PDF : Failed to fetch ». Cause : les images partaient en brut vers
 `/api/media/upload`, qui attend le format de l'envoi direct Vercel Blob. La PR accepte PDF
 **ou image** (JPG, PNG, WEBP), lit l'image comme un PDF, et ajoute un bouton ⌨️ (clavier
-arabe / français à l'écran) au champ Titre. **Attente :** « fusionne » de Karim, puis un
-essai réel depuis `admin.moroccovoyages21.com/outgoing/produits`.
+arabe / français à l'écran) au champ Titre. Fusionnée sur le « fusionne » de Karim.
+**Reste :** un essai réel avec une image depuis `admin.moroccovoyages21.com/outgoing/produits`.
 
 ## ▶️ Prochaine étape — Chantiers SEO restants (audit UX/SEO)
 Les lots 1 & 2 de l'audit sont **fusionnés et en ligne** (voir ci-dessous). Restent
