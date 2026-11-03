@@ -6,6 +6,15 @@
 
 _Dernière mise à jour : 2026-11-03_
 
+## ✅ Admin Produits : date d'ajout + bouton « 🖼 Médias » + photos automatiques (PR #301, #302) — FUSIONNÉES le 2026-11-03
+- **#301** : « 📅 Ajouté le JJ/MM/AAAA » devant chaque produit du catalogue (champ `createdAt` ; les voyages
+  du catalogue de base n'ont pas de date : « date non enregistrée »).
+- **#302** : bouton « 🖼 Médias » sur chaque produit → Gestion des médias ouverte sur sa fiche
+  (`?produit=<clé médias>`, `/outgoing/medias?produit=…` depuis l'admin maître). Un nouveau voyage créé
+  sans photos reçoit **une fois** jusqu'à 6 photos + 1 vidéo mp4 tirées au hasard dans les fiches **de la
+  même destination** (choix de Karim), modifiables ensuite dans Gestion des médias.
+**Reste :** essai réel par Karim ; « عمرة رجب » (créé avant #302) n'a pas de photos → « 🖼 Médias ».
+
 ## ✅ Admin Produits : ajout rapide depuis une image + clavier arabe/français (PR #300) — FUSIONNÉE le 2026-11-03
 Demande de Karim (capture de l'admin maître) : un JPG dans « PDF de l'équipe » donnait
 « Erreur upload PDF : Failed to fetch ». Cause : les images partaient en brut vers
