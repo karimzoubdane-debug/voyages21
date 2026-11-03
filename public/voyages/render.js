@@ -80,7 +80,9 @@
     // bidirectionnel. On isole chaque suite de chiffres dans un span LTR pour la lire correctement.
     function bidiNum(s) {
         if (v.lang !== "ar" || s == null) return s;
-        return String(s).replace(/(\d[\d ]*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
+        // « 19,900 » ou « 19.900 » : la virgule/le point des milliers restent dans le nombre
+        // (sinon, en arabe, « 19 » et « 900 » s'affichent séparés et inversés : « 900,19 »).
+        return String(s).replace(/(\d(?:[\d ]|[,.](?=\d{3}))*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
     }
 
     var cadran = (v.cadran || []).map(function (r) {

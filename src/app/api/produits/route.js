@@ -193,6 +193,45 @@ export async function PUT(request) {
       return Response.json({ ok: true, slug: body.slug }, { headers: corsHeaders });
     }
 
+    // Voyage OMRA PASSÉ (date de fin dépassée) → corbeille, sans rien changer à la fiche
+    // (choix de Karim, 03/11/2026 : Omra seulement). Déclenché par l'Admin Produits à l'ouverture du
+    // catalogue. Voyage admin : déplacé de `custom` vers `trash`. Voyage du catalogue
+    // de base (data.js, non effaçable d'ici) : marqué « supprimé » (retiré du site)
+    // et inscrit dans la corbeille pour pouvoir être restauré.
+    if (body.action === 'expire' && body.slug) {
+      const slug = String(body.slug);
+      const fin = String(body.fin || '');
+      const role = await getRole(request);
+      data.trash = data.trash || {};
+      if (data.trash[slug]) return Response.json({ ok: true, already: true }, { headers: corsHeaders });
+      const prev = data.status[slug] || null;
+      if (prev && prev.keepAfterExpiry) {
+        return Response.json({ ok: false, error: 'gardé en ligne par le propriétaire' }, { status: 409, headers: corsHeaders });
+      }
+      // Omra seulement (étiquette « عمرة » ou « Omra »)
+      const tagOf = (t) => String(t || '').trim().toLowerCase();
+      const tag = data.custom[slug] ? data.custom[slug].tag : (body.snapshot && body.snapshot.tag);
+      if (tagOf(tag) !== 'عمرة' && tagOf(tag) !== 'omra') {
+        return Response.json({ ok: false, error: 'seuls les voyages Omra passent automatiquement à la corbeille' }, { status: 400, headers: corsHeaders });
+      }
+      const entry = { slug, status: prev, deletedAt: new Date().toISOString(), deletedBy: 'expiration', expiredOn: fin, movedBy: role || '' };
+      if (data.custom[slug]) {
+        entry.product = data.custom[slug];
+        delete data.custom[slug];
+        delete data.status[slug];
+      } else if (body.static) {
+        const snap = body.snapshot && typeof body.snapshot === 'object' ? body.snapshot : {};
+        entry.static = true;
+        entry.product = { title: String(snap.title || slug), tag: String(snap.tag || ''), price: String(snap.price || ''), duration: String(snap.duration || '') };
+        data.status[slug] = { ...(prev || {}), removed: true, hidden: true };
+      } else {
+        return Response.json({ ok: false, error: 'voyage introuvable' }, { status: 404, headers: corsHeaders });
+      }
+      data.trash[slug] = entry;
+      await writeManifest(data);
+      return Response.json({ ok: true, expired: slug }, { headers: corsHeaders });
+    }
+
     // Restaurer un voyage depuis la corbeille → PROPRIÉTAIRE uniquement.
     if (body.action === 'restore' && body.slug) {
       const deniedOwner = await denyIfNotOwner(request, corsHeaders);
@@ -201,8 +240,17 @@ export async function PUT(request) {
       if (!t) {
         return Response.json({ ok: false, error: 'introuvable dans la corbeille' }, { status: 404, headers: corsHeaders });
       }
-      data.custom[body.slug] = t.product;
-      if (t.status) data.status[body.slug] = t.status; else delete data.status[body.slug];
+      // Un voyage passé que Karim restaure reste en ligne : on ne le renvoie plus
+      // automatiquement à la corbeille.
+      const st = t.status ? { ...t.status } : {};
+      if (t.deletedBy === 'expiration') st.keepAfterExpiry = true;
+      if (t.static) {
+        delete st.removed;
+        if (!(t.status && t.status.hidden)) delete st.hidden;
+      } else {
+        data.custom[body.slug] = t.product;
+      }
+      if (Object.keys(st).length) data.status[body.slug] = st; else delete data.status[body.slug];
       delete data.trash[body.slug];
       await writeManifest(data);
       return Response.json({ ok: true, restored: body.slug }, { headers: corsHeaders });
@@ -303,7 +351,8 @@ export async function DELETE(request) {
       if (deniedOwner) return deniedOwner;
       const data = await readManifest();
       const keys = Object.keys(data.trash || {});
-      for (const k of keys) await removeMediaEntry(k); // enlève aussi les médias
+      // enlève aussi les médias (sauf voyages du catalogue de base : leurs médias restent)
+      for (const k of keys) if (!(data.trash[k] && data.trash[k].static)) await removeMediaEntry(k);
       data.trash = {};
       await writeManifest(data);
       return Response.json({ ok: true, emptied: keys.length }, { headers: corsHeaders });
@@ -319,8 +368,11 @@ export async function DELETE(request) {
       const deniedOwner = await denyIfNotOwner(request, corsHeaders);
       if (deniedOwner) return deniedOwner;
       if (data.trash && data.trash[slug]) {
+        const isStatic = !!data.trash[slug].static;
         delete data.trash[slug];
-        await removeMediaEntry(slug);
+        // Voyage du catalogue de base : il reste retiré du site (removed) ; son code
+        // dans data.js et ses médias ne s'effacent pas d'ici.
+        if (!isStatic) await removeMediaEntry(slug);
       }
       await writeManifest(data);
       return Response.json({ ok: true }, { headers: corsHeaders });
