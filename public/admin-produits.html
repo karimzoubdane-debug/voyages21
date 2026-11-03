@@ -273,6 +273,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         <input type="search" placeholder="Rechercher…" id="filterSearch" oninput="applyFilters()" style="min-width:180px">
       </label>
     </div>
+    <div id="expirySection"></div>
     <div id="cadranSection"></div>
     <div id="pendingSection"></div>
     <div id="trashSection"></div>
@@ -637,8 +638,194 @@ function reload() {
       renderCadrans();
       renderCatalogue();
       log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
+      loadMediaMap();
+      runExpirySweep();
     })
     .catch(function(e){ log('Erreur : ' + e.message); });
+}
+
+// Médias en ligne (pour savoir quels voyages n'ont encore aucune photo)
+var mediaMap = null;
+function loadMediaMap() {
+  return fetch('/api/media', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(m){ if (m && typeof m === 'object') { mediaMap = m; renderCatalogue(); } })
+    .catch(function(){});
+}
+function mediaKeyOf(slug, v) {
+  var k = (v && v.mediaKey) || slug;
+  return MEDIA_KEY_ALIASES[k] || k;
+}
+function hasAnyMedia(rec) {
+  return !!(rec && ((rec.images && rec.images.length) || rec.videoUrl || rec.videoLink));
+}
+
+// ─────────────────────────────────────────
+// Voyages passés → corbeille (choix de Karim, 03/11/2026)
+// ─────────────────────────────────────────
+// À chaque ouverture du catalogue (propriétaire ou équipe), tout voyage dont la
+// date de fin écrite est dépassée part à la corbeille SANS AUCUN CHANGEMENT de sa
+// fiche : il n'est plus sur le site. Après 1 mois dans la corbeille, il est supprimé
+// définitivement (à l'ouverture par le propriétaire). « Restaurer » le remet en ligne
+// pour de bon (il n'est plus renvoyé à la corbeille). Sans année écrite, on ne peut pas
+// savoir : le voyage reste en ligne.
+// ── Fin d'un voyage (date après laquelle il est « passé ») ──
+var FIN_MOIS = {
+  'janvier':1,'janv':1,'février':2,'fevrier':2,'févr':2,'fevr':2,'mars':3,'avril':4,'avr':4,'mai':5,'juin':6,
+  'juillet':7,'juil':7,'août':8,'aout':8,'aôut':8,'septembre':9,'sept':9,'octobre':10,'oct':10,'novembre':11,'nov':11,
+  'décembre':12,'decembre':12,'déc':12,'dec':12,
+  'january':1,'february':2,'march':3,'april':4,'may':5,'june':6,'july':7,'august':8,'september':9,'october':10,'december':12,
+  'يناير':1,'فبراير':2,'مارس':3,'أبريل':4,'ابريل':4,'إبريل':4,'ماي':5,'مايو':5,'يونيو':6,'يونيه':6,'يوليوز':7,'يوليو':7,'يوليه':7,
+  'غشت':8,'أغسطس':8,'اغسطس':8,'شتنبر':9,'سبتمبر':9,'أكتوبر':10,'اكتوبر':10,'نونبر':11,'نوفمبر':11,'دجنبر':12,'ديسمبر':12
+};
+var FIN_MOIS_RX = Object.keys(FIN_MOIS).sort(function(a, b) { return b.length - a.length; }).join('|');
+var FIN_JOUR_MOIS = new RegExp('(?<!\\d)(\\d{1,2})(?:er)?\\s*(?:(?:[-–—→←]|au|à|to|إلى|الى)\\s*(\\d{1,2})(?:er)?\\s*)?(' + FIN_MOIS_RX + ')(?![\\p{L}])\\.?(?:\\s*(20\\d\\d)(?!\\d))?', 'giu');
+var FIN_NUM = /(?<!\d)(\d{1,2})\/(\d{1,2})(?:\/(20\d\d))?(?![\d\/])/g;
+var FIN_MOIS_AN = new RegExp('(?<![\\p{L}])(' + FIN_MOIS_RX + ')(?![\\p{L}])\\.?\\s+(20\\d\\d)(?!\\d)', 'giu');
+var FIN_SAISON = /(printemps|été|ete|summer|spring|automne|autumn|fall|hiver|winter)\s+(?:d[e'’]\s*)?(20\d\d)(?:\s*[-\/–]\s*(20\d\d))?/gi;
+var FIN_SAISON_FIN = { printemps:[6,20], spring:[6,20], 'été':[9,22], ete:[9,22], summer:[9,22], automne:[12,20], autumn:[12,20], fall:[12,20], hiver:[3,20], winter:[3,20] };
+var FIN_AN = /(?<!\d)(20\d\d)(?!\d)/g;
+// Phrases qui annoncent d'autres départs : la date la plus tardive écrite n'est pas la fin.
+var FIN_OUVERT = /autres dates|selon calendrier|à la demande|a la demande|sur demande|chaque jour|tous les jours|toute l['’]année|à partir de|a partir de|dès |on request|all year|every day/i;
+
+function finIso(y, m, d) {
+  var dt = new Date(Date.UTC(+y, +m - 1, +d));
+  if (dt.getUTCMonth() !== +m - 1 || dt.getUTCDate() !== +d) return '';
+  return dt.toISOString().slice(0, 10);
+}
+function finDuMois(y, m) { return new Date(Date.UTC(+y, +m, 0)).toISOString().slice(0, 10); }
+function maxIso(list) { return list.reduce(function(a, b) { return b > a ? b : a; }, ''); }
+function yearsIn(s) { var out = [], m; FIN_AN.lastIndex = 0; while ((m = FIN_AN.exec(s))) out.push(+m[1]); return out; }
+
+// Renvoie { fin: 'AAAA-MM-JJ', base: 'jour'|'mois'|'année' } ou { fin: '', raison } si on ne peut pas savoir.
+function tripEnd(v) {
+  v = v || {};
+  var dl = Array.isArray(v.datesList) ? v.datesList.map(String) : (v.datesList ? [String(v.datesList)] : []);
+  var d = v.dates || {};
+  var textes = [d.line || '', d.note || '', v.eyebrow || '', v.title || ''].map(String);
+  var tout = dl.concat(textes).join(' · ');
+  var anContexte = Math.max.apply(null, [0].concat(yearsIn(tout)));
+  if (!anContexte) return { fin: '', raison: 'aucune année écrite' };
+
+  if (FIN_OUVERT.test(tout)) {
+    var ans = yearsIn(tout);
+    return { fin: finIso(Math.max.apply(null, ans), 12, 31), base: 'année', ouvert: true };
+  }
+  var jours = [], m;
+  dl.concat(textes).forEach(function(s) {
+    var anLigne = Math.max.apply(null, [0].concat(yearsIn(s))) || anContexte;
+    FIN_JOUR_MOIS.lastIndex = 0;
+    while ((m = FIN_JOUR_MOIS.exec(s))) {
+      var mois = FIN_MOIS[m[3].toLowerCase()], an = m[4] || anLigne;
+      [m[1], m[2]].forEach(function(j) { if (j) { var x = finIso(an, mois, j); if (x) jours.push(x); } });
+    }
+    FIN_NUM.lastIndex = 0;
+    while ((m = FIN_NUM.exec(s))) { var y = finIso(m[3] || anLigne, m[2], m[1]); if (y) jours.push(y); }
+  });
+  if (jours.length) return { fin: maxIso(jours), base: 'jour' };
+
+  var mois2 = [];
+  FIN_MOIS_AN.lastIndex = 0;
+  while ((m = FIN_MOIS_AN.exec(tout))) mois2.push(finDuMois(m[2], FIN_MOIS[m[1].toLowerCase()]));
+  FIN_SAISON.lastIndex = 0;
+  while ((m = FIN_SAISON.exec(tout))) {
+    var f = FIN_SAISON_FIN[m[1].toLowerCase()];
+    mois2.push(finIso(m[3] || m[2], f[0], f[1]));
+  }
+  if (mois2.length) return { fin: maxIso(mois2), base: 'mois' };
+  return { fin: finIso(anContexte, 12, 31), base: 'année' };
+}
+
+var EXPIRY_PURGE_DAYS = 30;
+function todayCasa() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Africa/Casablanca' });
+}
+function frDate(iso) {
+  if (!iso) return '';
+  var p = String(iso).slice(0, 10).split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : iso;
+}
+function purgeDateOf(entry) {
+  var d = new Date(entry.deletedAt);
+  if (isNaN(d.getTime())) return '';
+  d.setDate(d.getDate() + EXPIRY_PURGE_DAYS);
+  return d.toISOString().slice(0, 10);
+}
+function productForDates(item) {
+  return item.source === 'static'
+    ? Object.assign({}, item.v, (manifest.overrides || {})[item.slug] || {})
+    : item.v;
+}
+
+var expirySweepDone = false;
+async function runExpirySweep() {
+  if (expirySweepDone) return;
+  if (manifest.role !== 'owner' && manifest.role !== 'team') return;
+  expirySweepDone = true;
+  var today = todayCasa();
+  var trash = manifest.trash || {};
+  var candidates = allProducts().filter(function(item) {
+    var st = manifest.status[item.slug] || {};
+    if (st.removed || st.keepAfterExpiry || trash[item.slug]) return false;
+    var r = tripEnd(productForDates(item));
+    item.fin = r.fin;
+    return !!r.fin && r.fin < today;
+  });
+  var moved = [], failed = [], purged = [];
+  for (var i = 0; i < candidates.length; i++) {
+    var it = candidates[i], v = it.v || {};
+    try {
+      var r = await fetch('/api/produits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'expire', slug: it.slug, fin: it.fin, static: it.source === 'static',
+          snapshot: { title: v.title || '', tag: v.tag || '', price: v.price || '', duration: v.duration || '' } })
+      });
+      var d = await r.json().catch(function(){ return {}; });
+      if (r.ok && d.ok) moved.push({ title: v.title || it.slug, fin: it.fin });
+      else failed.push((v.title || it.slug) + ' (' + (d.error || r.status) + ')');
+    } catch (e) { failed.push((v.title || it.slug) + ' (' + e.message + ')'); }
+  }
+  if (manifest.role === 'owner') {
+    var limit = new Date(Date.now() - EXPIRY_PURGE_DAYS * 86400000).toISOString();
+    var keys = Object.keys(trash);
+    for (var j = 0; j < keys.length; j++) {
+      var t = trash[keys[j]] || {};
+      if (t.deletedBy !== 'expiration' || !t.deletedAt || t.deletedAt > limit) continue;
+      try {
+        var rp = await fetch('/api/produits?slug=' + encodeURIComponent(keys[j]) + '&type=purge', { method: 'DELETE' });
+        var dp = await rp.json().catch(function(){ return {}; });
+        if (rp.ok && dp.ok) purged.push((t.product && t.product.title) || keys[j]);
+      } catch (e) {}
+    }
+  }
+  if (moved.length || failed.length || purged.length) {
+    renderExpiryBanner(moved, failed, purged);
+    if (moved.length || purged.length) reload();
+  }
+}
+
+function renderExpiryBanner(moved, failed, purged) {
+  var box = document.getElementById('expirySection');
+  if (!box) return;
+  var purgeOn = new Date(Date.now() + EXPIRY_PURGE_DAYS * 86400000).toISOString().slice(0, 10);
+  var html = '<div style="border:2px solid var(--warn);background:#fff7ea;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">';
+  if (moved.length) {
+    html += '<h3 style="margin:0 0 .4rem;color:#8a5208">🗓 ' + moved.length + ' voyage' + (moved.length > 1 ? 's passés retirés' : ' passé retiré') + ' du site</h3>'
+      + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">Leur date de fin est dépassée : ' + (moved.length > 1 ? 'ils sont partis' : 'il est parti')
+      + ' dans la corbeille sans aucun changement. Suppression définitive le ' + frDate(purgeOn) + ', sauf si tu ' + (moved.length > 1 ? 'les restaures' : 'le restaures') + '.</p>'
+      + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">'
+      + moved.map(function(m){ return '<li>' + esc(m.title) + ' — fin le ' + esc(frDate(m.fin)) + '</li>'; }).join('')
+      + '</ul>';
+  }
+  if (purged.length) {
+    html += '<p style="margin:.6rem 0 0;font-size:.85rem;color:#6b5a3e">🗑 ' + purged.length + ' voyage' + (purged.length > 1 ? 's' : '') + ' passé' + (purged.length > 1 ? 's' : '')
+      + ' supprimé' + (purged.length > 1 ? 's' : '') + ' définitivement (1 mois dans la corbeille) : ' + purged.map(esc).join(', ') + '.</p>';
+  }
+  if (failed.length) {
+    html += '<p style="margin:.6rem 0 0;font-size:.85rem;color:var(--danger)">⚠️ Non déplacé' + (failed.length > 1 ? 's' : '') + ' : ' + failed.map(esc).join(', ') + '.</p>';
+  }
+  box.innerHTML = html + '</div>';
 }
 
 // ─────────────────────────────────────────
@@ -792,6 +979,10 @@ function renderTrash() {
     var meta = [p.tag, p.duration, p.price].filter(Boolean).map(esc).join(' · ');
     var when = t.deletedAt ? new Date(t.deletedAt).toLocaleDateString('fr-FR') : '';
     var who = t.deletedBy === 'team' ? ' · par l’équipe' : (t.deletedBy === 'owner' ? ' · par toi' : '');
+    if (t.deletedBy === 'expiration') {
+      who = ' · 🗓 passé (fin le ' + frDate(t.expiredOn) + ') · suppression définitive le ' + frDate(purgeDateOf(t))
+        + (t.static ? ' · catalogue de base : reste retiré du site' : '');
+    }
     return '<div style="display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;border-top:1px solid #eadfca;padding:.6rem 0">'
       + '<div style="min-width:0"><div style="font-weight:700;color:var(--forest)">' + esc(p.title || slug) + '</div>'
       + '<div style="font-size:.82rem;color:#8a8279">' + meta + (meta && (when||who) ? ' — ' : '') + esc(when) + who + '</div></div>'
@@ -983,6 +1174,7 @@ function renderCatalogue() {
     var title = (v.title || '').toLowerCase();
 
     if (!matchesGroup(item)) return false;
+    if (manifest.trash && manifest.trash[item.slug]) return false; // il est dans la corbeille
     if (source && item.source !== source) return false;
     if (search && title.indexOf(search) === -1 && tag.indexOf(search) === -1) return false;
     if (status === 'active' && (st.hidden || st.badge === 'SOLDÉ' || st.badge === 'Complet')) return false;
@@ -1124,10 +1316,16 @@ function renderProdRow(slug, v, source, idx, total) {
     + '</div>'
     + '<div class="prod-actions">'
     + orderBtns
+    + ((st.hidden && !st.removed)
+        ? '<button class="mini ok" type="button" onclick="publishProduct(\'' + esc(slug) + '\')" title="Rendre ce voyage visible sur le site">✅ Publier en ligne</button>'
+        : '')
     + '<button class="mini" type="button" onclick="toggleDrawer(\'' + esc(slug) + '\')">Statut</button>'
     + '<a class="btn mini" href="' + (source === 'custom' ? '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug) : '/voyages/' + esc(slug) + '.html') + '" target="_blank" rel="noopener" title="Voir la fiche sur le site">👁 Voir</a>'
     + renderPdfBtn(slug, v, source)
     // Lien direct vers la fiche de ce voyage dans Gestion des médias (même clé que le site).
+    + ((mediaMap && !hasAnyMedia(mediaMap[mediaKeyOf(slug, v)]))
+        ? '<button class="mini" type="button" onclick="fillRandomMedia(\'' + esc(slug) + '\')" title="Ajouter des photos et une vidéo prises au hasard dans les voyages de la même destination">🎲 Photos au hasard</button>'
+        : '')
     + '<a class="btn mini" href="/admin-medias.html?produit=' + encodeURIComponent((v && v.mediaKey) || slug) + '" target="_blank" rel="noopener" title="Ajouter photos et vidéos à ce voyage (Gestion des médias)">🖼 Médias</a>'
     + '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>'
     + (source === 'custom'
@@ -1336,7 +1534,46 @@ function confirmDeleteStatic(slug, title) {
 }
 
 // Restaurer un voyage de base précédemment supprimé (removed:false, hidden:false).
+// Publier en ligne un voyage masqué, sans toucher au reste de son statut.
+function publishProduct(slug) {
+  var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
+  var title = (item && item.v && item.v.title) || slug;
+  var newSt = { ...(manifest.status[slug] || {}), hidden: false };
+  log('Publication…');
+  fetch('/api/produits', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'status', slug: slug, status: newSt })
+  })
+    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+    .then(function(res){
+      if (res.ok && res.d && res.d.ok) {
+        manifest.status[slug] = newSt;
+        toast('✅ « ' + title + ' » est en ligne');
+        log('« ' + title + ' » publié en ligne.');
+        renderCatalogue();
+      } else {
+        toast('❌ Publication refusée : ' + ((res.d && res.d.error) || 'erreur'));
+      }
+    })
+    .catch(function(e){ toast('❌ Erreur réseau'); log('Erreur publication : ' + e.message); });
+}
+
+// Photos et vidéo au hasard (même destination) pour un voyage qui n'en a aucune.
+async function fillRandomMedia(slug) {
+  var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
+  if (!item) return;
+  var v = item.v || {};
+  log('Choix des photos…');
+  var am = await autoMediaIfEmpty(slug, v.tag, mediaKeyOf(slug, v));
+  var txt = autoMediaText(am);
+  if (am === null && !txt) txt = 'Ce voyage a déjà des médias, ou leur lecture a échoué.';
+  if (txt) { toast(txt); log(txt); }
+  await loadMediaMap();
+}
+
 function restoreStatic(slug) {
+  if (manifest.trash && manifest.trash[slug]) { restoreTrash(slug); return; }
   log('Restauration…');
   var newSt = { ...(manifest.status[slug]||{}) };
   delete newSt.removed;
@@ -1396,13 +1633,14 @@ function shuffled(list) {
 
 // Renvoie { photos, video } si des médias ont été ajoutés ou s'il n'y en avait
 // aucun à prendre, null si la fiche avait déjà des médias ou en cas d'erreur.
-async function autoMediaIfEmpty(slug, tag) {
+async function autoMediaIfEmpty(slug, tag, key) {
   if (!slug || !tag) return null;
+  key = key || slug; // clé médias (voyages de base : leur mediaKey)
   try {
     var r = await fetch('/api/media', { cache: 'no-store' });
     if (!r.ok) throw new Error('lecture des médias (' + r.status + ')');
     var map = (await r.json()) || {};
-    var cur = map[slug];
+    var cur = map[key];
     if (cur && ((cur.images && cur.images.length) || cur.videoUrl || cur.videoLink)) return null;
 
     var want = destKey(tag);
@@ -1426,7 +1664,7 @@ async function autoMediaIfEmpty(slug, tag) {
     if (!photos.length && !videos.length) return { photos: 0, video: false };
 
     var rec = {
-      key: slug,
+      key: key,
       videoLink: '',
       videoUrl: videos.length ? shuffled(videos)[0] : '',
       images: shuffled(photos).slice(0, AUTO_MEDIA_PHOTOS).map(function(u) { return { url: u }; })
@@ -1434,7 +1672,7 @@ async function autoMediaIfEmpty(slug, tag) {
     var w = await fetch('/api/media', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: slug, rec: rec })
+      body: JSON.stringify({ key: key, rec: rec })
     });
     var d = await w.json().catch(function() { return {}; });
     if (!w.ok || d.ok === false) throw new Error(d.error || ('enregistrement (' + w.status + ')'));
