@@ -29,7 +29,9 @@
   }
 
   function bidiNum(s) {
-    return esc(s).replace(/(\d[\d ]*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
+    // « 19,900 » ou « 19.900 » : la virgule/le point des milliers restent dans le nombre
+    // (sinon, en arabe, « 19 » et « 900 » s'affichent séparés et inversés : « 900,19 »).
+    return esc(s).replace(/(\d(?:[\d ]|[,.](?=\d{3}))*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
   }
 
   function firstImage(v) {
