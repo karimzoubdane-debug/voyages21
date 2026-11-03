@@ -1127,6 +1127,8 @@ function renderProdRow(slug, v, source, idx, total) {
     + '<button class="mini" type="button" onclick="toggleDrawer(\'' + esc(slug) + '\')">Statut</button>'
     + '<a class="btn mini" href="' + (source === 'custom' ? '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug) : '/voyages/' + esc(slug) + '.html') + '" target="_blank" rel="noopener" title="Voir la fiche sur le site">👁 Voir</a>'
     + renderPdfBtn(slug, v, source)
+    // Lien direct vers la fiche de ce voyage dans Gestion des médias (même clé que le site).
+    + '<a class="btn mini" href="/admin-medias.html?produit=' + encodeURIComponent((v && v.mediaKey) || slug) + '" target="_blank" rel="noopener" title="Ajouter photos et vidéos à ce voyage (Gestion des médias)">🖼 Médias</a>'
     + '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>'
     + (source === 'custom'
         ? '<button class="mini danger" type="button" onclick="confirmDelete(\'' + esc(slug) + '\')">Supprimer</button>'
@@ -1358,6 +1360,99 @@ function restoreStatic(slug) {
 }
 
 // ─────────────────────────────────────────
+// Photos automatiques d'un nouveau voyage (choix de Karim, 03/11/2026)
+// ─────────────────────────────────────────
+// Un voyage créé sans photos reçoit, UNE seule fois, des photos et une vidéo
+// tirées au hasard (choix et ordre) parmi les fiches DE LA MÊME DESTINATION déjà
+// en ligne. Elles sont enregistrées dans sa fiche « Gestion des médias » : on peut
+// ensuite les changer, les retirer ou les réordonner. Rien n'est inventé : sans
+// photo de cette destination sur le site, on le dit et on n'ajoute rien.
+var AUTO_MEDIA_PHOTOS = 6;
+var MEDIA_KEY_ALIASES = { // mêmes alias que voyages/render.js (anciennes clés Omra)
+  'modal-omra': 'modal-omra-mouharram',
+  'modal-omra-06': 'modal-omra-06-juillet',
+  'modal-omra-08': 'modal-omra-08-juillet',
+  'modal-omra-01': 'modal-omra-01-juillet'
+};
+// Libellés qui désignent la même destination
+var TAG_SYNONYMS = [['عمرة', 'omra'], ['combiné', 'combinés'], ['croisière', 'croisières']];
+
+function destKey(tag) {
+  var t = String(tag || '').trim().toLowerCase();
+  for (var i = 0; i < TAG_SYNONYMS.length; i++) {
+    if (TAG_SYNONYMS[i].indexOf(t) !== -1) return TAG_SYNONYMS[i][0];
+  }
+  return t;
+}
+
+function shuffled(list) {
+  var a = list.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+// Renvoie { photos, video } si des médias ont été ajoutés ou s'il n'y en avait
+// aucun à prendre, null si la fiche avait déjà des médias ou en cas d'erreur.
+async function autoMediaIfEmpty(slug, tag) {
+  if (!slug || !tag) return null;
+  try {
+    var r = await fetch('/api/media', { cache: 'no-store' });
+    if (!r.ok) throw new Error('lecture des médias (' + r.status + ')');
+    var map = (await r.json()) || {};
+    var cur = map[slug];
+    if (cur && ((cur.images && cur.images.length) || cur.videoUrl || cur.videoLink)) return null;
+
+    var want = destKey(tag);
+    var keys = {};
+    allProducts().forEach(function(item) {
+      if (item.slug === slug) return;
+      var v = item.v || {};
+      if (!v.tag || destKey(v.tag) !== want) return;
+      var k = v.mediaKey || item.slug;
+      keys[MEDIA_KEY_ALIASES[k] || k] = true;
+    });
+    var photos = [], seen = {}, videos = [];
+    Object.keys(keys).forEach(function(k) {
+      var rec = map[k];
+      if (!rec || typeof rec !== 'object') return;
+      (rec.images || []).forEach(function(im) {
+        if (im && im.url && !seen[im.url]) { seen[im.url] = true; photos.push(im.url); }
+      });
+      if (rec.videoUrl && videos.indexOf(rec.videoUrl) === -1) videos.push(rec.videoUrl);
+    });
+    if (!photos.length && !videos.length) return { photos: 0, video: false };
+
+    var rec = {
+      key: slug,
+      videoLink: '',
+      videoUrl: videos.length ? shuffled(videos)[0] : '',
+      images: shuffled(photos).slice(0, AUTO_MEDIA_PHOTOS).map(function(u) { return { url: u }; })
+    };
+    var w = await fetch('/api/media', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: slug, rec: rec })
+    });
+    var d = await w.json().catch(function() { return {}; });
+    if (!w.ok || d.ok === false) throw new Error(d.error || ('enregistrement (' + w.status + ')'));
+    return { photos: rec.images.length, video: !!rec.videoUrl };
+  } catch (e) {
+    log('Photos automatiques impossibles : ' + e.message + ' — ajoutez-les avec « 🖼 Médias ».');
+    return null;
+  }
+}
+
+function autoMediaText(am) {
+  if (!am) return '';
+  if (!am.photos && !am.video) return '📷 Aucune photo de cette destination sur le site : ajoutez-les avec « 🖼 Médias ».';
+  return '📷 ' + am.photos + ' photo' + (am.photos > 1 ? 's' : '') + (am.video ? ' et 1 vidéo' : '')
+    + ' de la même destination ajoutée' + (am.photos + (am.video ? 1 : 0) > 1 ? 's' : '') + ' au hasard — modifiables avec « 🖼 Médias ».';
+}
+
+// ─────────────────────────────────────────
 // Mode rapide : PDF ou image
 // ─────────────────────────────────────────
 var quickPdfFile = null;
@@ -1565,6 +1660,8 @@ async function quickSubmit() {
       qlog.style.color='var(--ok)';
       qlog.textContent = '✅ Fiche remplie depuis le fichier — « ' + title + ' » est MASQUÉE : relisez-la, puis rendez-la visible avec « Statut ».';
       toast('✅ « ' + title + ' » lue depuis le fichier — masquée en attendant votre relecture.');
+      var amTxt = autoMediaText(await autoMediaIfEmpty(dx.slug, tag));
+      if (amTxt) { qlog.textContent += ' ' + amTxt; log(amTxt); }
     } else {
       readError = dx.error || 'erreur inconnue';
     }
@@ -1594,6 +1691,8 @@ async function quickSubmit() {
     var data = await res.json();
     if (!data.ok) throw new Error(data.error || 'Erreur serveur');
     reload();
+    var amTxt2 = autoMediaText(await autoMediaIfEmpty(data.slug, tag));
+    if (amTxt2) log(amTxt2);
     qlog.style.color='var(--ok)';
     qlog.textContent = (readError ? '⚠️ Fichier non lu (' + readError + ') — ' : '')
       + '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
@@ -1812,6 +1911,10 @@ async function submitForm(e) {
         });
       }
       toast('✅ ' + (currentEditSlug ? 'Voyage modifié' : 'Voyage ajouté') + ' — visible sur le site !');
+      if (!currentEditSlug && !currentEditIsStatic && !allImageUrls.length) {
+        var amTxt3 = autoMediaText(await autoMediaIfEmpty(finalSlug, product.tag));
+        if (amTxt3) log(amTxt3);
+      }
       reload();
       cancelForm();
     } else {

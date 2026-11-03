@@ -979,16 +979,41 @@
     }
 
     setHomeFields(DEFAULT_HOME_COVER);
-    loadCustomProductsIntoPicker().then(buildPicker);
-    apiGet().then(function (data) {
+    var pickerReady = loadCustomProductsIntoPicker().then(buildPicker);
+    var mediaReady = apiGet().then(function (data) {
         MANIFEST = data || {};
         setOnline(true);
         setHomeFields(homeCover());
         renderHeroProducts();
         refreshPickerMarks();
+        return true;
     }).catch(function () {
         setOnline(false, 'Stockage en ligne non disponible — le store Blob est-il activé sur Vercel ? Vous pouvez tout de même préparer le contenu, mais il ne sera pas enregistré tant que la connexion n\'est pas établie.');
         refreshPickerMarks();
+        return false;
+    });
+
+    // Lien direct depuis le catalogue de l'Admin Produits : ?produit=<clé médias>.
+    // On n'ouvre la fiche qu'une fois la liste ET les médias en ligne chargés :
+    // ouverte trop tôt, elle partirait vide et un enregistrement effacerait les
+    // photos déjà en ligne.
+    var URL_ALIASES = { // mêmes alias que voyages/render.js (anciennes clés Omra)
+        'modal-omra': 'modal-omra-mouharram',
+        'modal-omra-06': 'modal-omra-06-juillet',
+        'modal-omra-08': 'modal-omra-08-juillet',
+        'modal-omra-01': 'modal-omra-01-juillet'
+    };
+    Promise.all([pickerReady, mediaReady]).then(function (res) {
+        var wanted = new URLSearchParams(location.search).get('produit');
+        if (!wanted || !res[1]) return;
+        var sel = document.getElementById('picker');
+        var has = function (k) { return Array.prototype.some.call(sel.options, function (o) { return o.value === k; }); };
+        var key = has(wanted) ? wanted : (URL_ALIASES[wanted] && has(URL_ALIASES[wanted]) ? URL_ALIASES[wanted] : '');
+        if (!key) { toast('Voyage introuvable dans la liste des médias'); return; }
+        sel.value = key;
+        selectProduct(key);
+        var ed = document.getElementById('editor');
+        if (ed && ed.scrollIntoView) ed.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 </script>
 </body>
