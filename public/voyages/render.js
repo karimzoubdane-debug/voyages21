@@ -160,6 +160,9 @@
                 return "<tr><td class=\"hotel\">" + hotelsHtml + "</td>" + pricesHtml + "</tr>";
             }).join("") + "</tbody></table></div>"
             + (v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "");
+    } else if (v.priceTable && !(v.priceTable.rows || []).length) {
+        // Tableau sans ligne (fiche avec seulement une note prix) : la note seule
+        priceHtml = v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "";
     } else if (v.priceTable) {
         priceHtml = '<div class="ptable-wrap"><table class="ptable"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {

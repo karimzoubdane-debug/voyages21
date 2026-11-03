@@ -124,7 +124,8 @@ main{max-width:860px;margin:1.8rem auto 5rem;padding:0 1rem}
 
   <div class="notice no-print">
     <strong>Instructions :</strong> Remplissez tous les champs disponibles, puis cliquez sur
-    <strong>"Télécharger la fiche"</strong> — un fichier sera généré à envoyer à D21.
+    <strong>"📤 Envoyer à D21"</strong> — la fiche arrive dans Admin Produits, en attente de validation.
+    <strong>"⬇ Télécharger (.json)"</strong> garde une copie sur l'ordinateur (rien n'est enregistré automatiquement).
     Pour un PDF à envoyer par WhatsApp/email, utilisez <strong>"Imprimer / PDF"</strong>.
   </div>
 
@@ -575,14 +576,16 @@ function collectData() {
   var tag = isCombo ? 'Combinés' : (destinations[0] || '');
 
   var priceRows = getPriceTableData();
-  var priceTable = priceRows.length ? {
+  // Le supplément single devient une ligne du tableau (le site affiche les lignes du
+  // tableau, pas un champ « single ») ; la note prix est gardée même sans tableau.
+  var single = document.getElementById('f-single').value.trim();
+  if (single) priceRows.push(['Supplément single', '—', single]);
+  var priceNote = document.getElementById('f-priceNote').value.trim();
+  var priceTable = (priceRows.length || priceNote) ? {
     head: ['Catégorie / Type chambre', 'Date / Saison', 'Prix / pers.'],
     rows: priceRows,
-    note: document.getElementById('f-priceNote').value.trim() || undefined
+    note: priceNote || undefined
   } : undefined;
-
-  var single = document.getElementById('f-single').value.trim();
-  if (single && priceTable) priceTable.single = single;
 
   var ctaTitle = document.getElementById('f-ctaTitle').value.trim();
   var ctaText = document.getElementById('f-ctaText').value.trim();
@@ -650,12 +653,22 @@ function soumettre(btn) {
       if (res.ok && res.d && res.d.ok) {
         toast('✅ Voyage envoyé à D21 — en attente de validation');
         document.getElementById('printTitle').textContent = data.title;
+        // Bouton bloqué tant que la fiche n'a pas changé : évite les envois en double.
+        if (btn) {
+          btn.textContent = '✅ Envoyé';
+          var form = document.getElementById('ficheForm');
+          var rearm = function () { btn.disabled = false; btn.textContent = '📤 Envoyer à D21'; };
+          if (form) form.addEventListener('input', rearm, { once: true });
+        }
       } else {
         toast('❌ Échec de l\'envoi : ' + ((res.d && res.d.error) || 'erreur'));
+        if (btn) { btn.disabled = false; btn.textContent = '📤 Envoyer à D21'; }
       }
     })
-    .catch(function (e) { toast('❌ Erreur réseau : ' + e.message); })
-    .finally(function () { if (btn) { btn.disabled = false; btn.textContent = '📤 Envoyer à D21'; } });
+    .catch(function (e) {
+      toast('❌ Erreur réseau : ' + e.message);
+      if (btn) { btn.disabled = false; btn.textContent = '📤 Envoyer à D21'; }
+    });
 }
 
 // ─── Utilitaires ───
