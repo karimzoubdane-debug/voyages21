@@ -9,7 +9,9 @@
 // avec le bouton « Statut ». Rien n'est publié sans son accord.
 //
 // Corps attendu : { pdfUrl, tag, title?, destinations?, groupId? }
-//   pdfUrl  — l'URL Blob du PDF déjà téléversé par /api/pdf/upload
+//   pdfUrl  — l'URL Blob du PDF déjà téléversé par /api/pdf/upload, ou d'une image
+//             (JPG, PNG, WEBP) téléversée par /api/media/upload : une brochure
+//             reçue en photo se lit de la même façon
 //   tag     — la destination choisie dans l'admin (ex. « عمرة », « Turquie »)
 //   title   — titre imposé ; sinon celui que le modèle lit dans le PDF
 
@@ -27,6 +29,18 @@ const MODEL = 'claude-opus-5';
 // Limite volontairement basse (la 1ʳᵉ brochure fait ~4 Mo) : au-delà, la requête
 // coûte cher et risque de dépasser le temps d'exécution de la fonction.
 const MAX_PDF_BYTES = 8 * 1024 * 1024;
+// Images : 10 Mo maximum une fois encodées (limite de l'API), soit ~7,5 Mo bruts.
+// L'admin réduit d'elle-même les images plus lourdes avant l'envoi.
+const MAX_IMAGE_BYTES = 7.5 * 1024 * 1024;
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+// Type du fichier : d'abord l'en-tête renvoyé par le stockage, sinon l'extension.
+function fileKind(res, url) {
+  const ct = String(res.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
+  if (ct === 'application/pdf' || IMAGE_TYPES.includes(ct)) return ct;
+  const ext = (String(url).split('?')[0].split('.').pop() || '').toLowerCase();
+  return { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp' }[ext] || '';
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -263,15 +277,24 @@ export async function POST(request) {
     return Response.json({ ok: false, error: 'pdfUrl et tag requis' }, { status: 400, headers: corsHeaders });
   }
 
-  // 1) Récupérer le PDF déjà téléversé.
+  // 1) Récupérer le PDF (ou l'image) déjà téléversé.
   let pdfBase64;
+  let kind;
   try {
     const res = await fetch(pdfUrl, { cache: 'no-store' });
-    if (!res.ok) throw new Error('PDF introuvable (' + res.status + ')');
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.length > MAX_PDF_BYTES) {
+    if (!res.ok) throw new Error('fichier introuvable (' + res.status + ')');
+    kind = fileKind(res, pdfUrl);
+    if (!kind) {
       return Response.json(
-        { ok: false, error: 'PDF trop lourd (' + Math.round(buf.length / 1e6) + ' Mo, maximum 8 Mo).' },
+        { ok: false, error: 'Format non pris en charge : envoyez un PDF ou une image JPG, PNG ou WEBP.' },
+        { status: 415, headers: corsHeaders },
+      );
+    }
+    const buf = Buffer.from(await res.arrayBuffer());
+    const isPdf = kind === 'application/pdf';
+    if (buf.length > (isPdf ? MAX_PDF_BYTES : MAX_IMAGE_BYTES)) {
+      return Response.json(
+        { ok: false, error: (isPdf ? 'PDF' : 'Image') + ' trop lourd' + (isPdf ? '' : 'e') + ' (' + Math.round(buf.length / 1e6) + ' Mo, maximum ' + (isPdf ? '8' : '7') + ' Mo).' },
         { status: 413, headers: corsHeaders },
       );
     }
@@ -296,8 +319,11 @@ export async function POST(request) {
         {
           role: 'user',
           content: [
-            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } },
-            { type: 'text', text: 'Remplis la fiche de ce voyage. Destination retenue dans l\'admin : ' + tag + '.' },
+            kind === 'application/pdf'
+              ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } }
+              : { type: 'image', source: { type: 'base64', media_type: kind, data: pdfBase64 } },
+            { type: 'text', text: (kind === 'application/pdf' ? '' : 'La brochure est fournie en image (photo ou capture) : lis-la comme le PDF. ')
+              + 'Remplis la fiche de ce voyage. Destination retenue dans l\'admin : ' + tag + '.' },
           ],
         },
       ],
