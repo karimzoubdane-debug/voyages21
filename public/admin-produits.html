@@ -45,6 +45,8 @@ main{max-width:1140px;margin:1.4rem auto 4rem;padding:0 1rem}
 .prod-price{font-weight:800;color:var(--forest)}
 .prod-tag{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 .prod-source{font-size:.7rem;color:#999;font-style:italic}
+.prod-date{font-size:.72rem;font-weight:700;color:var(--forest2);margin-bottom:.15rem}
+.prod-date.none{color:#8a8f86;font-weight:600}
 .dest-warning{margin-top:.35rem;background:#fdecea;border:1px solid #f5c2bd;color:#b23a2e;border-radius:6px;padding:.35rem .55rem;font:600 .74rem/1.35 "DM Sans",sans-serif}
 .prod-actions{display:flex;flex-wrap:nowrap;gap:.4rem;align-items:center;padding:.5rem .7rem;border-left:1px solid var(--line);white-space:nowrap}
 .badge-pill{display:inline-block;border-radius:999px;padding:.18rem .55rem;font:700 .68rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase}
@@ -1068,6 +1070,20 @@ function hasDestPage(v) {
   });
 }
 
+// Date d'ajout d'un produit : seuls les voyages créés depuis l'admin la portent
+// (champ createdAt posé par le serveur). Les voyages du catalogue de base n'en
+// ont pas : on le dit, sans inventer de date.
+function renderProdDate(v, source) {
+  if (source === 'custom' && v && v.createdAt) {
+    var d = new Date(v.createdAt);
+    if (!isNaN(d.getTime())) {
+      var txt = d.toLocaleDateString('fr-FR', { timeZone: 'Africa/Casablanca', day: '2-digit', month: '2-digit', year: 'numeric' });
+      return '<div class="prod-date">📅 Ajouté le ' + esc(txt) + '</div>';
+    }
+  }
+  return '<div class="prod-date none">📅 ' + (source === 'custom' ? 'Date d’ajout non enregistrée' : 'Catalogue de base — date non enregistrée') + '</div>';
+}
+
 function renderProdRow(slug, v, source, idx, total) {
   var st = manifest.status[slug] || {};
   var thumb = getThumb(slug, v);
@@ -1089,6 +1105,7 @@ function renderProdRow(slug, v, source, idx, total) {
     + '<div class="prod-thumb" style="' + esc(thumbStyle) + '"></div>'
     + '<div style="display:flex;flex-direction:column;min-width:0">'
     + '<div class="prod-info">'
+    + renderProdDate(v, source)
     + '<div class="prod-tag">' + esc(v.tag || '—') + (source === 'custom' ? ' <span class="prod-source">· admin</span>' : '') + '</div>'
     + '<div class="prod-title">' + esc(v.title || '—') + '</div>'
     + '<div class="prod-meta">'
