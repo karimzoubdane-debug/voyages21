@@ -84,6 +84,7 @@
         position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%;
         background: var(--rouge); color: #fff; border: none; font-size: 0.85rem; line-height: 1; cursor: pointer;
     }
+    .thumb button.copy { top: auto; bottom: 4px; left: 4px; right: auto; background: rgba(27,58,40,.85); }
     .hint { font-size: 0.76rem; color: #888; margin-top: 0.25rem; }
     .warn {
         background: #fff3e0; border: 1px solid #e8a33d; color: #8a4b00;
@@ -921,8 +922,49 @@
             b.textContent = '×'; b.title = 'Retirer';
             b.onclick = function () { removeImage(i); };
             d.appendChild(b);
+            // Copier le lien de la photo, pour l'ajouter à un autre voyage (« Ajouter le lien »)
+            var c = document.createElement('button');
+            c.className = 'copy'; c.textContent = '🔗'; c.title = 'Copier le lien de cette photo';
+            c.onclick = function () { copyLink(src); };
+            d.appendChild(c);
             box.appendChild(d);
         });
+    }
+
+    function copyLink(url) {
+        var done = function () { toast('🔗 Lien copié — collez-le dans « Ajouter le lien » d’un autre voyage'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { window.prompt('Lien de la photo :', url); });
+        } else { window.prompt('Lien de la photo :', url); }
+    }
+
+    // ── Médias conservés (voyages en corbeille ou supprimés) ──
+    // Les médias ne sont jamais effacés (Karim, 04/11/2026) : ceux qui n'appartiennent plus
+    // à un voyage du catalogue sont rangés dans ce groupe, pour les revoir et les réutiliser.
+    var TRASH_TITLES = {};
+    function addKeptMediaToPicker() {
+        var sel = document.getElementById('picker');
+        if (!sel) return;
+        var has = {};
+        Array.prototype.forEach.call(sel.options, function (o) { has[o.value] = true; });
+        var keys = Object.keys(MANIFEST).filter(function (k) {
+            return k.indexOf('__') !== 0 && !has[k] && hasMedia(MANIFEST[k]);
+        });
+        if (!keys.length) return;
+        var og = document.createElement('optgroup');
+        og.label = '🗂 Médias conservés (voyages en corbeille ou supprimés)';
+        keys.forEach(function (k) {
+            var a = MANIFEST[k].archived || {};
+            var title = TRASH_TITLES[k] || a.title || k;
+            var o = document.createElement('option');
+            o.value = k;
+            o.textContent = (TRASH_TITLES[k] ? '🗑 ' : '🗂 ') + (a.tag ? a.tag + ' — ' : '') + title;
+            og.appendChild(o);
+            TITLES[k] = title;
+            PICKER_LABELS[k] = o.textContent;
+        });
+        sel.appendChild(og);
+        refreshPickerMarks();
     }
 
     // ── Export / Import / Reset ──
@@ -987,6 +1029,10 @@
             .then(function (r) { return r.ok ? r.json() : {}; })
             .then(function (data) {
                 var custom = (data && data.custom) || {};
+                Object.keys((data && data.trash) || {}).forEach(function (k) {
+                    var t = data.trash[k] || {};
+                    if (!t.static && t.product) TRASH_TITLES[k] = t.product.title || k;
+                });
                 Object.keys(custom).forEach(function (slug) {
                     if (TITLES[slug] !== undefined) return; // déjà présent
                     var p = custom[slug] || {};
@@ -1026,6 +1072,7 @@
         'modal-omra-01': 'modal-omra-01-juillet'
     };
     Promise.all([pickerReady, mediaReady]).then(function (res) {
+        if (res[1]) addKeptMediaToPicker();
         var wanted = new URLSearchParams(location.search).get('produit');
         if (!wanted || !res[1]) return;
         var sel = document.getElementById('picker');

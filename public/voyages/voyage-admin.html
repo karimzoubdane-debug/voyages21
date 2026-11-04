@@ -35,6 +35,11 @@
         app.innerHTML = '<div class="adm-error">Voyage introuvable.</div>';
         return;
       }
+      // Fiche en arabe sans langue enregistrée (ex. Omra créées depuis l'admin) :
+      // titre écrit en arabe → page de droite à gauche et libellés arabes.
+      if (!data.product.lang && /[\u0600-\u06FF]/.test(String(data.product.title || ''))) {
+        data.product.lang = 'ar';
+      }
       window.VOYAGES = {};
       window.VOYAGES[slug] = data.product;
       document.body.setAttribute('data-voyage', slug);
