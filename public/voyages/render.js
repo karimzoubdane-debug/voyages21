@@ -46,7 +46,7 @@
 
     var LABELS = {
         fr: {
-            back: "‹ Retour à l'accueil", soundOn: "Activer le son", soundOff: "Couper le son",
+            back: "‹ Retour à l'accueil", backDest: function (t) { return "‹ Tous nos voyages · " + t; }, soundOn: "Activer le son", soundOff: "Couper le son",
             from: "À partir de", quote: "Demander un devis", quoteWa: "Demander un devis sur WhatsApp",
             seeVideo: "Voir la vidéo", trust: "Sur mesure · Voyages 21, depuis 2000",
             why: "Pourquoi vous allez adorer ce voyage", itinDays: "Itinéraire jour par jour", itin: "Itinéraire",
@@ -60,7 +60,7 @@
             askText: function (t, l) { return "Bonjour, je suis intéressé(e) par le voyage « " + t + " »" + (l ? " (" + l + ")" : "") + ". Pouvez-vous me faire une proposition ?"; }
         },
         ar: {
-            back: "‹ العودة إلى الكتيّب", soundOn: "تشغيل الصوت", soundOff: "كتم الصوت",
+            back: "‹ العودة إلى الكتيّب", backDest: function (t, k) { return k === "omra" ? "‹ جميع رحلات العمرة" : "‹ العودة إلى جميع الرحلات"; }, soundOn: "تشغيل الصوت", soundOff: "كتم الصوت",
             from: "ابتداءً من", quote: "اطلب عرض سعر", quoteWa: "اطلب عرض سعر عبر واتساب",
             seeVideo: "شاهد الفيديو", trust: "رحلة على المقاس · Voyages 21 منذ 2000",
             why: "لماذا ستحبّون هذه الرحلة", itinDays: "البرنامج يوماً بيوم", itin: "البرنامج",
@@ -75,6 +75,50 @@
         }
     };
     var L = LABELS[v.lang] || LABELS.fr;
+
+    // ── Bouton retour : vers la page de la destination du voyage, pas vers l'accueil
+    // (Karim, 04/11/2026 ; le bouton Accueil est sur la page destination). On revient
+    // d'abord à la page destination d'où vient le visiteur ; sinon on la déduit du
+    // voyage (nom de la fiche pour les voyages du site, destination choisie dans
+    // l'admin pour les autres). Si on ne trouve rien : retour à l'accueil, comme avant.
+    var DESTS = {
+        chine: "Chine", combines: "Combinés", croisieres: "Croisières", cuba: "Cuba", egypte: "Égypte",
+        europe: "Europe", "malaisie-thailande": "Malaisie & Thaïlande", maroc: "Mon Maroc", omra: "Omra & Hajj",
+        ouzbekistan: "Ouzbékistan", perou: "Pérou", tunisie: "Tunisie", turquie: "Turquie",
+        "usa-canada": "USA & Canada", vietnam: "Vietnam", zanzibar: "Zanzibar"
+    };
+    var DEST_PREFIXES = [
+        [/^asie-chine/, "chine"], [/^asie-vietnam/, "vietnam"], [/^asie-ouzbekistan/, "ouzbekistan"],
+        [/^asie-(malaisie-thailande|thailande)/, "malaisie-thailande"], [/^asie-/, "combines"],
+        [/^europe-/, "europe"], [/^turquie-/, "turquie"], [/^croisiere-/, "croisieres"], [/^egypte-/, "egypte"],
+        [/^(usa|canada)-/, "usa-canada"], [/^cuba-/, "cuba"], [/^perou-/, "perou"], [/^zanzibar-/, "zanzibar"],
+        [/^afrique-tunisie/, "tunisie"], [/^omra-/, "omra"], [/^maroc-/, "maroc"]
+    ];
+    function sansAccents(x) { return String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); }
+    function destinationOf() {
+        try {
+            var ref = document.referrer ? new URL(document.referrer) : null;
+            if (ref && ref.origin === location.origin && /^\/voyages\/destinations\/[a-z0-9-]+\.html$/.test(ref.pathname)) {
+                var k = ref.pathname.split("/").pop().replace(/\.html$/, "");
+                if (DESTS[k]) return { key: k, href: ref.pathname + ref.hash };
+            }
+        } catch (e) {}
+        var key = "";
+        DEST_PREFIXES.some(function (r) { if (r[0].test(slug)) { key = r[1]; return true; } return false; });
+        if (!key) {
+            var noms = [v.tag].concat(v.destinations || []).map(sansAccents).filter(Boolean);
+            Object.keys(DESTS).some(function (k) {
+                var t = sansAccents(DESTS[k]);
+                if (noms.indexOf(t) !== -1 || noms.indexOf(k) !== -1 || (k === "omra" && (noms.indexOf("عمرة") !== -1 || noms.indexOf("omra") !== -1))) { key = k; return true; }
+                return false;
+            });
+        }
+        return key ? { key: key, href: "/voyages/destinations/" + key + ".html" } : null;
+    }
+    var DEST = destinationOf();
+    var backHtml = DEST
+        ? '<a href="' + DEST.href + '">' + L.backDest(DESTS[DEST.key], DEST.key) + "</a>"
+        : '<a href="/design/homepage-v2-luxe.html">' + L.back + "</a>";
 
     // En arabe (RTL), un nombre composé "17 200" est réordonné en "200 17" par l'algorithme
     // bidirectionnel. On isole chaque suite de chiffres dans un span LTR pour la lire correctement.
@@ -181,7 +225,7 @@
         : ((v.programme && v.programme.length) ? '<ol class="steps">' + v.programme.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" : "");
 
     app.innerHTML =
-        '<div class="topbar"><div class="topbar-inner"><a href="/design/homepage-v2-luxe.html">' + L.back + '</a><span class="brand">VOYAGES 21</span></div></div>'
+        '<div class="topbar"><div class="topbar-inner">' + backHtml + '<span class="brand">VOYAGES 21</span></div></div>'
         + '<div class="page">'
         + (v.eyebrow ? '<div class="eyebrow">' + v.eyebrow + "</div>" : "")
         + '<h1 class="voyage-title">' + v.title + (v.duration ? ' <span class="dur-badge">' + v.duration + "</span>" : "") + "</h1>"
