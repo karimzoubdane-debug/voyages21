@@ -84,6 +84,7 @@
         position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%;
         background: var(--rouge); color: #fff; border: none; font-size: 0.85rem; line-height: 1; cursor: pointer;
     }
+    .thumb button.copy { top: auto; bottom: 4px; left: 4px; right: auto; background: rgba(27,58,40,.85); }
     .hint { font-size: 0.76rem; color: #888; margin-top: 0.25rem; }
     .warn {
         background: #fff3e0; border: 1px solid #e8a33d; color: #8a4b00;
@@ -127,7 +128,7 @@
 <div class="v21-site-banner" style="background:#1B3A28;color:#fff;text-align:center;font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:8px 12px">📍 Tu édites le site <b>voyages21.com</b> (site principal). Pour les photos du site Incoming, utilise l’admin « Site Incoming » (<b>moroccovoyages21.com</b>).</div>
 <header>
     <h1>Voyages21 — Gestion des médias</h1>
-    <div class="sub">Sans mot de passe · choisissez un voyage, ajoutez photos &amp; vidéo</div>
+    <div class="sub">Choisissez un voyage, ajoutez photos &amp; vidéo</div>
     <div class="toolbar">
         <button class="btn ghost" onclick="location.href='/admin'">← Espace admin</button>
         <button class="btn ghost" onclick="exportData()">Exporter (sauvegarde)</button>
@@ -515,23 +516,40 @@
             return { destination: val('destination'), name: val('name'), price: val('price'), link: val('link'), videoUrl: val('videoUrl') };
         }).filter(function (it) { return it.destination || it.name || it.videoUrl; }) };
     }
+    // Toutes les lignes affichées, y compris vides (pour ne pas perdre une saisie non enregistrée)
+    function readHeroRows() {
+        return Array.prototype.slice.call(document.querySelectorAll('[data-hero-row]')).map(function (row) {
+            function val(k){ var el=row.querySelector('[data-hero="'+k+'"]'); return el ? el.value.trim() : ''; }
+            return { destination: val('destination'), name: val('name'), price: val('price'), link: val('link'), videoUrl: val('videoUrl') };
+        });
+    }
     function addHeroProduct() {
         var rec = heroProducts();
-        rec.items = rec.items || [];
+        rec.items = readHeroRows();
         rec.items.push({ destination: '', name: '', price: '', videoUrl: '', link: '' });
         MANIFEST[HERO_PRODUCTS_KEY] = rec;
         renderHeroProducts();
     }
     function removeHeroProduct(i) {
         var rec = heroProducts();
-        rec.items = rec.items || [];
+        rec.items = readHeroRows();
         rec.items.splice(i, 1);
         MANIFEST[HERO_PRODUCTS_KEY] = rec;
         renderHeroProducts();
     }
     function saveHeroProducts() {
-        MANIFEST[HERO_PRODUCTS_KEY] = readHeroProducts();
-        return saveManifest().then(function () { toast('Hero produits enregistre'); });
+        var rec = readHeroProducts();
+        MANIFEST[HERO_PRODUCTS_KEY] = rec;
+        // Enregistrement de cette seule rubrique (sans toucher aux médias des voyages)
+        return apiPutProduct(HERO_PRODUCTS_KEY, rec).then(function () {
+            setOnline(true);
+            renderHeroProducts();
+            toast('Hero produits enregistre');
+            notify();
+        }).catch(function (e) {
+            setOnline(false);
+            alert("Impossible d'enregistrer le hero produits : " + ((e && e.message) || e));
+        });
     }
 
     function homeCover() {
@@ -585,7 +603,7 @@
     function saveHomeCover() {
         var rec = Object.assign({}, DEFAULT_HOME_COVER, readHomeFields());
         MANIFEST[HOME_COVER_KEY] = rec;
-        return apiPutAll(MANIFEST).then(function () {
+        return apiPutProduct(HOME_COVER_KEY, rec).then(function () {
             setOnline(true);
             renderHomePreview();
             updateHomeVideoStatus(rec);
@@ -618,9 +636,9 @@
     }
     function resetHomeCover() {
         if (!confirm("Remettre l'accueil du site officiel par defaut ?")) return;
-        delete MANIFEST[HOME_COVER_KEY];
+        MANIFEST[HOME_COVER_KEY] = {};
         setHomeFields(DEFAULT_HOME_COVER);
-        apiPutAll(MANIFEST).then(function () {
+        apiPutProduct(HOME_COVER_KEY, {}).then(function () {
             toast('Accueil remis par defaut');
             notify();
         }).catch(function () { setOnline(false); alert("Echec de l'enregistrement en ligne."); });
@@ -729,7 +747,8 @@
 
             '<div class="section-label" style="margin-top:.9rem">Vidéo de la galerie — fichier mp4 (se lance automatiquement)</div>' +
             '<div class="row"><label class="hint">téléverser un fichier vidéo&nbsp;: </label>' +
-                '<input type="file" accept="video/*" onchange="setVideoFile(this)"></div>' +
+                '<input type="file" accept="video/*" onchange="setVideoFile(this)">' +
+                '<button class="mini clear" type="button" onclick="clearVideoFile()">Effacer</button></div>' +
             '<div class="hint">Idéal : clip court &lt; 30 s, &lt; 10 Mo, résolution 720p. Démarre tout seul (sans son) dans le carrousel.</div>' +
             '<div class="status" id="vstatus"></div>' +
 
@@ -810,7 +829,6 @@
     // ── Vidéo ──
     function setVideoLink(value) {
         currentRec.videoLink = (value || '').trim();
-        if (currentRec.videoLink) currentRec.videoUrl = '';
         updateVideoStatus();
         save();
     }
@@ -823,8 +841,6 @@
         if (el) { el.textContent = '⏳ Téléversement de la vidéo en cours…'; el.className = 'status'; }
         uploadFile(f).then(function (url) {
             currentRec.videoUrl = url;
-            currentRec.videoLink = '';
-            var li = document.getElementById('vlink'); if (li) li.value = '';
             updateVideoStatus();
             return save();
         }).catch(function (e) {
@@ -833,19 +849,25 @@
             alert('Échec du téléversement de la vidéo : ' + ((e && e.message) || e));
         });
     }
-    function clearVideo() {
+    function clearVideo() { // bouton « Effacer » du lien YouTube / Vimeo
         currentRec.videoLink = '';
-        currentRec.videoUrl = '';
         var li = document.getElementById('vlink'); if (li) li.value = '';
+        updateVideoStatus();
+        save();
+    }
+    function clearVideoFile() { // bouton « Effacer » de la vidéo mp4
+        currentRec.videoUrl = '';
         updateVideoStatus();
         save();
     }
     function updateVideoStatus() {
         var el = document.getElementById('vstatus');
         if (!el) return;
-        if (currentRec.videoUrl) { el.textContent = '✓ Vidéo (fichier) en ligne'; el.className = 'status set'; }
-        else if (currentRec.videoLink) { el.textContent = '✓ Vidéo (lien) enregistrée'; el.className = 'status set'; }
-        else { el.textContent = 'Aucune vidéo'; el.className = 'status'; }
+        var parts = [];
+        if (currentRec.videoUrl) parts.push('✓ Vidéo (fichier) en ligne');
+        if (currentRec.videoLink) parts.push('✓ Vidéo (lien) enregistrée');
+        el.textContent = parts.length ? parts.join(' · ') : 'Aucune vidéo';
+        el.className = parts.length ? 'status set' : 'status';
     }
 
     // ── Photos ──
@@ -877,6 +899,7 @@
             });
         });
         seq.then(function () { return save(); }).catch(function (e) {
+            save(); // les photos déjà envoyées restent enregistrées
             setOnline(false);
             alert('Échec du téléversement d\'une photo : ' + ((e && e.message) || e));
         });
@@ -899,8 +922,49 @@
             b.textContent = '×'; b.title = 'Retirer';
             b.onclick = function () { removeImage(i); };
             d.appendChild(b);
+            // Copier le lien de la photo, pour l'ajouter à un autre voyage (« Ajouter le lien »)
+            var c = document.createElement('button');
+            c.className = 'copy'; c.textContent = '🔗'; c.title = 'Copier le lien de cette photo';
+            c.onclick = function () { copyLink(src); };
+            d.appendChild(c);
             box.appendChild(d);
         });
+    }
+
+    function copyLink(url) {
+        var done = function () { toast('🔗 Lien copié — collez-le dans « Ajouter le lien » d’un autre voyage'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { window.prompt('Lien de la photo :', url); });
+        } else { window.prompt('Lien de la photo :', url); }
+    }
+
+    // ── Médias conservés (voyages en corbeille ou supprimés) ──
+    // Les médias ne sont jamais effacés (Karim, 04/11/2026) : ceux qui n'appartiennent plus
+    // à un voyage du catalogue sont rangés dans ce groupe, pour les revoir et les réutiliser.
+    var TRASH_TITLES = {};
+    function addKeptMediaToPicker() {
+        var sel = document.getElementById('picker');
+        if (!sel) return;
+        var has = {};
+        Array.prototype.forEach.call(sel.options, function (o) { has[o.value] = true; });
+        var keys = Object.keys(MANIFEST).filter(function (k) {
+            return k.indexOf('__') !== 0 && !has[k] && hasMedia(MANIFEST[k]);
+        });
+        if (!keys.length) return;
+        var og = document.createElement('optgroup');
+        og.label = '🗂 Médias conservés (voyages en corbeille ou supprimés)';
+        keys.forEach(function (k) {
+            var a = MANIFEST[k].archived || {};
+            var title = TRASH_TITLES[k] || a.title || k;
+            var o = document.createElement('option');
+            o.value = k;
+            o.textContent = (TRASH_TITLES[k] ? '🗑 ' : '🗂 ') + (a.tag ? a.tag + ' — ' : '') + title;
+            og.appendChild(o);
+            TITLES[k] = title;
+            PICKER_LABELS[k] = o.textContent;
+        });
+        sel.appendChild(og);
+        refreshPickerMarks();
     }
 
     // ── Export / Import / Reset ──
@@ -965,6 +1029,10 @@
             .then(function (r) { return r.ok ? r.json() : {}; })
             .then(function (data) {
                 var custom = (data && data.custom) || {};
+                Object.keys((data && data.trash) || {}).forEach(function (k) {
+                    var t = data.trash[k] || {};
+                    if (!t.static && t.product) TRASH_TITLES[k] = t.product.title || k;
+                });
                 Object.keys(custom).forEach(function (slug) {
                     if (TITLES[slug] !== undefined) return; // déjà présent
                     var p = custom[slug] || {};
@@ -1004,6 +1072,7 @@
         'modal-omra-01': 'modal-omra-01-juillet'
     };
     Promise.all([pickerReady, mediaReady]).then(function (res) {
+        if (res[1]) addKeptMediaToPicker();
         var wanted = new URLSearchParams(location.search).get('produit');
         if (!wanted || !res[1]) return;
         var sel = document.getElementById('picker');

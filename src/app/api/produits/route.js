@@ -53,10 +53,13 @@ async function writeManifest(data) {
   });
 }
 
-// Supprimer aussi l'entrée média du voyage (synchro Produits → Médias).
+// Les médias d'un voyage supprimé ne sont JAMAIS effacés (Karim, 04/11/2026 : « je ne
+// veux pas perdre les médias ») : on les garde dans le manifeste des médias avec une
+// étiquette « archived » (titre, destination, date) pour les retrouver dans Gestion des
+// médias (« Médias conservés ») et pour le tirage « 🎲 Photos au hasard ».
 // Le manifeste des médias est un blob séparé (media-manifest.json).
 const MEDIA_MANIFEST = 'media-manifest.json';
-async function removeMediaEntry(key) {
+async function archiveMediaEntries(entries) {
   try {
     const { blobs } = await list({ prefix: MEDIA_MANIFEST, limit: 1 });
     const hit = blobs.find((b) => b.pathname === MEDIA_MANIFEST);
@@ -64,8 +67,14 @@ async function removeMediaEntry(key) {
     const res = await fetch(hit.url + '?ts=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) return;
     const media = await res.json();
-    if (media && Object.prototype.hasOwnProperty.call(media, key)) {
-      delete media[key];
+    let changed = false;
+    for (const e of entries) {
+      const rec = media && media[e.key];
+      if (!rec || typeof rec !== 'object') continue;
+      rec.archived = { title: String(e.title || ''), tag: String(e.tag || ''), deletedAt: new Date().toISOString() };
+      changed = true;
+    }
+    if (changed) {
       await put(MEDIA_MANIFEST, JSON.stringify(media), {
         access: 'public',
         contentType: 'application/json',
@@ -351,8 +360,11 @@ export async function DELETE(request) {
       if (deniedOwner) return deniedOwner;
       const data = await readManifest();
       const keys = Object.keys(data.trash || {});
-      // enlève aussi les médias (sauf voyages du catalogue de base : leurs médias restent)
-      for (const k of keys) if (!(data.trash[k] && data.trash[k].static)) await removeMediaEntry(k);
+      // les médias sont gardés et étiquetés « conservés » (jamais effacés)
+      await archiveMediaEntries(keys.filter((k) => !(data.trash[k] && data.trash[k].static)).map((k) => {
+        const p = (data.trash[k] && data.trash[k].product) || {};
+        return { key: k, title: p.title, tag: p.tag };
+      }));
       data.trash = {};
       await writeManifest(data);
       return Response.json({ ok: true, emptied: keys.length }, { headers: corsHeaders });
@@ -368,11 +380,12 @@ export async function DELETE(request) {
       const deniedOwner = await denyIfNotOwner(request, corsHeaders);
       if (deniedOwner) return deniedOwner;
       if (data.trash && data.trash[slug]) {
-        const isStatic = !!data.trash[slug].static;
+        const t = data.trash[slug];
         delete data.trash[slug];
         // Voyage du catalogue de base : il reste retiré du site (removed) ; son code
-        // dans data.js et ses médias ne s'effacent pas d'ici.
-        if (!isStatic) await removeMediaEntry(slug);
+        // dans data.js et ses médias ne s'effacent pas d'ici. Voyage admin : ses médias
+        // sont gardés et étiquetés « conservés ».
+        if (!t.static) await archiveMediaEntries([{ key: slug, title: t.product && t.product.title, tag: t.product && t.product.tag }]);
       }
       await writeManifest(data);
       return Response.json({ ok: true }, { headers: corsHeaders });

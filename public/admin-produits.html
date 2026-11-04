@@ -553,6 +553,25 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 // ─────────────────────────────────────────
 // État global
 // ─────────────────────────────────────────
+// Les écritures vers /api/produits partent UNE PAR UNE (dans l'ordre des clics).
+// Sinon deux écritures simultanées (ex. le tri automatique des Omra passées et un clic
+// « Publier en ligne ») lisent la même version du catalogue et la dernière efface
+// l'autre : la publication de « عمرة رجب » a été perdue ainsi le 03/11/2026.
+(function () {
+  var baseFetch = window.fetch, chain = Promise.resolve();
+  window.fetch = function (u, o) {
+    var method = String((o && o.method) || 'GET').toUpperCase();
+    if (method !== 'GET' && String(u).indexOf('/api/produits') !== -1) {
+      var self = this, args = arguments;
+      var run = function () { return baseFetch.apply(self, args); };
+      var p = chain.then(run, run);
+      chain = p.catch(function () {});
+      return p;
+    }
+    return baseFetch.apply(this, arguments);
+  };
+})();
+
 var manifest = { custom: {}, status: {}, order: {}, groupOrder: {}, overrides: {} };
 var currentVisible = []; // slugs affichés dans l'ordre courant (pour Monter/Descendre)
 
@@ -738,7 +757,7 @@ function tripEnd(v) {
 }
 
 var EXPIRY_PURGE_DAYS = 30;
-var EXPIRY_GRACE_DAYS = 7; // une Omra passée reste en ligne 7 jours avant la corbeille (Karim, 03/11/2026)
+var EXPIRY_GRACE_DAYS = 20; // une Omra passée reste en ligne 20 jours avant la corbeille (Karim, 04/11/2026)
 function addDaysIso(iso, n) {
   var d = new Date(iso + 'T00:00:00Z');
   d.setUTCDate(d.getUTCDate() + n);
@@ -820,7 +839,7 @@ function renderExpiryBanner(moved, failed, purged) {
   var html = '<div style="border:2px solid var(--warn);background:#fff7ea;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">';
   if (moved.length) {
     html += '<h3 style="margin:0 0 .4rem;color:#8a5208">🗓 ' + moved.length + ' voyage' + (moved.length > 1 ? 's Omra passés retirés' : ' Omra passé retiré') + ' du site</h3>'
-      + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">Leur date de fin est dépassée depuis plus d’une semaine : ' + (moved.length > 1 ? 'ils sont partis' : 'il est parti')
+      + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">Leur date de fin est dépassée depuis plus de ' + EXPIRY_GRACE_DAYS + ' jours : ' + (moved.length > 1 ? 'ils sont partis' : 'il est parti')
       + ' dans la corbeille sans aucun changement. Suppression définitive le ' + frDate(purgeOn) + ', sauf si tu ' + (moved.length > 1 ? 'les restaures' : 'le restaures') + '.</p>'
       + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">'
       + moved.map(function(m){ return '<li>' + esc(m.title) + ' — fin le ' + esc(frDate(m.fin)) + '</li>'; }).join('')
@@ -1582,28 +1601,36 @@ function confirmDeleteStatic(slug, title) {
 
 // Restaurer un voyage de base précédemment supprimé (removed:false, hidden:false).
 // Publier en ligne un voyage masqué, sans toucher au reste de son statut.
-function publishProduct(slug) {
+async function publishProduct(slug) {
   var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
   var title = (item && item.v && item.v.title) || slug;
-  var newSt = { ...(manifest.status[slug] || {}), hidden: false };
   log('Publication…');
-  fetch('/api/produits', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ type: 'status', slug: slug, status: newSt })
-  })
-    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
-    .then(function(res){
-      if (res.ok && res.d && res.d.ok) {
-        manifest.status[slug] = newSt;
+  // Jusqu'à 2 essais : on relit le catalogue en ligne pour être sûr que la fiche est visible.
+  for (var essai = 1; essai <= 2; essai++) {
+    try {
+      var newSt = { ...(manifest.status[slug] || {}), hidden: false };
+      var r = await fetch('/api/produits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'status', slug: slug, status: newSt })
+      });
+      var d = await r.json().catch(function(){ return {}; });
+      if (!r.ok || !d.ok) { toast('❌ Publication refusée : ' + (d.error || 'erreur')); return; }
+      var chk = await fetch('/api/produits?ts=' + Date.now(), { cache: 'no-store' });
+      var live = chk.ok ? await chk.json() : {};
+      var st = (live.status || {})[slug] || {};
+      if (!st.hidden) {
+        manifest.status[slug] = st;
         toast('✅ « ' + title + ' » est en ligne');
-        log('« ' + title + ' » publié en ligne.');
+        log('« ' + title + ' » publié en ligne (vérifié).');
         renderCatalogue();
-      } else {
-        toast('❌ Publication refusée : ' + ((res.d && res.d.error) || 'erreur'));
+        return;
       }
-    })
-    .catch(function(e){ toast('❌ Erreur réseau'); log('Erreur publication : ' + e.message); });
+      manifest.status = live.status || manifest.status;
+    } catch (e) { log('Erreur publication : ' + e.message); }
+  }
+  toast('❌ La publication n’a pas été enregistrée : rechargez la page puis réessayez.');
+  log('« ' + title + ' » : publication non enregistrée après 2 essais.');
 }
 
 // Photos et vidéo au hasard (même destination) pour un voyage qui n'en a aucune.
@@ -1698,6 +1725,15 @@ async function autoMediaIfEmpty(slug, tag, key) {
       if (!v.tag || destKey(v.tag) !== want) return;
       var k = v.mediaKey || item.slug;
       keys[MEDIA_KEY_ALIASES[k] || k] = true;
+    });
+    // Voyages en corbeille et médias conservés de voyages supprimés (jamais effacés)
+    Object.keys(manifest.trash || {}).forEach(function(k) {
+      var t = manifest.trash[k] || {}, p = t.product || {};
+      if (!t.static && k !== slug && p.tag && destKey(p.tag) === want) keys[k] = true;
+    });
+    Object.keys(map).forEach(function(k) {
+      var a = map[k] && map[k].archived;
+      if (a && k !== key && a.tag && destKey(a.tag) === want) keys[k] = true;
     });
     var photos = [], seen = {}, videos = [];
     Object.keys(keys).forEach(function(k) {
