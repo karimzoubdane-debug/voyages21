@@ -10,6 +10,7 @@
   var statusMap = {};       // overrides de statut (soldé, places, masqué)
   var orderMap = {};        // rang d'affichage manuel par slug (Admin Produits)
   var groupOrderMap = {};   // ordre des cadrans par destination (Admin Produits)
+  var overridesMap = {};    // corrections d'un voyage « en dur » saisies dans l'admin
   // Clé stable de la destination (ex. /voyages/destinations/omra.html -> "omra").
   var destKey = (location.pathname.split('/').pop() || '').replace(/\.html?$/, '');
 
@@ -34,6 +35,26 @@
     return esc(s).replace(/(\d(?:[\d ]|[,.](?=\d{3}))*\d|\d)/g, '<span dir="ltr" style="unicode-bidi:isolate">$1</span>');
   }
 
+  // Fiche d'un voyage telle que la montre sa page : data.js + corrections de l'admin.
+  function tripData(slug, customData) {
+    if (customData) return customData;
+    var base = all[slug];
+    var corr = overridesMap[slug];
+    if (!base || !corr) return base;
+    var v = {};
+    Object.keys(base).forEach(function (k) { v[k] = base[k]; });
+    Object.keys(corr).forEach(function (k) { if (k !== 'updatedAt') v[k] = corr[k]; });
+    return v;
+  }
+
+  // Voyage soldé : date de fin passée (ou badge « SOLDÉ » posé dans l'admin). Il reste
+  // en ligne, badge SOLDÉ clignotant, rangé après les voyages en cours (Karim, 04/11/2026).
+  function isSolde(slug, customData) {
+    var F = window.V21Fin;
+    if (!F) return /^sold[ée]$/i.test(String((statusMap[slug] || {}).badge || '').trim());
+    return F.soldeInfo(tripData(slug, customData) || {}, statusMap[slug]).solde;
+  }
+
   function firstImage(v) {
     // Produits admin : images stockées directement sur le produit
     if (v.images && v.images.length) return v.images[0];
@@ -42,8 +63,9 @@
     return img || '';
   }
 
-  function badgeHtml(slug) {
+  function badgeHtml(slug, customData) {
     var st = statusMap[slug];
+    if (isSolde(slug, customData)) return '<span class="card-badge card-badge--solde">SOLDÉ</span>';
     if (st && st.surDevis) return '<span class="card-badge card-badge--gold">Voyage possible</span>';
     if (!st || !st.badge) return '';
     var color = st.badgeColor || 'danger';
@@ -83,7 +105,7 @@
   }
 
   function card(slug, customData) {
-    var v = customData || all[slug];
+    var v = tripData(slug, customData);
     if (!v) return '';
     if (isHidden(slug)) return '';
 
@@ -96,7 +118,7 @@
 
     return '<article class="card">'
       + '<div class="media" style="' + style + '">'
-      + badgeHtml(slug)
+      + badgeHtml(slug, customData)
       + '</div>'
       + '<div class="body">'
       + '<div class="tag">' + esc(v.tag || cfg.title) + '</div>'
@@ -112,7 +134,7 @@
   }
 
   function priceValue(slug, customData) {
-    var v = customData || all[slug] || {};
+    var v = tripData(slug, customData) || {};
     var n = parseInt(String(v.price || '').replace(/[^0-9]/g, ''), 10);
     return isNaN(n) ? Infinity : n;
   }
@@ -127,8 +149,11 @@
     var n = orderMap[slug];
     return (typeof n === 'number' && !isNaN(n)) ? n : Infinity;
   }
-  // Tri : d'abord l'ordre manuel (ascendant), puis le prix pour les non-classés.
+  // Tri : les voyages en cours d'abord (ordre manuel, puis prix), les soldés ensuite,
+  // du moins cher au plus cher (Karim, 04/11/2026).
   function byOrderThenPrice(a, b) {
+    if (a.solde !== b.solde) return a.solde ? 1 : -1;
+    if (a.solde) return a.price - b.price;
     var oa = orderValue(a.slug), ob = orderValue(b.slug);
     if (oa !== ob) return oa - ob;
     return a.price - b.price;
@@ -138,12 +163,12 @@
     var extraCustom = extraCustom || [];
     var existingCards = items
       .filter(function (s) { return !isHidden(s); })
-      .map(function (s) { return { slug: s, price: priceValue(s), html: card(s) }; })
+      .map(function (s) { return { slug: s, price: priceValue(s), solde: isSolde(s), html: card(s) }; })
       .filter(function (x) { return x.html; });
 
     var customCards = extraCustom
       .filter(function (s) { return !isHidden(s); })
-      .map(function (s) { return { slug: s, price: priceValue(s, customProducts[s]), html: card(s, customProducts[s]) }; })
+      .map(function (s) { return { slug: s, price: priceValue(s, customProducts[s]), solde: isSolde(s, customProducts[s]), html: card(s, customProducts[s]) }; })
       .filter(function (x) { return x.html; });
 
     var allCards = existingCards.concat(customCards)
@@ -283,10 +308,22 @@
     loadSocialContactBar();
   }
 
-  // Chargement parallèle : médias + produits admin
+  // Date de fin des voyages (statut SOLDÉ), partagée avec les fiches et l'admin.
+  function loadFin() {
+    if (window.V21Fin) return Promise.resolve();
+    return new Promise(function (ok) {
+      var s = document.createElement('script');
+      s.src = '/voyages/fin-voyage.js?v=solde-v1';
+      s.onload = ok; s.onerror = ok;
+      document.head.appendChild(s);
+    });
+  }
+
+  // Chargement parallèle : médias + produits admin + dates de fin
   Promise.all([
     fetch('/api/media', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
-    fetch('/api/produits', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })
+    fetch('/api/produits', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+    loadFin()
   ]).then(function (results) {
     media = results[0] || {};
     var manifest = results[1] || {};
@@ -294,6 +331,7 @@
     statusMap = manifest.status || {};
     orderMap = manifest.order || {};
     groupOrderMap = manifest.groupOrder || {};
+    overridesMap = manifest.overrides || {};
     render();
   }).catch(render);
 })();

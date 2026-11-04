@@ -4,22 +4,90 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Maroc — Voyages21</title>
+  <meta name="description" content="Voyages 21 fait découvrir le Maroc aux voyageurs du monde entier avec Morocco Voyages 21, son agence réceptive à Marrakech depuis 2000.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../destination.css?v=media-admin-v2">
+  <link rel="stylesheet" href="../destination.css?v=solde-v1">
+  <style>
+    /* Page « Mon Maroc » : présentation de l'activité réceptive (incoming) de Voyages 21
+       et lien vers son site dédié (demande de Karim, 04/11/2026). Les anciennes fiches
+       Maroc ne sont plus listées ici ; elles restent joignables par leur adresse. */
+    .incoming {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+      gap: 2rem;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 18px 40px rgba(21, 46, 31, .08);
+    }
+    .incoming h2 { color: var(--forest); font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.2; margin: .35rem 0 .8rem; }
+    .incoming p { color: var(--muted); font-size: 1.02rem; }
+    .incoming ul { list-style: none; margin: 1.1rem 0 1.6rem; display: grid; gap: .65rem; }
+    .incoming li { padding-inline-start: 1.6rem; position: relative; color: var(--ink); }
+    .incoming li::before { content: "✓"; position: absolute; inset-inline-start: 0; color: var(--gold); font-weight: 800; }
+    .incoming li b { color: var(--forest); }
+    .go-site {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      background: var(--gold); color: var(--forest2); text-decoration: none;
+      font: 800 1.15rem/1.2 'DM Sans', sans-serif; letter-spacing: .01em;
+      padding: 1.1rem 1.8rem; border-radius: 999px; width: 100%; text-align: center;
+      box-shadow: 0 10px 24px rgba(200, 164, 64, .45);
+      animation: go-pulse 2.2s ease-in-out infinite;
+    }
+    .go-site:hover { background: #d6b555; }
+    .go-url { display: block; margin-top: .6rem; text-align: center; font-weight: 700; color: var(--forest); word-break: break-word; }
+    @keyframes go-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    @media (prefers-reduced-motion: reduce) { .go-site { animation: none; } }
+    .qr-box { text-align: center; background: var(--cream); border-radius: 14px; padding: 1.4rem 1rem; }
+    .qr-box img { width: 100%; max-width: 240px; height: auto; display: block; margin: 0 auto .8rem; background: #fff; border-radius: 10px; padding: .4rem; }
+    .qr-box b { display: block; color: var(--forest); font-size: 1rem; }
+    .qr-box span { color: var(--muted); font-size: .9rem; }
+    @media (max-width: 820px) {
+      .incoming { grid-template-columns: 1fr; padding: 1.4rem; }
+    }
+  </style>
 </head>
 <body>
-  <div id="destinationApp"></div>
-  <script src="../data.js"></script>
-  <script>
-    window.DESTINATION_PAGE = {
-      title: 'Mon Maroc',
-      description: 'Séjours et circuits au Maroc, du désert aux villes impériales.',
-      countLabel: '8 voyages',
-      slugs: ['maroc-merzouga', 'maroc-bin-el-ouidane', 'maroc-dakhla', 'maroc-circuit-imperial-south', 'maroc-circuit-imperial-cities', 'maroc-circuit-best-morocco', 'maroc-circuit-discover-kingdom', 'maroc-circuit-grand-discovery']
-    };
-  </script>
-  <script src="../destination-render.js?v=media-admin-v2"></script>
+  <div class="topbar"><div class="topbar-inner">
+    <a href="/design/homepage-v2-luxe.html">‹ Retour à l'accueil</a>
+    <span class="brand">VOYAGES 21</span>
+  </div></div>
+
+  <main class="page">
+    <section class="hero" style="grid-template-columns:1fr">
+      <div>
+        <div class="eyebrow">Destination</div>
+        <h1>Mon Maroc</h1>
+        <p>Voyages 21 fait aussi découvrir le Maroc aux voyageurs du monde entier, avec son agence réceptive à Marrakech.</p>
+      </div>
+    </section>
+
+    <section class="incoming" aria-labelledby="incoming-title">
+      <div>
+        <div class="eyebrow">Depuis Marrakech · depuis 2000</div>
+        <h2 id="incoming-title">Morocco Voyages 21, notre agence réceptive au Maroc</h2>
+        <p>Des voyages au Maroc conçus à la carte par une équipe locale, à Marrakech depuis 2000.</p>
+        <ul>
+          <li><b>Circuits</b> de plusieurs jours : en bus avec chauffeur, en autotour, en 4x4 ou à moto.</li>
+          <li><b>Séjours &amp; packs</b> à Marrakech, Casablanca et Chefchaouen : villa, voiture &amp; activités.</li>
+          <li><b>Sur mesure, à la carte</b> : vous composez votre voyage, l'équipe s'occupe du reste.</li>
+          <li><b>Événements d'entreprise (MICE)</b> et offres pour les professionnels.</li>
+        </ul>
+        <a class="go-site" href="https://www.moroccovoyages21.com/" target="_blank" rel="noopener">Découvrir le site Morocco Voyages 21 ›</a>
+        <span class="go-url">www.moroccovoyages21.com</span>
+      </div>
+      <div class="qr-box">
+        <img src="qr-moroccovoyages21.svg" width="264" height="264" alt="QR code qui ouvre le site www.moroccovoyages21.com">
+        <b>Scannez avec votre téléphone</b>
+        <span>pour ouvrir www.moroccovoyages21.com</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="/social-contact-bar.js" defer></script>
 </body>
 </html>

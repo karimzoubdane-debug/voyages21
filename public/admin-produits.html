@@ -51,6 +51,8 @@ main{max-width:1140px;margin:1.4rem auto 4rem;padding:0 1rem}
 .prod-actions{display:flex;flex-wrap:nowrap;gap:.4rem;align-items:center;padding:.5rem .7rem;border-left:1px solid var(--line);white-space:nowrap}
 .badge-pill{display:inline-block;border-radius:999px;padding:.18rem .55rem;font:700 .68rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase}
 .badge-pill.sold{background:#d7263d;color:#fff}
+.badge-pill.blink{animation:pill-blink 1s steps(1,end) infinite}
+@keyframes pill-blink{0%,100%{opacity:1}50%{opacity:.15}}
 .badge-pill.gold{background:var(--gold);color:var(--forest2)}
 .badge-pill.green{background:var(--ok);color:#fff}
 .badge-pill.hidden{background:#ccc;color:#555}
@@ -549,6 +551,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 <div class="toast" id="toast"></div>
 
 <script src="/voyages/data.js?v=admin-produits-v2"></script>
+<script src="/voyages/fin-voyage.js?v=solde-v1"></script>
 <script>
 // ─────────────────────────────────────────
 // État global
@@ -659,7 +662,7 @@ function reload() {
       renderCatalogue();
       log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
       loadMediaMap();
-      runExpirySweep();
+      renderSoldes();
     })
     .catch(function(e){ log('Erreur : ' + e.message); });
 }
@@ -681,83 +684,19 @@ function hasAnyMedia(rec) {
 }
 
 // ─────────────────────────────────────────
-// Voyages OMRA passés → corbeille (choix de Karim, 03/11/2026 : Omra seulement)
+// Voyages passés → statut SOLDÉ (choix de Karim, 04/11/2026)
 // ─────────────────────────────────────────
-// À chaque ouverture du catalogue (propriétaire ou équipe), tout voyage Omra dont la
-// date de fin écrite est dépassée part à la corbeille SANS AUCUN CHANGEMENT de sa
-// fiche : il n'est plus sur le site. Après 1 mois dans la corbeille, il est supprimé
-// définitivement (à l'ouverture par le propriétaire). « Restaurer » le remet en ligne
-// pour de bon (il n'est plus renvoyé à la corbeille). Sans année écrite, on ne peut pas
-// savoir : le voyage reste en ligne.
-// ── Fin d'un voyage (date après laquelle il est « passé ») ──
-var FIN_MOIS = {
-  'janvier':1,'janv':1,'février':2,'fevrier':2,'févr':2,'fevr':2,'mars':3,'avril':4,'avr':4,'mai':5,'juin':6,
-  'juillet':7,'juil':7,'août':8,'aout':8,'aôut':8,'septembre':9,'sept':9,'octobre':10,'oct':10,'novembre':11,'nov':11,
-  'décembre':12,'decembre':12,'déc':12,'dec':12,
-  'january':1,'february':2,'march':3,'april':4,'may':5,'june':6,'july':7,'august':8,'september':9,'october':10,'december':12,
-  'يناير':1,'فبراير':2,'مارس':3,'أبريل':4,'ابريل':4,'إبريل':4,'ماي':5,'مايو':5,'يونيو':6,'يونيه':6,'يوليوز':7,'يوليو':7,'يوليه':7,
-  'غشت':8,'أغسطس':8,'اغسطس':8,'شتنبر':9,'سبتمبر':9,'أكتوبر':10,'اكتوبر':10,'نونبر':11,'نوفمبر':11,'دجنبر':12,'ديسمبر':12
-};
-var FIN_MOIS_RX = Object.keys(FIN_MOIS).sort(function(a, b) { return b.length - a.length; }).join('|');
-var FIN_JOUR_MOIS = new RegExp('(?<!\\d)(\\d{1,2})(?:er)?\\s*(?:(?:[-–—→←]|au|à|to|إلى|الى)\\s*(\\d{1,2})(?:er)?\\s*)?(' + FIN_MOIS_RX + ')(?![\\p{L}])\\.?(?:\\s*(20\\d\\d)(?!\\d))?', 'giu');
-var FIN_NUM = /(?<!\d)(\d{1,2})\/(\d{1,2})(?:\/(20\d\d))?(?![\d\/])/g;
-var FIN_MOIS_AN = new RegExp('(?<![\\p{L}])(' + FIN_MOIS_RX + ')(?![\\p{L}])\\.?\\s+(20\\d\\d)(?!\\d)', 'giu');
-var FIN_SAISON = /(printemps|été|ete|summer|spring|automne|autumn|fall|hiver|winter)\s+(?:d[e'’]\s*)?(20\d\d)(?:\s*[-\/–]\s*(20\d\d))?/gi;
-var FIN_SAISON_FIN = { printemps:[6,20], spring:[6,20], 'été':[9,22], ete:[9,22], summer:[9,22], automne:[12,20], autumn:[12,20], fall:[12,20], hiver:[3,20], winter:[3,20] };
-var FIN_AN = /(?<!\d)(20\d\d)(?!\d)/g;
-// Phrases qui annoncent d'autres départs : la date la plus tardive écrite n'est pas la fin.
-var FIN_OUVERT = /autres dates|selon calendrier|à la demande|a la demande|sur demande|chaque jour|tous les jours|toute l['’]année|à partir de|a partir de|dès |on request|all year|every day/i;
-
-function finIso(y, m, d) {
-  var dt = new Date(Date.UTC(+y, +m - 1, +d));
-  if (dt.getUTCMonth() !== +m - 1 || dt.getUTCDate() !== +d) return '';
-  return dt.toISOString().slice(0, 10);
-}
-function finDuMois(y, m) { return new Date(Date.UTC(+y, +m, 0)).toISOString().slice(0, 10); }
-function maxIso(list) { return list.reduce(function(a, b) { return b > a ? b : a; }, ''); }
-function yearsIn(s) { var out = [], m; FIN_AN.lastIndex = 0; while ((m = FIN_AN.exec(s))) out.push(+m[1]); return out; }
-
-// Renvoie { fin: 'AAAA-MM-JJ', base: 'jour'|'mois'|'année' } ou { fin: '', raison } si on ne peut pas savoir.
-function tripEnd(v) {
-  v = v || {};
-  var dl = Array.isArray(v.datesList) ? v.datesList.map(String) : (v.datesList ? [String(v.datesList)] : []);
-  var d = v.dates || {};
-  var textes = [d.line || '', d.note || '', v.eyebrow || '', v.title || ''].map(String);
-  var tout = dl.concat(textes).join(' · ');
-  var anContexte = Math.max.apply(null, [0].concat(yearsIn(tout)));
-  if (!anContexte) return { fin: '', raison: 'aucune année écrite' };
-
-  if (FIN_OUVERT.test(tout)) {
-    var ans = yearsIn(tout);
-    return { fin: finIso(Math.max.apply(null, ans), 12, 31), base: 'année', ouvert: true };
-  }
-  var jours = [], m;
-  dl.concat(textes).forEach(function(s) {
-    var anLigne = Math.max.apply(null, [0].concat(yearsIn(s))) || anContexte;
-    FIN_JOUR_MOIS.lastIndex = 0;
-    while ((m = FIN_JOUR_MOIS.exec(s))) {
-      var mois = FIN_MOIS[m[3].toLowerCase()], an = m[4] || anLigne;
-      [m[1], m[2]].forEach(function(j) { if (j) { var x = finIso(an, mois, j); if (x) jours.push(x); } });
-    }
-    FIN_NUM.lastIndex = 0;
-    while ((m = FIN_NUM.exec(s))) { var y = finIso(m[3] || anLigne, m[2], m[1]); if (y) jours.push(y); }
-  });
-  if (jours.length) return { fin: maxIso(jours), base: 'jour' };
-
-  var mois2 = [];
-  FIN_MOIS_AN.lastIndex = 0;
-  while ((m = FIN_MOIS_AN.exec(tout))) mois2.push(finDuMois(m[2], FIN_MOIS[m[1].toLowerCase()]));
-  FIN_SAISON.lastIndex = 0;
-  while ((m = FIN_SAISON.exec(tout))) {
-    var f = FIN_SAISON_FIN[m[1].toLowerCase()];
-    mois2.push(finIso(m[3] || m[2], f[0], f[1]));
-  }
-  if (mois2.length) return { fin: maxIso(mois2), base: 'mois' };
-  return { fin: finIso(anContexte, 12, 31), base: 'année' };
-}
+// Tout voyage dont la date de fin écrite est passée (Omra comprises) reste EN LIGNE avec
+// le badge SOLDÉ qui clignote, rangé après les voyages en cours, du moins cher au plus
+// cher. Plus aucune mise en corbeille automatique : c'est l'équipe commerciale et
+// marketing qui décide (mettre à jour, mettre en corbeille ou supprimer). Rien n'est
+// écrit dans le catalogue : le statut se calcule à l'affichage, il disparaît donc de
+// lui-même dès que les dates sont mises à jour. Sans année écrite, on ne peut pas
+// savoir : le voyage n'est pas soldé.
+// ── Fin d'un voyage : règle partagée avec le site (/voyages/fin-voyage.js) ──
+var tripEnd = window.V21Fin.tripEnd;
 
 var EXPIRY_PURGE_DAYS = 30;
-var EXPIRY_GRACE_DAYS = 20; // une Omra passée reste en ligne 20 jours avant la corbeille (Karim, 04/11/2026)
 function addDaysIso(iso, n) {
   var d = new Date(iso + 'T00:00:00Z');
   d.setUTCDate(d.getUTCDate() + n);
@@ -783,76 +722,41 @@ function productForDates(item) {
     : item.v;
 }
 
-var expirySweepDone = false;
-async function runExpirySweep() {
-  if (expirySweepDone) return;
-  if (manifest.role !== 'owner' && manifest.role !== 'team') return;
-  expirySweepDone = true;
-  var today = todayCasa();
-  var trash = manifest.trash || {};
-  var candidates = allProducts().filter(function(item) {
-    var st = manifest.status[item.slug] || {};
-    if (st.removed || st.keepAfterExpiry || trash[item.slug]) return false;
-    if (destKey((item.v || {}).tag) !== 'عمرة') return false; // Omra seulement
-    var r = tripEnd(productForDates(item));
-    item.fin = r.fin;
-    return !!r.fin && addDaysIso(r.fin, EXPIRY_GRACE_DAYS) < today;
-  });
-  var moved = [], failed = [], purged = [];
-  for (var i = 0; i < candidates.length; i++) {
-    var it = candidates[i], v = it.v || {};
-    try {
-      var r = await fetch('/api/produits', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'expire', slug: it.slug, fin: it.fin, static: it.source === 'static',
-          snapshot: { title: v.title || '', tag: v.tag || '', price: v.price || '', duration: v.duration || '' } })
-      });
-      var d = await r.json().catch(function(){ return {}; });
-      if (r.ok && d.ok) moved.push({ title: v.title || it.slug, fin: it.fin });
-      else failed.push((v.title || it.slug) + ' (' + (d.error || r.status) + ')');
-    } catch (e) { failed.push((v.title || it.slug) + ' (' + e.message + ')'); }
-  }
-  if (manifest.role === 'owner') {
-    var limit = new Date(Date.now() - EXPIRY_PURGE_DAYS * 86400000).toISOString();
-    var keys = Object.keys(trash);
-    for (var j = 0; j < keys.length; j++) {
-      var t = trash[keys[j]] || {};
-      if (t.deletedBy !== 'expiration' || !t.deletedAt || t.deletedAt > limit) continue;
-      try {
-        var rp = await fetch('/api/produits?slug=' + encodeURIComponent(keys[j]) + '&type=purge', { method: 'DELETE' });
-        var dp = await rp.json().catch(function(){ return {}; });
-        if (rp.ok && dp.ok) purged.push((t.product && t.product.title) || keys[j]);
-      } catch (e) {}
-    }
-  }
-  if (moved.length || failed.length || purged.length) {
-    renderExpiryBanner(moved, failed, purged);
-    if (moved.length || purged.length) reload();
-  }
+// Statut soldé d'un voyage du catalogue (date de fin passée ou badge SOLDÉ posé à la main).
+function soldeOf(item) {
+  var st = manifest.status[item.slug] || {};
+  return window.V21Fin.soldeInfo(productForDates(item), st);
+}
+function isAutoSolde(item) {
+  var st = manifest.status[item.slug] || {};
+  if (st.removed || st.hidden || item.inTrash) return false;
+  return soldeOf(item).solde;
 }
 
-function renderExpiryBanner(moved, failed, purged) {
+// Bandeau en tête du catalogue : la liste des voyages soldés, à décider par l'équipe.
+function renderSoldes() {
   var box = document.getElementById('expirySection');
   if (!box) return;
-  var purgeOn = new Date(Date.now() + EXPIRY_PURGE_DAYS * 86400000).toISOString().slice(0, 10);
-  var html = '<div style="border:2px solid var(--warn);background:#fff7ea;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">';
-  if (moved.length) {
-    html += '<h3 style="margin:0 0 .4rem;color:#8a5208">🗓 ' + moved.length + ' voyage' + (moved.length > 1 ? 's Omra passés retirés' : ' Omra passé retiré') + ' du site</h3>'
-      + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">Leur date de fin est dépassée depuis plus de ' + EXPIRY_GRACE_DAYS + ' jours : ' + (moved.length > 1 ? 'ils sont partis' : 'il est parti')
-      + ' dans la corbeille sans aucun changement. Suppression définitive le ' + frDate(purgeOn) + ', sauf si tu ' + (moved.length > 1 ? 'les restaures' : 'le restaures') + '.</p>'
-      + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">'
-      + moved.map(function(m){ return '<li>' + esc(m.title) + ' — fin le ' + esc(frDate(m.fin)) + '</li>'; }).join('')
-      + '</ul>';
-  }
-  if (purged.length) {
-    html += '<p style="margin:.6rem 0 0;font-size:.85rem;color:#6b5a3e">🗑 ' + purged.length + ' voyage' + (purged.length > 1 ? 's' : '') + ' passé' + (purged.length > 1 ? 's' : '')
-      + ' supprimé' + (purged.length > 1 ? 's' : '') + ' définitivement (1 mois dans la corbeille) : ' + purged.map(esc).join(', ') + '.</p>';
-  }
-  if (failed.length) {
-    html += '<p style="margin:.6rem 0 0;font-size:.85rem;color:var(--danger)">⚠️ Non déplacé' + (failed.length > 1 ? 's' : '') + ' : ' + failed.map(esc).join(', ') + '.</p>';
-  }
-  box.innerHTML = html + '</div>';
+  var trash = manifest.trash || {};
+  var list = allProducts().filter(function(item) {
+    if (trash[item.slug]) return false;
+    return isAutoSolde(item);
+  }).map(function(item) {
+    var i = soldeOf(item);
+    return { slug: item.slug, title: (item.v || {}).title || item.slug, tag: (item.v || {}).tag || '', price: (item.v || {}).price || '', fin: i.fin, expire: i.expire };
+  }).sort(function(a, b) { return priceNum({ price: a.price }) - priceNum({ price: b.price }); });
+  if (!list.length) { box.innerHTML = ''; return; }
+  box.innerHTML = '<div style="border:2px solid var(--danger);background:#fff3f3;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
+    + '<h3 style="margin:0 0 .4rem;color:var(--danger)"><span class="badge-pill sold blink">SOLDÉ</span> ' + list.length + ' voyage' + (list.length > 1 ? 's' : '') + ' dont la date est passée</h3>'
+    + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">' + (list.length > 1 ? 'Ils restent' : 'Il reste') + ' en ligne avec le badge SOLDÉ qui clignote, '
+    + 'après les voyages en cours. À l\'équipe de décider pour chacun : mettre à jour les dates (Modifier), mettre en corbeille ou supprimer.</p>'
+    + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">'
+    + list.map(function(m) {
+        return '<li style="margin:.2rem 0">' + esc(m.title) + (m.tag ? ' · ' + esc(m.tag) : '') + (m.price ? ' · ' + esc(m.price) : '')
+          + (m.expire && m.fin ? ' — fin le ' + esc(frDate(m.fin)) : ' — badge SOLDÉ posé à la main')
+          + ' <button class="mini blue" type="button" onclick="editProduct(\'' + esc(m.slug) + '\')">Modifier</button></li>';
+      }).join('')
+    + '</ul></div>';
 }
 
 // ─────────────────────────────────────────
@@ -1218,15 +1122,20 @@ function renderCatalogue() {
     if (item.inTrash && status) return false;
     if (source && item.source !== source) return false;
     if (search && title.indexOf(search) === -1 && tag.indexOf(search) === -1) return false;
-    if (status === 'active' && (st.hidden || st.badge === 'SOLDÉ' || st.badge === 'Complet')) return false;
-    if (status === 'sold' && (!st.badge || (st.badge !== 'SOLDÉ' && st.badge !== 'Complet'))) return false;
+    var solde = isAutoSolde(item);
+    if (status === 'active' && (st.hidden || solde || st.badge === 'SOLDÉ' || st.badge === 'Complet')) return false;
+    if (status === 'sold' && !solde && st.badge !== 'SOLDÉ' && st.badge !== 'Complet') return false;
     if (status === 'hidden' && !st.hidden) return false;
     return true;
   });
 
-  // Même tri que le site public : ordre manuel d'abord, puis prix.
+  // Même tri que le site public : voyages en cours (ordre manuel, puis prix), puis les
+  // soldés du moins cher au plus cher, puis la corbeille.
+  items.forEach(function(it) { it.solde = isAutoSolde(it); });
   items.sort(function(a, b) {
     if (!!a.inTrash !== !!b.inTrash) return a.inTrash ? 1 : -1; // corbeille en fin de liste
+    if (a.solde !== b.solde) return a.solde ? 1 : -1;
+    if (a.solde) return priceNum(a.v) - priceNum(b.v);
     var oa = orderVal(a.slug), ob = orderVal(b.slug);
     if (oa !== ob) return oa - ob;
     return priceNum(a.v) - priceNum(b.v);
@@ -1352,7 +1261,9 @@ function renderProdRow(slug, v, source, idx, total, inTrash) {
     + '<button class="mini" type="button" ' + (isFirst ? 'disabled' : '') + ' onclick="moveProduct(\'' + esc(slug) + '\',\'up\')" title="Monter">⬆️</button>'
     + '<button class="mini" type="button" ' + (isLast ? 'disabled' : '') + ' onclick="moveProduct(\'' + esc(slug) + '\',\'down\')" title="Descendre">⬇️</button>';
   var thumbStyle = thumb ? 'background-image:url(' + JSON.stringify(thumb) + ')' : '';
-  var badgeHtml = renderBadgePill(st, source);
+  var badgeHtml = (!st.hidden && !st.removed && isAutoSolde({ slug: slug, v: v, source: source }))
+    ? '<span class="badge-pill sold blink" title="Date passée : en ligne avec le badge SOLDÉ">SOLDÉ</span>'
+    : renderBadgePill(st, source);
   var drawerId = 'drawer-' + slug.replace(/[^a-z0-9]/g,'_');
   // Numéro de position (ordre d'affichage) — bien visible dans l'admin.
   var pos = (typeof idx === 'number') ? (idx + 1) : '';
