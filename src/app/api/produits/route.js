@@ -123,6 +123,8 @@ const RATTRAPAGE_07_11 = [
   { key: 'modal-chine', title: 'Circuit Chine — Pékin, Shanghai & Merveilles', tag: 'Chine', reason: 'prescrit (fin le 2026-08-25)' },
   { key: 'modal-chine-pekin-xian-guilin-shanghai', title: "Chine impériale & paysages du Sud — Pékin, Xi'an, Guilin & Shanghai", tag: 'Chine', reason: 'prescrit (fin le 2026-08-24)' },
   { key: 'modal-vietnam', title: 'Découverte du Vietnam — Hanoi à Saigon', tag: 'Vietnam', reason: 'prescrit (fin le 2026-08-21)' },
+  // constaté après le second passage : étiquette absente (6 photos et lien vidéo bien présents)
+  { key: 'modal-marmaris-bodrum', title: 'Istanbul, Marmaris & Bodrum', tag: 'Turquie', reason: 'prescrit (fin le 2026-08-21)' },
 ];
 
 const corsHeaders = {
@@ -290,7 +292,8 @@ export async function PUT(request) {
       if (r.erreur) return Response.json({ ok: false, error: r.erreur }, { status: 400, headers: corsHeaders });
       if (r.deja) return Response.json({ ok: true, already: true }, { headers: corsHeaders });
       // D'abord ranger le PDF et les médias : sans eux, on ne supprime rien.
-      const ok = await archiveMediaEntries([r.garde]);
+      const rattrapage = RATTRAPAGE_07_11.map((e) => ({ ...e, create: true, seulementSiAbsent: true }));
+      const ok = await archiveMediaEntries([r.garde].concat(rattrapage));
       if (!ok && r.garde.pdfUrl) {
         return Response.json({ ok: false, error: 'médiathèque injoignable : rien n\'est supprimé' }, { status: 503, headers: corsHeaders });
       }
