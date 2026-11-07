@@ -165,6 +165,13 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .mx-th.add:hover{opacity:1;border-color:var(--forest)}
 .mx-th.add span{position:absolute;bottom:4px;right:4px;background:var(--forest);color:#fff;border-radius:999px;padding:0 .45rem;font-weight:800}
 .mx-label{font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#536154;margin-top:.6rem}
+.mx-card{width:132px}
+.mx-src{font-size:.7rem;line-height:1.25;color:#6b6457;margin-top:.2rem;max-height:2.5em;overflow:hidden}
+.mx-lib{border:1px solid #e6ddcc;border-radius:8px;max-height:340px;overflow:auto;padding:.3rem .6rem;margin-bottom:.6rem}
+.mx-grp{border-bottom:1px solid #f0e8da;padding:.35rem 0}
+.mx-grp summary{cursor:pointer;font-weight:700;color:var(--forest);font-size:.9rem}
+.mx-vid{display:flex;flex-direction:column;gap:.3rem;width:180px}
+.mx-vid video{width:180px;height:110px;object-fit:cover;border-radius:8px;background:#000}
 .dialog .dbtn{display:flex;gap:.6rem}
 
 /* Group nav */
@@ -1433,6 +1440,7 @@ function renderProdRow(slug, v, source, idx, total, inTrash) {
     + ((mediaMap && !hasAnyMedia(mediaMap[mediaKeyOf(slug, v)]))
         ? '<button class="mini" type="button" onclick="fillRandomMedia(\'' + esc(slug) + '\')" title="Ajouter des photos et une vidéo prises au hasard dans les voyages de la même destination">🎲 Photos au hasard</button>'
         : '')
+    + '<button class="mini" type="button" onclick="openPhototheque(\'' + esc(slug) + '\')" title="Choisir vous-même les photos et la vidéo dans toutes celles du site, par voyage">📚 Photothèque</button>'
     + '<a class="btn mini" href="/admin-medias.html?produit=' + encodeURIComponent((v && v.mediaKey) || slug) + '" target="_blank" rel="noopener" title="Ajouter photos et vidéos à ce voyage (Gestion des médias)">🖼 Médias</a>'
     + '<button class="mini blue" type="button" onclick="editProduct(\'' + esc(slug) + '\')">Modifier</button>'
     + (source === 'custom'
@@ -1869,6 +1877,143 @@ function shuffled(list) {
   return a;
 }
 
+// ── Villes d'un voyage (choix des photos au hasard — Karim, 07/11/2026) ──
+// Le tirage ne prend que les photos des voyages qui passent par les MÊMES villes, et écarte
+// toute photo dont le nom de fichier cite une autre ville (ex. « antalya » pour un voyage
+// Istanbul). Les villes connues viennent des itinéraires des voyages du site, plus quelques
+// lieux fréquents dans les noms de photos. Les villes de départ du Maroc ne comptent pas.
+var VILLES_EN_PLUS = ['side', 'fethiye', 'pamukkale', 'cappadoce', 'cappadocia', 'izmir', 'bursa', 'sapanca', 'kusadasi', 'ephese',
+  'alanya', 'kemer', 'belek', 'oludeniz', 'mecque', 'makkah', 'medine', 'madinah', 'مكة', 'المكرمة', 'المدينة', 'المنورة', 'جدة',
+  'اسطنبول', 'إسطنبول', 'stone town', 'nungwi', 'dubai', 'abu dhabi', 'louxor', 'assouan', 'hurghada', 'sharm'];
+var VILLES_IGNOREES = ['casablanca', 'casa', 'rabat', 'tanger', 'marrakech', 'fes', 'agadir', 'oujda', 'en mer', 'vol kl', 'mille', 'plage',
+  'le caire', 'lagune', 'الدار البيضاء'];
+function normTxt(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f\u064B-\u065F\u0670]/g, ''); }
+var VILLES_CACHE = null;
+function villesConnues() {
+  if (VILLES_CACHE) return VILLES_CACHE;
+  var set = {};
+  function add(x) {
+    x = normTxt(x).replace(/\(.*?\)/g, '').replace(/\s+/g, ' ').trim();
+    if (x.length >= 3 && x.length <= 30 && !/[0-9]/.test(x) && VILLES_IGNOREES.indexOf(x) === -1) set[x] = true;
+  }
+  // Les étapes de l'itinéraire (« route ») seulement : le programme est fait de phrases.
+  allProducts().forEach(function(it) {
+    var v = it.v || {};
+    (v.route || []).forEach(function(st) {
+      String(st).replace(/\(.*?\)/g, ' ').split(/[·,—–\/&+()]| - | et /).forEach(add);
+    });
+  });
+  VILLES_EN_PLUS.forEach(add);
+  VILLES_CACHE = Object.keys(set);
+  return VILLES_CACHE;
+}
+function contientVille(texte, c) {
+  if (/[\u0600-\u06FF]/.test(c)) return texte.indexOf(c) !== -1;
+  return new RegExp('(^|[^a-z0-9])' + c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '([^a-z0-9]|$)').test(texte);
+}
+function texteVoyage(v) {
+  v = v || {};
+  var parts = [v.title, v.eyebrow].concat(v.route || [], v.programme || [], v.highlights || [],
+    (v.days || []).map(function(d) { return d && d.title; }));
+  return normTxt(parts.join(' | '));
+}
+function villesDe(v) {
+  var t = texteVoyage(v);
+  return villesConnues().filter(function(c) { return contientVille(t, c); });
+}
+function villesDansNom(url) {
+  var n = String(url || '').split('/').pop() || '';
+  try { n = decodeURIComponent(n); } catch (e) {}
+  n = normTxt(n).replace(/[-_]+/g, ' ');
+  return villesConnues().filter(function(c) { return c.length >= 4 && contientVille(n, c); });
+}
+
+// Fiches de médias de TOUT le site, par voyage (photothèque) : titre, destination, photos, vidéos.
+function bibliotheque(map, wantKey) {
+  var titres = {};
+  allProducts().forEach(function(it) {
+    var v = it.v || {}, k = mediaKeyOf(it.slug, v);
+    titres[k] = { title: v.title || it.slug, tag: v.tag || '' };
+  });
+  Object.keys(manifest.trash || {}).forEach(function(k) {
+    var p = ((manifest.trash[k] || {}).product) || {};
+    if (!titres[k]) titres[k] = { title: (p.title || k) + ' (corbeille)', tag: p.tag || '' };
+  });
+  var out = [];
+  Object.keys(map).forEach(function(k) {
+    var rec = map[k];
+    if (!rec || typeof rec !== 'object' || k.indexOf('__') === 0) return;
+    var imgs = (rec.images || []).map(function(im) { return im && im.url; }).filter(Boolean);
+    var vids = rec.videoUrl ? [rec.videoUrl] : [];
+    if (!imgs.length && !vids.length) return;
+    var a = rec.archived || {};
+    var t = titres[k] || { title: (a.title ? a.title + ' (conservé)' : k), tag: a.tag || '' };
+    out.push({ key: k, title: t.title, tag: t.tag, images: imgs, videos: vids });
+  });
+  out.sort(function(x, y) {
+    var dx = destKey(x.tag) === wantKey ? 0 : 1, dy = destKey(y.tag) === wantKey ? 0 : 1;
+    if (dx !== dy) return dx - dy;
+    return String(x.title).localeCompare(String(y.title), 'fr');
+  });
+  return out;
+}
+
+// Proposition de photos pour un voyage : mêmes villes (ou, si aucune ville n'est reconnue,
+// même destination), sans photo citant une autre ville. Renvoie { photos, videos, sources, villes }.
+function propositionMedias(map, slug, v, key) {
+  var want = destKey(v.tag);
+  var villes = villesDe(v);
+  var sources = {}, cands = [];
+  allProducts().forEach(function(item) {
+    if (item.slug === slug) return;
+    var iv = item.v || {};
+    if (!iv.tag || destKey(iv.tag) !== want) return;
+    cands.push({ key: MEDIA_KEY_ALIASES[iv.mediaKey || item.slug] || iv.mediaKey || item.slug, title: iv.title || item.slug, v: iv });
+  });
+  Object.keys(manifest.trash || {}).forEach(function(k) {
+    var t = manifest.trash[k] || {}, p = t.product || {};
+    if (!t.static && k !== slug && p.tag && destKey(p.tag) === want) cands.push({ key: k, title: p.title || k, v: p });
+  });
+  Object.keys(map).forEach(function(k) {
+    var a = map[k] && map[k].archived;
+    if (a && k !== key && a.tag && destKey(a.tag) === want) cands.push({ key: k, title: a.title || k, v: { title: a.title } });
+  });
+  // Ordre de préférence (tirage au hasard à l'intérieur de chaque rang) :
+  // 1. la photo nomme une ville du voyage (« #istanbul … ») ;
+  // 2. elle vient d'un voyage dont le titre ne cite que des villes du voyage (« Séjour à Istanbul ») ;
+  // 3. elle vient d'un voyage qui passe aussi ailleurs (« Istanbul & Antalya ») : en dernier.
+  var rangs = [[], [], []], vRangs = [[], [], []], vu = {};
+  function dans(x) { return villes.indexOf(x) !== -1; }
+  cands.forEach(function(c) {
+    var rec = map[c.key];
+    if (!rec || typeof rec !== 'object') return;
+    var pur = true, commun = true;
+    if (villes.length) {
+      var vc = villesDe(c.v);
+      commun = vc.some(dans); // sinon : seules ses photos qui NOMMENT une ville du voyage sont prises
+      var vt = villesDe({ title: c.title });
+      pur = (vt.length ? vt : vc).every(dans);
+    }
+    function rang(u) {
+      if (!villes.length) return 1;
+      var vn = villesDansNom(u);
+      if (vn.some(function(x) { return !dans(x); })) return -1; // photo d'une autre ville
+      if (vn.length) return 0;
+      return commun ? (pur ? 1 : 2) : -1;
+    }
+    (rec.images || []).forEach(function(im) {
+      var u = im && im.url;
+      if (!u || vu[u]) return;
+      var r = rang(u); if (r < 0) return;
+      vu[u] = true; rangs[r].push(u); sources[u] = c.title;
+    });
+    var vd = rec.videoUrl;
+    if (vd && !vu[vd]) { var rv = rang(vd); if (rv >= 0) { vu[vd] = true; vRangs[rv].push(vd); sources[vd] = c.title; } }
+  });
+  function aplatir(l) { return l.reduce(function(a, x) { return a.concat(shuffled(x)); }, []); }
+  return { photos: aplatir(rangs), videos: aplatir(vRangs), sources: sources, villes: villes };
+}
+
 // Renvoie { photos, video } si des médias ont été ajoutés ou s'il n'y en avait
 // aucun à prendre, null si la fiche avait déjà des médias ou en cas d'erreur.
 async function autoMediaIfEmpty(slug, tag, key) {
@@ -1880,43 +2025,23 @@ async function autoMediaIfEmpty(slug, tag, key) {
     var map = (await r.json()) || {};
     var cur = map[key];
     if (cur && ((cur.images && cur.images.length) || cur.videoUrl || cur.videoLink)) return null;
-
-    var want = destKey(tag);
-    var keys = {};
-    allProducts().forEach(function(item) {
-      if (item.slug === slug) return;
-      var v = item.v || {};
-      if (!v.tag || destKey(v.tag) !== want) return;
-      var k = v.mediaKey || item.slug;
-      keys[MEDIA_KEY_ALIASES[k] || k] = true;
-    });
-    // Voyages en corbeille et médias conservés de voyages supprimés (jamais effacés)
-    Object.keys(manifest.trash || {}).forEach(function(k) {
-      var t = manifest.trash[k] || {}, p = t.product || {};
-      if (!t.static && k !== slug && p.tag && destKey(p.tag) === want) keys[k] = true;
-    });
-    Object.keys(map).forEach(function(k) {
-      var a = map[k] && map[k].archived;
-      if (a && k !== key && a.tag && destKey(a.tag) === want) keys[k] = true;
-    });
-    var photos = [], seen = {}, videos = [];
-    Object.keys(keys).forEach(function(k) {
-      var rec = map[k];
-      if (!rec || typeof rec !== 'object') return;
-      (rec.images || []).forEach(function(im) {
-        if (im && im.url && !seen[im.url]) { seen[im.url] = true; photos.push(im.url); }
-      });
-      if (rec.videoUrl && videos.indexOf(rec.videoUrl) === -1) videos.push(rec.videoUrl);
-    });
-    if (!photos.length && !videos.length) return { photos: 0, video: false };
-    // Le choix au hasard est d'abord MONTRÉ : on confirme, on retire, on ajoute ; rien
-    // n'est enregistré avant « Confirmer » (Karim, 07/11/2026).
-    var prodTitle = ((allProducts().filter(function(i){ return i.slug === slug; })[0] || {}).v || {}).title || slug;
+    // La fiche du voyage (juste créé : on la relit si le catalogue n'est pas encore à jour)
+    var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
+    var v = item ? item.v : null;
+    if (!v) {
+      try { var rp = await fetch('/api/produits?slug=' + encodeURIComponent(slug), { cache: 'no-store' }); var dp = await rp.json(); v = (dp && dp.product) || null; } catch (e) {}
+    }
+    v = v || { title: slug, tag: tag };
+    if (!v.tag) v.tag = tag;
+    var prop = propositionMedias(map, slug, v, key);
+    // Le choix est d'abord MONTRÉ : on confirme, on retire, on ajoute (aussi depuis la
+    // photothèque de tout le site) ; rien n'est enregistré avant « Confirmer ».
     var choix = await confirmMediaChoice({
-      title: prodTitle,
-      images: shuffled(photos).slice(0, AUTO_MEDIA_PHOTOS),
-      videoUrl: videos.length ? shuffled(videos)[0] : '',
-      photosPool: photos, videosPool: videos
+      title: v.title || slug,
+      images: prop.photos.slice(0, AUTO_MEDIA_PHOTOS),
+      videoUrl: prop.videos.length ? prop.videos[0] : '',
+      photosPool: prop.photos, videosPool: prop.videos, sources: prop.sources, villes: prop.villes,
+      library: bibliotheque(map, destKey(v.tag))
     });
     if (!choix) return { cancelled: true };
     if (!choix.images.length && !choix.videoUrl) return { photos: 0, video: false, vide: true };
@@ -1940,41 +2065,123 @@ async function autoMediaIfEmpty(slug, tag, key) {
   }
 }
 
-// Fenêtre « Photos et vidéo proposées » : montre le choix fait au hasard ; ✕ retire une
-// photo, un clic sur une autre photo de la destination l'ajoute, « Depuis l'ordinateur »
-// envoie de nouvelles photos. Renvoie { images, videoUrl } ou null (Annuler).
+// « 📚 Photothèque » d'un voyage (Karim, 07/11/2026) : toutes les photos et vidéos du site,
+// par voyage ; on part des médias actuels du voyage et on choisit soi-même.
+async function openPhototheque(slug) {
+  var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
+  if (!item) { toast('Voyage introuvable'); return; }
+  var v = item.v || {}, key = mediaKeyOf(slug, v);
+  try {
+    var r = await fetch('/api/media', { cache: 'no-store' });
+    if (!r.ok) throw new Error('lecture des médias (' + r.status + ')');
+    var map = (await r.json()) || {};
+    var cur = map[key] || {};
+    var prop = propositionMedias(map, slug, v, key);
+    var choix = await confirmMediaChoice({
+      title: v.title || slug,
+      mode: 'phototheque',
+      images: (cur.images || []).map(function(im) { return im && im.url; }).filter(Boolean),
+      videoUrl: cur.videoUrl || '',
+      photosPool: prop.photos, videosPool: prop.videos, sources: prop.sources, villes: prop.villes,
+      library: bibliotheque(map, destKey(v.tag))
+    });
+    if (!choix) { toast('Rien n\'a été changé'); return; }
+    var rec = Object.assign({}, cur, {
+      key: key,
+      videoLink: cur.videoLink || '',
+      videoUrl: choix.videoUrl || '',
+      images: choix.images.map(function(u) { return { url: u }; })
+    });
+    var w = await fetch('/api/media', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: key, rec: rec })
+    });
+    var d = await w.json().catch(function() { return {}; });
+    if (!w.ok || d.ok === false) throw new Error(d.error || ('enregistrement (' + w.status + ')'));
+    toast('✅ Photos et vidéo de « ' + (v.title || slug) + ' » enregistrées');
+    log('Photothèque : ' + rec.images.length + ' photo(s)' + (rec.videoUrl ? ' et 1 vidéo' : '') + ' pour « ' + (v.title || slug) + ' ».');
+    await loadMediaMap();
+  } catch (e) {
+    toast('❌ ' + e.message);
+  }
+}
+
+// Fenêtre « Photos et vidéo » : la sélection (avec, sous chaque photo, le voyage d'où elle
+// vient), ✕ pour retirer, les photos des mêmes villes à ajouter, la PHOTOTHÈQUE de tout le
+// site par voyage (clic pour ajouter une photo ou prendre une vidéo), l'ajout depuis
+// l'ordinateur. Renvoie { images, videoUrl } ou null (Annuler : rien n'est enregistré).
 function confirmMediaChoice(o) {
   return new Promise(function(resolve) {
     var sel = o.images.slice();
     var vid = o.videoUrl || '';
     var vids = (o.videosPool || []).slice();
-    var busy = '';
+    var sources = Object.assign({}, o.sources || {});
+    (o.library || []).forEach(function(g) { g.images.concat(g.videos).forEach(function(u) { if (!sources[u]) sources[u] = g.title; }); });
+    var busy = '', filtre = '', ouverts = {};
     var ov = document.createElement('div');
     ov.className = 'mx-overlay';
-    function th(u, btn) { return '<div class="mx-th' + (btn ? '' : ' add') + '" style="background-image:url(' + JSON.stringify(u).replace(/"/g, '&quot;') + ')"' + (btn ? '' : ' data-add="' + esc(u) + '" title="Ajouter cette photo"') + '>' + (btn || '<span>＋</span>') + '</div>'; }
+    function bg(u) { return 'background-image:url(' + JSON.stringify(u).replace(/"/g, '&quot;') + ')'; }
+    function legende(u) { return sources[u] ? '<div class="mx-src" title="' + esc(sources[u]) + '">' + esc(sources[u]) + '</div>' : '<div class="mx-src">Ajoutée depuis l\'ordinateur</div>'; }
+    function carte(u, btn) {
+      return '<div class="mx-card"><div class="mx-th' + (btn ? '' : ' add') + '" style="' + bg(u) + '"' + (btn ? '' : ' data-add="' + esc(u) + '" title="Ajouter cette photo"') + '>' + (btn || '<span>＋</span>') + '</div>' + legende(u) + '</div>';
+    }
+    function groupe(g, i) {
+      var titre = esc(g.title) + (g.tag ? ' <span style="color:#8a8279;font-weight:400">· ' + esc(g.tag) + '</span>' : '') + ' <span style="color:#8a8279;font-weight:400">(' + g.images.length + ' photo' + (g.images.length > 1 ? 's' : '') + (g.videos.length ? ', ' + g.videos.length + ' vidéo' : '') + ')</span>';
+      var corps = ouverts[i]
+        ? '<div class="mx-grid">'
+          + g.images.map(function(u) { var pris = sel.indexOf(u) !== -1; return '<div class="mx-th' + (pris ? '' : ' add') + '" style="' + bg(u) + (pris ? ';opacity:.45' : '') + '"' + (pris ? ' title="Déjà retenue"' : ' data-add="' + esc(u) + '" title="Ajouter cette photo"') + '>' + (pris ? '<span>✓</span>' : '<span>＋</span>') + '</div>'; }).join('')
+          + g.videos.map(function(u) { return '<div class="mx-vid"><video src="' + esc(u) + '" muted playsinline preload="metadata"></video><button type="button" class="mini" data-vid="' + esc(u) + '">' + (u === vid ? '✓ Vidéo retenue' : '🎬 Prendre cette vidéo') + '</button></div>'; }).join('')
+          + '</div>'
+        : '';
+      return '<details class="mx-grp" data-grp="' + i + '"' + (ouverts[i] ? ' open' : '') + '><summary>' + titre + '</summary>' + corps + '</details>';
+    }
+    function drawLib() {
+      var zone = ov.querySelector('.mx-lib'); if (!zone) return;
+      var lib = (o.library || []).map(function(g, i) { return { g: g, i: i }; }).filter(function(x) {
+        return !filtre || normTxt(x.g.title + ' ' + x.g.tag).indexOf(normTxt(filtre)) !== -1;
+      });
+      var haut = zone.scrollTop;
+      zone.innerHTML = lib.length ? lib.map(function(x) { return groupe(x.g, x.i); }).join('') : '<em style="color:#8a8279">Aucun voyage trouvé</em>';
+      zone.scrollTop = haut;
+      zone.querySelectorAll('[data-add]').forEach(function(d) { d.onclick = function() { var u = d.getAttribute('data-add'); if (sel.indexOf(u) === -1) sel.push(u); draw(); }; });
+      zone.querySelectorAll('[data-vid]').forEach(function(b) { b.onclick = function() { vid = b.getAttribute('data-vid'); draw(); }; });
+      zone.querySelectorAll('details.mx-grp').forEach(function(d) { d.addEventListener('toggle', function() { var i = d.getAttribute('data-grp'); if (d.open && !ouverts[i]) { ouverts[i] = true; drawLib(); } else if (!d.open && ouverts[i]) { delete ouverts[i]; } }); });
+    }
     function draw() {
       var autres = (o.photosPool || []).filter(function(u) { return sel.indexOf(u) === -1; }).slice(0, 24);
+      var sc = ov.querySelector('.mx-box'); var top = sc ? sc.scrollTop : 0;
       ov.innerHTML = '<div class="mx-box wide" role="dialog" aria-modal="true" aria-labelledby="mcTitle">'
-        + '<h3 id="mcTitle">📷 Photos et vidéo proposées</h3>'
+        + '<h3 id="mcTitle">' + (o.mode === 'phototheque' ? '📚 Photothèque — photos et vidéo' : '📷 Photos et vidéo proposées') + '</h3>'
         + '<p style="margin:0 0 .4rem;font-weight:700;color:var(--forest)">« ' + esc(o.title) + ' »</p>'
-        + '<p style="margin:0 0 .6rem;font-size:.9rem;color:#536154">Choisies au hasard dans les voyages de la même destination et les médias conservés. <b>Rien n\'est enregistré avant « Confirmer ».</b></p>'
-        + '<div class="mx-label">Photos retenues (' + sel.length + ') — ✕ pour retirer</div>'
-        + '<div class="mx-grid">' + (sel.length ? sel.map(function(u, i) { return th(u, '<button type="button" data-rm="' + i + '" title="Retirer">✕</button>'); }).join('') : '<em style="color:#8a8279">Aucune photo retenue</em>') + '</div>'
+        + '<p style="margin:0 0 .6rem;font-size:.9rem;color:#536154">'
+        + (o.mode === 'phototheque' ? 'Choisissez vous-même dans toutes les photos et vidéos du site, classées par voyage. '
+          : !(o.photosPool || []).length && !(o.videosPool || []).length ? '<b style="color:#b42318">Aucune photo de ces villes n\'existe encore sur le site</b> : choisissez dans la photothèque ci-dessous ou depuis l\'ordinateur. '
+          : 'Choisies au hasard parmi les voyages qui passent par les mêmes villes' + (o.villes && o.villes.length ? '' : ' (même destination : aucune ville reconnue)') + ' ; les photos dont le nom cite une autre ville sont écartées. ')
+        + (o.villes && o.villes.length ? 'Villes du voyage : <b>' + esc(o.villes.join(', ')) + '</b>. ' : '')
+        + '<b>Rien n\'est enregistré avant « Confirmer ».</b></p>'
+        + '<div class="mx-label">Photos retenues (' + sel.length + ') — ✕ pour retirer · le voyage d\'origine est écrit dessous</div>'
+        + '<div class="mx-grid">' + (sel.length ? sel.map(function(u, i) { return carte(u, '<button type="button" data-rm="' + i + '" title="Retirer">✕</button>'); }).join('') : '<em style="color:#8a8279">Aucune photo retenue</em>') + '</div>'
         + '<div class="mx-label">Vidéo</div>'
         + '<div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.4rem 0 .9rem">'
-        + (vid ? '<video src="' + esc(vid) + '" muted playsinline controls style="width:240px;max-width:100%;border-radius:8px;background:#000"></video><button type="button" class="mini danger" id="mcVidRm">✕ Retirer la vidéo</button>' : '<em style="color:#8a8279">Aucune vidéo</em>')
-        + (vids.length > 1 || (!vid && vids.length) ? '<button type="button" class="mini" id="mcVidNext">🔀 ' + (vid ? 'Une autre vidéo' : 'Prendre une vidéo') + '</button>' : '')
+        + (vid ? '<div><video src="' + esc(vid) + '" muted playsinline controls style="width:240px;max-width:100%;max-height:260px;border-radius:8px;background:#000"></video>' + legende(vid) + '</div><button type="button" class="mini danger" id="mcVidRm">✕ Retirer la vidéo</button>' : '<em style="color:#8a8279">Aucune vidéo</em>')
+        + (vids.length > 1 || (!vid && vids.length) ? '<button type="button" class="mini" id="mcVidNext">🔀 ' + (vid ? 'Une autre vidéo des mêmes villes' : 'Prendre une vidéo des mêmes villes') + '</button>' : '')
         + '</div>'
-        + '<div class="mx-label">Ajouter — autres photos de la même destination</div>'
-        + '<div class="mx-grid">' + (autres.length ? autres.map(function(u) { return th(u); }).join('') : '<em style="color:#8a8279">Aucune autre photo</em>') + '</div>'
+        + (autres.length ? '<div class="mx-label">Ajouter — photos des mêmes villes</div><div class="mx-grid">' + autres.map(function(u) { return carte(u); }).join('') + '</div>' : '')
+        + '<div class="mx-label">📚 Toutes les photos et vidéos du site, par voyage (' + (o.library || []).length + ' voyages)</div>'
+        + '<input type="search" id="mcFiltre" placeholder="Chercher un voyage…" value="' + esc(filtre) + '" style="width:100%;max-width:360px;margin:.4rem 0;padding:.5rem .65rem;border:1px solid #cfc5b3;border-radius:6px;font:.9rem \'DM Sans\',sans-serif">'
+        + '<div class="mx-lib"></div>'
         + '<div class="mx-label">Ajouter — depuis l\'ordinateur</div>'
         + '<div style="margin:.4rem 0"><input type="file" id="mcFiles" accept="image/jpeg,image/png,image/webp" multiple> <span id="mcBusy" style="font-size:.85rem;color:#536154">' + esc(busy) + '</span></div>'
         + '<div class="mx-actions">'
         + '<button type="button" class="ok" id="mcOk">✅ Confirmer et enregistrer</button>'
         + '<button type="button" class="ghost" id="mcCancel" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Annuler (rien n\'est enregistré)</button>'
         + '</div></div>';
+      drawLib();
+      var box = ov.querySelector('.mx-box'); if (box) box.scrollTop = top;
       ov.querySelectorAll('[data-rm]').forEach(function(b) { b.onclick = function() { sel.splice(+b.getAttribute('data-rm'), 1); draw(); }; });
-      ov.querySelectorAll('[data-add]').forEach(function(d) { d.onclick = function() { sel.push(d.getAttribute('data-add')); draw(); }; });
+      ov.querySelectorAll('.mx-grid [data-add]').forEach(function(d) { if (!d.closest('.mx-lib')) d.onclick = function() { var u = d.getAttribute('data-add'); if (sel.indexOf(u) === -1) sel.push(u); draw(); }; });
+      var fi = ov.querySelector('#mcFiltre'); if (fi) fi.oninput = function() { filtre = fi.value; drawLib(); };
       var vr = ov.querySelector('#mcVidRm'); if (vr) vr.onclick = function() { vid = ''; draw(); };
       var vn = ov.querySelector('#mcVidNext'); if (vn) vn.onclick = function() {
         var i = vids.indexOf(vid); vid = vids[(i + 1) % vids.length]; draw();
@@ -1995,6 +2202,7 @@ function confirmMediaChoice(o) {
     draw();
   });
 }
+
 function autoMediaText(am) {
   if (!am) return '';
   if (am.cancelled) return '📷 Choix des photos annulé : rien n\'a été enregistré (vous pouvez les ajouter avec « 🖼 Médias »).';
@@ -2055,7 +2263,7 @@ function onQuickPdf(input) {
   // Auto-remplir le titre depuis le nom de fichier
   var titleInput = document.getElementById('qTitle');
   if (!titleInput.value) {
-    titleInput.value = file.name.replace(/\.(pdf|jpe?g|png|webp)$/i,'').replace(/[-_]+/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    titleInput.value = file.name.replace(/\.[a-z0-9]{2,5}$/i,'').replace(/[-_]+/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
   }
 }
 
