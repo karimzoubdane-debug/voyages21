@@ -1,5 +1,6 @@
 import { readJson, writeJson } from '../../../lib/blob-json.js';
 import { getRole } from '../../../lib/auth.js';
+import { rangerOmra } from '../../../lib/omra.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -181,7 +182,7 @@ export async function POST(request) {
       const id = 'sub-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
       data.pending[id] = {
         id,
-        product: body.product,
+        product: rangerOmra(body.product),
         title: body.product.title || '',
         submittedAt: new Date().toISOString(),
       };
@@ -200,7 +201,7 @@ export async function POST(request) {
     const data = await readManifest();
     // mediaKey = slug : le voyage est géré dans Admin Médias sous cette clé
     // (le site lit ses photos/vidéos via mediaKey).
-    data.custom[slug] = { ...body.product, slug, mediaKey: slug, createdAt: new Date().toISOString() };
+    data.custom[slug] = rangerOmra({ ...body.product, slug, mediaKey: slug, createdAt: new Date().toISOString() });
     await writeManifest(data);
     return Response.json({ ok: true, slug }, { headers: corsHeaders });
   } catch (e) {
@@ -350,7 +351,7 @@ export async function PUT(request) {
         return Response.json({ ok: false, error: 'soumission introuvable' }, { status: 404, headers: corsHeaders });
       }
       const slug = slugify((sub.product && sub.product.title) || sub.title || body.id);
-      data.custom[slug] = { ...sub.product, slug, mediaKey: slug, createdAt: new Date().toISOString() };
+      data.custom[slug] = rangerOmra({ ...sub.product, slug, mediaKey: slug, createdAt: new Date().toISOString() });
       delete data.pending[body.id];
       await writeManifest(data);
       return Response.json({ ok: true, slug }, { headers: corsHeaders });
@@ -397,13 +398,13 @@ export async function PUT(request) {
       if (!data.custom[body.slug]) {
         return Response.json({ ok: false, error: 'produit introuvable' }, { status: 404, headers: corsHeaders });
       }
-      data.custom[body.slug] = {
+      data.custom[body.slug] = rangerOmra({
         ...data.custom[body.slug],
         ...body.product,
         slug: body.slug,
         mediaKey: body.slug,
         updatedAt: new Date().toISOString(),
-      };
+      });
     } else {
       return Response.json({ ok: false, error: 'paramètres invalides' }, { status: 400, headers: corsHeaders });
     }
