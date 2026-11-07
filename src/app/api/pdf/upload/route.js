@@ -25,12 +25,23 @@ export async function POST(request) {
     const filename = url.searchParams.get('filename') || 'brochure.pdf';
     const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
 
-    // Document Word (.docx) accepté pour l'ajout rapide (Karim, 07/11/2026) : rangé à part,
-    // avec son vrai type, pour que la lecture automatique le reconnaisse.
-    const isDocx = /\.docx$/i.test(safeName);
-    const blob = await put(`voyages21/${isDocx ? 'docs' : 'pdfs'}/${safeName}`, request.body, {
+    // Documents Word acceptés pour l'ajout rapide (Karim, 07/11/2026) : .docx, .doc, leurs
+    // modèles, .docm et RTF. Rangés à part, avec leur vrai type, pour que la lecture
+    // automatique les reconnaisse.
+    const WORD_TYPES = {
+      docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      docm: 'application/vnd.ms-word.document.macroEnabled.12',
+      dotx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+      dotm: 'application/vnd.ms-word.template.macroEnabled.12',
+      doc: 'application/msword',
+      dot: 'application/msword',
+      rtf: 'application/rtf',
+    };
+    const ext = (safeName.split('.').pop() || '').toLowerCase();
+    const wordType = WORD_TYPES[ext];
+    const blob = await put(`voyages21/${wordType ? 'docs' : 'pdfs'}/${safeName}`, request.body, {
       access: 'public',
-      contentType: isDocx ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/pdf',
+      contentType: wordType || 'application/pdf',
       addRandomSuffix: true,
     });
 
