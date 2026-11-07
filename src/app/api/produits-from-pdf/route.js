@@ -21,6 +21,7 @@ import { getRole } from '../../../lib/auth.js';
 import { docxText } from '../../../lib/docx-text.js';
 import { rtfText } from '../../../lib/rtf-text.js';
 import WordExtractor from 'word-extractor';
+import { rangerOmra } from '../../../lib/omra.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -382,6 +383,7 @@ export async function POST(request) {
   product.whatsapp = '212614152686';
   if (Array.isArray(body.destinations) && body.destinations.length) product.destinations = body.destinations;
   if (body.groupId) product.groupId = body.groupId;
+  rangerOmra(product); // une Omra choisie « Arabie Saoudite » est rangée sous « عمرة »
 
   // 4) Enregistrer, masqué jusqu'à relecture.
   const slug = slugify(title);

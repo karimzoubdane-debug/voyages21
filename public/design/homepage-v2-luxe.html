@@ -5039,8 +5039,16 @@
       return 'world';
     }
 
+    // Moyen-Orient (Karim, 07/11/2026) : mêmes pays que le menu et les pages destination.
+    const PAYS_MOYEN_ORIENT = {
+      'arabie saoudite': 'Arabie Saoudite', 'bahrein': 'Bahreïn', 'emirats': 'Dubaï & Émirats', 'dubai': 'Dubaï & Émirats',
+      'emirats arabes unis': 'Dubaï & Émirats', 'abu dhabi': 'Dubaï & Émirats', 'jordanie': 'Jordanie', 'koweit': 'Koweït',
+      'liban': 'Liban', 'oman': 'Oman', 'qatar': 'Qatar'
+    };
+
     function countryForVoyage(slug, v, dest) {
       const text = normalizeSearchText([slug, dest, v.title, v.tag, v.eyebrow, Array.isArray(v.route) ? v.route.join(' ') : ''].join(' '));
+      const paysMO = PAYS_MOYEN_ORIENT[normalizeSearchText(v.tag).trim()];
       const rules = [
         ['maroc', 'Maroc'], ['turquie', 'Turquie'], ['istanbul', 'Turquie'], ['egypte', 'Égypte'], ['caire', 'Égypte'], ['zanzibar', 'Zanzibar'], ['tunisie', 'Tunisie'],
         ['usa', 'USA & Canada'], ['canada', 'USA & Canada'], ['cuba', 'Cuba'], ['perou', 'Pérou'], ['chine', 'Chine'], ['ouzbekistan', 'Ouzbékistan'],
@@ -5050,6 +5058,7 @@
       const category = categoryForVoyage(typeForVoyage(slug, v));
       if (category === 'omra') return 'Arabie Saoudite';
       if (category === 'cruise') return 'Croisières';
+      if (paysMO) return paysMO;
       const found = rules.find(([needle]) => text.includes(needle));
       return found ? found[1] : (dest || 'Voyages 21');
     }
@@ -5057,7 +5066,8 @@
     function continentForCountry(country) {
       if (['Égypte', 'Zanzibar', 'Tunisie', 'Maroc'].includes(country)) return 'Afrique';
       if (['USA & Canada', 'Cuba', 'Pérou'].includes(country)) return 'Amériques';
-      if (['Chine', 'Ouzbékistan', 'Malaisie', 'Singapour', 'Indonésie', 'Thaïlande', 'Vietnam', 'Turquie', 'Arabie Saoudite'].includes(country)) return 'Asie';
+      if (['Chine', 'Ouzbékistan', 'Malaisie', 'Singapour', 'Indonésie', 'Thaïlande', 'Vietnam', 'Turquie'].includes(country)) return 'Asie';
+      if (Object.values(PAYS_MOYEN_ORIENT).includes(country)) return 'Moyen-Orient';
       return 'Europe';
     }
 
@@ -5109,10 +5119,7 @@
       return IMG.europe;
     }
 
-    function buildSiteVoyages() {
-      const data = window.VOYAGES || {};
-      return Object.keys(data).map(slug => {
-        const v = data[slug] || {};
+    function siteItem(slug, v, link) {
         const dates = Array.isArray(v.datesList) ? v.datesList.filter(Boolean) : [];
         const dest = v.tag || (Array.isArray(v.route) && v.route[1]) || (v.cadran && v.cadran[1] && v.cadran[1][1]) || 'Voyages 21';
         const item = {
@@ -5123,7 +5130,7 @@
           dates,
           price: v.price || '',
           type: typeForVoyage(slug, v),
-          link: '/voyages/' + slug + '.html',
+          link: link || '/voyages/' + slug + '.html',
           searchText: normalizeSearchText([slug, dest, v.title, v.tag, v.eyebrow, v.price, dates.join(' '), Array.isArray(v.route) ? v.route.join(' ') : ''].join(' ')),
           durationBucket: durationBucket(v.duration)
         };
@@ -5133,7 +5140,11 @@
         item.months = monthsForDates(dates);
         item.img = imageForVoyage(item);
         return item;
-      });
+    }
+
+    function buildSiteVoyages() {
+      const data = window.VOYAGES || {};
+      return Object.keys(data).map(slug => siteItem(slug, data[slug] || {}));
     }
 
     const SITE_VOYAGES = buildSiteVoyages();
@@ -5507,6 +5518,48 @@
     }
 
     initTravelSearchV2();
+
+    // La barre de recherche ne lisait que le catalogue de base (data.js) : on y ajoute les
+    // voyages publiés depuis l'admin et on retire ceux qui ne sont plus en ligne (masqués,
+    // supprimés, prescrits), avec les mêmes règles que les pages destination (Karim, 07/11/2026).
+    (function completerRecherche() {
+      const chargerFin = () => window.V21Fin ? Promise.resolve() : new Promise(ok => {
+        const sc = document.createElement('script');
+        sc.src = '/voyages/fin-voyage.js?v=prescrit-v1';
+        sc.onload = ok; sc.onerror = ok;
+        document.head.appendChild(sc);
+      });
+      Promise.all([
+        fetch('/api/produits', { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null),
+        v21MediaManifest().catch(() => ({})),
+        chargerFin()
+      ]).then(([data, media]) => {
+        if (!data) return;
+        const status = data.status || {}, custom = data.custom || {}, overrides = data.overrides || {};
+        const F = window.V21Fin;
+        const horsLigne = (slug, v) => {
+          const st = status[slug] || {};
+          if (st.hidden || st.removed) return true;
+          try { return !!(F && v && F.prescritInfo(v, st).aSupprimer); } catch (e) { return false; }
+        };
+        for (let i = SITE_VOYAGES.length - 1; i >= 0; i--) {
+          const it = SITE_VOYAGES[i];
+          const v = Object.assign({}, (window.VOYAGES || {})[it.slug], overrides[it.slug] || {});
+          if (horsLigne(it.slug, v)) SITE_VOYAGES.splice(i, 1);
+        }
+        Object.keys(custom).forEach(slug => {
+          const v = custom[slug];
+          if (!v || !v.title || horsLigne(slug, v)) return;
+          const item = siteItem(slug, v, '/voyages/voyage-admin.html?slug=' + encodeURIComponent(slug));
+          const rec = media && media[v.mediaKey || slug];
+          const photo = rec && rec.images && rec.images[0] && rec.images[0].url;
+          if (photo) item.img = photo;
+          SITE_VOYAGES.push(item);
+        });
+        syncTravelSearchOptions();
+        updateSearchSuggestions(false);
+      });
+    })();
 
     function renderCoups() {
       const shuffled = [...VOYAGES].sort(() => Math.random() - 0.5);
