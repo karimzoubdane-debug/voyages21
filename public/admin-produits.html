@@ -150,6 +150,21 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 .dialog{background:#fff;border-radius:12px;padding:1.6rem;max-width:400px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,.28)}
 .dialog h3{margin:0 0 .7rem;font-family:"Playfair Display",serif;color:var(--forest)}
 .dialog p{margin:0 0 1.2rem;color:#536154;font-size:.93rem}
+/* Fenêtres « Publication bloquée » et « Photos proposées » (Karim, 07/11/2026) */
+.mx-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.mx-box{background:#fff;border-radius:14px;padding:1.4rem 1.5rem;width:100%;max-width:640px;max-height:92vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.35);font-family:"DM Sans",sans-serif}
+.mx-box.wide{max-width:920px}
+.mx-box h3{margin:0 0 .7rem;font-family:"Playfair Display",serif;color:var(--forest);font-size:1.3rem}
+.mx-cause{color:#b3261e;font-weight:800;background:#fdecea;border:2px solid #e57373;border-radius:10px;padding:.8rem 1rem;margin:0 0 1rem;line-height:1.45}
+.mx-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem}
+.mx-actions button{min-height:42px}
+.mx-grid{display:flex;flex-wrap:wrap;gap:.55rem;margin:.4rem 0 .9rem}
+.mx-th{position:relative;width:132px;height:88px;border-radius:8px;overflow:hidden;background:#eee center/cover no-repeat;border:2px solid #e6ddcc}
+.mx-th button{position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;border:0;background:#d7263d;color:#fff;font-weight:800;cursor:pointer;line-height:1}
+.mx-th.add{cursor:pointer;opacity:.85}
+.mx-th.add:hover{opacity:1;border-color:var(--forest)}
+.mx-th.add span{position:absolute;bottom:4px;right:4px;background:var(--forest);color:#fff;border-radius:999px;padding:0 .45rem;font-weight:800}
+.mx-label{font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#536154;margin-top:.6rem}
 .dialog .dbtn{display:flex;gap:.6rem}
 
 /* Group nav */
@@ -276,6 +291,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         <input type="search" placeholder="Rechercher…" id="filterSearch" oninput="applyFilters()" style="min-width:180px">
       </label>
     </div>
+    <div id="prescritSection"></div>
     <div id="expirySection"></div>
     <div id="cadranSection"></div>
     <div id="pendingSection"></div>
@@ -553,7 +569,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
 <div class="toast" id="toast"></div>
 
 <script src="/voyages/data.js?v=admin-produits-v2"></script>
-<script src="/voyages/fin-voyage.js?v=solde-v1"></script>
+<script src="/voyages/fin-voyage.js?v=prescrit-v1"></script>
 <script>
 // ─────────────────────────────────────────
 // État global
@@ -665,6 +681,7 @@ function reload() {
       log('Prêt. ' + Object.keys(manifest.custom).length + ' voyage(s) admin.');
       loadMediaMap();
       renderSoldes();
+      runPrescription();
     })
     .catch(function(e){ log('Erreur : ' + e.message); });
 }
@@ -729,10 +746,60 @@ function soldeOf(item) {
   var st = manifest.status[item.slug] || {};
   return window.V21Fin.soldeInfo(productForDates(item), st);
 }
+function isNewUnpublished(item) {
+  var st = manifest.status[item.slug] || {};
+  return item.source === 'custom' && !item.inTrash && !!st.hidden && !st.removed;
+}
 function isAutoSolde(item) {
   var st = manifest.status[item.slug] || {};
   if (st.removed || st.hidden || item.inTrash) return false;
   return soldeOf(item).solde;
+}
+
+// ── Prescription (Karim, 07/11/2026) ──
+// 7 jours après sa date de fin, un voyage est supprimé pour de bon ; seuls son PDF et ses
+// photos / vidéo restent, dans Gestion des médias → « 🗂 Médias conservés ». Le passage se
+// fait à l'ouverture du catalogue (propriétaire ou équipe), une fois par chargement ; le
+// site, lui, ne montre déjà plus ces voyages dès le 8e jour.
+var prescriptionDone = false;
+async function runPrescription() {
+  if (prescriptionDone) return;
+  if (manifest.role !== 'owner' && manifest.role !== 'team') return;
+  prescriptionDone = true;
+  var today = todayCasa();
+  var cibles = allProducts().filter(function(item) {
+    var st = manifest.status[item.slug] || {};
+    if (st.removed) return false;
+    var i = window.V21Fin.prescritInfo(productForDates(item), st, today);
+    item.fin = i.fin;
+    return i.aSupprimer;
+  });
+  if (!cibles.length) return;
+  var faits = [], rates = [];
+  for (var k = 0; k < cibles.length; k++) {
+    var it = cibles[k], v = it.v || {};
+    try {
+      var r = await fetch('/api/produits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'prescrit', slug: it.slug, fin: it.fin, static: it.source === 'static',
+          snapshot: { title: v.title || '', tag: v.tag || '', mediaKey: mediaKeyOf(it.slug, v) } })
+      });
+      var d = await r.json().catch(function(){ return {}; });
+      if (r.ok && d.ok) faits.push({ title: v.title || it.slug, fin: it.fin });
+      else rates.push((v.title || it.slug) + ' (' + (d.error || r.status) + ')');
+    } catch (e) { rates.push((v.title || it.slug) + ' (' + e.message + ')'); }
+  }
+  var box = document.getElementById('prescritSection');
+  if (box) {
+    box.innerHTML = '<div style="border:2px solid #8a8279;background:#f6f3ee;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
+      + (faits.length ? '<h3 style="margin:0 0 .4rem;color:#4a443b">🗑 ' + faits.length + ' voyage' + (faits.length > 1 ? 's prescrits supprimés' : ' prescrit supprimé') + '</h3>'
+        + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">Fin depuis plus de 7 jours. Leur PDF et leurs photos / vidéo sont gardés dans Gestion des médias → « 🗂 Médias conservés ».</p>'
+        + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">' + faits.map(function(m){ return '<li>' + esc(m.title) + ' — fin le ' + esc(frDate(m.fin)) + '</li>'; }).join('') + '</ul>' : '')
+      + (rates.length ? '<p style="margin:.6rem 0 0;font-size:.85rem;color:var(--danger)">⚠️ Non supprimé' + (rates.length > 1 ? 's' : '') + ' : ' + rates.map(esc).join(', ') + '.</p>' : '')
+      + '</div>';
+  }
+  if (faits.length) reload();
 }
 
 // Bandeau en tête du catalogue : la liste des voyages soldés, à décider par l'équipe.
@@ -745,17 +812,18 @@ function renderSoldes() {
     return isAutoSolde(item);
   }).map(function(item) {
     var i = soldeOf(item);
-    return { slug: item.slug, title: (item.v || {}).title || item.slug, tag: (item.v || {}).tag || '', price: (item.v || {}).price || '', fin: i.fin, expire: i.expire };
+    var pi = window.V21Fin.prescritInfo(productForDates(item), manifest.status[item.slug] || {});
+    return { slug: item.slug, title: (item.v || {}).title || item.slug, tag: (item.v || {}).tag || '', price: (item.v || {}).price || '', fin: i.fin, expire: i.expire, supprimeLe: pi.supprimeLe };
   }).sort(function(a, b) { return priceNum({ price: a.price }) - priceNum({ price: b.price }); });
   if (!list.length) { box.innerHTML = ''; return; }
   box.innerHTML = '<div style="border:2px solid var(--danger);background:#fff3f3;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
     + '<h3 style="margin:0 0 .4rem;color:var(--danger)"><span class="badge-pill sold blink">SOLDÉ</span> ' + list.length + ' voyage' + (list.length > 1 ? 's' : '') + ' dont la date est passée</h3>'
     + '<p style="margin:0 0 .5rem;font-size:.85rem;color:#6b5a3e">' + (list.length > 1 ? 'Ils restent' : 'Il reste') + ' en ligne avec le badge SOLDÉ qui clignote, '
-    + 'après les voyages en cours. À l\'équipe de décider pour chacun : mettre à jour les dates (Modifier), mettre en corbeille ou supprimer.</p>'
+    + 'après les voyages en cours, pendant 7 jours ; ensuite ' + (list.length > 1 ? 'ils sont supprimés' : 'il est supprimé') + ' (seuls le PDF et les photos / vidéo sont gardés). Pour le garder : mettre à jour ses dates avec « Modifier ».</p>'
     + '<ul style="margin:0;padding-left:1.1rem;font-size:.85rem">'
     + list.map(function(m) {
         return '<li style="margin:.2rem 0">' + esc(m.title) + (m.tag ? ' · ' + esc(m.tag) : '') + (m.price ? ' · ' + esc(m.price) : '')
-          + (m.expire && m.fin ? ' — fin le ' + esc(frDate(m.fin)) : ' — badge SOLDÉ posé à la main')
+          + (m.expire && m.fin ? ' — fin le ' + esc(frDate(m.fin)) + (m.supprimeLe ? ' · <b>supprimé le ' + esc(frDate(window.V21Fin.addDaysIso(m.supprimeLe, 1))) + '</b>' : '') : ' — badge SOLDÉ posé à la main')
           + ' <button class="mini blue" type="button" onclick="editProduct(\'' + esc(m.slug) + '\')">Modifier</button></li>';
       }).join('')
     + '</ul></div>';
@@ -1133,9 +1201,13 @@ function renderCatalogue() {
 
   // Même tri que le site public : voyages en cours (ordre manuel, puis prix), puis les
   // soldés du moins cher au plus cher, puis la corbeille.
-  items.forEach(function(it) { it.solde = isAutoSolde(it); });
+  items.forEach(function(it) { it.solde = isAutoSolde(it); it.nouveau = isNewUnpublished(it); });
   items.sort(function(a, b) {
     if (!!a.inTrash !== !!b.inTrash) return a.inTrash ? 1 : -1; // corbeille en fin de liste
+    // Un voyage ajouté et pas encore publié est en tête, le plus récent d'abord
+    // (Karim, 07/11/2026) ; une fois publié, il prend sa place selon son prix.
+    if (a.nouveau !== b.nouveau) return a.nouveau ? -1 : 1;
+    if (a.nouveau) return String((b.v || {}).createdAt || '').localeCompare(String((a.v || {}).createdAt || ''));
     if (a.solde !== b.solde) return a.solde ? 1 : -1;
     if (a.solde) return priceNum(a.v) - priceNum(b.v);
     var oa = orderVal(a.slug), ob = orderVal(b.slug);
@@ -1203,7 +1275,7 @@ function getThumb(slug, v) {
 // plutôt que de laisser Karim le découvrir sur le site.
 var DEST_PAGES = [
   'Chine', 'Combinés', 'Croisières', 'Cuba', 'Égypte', 'Europe',
-  'Malaisie & Thaïlande', 'Mon Maroc', 'Omra & Hajj', 'عمرة', 'Ouzbékistan',
+  'Malaisie & Thaïlande', 'Omra & Hajj', 'عمرة', 'Ouzbékistan',
   'Pérou', 'Tunisie', 'Turquie', 'USA & Canada', 'Vietnam', 'Zanzibar'
 ].map(function (n) { return n.toLowerCase(); });
 
@@ -1514,9 +1586,131 @@ function confirmDeleteStatic(slug, title) {
 
 // Restaurer un voyage de base précédemment supprimé (removed:false, hidden:false).
 // Publier en ligne un voyage masqué, sans toucher au reste de son statut.
-async function publishProduct(slug) {
+// ── Contrôle avant publication (Karim, 07/11/2026) ──
+// Un voyage dont la destination n'a pas de page sur le site n'apparaîtrait nulle part :
+// au clic sur « Publier en ligne », une fenêtre au milieu de l'écran bloque la
+// publication, écrit la cause en rouge et propose la correction ; on peut aussi publier
+// quand même.
+var DEST_CHOICES = [
+  ['عمرة', 'Omra & Hajj (عمرة)'], ['Chine', 'Chine'], ['Combinés', 'Combinés'], ['Croisières', 'Croisières'],
+  ['Cuba', 'Cuba'], ['Égypte', 'Égypte'], ['Europe', 'Europe'], ['Malaisie & Thaïlande', 'Malaisie & Thaïlande'],
+  ['Ouzbékistan', 'Ouzbékistan'], ['Pérou', 'Pérou'], ['Tunisie', 'Tunisie'], ['Turquie', 'Turquie'],
+  ['USA & Canada', 'USA & Canada'], ['Vietnam', 'Vietnam'], ['Zanzibar', 'Zanzibar']
+];
+var DEST_SUGGEST = {
+  'arabie saoudite': 'عمرة', 'omra': 'عمرة', 'hajj': 'عمرة',
+  'espagne': 'Europe', 'grèce': 'Europe', 'italie': 'Europe', 'portugal': 'Europe', 'france & suisse': 'Europe',
+  'royaume-uni': 'Europe', 'albanie': 'Europe', 'autriche': 'Europe', 'hongrie': 'Europe', 'tchéquie': 'Europe',
+  'thaïlande': 'Malaisie & Thaïlande', 'malaisie-thaïlande': 'Malaisie & Thaïlande', 'malaisie': 'Malaisie & Thaïlande',
+  'états-unis': 'USA & Canada', 'canada & usa': 'USA & Canada', 'canada': 'USA & Canada', 'azerbaïdjan': 'Combinés'
+};
+function suggestDest(v) {
+  var txt = [v.title, v.eyebrow, v.tag].join(' ');
+  if (/عمرة|omra/i.test(txt)) return 'عمرة';
+  var t = String(v.tag || '').trim().toLowerCase();
+  if (DEST_SUGGEST[t]) return DEST_SUGGEST[t];
+  var low = txt.toLowerCase();
+  for (var i = 0; i < DEST_CHOICES.length; i++) {
+    if (DEST_CHOICES[i][0] !== 'عمرة' && low.indexOf(DEST_CHOICES[i][0].toLowerCase()) !== -1) return DEST_CHOICES[i][0];
+  }
+  return '';
+}
+function openPublishBlock(slug, v) {
+  var sug = suggestDest(v);
+  var ov = document.createElement('div');
+  ov.className = 'mx-overlay';
+  ov.innerHTML = '<div class="mx-box" role="dialog" aria-modal="true" aria-labelledby="pbTitle">'
+    + '<h3 id="pbTitle">⛔ Publication bloquée</h3>'
+    + '<p style="margin:0 0 .6rem;font-weight:700;color:var(--forest)">« ' + esc(v.title || slug) + ' »</p>'
+    + '<div class="mx-cause">La destination « ' + esc(v.tag || '—') + ' » n\'a pas de page sur le site : publié ainsi, ce voyage n\'apparaîtrait sur aucune page.</div>'
+    + '<label class="mx-label" for="pbDest">Correction proposée — destination</label>'
+    + '<select id="pbDest" style="display:block;width:100%;margin-top:.35rem;padding:.6rem;border:1px solid #cfc5b3;border-radius:8px;font:1rem \'DM Sans\',sans-serif">'
+    + '<option value="">— choisir —</option>'
+    + DEST_CHOICES.map(function(d){ return '<option value="' + esc(d[0]) + '"' + (d[0] === sug ? ' selected' : '') + '>' + esc(d[1]) + '</option>'; }).join('')
+    + '</select>'
+    + (sug ? '<p style="margin:.45rem 0 0;font-size:.85rem;color:#536154">Proposition faite d\'après le titre et la destination saisis : à vérifier.</p>' : '')
+    + '<div class="mx-actions">'
+    + '<button type="button" class="ok" id="pbFix">✅ Corriger et publier</button>'
+    + '<button type="button" class="ghost" id="pbForce" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Publier quand même</button>'
+    + '<button type="button" class="ghost" id="pbCancel" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Annuler</button>'
+    + '</div></div>';
+  document.body.appendChild(ov);
+  function close() { ov.remove(); }
+  ov.querySelector('#pbCancel').onclick = close;
+  ov.addEventListener('click', function(e) { if (e.target === ov) close(); });
+  ov.querySelector('#pbForce').onclick = function() { close(); publishProduct(slug, { force: true }); };
+  ov.querySelector('#pbFix').onclick = async function() {
+    var dest = ov.querySelector('#pbDest').value;
+    if (!dest) { toast('Choisissez une destination'); return; }
+    var btn = this; btn.disabled = true; btn.textContent = 'Correction…';
+    // Omra : l'étiquette devient « عمرة » (règle de tout l'admin) ; sinon l'étiquette du
+    // pays est gardée et la page de destination est ajoutée.
+    var patch = dest === 'عمرة' ? { tag: 'عمرة' } : { destinations: [dest] };
+    try {
+      var r = await fetch('/api/produits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: slug, product: patch })
+      });
+      var d = await r.json().catch(function(){ return {}; });
+      if (!r.ok || !d.ok) throw new Error(d.error || ('erreur ' + r.status));
+      manifest.custom[slug] = Object.assign({}, manifest.custom[slug] || {}, patch);
+      close();
+      log('Destination corrigée : ' + (dest === 'عمرة' ? 'عمرة' : dest) + '.');
+      publishProduct(slug, { force: true });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = '✅ Corriger et publier';
+      toast('❌ Correction refusée : ' + e.message);
+    }
+  };
+}
+
+// Un voyage publié prend sa place selon son prix (du moins cher au plus cher) parmi les
+// voyages en cours de sa destination ; les autres gardent leur ordre (Karim, 07/11/2026).
+async function placeByPrice(slug) {
+  var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
+  if (!item) return;
+  var key = destKey((item.v || {}).tag);
+  var group = allProducts().filter(function(it) {
+    if (it.slug === slug) return false;
+    var st = manifest.status[it.slug] || {};
+    if (st.hidden || st.removed || (manifest.trash || {})[it.slug]) return false;
+    if (destKey((it.v || {}).tag) !== key) return false;
+    return !isAutoSolde(it);
+  });
+  manifest.order = manifest.order || {};
+  if (!group.some(function(it) { return typeof manifest.order[it.slug] === 'number'; })) {
+    if (typeof manifest.order[slug] !== 'number') return; // aucun rang : le site range déjà par prix
+  }
+  group.sort(function(a, b) {
+    var oa = orderVal(a.slug), ob = orderVal(b.slug);
+    if (oa !== ob) return oa - ob;
+    return priceNum(a.v) - priceNum(b.v);
+  });
+  var p = priceNum(item.v);
+  var idx = group.findIndex(function(it) { return priceNum(it.v) > p; });
+  if (idx < 0) idx = group.length;
+  group.splice(idx, 0, item);
+  var patch = {};
+  group.forEach(function(it, i) { patch[it.slug] = i + 1; manifest.order[it.slug] = i + 1; });
+  try {
+    await fetch('/api/produits', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'order', order: patch })
+    });
+    log('« ' + ((item.v || {}).title || slug) + ' » rangé selon son prix : position ' + (idx + 1) + ' de sa destination.');
+  } catch (e) { log('Rang selon le prix non enregistré : ' + e.message); }
+}
+
+async function publishProduct(slug, opts) {
+  opts = opts || {};
   var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
   var title = (item && item.v && item.v.title) || slug;
+  if (!opts.force && item && item.source === 'custom' && !hasDestPage(item.v || {})) {
+    openPublishBlock(slug, item.v || {});
+    return;
+  }
   log('Publication…');
   // Jusqu'à 2 essais : on relit le catalogue en ligne pour être sûr que la fiche est visible.
   for (var essai = 1; essai <= 2; essai++) {
@@ -1536,6 +1730,7 @@ async function publishProduct(slug) {
         manifest.status[slug] = st;
         toast('✅ « ' + title + ' » est en ligne');
         log('« ' + title + ' » publié en ligne (vérifié).');
+        await placeByPrice(slug);
         renderCatalogue();
         return;
       }
@@ -1658,12 +1853,22 @@ async function autoMediaIfEmpty(slug, tag, key) {
       if (rec.videoUrl && videos.indexOf(rec.videoUrl) === -1) videos.push(rec.videoUrl);
     });
     if (!photos.length && !videos.length) return { photos: 0, video: false };
-
+    // Le choix au hasard est d'abord MONTRÉ : on confirme, on retire, on ajoute ; rien
+    // n'est enregistré avant « Confirmer » (Karim, 07/11/2026).
+    var prodTitle = ((allProducts().filter(function(i){ return i.slug === slug; })[0] || {}).v || {}).title || slug;
+    var choix = await confirmMediaChoice({
+      title: prodTitle,
+      images: shuffled(photos).slice(0, AUTO_MEDIA_PHOTOS),
+      videoUrl: videos.length ? shuffled(videos)[0] : '',
+      photosPool: photos, videosPool: videos
+    });
+    if (!choix) return { cancelled: true };
+    if (!choix.images.length && !choix.videoUrl) return { photos: 0, video: false, vide: true };
     var rec = {
       key: key,
       videoLink: '',
-      videoUrl: videos.length ? shuffled(videos)[0] : '',
-      images: shuffled(photos).slice(0, AUTO_MEDIA_PHOTOS).map(function(u) { return { url: u }; })
+      videoUrl: choix.videoUrl || '',
+      images: choix.images.map(function(u) { return { url: u }; })
     };
     var w = await fetch('/api/media', {
       method: 'PUT',
@@ -1679,8 +1884,65 @@ async function autoMediaIfEmpty(slug, tag, key) {
   }
 }
 
+// Fenêtre « Photos et vidéo proposées » : montre le choix fait au hasard ; ✕ retire une
+// photo, un clic sur une autre photo de la destination l'ajoute, « Depuis l'ordinateur »
+// envoie de nouvelles photos. Renvoie { images, videoUrl } ou null (Annuler).
+function confirmMediaChoice(o) {
+  return new Promise(function(resolve) {
+    var sel = o.images.slice();
+    var vid = o.videoUrl || '';
+    var vids = (o.videosPool || []).slice();
+    var busy = '';
+    var ov = document.createElement('div');
+    ov.className = 'mx-overlay';
+    function th(u, btn) { return '<div class="mx-th' + (btn ? '' : ' add') + '" style="background-image:url(' + JSON.stringify(u).replace(/"/g, '&quot;') + ')"' + (btn ? '' : ' data-add="' + esc(u) + '" title="Ajouter cette photo"') + '>' + (btn || '<span>＋</span>') + '</div>'; }
+    function draw() {
+      var autres = (o.photosPool || []).filter(function(u) { return sel.indexOf(u) === -1; }).slice(0, 24);
+      ov.innerHTML = '<div class="mx-box wide" role="dialog" aria-modal="true" aria-labelledby="mcTitle">'
+        + '<h3 id="mcTitle">📷 Photos et vidéo proposées</h3>'
+        + '<p style="margin:0 0 .4rem;font-weight:700;color:var(--forest)">« ' + esc(o.title) + ' »</p>'
+        + '<p style="margin:0 0 .6rem;font-size:.9rem;color:#536154">Choisies au hasard dans les voyages de la même destination et les médias conservés. <b>Rien n\'est enregistré avant « Confirmer ».</b></p>'
+        + '<div class="mx-label">Photos retenues (' + sel.length + ') — ✕ pour retirer</div>'
+        + '<div class="mx-grid">' + (sel.length ? sel.map(function(u, i) { return th(u, '<button type="button" data-rm="' + i + '" title="Retirer">✕</button>'); }).join('') : '<em style="color:#8a8279">Aucune photo retenue</em>') + '</div>'
+        + '<div class="mx-label">Vidéo</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.4rem 0 .9rem">'
+        + (vid ? '<video src="' + esc(vid) + '" muted playsinline controls style="width:240px;max-width:100%;border-radius:8px;background:#000"></video><button type="button" class="mini danger" id="mcVidRm">✕ Retirer la vidéo</button>' : '<em style="color:#8a8279">Aucune vidéo</em>')
+        + (vids.length > 1 || (!vid && vids.length) ? '<button type="button" class="mini" id="mcVidNext">🔀 ' + (vid ? 'Une autre vidéo' : 'Prendre une vidéo') + '</button>' : '')
+        + '</div>'
+        + '<div class="mx-label">Ajouter — autres photos de la même destination</div>'
+        + '<div class="mx-grid">' + (autres.length ? autres.map(function(u) { return th(u); }).join('') : '<em style="color:#8a8279">Aucune autre photo</em>') + '</div>'
+        + '<div class="mx-label">Ajouter — depuis l\'ordinateur</div>'
+        + '<div style="margin:.4rem 0"><input type="file" id="mcFiles" accept="image/jpeg,image/png,image/webp" multiple> <span id="mcBusy" style="font-size:.85rem;color:#536154">' + esc(busy) + '</span></div>'
+        + '<div class="mx-actions">'
+        + '<button type="button" class="ok" id="mcOk">✅ Confirmer et enregistrer</button>'
+        + '<button type="button" class="ghost" id="mcCancel" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Annuler (rien n\'est enregistré)</button>'
+        + '</div></div>';
+      ov.querySelectorAll('[data-rm]').forEach(function(b) { b.onclick = function() { sel.splice(+b.getAttribute('data-rm'), 1); draw(); }; });
+      ov.querySelectorAll('[data-add]').forEach(function(d) { d.onclick = function() { sel.push(d.getAttribute('data-add')); draw(); }; });
+      var vr = ov.querySelector('#mcVidRm'); if (vr) vr.onclick = function() { vid = ''; draw(); };
+      var vn = ov.querySelector('#mcVidNext'); if (vn) vn.onclick = function() {
+        var i = vids.indexOf(vid); vid = vids[(i + 1) % vids.length]; draw();
+      };
+      ov.querySelector('#mcFiles').onchange = async function() {
+        var files = Array.prototype.slice.call(this.files || []);
+        for (var k = 0; k < files.length; k++) {
+          busy = 'Envoi de la photo ' + (k + 1) + ' sur ' + files.length + '…'; var bz = ov.querySelector('#mcBusy'); if (bz) bz.textContent = busy;
+          try { var up = await uploadFile(files[k]); if (up && up.url) sel.push(up.url); }
+          catch (e) { toast('❌ Photo non envoyée : ' + e.message); }
+        }
+        busy = ''; draw();
+      };
+      ov.querySelector('#mcOk').onclick = function() { ov.remove(); resolve({ images: sel.slice(), videoUrl: vid }); };
+      ov.querySelector('#mcCancel').onclick = function() { ov.remove(); resolve(null); };
+    }
+    document.body.appendChild(ov);
+    draw();
+  });
+}
 function autoMediaText(am) {
   if (!am) return '';
+  if (am.cancelled) return '📷 Choix des photos annulé : rien n\'a été enregistré (vous pouvez les ajouter avec « 🖼 Médias »).';
+  if (am.vide) return '📷 Aucune photo retenue : rien n\'a été enregistré.';
   if (!am.photos && !am.video) return '📷 Aucune photo de cette destination sur le site : ajoutez-les avec « 🖼 Médias ».';
   return '📷 ' + am.photos + ' photo' + (am.photos > 1 ? 's' : '') + (am.video ? ' et 1 vidéo' : '')
     + ' de la même destination ajoutée' + (am.photos + (am.video ? 1 : 0) > 1 ? 's' : '') + ' au hasard — modifiables avec « 🖼 Médias ».';

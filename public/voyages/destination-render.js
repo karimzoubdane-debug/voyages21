@@ -74,7 +74,12 @@
 
   function isHidden(slug) {
     var st = statusMap[slug];
-    return st && (st.hidden || st.removed);
+    if (st && (st.hidden || st.removed)) return true;
+    // Prescrit : 7 jours après sa date de fin, le voyage n'est plus montré (Karim, 07/11/2026)
+    var F = window.V21Fin;
+    if (!F) return false;
+    var v = tripData(slug, customProducts[slug]);
+    return !!v && F.prescritInfo(v, st).aSupprimer;
   }
 
   function isMarocSejour(slug) {
@@ -313,7 +318,7 @@
     if (window.V21Fin) return Promise.resolve();
     return new Promise(function (ok) {
       var s = document.createElement('script');
-      s.src = '/voyages/fin-voyage.js?v=solde-v1';
+      s.src = '/voyages/fin-voyage.js?v=prescrit-v1';
       s.onload = ok; s.onerror = ok;
       document.head.appendChild(s);
     });

@@ -736,6 +736,10 @@
         editor.innerHTML =
             '<h2>' + esc(TITLES[currentKey] || currentKey) + '</h2>' +
             '<div class="key">' + currentKey + '</div>' +
+            // Voyage supprimé (prescrit) : son PDF est gardé ici avec ses photos / vidéo
+            ((p.archived && p.archived.pdfUrl)
+                ? '<div style="margin:.4rem 0 .8rem;padding:.6rem .8rem;border:1px solid #C8A440;background:#fffaf0;border-radius:8px;font-size:.9rem">📄 PDF du voyage supprimé : <a href="' + esc(p.archived.pdfUrl) + '" target="_blank" rel="noopener">ouvrir</a> · <button class="mini" type="button" onclick="copyLink(\'' + esc(p.archived.pdfUrl) + '\')">🔗 Copier le lien</button></div>'
+                : '') +
             '<div class="warn" id="warnBox" style="display:none"></div>' +
 
             '<div class="section-label">Vidéo « Voir la vidéo » — lien YouTube / Vimeo</div>' +
@@ -948,7 +952,8 @@
         var has = {};
         Array.prototype.forEach.call(sel.options, function (o) { has[o.value] = true; });
         var keys = Object.keys(MANIFEST).filter(function (k) {
-            return k.indexOf('__') !== 0 && !has[k] && hasMedia(MANIFEST[k]);
+            var rec = MANIFEST[k];
+            return k.indexOf('__') !== 0 && !has[k] && (hasMedia(rec) || !!(rec && rec.archived && rec.archived.pdfUrl));
         });
         if (!keys.length) return;
         var og = document.createElement('optgroup');
