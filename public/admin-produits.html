@@ -547,6 +547,7 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
         <div class="form-actions">
           <button type="submit" class="btn submit-btn" id="submitBtn">Enregistrer le voyage</button>
           <button type="button" class="btn ghost" onclick="cancelForm()" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Annuler</button>
+          <button type="button" class="btn danger" id="deleteNowBtn" style="display:none" onclick="if (currentEditSlug) supprimerMaintenant(currentEditSlug)" title="Voyage soldé : le supprimer tout de suite (PDF et médias gardés)">🗑 Supprimer maintenant</button>
         </div>
       </form>
     </div>
@@ -810,6 +811,52 @@ async function runPrescription() {
   if (faits.length) reload();
 }
 
+// « 🗑 Supprimer maintenant » (Karim, 07/11/2026) : un voyage soldé peut être supprimé à la
+// main sans attendre les 7 jours ; même effet que la suppression automatique (retiré du
+// site, fiche effacée, PDF et photos / vidéo gardés dans « 🗂 Médias conservés »).
+function supprimerMaintenant(slug) {
+  var item = allProducts().filter(function(i){ return i.slug === slug; })[0];
+  if (!item) { toast('Voyage introuvable'); return; }
+  var v = item.v || {};
+  var info = window.V21Fin.soldeInfo(productForDates(item), manifest.status[slug] || {});
+  var ov = document.createElement('div');
+  ov.className = 'mx-overlay';
+  ov.innerHTML = '<div class="mx-box" role="dialog" aria-modal="true" aria-labelledby="smTitle">'
+    + '<h3 id="smTitle">🗑 Supprimer maintenant ?</h3>'
+    + '<p style="margin:0 0 .6rem;font-weight:700;color:var(--forest)">« ' + esc(v.title || slug) + ' »' + (info.fin ? ' — fin le ' + esc(frDate(info.fin)) : '') + '</p>'
+    + '<div class="mx-cause">Ce voyage sera retiré du site et sa fiche effacée tout de suite, sans attendre les 7 jours. Cette action est définitive.</div>'
+    + '<p style="margin:0;font-size:.92rem;color:#536154">Son PDF et ses photos / vidéo restent gardés dans Gestion des médias → « 🗂 Médias conservés ».</p>'
+    + '<div class="mx-actions">'
+    + '<button type="button" class="danger" id="smOk">🗑 Supprimer définitivement</button>'
+    + '<button type="button" class="ghost" id="smCancel" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Annuler</button>'
+    + '</div></div>';
+  document.body.appendChild(ov);
+  function close() { ov.remove(); }
+  ov.querySelector('#smCancel').onclick = close;
+  ov.addEventListener('click', function(e) { if (e.target === ov) close(); });
+  ov.querySelector('#smOk').onclick = async function() {
+    var btn = this; btn.disabled = true; btn.textContent = 'Suppression…';
+    try {
+      var r = await fetch('/api/produits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'prescrit', manuel: true, slug: slug, fin: info.fin || '', static: item.source === 'static',
+          snapshot: { title: v.title || '', tag: v.tag || '', mediaKey: mediaKeyOf(slug, v) } })
+      });
+      var d = await r.json().catch(function(){ return {}; });
+      if (!r.ok || !d.ok) throw new Error(d.error || ('erreur ' + r.status));
+      close();
+      toast('🗑 « ' + (v.title || slug) + ' » supprimé — PDF et médias gardés');
+      log('« ' + (v.title || slug) + ' » supprimé à la main ; PDF et médias dans « 🗂 Médias conservés ».');
+      if (currentEditSlug === slug) cancelForm();
+      reload();
+    } catch (e) {
+      btn.disabled = false; btn.textContent = '🗑 Supprimer définitivement';
+      toast('❌ Suppression refusée : ' + e.message);
+    }
+  };
+}
+
 // Bandeau en tête du catalogue : la liste des voyages soldés, à décider par l'équipe.
 function renderSoldes() {
   var box = document.getElementById('expirySection');
@@ -832,7 +879,8 @@ function renderSoldes() {
     + list.map(function(m) {
         return '<li style="margin:.2rem 0">' + esc(m.title) + (m.tag ? ' · ' + esc(m.tag) : '') + (m.price ? ' · ' + esc(m.price) : '')
           + (m.expire && m.fin ? ' — fin le ' + esc(frDate(m.fin)) + (m.supprimeLe ? ' · <b>supprimé le ' + esc(frDate(window.V21Fin.addDaysIso(m.supprimeLe, 1))) + '</b>' : '') : ' — badge SOLDÉ posé à la main')
-          + ' <button class="mini blue" type="button" onclick="editProduct(\'' + esc(m.slug) + '\')">Modifier</button></li>';
+          + ' <button class="mini blue" type="button" onclick="editProduct(\'' + esc(m.slug) + '\')">Modifier</button>'
+          + ' <button class="mini danger" type="button" onclick="supprimerMaintenant(\'' + esc(m.slug) + '\')" title="Supprimer ce voyage tout de suite (PDF et médias gardés)">🗑 Supprimer maintenant</button></li>';
       }).join('')
     + '</ul></div>';
 }
@@ -2308,6 +2356,9 @@ function editProduct(slug) {
   // l'ouvrir, « Modifier » montrait une page vide et rien ne pouvait être corrigé
   // (constat de Karim, 07/11/2026).
   var det = document.getElementById('formDetails'); if (det) det.open = true;
+  var dn = document.getElementById('deleteNowBtn');
+  // (style.display : la classe .btn l'emporte sur l'attribut « hidden »)
+  if (dn) dn.style.display = isAutoSolde({ slug: slug, v: v, source: currentEditIsStatic ? 'static' : 'custom' }) ? '' : 'none';
   var eb = document.getElementById('editBanner');
   if (eb) {
     eb.textContent = '✏️ Vous modifiez « ' + (v.title || slug) + ' » : corrigez ci-dessous, puis cliquez « Enregistrer les modifications » en bas de la fiche.';
@@ -2333,6 +2384,7 @@ function cancelForm() {
   selectBadge('none');
   var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = '';
   var eb = document.getElementById('editBanner'); if (eb) { eb.hidden = true; eb.textContent = ''; }
+  var dn = document.getElementById('deleteNowBtn'); if (dn) dn.style.display = 'none';
   document.getElementById('submitBtn').textContent = 'Enregistrer le voyage';
   switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));
 }
