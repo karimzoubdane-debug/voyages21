@@ -323,11 +323,13 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
       <div id="qLog" style="margin-top:.55rem;font:.8rem/1.3 'DM Sans',sans-serif;color:var(--ok);font-weight:700;min-height:1rem"></div>
     </div>
 
-    <details style="margin-bottom:1.2rem">
+    <details id="formDetails" style="margin-bottom:1.2rem">
       <summary style="cursor:pointer;font:.82rem/1 'DM Sans',sans-serif;font-weight:800;color:var(--forest2);letter-spacing:.05em;text-transform:uppercase;padding:.4rem 0">▸ Compléter la fiche manuellement (optionnel)</summary>
     <div class="form-panel" style="margin-top:.8rem">
       <form id="productForm" onsubmit="submitForm(event)">
         <input type="hidden" id="editSlug">
+        <!-- Bandeau du mode « Modifier » : dit quel voyage est corrigé (Karim, 07/11/2026) -->
+        <div id="editBanner" hidden style="background:#e8f1fb;border:2px solid var(--blue);border-radius:10px;padding:.75rem 1rem;margin-bottom:1rem;font:700 .92rem/1.4 'DM Sans',sans-serif;color:var(--forest2)"></div>
 
         <!-- Informations essentielles -->
         <div class="form-section">
@@ -1942,6 +1944,8 @@ async function quickSubmit() {
 // ─────────────────────────────────────────
 function openNewForm() {
   currentEditSlug = null;
+  currentEditIsStatic = false;
+  var eb0 = document.getElementById('editBanner'); if (eb0) { eb0.hidden = true; eb0.textContent = ''; }
   document.getElementById('editSlug').value = '';
   document.getElementById('productForm').reset();
   uploadedPhotos = [];
@@ -2025,8 +2029,23 @@ function editProduct(slug) {
   document.getElementById('hiddenCheck').checked = !!(st.hidden);
   document.getElementById('submitBtn').textContent = 'Enregistrer les modifications';
 
+  // La fiche vit dans le bloc repliable « Compléter la fiche manuellement » : sans
+  // l'ouvrir, « Modifier » montrait une page vide et rien ne pouvait être corrigé
+  // (constat de Karim, 07/11/2026).
+  var det = document.getElementById('formDetails'); if (det) det.open = true;
+  var eb = document.getElementById('editBanner');
+  if (eb) {
+    eb.textContent = '✏️ Vous modifiez « ' + (v.title || slug) + ' » : corrigez ci-dessous, puis cliquez « Enregistrer les modifications » en bas de la fiche.';
+    eb.hidden = false;
+  }
   switchTab('form', document.getElementById('tabFormBtn'));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(function () {
+    var target = eb || document.getElementById('productForm');
+    var hd = document.querySelector('header');
+    // l'en-tête reste collé en haut : on s'arrête juste en dessous pour que le bandeau se voie
+    var top = target ? target.getBoundingClientRect().top + window.scrollY - ((hd && getComputedStyle(hd).position !== 'static') ? hd.offsetHeight + 12 : 12) : 0;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }, 50);
 }
 
 function cancelForm() {
@@ -2037,6 +2056,9 @@ function cancelForm() {
   document.getElementById('productForm').reset();
   document.getElementById('photosPreview').innerHTML = '';
   selectBadge('none');
+  var qb = document.getElementById('quickAddBox'); if (qb) qb.style.display = '';
+  var eb = document.getElementById('editBanner'); if (eb) { eb.hidden = true; eb.textContent = ''; }
+  document.getElementById('submitBtn').textContent = 'Enregistrer le voyage';
   switchTab('catalogue', document.querySelector('[data-tab="catalogue"]'));
 }
 
@@ -2135,11 +2157,16 @@ async function submitForm(e) {
       var finalSlug = data.slug || slug;
       // Enregistrer le statut/badge si défini
       var hidden = document.getElementById('hiddenCheck').checked;
-      if (badge || hidden) {
+      // En modification, le statut est réécrit dès qu'il change (décocher « Masquer » ou
+      // retirer un badge n'était pas enregistré), en gardant ses autres réglages
+      // (Sur devis, brochure PDF…).
+      var oldSt = (manifest.status || {})[finalSlug] || {};
+      var stChanged = (oldSt.badge || '') !== (badge || '') || (oldSt.badgeColor || '') !== (badgeColor || '') || !!oldSt.hidden !== !!hidden;
+      if ((currentEditSlug && stChanged) || (!currentEditSlug && (badge || hidden))) {
         await fetch('/api/produits', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'status', slug: finalSlug, status: { badge: badge, badgeColor: badgeColor, hidden: hidden } })
+          body: JSON.stringify({ type: 'status', slug: finalSlug, status: Object.assign({}, oldSt, { badge: badge, badgeColor: badgeColor, hidden: hidden }) })
         });
       }
       toast('✅ ' + (currentEditSlug ? 'Voyage modifié' : 'Voyage ajouté') + ' — visible sur le site !');
