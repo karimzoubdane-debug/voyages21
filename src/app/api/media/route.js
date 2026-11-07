@@ -1,4 +1,5 @@
-import { list, put } from '@vercel/blob';
+import { list } from '@vercel/blob';
+import { readJson, writeJson } from '../../../lib/blob-json.js';
 import { getRole } from '../../../lib/auth.js';
 
 export const runtime = 'nodejs';
@@ -6,22 +7,14 @@ export const dynamic = 'force-dynamic';
 
 const MANIFEST = 'media-manifest.json';
 
+// Médiathèque versionnée (voir lib/blob-json.js) : plus de version périmée resservie
+// par le cache entre deux écritures rapprochées.
 async function readManifest() {
-  const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
-  const hit = blobs.find((b) => b.pathname === MANIFEST);
-  if (!hit) return {};
-  const res = await fetch(hit.url, { cache: 'no-store' });
-  if (!res.ok) return {};
-  return res.json();
+  return (await readJson(MANIFEST, null)) || {};
 }
 
 async function writeManifest(data) {
-  await put(MANIFEST, JSON.stringify(data), {
-    access: 'public',
-    contentType: 'application/json',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
+  await writeJson(MANIFEST, data);
 }
 
 const noStore = { 'Cache-Control': 'no-store' };

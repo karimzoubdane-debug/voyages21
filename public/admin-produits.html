@@ -302,9 +302,9 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
   <!-- ── Onglet Formulaire ── -->
   <div id="tab-form" hidden>
 
-    <!-- ⚡ MODE RAPIDE : PDF ou image (JPG, PNG, WEBP) -->
+    <!-- ⚡ MODE RAPIDE : PDF, Word (.docx) ou image (JPG, PNG, WEBP) -->
     <div class="quick-add" id="quickAddBox">
-      <h3>⚡ Ajout rapide — PDF ou image reçus de l'équipe</h3>
+      <h3>⚡ Ajout rapide — PDF, Word ou image reçus de l'équipe</h3>
       <div class="quick-add-grid">
         <label class="qlabel">1 — Destination *
           <select id="qTag">
@@ -319,10 +319,10 @@ label.field .hint{font:.73rem/1.3 "DM Sans",sans-serif;font-weight:400;color:#8a
             <optgroup label="Catégories spéciales"><option>Maroc</option><option>Combinés</option><option>عمرة</option><option>Croisières</option></optgroup>
           </select>
         </label>
-        <label class="qlabel">2 — PDF ou image de l'équipe *
+        <label class="qlabel">2 — PDF, Word ou image de l'équipe *
           <div class="quick-pdf-zone" id="qPdfZone" onclick="document.getElementById('qPdfInput').click()">
-            <input type="file" id="qPdfInput" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" style="display:none" onchange="onQuickPdf(this)">
-            <span id="qPdfLabel">📎 Cliquez pour sélectionner le PDF ou l'image</span>
+            <input type="file" id="qPdfInput" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp" style="display:none" onchange="onQuickPdf(this)">
+            <span id="qPdfLabel">📎 Cliquez pour sélectionner le PDF, le Word ou l'image</span>
           </div>
         </label>
         <label class="qlabel">3 — Titre (auto depuis le nom du fichier, modifiable)
@@ -775,21 +775,29 @@ async function runPrescription() {
     return i.aSupprimer;
   });
   if (!cibles.length) return;
+  // Un seul envoi pour tous : le serveur lit et écrit une seule fois (des envois à la
+  // suite repartaient parfois d'une version périmée — constat du 07/11/2026).
   var faits = [], rates = [];
-  for (var k = 0; k < cibles.length; k++) {
-    var it = cibles[k], v = it.v || {};
-    try {
-      var r = await fetch('/api/produits', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'prescrit', slug: it.slug, fin: it.fin, static: it.source === 'static',
-          snapshot: { title: v.title || '', tag: v.tag || '', mediaKey: mediaKeyOf(it.slug, v) } })
-      });
-      var d = await r.json().catch(function(){ return {}; });
-      if (r.ok && d.ok) faits.push({ title: v.title || it.slug, fin: it.fin });
-      else rates.push((v.title || it.slug) + ' (' + (d.error || r.status) + ')');
-    } catch (e) { rates.push((v.title || it.slug) + ' (' + e.message + ')'); }
-  }
+  var titres = {};
+  cibles.forEach(function(it) { titres[it.slug] = { title: (it.v || {}).title || it.slug, fin: it.fin }; });
+  try {
+    var r = await fetch('/api/produits', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'prescrits', items: cibles.map(function(it) {
+        var v = it.v || {};
+        return { slug: it.slug, fin: it.fin, static: it.source === 'static',
+          snapshot: { title: v.title || '', tag: v.tag || '', mediaKey: mediaKeyOf(it.slug, v) } };
+      }) })
+    });
+    var d = await r.json().catch(function(){ return {}; });
+    if (r.ok && d.ok) {
+      (d.faits || []).forEach(function(sl) { faits.push(titres[sl] || { title: sl, fin: '' }); });
+      (d.refus || []).forEach(function(x) { rates.push(((titres[x.slug] || {}).title || x.slug) + ' (' + x.error + ')'); });
+    } else {
+      rates.push('suppression refusée (' + (d.error || r.status) + ')');
+    }
+  } catch (e) { rates.push('suppression impossible (' + e.message + ')'); }
   var box = document.getElementById('prescritSection');
   if (box) {
     box.innerHTML = '<div style="border:2px solid #8a8279;background:#f6f3ee;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem">'
@@ -1954,14 +1962,16 @@ function autoMediaText(am) {
 var quickPdfFile = null;
 // Formats que la lecture automatique sait lire (PDF + images JPG, PNG, WEBP).
 // Le HEIC des iPhone n'est pas lisible : il faut l'exporter en JPG.
-var QUICK_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
-var QUICK_LABEL = '📎 Cliquez pour sélectionner le PDF ou l\'image';
+// Word (.docx) accepté (Karim, 07/11/2026) : son texte est lu comme un PDF.
+var DOCX_TYPE = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+var QUICK_TYPES = ['application/pdf', DOCX_TYPE, 'image/jpeg', 'image/png', 'image/webp'];
+var QUICK_LABEL = '📎 Cliquez pour sélectionner le PDF, le Word ou l\'image';
 
 function quickFileType(file) {
   if (QUICK_TYPES.indexOf(file.type) !== -1) return file.type;
   // Certains navigateurs laissent le type vide : on se fie alors à l'extension.
   var ext = (file.name.split('.').pop() || '').toLowerCase();
-  return { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }[ext] || '';
+  return { pdf: 'application/pdf', docx: DOCX_TYPE, jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }[ext] || '';
 }
 
 function onQuickPdf(input) {
@@ -1976,7 +1986,8 @@ function onQuickPdf(input) {
     zone.classList.remove('has-file');
     label.textContent = QUICK_LABEL;
     qlog.style.color = 'var(--danger)';
-    qlog.textContent = '⚠️ Format non pris en charge (' + file.name + ') : choisissez un PDF ou une image JPG, PNG ou WEBP.';
+    qlog.textContent = '⚠️ Format non pris en charge (' + file.name + ') : choisissez un PDF, un Word (.docx) ou une image JPG, PNG ou WEBP'
+      + (/\.doc$/i.test(file.name) ? ' — un ancien Word (.doc) doit d\'abord être enregistré en .docx ou en PDF.' : '.');
     return;
   }
   qlog.textContent = '';
@@ -2177,7 +2188,9 @@ async function quickSubmit() {
   // 2) Repli : l'ancienne fiche minimale (titre + PDF joint), pour ne jamais rester bloqué.
   qlog.textContent = 'Création du voyage…';
 
-  var product = { title: title, tag: tag, price: 'Sur devis', pdfUrl: pdfUrl, intro: [], highlights: [], whatsapp: '212614152686' };
+  var product = { title: title, tag: tag, price: 'Sur devis', intro: [], highlights: [], whatsapp: '212614152686' };
+  // Un Word n'est pas une brochure à télécharger pour les clients : gardé comme source.
+  if (quickFileType(quickPdfFile) === DOCX_TYPE) product.sourceUrl = pdfUrl; else product.pdfUrl = pdfUrl;
   try {
     var res = await fetch('/api/produits', {
       method: 'POST',
@@ -2515,8 +2528,8 @@ function shrinkImage(file) {
 }
 
 async function uploadFile(file) {
-  var type = file.type || quickFileType(file);
-  if (type === 'application/pdf') {
+  var type = quickFileType(file) || file.type;
+  if (type === 'application/pdf' || type === DOCX_TYPE) {
     var r = await fetch('/api/pdf/upload?filename=' + encodeURIComponent(file.name), {
       method: 'POST',
       body: file

@@ -16,8 +16,9 @@
 //   title   — titre imposé ; sinon celui que le modèle lit dans le PDF
 
 import Anthropic from '@anthropic-ai/sdk';
-import { list, put } from '@vercel/blob';
+import { readJson, writeJson } from '../../../lib/blob-json.js';
 import { getRole } from '../../../lib/auth.js';
+import { docxText } from '../../../lib/docx-text.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -33,13 +34,16 @@ const MAX_PDF_BYTES = 8 * 1024 * 1024;
 // L'admin réduit d'elle-même les images plus lourdes avant l'envoi.
 const MAX_IMAGE_BYTES = 7.5 * 1024 * 1024;
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+// Document Word (.docx) : son texte est extrait ici puis lu comme la brochure (Karim, 07/11/2026).
+const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+const MAX_DOCX_BYTES = 8 * 1024 * 1024;
 
 // Type du fichier : d'abord l'en-tête renvoyé par le stockage, sinon l'extension.
 function fileKind(res, url) {
   const ct = String(res.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
-  if (ct === 'application/pdf' || IMAGE_TYPES.includes(ct)) return ct;
+  if (ct === 'application/pdf' || ct === DOCX || IMAGE_TYPES.includes(ct)) return ct;
   const ext = (String(url).split('?')[0].split('.').pop() || '').toLowerCase();
-  return { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp' }[ext] || '';
+  return { pdf: 'application/pdf', docx: DOCX, jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp' }[ext] || '';
 }
 
 const corsHeaders = {
@@ -63,22 +67,12 @@ function slugify(s) {
 
 async function readManifest() {
   const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {}, groupOrder: {} };
-  const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
-  const hit = blobs.find((b) => b.pathname === MANIFEST);
-  if (!hit) return { ...empty };
-  const fresh = hit.url + (hit.url.includes('?') ? '&' : '?') + 'ts=' + Date.now();
-  const res = await fetch(fresh, { cache: 'no-store' });
-  if (!res.ok) return { ...empty };
-  return { ...empty, ...(await res.json()) };
+  const data = await readJson(MANIFEST, null);
+  return data ? { ...empty, ...data } : { ...empty };
 }
 
 async function writeManifest(data) {
-  await put(MANIFEST, JSON.stringify(data), {
-    access: 'public',
-    contentType: 'application/json',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
+  await writeJson(MANIFEST, data);
 }
 
 // Schéma de la réponse. Il doit rester PLAT et COURT : le moteur de sorties
@@ -280,19 +274,27 @@ export async function POST(request) {
   // 1) Récupérer le PDF (ou l'image) déjà téléversé.
   let pdfBase64;
   let kind;
+  let docTexte = '';
   try {
     const res = await fetch(pdfUrl, { cache: 'no-store' });
     if (!res.ok) throw new Error('fichier introuvable (' + res.status + ')');
     kind = fileKind(res, pdfUrl);
     if (!kind) {
       return Response.json(
-        { ok: false, error: 'Format non pris en charge : envoyez un PDF ou une image JPG, PNG ou WEBP.' },
+        { ok: false, error: 'Format non pris en charge : envoyez un PDF, un document Word (.docx) ou une image JPG, PNG ou WEBP. Un ancien fichier Word (.doc) doit d\'abord être enregistré en .docx ou en PDF.' },
         { status: 415, headers: corsHeaders },
       );
     }
     const buf = Buffer.from(await res.arrayBuffer());
+    if (kind === DOCX) {
+      if (buf.length > MAX_DOCX_BYTES) {
+        return Response.json({ ok: false, error: 'Document Word trop lourd (' + Math.round(buf.length / 1e6) + ' Mo, maximum 8 Mo).' }, { status: 413, headers: corsHeaders });
+      }
+      docTexte = docxText(buf);
+      if (!docTexte) throw new Error('le document Word ne contient pas de texte lisible');
+    }
     const isPdf = kind === 'application/pdf';
-    if (buf.length > (isPdf ? MAX_PDF_BYTES : MAX_IMAGE_BYTES)) {
+    if (kind !== DOCX && buf.length > (isPdf ? MAX_PDF_BYTES : MAX_IMAGE_BYTES)) {
       return Response.json(
         { ok: false, error: (isPdf ? 'PDF' : 'Image') + ' trop lourd' + (isPdf ? '' : 'e') + ' (' + Math.round(buf.length / 1e6) + ' Mo, maximum ' + (isPdf ? '8' : '7') + ' Mo).' },
         { status: 413, headers: corsHeaders },
@@ -318,7 +320,12 @@ export async function POST(request) {
       messages: [
         {
           role: 'user',
-          content: [
+          content: kind === DOCX
+            ? [
+              { type: 'text', text: 'La brochure est fournie en document Word ; en voici le texte (les cellules de tableau sont séparées par « | ») :\n\n' + docTexte },
+              { type: 'text', text: 'Lis ce texte comme le PDF de la brochure. Remplis la fiche de ce voyage. Destination retenue dans l\'admin : ' + tag + '.' },
+            ]
+            : [
             kind === 'application/pdf'
               ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } }
               : { type: 'image', source: { type: 'base64', media_type: kind, data: pdfBase64 } },
@@ -349,7 +356,10 @@ export async function POST(request) {
   }
   product.title = title;
   product.tag = tag;
-  product.pdfUrl = pdfUrl;
+  // Un document Word n'est pas proposé aux clients comme brochure : il est gardé comme
+  // fichier source de la fiche (et rangé avec les médias si le voyage est supprimé).
+  if (kind === DOCX) product.sourceUrl = pdfUrl;
+  else product.pdfUrl = pdfUrl;
   product.whatsapp = '212614152686';
   if (Array.isArray(body.destinations) && body.destinations.length) product.destinations = body.destinations;
   if (body.groupId) product.groupId = body.groupId;
