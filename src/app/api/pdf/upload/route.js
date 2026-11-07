@@ -25,9 +25,12 @@ export async function POST(request) {
     const filename = url.searchParams.get('filename') || 'brochure.pdf';
     const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
 
-    const blob = await put(`voyages21/pdfs/${safeName}`, request.body, {
+    // Document Word (.docx) accepté pour l'ajout rapide (Karim, 07/11/2026) : rangé à part,
+    // avec son vrai type, pour que la lecture automatique le reconnaisse.
+    const isDocx = /\.docx$/i.test(safeName);
+    const blob = await put(`voyages21/${isDocx ? 'docs' : 'pdfs'}/${safeName}`, request.body, {
       access: 'public',
-      contentType: 'application/pdf',
+      contentType: isDocx ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/pdf',
       addRandomSuffix: true,
     });
 

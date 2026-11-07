@@ -1,4 +1,4 @@
-import { list, put } from '@vercel/blob';
+import { readJson, writeJson } from '../../../lib/blob-json.js';
 import { getRole } from '../../../lib/auth.js';
 
 export const runtime = 'nodejs';
@@ -29,28 +29,16 @@ async function denyIfNotOwner(request, headers) {
   return Response.json({ ok: false, error: 'réservé au propriétaire' }, { status: 401, headers });
 }
 
+// Catalogue versionné (voir lib/blob-json.js) : chaque écriture est un nouveau fichier,
+// la lecture prend le plus récent — plus de version périmée resservie par le cache.
 async function readManifest() {
   const empty = { custom: {}, status: {}, pending: {}, trash: {}, order: {}, groupOrder: {}, overrides: {} };
-  const { blobs } = await list({ prefix: MANIFEST, limit: 1 });
-  const hit = blobs.find((b) => b.pathname === MANIFEST);
-  if (!hit) return { ...empty };
-  // Le CDN Blob sert l'ancienne version après un overwrite (même URL) : on
-  // casse le cache avec un paramètre unique pour toujours relire la dernière
-  // version (sinon une suppression/un badge semble « ne pas prendre »).
-  const fresh = hit.url + (hit.url.includes('?') ? '&' : '?') + 'ts=' + Date.now();
-  const res = await fetch(fresh, { cache: 'no-store' });
-  if (!res.ok) return { ...empty };
-  const data = await res.json();
-  return { ...empty, ...data };
+  const data = await readJson(MANIFEST, null);
+  return data ? { ...empty, ...data } : { ...empty };
 }
 
 async function writeManifest(data) {
-  await put(MANIFEST, JSON.stringify(data), {
-    access: 'public',
-    contentType: 'application/json',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
+  await writeJson(MANIFEST, data);
 }
 
 // Les médias d'un voyage supprimé ne sont JAMAIS effacés (Karim, 04/11/2026 : « je ne
@@ -64,15 +52,12 @@ const MEDIA_MANIFEST = 'media-manifest.json';
 // garder au moins le lien du PDF ; `pdfUrl` range ce lien avec l'étiquette.
 async function archiveMediaEntries(entries) {
   try {
-    const { blobs } = await list({ prefix: MEDIA_MANIFEST, limit: 1 });
-    const hit = blobs.find((b) => b.pathname === MEDIA_MANIFEST);
-    if (!hit) return;
-    const res = await fetch(hit.url + '?ts=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) return;
-    const media = await res.json();
+    const media = await readJson(MEDIA_MANIFEST, null);
+    if (!media) return false;
     let changed = false;
     for (const e of entries) {
       let rec = media && media[e.key];
+      if (e.seulementSiAbsent && rec && rec.archived) continue;
       if ((!rec || typeof rec !== 'object') && e.create && e.pdfUrl) {
         rec = media[e.key] = { key: e.key, videoLink: '', videoUrl: '', images: [] };
       }
@@ -82,20 +67,57 @@ async function archiveMediaEntries(entries) {
       if (e.reason) rec.archived.reason = String(e.reason);
       changed = true;
     }
-    if (changed) {
-      await put(MEDIA_MANIFEST, JSON.stringify(media), {
-        access: 'public',
-        contentType: 'application/json',
-        addRandomSuffix: false,
-        allowOverwrite: true,
-      });
-    }
+    if (changed) await writeJson(MEDIA_MANIFEST, media);
     return true;
   } catch {
     // best-effort : si la médiathèque n'est pas joignable, on n'échoue pas la suppression du voyage
     return false;
   }
 }
+
+// ── Prescription : préparation d'un voyage (sans écrire) ──
+// Renvoie { garde } (ce qu'il faut ranger dans la médiathèque) et retire le voyage de
+// `data` en mémoire, ou { erreur } / { deja }. L'écriture se fait une seule fois après.
+function prescrireDans(data, item) {
+  const slug = String(item.slug || '');
+  const fin = String(item.fin || '');
+  if (!slug) return { erreur: 'slug requis' };
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fin)) return { erreur: 'date de fin requise' };
+  const limite = new Date(fin + 'T00:00:00Z');
+  limite.setUTCDate(limite.getUTCDate() + 8);
+  if (Date.now() < limite.getTime()) return { erreur: 'pas encore prescrit (moins de 7 jours après la fin)' };
+  const prev = data.status[slug] || {};
+  const snap = item.snapshot && typeof item.snapshot === 'object' ? item.snapshot : {};
+  let garde;
+  if (data.custom[slug]) {
+    const p = data.custom[slug];
+    garde = { key: String(p.mediaKey || slug), title: p.title || slug, tag: p.tag || '', pdfUrl: p.pdfUrl || prev.pdfUrl || p.sourceUrl || '' };
+    delete data.custom[slug];
+    delete data.status[slug];
+  } else if (item.static) {
+    if (prev.removed) return { deja: true };
+    garde = { key: String(snap.mediaKey || slug), title: String(snap.title || slug), tag: String(snap.tag || ''), pdfUrl: prev.pdfUrl || '' };
+    data.status[slug] = { ...prev, removed: true, hidden: true, prescritLe: fin };
+  } else {
+    return { deja: true };
+  }
+  if (data.order) delete data.order[slug];
+  if (data.trash) delete data.trash[slug];
+  return { garde: { ...garde, create: true, reason: 'prescrit (fin le ' + fin + ')' } };
+}
+
+// Rattrapage du 07/11/2026 : lors du premier passage, des suppressions faites à la suite
+// ont relu une version périmée du stockage ; ces voyages ont bien quitté le site mais
+// leur étiquette « médias conservés » (et, pour l'Omra 1448, le lien de son PDF) a été
+// perdue. On la repose si elle manque encore (sans rien changer d'autre).
+const RATTRAPAGE_07_11 = [
+  { key: '2026-1448', title: 'عمرة اكتوبر 2026 1448', tag: 'عمرة', reason: 'prescrit (fin le 2026-10-18)',
+    pdfUrl: 'https://t6usmpynhzdvfouf.public.blob.vercel-storage.com/voyages21/pdfs/____________2026-1448-4ddkqsHgXmFrphy5Ywp45o7O027wD4.pdf' },
+  { key: 'modal-albanie-riviera', title: 'Albanie — Mer & Galets, Côte Ionienne', tag: 'Europe', reason: 'prescrit (fin le 2026-08-27)' },
+  { key: 'modal-chine', title: 'Circuit Chine — Pékin, Shanghai & Merveilles', tag: 'Chine', reason: 'prescrit (fin le 2026-08-25)' },
+  { key: 'modal-chine-pekin-xian-guilin-shanghai', title: "Chine impériale & paysages du Sud — Pékin, Xi'an, Guilin & Shanghai", tag: 'Chine', reason: 'prescrit (fin le 2026-08-24)' },
+  { key: 'modal-vietnam', title: 'Découverte du Vietnam — Hanoi à Saigon', tag: 'Vietnam', reason: 'prescrit (fin le 2026-08-21)' },
+];
 
 const corsHeaders = {
   'Cache-Control': 'no-store',
@@ -258,43 +280,34 @@ export async function PUT(request) {
     // être passée depuis plus de 7 jours. Voyage du catalogue de base (data.js, non
     // effaçable d'ici) : retiré du site.
     if (body.action === 'prescrit' && body.slug) {
-      const slug = String(body.slug);
-      const fin = String(body.fin || '');
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(fin)) {
-        return Response.json({ ok: false, error: 'date de fin requise' }, { status: 400, headers: corsHeaders });
-      }
-      const limite = new Date(fin + 'T00:00:00Z');
-      limite.setUTCDate(limite.getUTCDate() + 8);
-      if (Date.now() < limite.getTime()) {
-        return Response.json({ ok: false, error: 'pas encore prescrit (moins de 7 jours après la fin)' }, { status: 400, headers: corsHeaders });
-      }
-      const prev = data.status[slug] || {};
-      const snap = body.snapshot && typeof body.snapshot === 'object' ? body.snapshot : {};
-      let garde;
-      if (data.custom[slug]) {
-        const p = data.custom[slug];
-        garde = { key: String(p.mediaKey || slug), title: p.title || slug, tag: p.tag || '', pdfUrl: p.pdfUrl || prev.pdfUrl || '' };
-      } else if (body.static) {
-        if (prev.removed) return Response.json({ ok: true, already: true }, { headers: corsHeaders });
-        garde = { key: String(snap.mediaKey || slug), title: String(snap.title || slug), tag: String(snap.tag || ''), pdfUrl: prev.pdfUrl || '' };
-      } else {
-        return Response.json({ ok: true, already: true }, { headers: corsHeaders });
-      }
+      const r = prescrireDans(data, body);
+      if (r.erreur) return Response.json({ ok: false, error: r.erreur }, { status: 400, headers: corsHeaders });
+      if (r.deja) return Response.json({ ok: true, already: true }, { headers: corsHeaders });
       // D'abord ranger le PDF et les médias : sans eux, on ne supprime rien.
-      const ok = await archiveMediaEntries([{ ...garde, create: true, reason: 'prescrit (fin le ' + fin + ')' }]);
-      if (!ok && garde.pdfUrl) {
+      const ok = await archiveMediaEntries([r.garde]);
+      if (!ok && r.garde.pdfUrl) {
         return Response.json({ ok: false, error: 'médiathèque injoignable : rien n\'est supprimé' }, { status: 503, headers: corsHeaders });
       }
-      if (data.custom[slug]) {
-        delete data.custom[slug];
-        delete data.status[slug];
-      } else {
-        data.status[slug] = { ...prev, removed: true, hidden: true, prescritLe: fin };
-      }
-      if (data.order) delete data.order[slug];
-      if (data.trash) delete data.trash[slug];
       await writeManifest(data);
-      return Response.json({ ok: true, prescrit: slug }, { headers: corsHeaders });
+      return Response.json({ ok: true, prescrit: String(body.slug) }, { headers: corsHeaders });
+    }
+
+    // Tous les voyages prescrits EN UNE FOIS (une lecture, une écriture de chaque fichier) :
+    // évite qu'une écriture reparte de l'état d'avant la précédente.
+    if (body.action === 'prescrits' && Array.isArray(body.items)) {
+      const faits = [], refus = [], gardes = [];
+      for (const it of body.items) {
+        const r = prescrireDans(data, it);
+        if (r.erreur) refus.push({ slug: String(it.slug || ''), error: r.erreur });
+        else if (r.garde) { faits.push(String(it.slug)); gardes.push(r.garde); }
+      }
+      const rattrapage = RATTRAPAGE_07_11.map((e) => ({ ...e, create: true, seulementSiAbsent: true }));
+      const ok = await archiveMediaEntries(gardes.concat(rattrapage));
+      if (!ok) {
+        return Response.json({ ok: false, error: 'médiathèque injoignable : rien n\'est supprimé' }, { status: 503, headers: corsHeaders });
+      }
+      if (faits.length) await writeManifest(data);
+      return Response.json({ ok: true, faits, refus }, { headers: corsHeaders });
     }
 
     // Restaurer un voyage depuis la corbeille → PROPRIÉTAIRE uniquement.
