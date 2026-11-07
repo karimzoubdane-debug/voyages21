@@ -93,8 +93,13 @@
         chine: "Chine", combines: "Combinés", croisieres: "Croisières", cuba: "Cuba", egypte: "Égypte",
         europe: "Europe", "malaisie-thailande": "Malaisie & Thaïlande", maroc: "Mon Maroc", omra: "Omra & Hajj",
         ouzbekistan: "Ouzbékistan", perou: "Pérou", tunisie: "Tunisie", turquie: "Turquie",
-        "usa-canada": "USA & Canada", vietnam: "Vietnam", zanzibar: "Zanzibar"
+        "usa-canada": "USA & Canada", vietnam: "Vietnam", zanzibar: "Zanzibar",
+        // Moyen-Orient (Karim, 07/11/2026)
+        "arabie-saoudite": "Arabie Saoudite", bahrein: "Bahreïn", emirats: "Dubaï & Émirats", jordanie: "Jordanie",
+        koweit: "Koweït", liban: "Liban", oman: "Oman", qatar: "Qatar"
     };
+    // Autres noms d'une même destination (saisis dans l'admin), sans accents.
+    var DEST_ALIAS = { emirats: ["dubai", "emirats arabes unis", "abu dhabi"] };
     var DEST_PREFIXES = [
         [/^asie-chine/, "chine"], [/^asie-vietnam/, "vietnam"], [/^asie-ouzbekistan/, "ouzbekistan"],
         [/^asie-(malaisie-thailande|thailande)/, "malaisie-thailande"], [/^asie-/, "combines"],
@@ -117,7 +122,8 @@
             var noms = [v.tag].concat(v.destinations || []).map(sansAccents).filter(Boolean);
             Object.keys(DESTS).some(function (k) {
                 var t = sansAccents(DESTS[k]);
-                if (noms.indexOf(t) !== -1 || noms.indexOf(k) !== -1 || (k === "omra" && (noms.indexOf("عمرة") !== -1 || noms.indexOf("omra") !== -1))) { key = k; return true; }
+                if (noms.indexOf(t) !== -1 || noms.indexOf(k) !== -1 || (k === "omra" && (noms.indexOf("عمرة") !== -1 || noms.indexOf("omra") !== -1))
+                    || (DEST_ALIAS[k] || []).some(function (a) { return noms.indexOf(a) !== -1; })) { key = k; return true; }
                 return false;
             });
         }
