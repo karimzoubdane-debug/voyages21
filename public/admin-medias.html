@@ -322,6 +322,7 @@
         { key: 'world-africa', label: 'Destinations du monde — Afrique' },
         { key: 'world-americas', label: 'Destinations du monde — Amériques' },
         { key: 'world-asia', label: 'Destinations du monde — Asie' },
+        { key: 'world-middle-east', label: 'Destinations du monde — Moyen-Orient' },
         { key: 'world-combined', label: 'Destinations du monde — Combinés' },
         { key: 'cruises', label: 'Croisières' },
         { key: 'omra', label: 'Omra & Hajj' },
@@ -1028,6 +1029,13 @@
         var el = document.getElementById(id);
         if (el) el.addEventListener('input', renderHomePreview);
     });
+    // Pays du Moyen-Orient (mêmes pages que le menu du site), sans accents.
+    var MOYEN_ORIENT = ['arabie saoudite', 'bahrein', 'emirats', 'dubai', 'emirats arabes unis', 'abu dhabi',
+        'jordanie', 'koweit', 'liban', 'oman', 'qatar'];
+    function estMoyenOrient(tag) {
+        var t = String(tag || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+        return MOYEN_ORIENT.indexOf(t) !== -1;
+    }
     // Synchro : les voyages créés dans Admin Produits apparaissent ici (clé = slug).
     function loadCustomProductsIntoPicker() {
         return fetch('/api/produits', { cache: 'no-store' })
@@ -1043,7 +1051,8 @@
                     var p = custom[slug] || {};
                     var title = p.title || slug;
                     PRODUCTS.push({ k: slug, t: title });
-                    PICKER_META[slug] = { g: 'admin-produits', c: p.tag || '' };
+                    // Moyen-Orient (Karim, 07/11/2026) : ses voyages sont rangés par pays dans leur groupe.
+                    PICKER_META[slug] = { g: estMoyenOrient(p.tag) ? 'world-middle-east' : 'admin-produits', c: p.tag || '' };
                     TITLES[slug] = title;
                     PICKER_LABELS[slug] = (p.tag ? p.tag + ' — ' : '') + title;
                 });
