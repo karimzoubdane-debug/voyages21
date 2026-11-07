@@ -19,6 +19,8 @@ import Anthropic from '@anthropic-ai/sdk';
 import { readJson, writeJson } from '../../../lib/blob-json.js';
 import { getRole } from '../../../lib/auth.js';
 import { docxText } from '../../../lib/docx-text.js';
+import { rtfText } from '../../../lib/rtf-text.js';
+import WordExtractor from 'word-extractor';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -34,16 +36,33 @@ const MAX_PDF_BYTES = 8 * 1024 * 1024;
 // L'admin réduit d'elle-même les images plus lourdes avant l'envoi.
 const MAX_IMAGE_BYTES = 7.5 * 1024 * 1024;
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-// Document Word (.docx) : son texte est extrait ici puis lu comme la brochure (Karim, 07/11/2026).
+// Documents Word (Karim, 07/11/2026) : .docx / .docm / .dotx / .dotm (archives ZIP),
+// .doc / .dot (ancien format binaire) et RTF. Leur texte est extrait ici puis lu comme
+// la brochure.
 const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+const WORD_ZIP = [DOCX, 'application/vnd.ms-word.document.macroEnabled.12',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.template', 'application/vnd.ms-word.template.macroEnabled.12'];
+const WORD_BIN = 'application/msword';
+const RTF = 'application/rtf';
+const WORD_TYPES = WORD_ZIP.concat([WORD_BIN, RTF, 'text/rtf']);
 const MAX_DOCX_BYTES = 8 * 1024 * 1024;
+function estWord(kind) { return WORD_TYPES.includes(kind); }
+async function texteWord(kind, buf) {
+  if (kind === RTF || kind === 'text/rtf') return rtfText(buf);
+  if (WORD_ZIP.includes(kind)) {
+    try { return docxText(buf); } catch { /* sinon, lecteur général ci-dessous */ }
+  }
+  const doc = await new WordExtractor().extract(buf);
+  return String(doc.getBody() || '').trim();
+}
 
 // Type du fichier : d'abord l'en-tête renvoyé par le stockage, sinon l'extension.
 function fileKind(res, url) {
   const ct = String(res.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
-  if (ct === 'application/pdf' || ct === DOCX || IMAGE_TYPES.includes(ct)) return ct;
+  if (ct === 'application/pdf' || WORD_TYPES.includes(ct) || IMAGE_TYPES.includes(ct)) return ct === 'text/rtf' ? RTF : ct;
   const ext = (String(url).split('?')[0].split('.').pop() || '').toLowerCase();
-  return { pdf: 'application/pdf', docx: DOCX, jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp' }[ext] || '';
+  return { pdf: 'application/pdf', docx: DOCX, docm: WORD_ZIP[1], dotx: WORD_ZIP[2], dotm: WORD_ZIP[3], doc: WORD_BIN, dot: WORD_BIN, rtf: RTF,
+    jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp' }[ext] || '';
 }
 
 const corsHeaders = {
@@ -281,20 +300,20 @@ export async function POST(request) {
     kind = fileKind(res, pdfUrl);
     if (!kind) {
       return Response.json(
-        { ok: false, error: 'Format non pris en charge : envoyez un PDF, un document Word (.docx) ou une image JPG, PNG ou WEBP. Un ancien fichier Word (.doc) doit d\'abord être enregistré en .docx ou en PDF.' },
+        { ok: false, error: 'Format non pris en charge : envoyez un PDF, un document Word (.docx, .doc, .rtf…) ou une image JPG, PNG ou WEBP.' },
         { status: 415, headers: corsHeaders },
       );
     }
     const buf = Buffer.from(await res.arrayBuffer());
-    if (kind === DOCX) {
+    if (estWord(kind)) {
       if (buf.length > MAX_DOCX_BYTES) {
         return Response.json({ ok: false, error: 'Document Word trop lourd (' + Math.round(buf.length / 1e6) + ' Mo, maximum 8 Mo).' }, { status: 413, headers: corsHeaders });
       }
-      docTexte = docxText(buf);
+      docTexte = await texteWord(kind, buf);
       if (!docTexte) throw new Error('le document Word ne contient pas de texte lisible');
     }
     const isPdf = kind === 'application/pdf';
-    if (kind !== DOCX && buf.length > (isPdf ? MAX_PDF_BYTES : MAX_IMAGE_BYTES)) {
+    if (!estWord(kind) && buf.length > (isPdf ? MAX_PDF_BYTES : MAX_IMAGE_BYTES)) {
       return Response.json(
         { ok: false, error: (isPdf ? 'PDF' : 'Image') + ' trop lourd' + (isPdf ? '' : 'e') + ' (' + Math.round(buf.length / 1e6) + ' Mo, maximum ' + (isPdf ? '8' : '7') + ' Mo).' },
         { status: 413, headers: corsHeaders },
@@ -320,7 +339,7 @@ export async function POST(request) {
       messages: [
         {
           role: 'user',
-          content: kind === DOCX
+          content: estWord(kind)
             ? [
               { type: 'text', text: 'La brochure est fournie en document Word ; en voici le texte (les cellules de tableau sont séparées par « | ») :\n\n' + docTexte },
               { type: 'text', text: 'Lis ce texte comme le PDF de la brochure. Remplis la fiche de ce voyage. Destination retenue dans l\'admin : ' + tag + '.' },
@@ -358,7 +377,7 @@ export async function POST(request) {
   product.tag = tag;
   // Un document Word n'est pas proposé aux clients comme brochure : il est gardé comme
   // fichier source de la fiche (et rangé avec les médias si le voyage est supprimé).
-  if (kind === DOCX) product.sourceUrl = pdfUrl;
+  if (estWord(kind)) product.sourceUrl = pdfUrl;
   else product.pdfUrl = pdfUrl;
   product.whatsapp = '212614152686';
   if (Array.isArray(body.destinations) && body.destinations.length) product.destinations = body.destinations;
