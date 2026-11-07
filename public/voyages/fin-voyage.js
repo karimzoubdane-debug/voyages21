@@ -1,9 +1,9 @@
 /* Voyages21 — date de fin d'un voyage et statut « SOLDÉ » (expiré).
    Partagé par les pages destination, les fiches voyage et l'Admin Produits.
    Un voyage dont la date de fin écrite est passée est « soldé » : il reste en ligne
-   avec un badge SOLDÉ qui clignote, rangé après les voyages en cours ; c'est l'équipe
-   qui décide ensuite de le supprimer, de le mettre en corbeille ou de le mettre à jour
-   (choix de Karim, 04/11/2026 — Omra comprises, plus aucune corbeille automatique).
+   7 jours avec un badge SOLDÉ qui clignote, rangé après les voyages en cours, puis il
+   est supprimé (seuls son PDF et ses médias sont gardés) — choix de Karim, 07/11/2026,
+   Omra comprises.
    Sans année écrite, on ne peut pas savoir : le voyage n'est pas soldé. */
 (function (root) {
   // ── Fin d'un voyage (date après laquelle il est « passé ») ──
@@ -88,5 +88,23 @@
     return { solde: manuel || expire, manuel: manuel, expire: expire, fin: r.fin || '', base: r.base || '' };
   }
 
-  root.V21Fin = { tripEnd: tripEnd, soldeInfo: soldeInfo, todayCasa: todayCasa, finIso: finIso };
+  // Prescription (Karim, 07/11/2026) : un voyage passé reste 7 jours en ligne avec le
+  // badge SOLDÉ, puis il est supprimé ; seuls son PDF et ses photos / vidéo sont gardés
+  // (Gestion des médias → « Médias conservés »). Un badge SOLDÉ posé à la main sans date
+  // passée n'entraîne pas de suppression.
+  var PRESCRIPTION_JOURS = 7;
+  function addDaysIso(iso, n) {
+    var d = new Date(iso + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  }
+  function prescritInfo(v, st, today) {
+    var i = soldeInfo(v, st, today);
+    today = today || todayCasa();
+    i.supprimeLe = (i.expire && i.fin) ? addDaysIso(i.fin, PRESCRIPTION_JOURS) : '';
+    i.aSupprimer = !!i.supprimeLe && i.supprimeLe < today;
+    return i;
+  }
+
+  root.V21Fin = { tripEnd: tripEnd, soldeInfo: soldeInfo, prescritInfo: prescritInfo, todayCasa: todayCasa, finIso: finIso, addDaysIso: addDaysIso, PRESCRIPTION_JOURS: PRESCRIPTION_JOURS };
 })(typeof window !== 'undefined' ? window : globalThis);

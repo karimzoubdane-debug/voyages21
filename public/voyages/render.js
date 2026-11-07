@@ -16,6 +16,14 @@
     // pour les voyages non corrigés), puis on redessine une seule fois si un
     // correctif existe pour ce voyage.
     var redessine = false;
+    // Date de fin partagée (statut SOLDÉ / prescription) : chargée une fois pour la page.
+    var finPret = new Promise(function (ok) {
+        if (window.V21Fin) return ok();
+        var sf = document.createElement("script");
+        sf.src = "/voyages/fin-voyage.js?v=prescrit-v1";
+        sf.onload = ok; sf.onerror = ok;
+        document.head.appendChild(sf);
+    });
     start(base);
     fetch("/api/produits", { cache: "no-store" })
         .then(function (r) { return r.ok ? r.json() : {}; })
@@ -338,10 +346,13 @@
 
     fetch("/api/produits", { cache: "no-store" })
         .then(function (r) { return r.ok ? r.json() : {}; })
+        .then(function (manifest) { return finPret.then(function () { return manifest; }); })
         .then(function (manifest) {
             var statusEntry = (manifest.status || {})[slug] || {};
-            // Voyage retiré du site via l'admin : fiche indisponible.
-            if (statusEntry.removed) {
+            // Voyage retiré du site via l'admin, ou prescrit (7 jours après sa date de fin,
+            // Karim 07/11/2026) : fiche indisponible.
+            var prescrit = !!(window.V21Fin && window.V21Fin.prescritInfo(v, statusEntry).aSupprimer);
+            if (statusEntry.removed || prescrit) {
                 document.title = "Voyage indisponible — Voyages21";
                 if (app) app.innerHTML = '<div style="max-width:640px;margin:5rem auto;padding:2rem;text-align:center;font-family:\'DM Sans\',system-ui,sans-serif">'
                     + '<h1 style="font-family:\'Playfair Display\',Georgia,serif;color:#1B3A28;font-style:italic">Voyage indisponible</h1>'

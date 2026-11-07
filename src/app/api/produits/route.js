@@ -59,6 +59,9 @@ async function writeManifest(data) {
 // médias (« Médias conservés ») et pour le tirage « 🎲 Photos au hasard ».
 // Le manifeste des médias est un blob séparé (media-manifest.json).
 const MEDIA_MANIFEST = 'media-manifest.json';
+// Renvoie true si tout est rangé (ou rien à ranger), false si la médiathèque n'a pas pu
+// être écrite. `create: true` crée la fiche de médias quand elle n'existe pas encore, pour
+// garder au moins le lien du PDF ; `pdfUrl` range ce lien avec l'étiquette.
 async function archiveMediaEntries(entries) {
   try {
     const { blobs } = await list({ prefix: MEDIA_MANIFEST, limit: 1 });
@@ -69,9 +72,14 @@ async function archiveMediaEntries(entries) {
     const media = await res.json();
     let changed = false;
     for (const e of entries) {
-      const rec = media && media[e.key];
+      let rec = media && media[e.key];
+      if ((!rec || typeof rec !== 'object') && e.create && e.pdfUrl) {
+        rec = media[e.key] = { key: e.key, videoLink: '', videoUrl: '', images: [] };
+      }
       if (!rec || typeof rec !== 'object') continue;
       rec.archived = { title: String(e.title || ''), tag: String(e.tag || ''), deletedAt: new Date().toISOString() };
+      if (e.pdfUrl) rec.archived.pdfUrl = String(e.pdfUrl);
+      if (e.reason) rec.archived.reason = String(e.reason);
       changed = true;
     }
     if (changed) {
@@ -82,8 +90,10 @@ async function archiveMediaEntries(entries) {
         allowOverwrite: true,
       });
     }
+    return true;
   } catch {
     // best-effort : si la médiathèque n'est pas joignable, on n'échoue pas la suppression du voyage
+    return false;
   }
 }
 
@@ -239,6 +249,52 @@ export async function PUT(request) {
       data.trash[slug] = entry;
       await writeManifest(data);
       return Response.json({ ok: true, expired: slug }, { headers: corsHeaders });
+    }
+
+    // Voyage PRESCRIT (Karim, 07/11/2026) : 7 jours après sa date de fin, il est supprimé
+    // pour de bon (fiche, textes, prix) ; seuls son PDF et ses photos / vidéo sont gardés
+    // dans la médiathèque (« Médias conservés »), pour de futurs voyages. Déclenché par
+    // l'Admin Produits à l'ouverture du catalogue ; garde-fou : la date de fin envoyée doit
+    // être passée depuis plus de 7 jours. Voyage du catalogue de base (data.js, non
+    // effaçable d'ici) : retiré du site.
+    if (body.action === 'prescrit' && body.slug) {
+      const slug = String(body.slug);
+      const fin = String(body.fin || '');
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(fin)) {
+        return Response.json({ ok: false, error: 'date de fin requise' }, { status: 400, headers: corsHeaders });
+      }
+      const limite = new Date(fin + 'T00:00:00Z');
+      limite.setUTCDate(limite.getUTCDate() + 8);
+      if (Date.now() < limite.getTime()) {
+        return Response.json({ ok: false, error: 'pas encore prescrit (moins de 7 jours après la fin)' }, { status: 400, headers: corsHeaders });
+      }
+      const prev = data.status[slug] || {};
+      const snap = body.snapshot && typeof body.snapshot === 'object' ? body.snapshot : {};
+      let garde;
+      if (data.custom[slug]) {
+        const p = data.custom[slug];
+        garde = { key: String(p.mediaKey || slug), title: p.title || slug, tag: p.tag || '', pdfUrl: p.pdfUrl || prev.pdfUrl || '' };
+      } else if (body.static) {
+        if (prev.removed) return Response.json({ ok: true, already: true }, { headers: corsHeaders });
+        garde = { key: String(snap.mediaKey || slug), title: String(snap.title || slug), tag: String(snap.tag || ''), pdfUrl: prev.pdfUrl || '' };
+      } else {
+        return Response.json({ ok: true, already: true }, { headers: corsHeaders });
+      }
+      // D'abord ranger le PDF et les médias : sans eux, on ne supprime rien.
+      const ok = await archiveMediaEntries([{ ...garde, create: true, reason: 'prescrit (fin le ' + fin + ')' }]);
+      if (!ok && garde.pdfUrl) {
+        return Response.json({ ok: false, error: 'médiathèque injoignable : rien n\'est supprimé' }, { status: 503, headers: corsHeaders });
+      }
+      if (data.custom[slug]) {
+        delete data.custom[slug];
+        delete data.status[slug];
+      } else {
+        data.status[slug] = { ...prev, removed: true, hidden: true, prescritLe: fin };
+      }
+      if (data.order) delete data.order[slug];
+      if (data.trash) delete data.trash[slug];
+      await writeManifest(data);
+      return Response.json({ ok: true, prescrit: slug }, { headers: corsHeaders });
     }
 
     // Restaurer un voyage depuis la corbeille → PROPRIÉTAIRE uniquement.
