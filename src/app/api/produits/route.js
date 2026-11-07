@@ -82,10 +82,15 @@ function prescrireDans(data, item) {
   const slug = String(item.slug || '');
   const fin = String(item.fin || '');
   if (!slug) return { erreur: 'slug requis' };
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(fin)) return { erreur: 'date de fin requise' };
-  const limite = new Date(fin + 'T00:00:00Z');
-  limite.setUTCDate(limite.getUTCDate() + 8);
-  if (Date.now() < limite.getTime()) return { erreur: 'pas encore prescrit (moins de 7 jours après la fin)' };
+  // Suppression à la main (« 🗑 Supprimer maintenant », Karim 07/11/2026) : sans attendre
+  // les 7 jours, avec le même rangement du PDF et des médias.
+  const manuel = item.manuel === true;
+  if (!manuel) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(fin)) return { erreur: 'date de fin requise' };
+    const limite = new Date(fin + 'T00:00:00Z');
+    limite.setUTCDate(limite.getUTCDate() + 8);
+    if (Date.now() < limite.getTime()) return { erreur: 'pas encore prescrit (moins de 7 jours après la fin)' };
+  }
   const prev = data.status[slug] || {};
   const snap = item.snapshot && typeof item.snapshot === 'object' ? item.snapshot : {};
   let garde;
@@ -97,13 +102,14 @@ function prescrireDans(data, item) {
   } else if (item.static) {
     if (prev.removed) return { deja: true };
     garde = { key: String(snap.mediaKey || slug), title: String(snap.title || slug), tag: String(snap.tag || ''), pdfUrl: prev.pdfUrl || '' };
-    data.status[slug] = { ...prev, removed: true, hidden: true, prescritLe: fin };
+    data.status[slug] = { ...prev, removed: true, hidden: true, prescritLe: fin || new Date().toISOString().slice(0, 10) };
   } else {
     return { deja: true };
   }
   if (data.order) delete data.order[slug];
   if (data.trash) delete data.trash[slug];
-  return { garde: { ...garde, create: true, reason: 'prescrit (fin le ' + fin + ')' } };
+  const raison = manuel ? 'supprimé à la main le ' + new Date().toISOString().slice(0, 10) + (fin ? ' (fin le ' + fin + ')' : '') : 'prescrit (fin le ' + fin + ')';
+  return { garde: { ...garde, create: true, reason: raison } };
 }
 
 // Rattrapage du 07/11/2026 : lors du premier passage, des suppressions faites à la suite
