@@ -21,13 +21,6 @@ const APP_ROUTES = [
   { path: '/marhaba', priority: 0.6, changeFrequency: 'weekly' },
   { path: '/chroniques', priority: 0.6, changeFrequency: 'weekly' },
   { path: '/en-images', priority: 0.5, changeFrequency: 'monthly' },
-  { path: '/experiences', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/experiences/circuits-autotours', priority: 0.7, changeFrequency: 'monthly' },
-  { path: '/experiences/moto-expeditions', priority: 0.7, changeFrequency: 'monthly' },
-  { path: '/experiences/rallyes-4x4', priority: 0.7, changeFrequency: 'monthly' },
-  { path: '/circuits/classiques', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/circuits/moto', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/circuits/raid-4x4', priority: 0.8, changeFrequency: 'monthly' },
 ]
 
 // Scanne récursivement public/voyages pour lister les pages destination statiques.
