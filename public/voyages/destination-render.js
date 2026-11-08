@@ -138,14 +138,15 @@
       + '</article>';
   }
 
+  // Prix d'un voyage pour le tri, ou null s'il est « Sur devis » (réglage du statut) ou
+  // sans montant. Chiffres arabes acceptés ; on lit le PREMIER montant (« 13 500 », « 15,900 »,
+  // « 8.100 ») pour ne pas coller deux prix d'une fourchette.
   function priceValue(slug, customData) {
+    if (statusMap[slug] && statusMap[slug].surDevis) return null;
     var v = tripData(slug, customData) || {};
-    var n = parseInt(String(v.price || '').replace(/[^0-9]/g, ''), 10);
-    return isNaN(n) ? Infinity : n;
-  }
-
-  function sortByPrice(arr) {
-    return arr.slice().sort(function (a, b) { return priceValue(a) - priceValue(b); });
+    var t = String(v.price || '').replace(/[٠-٩]/g, function (d) { return String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)); });
+    var m = t.match(/\d{1,3}(?:[\s.,\u00a0\u202f]\d{3})+|\d+/);
+    return m ? parseInt(m[0].replace(/\D/g, ''), 10) : null;
   }
 
   // Rang manuel d'un produit (défini dans Admin Produits). Absent = rangé après,
@@ -154,14 +155,16 @@
     var n = orderMap[slug];
     return (typeof n === 'number' && !isNaN(n)) ? n : Infinity;
   }
-  // Tri : les voyages en cours d'abord (ordre manuel, puis prix), les soldés ensuite,
-  // du moins cher au plus cher (Karim, 04/11/2026).
+  // Tri d'une page (Karim, 08/11/2026) : du moins cher au plus cher, les « Sur devis »
+  // (ou sans prix) après ceux qui ont un prix ; les soldés à la fin, dans le même ordre.
+  // À prix égal, l'ordre choisi dans l'Admin Produits départage.
   function byOrderThenPrice(a, b) {
     if (a.solde !== b.solde) return a.solde ? 1 : -1;
-    if (a.solde) return a.price - b.price;
+    var da = a.price === null, db = b.price === null;
+    if (da !== db) return da ? 1 : -1;
+    if (!da && a.price !== b.price) return a.price - b.price;
     var oa = orderValue(a.slug), ob = orderValue(b.slug);
-    if (oa !== ob) return oa - ob;
-    return a.price - b.price;
+    return oa === ob ? 0 : (oa < ob ? -1 : 1);
   }
 
   function renderGrid(items, extraCustom) {
