@@ -237,7 +237,8 @@ export default function NavBar() {
             </Link>
           </div>
 
-          <div style={{ flex: 1 }} />
+          {/* Espace central (masqué sur téléphone, comme l'ancien menu : le bouton ☰ reste à sa place) */}
+          <div className="bar3-menu" style={{ flex: 1 }} />
 
           {/* Droite : téléphone + Contact + burger */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: '0 0 auto' }}>
