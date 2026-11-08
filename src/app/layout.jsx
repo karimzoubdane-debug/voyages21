@@ -8,7 +8,11 @@ export const metadata = {
   title: 'Voyages21 — Le Maroc Cousu Main depuis 2000',
   description: 'Agence de voyages sur mesure au Maroc. Circuits classiques, Raid 4x4, Moto Expédition, Experiences. Depuis Marrakech, depuis 2000.',
   keywords: 'voyage maroc, circuit maroc, raid 4x4 maroc, moto expedition maroc, agence voyage marrakech, maroc sur mesure',
-  alternates: { canonical: '/' },
+  // Canonique relative : chaque page se déclare elle-même (./ = l'adresse de la page).
+  // Avec '/', toutes les pages (mice, marhaba, partenaires, contact…) se déclaraient
+  // copies de l'accueil et Google ne les indexait pas — relevé de l'audit 212 (07/10/2026),
+  // vérifié en ligne le 08/11/2026.
+  alternates: { canonical: './' },
   openGraph: {
     title: 'Voyages21 — Le Maroc Cousu Main',
     description: 'Circuits, Raids 4x4, Moto Expédition et Expériences au Maroc sur mesure.',

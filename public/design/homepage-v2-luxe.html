@@ -5858,6 +5858,9 @@
     <!-- Barre de fond -->
     <div class="footer-bottom">
       <p class="footer-bottom-copy">© 2025 Voyages21 — Tous droits réservés</p>
+      <!-- Site sœur : l'agence réceptive (étrangers → Maroc). Seul lien de voyages21.com vers
+           moroccovoyages21.com — audit 212 (07/10/2026), go de Karim le 08/11/2026. -->
+      <p class="footer-bottom-soeur">Vous visitez le Maroc ? <a href="https://www.moroccovoyages21.com" target="_blank" rel="noopener">Notre agence réceptive : moroccovoyages21.com ↗</a></p>
       <p class="footer-bottom-credit">
         Site conçu par <a href="https://www.DA21.com" target="_blank" rel="noopener">DA21</a> — Société de communication
       </p>
@@ -6035,7 +6038,18 @@
       font-weight: 700;
       transition: color .2s;
     }
+    .footer-bottom-soeur {
+      font-size: .72rem;
+      color: rgba(255,255,255,.22);
+    }
+    .footer-bottom-soeur a {
+      color: rgba(196,154,60,.6);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color .2s;
+    }
     .footer-bottom-credit a:hover { color: var(--gold); }
+    .footer-bottom-soeur a:hover { color: var(--gold); }
 
     @media (max-width: 900px) {
       .footer-top { padding: 40px 24px 28px; }

@@ -4,7 +4,22 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-11-03_
+_Dernière mise à jour : 2026-11-08_
+
+## 🟡 Canoniques propres + lien vers moroccovoyages21.com (PR #319) — EN ATTENTE du « fusionne »
+Action 3 de l'audit 212 Communication (07/10/2026), go explicite de Karim le 08/11/2026 (zone rouge).
+- **Canonique** : `src/app/layout.jsx` passait `'/'` à toutes les pages → `/mice`, `/marhaba`,
+  `/partenaires`, `/contact`, `/about`, `/experiences`, `/circuits/*` se déclaraient copies de
+  l'accueil (vérifié en ligne le 08/11). Désormais `'./'` : chaque page se déclare à sa propre
+  adresse (`/faq` avait déjà la sienne, l'accueil ne change pas).
+- **Lien « Vous visitez le Maroc ? Notre agence réceptive : moroccovoyages21.com ↗ »** : dans le pied
+  de page commun (`Footer.jsx`, colonne marque) **et** dans la barre du bas de l'accueil
+  (`public/design/homepage-v2-luxe.html`, la page réellement servie sur `/` par `next.config.mjs`).
+  Aucun lien n'existait entre les deux sites.
+- Vérifié en local (`next build` + `next start`, 9 pages, 390 px et 1280 px). **Reste :** contrôler le
+  preview Vercel, puis le « fusionne » de Karim ; les 60 pages statiques `public/voyages/` n'ont pas de
+  canonique (chantier à part, si Karim le veut).
+
 
 ## ✅ Admin Produits : date d'ajout + bouton « 🖼 Médias » + photos automatiques (PR #301, #302) — FUSIONNÉES le 2026-11-03
 - **#301** : « 📅 Ajouté le JJ/MM/AAAA » devant chaque produit du catalogue (champ `createdAt` ; les voyages
