@@ -31,28 +31,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Circuits */}
-        <div className="footer-col">
-          <h4>Circuits</h4>
-          <ul>
-            <li><Link href="/circuits/raid-4x4">Raid 4x4 Collection 2026</Link></li>
-            <li><Link href="/circuits/moto">Moto Expedition</Link></li>
-            <li><Link href="/circuits/classiques">Circuits Classiques</Link></li>
-            <li><Link href="/circuits/classiques">Autotours Maroc</Link></li>
-          </ul>
-        </div>
-
-        {/* Experiences */}
-        <div className="footer-col">
-          <h4>Experiences</h4>
-          <ul>
-            <li><Link href="/experiences">Montgolfiere</Link></li>
-            <li><Link href="/experiences">Quad Desert</Link></li>
-            <li><Link href="/experiences">Ateliers Cuisine</Link></li>
-            <li><Link href="/experiences">Toutes les activites</Link></li>
-          </ul>
-        </div>
-
         {/* Contact */}
         <div className="footer-col footer-contact">
           <h4>Contact</h4>
