@@ -2468,6 +2468,7 @@ async function quickSubmit() {
       toast('✅ « ' + title + ' » lue depuis le fichier — masquée en attendant votre relecture.');
       var amTxt = autoMediaText(await autoMediaIfEmpty(dx.slug, tag));
       if (amTxt) { qlog.textContent += ' ' + amTxt; log(amTxt); }
+      loadMediaMap(); // la ligne du voyage ne propose plus « 🎲 Photos au hasard » s'il en a
     } else {
       readError = dx.error || 'erreur inconnue';
     }
@@ -2501,6 +2502,7 @@ async function quickSubmit() {
     reload();
     var amTxt2 = autoMediaText(await autoMediaIfEmpty(data.slug, tag));
     if (amTxt2) log(amTxt2);
+    loadMediaMap();
     qlog.style.color='var(--ok)';
     qlog.textContent = (readError ? '⚠️ Fichier non lu (' + readError + ') — ' : '')
       + '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
@@ -2751,6 +2753,7 @@ async function submitForm(e) {
       if (!currentEditSlug && !currentEditIsStatic && !allImageUrls.length) {
         var amTxt3 = autoMediaText(await autoMediaIfEmpty(finalSlug, product.tag));
         if (amTxt3) log(amTxt3);
+        loadMediaMap();
       }
       reload();
       cancelForm();
