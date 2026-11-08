@@ -29,6 +29,19 @@ export default function Footer() {
               WhatsApp +212 661 181 618
             </a>
           </div>
+          {/* Site sœur : l'agence réceptive (étrangers → Maroc). Seul lien de voyages21.com
+              vers moroccovoyages21.com — demandé par l'audit 212 (07/10/2026), go de Karim le 08/11/2026. */}
+          <p className="footer-soeur" style={{ marginTop: '1.25rem', fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)' }}>
+            Vous visitez le Maroc ?{' '}
+            <a
+              href="https://www.moroccovoyages21.com"
+              target="_blank"
+              rel="noopener"
+              style={{ color: 'var(--gold)', textDecoration: 'none', fontWeight: '500' }}
+            >
+              Notre agence réceptive : moroccovoyages21.com ↗
+            </a>
+          </p>
         </div>
 
         {/* Circuits */}
