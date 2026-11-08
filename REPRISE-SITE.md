@@ -6,7 +6,7 @@
 
 _Dernière mise à jour : 2026-11-08_
 
-## 🟡 Canoniques propres + lien vers moroccovoyages21.com (PR #319) — EN ATTENTE du « fusionne »
+## ✅ Canoniques propres + lien vers moroccovoyages21.com (PR #319) — FUSIONNÉE le 2026-11-08
 Action 3 de l'audit 212 Communication (07/10/2026), go explicite de Karim le 08/11/2026 (zone rouge).
 - **Canonique** : `src/app/layout.jsx` passait `'/'` à toutes les pages → `/mice`, `/marhaba`,
   `/partenaires`, `/contact`, `/about`, `/experiences`, `/circuits/*` se déclaraient copies de
@@ -16,9 +16,9 @@ Action 3 de l'audit 212 Communication (07/10/2026), go explicite de Karim le 08/
   de page commun (`Footer.jsx`, colonne marque) **et** dans la barre du bas de l'accueil
   (`public/design/homepage-v2-luxe.html`, la page réellement servie sur `/` par `next.config.mjs`).
   Aucun lien n'existait entre les deux sites.
-- Vérifié en local (`next build` + `next start`, 9 pages, 390 px et 1280 px). **Reste :** contrôler le
-  preview Vercel, puis le « fusionne » de Karim ; les 60 pages statiques `public/voyages/` n'ont pas de
-  canonique (chantier à part, si Karim le veut).
+- Vérifié en local (`next build` + `next start`, 9 pages, 390 px et 1280 px) et sur le preview Vercel ;
+  fusionnée sur le « Fusionnes » de Karim le 08/11. **Reste :** les 60 pages statiques `public/voyages/`
+  n'ont pas de canonique (chantier à part, si Karim le veut).
 
 
 ## ✅ Admin Produits : date d'ajout + bouton « 🖼 Médias » + photos automatiques (PR #301, #302) — FUSIONNÉES le 2026-11-03
