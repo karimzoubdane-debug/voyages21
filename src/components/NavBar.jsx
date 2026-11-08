@@ -2,60 +2,9 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
-const CADRAN = {
-  img:  'https://images.unsplash.com/photo-1548813395-edd5373a8e72?w=700&q=80',
-  href: '/comment-voir-le-maroc',
-}
-
-// Villes pour "Choisissez votre ville de séjour"
-const SEJOURS_VILLES = [
-  { label: 'Marrakech',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=480&q=80' },
-  { label: 'Fez',         href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1489493585363-d69421e0edd3?w=480&q=80' },
-  { label: 'Casablanca',  href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1551913902-c92207136625?w=480&q=80' },
-  { label: 'Chefchaouen', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=480&q=80' },
-]
-
-// Types de séjours (texte seul)
-const SEJOURS_TYPES = [
-  { label: 'Week-end',    href: '/circuits/classiques' },
-  { label: 'Court séjour', href: '/circuits/classiques' },
-  { label: 'Long séjour', href: '/circuits/classiques' },
-  { label: 'Escapade',    href: '/circuits/classiques' },
-]
-
-const CIRCUITS = [
-  { label: 'En minibus',              href: '/circuits/classiques',            img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=480&q=80' },
-  { label: 'En autotours',            href: '/experiences/circuits-autotours', img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=480&q=80' },
-  { label: 'Rallye 4x4',             href: '/circuits/raid-4x4',              img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=480&q=80' },
-  { label: 'Virée en Moto cylindrée', href: '/circuits/moto',                  img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=480&q=80' },
-]
-
-const AVEC_QUI = [
-  { label: 'En petits groupes',     href: '/experiences', img: 'https://images.unsplash.com/photo-1501554728187-ce583db33af7?w=480&q=80' },
-  { label: 'Solo',                  href: '/experiences', img: 'https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=480&q=80' },
-  { label: 'En couple',            href: '/experiences', img: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=480&q=80' },
-  { label: 'Entre amis et famille', href: '/experiences', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=480&q=80' },
-]
-
-const STYLES_VOYAGE = [
-  { label: 'Essentiel',   href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=400&q=80' },
-  { label: 'Authentique', href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80' },
-  { label: 'Prestige',    href: '/circuits/classiques', img: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=400&q=80' },
-]
-
-const EXPLORER_ITEMS = [
-  { label: 'Comment voir le Maroc', href: '/comment-voir-le-maroc', img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=240&q=75' },
-  { label: 'Que voir au Maroc',     href: '/que-voir-au-maroc',     img: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=240&q=75' },
-]
-
-const ILES_ITEMS = [
-  { label: 'Zanzibar',   href: '/voyages/zanzibar',   img: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=480&q=80' },
-  { label: 'Maldives',   href: '/voyages/maldives',   img: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=480&q=80' },
-  { label: 'Seychelles', href: '/voyages/seychelles', img: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=480&q=80' },
-  { label: 'Maurice',    href: '/voyages/maurice',    img: 'https://images.unsplash.com/photo-1540202404-1b927e27fa8b?w=480&q=80' },
-  { label: 'Cap-Vert',   href: '/voyages/cap-vert',   img: 'https://images.unsplash.com/photo-1566732562932-45c4b2b8b5f0?w=480&q=80' },
-  { label: 'Bali',       href: '/voyages/bali',       img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=480&q=80' },
-]
+// Les 4 menus déroulants (Inspirations, Choisissez votre style, Explorer, Îles paradisiaques)
+// ont été retirés le 08/11/2026 (Karim) : leurs liens menaient aux anciennes pages Maroc,
+// désormais sur le site incoming www.moroccovoyages21.com, ou à des pages qui n'existent pas.
 
 // ── Icônes ────────────────────────────────────────────────────────────────────
 
@@ -91,159 +40,6 @@ function Chevron({ active }) {
   )
 }
 
-// Carte image — grille 2×2 dans le panel Inspirations
-function InspCard({ item, onClose }) {
-  return (
-    <Link href={item.href} onClick={onClose}
-      style={{
-        textDecoration: 'none', cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.35rem',
-        width: '128px',
-      }}
-    >
-      <div style={{
-        width: '124px', height: '84px', borderRadius: '6px',
-        backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
-        border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
-      }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.04)' }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
-      />
-      <span style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.73rem', fontWeight: 500, textAlign: 'center', lineHeight: 1.25 }}>
-        {item.label}
-      </span>
-    </Link>
-  )
-}
-
-// Grande carte Styles
-function LargeCard({ item, onClose }) {
-  return (
-    <Link href={item.href} onClick={onClose}
-      style={{
-        textDecoration: 'none', flexShrink: 0, cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem',
-        width: '225px',
-      }}
-    >
-      <div style={{
-        width: '220px', height: '165px', borderRadius: '8px',
-        backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
-        border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
-      }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.04)' }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
-      />
-      <span style={{ color: 'rgba(255,255,255,0.92)', fontSize: '1rem', fontWeight: 600, textAlign: 'center', lineHeight: 1.3 }}>
-        {item.label}
-      </span>
-    </Link>
-  )
-}
-
-// Grande carte Explorer
-function ExplorerCard({ item, onClose }) {
-  return (
-    <Link href={item.href} onClick={onClose}
-      style={{
-        textDecoration: 'none', flexShrink: 0, cursor: 'pointer',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem',
-        width: '240px',
-      }}
-    >
-      <div
-        style={{
-          width: '235px', height: '165px', borderRadius: '8px',
-          backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center',
-          border: '2px solid transparent', transition: 'border-color .2s, transform .2s',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.03)' }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
-      />
-      <span style={{ color: 'rgba(255,255,255,0.92)', fontSize: '0.9rem', fontWeight: 600, textAlign: 'center', lineHeight: 1.3 }}>
-        {item.label}
-      </span>
-    </Link>
-  )
-}
-
-// Cadran droit — image visible en haut + texte en bas
-function RightCadran({ onClose }) {
-  return (
-    <Link href={CADRAN.href} onClick={onClose}
-      style={{
-        width: '160px', flexShrink: 0, alignSelf: 'stretch',
-        borderRadius: '8px', overflow: 'hidden',
-        display: 'flex', flexDirection: 'column',
-        textDecoration: 'none', cursor: 'pointer',
-        border: '2px solid transparent',
-        transition: 'border-color .2s, transform .25s',
-        minHeight: '150px',
-      }}
-      onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8A440'; e.currentTarget.style.transform = 'scale(1.02)' }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
-    >
-      <div style={{
-        flex: 1,
-        backgroundImage: `url(${CADRAN.img})`,
-        backgroundSize: 'cover', backgroundPosition: 'center',
-        minHeight: '100px',
-      }} />
-      <div style={{
-        background: 'rgba(21,46,31,0.96)',
-        borderTop: '1px solid rgba(200,164,64,0.3)',
-        padding: '0.65rem 0.8rem', textAlign: 'center', flexShrink: 0,
-      }}>
-        <p style={{ color: '#FFFFFF', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.04em', lineHeight: 1.4, marginBottom: '0.18rem' }}>
-          Voir tous<br />nos circuits
-        </p>
-        <span style={{ color: '#C8A440', fontSize: '0.9rem' }}>→</span>
-      </div>
-    </Link>
-  )
-}
-
-// Séparateur vertical stylé entre blocs — dégradé or
-function ColSep() {
-  return (
-    <div style={{
-      width: '1px', flexShrink: 0, alignSelf: 'stretch',
-      background: 'linear-gradient(to bottom, transparent, rgba(200,164,64,0.5) 20%, rgba(200,164,64,0.5) 80%, transparent)',
-    }} />
-  )
-}
-
-// Titre de section — imposant, centré
-const SEC = {
-  fontFamily: "'Playfair Display', serif",
-  fontStyle: 'italic',
-  fontSize: '1.1rem',
-  fontWeight: 700,
-  color: '#FFFFFF',
-  letterSpacing: '0.01em',
-  marginBottom: '0.9rem',
-  display: 'block',
-  textAlign: 'center',
-}
-
-// Bouton trigger pill — fond solide au clic (click-only, plus de hover)
-function triggerStyle(active) {
-  return {
-    display: 'flex', alignItems: 'center', gap: '5px',
-    padding: '0.3rem 1.05rem',
-    background: active ? '#1D4030' : 'transparent',
-    border: `1.5px solid ${active ? '#C8A440' : 'rgba(255,255,255,0.52)'}`,
-    borderRadius: '50px',
-    cursor: 'pointer',
-    color: active ? '#C8A440' : '#FFFFFF',
-    fontFamily: "'Playfair Display', serif",
-    fontStyle: 'italic',
-    fontSize: '0.82rem', fontWeight: 600, letterSpacing: '0.02em',
-    transition: 'color .2s, background .2s, border-color .2s',
-    whiteSpace: 'nowrap',
-  }
-}
-
 const BAR_LINK = {
   color: 'rgba(255,255,255,0.78)', textDecoration: 'none',
   fontFamily: "'DM Sans', sans-serif", fontSize: '0.72rem',
@@ -256,7 +52,6 @@ const BAR_LINK = {
 export default function NavBar() {
   const [scrolled,   setScrolled]   = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [openMenu,   setOpenMenu]   = useState(null)
   const [aboutOpen,  setAboutOpen]  = useState(false)
   const aboutRef = useRef(null)
 
@@ -265,18 +60,6 @@ export default function NavBar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  // Ferme les mega menus au clic extérieur
-  useEffect(() => {
-    if (!openMenu) return
-    const handler = (e) => {
-      if (!e.target.closest('header') && !e.target.closest('.mega-panel')) {
-        setOpenMenu(null)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [openMenu])
 
   // Ferme le dropdown About au clic extérieur
   useEffect(() => {
@@ -290,13 +73,12 @@ export default function NavBar() {
     return () => document.removeEventListener('mousedown', handler)
   }, [aboutOpen])
 
-  const toggleMenu = (name) => setOpenMenu(prev => prev === name ? null : name)
-  const closeNow   = ()     => { setOpenMenu(null); setAboutOpen(false) }
+  const closeNow   = ()     => setAboutOpen(false)
 
   const hoverGold = (e) => { e.currentTarget.style.color = '#C8A440' }
   const hoverOff  = (e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.78)' }
 
-  const bar3Bg = (scrolled || openMenu !== null)
+  const bar3Bg = scrolled
     ? 'rgba(27,58,40,0.97)'
     : 'transparent'
 
@@ -455,25 +237,7 @@ export default function NavBar() {
             </Link>
           </div>
 
-          {/* Menus desktop — CLIC uniquement, plus de survol */}
-          <div className="bar3-menu" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flex: 1, justifyContent: 'center' }}>
-
-            <button style={triggerStyle(openMenu === 'inspirations')} onClick={() => toggleMenu('inspirations')}>
-              Inspirations <Chevron active={openMenu === 'inspirations'} />
-            </button>
-
-            <button style={triggerStyle(openMenu === 'styles')} onClick={() => toggleMenu('styles')}>
-              Choisissez votre style <Chevron active={openMenu === 'styles'} />
-            </button>
-
-            <button style={triggerStyle(openMenu === 'explorer')} onClick={() => toggleMenu('explorer')}>
-              Explorer <Chevron active={openMenu === 'explorer'} />
-            </button>
-
-            <button style={triggerStyle(openMenu === 'iles')} onClick={() => toggleMenu('iles')}>
-              Îles paradisiaques <Chevron active={openMenu === 'iles'} />
-            </button>
-          </div>
+          <div style={{ flex: 1 }} />
 
           {/* Droite : téléphone + Contact + burger */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: '0 0 auto' }}>
@@ -514,156 +278,6 @@ export default function NavBar() {
       </header>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — INSPIRATIONS
-          3 blocs image + cadran, 1.25× la taille du panel Styles, séparateurs dorés
-      ══════════════════════════════════════════════════════════════════════ */}
-      {openMenu === 'inspirations' && (
-        <div className="mega-panel">
-          <div style={{
-            maxWidth: '1200px', margin: '0 auto',
-            display: 'flex', alignItems: 'stretch', gap: 0,
-          }}>
-
-            {/* Bloc 1 : Séjours — grille 2×2 */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
-              <span style={SEC}>Séjours</span>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-                {SEJOURS_VILLES.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-              </div>
-            </div>
-
-            <ColSep />
-
-            {/* Bloc 2 : Circuits — grille 2×2 */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
-              <span style={SEC}>Circuits</span>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-                {CIRCUITS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-              </div>
-            </div>
-
-            <ColSep />
-
-            {/* Bloc 3 : Avec qui partir — grille 2×2 */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
-              <span style={SEC}>Avec qui partir</span>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-                {AVEC_QUI.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-              </div>
-            </div>
-
-            <ColSep />
-
-            {/* Bloc 4 : Voir tous nos circuits (cadran) */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 0 0 1.2rem', flexShrink: 0 }}>
-              <span style={{ ...SEC, marginBottom: '0.9rem' }}>Voir tous nos circuits</span>
-              <RightCadran onClose={closeNow} />
-            </div>
-          </div>
-
-          {/* Pied du menu */}
-          <div style={{
-            maxWidth: '1200px', margin: '0.75rem auto 0',
-            paddingTop: '0.65rem',
-            borderTop: '1px solid rgba(200,164,64,0.18)',
-            textAlign: 'center',
-          }}>
-            <Link href="/contact" onClick={closeNow} style={{
-              color: '#C8A440', fontSize: '0.78rem', fontWeight: 600,
-              textDecoration: 'none', letterSpacing: '0.05em',
-              fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
-            }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.75'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              Contactez-nous pour votre voyage cousu main →
-            </Link>
-          </div>
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — CHOISISSEZ VOTRE STYLE
-      ══════════════════════════════════════════════════════════════════════ */}
-      {openMenu === 'styles' && (
-        <div className="mega-panel">
-          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <div style={{ display: 'flex', gap: '1.8rem', marginBottom: '0.8rem' }}>
-                {STYLES_VOYAGE.map(item => <LargeCard key={item.label} item={item} onClose={closeNow} />)}
-              </div>
-              <Link href="/about#styles" onClick={closeNow}
-                style={{ color: '#C8A440', fontSize: '0.76rem', fontWeight: 600, textDecoration: 'none', letterSpacing: '0.04em', transition: 'opacity .15s' }}
-                onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
-                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-              >
-                À propos de nos styles de voyages →
-              </Link>
-            </div>
-            <RightCadran onClose={closeNow} />
-          </div>
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — EXPLORER
-      ══════════════════════════════════════════════════════════════════════ */}
-      {openMenu === 'explorer' && (
-        <div className="mega-panel">
-          <div style={{ display: 'flex', gap: '2rem', alignItems: 'stretch', justifyContent: 'center' }}>
-            {EXPLORER_ITEMS.map(item => <ExplorerCard key={item.label} item={item} onClose={closeNow} />)}
-            <RightCadran onClose={closeNow} />
-          </div>
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════════════════════════════════════
-          MEGA MENU — ÎLES PARADISIAQUES
-      ══════════════════════════════════════════════════════════════════════ */}
-      {openMenu === 'iles' && (
-        <div className="mega-panel">
-          <div style={{
-            maxWidth: '1200px', margin: '0 auto',
-            display: 'flex', alignItems: 'stretch', gap: 0,
-          }}>
-            {/* Grille des îles — 3 colonnes */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.2rem' }}>
-              <span style={SEC}>Îles paradisiaques</span>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.6rem' }}>
-                {ILES_ITEMS.map(item => <InspCard key={item.label} item={item} onClose={closeNow} />)}
-              </div>
-            </div>
-
-            <ColSep />
-
-            {/* Cadran droit */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 0 0 1.2rem', flexShrink: 0 }}>
-              <span style={{ ...SEC, marginBottom: '0.9rem' }}>Voir nos îles</span>
-              <RightCadran onClose={closeNow} />
-            </div>
-          </div>
-
-          <div style={{
-            maxWidth: '1200px', margin: '0.75rem auto 0',
-            paddingTop: '0.65rem',
-            borderTop: '1px solid rgba(200,164,64,0.18)',
-            textAlign: 'center',
-          }}>
-            <Link href="/contact" onClick={closeNow} style={{
-              color: '#C8A440', fontSize: '0.78rem', fontWeight: 600,
-              textDecoration: 'none', letterSpacing: '0.05em',
-              fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
-            }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.75'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              Contactez-nous pour votre séjour dans les îles →
-            </Link>
-          </div>
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════════════════════════════════════
           MENU MOBILE
       ══════════════════════════════════════════════════════════════════════ */}
       {mobileOpen && (
@@ -673,41 +287,6 @@ export default function NavBar() {
               { label: '← Accueil',                href: '/',                               section: true },
               { label: 'Marhaba',                   href: '/marhaba',                        section: true },
               { label: 'Blog',                      href: '/chroniques',                     section: true },
-              { label: 'Inspirations',              href: '#',                               section: true },
-              { label: 'Séjours',                  href: '#',                               indent: true, disabled: true },
-              { label: 'Week-end',                  href: '/circuits/classiques',            indent: true },
-              { label: 'Court séjour',             href: '/circuits/classiques',            indent: true },
-              { label: 'Long séjour',              href: '/circuits/classiques',            indent: true },
-              { label: 'Escapade',                  href: '/circuits/classiques',            indent: true },
-              { label: 'Choisissez votre ville',   href: '#',                               indent: true, disabled: true },
-              { label: 'Marrakech',                 href: '/circuits/classiques',            indent: true },
-              { label: 'Fez',                       href: '/circuits/classiques',            indent: true },
-              { label: 'Casablanca',                href: '/circuits/classiques',            indent: true },
-              { label: 'Chefchaouen',               href: '/circuits/classiques',            indent: true },
-              { label: 'Circuits',                 href: '#',                               indent: true, disabled: true },
-              { label: 'En minibus',                href: '/circuits/classiques',            indent: true },
-              { label: 'En autotours',              href: '/experiences/circuits-autotours', indent: true },
-              { label: 'Rallye 4x4',               href: '/circuits/raid-4x4',              indent: true },
-              { label: 'Virée en Moto cylindrée',  href: '/circuits/moto',                  indent: true },
-              { label: 'Avec qui partir',          href: '#',                               indent: true, disabled: true },
-              { label: 'En petits groupes',        href: '/experiences',                    indent: true },
-              { label: 'Solo',                      href: '/experiences',                    indent: true },
-              { label: 'En couple',                href: '/experiences',                    indent: true },
-              { label: 'Entre amis et famille',    href: '/experiences',                    indent: true },
-              { label: 'Choisissez votre style',   href: '#',                               section: true },
-              { label: 'Essentiel',                 href: '/circuits/classiques',            indent: true },
-              { label: 'Authentique',               href: '/circuits/classiques',            indent: true },
-              { label: 'Prestige',                 href: '/circuits/classiques',            indent: true },
-              { label: 'Explorer',                 href: '#',                               section: true },
-              { label: 'Comment voir le Maroc',    href: '/comment-voir-le-maroc',          indent: true },
-              { label: 'Que voir au Maroc',        href: '/que-voir-au-maroc',             indent: true },
-              { label: 'Îles paradisiaques',       href: '#',                               section: true },
-              { label: 'Zanzibar',                 href: '/voyages/zanzibar',               indent: true },
-              { label: 'Maldives',                 href: '/voyages/maldives',               indent: true },
-              { label: 'Seychelles',               href: '/voyages/seychelles',             indent: true },
-              { label: 'Maurice',                  href: '/voyages/maurice',                indent: true },
-              { label: 'Cap-Vert',                 href: '/voyages/cap-vert',               indent: true },
-              { label: 'Bali',                     href: '/voyages/bali',                   indent: true },
               { label: 'À propos',                 href: '#',                               section: true },
               { label: 'Notre expertise',          href: '/about#expertise',               indent: true },
               { label: 'Nos engagements',          href: '/about#engagements',             indent: true },
