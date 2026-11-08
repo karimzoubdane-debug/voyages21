@@ -1990,20 +1990,25 @@ function bibliotheque(map, wantKey) {
 function propositionMedias(map, slug, v, key) {
   var want = destKey(v.tag);
   var villes = villesDe(v);
+  // Candidats : les voyages de la même destination, et — quand les villes du voyage sont
+  // connues — ceux d'une autre destination qui ne passent QUE par ces villes (08/11/2026 :
+  // « Al-Andalus — Madrid, Grenade, Séville », rangé « Espagne », pour un voyage Andalousie
+  // rangé « Europe », au lieu des photos de Lisbonne d'un circuit Portugal & Espagne).
   var sources = {}, cands = [];
+  function memeDest(tag) { return !!tag && destKey(tag) === want; }
   allProducts().forEach(function(item) {
     if (item.slug === slug) return;
     var iv = item.v || {};
-    if (!iv.tag || destKey(iv.tag) !== want) return;
-    cands.push({ key: MEDIA_KEY_ALIASES[iv.mediaKey || item.slug] || iv.mediaKey || item.slug, title: iv.title || item.slug, v: iv });
+    if (!iv.tag) return;
+    cands.push({ key: MEDIA_KEY_ALIASES[iv.mediaKey || item.slug] || iv.mediaKey || item.slug, title: iv.title || item.slug, v: iv, meme: memeDest(iv.tag) });
   });
   Object.keys(manifest.trash || {}).forEach(function(k) {
     var t = manifest.trash[k] || {}, p = t.product || {};
-    if (!t.static && k !== slug && p.tag && destKey(p.tag) === want) cands.push({ key: k, title: p.title || k, v: p });
+    if (!t.static && k !== slug && p.tag) cands.push({ key: k, title: p.title || k, v: p, meme: memeDest(p.tag) });
   });
   Object.keys(map).forEach(function(k) {
     var a = map[k] && map[k].archived;
-    if (a && k !== key && a.tag && destKey(a.tag) === want) cands.push({ key: k, title: a.title || k, v: { title: a.title } });
+    if (a && k !== key && a.tag) cands.push({ key: k, title: a.title || k, v: { title: a.title }, meme: memeDest(a.tag) });
   });
   // Ordre de préférence (tirage au hasard à l'intérieur de chaque rang) :
   // 1. la photo nomme une ville du voyage (« #istanbul … ») ;
@@ -2021,6 +2026,7 @@ function propositionMedias(map, slug, v, key) {
       var vt = villesDe({ title: c.title });
       pur = (vt.length ? vt : vc).every(dans);
     }
+    if (!c.meme && !(villes.length && commun && pur)) return; // autre destination : seulement si mêmes villes
     function rang(u) {
       if (!villes.length) return 1;
       var vn = villesDansNom(u);
@@ -2462,6 +2468,7 @@ async function quickSubmit() {
       toast('✅ « ' + title + ' » lue depuis le fichier — masquée en attendant votre relecture.');
       var amTxt = autoMediaText(await autoMediaIfEmpty(dx.slug, tag));
       if (amTxt) { qlog.textContent += ' ' + amTxt; log(amTxt); }
+      loadMediaMap(); // la ligne du voyage ne propose plus « 🎲 Photos au hasard » s'il en a
     } else {
       readError = dx.error || 'erreur inconnue';
     }
@@ -2495,6 +2502,7 @@ async function quickSubmit() {
     reload();
     var amTxt2 = autoMediaText(await autoMediaIfEmpty(data.slug, tag));
     if (amTxt2) log(amTxt2);
+    loadMediaMap();
     qlog.style.color='var(--ok)';
     qlog.textContent = (readError ? '⚠️ Fichier non lu (' + readError + ') — ' : '')
       + '✅ Voyage « ' + title + ' » créé dans ' + tag + ' — visible sur le site !';
@@ -2745,6 +2753,7 @@ async function submitForm(e) {
       if (!currentEditSlug && !currentEditIsStatic && !allImageUrls.length) {
         var amTxt3 = autoMediaText(await autoMediaIfEmpty(finalSlug, product.tag));
         if (amTxt3) log(amTxt3);
+        loadMediaMap();
       }
       reload();
       cancelForm();
