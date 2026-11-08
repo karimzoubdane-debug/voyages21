@@ -84,7 +84,12 @@ const EMBED=new URLSearchParams(location.search).has("embed");
 if(EMBED){document.documentElement.classList.add("is-embed");const liftIntro=e=>{e.preventDefault();try{window.parent.postMessage("v21-intro-close","*")}catch(_){}} ;magicButton.addEventListener("click",liftIntro,true);const brandLink=document.querySelector(".brand");if(brandLink)brandLink.addEventListener("click",liftIntro,true);}
 magicButton.addEventListener("click",e=>{if(magicButton.getAttribute("href")==="#brochure"){e.preventDefault();goBrochure()}});
 backCover.addEventListener("click",e=>{e.preventDefault();goCover()});
-getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")location.replace(DEFAULT_COVER.buttonUrl)});
+// Intro de l'accueil (?embed=1) : l'image fixe de la 1re vidéo s'affiche tout de suite, la vidéo
+// ne se charge qu'une fois l'accueil affiché (Karim, 08/11/2026) — elle ne dispute plus la
+// bande passante aux textes et aux photos de la page.
+function accueilAffiche(){return new Promise(ok=>{setTimeout(ok,4000);try{const d=window.parent.document;if(d.readyState==="complete")return ok();window.parent.addEventListener("load",()=>ok(),{once:true})}catch(e){ok()}})}
+async function imageDAttente(layer,item){if(!item||item.type!=="video"||!item.poster)return;const p=escapeCssUrl(await resolveMediaUrl({url:item.poster}));layer.innerHTML=`<div class="layer-bg" style="background-image:url(&quot;${p}&quot;)"></div><div class="layer-media"><img src="${p}" alt=""></div>`;layer.classList.add("active")}
+getCover().then(async data=>{cover=normalizeCover(data);media=cover.media;renderText(cover);renderOffer(media[0]);if(EMBED){await imageDAttente(layers[0],media[0]);await accueilAffiche()}await paintLayer(layers[0],media[0]);setupAudio(cover);requestAnimationFrame(()=>layers[0].classList.add("active"));timer=setTimeout(()=>{index=1%media.length;showCurrent()},Math.max(4200,Number(media[0].duration||4.2)*1000));if(location.hash==="#brochure")location.replace(DEFAULT_COVER.buttonUrl)});
 </script>
 <script src="/social-contact-bar.js" defer></script>
 </body>
