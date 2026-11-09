@@ -10,6 +10,15 @@ const nextConfig = {
       { source: '/experiences', destination: '/voyages/destinations/maroc.html', permanent: true },
       { source: '/experiences/:page', destination: '/voyages/destinations/maroc.html', permanent: true },
       { source: '/circuits/:page', destination: '/voyages/destinations/maroc.html', permanent: true },
+      // Les 8 fiches voyage Maroc du catalogue (retirées le 09/11/2026, même raison) :
+      { source: '/voyages/maroc-merzouga.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-bin-el-ouidane.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-dakhla.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-circuit-imperial-south.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-circuit-imperial-cities.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-circuit-best-morocco.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-circuit-discover-kingdom.html', destination: '/voyages/destinations/maroc.html', permanent: true },
+      { source: '/voyages/maroc-circuit-grand-discovery.html', destination: '/voyages/destinations/maroc.html', permanent: true },
     ]
   },
   async rewrites() {
