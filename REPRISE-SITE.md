@@ -6,7 +6,7 @@
 
 _Dernière mise à jour : 2026-11-09_
 
-## ⏳ Omra : une page par programme lisible par Google + titres « Maroc » (PR #328) — BROUILLON, attend le « Fusionne » de Karim
+## ✅ Omra : une page par programme lisible par Google + titres « Maroc » (PR #328) — FUSIONNÉE le 2026-11-09
 Go de Karim du 09/11/2026 après le relevé Google du Maroc (`performances-sites`,
 `revue/etude-maroc/releve-2026-11-09.md`) : voyages21.com absent des 10 premiers sur les cinq
 recherches Omra ; les premiers ont une page par programme au nom de la recherche.
@@ -20,8 +20,9 @@ recherches Omra ; les premiers ont une page par programme au nom de la recherche
   Omra & Hajj » ; `destinations/omra|turquie|egypte.html` : titre + description + `pageTitle`
   (que `destination-render.js` respecte désormais) ; lien en clair vers `/omra` sur la page Omra.
 - Vérifié : `next build`, 13 programmes, 390/1280 px, 404 sur un slug inconnu.
-**Reste :** le « Fusionne » de Karim ; puis vérifier `/omra/2027-voyages-21` en production et dans
-Search Console. Deux autres actions du relevé Maroc attendent Karim (fiche Google Maps à compléter,
+Fusionnée sur le « Fusionnes » de Karim le 09/11/2026 au soir (après vérification sur l'aperçu Vercel :
+13 programmes servis depuis le vrai catalogue). **Reste :** suivre `/omra` et `/omra/2027-voyages-21`
+dans Search Console (indexation) et au relevé Maroc du 16/11 (performances-sites). Deux autres actions du relevé Maroc attendent Karim (fiche Google Maps à compléter,
 export des avis pour rafraîchir le bloc de l'accueil figé à juillet 2026).
 
 ## ✅ Canoniques propres + lien vers moroccovoyages21.com (PR #319) — FUSIONNÉE le 2026-11-08
