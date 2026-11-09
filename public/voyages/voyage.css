@@ -23,6 +23,14 @@ img{max-width:100%;display:block;}
 .voyage-title{font-size:clamp(1.9rem,4.6vw,2.8rem);line-height:1.15;color:var(--forest);margin:.25rem 0 1.1rem;}
 .dur-badge{display:inline-block;vertical-align:middle;margin-inline-start:.8rem;background:var(--gold);color:var(--forest2);font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.03em;padding:.38rem 1.15rem;border-radius:999px;white-space:nowrap;box-shadow:0 3px 10px rgba(200,164,64,.4);text-transform:uppercase;}
 
+/* Une durée longue (ex. « 14 ليلة (04 إسطنبول + 06 مكة المكرمة + 04 المدينة المنورة) ») ne tenait
+   pas sur une ligne : le badge élargissait toute la page sur téléphone (page qui glisse de côté,
+   constaté le 09/11/2026). Il peut désormais passer à la ligne et ne dépasse jamais l'écran. */
+.dur-badge{max-width:calc(100% - .8rem);}
+@media (max-width:640px){
+  .dur-badge{white-space:normal;line-height:1.35;}
+}
+
 /* rangée héro : média (gauche) + cadran (droite) */
 .hero-row{display:grid;grid-template-columns:1.7fr 1fr;gap:1.4rem;align-items:start;}
 .media-col{min-width:0;}
@@ -112,6 +120,16 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
 .ptable tbody td{color:#000;}
 .ptable tr:last-child td,.ptable tbody tr:last-child th{border-bottom:none;}
 .ptable tbody th .pt-city{display:block;font-weight:400;font-size:.74rem;color:var(--forest);font-family:'DM Sans',sans-serif;margin-top:.15rem;}
+/* Téléphone (≤ 480 px) : tableau plus serré et prix autorisés à passer la devise à la ligne
+   (le montant, lui, reste d'un bloc, voir render.js) — pour tenir dans l'écran sans colonne coupée. */
+@media (max-width:480px){
+  .ptable th,.ptable td{padding:.55rem .45rem;font-size:.84rem;}
+  .ptable td{white-space:normal;}
+  .ptable thead th{font-size:.66rem;letter-spacing:.03em;}
+}
+@media (max-width:360px){
+  .ptable th,.ptable td{padding:.5rem .32rem;font-size:.8rem;}
+}
 
 /* tableau de prix « hôtel-pairs » (même style que la page Hajj 2027 : ville + hôtel + photo par ligne) */
 .ptwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
@@ -153,6 +171,22 @@ section{scroll-margin-top:64px;padding:1.8rem 0;border-top:1px solid var(--line)
   .price-table--grid th,.price-table--grid td{padding:.3rem .18rem;}
   .price-table--grid thead th{font-size:.56rem;}
   .price-table--grid td.hotel .hotel-name{font-size:.62rem;}
+}
+/* Téléphone (≤ 480 px) : les 6 colonnes ne tiennent plus, les prix se chevauchaient
+   (signalé par Karim le 09/11/2026 sur l'Omra Ramadan 2027, à 320–360 px de large).
+   Chaque ligne passe sur deux étages dans une grille de 12 colonnes : Médine | La Mecque
+   (6 + 6), puis les prix (12 / nombre de prix chacun, valeur --pspan posée par render.js).
+   L'en-tête suit la même grille, donc chaque intitulé (ثنائي, ثلاثي…) reste au-dessus de son prix. */
+@media (max-width:480px){
+  .price-table--grid,.price-table--grid thead,.price-table--grid tbody{display:block;width:100%;}
+  .price-table--grid colgroup{display:none;}
+  .price-table--grid tr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));}
+  .price-table--grid th.hotel,.price-table--grid td.hotel{grid-column:span 6;font-size:.74rem;padding:.45rem .35rem .2rem;border-bottom:none;}
+  .price-table--grid th:not(.hotel),.price-table--grid td.price{grid-column:span var(--pspan,3);padding:.25rem .2rem .5rem;}
+  .price-table--grid thead th{font-size:.7rem;}
+  .price-table--grid .price .num{font-size:.86rem;}
+  .price-table--grid .price small{font-size:.64rem;}
+  .price-table--grid tbody tr{border-bottom:1px solid var(--line);}
 }
 
 /* galerie photos type Intrepid : fond clair, ascenseur vertical */

@@ -186,7 +186,14 @@
         var pt = v.priceTable;
         var ptColgroup = '<colgroup><col class="c-hotel"><col class="c-hotel">'
             + pt.columns.map(function () { return '<col class="c-price">'; }).join("") + '</colgroup>';
-        priceHtml = '<div class="ptwrap"><table class="price-table price-table--grid">' + ptColgroup + '<thead><tr>'
+        // Sur téléphone, chaque ligne passe sur deux étages (hôtels, puis prix) dans une grille
+        // de 12 : chaque prix y prend 12 / (nombre de prix) colonnes (voir voyage.css).
+        var ptSpan = Math.max(2, Math.floor(12 / Math.max(1, pt.columns.length)));
+        // Devise sous chaque prix : si c'est une phrase (ex. « سعر الفرد في الغرفة بالدرهم المغربي »,
+        // lue dans un PDF), elle débordait sur les cases voisines : on l'affiche une seule fois au-dessus.
+        var ptDevise = pt.currency || "درهم", ptDeviseLongue = String(ptDevise).length > 12;
+        priceHtml = (ptDeviseLongue ? '<p class="note">' + ptDevise + "</p>" : "")
+            + '<div class="ptwrap"><table class="price-table price-table--grid" style="--pspan:' + ptSpan + '">' + ptColgroup + '<thead><tr>'
             + '<th class="hotel">' + (pt.medina.label || "") + "</th>"
             + '<th class="hotel">' + (pt.mecca.label || "") + "</th>"
             + pt.columns.map(function (c) { return "<th>" + c + "</th>"; }).join("")
@@ -194,7 +201,7 @@
                 var pricesHtml = (r.prices || []).map(function (p) {
                     return (p == null || p === "—")
                         ? '<td class="price">—</td>'
-                        : '<td class="price"><span class="num">' + bidiNum(p) + '</span><small>' + (pt.currency || "درهم") + "</small></td>";
+                        : '<td class="price"><span class="num">' + bidiNum(p) + "</span>" + (ptDeviseLongue ? "" : "<small>" + ptDevise + "</small>") + "</td>";
                 }).join("");
                 return "<tr><td class=\"hotel\">" + r.medinaHotel.name + "</td>"
                     + "<td class=\"hotel\">" + r.meccaHotel.name + "</td>"
@@ -202,7 +209,9 @@
             }).join("") + "</tbody></table></div>"
             + (pt.note ? '<p class="note">' + bidiNum(pt.note) + "</p>" : "");
     } else if (v.priceTable && v.priceTable.style === "hotel-pairs") {
-        priceHtml = '<div class="ptwrap"><table class="price-table"><thead><tr><th class="hotel">' + (v.priceTable.hotelHeader || "") + "</th>"
+        var hpDevise = v.priceTable.currency || "درهم", hpDeviseLongue = String(hpDevise).length > 12;
+        priceHtml = (hpDeviseLongue ? '<p class="note">' + hpDevise + "</p>" : "")
+            + '<div class="ptwrap"><table class="price-table"><thead><tr><th class="hotel">' + (v.priceTable.hotelHeader || "") + "</th>"
             + v.priceTable.columns.map(function (c) { return "<th>" + c + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
                 var hotelsHtml = (r.hotels || []).map(function (h) {
@@ -213,7 +222,7 @@
                 var pricesHtml = (r.prices || []).map(function (p) {
                     return (p == null || p === "—")
                         ? '<td class="price">—</td>'
-                        : '<td class="price"><span class="num">' + bidiNum(p) + '</span><small>' + (v.priceTable.currency || "درهم") + "</small></td>";
+                        : '<td class="price"><span class="num">' + bidiNum(p) + "</span>" + (hpDeviseLongue ? "" : "<small>" + hpDevise + "</small>") + "</td>";
                 }).join("");
                 return "<tr><td class=\"hotel\">" + hotelsHtml + "</td>" + pricesHtml + "</tr>";
             }).join("") + "</tbody></table></div>"
@@ -222,9 +231,12 @@
         // Tableau sans ligne (fiche avec seulement une note prix) : la note seule
         priceHtml = v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "";
     } else if (v.priceTable) {
+        // Un montant ne se coupe jamais en deux (« 32 000 DH » ne devient pas « 32 / 000 / DH » sur
+        // téléphone) : l'espace des milliers devient insécable ; seule la devise peut passer à la ligne.
+        var unBloc = function (c) { return c == null ? c : String(c).replace(/(\d) (?=\d{3}(?!\d))/g, "$1\u00a0"); };
         priceHtml = '<div class="ptable-wrap"><table class="ptable"><thead><tr>' + v.priceTable.head.map(function (h) { return "<th>" + h + "</th>"; }).join("")
             + "</tr></thead><tbody>" + v.priceTable.rows.map(function (r) {
-                return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + c + "</th>" : '<td>' + bidiNum(c) + "</td>"; }).join("") + "</tr>";
+                return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + unBloc(c) + "</th>" : '<td>' + unBloc(bidiNum(c)) + "</td>"; }).join("") + "</tr>";
             }).join("") + "</tbody></table></div>"
             + (v.priceTable.note ? '<p class="note">' + bidiNum(v.priceTable.note) + "</p>" : "");
     }
