@@ -16,6 +16,41 @@
     // pour les voyages non corrigés), puis on redessine une seule fois si un
     // correctif existe pour ce voyage.
     var redessine = false;
+    // Écran titre (Karim, 09/11/2026) : à chaque arrivée sur un voyage, son titre s'affiche en grand,
+    // bien lisible, devant la galerie ; il disparaît au premier défilement, par la croix ou après
+    // 4 secondes. Un second dessin de la page (correctif de l'admin) ne le refait pas apparaître.
+    var ecranTitre = "a-montrer"; // "a-montrer" → "visible" → "ferme"
+    function fermerEcranTitre() {
+        if (ecranTitre === "ferme") return;
+        ecranTitre = "ferme";
+        window.removeEventListener("scroll", fermerEcranTitre);
+        var el = document.getElementById("ecranTitre");
+        if (!el) return;
+        el.classList.add("est-ferme");
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 450);
+    }
+    function montrerEcranTitre(titre) {
+        if (ecranTitre === "ferme" || !titre) return;
+        var box = document.getElementById("hero");
+        if (!box) return;
+        var el = document.createElement("div");
+        el.id = "ecranTitre";
+        el.className = "ecran-titre";
+        el.innerHTML = '<button type="button" class="ecran-titre-x" aria-label="Fermer">×</button>'
+            + '<div class="ecran-titre-txt"><span class="ecran-titre-trait"></span><p></p><span class="ecran-titre-trait"></span></div>';
+        el.querySelector("p").textContent = titre;
+        el.querySelector(".ecran-titre-x").addEventListener("click", fermerEcranTitre);
+        box.appendChild(el);
+        if (ecranTitre === "a-montrer") {
+            ecranTitre = "visible";
+            setTimeout(fermerEcranTitre, 4000);
+            // Écoute du défilement après un court instant : le navigateur peut remettre la page à
+            // sa position (retour arrière) juste à l'ouverture, ce n'est pas un geste du visiteur.
+            setTimeout(function () {
+                if (ecranTitre === "visible") window.addEventListener("scroll", fermerEcranTitre, { passive: true });
+            }, 300);
+        }
+    }
     // Date de fin partagée (statut SOLDÉ / prescription) : chargée une fois pour la page.
     var finPret = new Promise(function (ok) {
         if (window.V21Fin) return ok();
@@ -293,6 +328,7 @@
     // ===== Médias en ligne + comportements =====
     var hero = document.getElementById("heroVideo");
     var heroBox = document.getElementById("hero");
+    montrerEcranTitre(String(TITLE || "").replace(/<[^>]*>/g, "").trim());
     var voirVideoBtn = document.getElementById("voirVideo");
     var thumbsBox = document.getElementById("thumbs");
     var PHOTOS = [];
