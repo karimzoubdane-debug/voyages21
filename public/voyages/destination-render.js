@@ -21,7 +21,9 @@
     'modal-omra-01': 'modal-omra-01-juillet'
   };
 
-  document.title = (cfg.title || 'Destination') + ' — Voyages21';
+  // Le titre pour Google est celui écrit dans la page (pageTitle, 09/11/2026 : les mots que
+  // tapent les voyageurs) ; sans lui, l'ancien « <Destination> — Voyages21 ».
+  document.title = cfg.pageTitle || ((cfg.title || 'Destination') + ' — Voyages21');
 
   function esc(s) {
     return String(s || '').replace(/[&<>"']/g, function (c) {

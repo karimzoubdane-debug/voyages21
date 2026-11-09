@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omra & Hajj — Voyages21</title>
+  <title>Omra &amp; Hajj depuis Marrakech — programmes 2026-2027 | Voyages21</title>
+  <meta name="description" content="Omra et Hajj au départ du Maroc avec Voyages21, agence de voyages à Marrakech depuis 2000 : programmes par saison, dates, compagnies, hôtels à Médine et à La Mecque, prix en dirhams. Agence labellisée pour le Hajj depuis 2006.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
@@ -11,6 +12,13 @@
 </head>
 <body>
   <div id="destinationApp"></div>
+  <!-- Les programmes Omra lisibles sans script (pages /omra, 09/11/2026) : un lien en clair pour les visiteurs et pour Google -->
+  <section class="v21-omra-fr" style="max-width:1060px;margin:0 auto 2rem;padding:0 1rem">
+    <div style="background:#F5F0E8;border-radius:14px;padding:1rem 1.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem">
+      <p style="margin:0;color:#1B3A28"><b>Les programmes Omra en français</b> — dates, compagnies, hôtels à Médine et à La Mecque, prix en dirhams.</p>
+      <a href="/omra" style="background:#1B3A28;color:#fff;text-decoration:none;border-radius:999px;padding:.7rem 1.2rem;font-weight:700;white-space:nowrap">Voir tous les programmes Omra ›</a>
+    </div>
+  </section>
   <style>
     .v21-hajj-feature { max-width: 1060px; margin: 0 auto 1.4rem; }
     .v21-hajj-feature .inner { display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap;
@@ -52,6 +60,7 @@
   <script src="../data.js"></script>
   <script>
     window.DESTINATION_PAGE = {
+      pageTitle: 'Omra & Hajj depuis Marrakech — programmes 2026-2027 | Voyages21',
       title: 'Omra & Hajj',
       // Libellés acceptés en plus du titre : l'Admin Produits range les Omra sous « عمرة ».
       tags: ['عمرة'],
