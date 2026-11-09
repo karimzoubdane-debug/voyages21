@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VOYAGES21 - Evasion Ete 2026</title>
+<title>VOYAGES21 - Évasions de Fin d'Année 2026</title>
 <style>
 :root{--gold:#C8A440;--cream:#F8F1E4;--ink:#14110c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:#080806;color:#fff;font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .cover{position:relative;min-height:100svh;overflow:hidden;background:#080806;isolation:isolate}.stage{position:absolute;inset:0;z-index:0;background:#080806}.layer{position:absolute;inset:0;opacity:0;transition:opacity .85s ease;background:#080806}.layer.active{opacity:1}.layer-media{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}.layer-bg{position:absolute;inset:-1.5%;background:center/cover no-repeat;filter:blur(6px) saturate(1.03) brightness(.94);transform:scale(1.03);opacity:.44}.layer img,.layer video{position:relative;z-index:1;width:100%;height:100%;display:block;filter:contrast(1.03) saturate(1.04);animation:none}.layer img{object-fit:contain;transform:scale(var(--cover-scale,1.22));will-change:transform}.layer video{object-fit:cover;transform:scale(1.015);background:#080806}.layer.active img{animation:imageReveal var(--reveal-ms,3900ms) cubic-bezier(.16,.84,.22,1) forwards}.layer.active video{animation:videoSettle 1.8s ease-out forwards}
@@ -15,7 +15,7 @@ h1{margin:0;color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:cl
 .sound{position:absolute;right:18px;bottom:18px;z-index:5;width:42px;height:42px;border:1px solid rgba(255,255,255,.42);border-radius:999px;background:rgba(10,10,8,.34);color:#fff;display:none;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(14px);font-size:1rem}.sound.show{display:flex}.sound.on{background:rgba(200,164,64,.88);color:#111;border-color:rgba(200,164,64,.88)}
 .brochure-shell{display:none;position:relative;min-height:100svh;background:#f6f0e7;color:var(--ink)}.show-brochure .cover{display:none}.show-brochure .brochure-shell{display:block}.brochure-shell iframe{display:block;width:100%;height:calc(100svh - 38px);border:0;background:#f6f0e7}.brochure-tools{height:38px;display:flex;align-items:center;justify-content:center;background:#102416;border-bottom:1px solid rgba(200,164,64,.28)}.back-cover{display:inline-flex;align-items:center;justify-content:center;min-height:26px;padding:.35rem .72rem;border:1px solid rgba(20,17,12,.18);border-radius:4px;background:var(--gold);color:var(--ink);text-decoration:none;font-size:.66rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;box-shadow:none;transition:filter .18s}.back-cover:hover{filter:brightness(.94)}
 .fallback-note{display:none;background:var(--cream);color:var(--ink);padding:2rem;font-size:.95rem}@keyframes imageReveal{0%{transform:scale(var(--cover-scale,1.22))}76%,100%{transform:scale(1)}}@keyframes videoSettle{0%{transform:scale(1.015)}100%{transform:scale(1)}}@keyframes heartBeat{0%,40%,70%,100%{transform:translateX(-50%) scale(1);background:rgba(10,10,8,.34)}52%{transform:translateX(-50%) scale(1.07);background:#d71920}60%{transform:translateX(-50%) scale(.98);background:#d71920}}@media(max-width:720px){.brand{top:12px;left:14px}.brand img{width:72px}.copy{top:61%;width:calc(100% - 24px);grid-template-columns:1fr;gap:.18rem;text-align:center;padding:.68rem .9rem;background:rgba(248,241,228,.24);backdrop-filter:blur(1px)}.eyebrow{font-size:.66rem;white-space:normal}h1{font-size:clamp(1.85rem,11vw,3.25rem)}.subtitle{font-size:clamp(1.05rem,6.4vw,1.55rem);white-space:normal}.magic-button{width:calc(100% - 36px);max-width:360px;text-align:center;letter-spacing:.08em;bottom:22px}.sound{bottom:12px;right:12px;width:38px;height:38px}.brochure-tools{height:36px}.brochure-shell iframe{height:calc(100svh - 36px)}.back-cover{min-height:24px;padding:.3rem .62rem;font-size:.6rem}}@media(prefers-reduced-motion:reduce){.layer{transition:opacity .2s ease}.layer.active img,.layer.active video,.magic-button{animation:none;transform:translateX(-50%)}}
-</style>
+#title,#subtitle{text-wrap:balance}</style>
 </head>
 <body>
 <main class="cover" id="cover" aria-label="Cover brochure VOYAGES21">
@@ -25,11 +25,11 @@ h1{margin:0;color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:cl
   </div>
   <div class="texture"></div>
   <div class="veil"></div>
-  <a class="brand" href="/" aria-label="Voyages 21"><img src="/logo-voyages21.png" alt="Voyages 21"></a>
+  <a class="brand" href="/" aria-label="Voyages 21"><img src="/logo-voyages21-3d.webp" alt="Voyages 21"></a>
   <section class="copy is-intro">
     <p class="eyebrow" id="eyebrow"></p>
-    <h1 id="title">Evasion Ete 2026</h1>
-    <p class="subtitle" id="subtitle">By Voyages 21</p>
+    <h1 id="title">Évasions de Fin d'Année 2026</h1>
+    <p class="subtitle" id="subtitle">Le monde à portée de main</p>
   </section>
   <a class="magic-button" id="magicButton" href="/design/homepage-v2-luxe.html">Votre bonheur commence ici</a>
   <button class="sound" id="soundButton" type="button" aria-label="Activer le son" title="Activer le son">OFF</button>
@@ -43,7 +43,7 @@ h1{margin:0;color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:cl
 </section>
 <section class="fallback-note">Emplacement reserve a l'integration de la brochure dans la meme page.</section>
 <script>
-const DEFAULT_COVER={eyebrow:"",title:"Evasion Ete 2026",subtitle:"By Voyages 21",buttonText:"Votre bonheur commence ici",buttonUrl:"/design/homepage-v2-luxe.html",audio:{url:""},media:[{type:"image",url:"https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1800&q=85",duration:4},{type:"image",url:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85",duration:4},{type:"image",url:"https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1800&q=85",duration:4},{type:"image",url:"https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1800&q=85",duration:4}]};
+const DEFAULT_COVER={eyebrow:"",title:"Évasions de Fin d'Année 2026",subtitle:"Le monde à portée de main",buttonText:"Votre bonheur commence ici",buttonUrl:"/design/homepage-v2-luxe.html",audio:{url:""},media:[{type:"image",url:"https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1800&q=85",duration:4},{type:"image",url:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85",duration:4},{type:"image",url:"https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1800&q=85",duration:4},{type:"image",url:"https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1800&q=85",duration:4}]};
 let cover=DEFAULT_COVER,media=[],index=0,active=0,timer=null,audioReady=false,brochureLoaded=false;
 const layers=[document.getElementById("layerA"),document.getElementById("layerB")],audio=document.getElementById("coverAudio"),soundButton=document.getElementById("soundButton"),magicButton=document.getElementById("magicButton"),brochureFrame=document.getElementById("brochureFrame"),backCover=document.getElementById("backCover"),offerCard=document.querySelector(".copy"),eyebrowEl=document.getElementById("eyebrow"),titleEl=document.getElementById("title"),subtitleEl=document.getElementById("subtitle");
 const COVER_OFFERS=[{match:/sharam|sharm|caire/i,title:"Le Caire & Sharm El Sheikh",price:"19 300 DH"},{match:/istanbul.*bodrum|bodrum.*istanbul/i,title:"Istanbul & Bodrum",price:"16 900 DH"},{match:/rome|venice|venise|ital/i,title:"Circuit Italie",price:"21 500 DH"},{match:/untitled|chine|china|great.wall|grande.muraille/i,title:"Chine",price:"29 900 DH"},{match:/ha.long|halong|vietnam/i,title:"Vietnam",price:"33 900 DH"},{match:/zanzibar|zanz|dhow|boat.on.ocean/i,title:"Zanzibar",price:"18 500 DH"}];
@@ -55,7 +55,7 @@ function writeLocalCover(data){const payload=data&&data.cover?data.cover:data;co
 function openMediaDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open("v21_cover_media",1);req.onupgradeneeded=()=>req.result.createObjectStore("files");req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function getLocalBlobUrl(id){const db=await openMediaDb();const blob=await new Promise((resolve,reject)=>{const tx=db.transaction("files","readonly");const req=tx.objectStore("files").get(id);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});db.close();return blob?URL.createObjectURL(blob):""}
 async function resolveMediaUrl(item){if(item.url&&item.url.startsWith("localblob:"))return await getLocalBlobUrl(item.url.slice(10));return item.url||""}
-function offerFor(item){const key=[item?.name,item?.url].filter(Boolean).join(" ");return COVER_OFFERS.find(o=>o.match.test(key))||{title:"Evasion Ete 2026",price:"By Voyages 21",intro:true}}
+function offerFor(item){const key=[item?.name,item?.url].filter(Boolean).join(" ");return COVER_OFFERS.find(o=>o.match.test(key))||{title:"Évasions de Fin d'Année 2026",price:"Le monde à portée de main",intro:true}}
 function renderOffer(item){const offer=offerFor(item);offerCard.classList.add("is-changing");setTimeout(()=>{offerCard.classList.toggle("is-intro",!!offer.intro);eyebrowEl.textContent=offer.intro?"":"A partir de";titleEl.textContent=offer.title;subtitleEl.textContent=offer.price||"";offerCard.classList.remove("is-changing")},120)}
 function renderText(c){magicButton.textContent=c.buttonText||DEFAULT_COVER.buttonText;magicButton.href=DEFAULT_COVER.buttonUrl}
 function escapeCssUrl(value){return String(value||"").replace(/"/g,"%22")}
