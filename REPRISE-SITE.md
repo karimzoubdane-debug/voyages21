@@ -4,7 +4,25 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-11-08_
+_Dernière mise à jour : 2026-11-09_
+
+## ⏳ Omra : une page par programme lisible par Google + titres « Maroc » (PR #328) — BROUILLON, attend le « Fusionne » de Karim
+Go de Karim du 09/11/2026 après le relevé Google du Maroc (`performances-sites`,
+`revue/etude-maroc/releve-2026-11-09.md`) : voyages21.com absent des 10 premiers sur les cinq
+recherches Omra ; les premiers ont une page par programme au nom de la recherche.
+- **`/omra` et `/omra/<programme>`** (`src/app/omra/`, `src/lib/omra-catalogue.js`) : rendues par le
+  serveur depuis le catalogue de l'Admin Produits (même stockage que `/api/produits`, rien recopié) ;
+  titre et description en français par correspondances exactes (saison/mois, année, ville, compagnie,
+  dates, prix), programme tel qu'écrit par l'équipe (arabe), grille hôtels/prix, WhatsApp, lien vers
+  la fiche avec photos, fiche machine TouristTrip. Un programme masqué/retiré/prescrit dans l'admin
+  disparaît aussi ici. Plan de site : `/omra` + une adresse par programme (13 au 09/11).
+- **Titres** : accueil « Voyages21 — Agence de voyages à Marrakech depuis 2000 : voyages organisés,
+  Omra & Hajj » ; `destinations/omra|turquie|egypte.html` : titre + description + `pageTitle`
+  (que `destination-render.js` respecte désormais) ; lien en clair vers `/omra` sur la page Omra.
+- Vérifié : `next build`, 13 programmes, 390/1280 px, 404 sur un slug inconnu.
+**Reste :** le « Fusionne » de Karim ; puis vérifier `/omra/2027-voyages-21` en production et dans
+Search Console. Deux autres actions du relevé Maroc attendent Karim (fiche Google Maps à compléter,
+export des avis pour rafraîchir le bloc de l'accueil figé à juillet 2026).
 
 ## ✅ Canoniques propres + lien vers moroccovoyages21.com (PR #319) — FUSIONNÉE le 2026-11-08
 Action 3 de l'audit 212 Communication (07/10/2026), go explicite de Karim le 08/11/2026 (zone rouge).
