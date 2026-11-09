@@ -7,6 +7,11 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { lireCatalogue, programmesOmra } from '@/lib/omra-catalogue'
+
+// Les pages /omra/<programme> suivent le catalogue de l'admin : le plan de site se
+// construit à la demande, pas à la construction du site.
+export const dynamic = 'force-dynamic'
 
 const SITE_URL = 'https://www.voyages21.com'
 
@@ -16,6 +21,7 @@ const APP_ROUTES = [
   { path: '/about', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/contact', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/omra', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/mice', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/partenaires', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/marhaba', priority: 0.6, changeFrequency: 'weekly' },
@@ -43,7 +49,7 @@ function listVoyagesPages() {
   return urls
 }
 
-export default function sitemap() {
+export default async function sitemap() {
   const now = new Date()
 
   const appEntries = APP_ROUTES.map((r) => ({
@@ -60,5 +66,18 @@ export default function sitemap() {
     priority: 0.7,
   }))
 
-  return [...appEntries, ...voyagesEntries]
+  // Une adresse par programme Omra de l'admin (09/11/2026) ; rien si le catalogue est injoignable.
+  let omraEntries = []
+  try {
+    omraEntries = programmesOmra(await lireCatalogue()).map((p) => ({
+      url: `${SITE_URL}/omra/${p.slug}`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    }))
+  } catch {
+    omraEntries = []
+  }
+
+  return [...appEntries, ...voyagesEntries, ...omraEntries]
 }
