@@ -122,7 +122,7 @@
       : '../' + esc(slug) + '.html';
 
     return '<article class="card">'
-      + '<div class="media" style="' + style + '">'
+      + '<div class="media" style="' + style + '" data-titre="' + esc(v.title) + '">'
       + badgeHtml(slug, customData)
       + '</div>'
       + '<div class="body">'
@@ -314,7 +314,55 @@
     wireTabs();
     activateHashTab();
     loadSocialContactBar();
+    montrerTitresVignettes();
   }
+
+  // Titre en grand sur chaque vignette (Karim, 09/11/2026) : à chaque arrivée sur la page des
+  // vignettes, le titre de chaque voyage s'affiche, bien lisible, devant sa photo, puis disparaît
+  // après 4 secondes, par sa croix, ou quand on fait défiler la vignette hors de l'écran.
+  // Il apparaît quand la vignette arrive à l'écran : sur téléphone les vignettes sont plus bas
+  // dans la page, un affichage dès l'ouverture serait fini avant qu'on y arrive.
+  // Aussi au retour arrière (pageshow).
+  var observateurTitres = null;
+  function fermerUnTitre(el) {
+    if (!el || el.classList.contains('est-ferme')) return;
+    el.classList.add('est-ferme');
+    if (el._minuterie) clearTimeout(el._minuterie);
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 450);
+  }
+  function afficherTitre(media) {
+    if (media._titreMontre) return;
+    media._titreMontre = true;
+    var titre = media.getAttribute('data-titre');
+    if (!titre) return;
+    var el = document.createElement('div');
+    el.className = 'vignette-titre';
+    el.innerHTML = '<button type="button" class="vignette-titre-x" aria-label="Fermer">×</button><p></p>';
+    el.querySelector('p').textContent = titre;
+    el.querySelector('.vignette-titre-x').addEventListener('click', function () { fermerUnTitre(el); });
+    media.appendChild(el);
+    el._minuterie = setTimeout(function () { fermerUnTitre(el); }, 4000);
+  }
+  function montrerTitresVignettes() {
+    if (observateurTitres) observateurTitres.disconnect();
+    var medias = document.querySelectorAll('.card .media[data-titre]');
+    Array.prototype.forEach.call(medias, function (m) {
+      m._titreMontre = false;
+      Array.prototype.forEach.call(m.querySelectorAll('.vignette-titre'), function (el) { if (el.parentNode) el.parentNode.removeChild(el); });
+    });
+    if (!('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(medias, afficherTitre);
+      return;
+    }
+    observateurTitres = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.6) afficherTitre(e.target);
+        else if (!e.isIntersecting) fermerUnTitre(e.target.querySelector('.vignette-titre'));
+      });
+    }, { threshold: [0, 0.6] });
+    Array.prototype.forEach.call(medias, function (m) { observateurTitres.observe(m); });
+  }
+  window.addEventListener('pageshow', function (e) { if (e.persisted) montrerTitresVignettes(); });
 
   // Date de fin des voyages (statut SOLDÉ), partagée avec les fiches et l'admin.
   function loadFin() {

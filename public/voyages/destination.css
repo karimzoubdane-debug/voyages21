@@ -226,6 +226,58 @@ h1, h2, h3 {
   background: linear-gradient(to top, rgba(21,46,31,.45), transparent 60%);
 }
 
+/* Titre en grand sur chaque vignette à l'arrivée (Karim, 09/11/2026), fermé au premier
+   défilement, par la croix ou après 4 s (voir destination-render.js). */
+.vignette-titre {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem 1.3rem;
+  background: rgba(16,35,26,.74);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: vignetteTitreIn .45s ease both;
+  transition: opacity .45s ease;
+}
+.vignette-titre.est-ferme { opacity: 0; pointer-events: none; }
+.vignette-titre p {
+  margin: 0;
+  padding: .55rem 0;
+  border-top: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  color: #fff;
+  font-family: 'Playfair Display', 'Noto Naskh Arabic', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 2px 12px rgba(0,0,0,.4);
+}
+.vignette-titre-x {
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.6);
+  background: rgba(0,0,0,.28);
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vignette-titre-x:hover { background: var(--gold); color: #152E1F; border-color: var(--gold); }
+@keyframes vignetteTitreIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .vignette-titre { animation: none; } }
+
 .card-badge {
   position: absolute;
   top: .75rem;
