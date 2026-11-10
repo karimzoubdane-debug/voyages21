@@ -239,10 +239,19 @@ h1, h2, h3 {
   background: rgba(16,35,26,.74);
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
-  animation: vignetteTitreIn .45s ease both;
   transition: opacity .45s ease;
 }
 .vignette-titre.est-ferme { opacity: 0; pointer-events: none; }
+/* Diaporama de la vignette : les photos du voyage se relaient (fondu), sous le badge et le titre. */
+.vignette-diapo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .55s ease;
+}
+.vignette-diapo.est-visible { opacity: 1; }
 .vignette-titre p {
   margin: 0;
   padding: .55rem 0;

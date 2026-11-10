@@ -65,6 +65,14 @@
     return img || '';
   }
 
+  // Toutes les photos d'un voyage (diaporama de la vignette), 8 au plus.
+  function allImages(v) {
+    var list = (v.images && v.images.length) ? v.images
+      : ((media[v.mediaKey] || media[MEDIA_KEY_ALIASES[v.mediaKey]] || {}).images || []);
+    return list.map(function (x) { return typeof x === 'string' ? x : (x && x.url); })
+      .filter(Boolean).slice(0, 8);
+  }
+
   function badgeHtml(slug, customData) {
     var st = statusMap[slug];
     if (isSolde(slug, customData)) return '<span class="card-badge card-badge--solde">SOLDÉ</span>';
@@ -124,7 +132,7 @@
       : '../' + esc(slug) + '.html';
 
     return '<article class="card">'
-      + '<div class="media" style="' + style + '" data-titre="' + esc(v.title) + '">'
+      + '<div class="media" style="' + style + '" data-titre="' + esc(v.title) + '" data-photos="' + esc(JSON.stringify(allImages(v))) + '">'
       + badgeHtml(slug, customData)
       + '</div>'
       + '<div class="body">'
@@ -319,47 +327,115 @@
     montrerTitresVignettes();
   }
 
-  // Titre en grand sur chaque vignette (Karim, 09/11/2026) : à chaque arrivée sur la page des
-  // vignettes, le titre de chaque voyage s'affiche, bien lisible, devant sa photo, puis disparaît
-  // après 4 secondes, par sa croix, ou quand on fait défiler la vignette hors de l'écran.
-  // Il apparaît quand la vignette arrive à l'écran : sur téléphone les vignettes sont plus bas
-  // dans la page, un affichage dès l'ouverture serait fini avant qu'on y arrive.
-  // Aussi au retour arrière (pageshow).
+  // Titre en grand sur chaque vignette, en boucle avec les photos du voyage (Karim, 09–10/11/2026) :
+  // la fenêtre du titre reste 4 secondes, puis chaque photo du voyage 2 secondes, puis le titre
+  // revient, et ainsi de suite. La boucle tourne quand la vignette est à l'écran (sur téléphone
+  // les vignettes sont plus bas dans la page) et s'arrête quand on la fait défiler hors de l'écran.
+  // La croix retire le titre de la boucle de cette vignette (les photos continuent).
+  // Les photos se chargent une à une, au moment de les montrer (rien de plus à l'ouverture).
+  var DUREE_TITRE = 4000, DUREE_PHOTO = 2000;
   var observateurTitres = null;
-  function fermerUnTitre(el) {
-    if (!el || el.classList.contains('est-ferme')) return;
-    el.classList.add('est-ferme');
-    if (el._minuterie) clearTimeout(el._minuterie);
-    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 450);
-  }
-  function afficherTitre(media) {
-    if (media._titreMontre) return;
-    media._titreMontre = true;
-    var titre = media.getAttribute('data-titre');
-    if (!titre) return;
-    var el = document.createElement('div');
-    el.className = 'vignette-titre';
+  function fenetreTitre(media) {
+    var el = media.querySelector('.vignette-titre');
+    if (el) return el;
+    el = document.createElement('div');
+    el.className = 'vignette-titre est-ferme';
     el.innerHTML = '<button type="button" class="vignette-titre-x" aria-label="Fermer">×</button><p></p>';
-    el.querySelector('p').textContent = titre;
-    el.querySelector('.vignette-titre-x').addEventListener('click', function () { fermerUnTitre(el); });
+    el.querySelector('p').textContent = media.getAttribute('data-titre') || '';
+    el.querySelector('.vignette-titre-x').addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      media._sansTitre = true;
+      el.classList.add('est-ferme');
+      prochaineEtape(media, 0);
+    });
     media.appendChild(el);
-    el._minuterie = setTimeout(function () { fermerUnTitre(el); }, 4000);
+    return el;
+  }
+  // Deux couches de photo qui se relaient, pour un fondu d'une photo à l'autre.
+  function couchesPhoto(media) {
+    if (media._couches) return media._couches;
+    media._couches = [0, 1].map(function () {
+      var c = document.createElement('div');
+      c.className = 'vignette-diapo';
+      media.insertBefore(c, media.firstChild);
+      return c;
+    });
+    media._coucheActive = 1;
+    return media._couches;
+  }
+  function montrerPhoto(media, url, suite) {
+    if (!url) { suite(); return; } // vignette sans photo : on garde le fond
+    var img = new Image();
+    var fait = false, tour = media._tour;
+    var poser = function () {
+      if (fait || !media._enBoucle || tour !== media._tour) return;
+      fait = true;
+      var couches = couchesPhoto(media);
+      var nouvelle = couches[1 - media._coucheActive], ancienne = couches[media._coucheActive];
+      media._coucheActive = 1 - media._coucheActive;
+      nouvelle.style.backgroundImage = "url('" + String(url).replace(/'/g, '%27') + "')";
+      nouvelle.style.zIndex = 1; ancienne.style.zIndex = 0;
+      nouvelle.classList.add('est-visible');
+      setTimeout(function () { ancienne.classList.remove('est-visible'); }, 600);
+      suite();
+    };
+    img.onload = poser;
+    img.onerror = function () { if (!fait && tour === media._tour) { fait = true; suite(); } };
+    img.src = url;
+    setTimeout(poser, 1500); // photo lente : on n'attend pas plus pour garder le rythme
+  }
+  function prochaineEtape(media, delai) {
+    clearTimeout(media._minuterie);
+    media._minuterie = setTimeout(function () { etape(media); }, delai);
+  }
+  function etape(media) {
+    if (!media._enBoucle) return;
+    var photos = media._photos || [];
+    var titre = fenetreTitre(media);
+    // Étape -1 = la fenêtre du titre ; 0..n-1 = les photos.
+    var i = media._etape;
+    var suivante = (i + 1 < photos.length) ? i + 1 : (media._sansTitre ? 0 : -1);
+    media._etape = suivante;
+    if (suivante === -1) {
+      titre.classList.remove('est-ferme');
+      prochaineEtape(media, DUREE_TITRE);
+    } else {
+      titre.classList.add('est-ferme');
+      montrerPhoto(media, photos[suivante], function () { prochaineEtape(media, DUREE_PHOTO); });
+    }
+  }
+  function demarrerBoucle(media) {
+    if (media._enBoucle) return;
+    media._enBoucle = true;
+    media._tour = (media._tour || 0) + 1; // une photo encore en chargement d'un tour précédent est ignorée
+    if (!media._photos) {
+      var liste = [];
+      try { liste = JSON.parse(media.getAttribute('data-photos') || '[]'); } catch (e) { liste = []; }
+      media._photos = liste.length ? liste : [null];
+    }
+    media._etape = -1; // on commence par le titre, sur la photo déjà affichée
+    if (media._sansTitre) { prochaineEtape(media, 0); return; }
+    fenetreTitre(media).classList.remove('est-ferme');
+    prochaineEtape(media, DUREE_TITRE);
+  }
+  function arreterBoucle(media) {
+    media._enBoucle = false;
+    clearTimeout(media._minuterie);
+    var t = media.querySelector('.vignette-titre');
+    if (t) t.classList.add('est-ferme');
   }
   function montrerTitresVignettes() {
     if (observateurTitres) observateurTitres.disconnect();
     var medias = document.querySelectorAll('.card .media[data-titre]');
-    Array.prototype.forEach.call(medias, function (m) {
-      m._titreMontre = false;
-      Array.prototype.forEach.call(m.querySelectorAll('.vignette-titre'), function (el) { if (el.parentNode) el.parentNode.removeChild(el); });
-    });
+    Array.prototype.forEach.call(medias, function (m) { arreterBoucle(m); m._sansTitre = false; });
     if (!('IntersectionObserver' in window)) {
-      Array.prototype.forEach.call(medias, afficherTitre);
+      Array.prototype.forEach.call(medias, demarrerBoucle);
       return;
     }
     observateurTitres = new IntersectionObserver(function (entrees) {
       entrees.forEach(function (e) {
-        if (e.isIntersecting && e.intersectionRatio >= 0.6) afficherTitre(e.target);
-        else if (!e.isIntersecting) fermerUnTitre(e.target.querySelector('.vignette-titre'));
+        if (e.isIntersecting && e.intersectionRatio >= 0.6) demarrerBoucle(e.target);
+        else if (!e.isIntersecting) arreterBoucle(e.target);
       });
     }, { threshold: [0, 0.6] });
     Array.prototype.forEach.call(medias, function (m) { observateurTitres.observe(m); });
