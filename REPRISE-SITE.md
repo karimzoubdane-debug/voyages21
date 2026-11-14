@@ -4,7 +4,20 @@
 > d'une conversation. But : reprendre sans que Karim réexplique le contexte.
 > **À mettre à jour après chaque avancée** (PR créée/fusionnée, décision, livraison).
 
-_Dernière mise à jour : 2026-11-09_
+_Dernière mise à jour : 2026-11-14_
+
+## ⏳ EN SUSPENS jusqu'au « done » de Karim — à lui rappeler à la fin de chaque discussion : PIXEL META ET FENÊTRE DES COOKIES (Karim, 14/11/2026)
+Demandé par Karim le 14/11/2026 (discussion « CRM Activités ») pour ses quatre sites : la page /demande du CRM
+(`v21-prospection`), le site incoming moroccovoyages21.com (`v21-incoming`), **ce site, voyages21.com**, et l'appli PackAcc
+(`Packages-Appli-DA21`). Consigne aussi dans la boîte à consignes du Cockpit (`v21-cockpit`, `COCKPIT-INBOX.md`).
+- **Ce qu'il faut poser** : le pixel Meta avec une fenêtre des cookies : rien de chargé avant l'accord du visiteur, boutons
+  « Accepter » et « Refuser » de même taille, choix modifiable, mention dans le texte de protection des données.
+- **Pixel de ce site** : proposé à Karim le 14/11, voyages21.com garde son pixel actuel, **1385401490278950**, aujourd'hui posé
+  sur la seule page Hajj (`public/voyages/destinations/hajj-2027.html`, avec Google Tag `G-S6KCFFBSFW`) ; décision de Karim
+  attendue. (Proposition pour les trois sites du Maroc : un pixel « incoming » commun, à créer par Karim.)
+- **Constaté le 14/11/2026** : `src/app/layout.jsx` charge la bannière Cookieyes avec la clé d'exemple `VOTRE_CLE_COOKIEYES`,
+  jamais remplacée : cette fenêtre des cookies ne fonctionne donc pas aujourd'hui.
+- Branche + PR, mise en ligne au « fusionne » de Karim.
 
 ## ✅ Omra : une page par programme lisible par Google + titres « Maroc » (PR #328) — FUSIONNÉE le 2026-11-09
 Go de Karim du 09/11/2026 après le relevé Google du Maroc (`performances-sites`,
