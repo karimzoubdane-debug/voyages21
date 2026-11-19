@@ -57,12 +57,22 @@
     return F.soldeInfo(tripData(slug, customData) || {}, statusMap[slug]).solde;
   }
 
+  // Photo Unsplash demandée en très grand (w=3000 sur la page Turquie : 627 Ko pour une
+  // vignette de 400 px de large) : on la demande à 1 200 px, assez pour un écran net.
+  // Même photo, même cadrage ; les photos de l'admin (stockage Vercel) ne changent pas.
+  function alleger(url) {
+    if (typeof url !== 'string') return url;
+    return url.replace(/^(https:\/\/images\.unsplash\.com\/[^?#]*\?(?:[^#]*&)?w=)(\d+)/, function (tout, debut, w) {
+      return +w > 1200 ? debut + '1200' : tout;
+    });
+  }
+
   function firstImage(v) {
     // Produits admin : images stockées directement sur le produit
-    if (v.images && v.images.length) return v.images[0];
+    if (v.images && v.images.length) return alleger(v.images[0]);
     var rec = media[v.mediaKey] || media[MEDIA_KEY_ALIASES[v.mediaKey]] || {};
     var img = rec.images && rec.images[0] && rec.images[0].url;
-    return img || '';
+    return alleger(img || '');
   }
 
   // Toutes les photos d'un voyage (diaporama de la vignette), 8 au plus.
@@ -70,7 +80,7 @@
     var list = (v.images && v.images.length) ? v.images
       : ((media[v.mediaKey] || media[MEDIA_KEY_ALIASES[v.mediaKey]] || {}).images || []);
     return list.map(function (x) { return typeof x === 'string' ? x : (x && x.url); })
-      .filter(Boolean).slice(0, 8);
+      .filter(Boolean).map(alleger).slice(0, 8);
   }
 
   function badgeHtml(slug, customData) {
@@ -223,6 +233,22 @@
     if (tab) tab.click();
   }
 
+  // La photo de la première vignette est le plus gros élément de la page (7,6 s sur la page
+  // Turquie, mesure Google du 16/11/2026) : on la demande en priorité, avant les autres photos.
+  // Elle est la première du premier onglet (photo posée directement ou en attente, data-fond).
+  function prechargerPremierePhoto(html) {
+    if (document.querySelector('link[data-premiere-photo]')) return;
+    var m = /(?:data-fond="|background-image:url\(')([^"']+)/.exec(html || '');
+    if (!m) return;
+    var lien = document.createElement('link');
+    lien.rel = 'preload';
+    lien.as = 'image';
+    lien.href = m[1].replace(/&amp;/g, '&');
+    lien.setAttribute('fetchpriority', 'high');
+    lien.setAttribute('data-premiere-photo', '');
+    document.head.appendChild(lien);
+  }
+
   function loadSocialContactBar() {
     if (document.querySelector('script[src="/social-contact-bar.js"]')) return;
     var script = document.createElement('script');
@@ -307,6 +333,7 @@
       }
     }
 
+    prechargerPremierePhoto(content);
     app.innerHTML = '<div class="topbar"><div class="topbar-inner">'
       + '<a href="/design/homepage-v2-luxe.html">‹ Retour à l\'accueil</a>'
       + '<span class="brand">VOYAGES 21</span>'
