@@ -9,6 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../destination.css?v=solde-v1">
+  <!-- L'encadré « Les programmes Omra en français » est écrit sous les programmes, que le script
+       dessine ensuite au-dessus de lui : il apparaissait en haut puis sautait en bas (décalage noté
+       0,21 par Google le 16/11/2026, note de rapidité de 93 à 82). Avec le script, il n'apparaît
+       qu'une fois les programmes en place ; sans script, il reste visible comme avant. -->
+  <script>document.documentElement.className += ' js';</script>
+  <style>.js #destinationApp:empty + .v21-omra-fr { display: none; }</style>
 </head>
 <body>
   <div id="destinationApp"></div>
