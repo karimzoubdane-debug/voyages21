@@ -125,14 +125,13 @@
     if (isHidden(slug)) return '';
 
     var img = firstImage(v);
-    var style = img ? "background-image:url('" + esc(img) + "')" : '';
     var intro = (v.intro && (Array.isArray(v.intro) ? v.intro[0] : v.intro)) || (v.cta && v.cta.text) || '';
     var link = customData
       ? '../voyage-admin.html?slug=' + encodeURIComponent(slug)
       : '../' + esc(slug) + '.html';
 
     return '<article class="card">'
-      + '<div class="media" style="' + style + '" data-titre="' + esc(v.title) + '" data-photos="' + esc(JSON.stringify(allImages(v))) + '">'
+      + '<div class="media"' + (img ? ' data-fond="' + esc(img) + '"' : '') + ' data-titre="' + esc(v.title) + '" data-photos="' + esc(JSON.stringify(allImages(v))) + '">'
       + badgeHtml(slug, customData)
       + '</div>'
       + '<div class="body">'
@@ -324,7 +323,37 @@
     wireTabs();
     activateHashTab();
     loadSocialContactBar();
+    chargerFonds();
     montrerTitresVignettes();
+  }
+
+  // Photo de chaque vignette posée quand la vignette approche de l'écran (18/11/2026).
+  // Avant, toutes les photos partaient à l'ouverture : 27 vignettes sur la page Omra, soit
+  // 6,4 Mo sur téléphone le 16/11/2026 alors qu'on n'en voit que deux. La marge de 400 px
+  // fait arriver la photo avant que la vignette n'entre à l'écran : le visiteur voit la même
+  // page. Les onglets cachés (ex. الحج) chargent leurs photos quand on les ouvre.
+  var observateurFonds = null;
+  function poserFond(media) {
+    var url = media.getAttribute('data-fond');
+    if (!url) return;
+    media.style.backgroundImage = "url('" + url.replace(/'/g, '%27') + "')";
+    media.removeAttribute('data-fond');
+  }
+  function chargerFonds() {
+    if (observateurFonds) observateurFonds.disconnect();
+    var medias = app.querySelectorAll('.card .media[data-fond]');
+    if (!('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(medias, poserFond);
+      return;
+    }
+    observateurFonds = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        poserFond(e.target);
+        observateurFonds.unobserve(e.target);
+      });
+    }, { rootMargin: '400px 0px' });
+    Array.prototype.forEach.call(medias, function (m) { observateurFonds.observe(m); });
   }
 
   // Titre en grand sur chaque vignette, en boucle avec les photos du voyage (Karim, 09–10/11/2026) :
