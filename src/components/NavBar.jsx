@@ -99,7 +99,7 @@ export default function NavBar() {
             <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.2rem', fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.08em', lineHeight: 1 }}>
               VOYAGES<span style={{ color: '#C8A440' }}>21</span>
             </span>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.52rem', fontWeight: 500, color: 'rgba(200,164,64,0.75)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.52rem', fontWeight: 500, color: 'rgba(200,164,64,1)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
               le voyage cousu main
             </span>
           </Link>

@@ -45,7 +45,7 @@ export default function ContactPage() {
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: '4rem' }}>
           {/* Infos contact */}
           <div>
-            <p className="section-label">Nous trouver</p>
+            <p className="section-label" style={{ color: '#8A6D1A' }}>Nous trouver</p>
             <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.6rem', color: 'var(--navy)', marginBottom: '2rem' }}>Contact direct</h2>
 
             {[
@@ -56,7 +56,7 @@ export default function ContactPage() {
               { label: 'Site', val: 'www.boutique.voyages21.com' },
             ].map(info => (
               <div key={info.label} style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--light-gray)' }}>
-                <p style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '0.3rem' }}>{info.label}</p>
+                <p style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#8A6D1A', marginBottom: '0.3rem' }}>{info.label}</p>
                 <p style={{ fontSize: '0.88rem', color: 'var(--navy)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>{info.val}</p>
               </div>
             ))}
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.6rem',
-                background: '#25D366',
+                background: '#1D8348',
                 color: 'white',
                 padding: '0.85rem 1.5rem',
                 textDecoration: 'none',
@@ -85,7 +85,7 @@ export default function ContactPage() {
 
           {/* Formulaire */}
           <div>
-            <p className="section-label">Votre projet</p>
+            <p className="section-label" style={{ color: '#8A6D1A' }}>Votre projet</p>
             <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.6rem', color: 'var(--navy)', marginBottom: '2rem' }}>Demande de devis</h2>
 
             {sent ? (
@@ -106,8 +106,9 @@ export default function ContactPage() {
                     { name: 'nom', label: 'Nom', type: 'text', req: true },
                   ].map(f => (
                     <div key={f.name}>
-                      <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>{f.label}</label>
+                      <label htmlFor={`contact-${f.name}`} style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>{f.label}</label>
                       <input
+                        id={`contact-${f.name}`}
                         type={f.type}
                         name={f.name}
                         required={f.req}
@@ -122,8 +123,9 @@ export default function ContactPage() {
                   { name: 'telephone', label: 'Telephone / WhatsApp', type: 'tel', req: false },
                 ].map(f => (
                   <div key={f.name}>
-                    <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>{f.label}</label>
+                    <label htmlFor={`contact-${f.name}`} style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>{f.label}</label>
                     <input
+                      id={`contact-${f.name}`}
                       type={f.type}
                       name={f.name}
                       required={f.req}
@@ -133,8 +135,8 @@ export default function ContactPage() {
                 ))}
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Type de voyage souhaite</label>
-                  <select name="type_voyage" style={{ width: '100%', padding: '0.75rem', border: '1.5px solid #ddd', fontSize: '0.88rem', fontFamily: 'DM Sans, sans-serif', outline: 'none', background: 'var(--light-gray)' }}>
+                  <label htmlFor="contact-type_voyage" style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Type de voyage souhaite</label>
+                  <select id="contact-type_voyage" name="type_voyage" style={{ width: '100%', padding: '0.75rem', border: '1.5px solid #ddd', fontSize: '0.88rem', fontFamily: 'DM Sans, sans-serif', outline: 'none', background: 'var(--light-gray)' }}>
                     <option value="">Choisir...</option>
                     <option value="raid_4x4">Raid 4x4</option>
                     <option value="moto">Moto Expedition</option>
@@ -148,18 +150,19 @@ export default function ContactPage() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Nombre de voyageurs</label>
-                    <input type="number" name="voyageurs" min="1" style={{ width: '100%', padding: '0.75rem', border: '1.5px solid #ddd', fontSize: '0.88rem', fontFamily: 'DM Sans, sans-serif', outline: 'none', background: 'var(--light-gray)' }} />
+                    <label htmlFor="contact-voyageurs" style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Nombre de voyageurs</label>
+                    <input id="contact-voyageurs" type="number" name="voyageurs" min="1" style={{ width: '100%', padding: '0.75rem', border: '1.5px solid #ddd', fontSize: '0.88rem', fontFamily: 'DM Sans, sans-serif', outline: 'none', background: 'var(--light-gray)' }} />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Dates envisagees</label>
-                    <input type="text" name="dates" placeholder="ex: Mars 2026" style={{ width: '100%', padding: '0.75rem', border: '1.5px solid #ddd', fontSize: '0.88rem', fontFamily: 'DM Sans, sans-serif', outline: 'none', background: 'var(--light-gray)' }} />
+                    <label htmlFor="contact-dates" style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Dates envisagees</label>
+                    <input id="contact-dates" type="text" name="dates" placeholder="ex: Mars 2026" style={{ width: '100%', padding: '0.75rem', border: '1.5px solid #ddd', fontSize: '0.88rem', fontFamily: 'DM Sans, sans-serif', outline: 'none', background: 'var(--light-gray)' }} />
                   </div>
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Votre projet (details, attentes, questions...)</label>
+                  <label htmlFor="contact-message" style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', marginBottom: '0.4rem' }}>Votre projet (details, attentes, questions...)</label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     rows={5}
                     required
